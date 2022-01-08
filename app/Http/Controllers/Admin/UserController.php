@@ -94,7 +94,7 @@ class UserController extends Controller
         if ($userCustom->name == 'admin') {
             return redirect()->route('admin.users.index')->with('No se puede eliminar.');
         }
-        $userCustom->delele();
+        $userCustom->delete();
         return redirect()->route('admin.users.index')->with('Eliminado correctamente.');
     }
 }
