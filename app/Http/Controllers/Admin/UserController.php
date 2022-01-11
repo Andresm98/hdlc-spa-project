@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Http\Requests\StoreUserPost;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
 
 class UserController extends Controller
 {
@@ -33,6 +37,10 @@ class UserController extends Controller
     public function create()
     {
         return Inertia::render('Users/Create');
+    }
+
+    public function dd(){
+
     }
 
     /**
@@ -67,7 +75,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user_custom = User::find($id);
+        return Inertia::render('Users/Edit', compact('user_custom'));
     }
 
     /**
@@ -79,7 +88,23 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $user = User::find($id);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:225|' . Rule::unique('users')->ignore($user->id),
+            'password' => 'nullable'
+        ]);
+
+        if (!$validator->validated()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $user->update($request->all());
+
+        return redirect()->route('admin.users.index')->with('Actualizado correctamente.');
     }
 
     /**
@@ -92,9 +117,9 @@ class UserController extends Controller
     {
         $userCustom = User::find($id);
         if ($userCustom->name == 'admin') {
-            return redirect()->route('admin.users.index')->with('No se puede eliminar.');
+            return redirect()->route('admin.users.index')->with('error', 'No se puede eliminar.');
         }
         $userCustom->delete();
-        return redirect()->route('admin.users.index')->with('Eliminado correctamente.');
+        return redirect()->route('admin.users.index')->with('success', 'Eliminado correctamente.');
     }
 }

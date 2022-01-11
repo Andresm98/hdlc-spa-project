@@ -21,4 +21,7 @@ use App\Http\Controllers\Admin\UserController;
 Route::resource('admin', UserController::class, ['parameters' => [
     // set value (userCustom) in methods in the class.
     'admin' => 'userCustom'
-]])->names('admin.users');
+]])->names('users');
+
+
+Route::get('jjj', [UserController::class, 'dd'])->name('usersk.create');

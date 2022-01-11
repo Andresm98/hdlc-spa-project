@@ -1,5 +1,5 @@
 <template>
-  <app-layout>
+  <app-layout title="Admin Sistema">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-700 leading-tight">
         Usuarios
@@ -8,8 +8,6 @@
         Bienvenido Usuario: {{ $page.props.user.name }}
       </div>
     </template>
-    <!-- This example requires Tailwind CSS v2.0+ -->
-
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -41,19 +39,6 @@
                 "
                 >Crear usuarios</Link
               >
-              <!-- <trashed-message
-                class="mb-6 bg-green-500 rounded"
-                v-if="$page.props.flash.message"
-              >
-                {{ $page.props.flash.message }}
-              </trashed-message>
-
-              <trashed-message
-                class="mb-6 bg-red-500 rounded"
-                v-if="$page.props.flash.error"
-              >
-                {{ $page.props.flash.error }}
-              </trashed-message> -->
 
               <section class="pl-4">
                 <pagination class="mt-6 mb-5" :links="usersList.links" />
@@ -377,6 +362,9 @@ import SelectInput from "@/Components/SelectInput";
 import LoadingButton from "@/Components/LoadingButton";
 import TrashedMessage from "@/Components/TrashedMessage";
 
+import VueSweetalert2 from "vue-sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+
 export default defineComponent({
   props: {
     usersList: Object,
@@ -411,7 +399,10 @@ export default defineComponent({
       Inertia.delete(
         route("admin.users.destroy", { userCustom: this.selectedUser })
       );
-
+      Toast.fire({
+        icon: "success",
+        title: "Usuario eliminado correctamente.",
+      });
       this.modalOpen = false;
     },
 
@@ -420,8 +411,16 @@ export default defineComponent({
 
       this.modalOpen = false;
     },
+
+    sweetAlert() {
+      this.$swal({
+        title: "<i>Custom HTML</i>",
+        html: `This is an <em> emaphazied text </em>, <a href="#">links</a><strong>And other tags</strong>`,
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+      });
+    },
   },
 });
 </script>
-
-

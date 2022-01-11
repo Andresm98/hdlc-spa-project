@@ -396,6 +396,11 @@ import JetLabel from "@/Jetstream/Label";
 import JetButton from "@/Jetstream/Button";
 
 export default {
+  props: {
+    user_custom: Object,
+    errors: null,
+  },
+  remember: "form",
   components: {
     AppLayout,
     Link,
@@ -406,12 +411,6 @@ export default {
     JetButton,
   },
 
-  props: {
-    user_custom: Object,
-    errors: null,
-  },
-
-  remember: "form",
   data() {
     return {
       form: this.$inertia.form({
@@ -421,6 +420,7 @@ export default {
       }),
     };
   },
+
   methods: {
     update() {
       Inertia.put(

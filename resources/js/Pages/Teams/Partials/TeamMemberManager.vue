@@ -6,7 +6,7 @@
             <!-- Add Team Member -->
             <jet-form-section @submitted="addTeamMember">
                 <template #title>
-                    Add Team Member
+                    Agregar un miembro a su equipo
                 </template>
 
                 <template #description>
