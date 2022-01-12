@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name', 'lastname','email', 'password',
+        'name', 'lastname', 'email', 'password',
     ];
 
     /**
@@ -58,4 +58,26 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+    /**
+     *
+     * Crear relaciones uno a uno a nivel de Modelos.
+     *
+     */
+
+    //  Relacion uno a uno
+
+    public function profile()
+    {
+        return $this->hasOne('App\Models\Profile');
+    }
+
+
+    // Relaciones uno a uno polimorfica
+
+    public function image()
+    {
+        return $this->morphOne('App\Models\Images', 'imageable');
+    }
 }
