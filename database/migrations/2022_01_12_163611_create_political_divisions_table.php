@@ -15,11 +15,9 @@ class CreatePoliticalDivisionsTable extends Migration
     {
         Schema::create('political_divisions', function (Blueprint $table) {
 
-
             $table->string('id');
 
             $table->string('political_divisionc_id')->nullable();
-
 
             $table->string('name');
             $table->tinyInteger('level');

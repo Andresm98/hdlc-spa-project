@@ -31,9 +31,9 @@
               <h6 class="text-blueGray-700 text-xl font-bold">Tarjeta de Hermana</h6>
               <button
                 class="
-                  bg-pink-500
+                  bg-blue-500
                   text-white
-                  active:bg-pink-600
+                  active:bg-blue-600
                   font-bold
                   uppercase
                   text-xs
@@ -51,7 +51,7 @@
                 "
                 type="button"
               >
-                Configuraciones
+                Verificar
               </button>
             </div>
           </div>
@@ -380,7 +380,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/Pagination";
 

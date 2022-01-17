@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateImagesTable extends Migration
+class CreateTestAWSTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,11 @@ class CreateImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('test_a_w_s', function (Blueprint $table) {
+            $table->id();
 
-            // tabla polimorfica
             $table->string('filename');
             $table->string('url');
-
-            $table->unsignedBigInteger('imageable_id');
-            $table->string('imageable_type');
-
-            $table->primary(['imageable_id', 'imageable_type']);
 
             $table->timestamps();
         });
@@ -35,6 +30,6 @@ class CreateImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('test_a_w_s');
     }
 }

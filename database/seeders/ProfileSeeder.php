@@ -19,7 +19,7 @@ class ProfileSeeder extends Seeder
     public function run()
     {
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 4; $i++) {
             $profile =  Profile::create([
                 'identity_card' => Str::random(10),
                 'date_birth' => '1998-02-01',

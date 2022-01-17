@@ -25,3 +25,7 @@ Route::resource('admin', UserController::class, ['parameters' => [
 
 
 Route::get('jjj', [UserController::class, 'dd'])->name('usersk.create');
+
+
+
+Route::get('/pdf', [UserController::class, 'PDF']);

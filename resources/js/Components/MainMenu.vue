@@ -1,27 +1,24 @@
 <template>
-  <div>
+  <div >
     <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/">
-        <icon name="dashboard" class="mr-2 w-4 h-4" :class="isUrl('') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Dashboard</div>
+      <Link class="rounded-full focus:outline-none focus:ring-2 focus:bg-blue-50 focus:ring-blue-800  sm:ml-8" href="/">
+        <div :class="isUrl('admin/user') ? 'text-sm text-center py-2 text-white' : 'text-sm text-center py-2  bg-blue-600 text-white hover:text-white hover:text-sm hover:bg-blue-500 rounded-full'">Inicio</div>
+      </Link>
+    </div>
+
+    <div class="mb-4">
+      <Link class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-blue-800  sm:ml-8" href="/">
+        <div :class="isUrl('') ? 'text-sm text-center py-2  text-white' : ' text-sm text-center py-2  bg-blue-600 text-white hover:text-white hover:text-sm hover:bg-blue-500 rounded-full'">Usuarios</div>
       </Link>
     </div>
     <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/organizations">
-        <icon name="office" class="mr-2 w-4 h-4" :class="isUrl('organizations') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('organizations') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Info.</div>
+      <Link  class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-blue-800  sm:ml-8" href="/">
+        <div :class="isUrl('') ? 'text-sm text-center py-2   text-white' : ' text-sm text-center py-2   bg-blue-600 text-white hover:text-white hover:text-sm hover:bg-blue-500 rounded-full'">Comunidad</div>
       </Link>
     </div>
     <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/contacts">
-        <icon name="users" class="mr-2 w-4 h-4" :class="isUrl('contacts') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('contacts') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Contactos</div>
-      </Link>
-    </div>
-    <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/reports">
-        <icon name="printer" class="mr-2 w-4 h-4" :class="isUrl('reports') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('reports') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Reportes</div>
+      <Link  class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-blue-800  sm:ml-8" href="/">
+        <div :class="isUrl('') ? 'text-sm text-center py-2  text-white' : ' text-sm text-center py-2 bg-blue-600 text-white hover:text-white hover:text-sm hover:bg-blue-500 rounded-full'">Reportes</div>
       </Link>
     </div>
   </div>

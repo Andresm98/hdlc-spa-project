@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use Illuminate\Support\Str;
+
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -23,7 +25,9 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input)
     {
         Validator::make($input, [
+            'username' => ['required', 'string', 'max:255','unique:users'],
             'name' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
@@ -31,7 +35,10 @@ class CreateNewUser implements CreatesNewUsers
 
         return DB::transaction(function () use ($input) {
             return tap(User::create([
+                'username' => $input['username'],
                 'name' => $input['name'],
+                'lastname' => $input['lastname'],
+                'slug' => Str::slug($input['username']),
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
             ]), function (User $user) {
@@ -50,7 +57,7 @@ class CreateNewUser implements CreatesNewUsers
     {
         $user->ownedTeams()->save(Team::forceCreate([
             'user_id' => $user->id,
-            'name' => explode(' ', $user->name, 2)[0]."'s Team",
+            'name' => explode(' Equipo de ', $user->name, 2)[0] . "",
             'personal_team' => true,
         ]));
     }

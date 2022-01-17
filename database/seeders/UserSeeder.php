@@ -29,8 +29,10 @@ class UserSeeder extends Seeder
         foreach ($users as $name => $email) {
             DB::transaction(function () use ($name, $email) {
                 return tap(User::create([
+                    'username' => 'usernamehdlc '.$name,
+                    'slug' => Str::slug('usernamehdlc '.$name),
                     'name' => $name,
-                    'lastname' => 'last_' . $name,
+                    'lastname' => 'last-' . $name,
                     'email' => $email,
                     'password' => Hash::make('secret'),
                 ]), function (User $user) {
@@ -66,8 +68,10 @@ class UserSeeder extends Seeder
 
 
         //
-        for ($i = 0; $i <= 5; $i++) {
+        for ($i = 0; $i <= 60; $i++) {
             $user =  User::create([
+                'username' => 'username_' .Str::random(5),
+                'slug' => Str::slug('username_'.Str::random(10)),
                 'name' => Str::random(10),
                 'lastname' => Str::random(10),
                 'email' => Str::random(10) . '@gmail.com',

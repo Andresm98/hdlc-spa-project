@@ -6,14 +6,12 @@
             </div>
 
             <div class="mt-8 text-2xl">
-                Welcome to your Jetstream application!
+                Bienvenido al Sistema de Administración Secretaría HDLC
             </div>
 
             <div class="mt-6 text-gray-500">
-                Laravel Jetstream provides a beautiful, robust starting point for your next Laravel application. Laravel is designed
-                to help you build your application using a development environment that is simple, powerful, and enjoyable. We believe
-                you should love expressing your creativity through programming, so we have spent time carefully crafting the Laravel
-                ecosystem to be a breath of fresh air. We hope you love it.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni officia voluptate sed sequi, impedit est aperiam fuga illo alias quod blanditiis delectus temporibus nihil quo neque, facilis, unde eaque magnam.
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad quas doloribus vero natus, quos assumenda qui iure nam rem vitae ea, repellat laborum error expedita sed aperiam veniam, repudiandae labore?
             </div>
         </div>
 
@@ -26,7 +24,7 @@
 
                 <div class="ml-12">
                     <div class="mt-2 text-sm text-gray-500">
-                        Laravel has wonderful documentation covering every aspect of the framework. Whether you're new to the framework or have previous experience, we recommend reading all of the documentation from beginning to end.
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis, obcaecati quasi, fugit consectetur, asperiores sint minus tempore alias amet doloribus dolores officiis voluptate mollitia dolor. Eum voluptatem enim officiis repudiandae!
                     </div>
 
                     <a href="https://laravel.com/docs">
@@ -44,12 +42,12 @@
             <div class="p-6 border-t border-gray-200 md:border-t-0 md:border-l">
                 <div class="flex items-center">
                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="https://laracasts.com">Laracasts</a></div>
+                    <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="https://laracasts.com">Vue Redux</a></div>
                 </div>
 
                 <div class="ml-12">
                     <div class="mt-2 text-sm text-gray-500">
-                        Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. At dolores magnam sapiente, ab consequuntur recusandae esse cupiditate reprehenderit nemo enim dolorum laboriosam id a tempore vel eveniet consequatur quos quisquam.
                     </div>
 
                     <a href="https://laracasts.com">
@@ -67,12 +65,12 @@
             <div class="p-6 border-t border-gray-200">
                 <div class="flex items-center">
                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="https://tailwindcss.com/">Tailwind</a></div>
+                    <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="https://tailwindcss.com/">TW - UI</a></div>
                 </div>
 
                 <div class="ml-12">
                     <div class="mt-2 text-sm text-gray-500">
-                        Laravel Jetstream is built with Tailwind, an amazing utility first CSS framework that doesn't get in your way. You'll be amazed how easily you can build and maintain fresh, modern designs with this wonderful framework at your fingertips.
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. In facilis non accusamus vel voluptatem aliquid nostrum qui consequatur deserunt alias excepturi, dolore veritatis id, odit illum, commodi minima distinctio aut.
                     </div>
                 </div>
             </div>
@@ -85,7 +83,7 @@
 
                 <div class="ml-12">
                     <div class="mt-2 text-sm text-gray-500">
-                        Authentication and registration views are included with Laravel Jetstream, as well as support for user email verification and resetting forgotten passwords. So, you're free to get started what matters most: building your application.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia at totam rem pariatur soluta hic velit quam adipisci nihil. Ipsam voluptatem reprehenderit nesciunt? Libero ipsum quam vero, modi deleniti magni?
                     </div>
                 </div>
             </div>

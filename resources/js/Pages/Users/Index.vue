@@ -1,13 +1,13 @@
 <template>
   <app-layout title="Admin Sistema">
-    <template #header>
+    <!-- <template #header>
       <h2 class="font-semibold text-xl text-gray-700 leading-tight">
         Usuarios
       </h2>
       <div class="text-sm text-blue-700 mt-3 mb-6">
         Bienvenido Usuario: {{ $page.props.user.name }}
       </div>
-    </template>
+    </template> -->
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -22,20 +22,35 @@
                 sm:rounded-lg
               "
             >
+              <alert
+                v-if="$page.props.flash.success"
+                class="alert"
+                :type_alert_r="(type_alert = 'success')"
+                :message="$page.props.flash.success"
+              >
+              </alert>
+              <alert
+                v-if="$page.props.flash.error"
+                class="alert"
+                :type_alert_r="(type_alert = 'error')"
+                :message="$page.props.flash.error"
+              >
+              </alert>
+
               <Link
                 :href="route('admin.users.create')"
                 class="
-                  p-2
-                  pl-5
-                  pr-5
+                  pt-12
+                  pb-1
+                  pl-4
+                  pr-4
                   bg-blue-500
                   border-2 border-blue-500
                   text-white text-sm
                   rounded-lg
                   hover:bg-blue-500 hover:text-gray-100
                   focus:border-4 focus:border-blue-300
-                  mr-2
-                  mt-4
+
                 "
                 >Crear usuarios</Link
               >
@@ -59,7 +74,7 @@
                         tracking-wider
                       "
                     >
-                      ID
+                      Identificador
                     </th>
                     <th
                       scope="col"
@@ -131,9 +146,9 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="text-sm text-gray-900">
-                        Regional Paradigm Technician
+                        Hijas de la Caridad San V. Paúl
                       </div>
-                      <div class="text-sm text-gray-500">Optimization</div>
+                      <div class="text-sm text-gray-500">Ecuador</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <span
@@ -148,7 +163,7 @@
                           text-green-800
                         "
                       >
-                        Active
+                        Activo
                       </span>
                     </td>
                     <!-- <td
@@ -158,7 +173,7 @@
                     </td> -->
                     <td
                       class="
-                        px-6
+                        px-3
                         py-4
                         whitespace-nowrap
                         text-right text-sm
@@ -168,6 +183,7 @@
                       <!-- Componentes -->
 
                       <div class="mx-auto flex gap-10">
+
                         <!-- Observar -->
                         <Link
                           :href="
@@ -296,10 +312,10 @@
 
                         <!-- Delete Account Confirmation Modal -->
                         <jet-dialog-modal :show="modalOpen">
-                          <template v-slot:title> Delete Account </template>
+                          <template v-slot:title> Eliminar </template>
 
                           <template v-slot:content>
-                            <p class="text-lg text-red-700">
+                            <p class="text-lg text-blue-700">
                               ¿Está seguro/a de que desea eliminar la cuenta de
                               {{ selectedUser.name }} ?
                             </p>
@@ -345,7 +361,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/Pagination";
 import { Inertia } from "@inertiajs/inertia";
@@ -361,8 +377,8 @@ import TextInput from "@/Components/TextInput";
 import SelectInput from "@/Components/SelectInput";
 import LoadingButton from "@/Components/LoadingButton";
 import TrashedMessage from "@/Components/TrashedMessage";
+import Alert from "@/Components/Alert";
 
-import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
 export default defineComponent({
@@ -385,41 +401,26 @@ export default defineComponent({
     SelectInput,
     TextInput,
     TrashedMessage,
+    Alert,
   },
 
   data() {
     return {
       modalOpen: false,
       selectedUser: Object,
+      type_alert: null,
     };
   },
-
   methods: {
     deleteUser: function () {
       Inertia.delete(
         route("admin.users.destroy", { userCustom: this.selectedUser })
       );
-      Toast.fire({
-        icon: "success",
-        title: "Usuario eliminado correctamente.",
-      });
       this.modalOpen = false;
+    //   window.location.reload();
     },
-
     closeModal() {
-      console.log("salvar");
-
       this.modalOpen = false;
-    },
-
-    sweetAlert() {
-      this.$swal({
-        title: "<i>Custom HTML</i>",
-        html: `This is an <em> emaphazied text </em>, <a href="#">links</a><strong>And other tags</strong>`,
-        showCloseButton: true,
-        showCancelButton: true,
-        focusConfirm: false,
-      });
     },
   },
 });

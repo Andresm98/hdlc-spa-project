@@ -9,6 +9,11 @@ class Profile extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'identity_card', 'date_birth', 'date_vocation',
+         'date_admission', 'cellphone', 'phone','observation'
+    ];
+
     /**
      *
      * Crear relaciones a nivel de modelo

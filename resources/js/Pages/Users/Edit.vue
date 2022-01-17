@@ -34,9 +34,9 @@
                 </h6>
                 <button
                   class="
-                    bg-pink-500
+                    bg-blue-500
                     text-white
-                    active:bg-pink-600
+                    active:bg-blue-600
                     font-bold
                     uppercase
                     text-xs
@@ -384,7 +384,7 @@
 
 
 <script>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
 
 import { Inertia } from "@inertiajs/inertia";
 
