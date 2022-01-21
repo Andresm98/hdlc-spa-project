@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Secretary;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
-class SecretaryController extends Controller
+class Profile extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,9 +23,15 @@ class SecretaryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createprofile(Request $request)
     {
-        //
+        FIXME:
+        // Realizar las funcionalidades necesarias.
+
+        $user = User::find(6);
+
+        $user->profile()->update($request->all());
+        return $request->all();
     }
 
     /**

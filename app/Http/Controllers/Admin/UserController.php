@@ -25,14 +25,22 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // return Inertia::render('Users/Index', [
+    //     'usersList' => $usersList
+    // ]);
     public function index()
     {
-        $usersList = User::orderBy('id', 'asc')
-            ->paginate(10);
+        $team = Team::find(1);  //Admin Team
 
-        return Inertia::render('Users/Index', [
-            'usersList' => $usersList
-        ]);
+        $user = auth()->user();
+
+        if (!$user->hasTeamPermission($team, 'edit')) {
+            abort(403, "No tiene permisos");
+        }
+
+        $users_list = User::orderBy('id', 'asc')
+            ->paginate(10);
+        return Inertia::render('Users/Index', compact('users_list'));
     }
 
     /**
@@ -42,13 +50,20 @@ class UserController extends Controller
      */
     public function create()
     {
+        $team = Team::find(1);  //Admin Team
+
+        $user = auth()->user();
+
+        if (!$user->hasTeamPermission($team, 'edit')) {
+            abort(403, "No tiene permisos");
+        }
+
         return Inertia::render('Users/Create');
     }
 
     public function dd()
     {
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -73,7 +88,7 @@ class UserController extends Controller
 
         $user = tap(User::create([
             'username' => $request->get('username'),
-            'slug' => Str::slug($request->get('username') . '-' . random_int(100, 800)),
+            'slug' => Str::slug($request->get('username') . '-' . random_int(100, 10000)),
             'name' => $request->get('name'),
             'lastname' => $request->get('lastname'),
             'email' => $request->get('email'),
@@ -90,8 +105,7 @@ class UserController extends Controller
             'url' => Storage::disk('s3')->url($path)
         ]);
 
-
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')->with('success', 'Usuario creado correctamente.');
     }
 
     /**
@@ -102,8 +116,16 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $userCustom = User::find($id);
-        return Inertia::render('Users/Show', compact('userCustom'));
+        $user_custom = User::select()->where('slug', $id)->get();
+        $user = User::find($user_custom[0]['id']);
+        if ($user->image) {
+            $image = Storage::disk('s3')->temporaryUrl(
+                $user->image->filename,
+                now()->addMinutes(5)
+            );
+            return Inertia::render('Users/Show', compact('user_custom', 'image'));
+        }
+        return Inertia::render('Users/Show', compact('user_custom'));
     }
 
     /**
@@ -114,7 +136,15 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user_custom = User::find($id);
+        $user_customa = User::select()->where('slug', $id)->get();
+        $user_custom = User::find($user_customa[0]['id']);
+        if ($user_custom->image) {
+            $image = Storage::disk('s3')->temporaryUrl(
+                $user_custom->image->filename,
+                now()->addMinutes(5)
+            );
+            return Inertia::render('Users/Edit', compact('user_custom', 'image'));
+        }
         return Inertia::render('Users/Edit', compact('user_custom'));
     }
 
@@ -139,9 +169,28 @@ class UserController extends Controller
                 ->withErrors($validator->errors())
                 ->withInput();
         }
+        // Input File
+
+        if ($request->file('file')) {
+            if (!$user->image) {
+                $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
+                Storage::disk('s3')->setVisibility($path, 'private');
+                $user->image()->create([
+                    'filename' => $path,
+                    'url' => Storage::disk('s3')->url($path)
+                ]);
+            }
+            Storage::disk('s3')->delete($user->image->filename);
+            $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
+            Storage::disk('s3')->setVisibility($path, 'private');
+            $user->image()->update([
+                'filename' => $path,
+                'url' => Storage::disk('s3')->url($path)
+            ]);
+        }
 
         $user->update($request->all());
-        return redirect()->route('admin.users.index')->with('success', 'Usuario ctualizado correctamente.');
+        return redirect()->route('admin.users.index')->with('success', 'Usuario actualizado correctamente.');
     }
 
     /**
@@ -174,6 +223,12 @@ class UserController extends Controller
             'personal_team' => true,
         ]));
     }
+
+    public function welcome()
+    {
+        return Inertia::render('Users/Welcome');
+    }
+
 
     public function PDF()
     {
