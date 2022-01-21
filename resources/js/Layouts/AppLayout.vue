@@ -29,13 +29,13 @@
                   :href="route('dashboard')"
                   :active="route().current('dashboard')"
                 >
-                  Element SPA
+                  Origin SPA
                 </jet-nav-link>
                 <jet-nav-link
                   :href="route('dashboard')"
                   :active="route().current('dashboard')"
                 >
-            Element SPA
+                  Origin SPA
                 </jet-nav-link>
               </div>
             </div>
@@ -52,23 +52,7 @@
                     <span class="inline-flex rounded-md">
                       <button
                         type="button"
-                        class="
-                          inline-flex
-                          items-center
-                          px-3
-                          py-2
-                          border border-transparent
-                          text-sm
-                          leading-4
-                          font-medium
-                          rounded-md
-                          text-gray-500
-                          bg-white
-                          hover:bg-gray-50 hover:text-gray-700
-                          focus:outline-none focus:bg-gray-50
-                          active:bg-gray-50
-                          transition
-                        "
+                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition"
                       >
                         {{ $page.props.user.current_team.name }}
 
@@ -98,9 +82,7 @@
 
                         <!-- Team Settings -->
                         <jet-dropdown-link
-                          :href="
-                            route('teams.show', $page.props.user.current_team)
-                          "
+                          :href="route('teams.show', $page.props.user.current_team)"
                         >
                           Configurar Equipo
                         </jet-dropdown-link>
@@ -127,9 +109,7 @@
                             <jet-dropdown-link as="button">
                               <div class="flex items-center">
                                 <svg
-                                  v-if="
-                                    team.id == $page.props.user.current_team_id
-                                  "
+                                  v-if="team.id == $page.props.user.current_team_id"
                                   class="mr-2 h-5 w-5 text-green-400"
                                   fill="none"
                                   stroke-linecap="round"
@@ -159,14 +139,7 @@
                   <template #trigger>
                     <button
                       v-if="$page.props.jetstream.managesProfilePhotos"
-                      class="
-                        flex
-                        text-sm
-                        border-2 border-transparent
-                        rounded-full
-                        focus:outline-none focus:border-gray-300
-                        transition
-                      "
+                      class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition"
                     >
                       <img
                         class="h-8 w-8 rounded-full object-cover"
@@ -178,22 +151,7 @@
                     <span v-else class="inline-flex rounded-md">
                       <button
                         type="button"
-                        class="
-                          inline-flex
-                          items-center
-                          px-3
-                          py-2
-                          border border-transparent
-                          text-sm
-                          leading-4
-                          font-medium
-                          rounded-md
-                          text-gray-500
-                          bg-white
-                          hover:text-gray-700
-                          focus:outline-none
-                          transition
-                        "
+                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition"
                       >
                         {{ $page.props.user.name }}
 
@@ -223,8 +181,8 @@
                       Perfil
                     </jet-dropdown-link>
 
-                    <jet-dropdown-link :href="route('admin.users.index')">
-                      Administrar Sistema
+                    <jet-dropdown-link :href="route('admin.welcome')">
+                      Administrar Systemmm
                     </jet-dropdown-link>
 
                     <jet-dropdown-link
@@ -238,9 +196,7 @@
 
                     <!-- Authentication -->
                     <form @submit.prevent="logout">
-                      <jet-dropdown-link as="button">
-                        Salir
-                      </jet-dropdown-link>
+                      <jet-dropdown-link as="button"> Salir </jet-dropdown-link>
                     </form>
                   </template>
                 </jet-dropdown>
@@ -251,17 +207,7 @@
             <div class="-mr-2 flex items-center sm:hidden">
               <button
                 @click="showingNavigationDropdown = !showingNavigationDropdown"
-                class="
-                  inline-flex
-                  items-center
-                  justify-center
-                  p-2
-                  rounded-md
-                  text-gray-400
-                  hover:text-gray-500 hover:bg-gray-100
-                  focus:outline-none focus:bg-gray-100 focus:text-gray-500
-                  transition
-                "
+                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition"
               >
                 <svg
                   class="h-6 w-6"
@@ -354,18 +300,14 @@
 
               <!-- Authentication -->
               <form method="POST" @submit.prevent="logout">
-                <jet-responsive-nav-link as="button">
-                  Log Out
-                </jet-responsive-nav-link>
+                <jet-responsive-nav-link as="button"> Log Out </jet-responsive-nav-link>
               </form>
 
               <!-- Team Management -->
               <template v-if="$page.props.jetstream.hasTeamFeatures">
                 <div class="border-t border-gray-200"></div>
 
-                <div class="block px-4 py-2 text-xs text-gray-400">
-                  Manage Team
-                </div>
+                <div class="block px-4 py-2 text-xs text-gray-400">Manage Team</div>
 
                 <!-- Team Settings -->
                 <jet-responsive-nav-link
@@ -386,14 +328,9 @@
                 <div class="border-t border-gray-200"></div>
 
                 <!-- Team Switcher -->
-                <div class="block px-4 py-2 text-xs text-gray-400">
-                  Switch Teams
-                </div>
+                <div class="block px-4 py-2 text-xs text-gray-400">Switch Teams</div>
 
-                <template
-                  v-for="team in $page.props.user.all_teams"
-                  :key="team.id"
-                >
+                <template v-for="team in $page.props.user.all_teams" :key="team.id">
                   <form @submit.prevent="switchToTeam(team)">
                     <jet-responsive-nav-link as="button">
                       <div class="flex items-center">
@@ -407,9 +344,7 @@
                           stroke="currentColor"
                           viewBox="0 0 24 24"
                         >
-                          <path
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                          ></path>
+                          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         <div>{{ team.name }}</div>
                       </div>
@@ -444,10 +379,7 @@
               md:block
             "
           /> -->
-          <div
-            class="px-4 py-8 md:flex-1 md:p-12 md:overflow-y-auto"
-            scroll-region
-          >
+          <div class="px-4 py-8 md:flex-1 md:p-12 md:overflow-y-auto" scroll-region>
             <slot></slot>
           </div>
         </div>
@@ -466,7 +398,7 @@ import JetNavLink from "@/Jetstream/NavLink.vue";
 import JetResponsiveNavLink from "@/Jetstream/ResponsiveNavLink.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import Dropdown from "@/Components/Dropdown";
-import MainMenu from "@/Components/MainMenu";
+import MainMenu from "@/Components/Admin/MainMenu";
 export default defineComponent({
   props: {
     title: String,

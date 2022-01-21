@@ -11,25 +11,26 @@
 
                 <template #description>
                     Add a new team member to your team, allowing them to collaborate with you.
+                    Agregar un nuevo miembro a tu equipo permitiéndole que colabore contigo.
                 </template>
 
                 <template #form>
                     <div class="col-span-6">
                         <div class="max-w-xl text-sm text-gray-600">
-                            Please provide the email address of the person you would like to add to this team.
+                            Por favor, ingrese el correo electrónico de la persona a la que te gustaría agregar a este equipo.
                         </div>
                     </div>
 
                     <!-- Member Email -->
                     <div class="col-span-6 sm:col-span-4">
-                        <jet-label for="email" value="Email" />
+                        <jet-label for="email" value="Correo Electrónico" />
                         <jet-input id="email" type="email" class="mt-1 block w-full" v-model="addTeamMemberForm.email" />
                         <jet-input-error :message="addTeamMemberForm.errors.email" class="mt-2" />
                     </div>
 
                     <!-- Role -->
                     <div class="col-span-6 lg:col-span-4" v-if="availableRoles.length > 0">
-                        <jet-label for="roles" value="Role" />
+                        <jet-label for="roles" value="Rol" />
                         <jet-input-error :message="addTeamMemberForm.errors.role" class="mt-2" />
 
                         <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
