@@ -25,7 +25,9 @@ class StoreUserPost extends FormRequest
     {
         return [
             //
+            'username' => 'required|string|255',
             'name' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|min:8|string',
         ];

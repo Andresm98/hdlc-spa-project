@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\TestAWSController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +29,14 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
+
+
+Route::get('/image', [TestAWSController::class, 'index'])->name('test.image.index');
+
+
+Route::post('/image', [TestAWSController::class, 'store'])->name('test.image.create');
+
+
+Route::get('/image/show', [TestAWSController::class, 'show'])->name('test.image.show');
+
+

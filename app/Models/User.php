@@ -20,13 +20,15 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+
+    protected $guarded = [];
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 'slug', 'lastname', 'name', 'lastname', 'email', 'password',
     ];
 
     /**
@@ -58,4 +60,26 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+    /**
+     *
+     * Crear relaciones uno a uno a nivel de Modelos.
+     *
+     */
+
+    //  Relacion uno a uno
+
+    public function profile()
+    {
+        return $this->hasOne('App\Models\Profile');
+    }
+
+
+    // Relaciones uno a uno polimorfica
+
+    public function image()
+    {
+        return $this->morphOne('App\Models\Images', 'imageable');
+    }
 }

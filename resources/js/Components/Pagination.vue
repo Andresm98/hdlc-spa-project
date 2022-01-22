@@ -6,7 +6,7 @@
                     v-html="link.label" />
                 <Link v-else
                     class="mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded hover:bg-blue-50 hover:text-gray focus:border-blue-500 focus:text-blue-500"
-                    :class="{ 'bg-blue-500 text-white hover:bg-blue-900' : link.active }" :href="link.url" v-html="link.label" ></Link>
+                    :class="{ 'bg-blue-500 text-white hover:bg-blue-700' : link.active }" :href="link.url" v-html="link.label" ></Link>
             </template>
         </div>
     </div>
