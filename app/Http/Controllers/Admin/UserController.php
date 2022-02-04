@@ -11,36 +11,67 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Fortify\Contracts\CreatesNewUsers;
-use Laravel\Jetstream\Jetstream;
+use Spatie\Permission\Models\Role;
 
 use PDF;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
+
+
+    public function  __construct()
+    {
+        $this->middleware('can:create users')->only('create', 'store', 'createTeam');
+        $this->middleware('can:read users')->only('index', 'show');
+        $this->middleware('can:update users')->only('edit', 'update');
+        $this->middleware('can:delete users')->only('delete', 'destroy');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    public function welcome()
+    {
+        $users = count(User::all());
+        $roles        = count(Role::all());
+        $permissions = count(Permission::all());
+        return Inertia::render('Admin/Welcome', compact('users', 'roles', 'permissions'));
+    }
+
     // return Inertia::render('Users/Index', [
     //     'usersList' => $usersList
     // ]);
     public function index()
     {
-        $team = Team::find(1);  //Admin Team
+        // $team = Team::find(1);  //Admin Team
+        // $user = auth()->user();
+        // if (!$user->hasTeamPermission($team, 'edit')) {
+        //     abort(403, "No tiene permisos");
+        // }
+        request()->validate([
+            'direction' => ['in:asc,desc'],
+            'field' => ['in:name,email']
+        ]);
 
-        $user = auth()->user();
+        $query = User::query();
 
-        if (!$user->hasTeamPermission($team, 'edit')) {
-            abort(403, "No tiene permisos");
+        if (request('search')) {
+            $query->where('name', 'LIKE', '%' . request('search') . '%');
         }
 
-        $users_list = User::orderBy('id', 'asc')
-            ->paginate(10);
-        return Inertia::render('Users/Index', compact('users_list'));
+        if (request()->has(['field', 'direction'])) {
+            $query->orderBy(request('field'), request('direction'));
+        }
+        return Inertia::render('Admin/Users/Index', [
+            'users_list' => $query
+                ->paginate(10)
+                ->appends(request()->query()),
+            'filters' => request()->all(['search', 'field', 'direction', 'page'])
+        ]);
     }
 
     /**
@@ -50,20 +81,17 @@ class UserController extends Controller
      */
     public function create()
     {
-        $team = Team::find(1);  //Admin Team
+        // $team = Team::find(1);  //Admin Team
 
-        $user = auth()->user();
+        // $user = auth()->user();
 
-        if (!$user->hasTeamPermission($team, 'edit')) {
-            abort(403, "No tiene permisos");
-        }
+        // if (!$user->hasTeamPermission($team, 'edit')) {
+        //     abort(403, "No tiene permisos");
+        // }
 
-        return Inertia::render('Users/Create');
+        return Inertia::render('Admin/Users/Create');
     }
 
-    public function dd()
-    {
-    }
     /**
      * Store a newly created resource in storage.
      *
@@ -73,10 +101,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255|unique:users',
-            'name' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'username' => 'required|string|max:60|unique:users',
+            'name' => 'required|string|max:60',
+            'lastname' => 'required|string|max:60',
+            'email' => 'required|string|email|max:60|unique:users',
             'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -114,18 +142,30 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $user_custom = User::select()->where('slug', $id)->get();
-        $user = User::find($user_custom[0]['id']);
-        if ($user->image) {
-            $image = Storage::disk('s3')->temporaryUrl(
-                $user->image->filename,
-                now()->addMinutes(5)
-            );
-            return Inertia::render('Users/Show', compact('user_custom', 'image'));
+
+        $validator = Validator::make(['slug' => $slug], [
+            'slug' => ['required', 'string', 'max:50', 'alpha_dash', 'exists:users,slug']
+        ]);
+
+        if ($validator->fails()) {
+            abort(404);
+        } else {
+            $user_custom = User::select()
+                ->where('slug', '=', [$slug])
+                ->get()
+                ->first();
+            $user =  User::find($user_custom->id);
+            if ($user->image) {
+                $image = Storage::disk('s3')->temporaryUrl(
+                    $user->image->filename,
+                    now()->addMinutes(5)
+                );
+                return Inertia::render('Admin/Users/Show', compact('user_custom', 'image'));
+            }
+            return Inertia::render('Admin/Users/Show', compact('user_custom'));
         }
-        return Inertia::render('Users/Show', compact('user_custom'));
     }
 
     /**
@@ -134,18 +174,36 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        $user_customa = User::select()->where('slug', $id)->get();
-        $user_custom = User::find($user_customa[0]['id']);
-        if ($user_custom->image) {
-            $image = Storage::disk('s3')->temporaryUrl(
-                $user_custom->image->filename,
-                now()->addMinutes(5)
-            );
-            return Inertia::render('Users/Edit', compact('user_custom', 'image'));
+
+        $validator = Validator::make(['slug' => $slug], [
+            'slug' => ['required', 'string', 'max:50', 'alpha_dash', 'exists:users,slug']
+        ]);
+
+        if ($validator->fails()) {
+            abort(404);
+        } else {
+            $user_custom = User::select()
+                ->where('slug', '=', [$slug])
+                ->get()
+                ->first();
+            $user =  User::find($user_custom->id);
+
+            $rolesAvailable = Role::all();
+            $roles = collect();
+            foreach ($user_custom->roles as $role) {
+                $roles->push($role->id);
+            }
+            if ($user_custom->image) {
+                $image = Storage::disk('s3')->temporaryUrl(
+                    $user_custom->image->filename,
+                    now()->addMinutes(5)
+                );
+                return Inertia::render('Admin/Users/Edit', compact('user_custom', 'image', 'rolesAvailable', 'roles'));
+            }
+            return Inertia::render('Admin/Users/Edit', compact('user_custom', 'rolesAvailable', 'roles'));
         }
-        return Inertia::render('Users/Edit', compact('user_custom'));
     }
 
     /**
@@ -157,40 +215,48 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255|',
-            'email' => 'required|email|max:225|' . Rule::unique('users')->ignore($user->id),
-        ]);
 
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($id)],
+            'roles*' => 'required|exists:roles,id',
+            'file' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+        ]);
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator->errors())
                 ->withInput();
-        }
-        // Input File
-
-        if ($request->file('file')) {
-            if (!$user->image) {
-                $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
-                Storage::disk('s3')->setVisibility($path, 'private');
-                $user->image()->create([
-                    'filename' => $path,
-                    'url' => Storage::disk('s3')->url($path)
-                ]);
+        } else {
+            $user =  User::find($id);
+            if ($request->file('file')) {
+                if (!$user->image) {
+                    $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
+                    Storage::disk('s3')->setVisibility($path, 'private');
+                    $user->image()->create([
+                        'filename' => $path,
+                        'url' => Storage::disk('s3')->url($path)
+                    ]);
+                } else {
+                    Storage::disk('s3')->delete($user->image->filename);
+                    $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
+                    Storage::disk('s3')->setVisibility($path, 'private');
+                    $user->image()->update([
+                        'filename' => $path,
+                        'url' => Storage::disk('s3')->url($path)
+                    ]);
+                }
             }
-            Storage::disk('s3')->delete($user->image->filename);
-            $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
-            Storage::disk('s3')->setVisibility($path, 'private');
-            $user->image()->update([
-                'filename' => $path,
-                'url' => Storage::disk('s3')->url($path)
-            ]);
+            $user->update(
+                [
+                    'name' => $request->get('name'),
+                    'lastname' => $request->get('lastname'),
+                    'email' => $request->get('email'),
+                ]
+            );
+            $user->roles()->sync($request->roles);
+            return redirect()->route('admin.users.index')->with('success', 'Usuario actualizado correctamente.');
         }
-
-        $user->update($request->all());
-        return redirect()->route('admin.users.index')->with('success', 'Usuario actualizado correctamente.');
     }
 
     /**
@@ -199,14 +265,27 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $userCustom = User::find($id);
-        if ($userCustom->name == 'Admin') {
-            return redirect()->route('admin.users.index')->with('error', 'No se puede eliminar.');
+        $validator = Validator::make(['slug' => $slug], [
+            'slug' => ['required', 'string', 'max:50', 'alpha_dash', 'exists:users,slug']
+        ]);
+
+        if ($validator->fails()) {
+            abort(404);
+        } else {
+            $user_custom = User::select('id')
+                ->where('slug', '=', [$slug])
+                ->get()
+                ->first();
+            $user =  User::find($user_custom->id);
+
+            if ($user->id == 1) {
+                return redirect()->route('admin.users.index')->with('error', 'No se puede eliminar.');
+            }
+            $user->delete();
+            return redirect()->route('admin.users.index')->with('success', 'Eliminado correctamente.');
         }
-        $userCustom->delete();
-        return redirect()->route('admin.users.index')->with('success', 'Eliminado correctamente.');
     }
 
     /**
@@ -224,12 +303,7 @@ class UserController extends Controller
         ]));
     }
 
-    public function welcome()
-    {
-        return Inertia::render('Users/Welcome');
-    }
-
-
+    // FIXME: Add methods PDS
     public function PDF()
     {
         $users = User::all();

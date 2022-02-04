@@ -1,5 +1,5 @@
 <template>
-     <app-layout>
+    <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-700 leading-tight">
                 Usuarios
@@ -126,10 +126,10 @@
                     datos principales de la hermana a la que desea agregar al
                     sistema, por lo que deberá verificar los datos a ingresar.
                     <ul class="list-disc pl-5">
-                        <li class="dark:text-white"><p class="mt-2  pt-6 text-sm  uppercase">  Nombre de usuario único en el sistema.</p></li>
-                        <li class="dark:text-white"><p class="  text-sm  uppercase dark:text-white">Correo electrónico único en el sistema.</p></li>
-                        <li class="dark:text-white"><p class="  text-sm  uppercase dark:text-white">Nombres Completos.</p></li>
-                        <li class="dark:text-white"><p class="  text-sm  uppercase dark:text-white">Apellidos Completos.</p></li>
+                        <li><p class="mt-2  pt-6 text-sm  uppercase">  Nombre de usuario único en el sistema.</p></li>
+                        <li><p class="  text-sm  uppercase">Correo electrónico único en el sistema.</p></li>
+                        <li><p class="  text-sm  uppercase">Nombres Completos.</p></li>
+                        <li><p class="  text-sm  uppercase">Apellidos Completos.</p></li>
                     </ul>
 
                 </p>
@@ -139,13 +139,14 @@
         <!-- <section>
             <menu-dropdown> </menu-dropdown>
         </section> -->
-   <div v-for="user in user_custom" :key="user.id">
+
         <section class="py-1 bg-slate-800">
             <div class="w-full lg:w-5/6 px-4 mx-auto mt-6">
                 <div
                     class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
                 >
                     <div class="bg-neutral-100 hover:bg-gray-100 rounded-lg">
+                        <form @submit.prevent="submit" class="">
                             <div class="rounded-t bg-white mb-0 px-6 py-6">
                                 <div class="text-center flex justify-between">
                                     <h6
@@ -176,14 +177,15 @@
                                         >
                                             Nombre de Usuario
                                         </label>
-
+                                        <jet-input-error
+                                            :message="errors.username"
+                                        />
                                         <input
                                             type="text"
                                             placeholder="Nombre del usuario en el Sistema"
                                             class="border-0 px-3 py-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                             @keydown.space.prevent
-                                            v-model="user.username"
-                                            readonly
+                                            v-model="form.username"
                                         />
                                     </div>
 
@@ -195,12 +197,14 @@
                                             Correo Electrónico
                                         </label>
 
+                                        <jet-input-error
+                                            :message="errors.email"
+                                        />
                                         <input
                                             type="email"
                                             placeholder="micorreo@correo.com"
                                             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                            value="user.email"
-                                            readonly
+                                            v-model="form.email"
                                         />
                                     </div>
                                     <div class="relative w-full mb-3">
@@ -210,13 +214,14 @@
                                         >
                                             Nombres Completos
                                         </label>
-
+                                        <jet-input-error
+                                            :message="errors.name"
+                                        />
                                         <input
                                             type="text"
                                             placeholder="Ejm: Lucas Andres"
                                             class="border-0 px-3 py-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                            v-model="user.name"
-                                            readonly
+                                            v-model="form.name"
                                         />
                                     </div>
                                     <div class="relative w-full mb-3">
@@ -227,58 +232,138 @@
                                             Apellidos Completos
                                         </label>
 
+                                        <jet-input-error
+                                            :message="errors.lastname"
+                                        />
                                         <input
                                             type="text"
                                             placeholder="Ejm: Fuentes Ramos"
                                             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                            v-model="user.lastname"
-                                            readonly
+                                            v-model="form.lastname"
                                         />
+                                    </div>
+
+                                    <div class="relative w-full mb-3">
+                                        <!-- <select-input
+                                            v-model="form.country"
+                                            :error="form.errors.country"
+                                            class=""
+                                        >
+                                            <option value="CA">Canada</option>
+                                            <option value="CA1">
+                                                United States
+                                            </option>
+                                            <option value="CA2">Canada</option>
+                                            <option value="CA3">Mexico</option>
+                                        </select-input> -->
                                     </div>
                                 </div>
                                 <div class="w-full lg:w-1/3 px-4">
                                     <div class="relative w-full mb-3">
                                         <div class="section">
+                                            <jet-input-error
+                                                :message="errors.file"
+                                            />
+                                            <input
+                                                class="block w-full text-sm text-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-500 file:text-white hover:file:bg-green-600 mb-4"
+                                                type="file"
+                                                accept="image/png, image/gif, image/jpeg"
+                                                @input="
+                                                    form.file =
+                                                        $event.target.files[0]
+                                                "
+                                                @change="onFileChange"
+                                            />
                                             <img
-                                                v-if="!image"
+                                                v-if="url"
+                                                :src="url"
+                                                class="rounded-xl h-60 w-40 object-cover"
+                                            />
+
+                                            <img
+                                                v-if="!url"
                                                 src="https://www.daughtersofcharity.com/wp-content/uploads/2021/05/DOC-SEAS-Logo-footer-236x300.png"
                                                 class="rounded-xl h-60 w-40 object-cover"
                                             />
-                                            <img
-                                                v-if="image"
-                                                :src="image"
-                                                class="rounded-xl h-60 w-40 object-cover"
-                                            />
+                                            <progress
+                                                v-if="form.progress"
+                                                :value="
+                                                    form.progress.percentage
+                                                "
+                                                max="100"
+                                            >
+                                                {{ form.progress.percentage }}%
+                                            </progress>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <hr
-                                class="mt-1 mb-3 ml-4 mr-4 border-b-1 border-blueGray-300 hover:border-blueGray-100"
+                                class="mt-1 mb-3 border-b-1 border-blueGray-300 hover:border-blueGray-100"
                             />
-
+                        </form>
                     </div>
                 </div>
             </div>
         </section>
-        </div>
     </app-layout>
 </template>
 
 <script>
-import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
+import { useForm } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/Pagination";
-import Layout from '@/Components/Admin/Layout'
+import JetInputError from "@/Jetstream/InputError";
+import JetInput from "@/Jetstream/Input";
+import JetLabel from "@/Jetstream/Label";
+import JetButton from "@/Jetstream/Button";
+import SelectInput from "@/Components/SelectInput";
+import SimpleUpload from "@/Components/SimpleUpload";
+import PrincipalLayout from "@/Components/Admin/PrincipalLayout";
 
-export default defineComponent({
-    props: { user_custom: Object, image: String },
-    layout: Layout,
-    components: {
-        AppLayout,
-        Link,
-        Pagination,
+export default {
+  props: ["errors"],
+  layout: PrincipalLayout,
+  components: {
+    AppLayout,
+    Link,
+    Pagination,
+    JetInputError,
+    JetInput,
+    JetLabel,
+    JetButton,
+    SimpleUpload,
+    SelectInput,
+  },
+  data() {
+    return {
+      photoPreview: null,
+      url: null,
+    };
+  },
+
+  methods: {
+    onFileChange(e) {
+      const file = e.target.files[0];
+      this.url = URL.createObjectURL(file);
     },
-});
+  },
+  setup() {
+    const form = useForm({
+      username: null,
+      lastname: null,
+      name: null,
+      email: null,
+      password: null,
+      file: null,
+    });
+
+    function submit() {
+      form.post(route("admin.user.store"));
+    }
+
+    return { form, submit };
+  },
+};
 </script>

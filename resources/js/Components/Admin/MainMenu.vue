@@ -14,10 +14,25 @@
       </Link>
         <hr :class="isUrl('system/admin/users/all') ? 'text-white' : 'hidden'"/>
     </div>
+
+    <div class="mb-4">
+      <Link class="group flex items-center py-3" :href="route('admin.roles.index')">
+        <icon name="roles" class="mr-2 w-4 h-4" :class="isUrl('system/admin/roles') ? 'fill-white' : 'fill-gray-400 group-hover:fill-white'" />
+        <div :class="isUrl('system/admin/roles') ? 'text-white' : 'text-gray-400 group-hover:text-white'">Roles</div>
+      </Link>
+        <hr :class="isUrl('system/admin/roles') ? 'text-white' : 'hidden'"/>
+    </div>
+    <div class="mb-4">
+      <Link class="group flex items-center py-3" :href="route('admin.settings.index')">
+        <icon name="settings" class="mr-2 w-4 h-4" :class="isUrl('sytem/admin/settings') ? 'fill-white' : 'fill-gray-400 group-hover:fill-white'" />
+        <div :class="isUrl('system/admin/settings') ? 'text-white' : 'text-gray-400 group-hover:text-white'">Configuración</div>
+      </Link>
+        <hr :class="isUrl('system/admin/settings') ? 'text-white' : 'hidden'"/>
+    </div>
     <div class="mb-4">
       <Link class="group flex items-center py-3" href="/cominities">
         <icon name="users" class="mr-2 w-4 h-4" :class="isUrl('cominities') ? 'fill-white' : 'fill-gray-400 group-hover:fill-white'" />
-        <div :class="isUrl('cominities') ? 'text-white' : 'text-gray-400 group-hover:text-white'">Contacts</div>
+        <div :class="isUrl('cominities') ? 'text-white' : 'text-gray-400 group-hover:text-white'">División</div>
       </Link>
         <hr :class="isUrl('cominities') ? 'text-white' : 'hidden'"/>
     </div>
@@ -25,7 +40,7 @@
     <div class="mb-4">
       <Link class="group flex items-center py-3" href="/reports">
         <icon name="printer" class="mr-2 w-4 h-4" :class="isUrl('reports') ? 'fill-white' : 'fill-gray-400 group-hover:fill-white'" />
-        <div :class="isUrl('reports') ? 'text-white' : 'text-gray-400 group-hover:text-white'">Reports</div>
+        <div :class="isUrl('reports') ? 'text-white' : 'text-gray-400 group-hover:text-white'">Reportes</div>
       </Link>
       <hr :class="isUrl('reports') ? 'text-white' : 'hidden'"/>
     </div>

@@ -4,6 +4,10 @@
         <jet-form-section @submitted="createApiToken">
             <template #title>
             Crear token de API
+
+            <!-- {{availablePermissions}}
+            {{defaultPermissions}} -->
+
             </template>
 
             <template #description>
@@ -122,6 +126,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div v-for="permission in availablePermissions" :key="permission">
                         <label class="flex items-center">
+
                             <jet-checkbox :value="permission" v-model:checked="updateApiTokenForm.permissions"/>
                             <span class="ml-2 text-sm text-gray-600">{{ permission }}</span>
                         </label>
@@ -233,6 +238,7 @@
             },
 
             manageApiTokenPermissions(token) {
+                console.log( token.abilities)
                 this.updateApiTokenForm.permissions = token.abilities
 
                 this.managingPermissionsFor = token

@@ -9,6 +9,7 @@ use App\Models\Team;
 use App\Models\User;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserSeeder extends Seeder
 {
@@ -29,7 +30,7 @@ class UserSeeder extends Seeder
         foreach ($users as $name => $email) {
             DB::transaction(function () use ($name, $email) {
                 return tap(User::create([
-                    'username' => 'usernamehdlc ' . $name,
+                    'username' => 'usernamehdlc' . $name,
                     'slug' => Str::slug('usernamehdlc ' . $name),
                     'name' => $name,
                     'lastname' => 'last-' . $name,
@@ -37,6 +38,7 @@ class UserSeeder extends Seeder
                     'password' => Hash::make('secret'),
                 ]), function (User $user) {
                     $this->createTeam($user);
+                    $user->assignRole('invited', 'super admin');
                 });
             });
         }
@@ -52,6 +54,7 @@ class UserSeeder extends Seeder
             ['role' => $role]
         );
 
+
         $role = 'staff';
         $email = 'staff@example.com';
         $team->users()->attach(
@@ -66,17 +69,53 @@ class UserSeeder extends Seeder
             ['role' => $role]
         );
 
+        // invited
 
-        //
-        for ($i = 0; $i <= 6000; $i++) {
+        for ($i = 0; $i <= 60; $i++) {
+            $username = 'invited  ' . Str::random(15);
+            $slug =  Str::slug($username);
             $user =  User::create([
-                'username' => 'username_' . Str::random(5),
-                'slug' => Str::slug('username_' . Str::random(10)),
-                'name' => Str::random(10),
-                'lastname' => Str::random(10),
-                'email' => Str::random(10) . '@gmail.com',
+                'username' => $username,
+                'slug' => $slug,
+                'name' => Str::random(15),
+                'lastname' =>  Str::random(15),
+                'email' =>  $slug .  '@gmail.com',
                 'password' => Hash::make('secret'),
             ]);
+            $user->assignRole('invited');
+            $this->createTeam($user);
+        }
+
+        //  secretary
+        for ($i = 0; $i <= 60; $i++) {
+            $username = 'secretary  ' . Str::random(15);
+            $slug =  Str::slug($username);
+            $user =  User::create([
+                'username' => $username,
+                'slug' => $slug,
+                'name' => Str::random(15),
+                'lastname' =>  Str::random(15),
+                'email' =>  $slug .  '@gmail.com',
+                'password' => Hash::make('secret'),
+            ]);
+            $user->assignRole('invited', 'secretary');
+            $this->createTeam($user);
+        }
+
+
+        //  daughter
+        for ($i = 0; $i <= 40; $i++) {
+            $username = 'daughter  ' . Str::random(15);
+            $slug =  Str::slug($username);
+            $user =  User::create([
+                'username' => $username,
+                'slug' => $slug,
+                'name' => Str::random(15),
+                'lastname' =>  Str::random(15),
+                'email' =>  $slug . '@gmail.com',
+                'password' => Hash::make('secret'),
+            ]);
+            $user->assignRole('invited', 'daughter');
             $this->createTeam($user);
         }
     }

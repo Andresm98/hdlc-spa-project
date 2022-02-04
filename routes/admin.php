@@ -3,7 +3,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
-
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SettingsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,15 +19,48 @@ use App\Http\Controllers\Admin\UserController;
 
 // Crud Usuarios
 
-Route::get('admin/welcome', [UserController::class, 'welcome'])->name('welcome');
-Route::get('admin/users/all',[UserController::class, 'index'])->name('users.index');
-Route::get('admin/user/create',[UserController::class, 'create'])->name('user.create');
-Route::post('admin/user/store',[UserController::class, 'store'])->name('user.store');
-Route::get('admin/user/show/{slug}', [UserController::class, 'show'])->name('user.show');
-Route::get('admin/user/edit/{slug}', [UserController::class, 'edit'])->name('user.edit');
-Route::put('admin/user/update/{user_custom}', [UserController::class, 'update'])->name('user.update');
 
+Route::group(
+    ['middleware' => ['role:super admin']],
+    function () {
 
+        Route::get('admin/welcome', [UserController::class, 'welcome'])
+            ->middleware('can:see admin menu')
+            ->name('welcome');
 
-Route::get('jjj', [UserController::class, 'dd'])->name('usersk.create');
-Route::get('/pdf', [UserController::class, 'PDF']);
+        Route::get('admin/users/all', [UserController::class, 'index'])
+            ->name('users.index');
+
+        Route::get('admin/user/create', [UserController::class, 'create'])
+            ->name('user.create');
+
+        Route::post('admin/user/store', [UserController::class, 'store'])
+            ->name('user.store');
+
+        Route::get('admin/user/show/{slug}', [UserController::class, 'show'])
+            ->name('user.show');
+
+        Route::get('admin/user/edit/{slug}', [UserController::class, 'edit'])
+            ->name('user.edit');
+
+        Route::put('admin/user/update/{user_custom}', [UserController::class, 'update'])
+            ->name('user.update');
+
+        Route::delete('admin/user/{slug}', [UserController::class, 'destroy'])
+            ->name('user.destroy');
+
+        // Group Crud Roles
+
+        Route::resource('admin/roles', RoleController::class)
+            ->names('roles');
+
+        //  Group Crud
+
+        Route::resource('admin/settings', SettingsController::class)
+            ->names('settings');
+
+        // FIXME:: Rest METHODS
+        Route::get('jjj', [UserController::class, 'dd'])->name('usersk.create');
+        Route::get('/pdf', [UserController::class, 'PDF']);
+    }
+);

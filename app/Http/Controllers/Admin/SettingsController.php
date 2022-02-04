@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Secretary;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
+use Inertia\Inertia;
 
-class Profile extends Controller
+class SettingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class Profile extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Admin/Settings/Index');
     }
 
     /**
@@ -23,15 +23,9 @@ class Profile extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createprofile(Request $request)
+    public function create()
     {
-        FIXME:
-        // Realizar las funcionalidades necesarias.
-
-        $user = User::find(6);
-
-        $user->profile()->update($request->all());
-        return $request->all();
+        //
     }
 
     /**
