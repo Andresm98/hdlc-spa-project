@@ -134,6 +134,8 @@ class UserController extends Controller
             $user = User::find($daughter_custom->id);
             $profile_daughter =   $profile_daughter->specificProfile($daughter_custom->id);
 
+            // return $addressClass->getSaveAddress($profile_daughter->address->political_division_id);
+
             if ($daughter_custom->image) {
                 $image = Storage::disk('s3')->temporaryUrl(
                     $daughter_custom->image->filename,
@@ -192,7 +194,6 @@ class UserController extends Controller
                     'email' => $request->get('email'),
                 ]
             );
-            $user->roles()->sync($request->roles);
             return redirect()->back()->with('success', 'Usuario actualizado correctamente.');
         }
     }

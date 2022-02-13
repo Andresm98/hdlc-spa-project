@@ -20,6 +20,8 @@ class CreateProfilesTable extends Migration
             $table->date('date_birth');
             $table->date('date_vocation');
             $table->date('date_admission');
+            $table->date('date_send');
+            $table->date('date_vote');
             $table->char('cellphone', 20);
             $table->char('phone', 20);
             $table->text('observation');

@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-gradient-to-r from-orange-400 to-blue-500  hover:from-red-400 hover:to-blue-700 border-b border-gray-100">
+  <nav class="bg-gradient-to-r from-orange-400 to-blue-500  hover:from-red-400 hover:to-blue-700 border-b border-gray-100 w-full">
     <!-- <nav class="bg-slate-800 transparent border-b border-gray-100">  -->
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,4 +1,8 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-@import '../../node_modules/@suadelabs/vue3-multiselect/dist/vue3-multiselect.css';
+@import '../../node_modules/vue-multiselect/dist/vue-multiselect.css';
+@import '../../node_modules/vue3-date-time-picker/dist/main.css';
+@import'../../node_modules/vue-sidebar-menu/dist/vue-sidebar-menu.css';
+
+

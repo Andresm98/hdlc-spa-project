@@ -25,6 +25,8 @@ class ProfileSeeder extends Seeder
                 'date_birth' => '1998-02-01',
                 'date_vocation' => '2009-02-01',
                 'date_admission' => '2012-02-01',
+                'date_send' => '2010-02-02',
+                'date_vote' => '2020-02-02',
                 'cellphone' => Str::random(10),
                 'phone' => Str::random(10),
                 'observation' => 'THE OBSEVATION 1',

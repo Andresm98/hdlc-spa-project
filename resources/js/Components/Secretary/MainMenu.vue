@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="md:flex md:flex-col md:h-screen">
+
+
     <div class="mb-4">
       <Link class="group flex items-center py-3" href="/secretary/welcome">
         <icon name="dashboard" class="mr-2 w-4 h-4" :class="isUrl('secretary/welcome') ? 'fill-white' : 'fill-gray-400 group-hover:fill-white'" />

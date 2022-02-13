@@ -52,6 +52,51 @@ class AddressController extends Controller
             ->get();
     }
 
+    public function getSaveAddress($actual_parish)
+    {
+
+        // Parishes
+        $data_parish = DB::table('political_divisions')
+            ->where('id', "=", $actual_parish)
+            ->where('level', '=', '3')
+            ->get()
+            ->first();
+
+        $parishes =  DB::table('political_divisions')
+            ->where('political_divisionc_id', "=", $data_parish->political_divisionc_id)
+            ->where('level', '=', '3')
+            ->get();
+
+        // Cantons
+        $data_canton = DB::table('political_divisions')
+            ->where('id', '=', $data_parish->political_divisionc_id)
+            ->where('level', '=', '2')
+            ->get()
+            ->first();
+
+        $cantons = DB::table('political_divisions')
+            ->where('political_divisionc_id', '=', $data_canton->political_divisionc_id)
+            ->where('level', '=', '2')
+            ->get();
+
+        // Provinces
+
+        $data_province = DB::table('political_divisions')
+            ->where('id', '=', $data_canton->political_divisionc_id)
+            ->where('level', '=', '1')
+            ->get()
+            ->first();
+
+
+        return response()->json([
+            'data_parish' => $data_parish,
+            'parishes' => $parishes,
+            'data_canton' => $data_canton,
+            'cantons' => $cantons,
+            'data_province' => $data_province
+        ]);
+    }
+
     public  function getMyAddress($profile_id)
     {
         $profile = Profile::find($profile_id);

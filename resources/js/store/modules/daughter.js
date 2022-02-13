@@ -8,6 +8,8 @@ const state = () => ({
         date_birth: null,
         date_vocation: null,
         date_admission: null,
+        date_send: null,
+        date_vote: null,
         cellphone: null,
         phone: null,
         observation: null,
@@ -63,6 +65,8 @@ const mutations = {
             date_birth,
             date_vocation,
             date_admission,
+            date_send,
+            date_vote,
             cellphone,
             phone,
             observation,
@@ -74,6 +78,8 @@ const mutations = {
         state.profile.date_birth = date_birth;
         state.profile.date_vocation = date_vocation;
         state.profile.date_admission = date_admission;
+        state.profile.date_send = date_send;
+        state.profile.date_vote = date_vote;
         state.profile.cellphone = cellphone;
         state.profile.phone = phone;
         state.profile.observation = observation;
@@ -86,9 +92,9 @@ const actions = {
         context.commit("increment");
     },
     changeUser(context, payload) {
-        setTimeout(() => {
-            context.commit("changeUser", payload);
-        }, 2000);
+        // setTimeout(() => {
+        context.commit("changeUser", payload);
+        // }, 2000);
     },
 
     changeUserId(context, payload) {

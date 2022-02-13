@@ -65,7 +65,7 @@ class ProfileController extends Controller
             ]);
 
             return back()->with([
-                'success' => 'El perfil del usuario fue actualizado correctamente.',
+                'success' => 'El perfil del usuario fue guardado correctamente.',
             ]);
         }
     }
@@ -112,8 +112,14 @@ class ProfileController extends Controller
                 'phone' => $request->get("phone"),
                 'observation' => $request->get("observation"),
             ]);
+
+            $user->profile->address()->update([
+                'address' => $request->address["address"],
+                'political_division_id' => $request->address["political_division_id"]
+            ]);
+
             return back()->with([
-                'success' => 'El perfil del usuario fue creado correctamente.',
+                'success' => 'El perfil del usuario fue actualizado correctamente.',
             ]);
         }
     }

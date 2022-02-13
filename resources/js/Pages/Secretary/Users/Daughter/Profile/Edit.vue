@@ -6,7 +6,7 @@
       bg-gradient-to-r
       from-slate-800
       via-slate-800
-      to-slate-700
+      to-slate-800
       p-2
       border-2
       rounded-lg
@@ -250,7 +250,7 @@
                 border border-gray-300
                 rounded-md
               "
-              v-model="this.profile.address['address']"
+              v-model="profile.address['address']"
               placeholder="Agregar la dirección actual.."
             />
           </div>
@@ -258,7 +258,7 @@
       </div>
 
       <div class="w-full lg:w-2/5 px-4 mb-2">
-        <div class="relative w-full">
+        <div class="w-full">
           <label
             class="block text-sm font-medium text-white"
             htmlfor="grid-password"
@@ -267,6 +267,7 @@
           </label>
           <div>
             <multiselect
+              class="absolute"
               :searchable="true"
               v-model="selectOne.selectedProvince"
               :options="this.allProvinces"
@@ -281,6 +282,54 @@
             >
             </multiselect>
           </div>
+        </div>
+      </div>
+      <div class="w-full lg:w-3/5 px-4 mb-2">
+        <div class="relative w-full">
+          <label
+            class="block text-sm font-medium text-white"
+            htmlfor="grid-password"
+          >
+            Cantón
+          </label>
+          <multiselect
+            :searchable="true"
+            v-model="selectTwo.selectedCanton"
+            :options="selectTwo.options"
+            :close-on-select="true"
+            :clear-on-select="false"
+            mode="tags"
+            label="name"
+            @select="onSelectedCanton"
+            @search-change="onSearchCantonChange"
+            track-by="name"
+            placeholder="Buscar cantón"
+          >
+          </multiselect>
+        </div>
+      </div>
+
+      <div class="w-full lg:w-12/12 px-4 mb-2">
+        <div class="relative w-full">
+          <label
+            class="block text-sm font-medium text-white"
+            htmlfor="grid-password"
+          >
+            Parroquia
+          </label>
+          <multiselect
+            :searchable="true"
+            v-model="selectThree.selectedParish"
+            :options="selectThree.options"
+            :close-on-select="true"
+            :clear-on-select="false"
+            label="name"
+            @select="onSelectedParish"
+            @search-change="onSearchParishChange"
+            track-by="name"
+            placeholder="Buscar parroquia"
+          >
+          </multiselect>
         </div>
       </div>
 
@@ -321,7 +370,6 @@
         </div>
       </div>
     </div>
-
     <jet-button type="submit" class="ml-4 mt-4 btn btn-primary"
       >Actualizar Perfil</jet-button
     >
@@ -336,9 +384,27 @@ import moment from "moment";
 import "vue3-date-time-picker/dist/main.css";
 import { mapState, mapMutations, mapGetters } from "vuex";
 import { Inertia } from "@inertiajs/inertia";
-import Multiselect from "@suadelabs/vue3-multiselect";
 
 export default {
+  mounted() {
+    this.status().then((data) => {
+      console.log(data);
+      this.selectThree.options = data.parishes;
+      this.selectThree.selectedParish = data.data_parish;
+
+      this.selectTwo.options = data.cantons;
+      this.selectTwo.selectedCanton = data.data_canton;
+
+      this.selectOne.selectedProvince = data.data_province;
+    });
+
+    // // console.log(global_address);
+
+    // this.selectThree.selectedParish = {
+    //   id: "02",
+    //   name: this.profile.address["name"],
+    // };
+  },
   computed: {
     ...mapState("daughter", ["profile"]),
     ...mapState("address", ["allProvinces"]),
@@ -346,7 +412,40 @@ export default {
       message: (state) => state.obj.message,
     }),
   },
-  components: { Datepicker, JetButton, moment, Multiselect },
+
+  watch: {
+    "selectOne.selectedProvince": function () {
+      if (this.selectOne.selectedProvince === null) {
+        this.selectTwo.selectedCanton = null;
+        this.selectThree.selectedParish = null;
+        this.selectTwo.options = [];
+        this.selectThree.options = [];
+        // Clean data Form
+        this.form.province_id = null;
+        this.form.canton_id = null;
+        this.form.parish_id = null;
+        this.form.political_division_id = null;
+      }
+    },
+    "selectTwo.selectedCanton": function () {
+      if (this.selectTwo.selectedCanton === null) {
+        this.selectThree.selectedParish = null;
+        this.selectThree.options = [];
+        // Clean data Form
+        this.form.canton_id = null;
+        this.form.parish_id = null;
+        this.form.political_division_id = null;
+      }
+    },
+    "selectThree.selectedParish": function () {
+      if (this.selectThree.selectedParish === null) {
+        // Clean data Form
+        this.form.parish_id = null;
+        this.form.political_division_id = null;
+      }
+    },
+  },
+  components: { Datepicker, JetButton, moment },
   props: { daughter_custom: Object },
   setup() {
     const formatSet = "YYYY-MM-DD";
@@ -357,7 +456,6 @@ export default {
       console.log("curr: " + date);
       return moment(date).format(formatSet);
     };
-
     const form = useForm({
       user_id: null,
       date_birth: null,
@@ -367,6 +465,14 @@ export default {
       cellphone: null,
       phone: null,
       observation: null,
+      address: {
+        address: null,
+        political_division_id: null,
+      },
+      province_id: null,
+      canton_id: null,
+      parish_id: null,
+      political_division_id: null,
     });
     return {
       date,
@@ -383,7 +489,7 @@ export default {
       },
       selectOne: {
         selectedProvince: undefined,
-        value: "020251",
+        value: 0,
         options: {
           type: Array,
           default: () => [],
@@ -412,15 +518,70 @@ export default {
   },
 
   methods: {
+    async status() {
+      console.log("perfil");
+      let response = await axios.get(
+        this.route("secretary.daughters-profile.actual-address", {
+          actual_parish: this.profile.address["political_division_id"],
+        })
+      );
+      return response.data;
+    },
+    onSearchProvincesChange(term) {
+      console.log("input data search " + term);
+    },
     onSelectedProvince(province) {
-      console.log("se muestran");
+      console.log("input data selecter " + province.id);
+      this.form.province_id = province.id;
+      this.form.canton_id = null;
+      this.form.parish_id = null;
+      this.form.political_division_id = null;
+      this.selectTwo.selectedCanton = undefined;
+      this.selectThree.selectedParish = undefined;
+      this.selectTwo.options = [];
+      this.selectThree.options = [];
+      axios
+        .get(
+          this.route("secretary.daughters-profile.cantons", {
+            province_id: province.id,
+          })
+        )
+        .then((res) => {
+          console.log(res.data);
+          this.selectTwo.options = res.data;
+        });
     },
-    onSearchProvincesChange() {
 
-
+    onSearchCantonChange(term) {
+      console.log(term);
     },
-    //   Mutationss
+    onSelectedCanton(canton) {
+      console.log("input data selecter " + canton.id);
+      this.form.canton_id = canton.id;
+      this.form.parish_id = null;
+      this.form.political_division_id = null;
+      this.selectThree.selectedParish = undefined;
+      this.selectThree.options = [];
 
+      axios
+        .get(
+          this.route("secretary.daughters-profile.parishes", {
+            canton_id: canton.id,
+          })
+        )
+        .then((res) => {
+          console.log(res.data);
+          this.selectThree.options = res.data;
+        });
+    },
+
+    onSearchParishChange(term) {
+      console.log(term);
+    },
+    onSelectedParish(parish) {
+      this.profile.address["political_division_id"] = parish.id;
+      console.log("input parish data selecter " + this.form.parish_id);
+    },
 
     localData() {
       console.log("TIPS " + this.profileDaughter());
@@ -431,34 +592,17 @@ export default {
     ...mapMutations("daughter", ["updateProfile"]),
     ...mapGetters("daughter", ["profileDaughter"]),
 
-    updateData() {
-      this.updateProfile({
-        observation: this.form.observation,
-        cellphone: this.form.cellphone,
-        identity_card: this.form.identity_card,
-        cellphone: this.form.cellphone,
-        phone: this.form.phone,
-        observation: this.form.observation,
-        date_birth: this.formatDate(this.form.date_birth),
-        date_vocation: this.formatDate(this.form.date_vocation),
-        date_admission: this.formatDate(this.form.date_admission),
-        // user_id: this.form.user_id,
-      });
-    },
-
     /*
      * Send Data to Update Data
      */
     submit() {
-      this.form.identity_card = this.profile.identity_card;
-      this.form.cellphone = this.profile.cellphone;
-      this.form.phone = this.profile.phone;
-      this.form.observation = this.profile.observation;
-      this.form.date_birth = this.profile.date_birth;
-      this.form.date_vocation = this.profile.date_vocation;
-      this.form.date_admission = this.profile.date_admission;
-      //   this.form.user_id = this.profile.user_id;
-      this.updateData();
+      this.profile.date_birth = this.formatDate(this.profile.date_birth);
+      this.profile.date_vocation = this.formatDate(this.profile.date_vocation);
+      this.profile.date_admission = this.formatDate(
+        this.profile.date_admission
+      );
+
+      //   console.log(this.profile);
       Inertia.put(
         route("secretary.daughters-profile.update", {
           profile_custom_id: this.profile.user_id,

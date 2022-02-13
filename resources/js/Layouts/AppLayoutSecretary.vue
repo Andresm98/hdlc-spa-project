@@ -9,13 +9,7 @@
         </div>
       </header>
       <!-- Page Content -->
-      <main>
-        <div class="md:flex md:flex-grow md:overflow-hidden">
-          <div class="md:flex-1 md:p-12 md:overflow-y-auto" scroll-region>
-            <slot></slot>
-          </div>
-        </div>
-      </main>
+      <slot></slot>
     </div>
   </div>
 </template>

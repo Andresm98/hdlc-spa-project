@@ -1,6 +1,6 @@
 <template >
   <!-- {{$daughter_custom}} -->
-  <form @submit.prevent="submit" class="bg-gray-200 p-2 border-2 rounded-lg">
+  <form @submit.prevent="submit" class="bg-gray-100 p-2 border-2 rounded-lg">
     <h6
       class="
         mt-2
@@ -62,23 +62,13 @@
             Fecha de Nacimiento
           </label>
           <Datepicker
-            class="
-              border-0
-              py-0.5
-              placeholder-blueGray-300
-              text-blueGray-600
-              bg-white
-              rounded
-              text-sm
-              shadow
-              focus:outline-none focus:ring
-              w-full
-              ease-linear
-              transition-all
-              duration-150
-            "
             v-model="form.date_birth"
             :format="format"
+            @blur="blur"
+            @focus="muestra"
+            @closed="cerrado"
+            :transitions="false"
+            menuClassName="dp-custom-menu"
             required
           />
         </div>
@@ -93,23 +83,12 @@
             Fecha de Vocación
           </label>
           <Datepicker
-            class="
-              border-0
-              py-0.5
-              placeholder-blueGray-300
-              text-blueGray-600
-              bg-white
-              rounded
-              text-sm
-              shadow
-              focus:outline-none focus:ring
-              w-full
-              ease-linear
-              transition-all
-              duration-150
-            "
+            class=""
             v-model="form.date_vocation"
             :format="format"
+            :transitions="false"
+            menuClassName="dp-custom-menu"
+            required
           />
         </div>
       </div>
@@ -123,23 +102,11 @@
             Fecha de Admisión
           </label>
           <Datepicker
-            class="
-              border-0
-              py-0.5
-              placeholder-blueGray-300
-              text-blueGray-600
-              bg-white
-              rounded
-              text-sm
-              shadow
-              focus:outline-none focus:ring
-              w-full
-              ease-linear
-              transition-all
-              duration-150
-            "
+            class=""
             v-model="form.date_admission"
             :format="format"
+            :transitions="false"
+            menuClassName="dp-custom-menu"
             required
           />
         </div>
@@ -242,6 +209,7 @@
               "
               v-model="form.address"
               placeholder="Agregar la dirección actual.."
+              required
             />
           </div>
         </div>
@@ -255,7 +223,7 @@
           >
             Provincia
           </label>
-          <div class="relative">
+          <div :class="{ invalid: isInvalid }">
             <multiselect
               :searchable="true"
               v-model="selectOne.selectedProvince"
@@ -270,6 +238,7 @@
               placeholder="Buscar provincia"
             >
             </multiselect>
+            <p class="text-red-400 text-sm" v-show="isInvalid">Obligatorio</p>
           </div>
         </div>
       </div>
@@ -281,20 +250,25 @@
           >
             Cantón
           </label>
-          <multiselect
-            :searchable="true"
-            v-model="selectTwo.selectedCanton"
-            :options="selectTwo.options"
-            :close-on-select="true"
-            :clear-on-select="false"
-            mode="tags"
-            label="name"
-            @select="onSelectedCanton"
-            @search-change="onSearchCantonChange"
-            track-by="name"
-            placeholder="Buscar cantón"
-          >
-          </multiselect>
+          <div :class="{ invalid: isInvalidCanton }">
+            <multiselect
+              :searchable="true"
+              v-model="selectTwo.selectedCanton"
+              :options="selectTwo.options"
+              :close-on-select="true"
+              :clear-on-select="false"
+              mode="tags"
+              label="name"
+              @select="onSelectedCanton"
+              @search-change="onSearchCantonChange"
+              track-by="name"
+              placeholder="Buscar cantón"
+            >
+            </multiselect>
+            <p class="text-sm text-red-400" v-show="isInvalidCanton">
+              Obligatorio
+            </p>
+          </div>
         </div>
       </div>
 
@@ -306,19 +280,24 @@
           >
             Parroquia
           </label>
-          <multiselect
-            :searchable="true"
-            v-model="selectThree.selectedParish"
-            :options="selectThree.options"
-            :close-on-select="true"
-            :clear-on-select="false"
-            label="name"
-            @select="onSelectedParish"
-            @search-change="onSearchParishChange"
-            track-by="name"
-            placeholder="Buscar parroquia"
-          >
-          </multiselect>
+          <div :class="{ invalid: isInvalidParish }">
+            <multiselect
+              :searchable="true"
+              v-model="selectThree.selectedParish"
+              :options="selectThree.options"
+              :close-on-select="true"
+              :clear-on-select="false"
+              label="name"
+              @select="onSelectedParish"
+              @search-change="onSearchParishChange"
+              track-by="name"
+              placeholder="Buscar parroquia"
+            >
+            </multiselect>
+            <p class="text-sm text-red-400" v-show="isInvalidParish">
+              Obligatorio
+            </p>
+          </div>
         </div>
       </div>
 
@@ -345,6 +324,7 @@
               "
               v-model="form.observation"
               placeholder="Agregar las observaciones generales..."
+              required
             />
           </div>
         </div>
@@ -361,7 +341,6 @@ import Datepicker from "vue3-date-time-picker";
 import { useForm } from "@inertiajs/inertia-vue3";
 import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import moment from "moment";
-import Multiselect from "@suadelabs/vue3-multiselect";
 
 import { Inertia } from "@inertiajs/inertia";
 import "vue3-date-time-picker/dist/main.css";
@@ -372,7 +351,6 @@ export default {
   //   Props
   props: {
     daughter_custom: Object,
-    cantons: [],
   },
   //  Return Data
   computed: {
@@ -381,14 +359,39 @@ export default {
     ...mapState({
       message: (state) => state.obj.message,
     }),
+    isInvalid() {
+      console.log("ee", this.selectOne.selectedProvince);
+      return (
+        this.selectOne.selectedProvince == undefined ||
+        this.selectOne.selectedProvince == null
+      );
+    },
+    isInvalidCanton() {
+      console.log("ee canton", this.selectTwo.selectedCanton);
+      return (
+        this.selectTwo.selectedCanton == undefined ||
+        this.selectTwo.selectedCanton == null
+      );
+    },
+    isInvalidParish() {
+      console.log("ee Parish", this.selectThree.selectedParish);
+      return (
+        this.selectThree.selectedParish == undefined ||
+        this.selectThree.selectedParish == null
+      );
+    },
   },
   // Data in this component
   data() {
     return {
+      selected: null,
+      options: ["list", "of", "options"],
       //Provinces
       selectOne: {
         selectedProvince: undefined,
         value: 0,
+        isDisabled: false,
+        isTouched: false,
         options: {
           type: Array,
           default: () => [],
@@ -451,7 +454,6 @@ export default {
   // Relashionship with another components
   components: {
     Datepicker,
-    Multiselect,
     JetButtonSuccess,
     moment,
   },
@@ -486,6 +488,15 @@ export default {
   },
   // Mehods in this component
   methods: {
+    muestra() {
+      console.log("abrir");
+    },
+    cerrado() {
+      console.log("cerrado");
+    },
+    blur() {
+      console.log("blurrr");
+    },
     onSearchProvincesChange(term) {
       console.log("input data search " + term);
     },
@@ -575,7 +586,13 @@ export default {
       this.form.date_admission = this.form.date_admission;
       this.form.user_id = this.profile.user_id;
       this.updateData();
-      Inertia.post(route("secretary.daughters-profile.store"), this.profile);
+      if (
+        this.isInvalid == false &&
+        this.isInvalidCanton == false &&
+        this.isInvalidParish == false
+      ) {
+        Inertia.post(route("secretary.daughters-profile.store"), this.profile);
+      }
     },
 
     formatDate(value) {
@@ -641,4 +658,10 @@ export default {
   },
 };
 </script>
+
+<style >
+.dp-custom-menu {
+  box-shadow: 0 0 6px #2d5a0f;
+}
+</style>
 

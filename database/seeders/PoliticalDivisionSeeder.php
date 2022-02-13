@@ -923,7 +923,6 @@ class PoliticalDivisionSeeder extends Seeder
             ['100157', '1001', 'SAN ANTONIO'],
             ['100201', '1002', 'ANDRADE MARÍN (LOURDES)'],
             ['100202', '1002', 'ATUNTAQUI'],
-            ['100250', '1002', 'ATUNTAQUI'],
             ['100251', '1002', 'IMBAYA (SAN LUIS DE COBUENDO)'],
             ['100252', '1002', 'SAN FRANCISCO DE NATABUELA'],
             ['100253', '1002', 'SAN JOSÉ DE CHALTURA'],

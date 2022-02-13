@@ -346,7 +346,7 @@
                                   {{ user_custom.name }}
                                 </div>
                                 <div class="text-sm text-gray-500">
-                                  {{ user_custom.email }}
+                                  {{ user_custom.lastname }}
                                 </div>
                               </div>
                             </div>

@@ -3,8 +3,10 @@ require("./bootstrap");
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
-import Multiselect from "@suadelabs/vue3-multiselect";
+import VueMultiselect from "vue-multiselect";
 import store from "./store/index.js";
+import Datepicker from "vue3-date-time-picker";
+
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
@@ -28,7 +30,8 @@ createInertiaApp({
         return createApp({ render: () => h(app, props) })
             .use(plugin)
             .use(store)
-            .component("multiselect", Multiselect)
+            .component("multiselect", VueMultiselect)
+            .component("datepicker", Datepicker)
             .mixin({ methods: { route } })
             .mount(el);
     },

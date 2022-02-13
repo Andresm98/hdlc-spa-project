@@ -36,7 +36,7 @@ Route::group(
         Route::put('profile/{profile_custom_id}', [ProfileController::class, 'update'])
             ->name('daughters-profile.update');
 
-        Route::get('profile/province', [AddressController::class, 'getProvince'])
+        Route::get('profile/province', [AddressController::class, 'getProvinces'])
             ->name('daughters-profile.province');
 
         Route::get('profile/cantons/{province_id}', [AddressController::class, 'getCantons'])
@@ -45,7 +45,10 @@ Route::group(
         Route::get('profile/parishes/{canton_id}', [AddressController::class, 'getParishes'])
             ->name('daughters-profile.parishes');
 
-            Route::get('profile/parishes/{parish_id}', [AddressController::class, 'getFinalAddress'])
+        Route::get('profile/parishes/{parish_id}', [AddressController::class, 'getFinalAddress'])
             ->name('daughters-profile.finaladdr');
+
+        Route::get('profile/profile/address/{actual_parish}', [AddressController::class, 'getSaveAddress'])
+            ->name('daughters-profile.actual-address');
     }
 );
