@@ -9,6 +9,11 @@ class InfoFamily extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'names_father', 'names_mother',
+        'nr_sisters', 'nr_brothers', 'place_of_family'
+    ];
+
     /**
      *
      * Relaciones a nivel de modelo de base de datos.

@@ -13,13 +13,6 @@ class Sacrament extends Model
     use HasFactory;
 
 
-    const BAUTISMO = 1;
-    const PENITENCIA = 2;
-    const EUCARISTIA = 3;
-    const CONFIRMACION = 4;
-    const ORDENSACERDOTAL = 5;
-    const MATRIMONIO = 6;
-    const UNIONENFERMOS = 7;
     /**
      *
      * Crear las relaciones a nivel de modelo

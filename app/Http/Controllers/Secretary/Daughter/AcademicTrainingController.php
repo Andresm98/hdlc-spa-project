@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Secretary\Daughter;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\AcademicTraining;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class AcademicTrainingController extends Controller
 {
@@ -12,9 +15,18 @@ class AcademicTrainingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
-        //
+        $validator = Validator::make(['id' => $user_id], [
+            'id' => ['required', 'exists:users,id']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => 'No existen datos']);
+        }
+
+        $user = User::find($user_id);
+        return $user->profile->academic_trainings;
     }
 
     /**
@@ -33,9 +45,32 @@ class AcademicTrainingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $user_id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name_title' => ['required', 'max:50'],
+            'institution' => ['required', 'max:50'],
+            'date_title' => ['required', 'date_format:Y-m-d H:i:s'],
+            'observation' => ['required', 'max:4000'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator->errors())
+                ->withInput();
+        }
+
+        $user = User::find($user_id);
+        $user->profile->academic_trainings()->create([
+            'name_title' => $request->get('name_title'),
+            'institution' => $request->get('institution'),
+            'date_title' => $request->get('date_title'),
+            'observation' => $request->get('observation'),
+        ]);
+
+        return redirect()->back()->with([
+            'success' => 'Registro académico ingresado correctamente!!'
+        ]);
     }
 
     /**
@@ -67,9 +102,36 @@ class AcademicTrainingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user_id, $academic_id)
     {
-        //
+
+        $validator = Validator::make([
+            'user_id' => $user_id,
+            'academic_id' => $academic_id
+        ], [
+            'user_id' => ['required', 'exists:users,id'],
+            'academic_id' => ['required', 'exists:academic_trainings,id']
+        ]);
+
+        $validatorData = Validator::make($request->all(), [
+            'name_title' => ['required', 'max:50'],
+            'institution' => ['required', 'max:50'],
+            'date_title' => ['required', 'date_format:Y-m-d H:i:s'],
+            'observation' => ['required', 'max:4000'],
+        ]);
+
+        if ($validator->fails() || $validatorData->fails()) {
+            return response()->json(['error' => 'No existen los datos']);
+        }
+
+        $academic = AcademicTraining::find($academic_id);
+        $academic->update([
+            'name_title' => $request->get('name_title'),
+            'institution' => $request->get('institution'),
+            'date_title' => $request->get('date_title'),
+            'observation' => $request->get('observation'),
+        ]);
+        return redirect()->back()->with(['success' => 'Registro Académico actualizado correctamente']);
     }
 
     /**
@@ -78,8 +140,22 @@ class AcademicTrainingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user_id, $academic_id)
     {
-        //
+        $validator = Validator::make([
+            'user_id' => $user_id,
+            'academic_id' => $academic_id
+        ], [
+            'user_id' => ['required', 'exists:users,id'],
+            'academic_id' => ['required', 'exists:academic_trainings,id']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => 'No existen los datos']);
+        }
+
+        $academic = AcademicTraining::find($academic_id);
+        $academic->delete();
+        return redirect()->back()->with(['success' => 'Registro Académico eliminado correctamente']);
     }
 }

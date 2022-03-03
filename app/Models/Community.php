@@ -9,6 +9,9 @@ class Community extends Model
 {
     use HasFactory;
 
+    //  Variable para asignacion masiva
+    protected $guarded = [];
+
     /**
      *
      * Relacionar las entidades a nivel de modelo,
@@ -26,15 +29,25 @@ class Community extends Model
     {
         return $this->hasMany('App\Models\CommunityActivity');
     }
+
     public function resumes()
     {
         return $this->hasMany('App\Models\CommunityResume');
     }
 
-    // Relacion uno a uno polimorfica inversa
+    public function visit()
+    {
+        return $this->hasMany('App\Models\CommunityVisit');
+    }
+
+    // Relation pne to one inverse polimorph
 
     public function address()
     {
         return $this->morphOne('App\Models\Address', 'addressable');
     }
+
+    // Relation one to one
+
+
 }

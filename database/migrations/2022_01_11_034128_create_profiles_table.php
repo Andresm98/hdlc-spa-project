@@ -17,14 +17,15 @@ class CreateProfilesTable extends Migration
             $table->id();
 
             $table->tinyText('identity_card');
-            $table->date('date_birth');
-            $table->date('date_vocation');
-            $table->date('date_admission');
-            $table->date('date_send');
-            $table->date('date_vote');
+            $table->dateTime('date_birth');
+            $table->dateTime('date_vocation')->nullable();
+            $table->dateTime('date_admission')->nullable();
+            $table->dateTime('date_send')->nullable();
+            $table->dateTime('date_vote')->nullable();
+            $table->dateTime('date_death')->nullable();
             $table->char('cellphone', 20);
             $table->char('phone', 20);
-            $table->text('observation');
+            $table->longText('observation', 4000);
 
             // Asignar el campo de clave primaria.
             $table->unsignedBigInteger('user_id')->unique();

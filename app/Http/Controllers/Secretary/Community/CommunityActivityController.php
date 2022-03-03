@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Secretary\Daughter;
+namespace App\Http\Controllers\Secretary\Community;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CommunityController extends Controller
+class CommunityActivityController extends Controller
 {
     /**
      * Display a listing of the resource.

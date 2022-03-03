@@ -16,8 +16,8 @@ class CreateInfoFamiliesTable extends Migration
         Schema::create('info_families', function (Blueprint $table) {
             $table->id();
 
-            $table->string('names_father', 50);
-            $table->string('names_mother', 50);
+            $table->string('names_father', 100);
+            $table->string('names_mother', 100);
             $table->tinyInteger('nr_sisters');
             $table->tinyInteger('nr_brothers');
             $table->tinyInteger('place_of_family');

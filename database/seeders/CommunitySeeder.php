@@ -17,14 +17,16 @@ class CommunitySeeder extends Seeder
     public function run()
     {
 
-        for ($i = 0; $i <= 30; $i++) {
+        for ($i = 0; $i <= 70; $i++) {
             $comunity = Community::create([
-                'name' => 'comunidad '. Str::random(10),
-                'cellphone' =>  Str::random(6),
-                'phone' => Str::random(6),
-                'email' => Str::random(4) . '@gmail.com',
-                'foundation_comm' => '1930-02-02',
-                'foundation_work' => '1750-12-10',
+                'comm_identity_card' =>Str::random(10),
+                'comm_name' => 'comunidad ' . Str::random(10),
+                'comm_slug' => Str::slug('comunidad ' . Str::random(14)),
+                'comm_cellphone' =>  Str::random(6),
+                'comm_phone' => Str::random(6),
+                'comm_email' => Str::random(4) . '@gmail.com',
+                'date_fndt_comm' => '1900-02-01',
+                'date_fndt_work' => '1900-12-10',
                 'rn_collaborators' => $i * 3
             ]);
         }

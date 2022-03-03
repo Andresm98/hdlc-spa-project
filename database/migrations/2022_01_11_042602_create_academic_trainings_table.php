@@ -19,7 +19,7 @@ class CreateAcademicTrainingsTable extends Migration
             // Crear los campos necesarios a ser migrados a la base de datos
             $table->string('name_title', 50);
             $table->string('institution', 50);
-            $table->date('date_title');
+            $table->dateTime('date_title');
             $table->text('observation');
 
             // Asignar el campo la clave foranea

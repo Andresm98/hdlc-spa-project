@@ -355,7 +355,6 @@ export default defineComponent({
           this.displayingToken = true;
           this.createApiTokenForm.reset();
         },
-        _token: this.$page.props.csrf_token,
       });
     },
 

@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 use Illuminate\Validation\Rule;
-use PDF;
 use Spatie\Permission\Models\Permission;
 
 // Inject
@@ -38,7 +37,8 @@ class UserController extends Controller
     {
         return   $query->whereHas("roles", function ($q) {
             $q->where("name", "daughter");
-        })->paginate(10)
+        })
+            ->paginate(10)
             ->appends(request()->query());
     }
 
@@ -121,11 +121,11 @@ class UserController extends Controller
         // Import Methods
         $profile_daughter = new ProfileController();
         $addressClass = new AddressController();
-        $provinces =  $addressClass->getProvinces();
 
         if ($validator->fails()) {
             abort(404);
         } else {
+            $provinces =  $addressClass->getProvinces();
             $daughter_custom = User::select()
                 ->where('slug', '=', [$slug])
                 ->get()

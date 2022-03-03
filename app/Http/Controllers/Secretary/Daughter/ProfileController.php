@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Secretary\Daughter;
 
+use App\Models\User;
+use App\Models\Profile;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use App\Models\Profile;
-use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -19,10 +20,6 @@ class ProfileController extends Controller
     {
         //
     }
-
-    /*
-    *  Get Actual Profile
-    */
 
     public function specificProfile($id)
     {
@@ -47,26 +44,52 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::find($request->get("user_id"));
-        if (!$user->profile) {
-            $profile = $user->profile()->create([
-                'identity_card' => $request->get("identity_card"),
-                'date_birth' => $request->get("date_birth"),
-                'date_vocation' => $request->get("date_vocation"),
-                'date_admission' => $request->get("date_admission"),
-                'cellphone' => $request->get("cellphone"),
-                'phone' => $request->get("phone"),
-                'observation' => $request->get("observation"),
-            ]);
+        $validator = Validator::make($request->all(), [
+            // // 'date_birth' => ['required', 'date_format:Y-m-d H:i:s'],
+            'user_id' => ['required', 'exists:users,id'],
+            'identity_card' => ['required', 'string', 'max:13'],
+            'date_birth' => ['required', 'date_format:Y-m-d'],
+            // 'date_vocation' => ['required', 'date_format:Y-m-d'],
+            // 'date_admission' => ['required', 'date_format:Y-m-d'],
+            // 'date_send' => ['required', 'date_format:Y-m-d'],
+            // 'date_vote' => ['required', 'date_format:Y-m-d'],
+            // 'date_death' => ['date_format:Y-m-d'],
+            'cellphone' => ['required', 'string', 'max:15'],
+            'phone' => ['required', 'string', 'max:15'],
+            'observation' => ['required', 'string', 'max:4000'],
+            'address.address' => ['required', 'string', 'max:100'],
+            'address.political_division_id' => ['required', 'string', 'exists:political_divisions,id']
+        ]);
 
-            $profile->address()->create([
-                'address' => $request->get("address"),
-                'political_division_id' => $request->get("political_division_id")
-            ]);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator->errors())
+                ->withInput();
+        } else {
+            $user = User::find($request->get("user_id"));
+            if (!$user->profile) {
+                $profile = $user->profile()->create([
+                    'identity_card' => $request->get("identity_card"),
+                    'date_birth' => $request->get("date_birth"),
+                    'date_vocation' => $request->get("date_vocation"),
+                    'date_admission' => $request->get("date_admission"),
+                    'date_send' => $request->get('date_send'),
+                    'date_vote' => $request->get('date_vote'),
+                    'date_death' => $request->get('date_death'),
+                    'cellphone' => $request->get("cellphone"),
+                    'phone' => $request->get("phone"),
+                    'observation' => $request->get("observation"),
+                ]);
 
-            return back()->with([
-                'success' => 'El perfil del usuario fue guardado correctamente.',
-            ]);
+                $profile->address()->create([
+                    'address' => $request->address["address"],
+                    'political_division_id' => $request->address["political_division_id"]
+                ]);
+
+                return  redirect()->route('secretary.daughters.edit', $user->slug)->with([
+                    'success' => 'El perfil del usuario fue actualizado correctamente.',
+                ]);
+            }
         }
     }
 
@@ -101,26 +124,52 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $profile_custom_id)
     {
-        $user = User::find($profile_custom_id);
-        if ($user->profile) {
-            $user->profile()->update([
-                'identity_card' => $request->get("identity_card"),
-                'date_birth' => $request->get("date_birth"),
-                'date_vocation' => $request->get("date_vocation"),
-                'date_admission' => $request->get("date_admission"),
-                'cellphone' => $request->get("cellphone"),
-                'phone' => $request->get("phone"),
-                'observation' => $request->get("observation"),
-            ]);
+        $validator = Validator::make($request->all(), [
+            // // 'date_birth' => ['required', 'date_format:Y-m-d H:i:s'],
+            'user_id' => ['required', 'exists:users,id'],
+            'identity_card' => ['required', 'string', 'max:13'],
+            'date_birth' => ['required', 'date_format:Y-m-d H:i:s'],
+            // 'date_vocation' => ['required', 'date_format:Y-m-d H:i:s'],
+            // 'date_admission' => ['required', 'date_format:Y-m-d H:i:s'],
+            // 'date_send' => ['required', 'date_format:Y-m-d H:i:s'],
+            // 'date_vote' => ['required', 'date_format:Y-m-d H:i:s'],
+            // 'date_death' => ['date_format:Y-m-d H:i:s'],
+            'cellphone' => ['required', 'string', 'max:15'],
+            'phone' => ['required', 'string', 'max:15'],
+            'observation' => ['required', 'string', 'max:4000'],
+            'address.address' => ['required', 'string', 'max:100'],
+            'address.political_division_id' => ['required', 'string', 'exists:political_divisions,id'],
+        ]);
 
-            $user->profile->address()->update([
-                'address' => $request->address["address"],
-                'political_division_id' => $request->address["political_division_id"]
-            ]);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator->errors())
+                ->withInput();
+        } else {
 
-            return back()->with([
-                'success' => 'El perfil del usuario fue actualizado correctamente.',
-            ]);
+            $user = User::find($profile_custom_id);
+            if ($user->profile) {
+                $user->profile()->update([
+                    'identity_card' => $request->get("identity_card"),
+                    'date_birth' => $request->get("date_birth"),
+                    'date_vocation' => $request->get("date_vocation"),
+                    'date_admission' => $request->get("date_admission"),
+                    'date_send' => $request->get('date_send'),
+                    'date_vote' => $request->get('date_vote'),
+                    'date_death' => $request->get('date_death'),
+                    'cellphone' => $request->get("cellphone"),
+                    'phone' => $request->get("phone"),
+                    'observation' => $request->get("observation"),
+                ]);
+                $user->profile->address()->update([
+                    'address' => $request->address["address"],
+                    'political_division_id' => $request->address["political_division_id"]
+                ]);
+
+                return redirect()->route('secretary.daughters.edit', $user->slug)->with([
+                    'success' => 'El perfil del usuario fue actualizado correctamente.',
+                ]);
+            }
         }
     }
 

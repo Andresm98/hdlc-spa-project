@@ -16,7 +16,7 @@ class CreateHealthsTable extends Migration
         Schema::create('healths', function (Blueprint $table) {
             $table->id();
 
-            $table->date('consult_date');
+            $table->dateTime('consult_date');
             $table->text('actual_health');
             $table->text('chronic_diseases');
             $table->text('other_health_problems');

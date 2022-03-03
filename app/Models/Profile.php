@@ -11,7 +11,7 @@ class Profile extends Model
 
     protected $fillable = [
         'identity_card', 'date_birth', 'date_vocation',
-         'date_admission', 'cellphone', 'phone','observation'
+        'date_admission', 'date_send', 'date_vote', 'date_death', 'cellphone', 'phone', 'observation'
     ];
 
     /**
@@ -55,12 +55,20 @@ class Profile extends Model
         return $this->hasMany('App\Models\Transfer');
     }
 
-    public function health()
+    public function healths()
     {
         return $this->hasMany('App\Models\Health');
     }
 
-    // Relacion uno a varios
+    public function permits()
+    {
+        return $this->hasMany('App\Models\Permit');
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany('App\Models\Appointment');
+    }
 
     public function sacraments()
     {

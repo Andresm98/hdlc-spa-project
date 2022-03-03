@@ -104,7 +104,7 @@ class UserSeeder extends Seeder
 
 
         //  daughter
-        for ($i = 0; $i <= 40; $i++) {
+        for ($i = 0; $i <= 100; $i++) {
             $username = 'daughter  ' . Str::random(15);
             $slug =  Str::slug($username);
             $user =  User::create([

@@ -9,6 +9,12 @@ class AcademicTraining extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name_title',
+        'institution',
+        'date_title',
+        'observation'
+    ];
     /**
      *
      *  Crear relacion de uno  varios a nivel de Modelo

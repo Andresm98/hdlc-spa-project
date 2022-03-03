@@ -1,148 +1,62 @@
-<template  @scroll="handleScroll" >
+<template @scroll="handleScroll">
   <app-layout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-700 leading-tight">
-        Editar Usuarios
-      </h2>
+      <h2 class="font-semibold text-xl text-gray-700 leading-tight">Editar Usuarios</h2>
       <div class="text-sm text-blue-700 mt-3 mb-6">
         Bienvenido Usuario: {{ $page.props.user.name }}
       </div>
     </template>
-    <alert
+    <!-- <alert
       v-if="$page.props.flash.success"
       class="alert"
       :type_alert_r="(type_alert = 'success')"
       :message="$page.props.flash.success"
     >
-    </alert>
+    </alert> -->
     <section
-      class="
-        bg-gray-200
-        dark:bg-slate-800
-        y-1
-        px-4
-        sm:p-6
-        md:py-10 md:px-8
-        pt-2
-        pb-4
-        rounded-lg
-        m-1
-      "
+      class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg m-1"
     >
       <div
-        class="
-          max-w-4xl
-          mx-auto
-          grid grid-cols-1
-          lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2
-        "
+        class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
       >
         <div
-          class="
-            relative
-            p-3
-            col-start-1
-            row-start-1
-            flex flex-col-reverse
-            rounded-lg
-            bg-gradient-to-t
-            from-black/75
-            via-black/0
-            sm:bg-none sm:row-start-2 sm:p-0
-            lg:row-start-1
-          "
+          class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 lg:row-start-1"
         >
           <h1
-            class="
-              mt-1
-              text-lg
-              font-semibold
-              text-black
-              sm:text-black
-              md:text-2xl
-              dark:sm:text-white
-            "
+            class="mt-1 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
           >
             Provincia Ecuador
           </h1>
           <p
-            class="
-              text-sm
-              leading-4
-              font-medium
-              text-black
-              sm:text-black
-              dark:sm:text-slate-400
-            "
+            class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
           >
             Información General de Hermana
           </p>
         </div>
         <div
-          class="
-            grid
-            gap-4
-            col-start-1 col-end-3
-            row-start-1
-            sm:mb-6 sm:grid-cols-4
-            lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0
-          "
+          class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
         >
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_2.png"
             alt=""
-            class="
-              w-full
-              h-60
-              object-cover
-              rounded-lg
-              sm:h-52 sm:col-span-2
-              lg:col-span-full
-            "
+            class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 lg:col-span-full"
             loading="lazy"
           />
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_3.png"
             alt=""
-            class="
-              hidden
-              w-full
-              h-52
-              object-cover
-              rounded-lg
-              sm:block sm:col-span-2
-              md:col-span-1
-              lg:row-start-2 lg:col-span-2 lg:h-32
-            "
+            class="hidden w-full h-52 object-cover rounded-lg sm:block sm:col-span-2 md:col-span-1 lg:row-start-2 lg:col-span-2 lg:h-32"
             loading="lazy"
           />
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_1.png"
             alt=""
-            class="
-              hidden
-              w-full
-              h-52
-              object-cover
-              rounded-lg
-              md:block
-              lg:row-start-2 lg:col-span-2 lg:h-32
-            "
+            class="hidden w-full h-52 object-cover rounded-lg md:block lg:row-start-2 lg:col-span-2 lg:h-32"
             loading="lazy"
           />
         </div>
         <dl
-          class="
-            mt-4
-            text-xs
-            font-medium
-            flex
-            items-center
-            row-start-2
-            sm:mt-1 sm:row-start-3
-            md:mt-2.5
-            lg:row-start-2
-          "
+          class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2"
         >
           <dt class="sr-only">Visto</dt>
           <dd class="text-indigo-600 flex items-center dark:text-indigo-400">
@@ -160,9 +74,7 @@
                 stroke-linejoin="round"
               />
             </svg>
-            <span
-              >0.00 <span class="text-slate-400 font-normal">(0)</span></span
-            >
+            <span>0.00 <span class="text-slate-400 font-normal">(0)</span></span>
           </dd>
           <dt class="sr-only">Ubicación por defecto - Ecuador</dt>
           <dd class="flex items-center">
@@ -195,63 +107,53 @@
           </dd>
         </dl>
         <div
-          class="
-            mt-4
-            col-start-1
-            row-start-3
-            self-center
-            sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2
-            lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4
-          "
+          class="mt-4 col-start-1 row-start-3 self-center sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2 lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4"
         >
           <button
             type="button"
-            class="
-              bg-blue-600
-              text-white text-sm
-              leading-6
-              font-medium
-              py-2
-              px-3
-              rounded-lg
-            "
+            class="bg-blue-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg"
           >
             <!--
                         FIXME: Import Controllers For PDF-->
             Plantilla PDF
           </button>
-        </div>    <p
-                    class="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 text-black dark:text-white"
-                >
-                    La presente plantiflla de información se relaciona con los
-                    datos principales de la hermana a la que desea agregar al
-                    sistema, por lo que deberá verificar los datos a ingresar.
-                    <ul class="list-disc pl-5">
-                        <li class="dark:text-white"><p class="mt-2  pt-6 text-sm  uppercase">  Nombre de usuario único en el sistema.</p></li>
-                        <li class="dark:text-white"><p class="  text-sm  uppercase dark:text-white">Correo electrónico único en el sistema.</p></li>
-                        <li class="dark:text-white"><p class="  text-sm  uppercase dark:text-white">Nombres Completos.</p></li>
-                        <li class="dark:text-white"><p class="  text-sm  uppercase dark:text-white">Apellidos Completos.</p></li>
-                    </ul>
+        </div>
 
-                </p>
+        <div
+          class="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 text-black dark:text-white"
+        >
+          <p>
+            La presente plantiflla de información se relaciona con los datos principales
+            de la hermana a la que desea agregar al sistema, por lo que deberá verificar
+            los datos a ingresar.
+          </p>
+
+          <ul class="list-disc pl-5">
+            <li class="dark:text-white">
+              <p class="mt-2 pt-6 text-sm uppercase">
+                Nombre de usuario único en el sistema.
+              </p>
+            </li>
+            <li class="dark:text-white">
+              <p class="text-sm uppercase dark:text-white">
+                Correo electrónico debe ser único en el sistema.
+              </p>
+            </li>
+            <li class="dark:text-white">
+              <p class="text-sm uppercase dark:text-white">Nombres Completos.</p>
+            </li>
+            <li class="dark:text-white">
+              <p class="text-sm uppercase dark:text-white">Apellidos Completos.</p>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
 
     <section class="py-1 bg-slate-800 rounded-lg m-1">
       <div class="w-full lg:w-5/6 px-4 mx-auto mt-6">
         <div
-          class="
-            relative
-            flex flex-col
-            min-w-0
-            break-words
-            w-full
-            mb-6
-            shadow-lg
-            rounded-lg
-            bg-blueGray-100
-            border-0
-          "
+          class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
         >
           <div class="bg-neutral-100 hover:bg-gray-100 rounded-lg">
             <form @submit.prevent="submit" class="">
@@ -261,26 +163,7 @@
                     Tarjeta de Información General Hermana
                   </h6>
                   <button
-                    class="
-                      bg-blue-500
-                      hover:bg-blue-700
-                      text-white
-                      active:bg-blue-600
-                      font-bold
-                      uppercase
-                      text-xs
-                      px-4
-                      py-2
-                      rounded
-                      shadow
-                      hover:shadow-md
-                      outline-none
-                      focus:outline-none
-                      mr-1
-                      ease-linear
-                      transition-all
-                      duration-150
-                    "
+                    class="bg-blue-500 hover:bg-blue-700 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                     type="submit"
                   >
                     Guardar Tarjeta
@@ -288,20 +171,11 @@
                 </div>
               </div>
               <hr />
-              <h6
-                class="
-                  mt-2
-                  text-lg
-                  font-medium
-                  text-center
-                  leading-6
-                  text-gray-900
-                "
-              >
+              <h6 class="mt-2 text-lg font-medium text-center leading-6 text-gray-900">
                 Información General
               </h6>
               <div class="flex flex-wrap">
-                <div class="w-full lg:w-2/3 px-4">
+                <div class="w-full lg:w-10/12 px-4">
                   <div class="relative w-full mb-3">
                     <label
                       class="block text-sm font-medium text-gray-700"
@@ -313,22 +187,7 @@
                     <input
                       type="text"
                       placeholder="Nombre del usuario en el Sistema"
-                      class="
-                        border-0
-                        px-3
-                        py-3
-                        placeholder-blueGray-300
-                        text-black
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       @keydown.space.prevent
                       v-model="form.username"
                       readonly
@@ -346,22 +205,7 @@
                     <input
                       type="email"
                       placeholder="micorreo@correo.com"
-                      class="
-                        border-0
-                        px-3
-                        py-3
-                        placeholder-blueGray-300
-                        text-blueGray-600
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="form.email"
                     />
                   </div>
@@ -376,22 +220,7 @@
                     <input
                       type="text"
                       placeholder="Ejm: Lucas Andres"
-                      class="
-                        border-0
-                        px-3
-                        py-3
-                        placeholder-blueGray-300
-                        text-black
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="form.name"
                     />
                   </div>
@@ -407,68 +236,41 @@
                     <input
                       type="text"
                       placeholder="Ejm: Fuentes Ramos"
-                      class="
-                        border-0
-                        px-3
-                        py-3
-                        placeholder-blueGray-300
-                        text-blueGray-600
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="form.lastname"
                     />
                   </div>
-                  <div class="relative w-full mb-3"></div>
                 </div>
-                <div class="w-full lg:w-1/3 px-4">
+                <div class="w-full lg:w-2/12 px-4">
                   <div class="relative w-full mb-3">
                     <div class="section">
                       <jet-input-error :message="errors.file" />
                       <input
-                        class="
-                          block
-                          w-full
-                          text-sm text-blue-500
-                          file:mr-4
-                          file:py-2
-                          file:px-4
-                          file:rounded-full
-                          file:border-0
-                          file:text-sm
-                          file:font-semibold
-                          file:bg-green-500
-                          file:text-white
-                          hover:file:bg-green-600
-                          mb-4
-                        "
+                        class="block w-full text-sm text-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-500 file:text-white hover:file:bg-green-600 mb-4"
                         type="file"
                         accept="image/png, image/gif, image/jpeg"
                         @input="form.file = $event.target.files[0]"
                         @change="onFileChange"
                       />
-                      <img
-                        v-if="image && !url"
-                        :src="image"
-                        class="rounded-xl h-60 w-40 object-cover"
-                      />
-                      <img
-                        v-if="url"
-                        :src="url"
-                        class="rounded-xl h-60 w-40 object-cover"
-                      />
-                      <img
-                        v-if="!image && !url"
-                        src="https://www.daughtersofcharity.com/wp-content/uploads/2021/05/DOC-SEAS-Logo-footer-236x300.png"
-                        class="rounded-xl h-60 w-40 object-cover"
-                      />
+
+                      <section class="hero container max-w-screen-lg mx-auto pb-10">
+                        <img
+                          v-if="image && !url"
+                          :src="image"
+                          class="rounded-xl h-60 w-40 object-cover mx-auto"
+                        />
+                        <img
+                          v-if="url"
+                          :src="url"
+                          class="rounded-xl h-60 w-40 object-cover mx-auto"
+                        />
+                        <img
+                          v-if="!image && !url"
+                          src="https://www.daughtersofcharity.com/wp-content/uploads/2021/05/DOC-SEAS-Logo-footer-236x300.png"
+                          class="rounded-xl h-60 w-40 object-cover mx-auto"
+                        />
+                      </section>
+
                       <progress
                         v-if="form.progress"
                         :value="form.progress.percentage"
@@ -481,94 +283,108 @@
                 </div>
               </div>
               <hr
-                class="
-                  mt-1
-                  mb-3
-                  ml-4
-                  mr-4
-                  border-b-1 border-blueGray-300
-                  hover:border-blueGray-100
-                "
+                class="mt-1 mb-3 ml-4 mr-4 border-b-1 border-blueGray-300 hover:border-blueGray-100"
               />
 
-              <div
-                class="mr-4 ml-4 grid grid-cols-1 md:grid-cols-2 gap-4"
-              ></div>
-              <hr
-                class="
-                  mt-1
-                  mb-3
-                  ml-4
-                  mr-4
-                  border-b-1 border-blueGray-300
-                  hover:border-blueGray-100
-                "
-              />
+              <div class="mr-4 ml-4 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </form>
 
-<health></health>
-            <swiper
+            <div class="mx-6 my-2 w-9/12">
+              <h2 class="text-center text-lg">Menú de Operaciones</h2>
+              <div>
+                <multiselect
+                  placeholder="Seleccionar"
+                  select-label="Si desea presione ENTER para seleccionar elementos"
+                  v-model="selectMenu.selectedElement"
+                  :options="selectMenu.options"
+                  :max-height="250"
+                  :searchable="true"
+                ></multiselect>
+              </div>
+            </div>
+            <div v-if="selectMenu.selectedElement == 'Perfil'">
+              <div v-if="profile_daughter == null" class="m-4">
+                <profile-daughter></profile-daughter>
+              </div>
+              <div v-else class="m-4">
+                <profile-daughter-edit></profile-daughter-edit>
+              </div>
+            </div>
+            <div
+              v-if="
+                selectMenu.selectedElement == 'Información Familiar' &&
+                profile_daughter != null
+              "
+            >
+              <info-family></info-family>
+            </div>
+            <div
+              v-if="
+                selectMenu.selectedElement == 'Salud Actual' && profile_daughter != null
+              "
+            >
+              <health></health>
+            </div>
+            <div
+              v-if="
+                selectMenu.selectedElement == 'Récord Académico' &&
+                profile_daughter != null
+              "
+            >
+              <academic-training></academic-training>
+            </div>
+            <div
+              v-if="selectMenu.selectedElement == 'Permisos' && profile_daughter != null"
+            >
+              <permit></permit>
+            </div>
+            <div
+              v-if="
+                selectMenu.selectedElement == 'Nombramientos' && profile_daughter != null
+              "
+            >
+              <appointment></appointment>
+            </div>
+            <div
+              v-if="
+                selectMenu.selectedElement == 'Sacramentos' && profile_daughter != null
+              "
+            >
+              <sacrament></sacrament>
+            </div>
+            <!-- <swiper
               :pagination="pagination"
               :modules="modules"
               class="mySwiper"
             >
-              <swiper-slide class="pb-10 pt-10">
-
-
-             <div v-if="profile_daughter == null" class="m-4">
-              <profile-daughter></profile-daughter>
-            </div>
-            <div v-else class="m-4">
-              <profile-daughter-edit></profile-daughter-edit>
-            </div>
-
-
+              <swiper-slide class="absolute pb-10 pt-10">
+                    <div v-if="profile_daughter == null" class="m-4">
+                        <profile-daughter></profile-daughter>
+                    </div>
+                    <div v-else class="m-4">
+                        <profile-daughter-edit></profile-daughter-edit>
+                    </div>
               </swiper-slide>
-              <swiper-slide class="pb-10 pt-10 ">
+              <swiper-slide class="pb-10 pt-10 "  v-if="profile_daughter != null">
+                  <info-family></info-family>
+              </swiper-slide>
+              <swiper-slide class="pb-10 pt-10 "  v-if="profile_daughter != null">
                   <health></health>
               </swiper-slide>
-              <swiper-slide class="pb-10 pt-10">
-                <select
-                  id="country"
-                  name="country"
-                  autocomplete="country-name"
-                  class="
-                    mt-1
-                    block
-                    w-full
-                    py-2
-                    px-3
-                    border border-gray-300
-                    bg-white
-                    rounded-md
-                    shadow-sm
-                    focus:outline-none
-                    focus:ring-indigo-500
-                    focus:border-indigo-500
-                    sm:text-sm
-                  "
-                >
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
-                </select>
+               <swiper-slide class="pb-10 pt-10 "  v-if="profile_daughter != null">
+                  <academic-training></academic-training>
               </swiper-slide>
-              <swiper-slide class="pb-10 pt-10">Slide 4</swiper-slide>
-              <swiper-slide class="pb-10 pt-10">Slide 5</swiper-slide>
-              <swiper-slide class="pb-10 pt-10">Slide 6</swiper-slide>
-              <swiper-slide class="pb-10 pt-10">Slide 7</swiper-slide>
-              <swiper-slide class="pb-10 pt-10">Slide 8</swiper-slide>
-              <swiper-slide class="pb-10 pt-10">Slide 6</swiper-slide>
-              <swiper-slide class="pb-10 pt-10">Slide 7</swiper-slide>
-              <swiper-slide class="pb-10 pt-10">Slide 8</swiper-slide>
-              <swiper-slide class="pb-10 pt-10">Slide 9</swiper-slide>
-              <swiper-slide class="pb-10 pt-10">Slide 6</swiper-slide>
-              <swiper-slide class="pb-10 pt-10">Slide 7</swiper-slide>
-              <swiper-slide class="pb-10 pt-10">Slide 8</swiper-slide>
-              <swiper-slide class="pb-10 pt-10">Slide 9</swiper-slide>
-              <swiper-slide class="pb-10 pt-10">Slide 9</swiper-slide>
-            </swiper>
+              <swiper-slide class="pb-10 pt-10 "  v-if="profile_daughter != null">
+                  <permit></permit>
+              </swiper-slide>
+              <swiper-slide class="pb-10 pt-10 "  v-if="profile_daughter != null">
+                  <appointment></appointment>
+              </swiper-slide>
+              <swiper-slide class="pb-10 pt-10 "  v-if="profile_daughter != null">
+                  <sacrament></sacrament>
+              </swiper-slide>
 
+            </swiper> -->
           </div>
         </div>
       </div>
@@ -578,17 +394,17 @@
 <script>
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm, Link } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
-import { Link } from "@inertiajs/inertia-vue3";
 import JetInputError from "@/Jetstream/InputError";
 import JetInput from "@/Jetstream/Input";
 import JetLabel from "@/Jetstream/Label";
 import JetButton from "@/Jetstream/Button";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import JetCheckbox from "@/Jetstream/Checkbox";
-import { mapActions, mapGetters } from "vuex";
 import Alert from "@/Components/Alert";
+
+import { mapActions, mapGetters } from "vuex";
 
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -603,22 +419,27 @@ import { Pagination } from "swiper";
 import ProfileDaughter from "@/Pages/Secretary/Users/Daughter/Profile/Create";
 import ProfileDaughterEdit from "@/Pages/Secretary/Users/Daughter/Profile/Edit";
 import Health from "@/Pages/Secretary/Users/Daughter/Health/Index";
+import AcademicTraining from "@/Pages/Secretary/Users/Daughter/AcademicTraining/Index";
+import Permit from "@/Pages/Secretary/Users/Daughter/Permit/Index";
+import Appointment from "@/Pages/Secretary/Users/Daughter/Appointment/Index";
+import InfoFamily from "@/Pages/Secretary/Users/Daughter/InfoFamily/Index";
+import Sacrament from "@/Pages/Secretary/Users/Daughter/Sacrament/Index";
 
 export default defineComponent({
   created() {
-    console.log("created " + this.$el);
+    // console.log("created " + this.$el);
     this.uploadProvinces(this.provinces);
   },
 
   beforeMount() {
-    console.log("mounted " + this.$el);
-
+    // console.log("mounted " + this.$el);
     if (this.profile_daughter == null) {
       this.changeUserId(this.daughter_custom.id);
     } else {
       this.changeUser(this.profile_daughter);
     }
   },
+
   setup() {
     return {
       pagination: {
@@ -642,6 +463,11 @@ export default defineComponent({
   },
   computed: {
     ...mapGetters("daughter", ["actualCount"]),
+    isInvalid() {
+      console.log("inva ", this.isTouched, "\n\nopp> ");
+
+      return this.value == null;
+    },
   },
   layout: PrincipalLayout,
   components: {
@@ -656,12 +482,37 @@ export default defineComponent({
     ProfileDaughter,
     ProfileDaughterEdit,
     Health,
+    AcademicTraining,
+    Permit,
+    Appointment,
+    InfoFamily,
+    Sacrament,
     Alert,
     AppLayout,
   },
 
   data() {
     return {
+      isDisabled: false,
+      isTouched: false,
+      selectMenu: {
+        selectedElement: "Perfil",
+        isDisabled: false,
+        isTouched: false,
+        options: [
+          "Perfil",
+          "Información Familiar",
+          "Salud Actual",
+          "Récord Académico",
+          "Sacramentos",
+          "Permisos",
+          "Nombramientos",
+        ],
+        loading: false,
+        multiSelectUser: null,
+        vSelectUser: null,
+      },
+      //
       form: useForm({
         username: this.daughter_custom.username,
         name: this.daughter_custom.name,
@@ -682,22 +533,20 @@ export default defineComponent({
     onSearchProvincesChange() {},
 
     onSelectedProvince() {},
-    //   computed: {
-    //     // ejexcc() {
-    //     //   this.$store.dispatch("changeUser", {
-    //     //     newId: this.daughter_custom.id,
-    //     //   });
-    //     // },
-    //   },
+
     ...mapActions("daughter", ["increment"]),
+
     ...mapActions("daughter", ["changeUser"]),
+
     ...mapActions("daughter", ["changeUserId"]),
+
     ...mapActions("address", ["uploadProvinces"]),
 
     onFileChange(e) {
       const file = e.target.files[0];
       this.url = URL.createObjectURL(file);
     },
+
     submit() {
       Inertia.post(
         route(`secretary.daughters.update`, {
@@ -709,11 +558,39 @@ export default defineComponent({
           lastname: this.form.lastname,
           email: this.form.email,
           file: this.form.file,
+        },
+        {
+          preserveScroll: true,
         }
       );
     },
+
+    onChange(value) {
+      this.value = value;
+      console.log("aiudaaa> ", value);
+      if (value.indexOf("Reset me!") !== -1) {
+        console.log("is reset");
+        this.value = [];
+      }
+    },
+    onSelect(option) {
+      if (option === "Disable me!") {
+        console.log("is disable");
+        this.isDisabled = true;
+      }
+    },
+    onTouch() {
+      console.log("is touched");
+      this.isTouched = true;
+    },
   },
+
+  //   computed: {
+  //     // ejexcc() {
+  //     //   this.$store.dispatch("changeUser", {
+  //     //     newId: this.daughter_custom.id,
+  //     //   });
+  //     // },
+  //   },
 });
 </script>
-
-

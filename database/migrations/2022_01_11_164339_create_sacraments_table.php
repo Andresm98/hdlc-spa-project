@@ -15,14 +15,11 @@ class CreateSacramentsTable extends Migration
      */
     public function up()
     {
+
         Schema::create('sacraments', function (Blueprint $table) {
             $table->id();
-            $table->enum('name', [
-                Sacrament::BAUTISMO, Sacrament::PENITENCIA, Sacrament::EUCARISTIA,
-                Sacrament::CONFIRMACION, Sacrament::ORDENSACERDOTAL, Sacrament::MATRIMONIO,
-                Sacrament::UNIONENFERMOS
-            ])->default(Sacrament::BAUTISMO);
-            $table->date('date');
+            $table->tinyText('sacrament_name');
+            $table->dateTime('sacrament_date');
             $table->text('observation');
 
             // Generar el campo

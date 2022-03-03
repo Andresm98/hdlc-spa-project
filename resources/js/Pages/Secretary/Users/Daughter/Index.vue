@@ -11,41 +11,27 @@
     <section class="py-1 bg-gray">
       <div class="w-full lg:w-full">
         <div
-          class="
-            relative
-            flex flex-col
-            min-w-0
-            break-words
-            w-full
-            mb-6
-            shadow-lg
-            rounded-lg
-            bg-blueGray-100
-            border-0
-          "
+          class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
         >
-          <div
-            class="
-              shadow
-              overflow-hidden
-              border-b border-gray-200
-              sm:rounded-lg
-            "
-          >
-            <alert
-              v-if="$page.props.flash.success"
-              class="alert"
-              :type_alert_r="(type_alert = 'success')"
-              :message="$page.props.flash.success"
-            >
-            </alert>
-            <alert
-              v-if="$page.props.flash.error"
-              class="alert"
-              :type_alert_r="(type_alert = 'error')"
-              :message="$page.props.flash.error"
-            >
-            </alert>
+          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <div v-if="$page.props.flash != null">
+              <alert
+                v-if="$page.props.flash.success"
+                class="alert"
+                :type_alert_r="(type_alert = 'success')"
+                :message="$page.props.flash.success"
+              >
+              </alert>
+            </div>
+            <div v-if="$page.props.flash != null">
+              <alert
+                v-if="$page.props.flash.error"
+                class="alert"
+                :type_alert_r="(type_alert = 'error')"
+                :message="$page.props.flash.error"
+              >
+              </alert>
+            </div>
 
             <!-- <Link
               :href="route('admin.user.create')"
@@ -56,14 +42,7 @@
             <div class="container mx-auto">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    p-1
-                    bg-gray-100
-                  "
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
                 >
                   <input
                     type="text"
@@ -72,99 +51,7 @@
                     id="email"
                     autocomplete="Search"
                     placeholder="Nombre"
-                    class="
-                      focus:ring-blue-500 focus:border-blue-500
-                      block
-                      w-full
-                      shadow-sm
-                      sm:text-sm
-                      border-gray-300
-                      rounded-md
-                    "
-                  />
-                </div>
-                <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    p-1
-                    bg-gray-100
-                  "
-                >
-                  <input
-                    type="text"
-                    name="email-address"
-                    v-model="params.search"
-                    id="email"
-                    autocomplete="Search"
-                    placeholder="Nombre"
-                    class="
-                      focus:ring-blue-500 focus:border-blue-500
-                      block
-                      w-full
-                      shadow-sm
-                      sm:text-sm
-                      border-gray-300
-                      rounded-md
-                    "
-                  />
-                </div>
-                <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    p-1
-                    bg-gray-100
-                  "
-                >
-                  <input
-                    type="text"
-                    name="email-address"
-                    v-model="params.search"
-                    id="email"
-                    autocomplete="Search"
-                    placeholder="Nombre"
-                    class="
-                      focus:ring-blue-500 focus:border-blue-500
-                      block
-                      w-full
-                      shadow-sm
-                      sm:text-sm
-                      border-gray-300
-                      rounded-md
-                    "
-                  />
-                </div>
-                <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    p-1
-                    bg-gray-100
-                  "
-                >
-                  <input
-                    type="text"
-                    name="email-address"
-                    v-model="params.search"
-                    id="email"
-                    autocomplete="Search"
-                    placeholder="Nombre"
-                    class="
-                      focus:ring-blue-500 focus:border-blue-500
-                      block
-                      w-full
-                      shadow-sm
-                      sm:text-sm
-                      border-gray-300
-                      rounded-md
-                    "
+                    class="focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
                 </div>
               </div>
@@ -177,16 +64,7 @@
             <div class="py-2">
               <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                  <div
-                    class="
-                      py-2
-                      align-middle
-                      inline-block
-                      min-w-full
-                      sm:px-6
-                      lg:px-8
-                    "
-                  >
+                  <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <table
                       v-if="daughters_list.data.length > 0"
                       class="min-w-full divide-y divide-gray-200"
@@ -195,29 +73,16 @@
                         <tr>
                           <th
                             scope="col"
-                            class="
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             <span
-                              class="
-                                inline-flex
-                                px-6
-                                py-3
-                                w-full
-                                justify-between
-                              "
+                              class="inline-flex px-6 py-3 w-full justify-between"
                               @click="sort('name')"
                               >Nombre
 
                               <svg
                                 v-if="
-                                  params.field === 'name' &&
-                                  params.direction === 'asc'
+                                  params.field === 'name' && params.direction === 'asc'
                                 "
                                 class="h-6 w-6"
                                 viewBox="0 0 20 20"
@@ -228,8 +93,7 @@
                               </svg>
                               <svg
                                 v-if="
-                                  params.field === 'name' &&
-                                  params.direction === 'desc'
+                                  params.field === 'name' && params.direction === 'desc'
                                 "
                                 class="h-6 w-6"
                                 viewBox="0 0 20 20"
@@ -242,28 +106,15 @@
                           </th>
                           <th
                             scope="col"
-                            class="
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             <span
-                              class="
-                                inline-flex
-                                px-6
-                                py-3
-                                w-full
-                                justify-between
-                              "
+                              class="inline-flex px-6 py-3 w-full justify-between"
                               @click="sort('email')"
                               >Correo
                               <svg
                                 v-if="
-                                  params.field === 'email' &&
-                                  params.direction === 'asc'
+                                  params.field === 'email' && params.direction === 'asc'
                                 "
                                 class="h-6 w-6"
                                 viewBox="0 0 20 20"
@@ -274,8 +125,7 @@
                               </svg>
                               <svg
                                 v-if="
-                                  params.field === 'email' &&
-                                  params.direction === 'desc'
+                                  params.field === 'email' && params.direction === 'desc'
                                 "
                                 class="h-6 w-6"
                                 viewBox="0 0 20 20"
@@ -288,29 +138,13 @@
                           </th>
                           <th
                             scope="col"
-                            class="
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             Correo
                           </th>
                           <th
                             scope="col"
-                            class="
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             Estado
                           </th>
@@ -348,28 +182,13 @@
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             <span
-                              class="
-                                px-2
-                                inline-flex
-                                text-xs
-                                leading-5
-                                font-semibold
-                                rounded-full
-                                bg-green-100
-                                text-green-800
-                              "
+                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                             >
                               Activo
                             </span>
                           </td>
                           <td
-                            class="
-                              px-3
-                              py-4
-                              whitespace-nowrap
-                              text-right text-sm
-                              font-medium
-                            "
+                            class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                           >
                             <!-- Components -->
 
@@ -385,19 +204,7 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="
-                                        flex
-                                        items-center
-                                        justify-center
-                                        flex-1
-                                        h-full
-                                        p-2
-                                        border border-blue-800
-                                        text-white
-                                        shadow
-                                        rounded-lg
-                                        hover:bg-blue-50 hover:text-zinc-300
-                                      "
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-blue-800 text-white shadow rounded-lg hover:bg-blue-50 hover:text-zinc-300"
                                     >
                                       <div class="relative">
                                         <svg
@@ -427,19 +234,7 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="
-                                        flex
-                                        items-center
-                                        justify-center
-                                        flex-1
-                                        h-full
-                                        p-2
-                                        border border-green-500
-                                        text-white
-                                        shadow
-                                        rounded-lg
-                                        hover:bg-green-50 hover:text-zinc-300
-                                      "
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-green-500 text-white shadow rounded-lg hover:bg-green-50 hover:text-zinc-300"
                                     >
                                       <div class="relative">
                                         <svg
@@ -468,19 +263,7 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="
-                                        flex
-                                        items-center
-                                        justify-center
-                                        flex-1
-                                        h-full
-                                        p-2
-                                        border border-red-500
-                                        text-white
-                                        shadow
-                                        rounded-lg
-                                        hover:bg-red-50 hover:text-zinc-300
-                                      "
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-red-500 text-white shadow rounded-lg hover:bg-red-50 hover:text-zinc-300"
                                     >
                                       <div class="relative">
                                         <svg
@@ -499,46 +282,15 @@
                                 </div>
                               </button>
                               <!-- Delete Account Confirmation Modal -->
-                              <div>
-                                <jet-dialog-modal :show="modal_open">
-                                  <template v-slot:title> Eliminar </template>
-
-                                  <template v-slot:content>
-                                    <p class="text-lg text-black">
-                                      ¿Está seguro/a de que desea eliminar la
-                                      cuenta de
-                                      {{ selected_user.name }}
-                                      ?
-                                    </p>
-                                    Una vez la cuenta es eliminada, todos sus
-                                    recursos y los datos se eliminarán de forma
-                                    permanente. Por favor verifique nuevamente
-                                    su acción pues es irreversible.
-                                  </template>
-                                  <template v-slot:footer>
-                                    <jet-secondary-button @click="closeModal()">
-                                      Cancelar
-                                    </jet-secondary-button>
-                                    <jet-danger-button
-                                      class="ml-3"
-                                      @click="deleteUser()"
-                                    >
-                                      Eliminar Usuario
-                                    </jet-danger-button>
-                                  </template>
-                                </jet-dialog-modal>
-                              </div>
+                              <div></div>
                             </div>
                           </td>
                         </tr>
                       </tbody>
                     </table>
-                    <div
-                      v-else
-                      class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg"
-                    >
+                    <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
                       <p class="text-center text-lg">
-                        No exisen datos que coincidan con su búsqueda
+                        No existen datos que coincidan con su búsqueda
                       </p>
                     </div>
                   </div>
@@ -555,6 +307,25 @@
         </div>
       </div>
     </section>
+    <jet-dialog-modal :show="modal_open">
+      <template v-slot:title> Eliminar </template>
+
+      <template v-slot:content>
+        <p class="text-lg text-black">
+          ¿Está seguro/a de que desea eliminar la cuenta de
+          {{ selected_user.name }}
+          ?
+        </p>
+        Una vez la cuenta es eliminada, todos sus recursos y los datos se eliminarán de
+        forma permanente. Por favor verifique nuevamente su acción pues es irreversible.
+      </template>
+      <template v-slot:footer>
+        <jet-secondary-button @click="closeModal()"> Cancelar </jet-secondary-button>
+        <jet-danger-button class="ml-3" @click="deleteUser()">
+          Eliminar Usuario
+        </jet-danger-button>
+      </template>
+    </jet-dialog-modal>
   </app-layout>
 </template>
 
@@ -618,9 +389,7 @@ export default defineComponent({
     },
 
     deleteUser: function () {
-      Inertia.delete(
-        route("admin.user.destroy", { slug: this.selected_user.slug })
-      );
+      Inertia.delete(route("admin.user.destroy", { slug: this.selected_user.slug }));
       this.modal_open = false;
     },
     closeModal() {

@@ -10,6 +10,7 @@ const state = () => ({
         date_admission: null,
         date_send: null,
         date_vote: null,
+        date_death: null,
         cellphone: null,
         phone: null,
         observation: null,
@@ -18,7 +19,6 @@ const state = () => ({
             address: null,
             political_division_id: null,
         },
-        political_division_id: null,
     },
 });
 
@@ -67,10 +67,10 @@ const mutations = {
             date_admission,
             date_send,
             date_vote,
+            date_death,
             cellphone,
             phone,
             observation,
-            political_division_id,
             address,
         }
     ) {
@@ -80,11 +80,11 @@ const mutations = {
         state.profile.date_admission = date_admission;
         state.profile.date_send = date_send;
         state.profile.date_vote = date_vote;
+        state.profile.date_death = date_death;
         state.profile.cellphone = cellphone;
         state.profile.phone = phone;
         state.profile.observation = observation;
         state.profile.address = address;
-        state.profile.political_division_id = political_division_id;
     },
 };
 const actions = {

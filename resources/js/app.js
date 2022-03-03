@@ -3,25 +3,14 @@ require("./bootstrap");
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
+import VueSweetalert2 from "vue-sweetalert2";
 import VueMultiselect from "vue-multiselect";
 import store from "./store/index.js";
 import Datepicker from "vue3-date-time-picker";
-
+import { QuillEditor } from "@vueup/vue-quill";
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
-
-window.Toast = Swal.mixin({
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener("mouseenter", Swal.stopTimer);
-        toast.addEventListener("mouseleave", Swal.resumeTimer);
-    },
-});
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -30,8 +19,10 @@ createInertiaApp({
         return createApp({ render: () => h(app, props) })
             .use(plugin)
             .use(store)
+            .use(VueSweetalert2)
             .component("multiselect", VueMultiselect)
             .component("datepicker", Datepicker)
+            .component("QuillEditor", QuillEditor)
             .mixin({ methods: { route } })
             .mount(el);
     },

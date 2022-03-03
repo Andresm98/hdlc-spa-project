@@ -16,16 +16,17 @@ class CreateCommunityActivitiesTable extends Migration
         Schema::create('community_activities', function (Blueprint $table) {
             $table->id();
 
+            // Fields
             $table->string('name');
             $table->string('description', 100);
             $table->text('observation');
-            $table->date('date');
+            $table->dateTime('date_comn_activity');
 
-            // Generar el campo
+            // FK field
 
             $table->unsignedBigInteger('community_id');
 
-            // Asignar el valor al campo
+            // Asign relashionship
 
             $table->foreign('community_id')
                 ->references('id')

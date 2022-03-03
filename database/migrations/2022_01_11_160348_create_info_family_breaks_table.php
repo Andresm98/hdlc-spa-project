@@ -16,8 +16,8 @@ class CreateInfoFamilyBreaksTable extends Migration
         Schema::create('info_family_breaks', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name_family_member');
-            $table->string('relation');
+            $table->string('name_family_member',100);
+            $table->string('relation',100);
             $table->char('cellphone', 20);
             $table->char('phone', 20);
 

@@ -16,8 +16,8 @@ class CreateTransfersTable extends Migration
         Schema::create('transfers', function (Blueprint $table) {
             $table->id();
 
-            $table->date('adission');
-            $table->date('relocated');
+            $table->dateTime('adission');
+            $table->dateTime('relocated')->nullable();
             $table->string('colocation', 40);
             $table->text('observation');
 
