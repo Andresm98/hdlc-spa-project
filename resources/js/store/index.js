@@ -10,6 +10,11 @@ import sacrament from "./modules/sacrament";
 import permit from "./modules/permit";
 import appointment from "./modules/appointment";
 
+import community from "./modules/communities/community";
+import activity from "./modules/communities/activity";
+import resume from "./modules/communities/resume";
+import visit from "./modules/communities/visit";
+
 const debug = process.env.NODE_ENV !== "production";
 
 const store = new Vuex.Store({
@@ -32,6 +37,11 @@ const store = new Vuex.Store({
         sacrament,
         permit,
         appointment,
+        //
+        community,
+        activity,
+        resume,
+        visit,
     },
     // strict: debug,
 });

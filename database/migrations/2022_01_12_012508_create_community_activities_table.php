@@ -17,10 +17,12 @@ class CreateCommunityActivitiesTable extends Migration
             $table->id();
 
             // Fields
-            $table->string('name');
-            $table->string('description', 100);
-            $table->text('observation');
-            $table->dateTime('date_comn_activity');
+            $table->string('comm_name_activity');
+            $table->mediumText('comm_description_activity', 4000);
+            $table->dateTime('comm_date_activity');
+            $table->tinyInteger('comm_nr_daughters');
+            $table->tinyInteger('comm_nr_beneficiaries');
+            $table->tinyInteger('comm_nr_collaborators');
 
             // FK field
 

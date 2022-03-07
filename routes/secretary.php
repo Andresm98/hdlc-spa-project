@@ -14,6 +14,7 @@ use App\Http\Controllers\Secretary\Daughter\InfoFamilyController;
 use App\Http\Controllers\Secretary\Daughter\AppointmentController;
 use App\Http\Controllers\Secretary\Daughter\InfoFamilyBreakController;
 use App\Http\Controllers\Secretary\Daughter\AcademicTrainingController;
+use App\Http\Controllers\Secretary\Community\CommunityActivityController;
 
 Route::group(
     ['middleware' => ['role:secretary']],
@@ -174,4 +175,18 @@ Route::group([
 
     Route::get('community/address/{actual_parish}', [AddressController::class, 'getSaveAddress'])
         ->name('communities.actual-address');
+
+    // Communities Activities
+
+    Route::get('activities/{community_id}', [CommunityActivityController::class, 'index'])
+        ->name('communities.activity.index');
+
+    Route::post('activities/store/{community_id}', [CommunityActivityController::class, 'store'])
+        ->name('communities.activity.store');
+
+    Route::delete('activities/delete/{community_id}/{activity_id}', [CommunityActivityController::class, 'destroy'])
+        ->name('communities.activity.delete');
+
+    Route::put('activities/update/{community_id}/{activity_id}', [CommunityActivityController::class, 'update'])
+        ->name('communities.activity.update');
 });

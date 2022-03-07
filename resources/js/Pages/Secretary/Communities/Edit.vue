@@ -466,11 +466,33 @@
                   </div>
                 </div>
               </div>
-
-              <hr
-                class="mt-1 mb-3 ml-4 mr-4 border-b-1 border-blueGray-300 hover:border-blueGray-100"
-              />
             </form>
+            <hr
+              class="mt-1 mb-3 ml-4 mr-4 border-b-1 border-blueGray-300 hover:border-blueGray-100"
+            />
+            <div class="mx-6 my-2 w-9/12">
+              <h2 class="text-center text-lg">Menú de Operaciones</h2>
+              <div>
+                <multiselect
+                  placeholder="Seleccionar"
+                  select-label="Si desea presione ENTER para seleccionar elementos"
+                  v-model="selectMenu.selectedElement"
+                  :options="selectMenu.options"
+                  :max-height="250"
+                  :searchable="true"
+                ></multiselect>
+              </div>
+            </div>
+            <!-- Options -->
+            <div v-if="selectMenu.selectedElement == 'Actividades'">
+              <activities></activities>
+            </div>
+            <div v-if="selectMenu.selectedElement == 'Resumen Anual'">
+              <resumes></resumes>
+            </div>
+            <div v-if="selectMenu.selectedElement == 'Visitas'">
+              <visits></visits>
+            </div>
           </div>
         </div>
       </div>
@@ -490,7 +512,8 @@ import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import JetCheckbox from "@/Jetstream/Checkbox";
 import Alert from "@/Components/Alert";
 import { ref } from "vue";
-
+import Datepicker from "vue3-date-time-picker";
+import moment from "moment";
 import { mapState, mapActions, mapGetters } from "vuex";
 
 // Import Swiper Vue.js components
@@ -502,17 +525,10 @@ import "../../../../css/style.css";
 // import required modules
 import { Pagination } from "swiper";
 
-// Import Components
-import ProfileDaughter from "@/Pages/Secretary/Users/Daughter/Profile/Create";
-import ProfileDaughterEdit from "@/Pages/Secretary/Users/Daughter/Profile/Edit";
-import Health from "@/Pages/Secretary/Users/Daughter/Health/Index";
-import AcademicTraining from "@/Pages/Secretary/Users/Daughter/AcademicTraining/Index";
-import Permit from "@/Pages/Secretary/Users/Daughter/Permit/Index";
-import Appointment from "@/Pages/Secretary/Users/Daughter/Appointment/Index";
-import InfoFamily from "@/Pages/Secretary/Users/Daughter/InfoFamily/Index";
-import Sacrament from "@/Pages/Secretary/Users/Daughter/Sacrament/Index";
-import Datepicker from "vue3-date-time-picker";
-import moment from "moment";
+// Import Custom Components
+import Activities from "@/Pages/Secretary/Communities/Activities/Index";
+import Resumes from "@/Pages/Secretary/Communities/Resumes/Index";
+import Visits from "@/Pages/Secretary/Communities/Visits/Index";
 
 export default defineComponent({
   created() {
@@ -541,6 +557,7 @@ export default defineComponent({
         this.selectOne.selectedProvince = data.data_province;
       });
     }
+    this.changeCommunity(this.community_custom);
   },
   setup() {
     const date = ref(new Date());
@@ -572,6 +589,7 @@ export default defineComponent({
   computed: {
     ...mapGetters("daughter", ["actualCount"]),
     ...mapState("address", ["allProvinces"]),
+    ...mapState("community", ["community"]),
 
     // Validate Multioption
     isInvalidProvince() {
@@ -645,16 +663,11 @@ export default defineComponent({
     JetLabel,
     JetButton,
     JetCheckbox,
-    ProfileDaughter,
-    ProfileDaughterEdit,
-    Health,
-    AcademicTraining,
-    Permit,
-    Appointment,
-    InfoFamily,
+    Activities,
+    Resumes,
+    Visits,
     Datepicker,
     moment,
-    Sacrament,
     Alert,
     AppLayout,
   },
@@ -664,18 +677,10 @@ export default defineComponent({
       isDisabled: false,
       isTouched: false,
       selectMenu: {
-        selectedElement: "Perfil",
+        selectedElement: "Actividades",
         isDisabled: false,
         isTouched: false,
-        options: [
-          "Perfil",
-          "Información Familiar",
-          "Salud Actual",
-          "Récord Académico",
-          "Sacramentos",
-          "Permisos",
-          "Nombramientos",
-        ],
+        options: ["Actividades", "Resumen Anual", "Visitas"],
         loading: false,
         multiSelectUser: null,
         vSelectUser: null,
@@ -780,6 +785,7 @@ export default defineComponent({
       );
       return response.data;
     },
+    ...mapActions("community", ["changeCommunity"]),
     onSearchProvincesChange(term) {
       //   console.log("input data search " + term);
     },

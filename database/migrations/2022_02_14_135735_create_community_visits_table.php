@@ -17,11 +17,11 @@ class CreateCommunityVisitsTable extends Migration
             $table->id();
 
             //  Fields
-            $table->string('reason', 100);
-            $table->string('type', 50);
-            $table->mediumText('description', 4000);
-            $table->dateTime('date_init');
-            $table->dateTime('date_end');
+            $table->string('comm_reason_visit', 100);
+            $table->string('comm_type_visit', 50);
+            $table->mediumText('comm_description_visit', 4000);
+            $table->dateTime('comm_date_init_visit');
+            $table->dateTime('comm_date_end_visit');
 
             // FK field
             $table->unsignedBigInteger('community_id');

@@ -17,11 +17,10 @@ class CreateCommunityResumesTable extends Migration
             $table->id();
 
             // Fields
-            $table->string('name', 100);
-            $table->mediumText('description', 2000);
-            $table->tinyInteger('nr_daughters');
-            $table->tinyInteger('nr_collaborators');
-
+            $table->string('comm_name_resume');
+            $table->string('comm_annexed_resume', 400);
+            $table->mediumText('comm_observation_resume', 4000);
+            $table->dateTime('comm_date_resume');
             // FK field
 
             $table->unsignedBigInteger('community_id');

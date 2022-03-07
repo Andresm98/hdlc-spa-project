@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Secretary\Community;
 
-use App\Http\Controllers\Controller;
+use App\Models\Community;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class CommunityActivityController extends Controller
 {
@@ -12,9 +14,16 @@ class CommunityActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($community_id)
     {
-        //
+        $validator = Validator::make(['id' => $community_id], [
+            'id' => ['required', 'exists:community_activities,id']
+        ]);
+        if ($validator->fails()) {
+            return "error";
+        }
+        $community = Community::find($community_id);
+        return $community->activities;
     }
 
     /**
@@ -33,9 +42,31 @@ class CommunityActivityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $community_id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name_appointment' => ['required', 'max:100'],
+            'description' => ['required', 'max:2000'],
+            'date_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
+            // 'date_end_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator->errors())
+                ->withInput();
+        }
+        $user = Community::find($community_id);
+        $user->profile->appointments()->create([
+            'name_appointment' => $request->get('name_appointment'),
+            'description' => $request->get('description'),
+            'date_appointment' => $request->get('date_appointment'),
+            // 'date_end_appointment' => $request->get('date_end_appointment'),
+        ]);
+
+        return redirect()->back()->with([
+            'success' => 'Nombramiento guardado correctamente!'
+        ]);
     }
 
     /**
