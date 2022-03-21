@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class CommunityResume extends Model
 {
     use HasFactory;
+    //  Variable para asignacion masiva
+    protected $guarded = [];
 
     /**
      *

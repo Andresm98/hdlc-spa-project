@@ -21,7 +21,7 @@ const mutations = {
 };
 
 const actions = {
-    updateResume(context, payload) {
+    updateAllResume(context, payload) {
         context.commit("addResume", payload);
     },
 };

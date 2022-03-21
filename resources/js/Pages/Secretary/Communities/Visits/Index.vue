@@ -21,6 +21,7 @@
                   maxlength="100"
                   placeholder="Ingresar razón visita"
                   class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  v-model="form.comm_reason_visit"
                   required
                 />
               </div>
@@ -40,6 +41,7 @@
                   maxlength="100"
                   placeholder="Ingresar tipo de visita"
                   class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  v-model="form.comm_type_visit"
                   required
                 />
               </div>
@@ -59,6 +61,7 @@
                   theme="snow"
                   :toolbar="toolbarOptions"
                   placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+                  v-model:content="form.comm_description_visit"
                 ></quill-editor>
               </div>
             </div>
@@ -77,6 +80,7 @@
                 :format="format"
                 :transitions="false"
                 menuClassName="dp-custom-menu"
+                v-model="form.comm_date_init_visit"
                 required
               />
             </div>
@@ -95,6 +99,7 @@
                 :format="format"
                 :transitions="false"
                 menuClassName="dp-custom-menu"
+                v-model="form.comm_date_end_visit"
                 required
               />
             </div>
@@ -110,6 +115,176 @@
       <hr
         class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
       />
+      <!-- Data Table  -->
+      <div class="w-full bg-white rounded-lg shadow overflow-y-auto h-52">
+        <ul class="divide-y-2 divide-gray-100">
+          <li class="text-center text-white bg-slate-900">Historial de Visitas</li>
+          <li
+            class="p-2 hover:bg-emerald-500 hover:text-white"
+            v-for="visit in this.getAllVisit()"
+            :key="visit"
+          >
+            <div class="grid gap-5 grid-cols-5">
+              <div class="md:block md:text-sm lg:block lg:text-sm pt-2">
+                {{ visit.comm_reason_visit }}
+              </div>
+              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2"></div>
+              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2"></div>
+              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2"></div>
+              <div>
+                <jet-button @click="confirmationVisitUpdate(visit)">Detalles</jet-button>
+                <jet-danger-button @click="confirmationVisitDelete(visit)"
+                  >Eliminar</jet-danger-button
+                >
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- Delete  Data Form-->
+      <jet-confirmation-modal
+        :show="visitBeingDeleted"
+        @close="visitBeingDeleted == null"
+      >
+        <template #title> Eliminar la Visita</template>
+
+        <template #content>
+          ¿Está seguro de que desea eliminar la visita:
+          {{ this.deleteVisitForm.comm_reason_visit }}?
+        </template>
+
+        <template #footer>
+          <jet-secondary-button @click="visitBeingDeleted = null">
+            Cancelar
+          </jet-secondary-button>
+
+          <jet-danger-button class="ml-3" @click="deleteVisit">
+            Eliminar
+          </jet-danger-button>
+        </template>
+      </jet-confirmation-modal>
+
+      <!-- Put Data Form -->
+      <jet-dialog-modal
+        :max-width="'input-md'"
+        :show="visitBeingUpdated"
+        @close="visitBeingUpdated == null"
+      >
+        <template #title> Datos de la Visita</template>
+
+        <template #content>
+          <div class="flex flex-wrap">
+            <div class="w-full lg:w-6/12 px-4">
+              <div class="relative w-full mb-3">
+                <div class="">
+                  <label class="block text-sm font-medium text-gray-700">
+                    Razón de la Visita
+                  </label>
+
+                  <input
+                    type="text"
+                    minLength="10"
+                    maxlength="100"
+                    placeholder="Ingresar razón visita"
+                    class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    v-model="updateVisitForm.comm_reason_visit"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="w-full lg:w-6/12 px-4">
+              <div class="relative w-full mb-3">
+                <div class="">
+                  <label class="block text-sm font-medium text-gray-700">
+                    Tipo de Visita
+                  </label>
+
+                  <input
+                    type="text"
+                    minLength="10"
+                    maxlength="100"
+                    placeholder="Ingresar tipo de visita"
+                    class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    v-model="updateVisitForm.comm_type_visit"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="w-full lg:w-12/12 px-4">
+              <div class="relative w-full mb-3">
+                <label class="block text-sm font-medium text-gray-700">
+                  Descripción de Visita
+                </label>
+
+                <div class="bg-white">
+                  <quill-editor
+                    ref="qleditor1"
+                    contentType="html"
+                    theme="snow"
+                    :toolbar="toolbarOptions"
+                    placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+                    v-model:content="updateVisitForm.comm_description_visit"
+                  ></quill-editor>
+                </div>
+              </div>
+            </div>
+
+            <div class="w-full lg:w-6/12 px-4">
+              <div class="relative w-full mb-3">
+                <label
+                  class="block text-sm font-medium text-gray-700"
+                  htmlfor="grid-password"
+                >
+                  Fecha de Inicio
+                </label>
+
+                <Datepicker
+                  :format="format"
+                  :transitions="false"
+                  menuClassName="dp-custom-menu"
+                  v-model="updateVisitForm.comm_date_init_visit"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="w-full lg:w-6/12 px-4">
+              <div class="relative w-full mb-3">
+                <label
+                  class="block text-sm font-medium text-gray-700"
+                  htmlfor="grid-password"
+                >
+                  Fecha de Finalización
+                </label>
+
+                <Datepicker
+                  :format="format"
+                  :transitions="false"
+                  menuClassName="dp-custom-menu"
+                  v-model="updateVisitForm.comm_date_end_visit"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Information Address -->
+          </div>
+        </template>
+
+        <template #footer>
+          <jet-secondary-button @click="this.visitBeingUpdated = null">
+            Cancelar
+          </jet-secondary-button>
+
+          <jet-button-success class="ml-3" @click="updateVisit">
+            Actualizar
+          </jet-button-success>
+        </template>
+      </jet-dialog-modal>
     </div>
   </div>
 </template>
@@ -138,7 +313,7 @@ export default {
     errors: [],
   },
   mounted() {
-    // this.allSacrament;
+    this.allVisit;
   },
   computed: {
     isInvalid() {
@@ -147,18 +322,19 @@ export default {
     },
 
     ...mapState("community", ["community"]),
+    ...mapState("visit", ["visit"]),
 
-    // allSacrament() {
-    //   axios
-    //     .get(
-    //       this.route("secretary.daughter-profile.sacrament.index", {
-    //         user_id: this.profile.user_id,
-    //       })
-    //     )
-    //     .then((res) => {
-    //       this.updateAllSacrament(res.data);
-    //     });
-    // },
+    allVisit() {
+      axios
+        .get(
+          this.route("secretary.communities.visit.index", {
+            community_id: this.community.id,
+          })
+        )
+        .then((res) => {
+          this.updateAllVisit(res.data);
+        });
+    },
   },
   // Relashionship with another components
   components: {
@@ -182,9 +358,11 @@ export default {
       return moment(date).format(format);
     };
     const form = useForm({
-      sacrament_name: null,
-      sacrament_date: null,
-      observation: null,
+      comm_reason_visit: null,
+      comm_type_visit: null,
+      comm_description_visit: null,
+      comm_date_init_visit: null,
+      comm_date_end_visit: null,
     });
     return {
       date,
@@ -226,22 +404,26 @@ export default {
         "Matrimonio",
         "Unión de Enfermos",
       ],
-      //   sacramentBeingDeleted: null,
-      //   deleteSacramentForm: this.$inertia.form({
-      //     sacrament_name: null,
-      //     sacrament_date: null,
-      //     observation: null,
-      //   }),
-      //   sacramentBeingUpdated: null,
-      //   updateSacramentForm: this.$inertia.form({
-      //     sacrament_name: null,
-      //     sacrament_date: null,
-      //     observation: null,
-      //   }),
+      visitBeingDeleted: null,
+      deleteVisitForm: this.$inertia.form({
+        comm_reason_visit: null,
+        comm_type_visit: null,
+        comm_description_visit: null,
+        comm_date_init_visit: null,
+        comm_date_end_visit: null,
+      }),
+      visitBeingUpdated: null,
+      updateVisitForm: this.$inertia.form({
+        comm_reason_visit: null,
+        comm_type_visit: null,
+        comm_description_visit: null,
+        comm_date_init_visit: null,
+        comm_date_end_visit: null,
+      }),
     };
   },
   watch: {
-    "form.observation": function () {
+    "form.comm_description_visit": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
 
@@ -251,7 +433,7 @@ export default {
         quill.setHTML(this.data_intput_one);
       }
     },
-    "updateSacramentForm.observation": function () {
+    "updateVisitForm.comm_description_visit": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
 
@@ -263,97 +445,108 @@ export default {
     },
   },
   methods: {
-    // ...mapActions("sacrament", ["updateAllSacrament"]),
-    // ...mapGetters("sacrament", ["getAllSacrament"]),
-    // submit() {
-    //   this.form.sacrament_date = this.formatDate(this.form.sacrament_date);
-    //   //
-    //   Inertia.post(
-    //     route("secretary.daughter-profile.sacrament.store", {
-    //       user_id: this.profile.user_id,
-    //     }),
-    //     this.form,
-    //     {
-    //       preserveScroll: true,
-    //       preserveState: true,
-    //       onSuccess: () => {
-    //         setTimeout(() => {
-    //           this.updateTable();
-    //         }, 10);
-    //         this.form.sacrament_name = null;
-    //         this.form.sacrament_date = null;
-    //         this.form.observation = null;
-    //         this.$refs.qleditor1.setHTML("");
-    //       },
-    //     }
-    //   );
-    //   //
-    // },
-    // formatDate(value) {
-    //   return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
-    // },
-    // confirmationSacramentUpdate(sacrament) {
-    //   this.updateSacramentForm.sacrament_name = sacrament.sacrament_name;
-    //   this.updateSacramentForm.sacrament_date = sacrament.sacrament_date;
-    //   this.updateSacramentForm.observation = sacrament.observation;
-    //   this.sacramentBeingUpdated = sacrament;
-    // },
-    // updateSacrament() {
-    //   this.updateSacramentForm.sacrament_date = this.formatDate(
-    //     this.updateSacramentForm.sacrament_date
-    //   );
-    //   this.updateSacramentForm.put(
-    //     this.route("secretary.daughter-profile.sacrament.update", {
-    //       user_id: this.profile.user_id,
-    //       sacrament_id: this.sacramentBeingUpdated.id,
-    //     }),
-    //     {
-    //       preserveScroll: true,
-    //       preserveState: true,
-    //       onSuccess: () => {
-    //         this.sacramentBeingUpdated = null;
-    //         setTimeout(() => {
-    //           this.updateTable();
-    //         }, 100);
-    //       },
-    //     }
-    //   );
-    // },
-    // // Delete
-    // confirmationSacramentDelete(sacrament) {
-    //   this.deleteSacramentForm.observation = sacrament.observation;
-    //   this.sacramentBeingDeleted = sacrament;
-    // },
-    // deleteSacrament() {
-    //   this.deleteSacramentForm.delete(
-    //     this.route("secretary.daughter-profile.sacrament.delete", {
-    //       user_id: this.profile.user_id,
-    //       sacrament_id: this.sacramentBeingDeleted.id,
-    //     }),
-    //     {
-    //       preserveScroll: true,
-    //       preserveState: true,
-    //       onSuccess: () => (
-    //         (this.sacramentBeingDeleted = null),
-    //         setTimeout(() => {
-    //           this.updateTable();
-    //         }, 500)
-    //       ),
-    //     }
-    //   );
-    // },
-    // //
-    // updateTable() {
-    //   axios
-    //     .get(
-    //       this.route("secretary.daughter-profile.sacrament.index", {
-    //         user_id: this.profile.user_id,
-    //       })
-    //     )
-    //     .then((res) => {
-    //       this.updateAllSacrament(res.data);
-    //     });
-    // },
+    ...mapActions("visit", ["updateAllVisit"]),
+    ...mapGetters("visit", ["getAllVisit"]),
+    submit() {
+      this.form.comm_date_init_visit = this.formatDate(this.form.comm_date_init_visit);
+      this.form.comm_date_end_visit = this.formatDate(this.form.comm_date_end_visit);
+      //
+      Inertia.post(
+        route("secretary.communities.visit.store", {
+          community_id: this.community.id,
+        }),
+        this.form,
+        {
+          preserveScroll: true,
+          preserveState: true,
+          onSuccess: () => {
+            setTimeout(() => {
+              this.updateTable();
+            }, 10);
+
+            this.form.comm_reason_visit = null;
+            this.form.comm_type_visit = null;
+            this.form.comm_description_visit = null;
+            this.form.comm_date_init_visit = null;
+            this.form.comm_date_end_visit = null;
+            this.$refs.qleditor1.setHTML("");
+          },
+        }
+      );
+      //
+    },
+    formatDate(value) {
+      return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
+    },
+    confirmationVisitUpdate(visit) {
+      this.updateVisitForm.comm_reason_visit = visit.comm_reason_visit;
+      this.updateVisitForm.comm_type_visit = visit.comm_type_visit;
+      this.updateVisitForm.comm_description_visit = visit.comm_description_visit;
+      this.updateVisitForm.comm_date_init_visit = visit.comm_date_init_visit;
+      this.updateVisitForm.comm_date_end_visit = visit.comm_date_end_visit;
+
+      this.visitBeingUpdated = visit;
+    },
+    updateVisit() {
+      this.updateVisitForm.comm_date_init_visit = this.formatDate(
+        this.updateVisitForm.comm_date_init_visit
+      );
+      this.updateVisitForm.comm_date_end_visit = this.formatDate(
+        this.updateVisitForm.comm_date_end_visit
+      );
+
+      this.updateVisitForm.put(
+        this.route("secretary.communities.visit.update", {
+          community_id: this.community.id,
+          visit_id: this.visitBeingUpdated.id,
+        }),
+        {
+          preserveScroll: true,
+          preserveState: true,
+          onSuccess: () => {
+            this.visitBeingUpdated = null;
+            setTimeout(() => {
+              this.updateTable();
+            }, 100);
+          },
+        }
+      );
+    },
+    // Delete
+    confirmationVisitDelete(visit) {
+      this.deleteVisitForm.comm_reason_visit = visit.comm_reason_visit;
+      this.visitBeingDeleted = visit;
+    },
+    deleteVisit() {
+      this.deleteVisitForm.delete(
+        this.route("secretary.communities.visit.delete", {
+          community_id: this.community.id,
+          visit_id: this.visitBeingDeleted.id,
+        }),
+        {
+          preserveScroll: true,
+          preserveState: true,
+          onSuccess: () => (
+            (this.visitBeingDeleted = null),
+            setTimeout(() => {
+              this.updateTable();
+            }, 2)
+          ),
+        }
+      );
+    },
+    //
+    updateTable() {
+      axios
+        .get(
+          this.route("secretary.communities.visit.index", {
+            community_id: this.community.id,
+          })
+        )
+        .then((res) => {
+          this.updateAllVisit(res.data);
+        });
+    },
     // showAlert() {
     //   // Use sweetalert2
     //   this.$swal("Hello Vue world!!!");

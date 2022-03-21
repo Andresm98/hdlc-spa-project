@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class CommunityVisit extends Model
 {
     use HasFactory;
+    //  Variable para asignacion masiva
+    protected $guarded = [];
 
     public function community()
     {

@@ -8,13 +8,24 @@
         Bienvenido Usuario: {{ $page.props.user.name }}
       </div>
     </template>
-    <alert
-      v-if="$page.props.flash.success"
-      class="alert"
-      :type_alert_r="(type_alert = 'success')"
-      :message="$page.props.flash.success"
-    >
-    </alert>
+    <div v-if="$page.props.flash != null">
+      <alert
+        v-if="$page.props.flash.success"
+        class="alert"
+        :type_alert_r="(type_alert = 'success')"
+        :message="$page.props.flash.success"
+      >
+      </alert>
+    </div>
+    <div v-if="$page.props.flash != null">
+      <alert
+        v-if="$page.props.flash.error"
+        class="alert"
+        :type_alert_r="(type_alert = 'error')"
+        :message="$page.props.flash.error"
+      >
+      </alert>
+    </div>
     <section
       class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg m-1"
     >
@@ -186,15 +197,15 @@
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Nombre de Compañía
+                      Nombre de Comunidad:
                     </label>
                     <jet-input-error :message="errors.comm_name" />
                     <input
                       type="text"
                       placeholder="Nombre de la comunidad en el Sistema"
                       class="border-0 px-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      @keydown.space.prevent
                       v-model="form.comm_name"
+                      required
                     />
                   </div>
                 </div>
@@ -206,7 +217,7 @@
                     class="block text-sm font-medium text-gray-700"
                     htmlfor="grid-password"
                   >
-                    Correo Electrónico
+                    Correo Electrónico:
                   </label>
 
                   <jet-input-error :message="errors.comm_email" />
@@ -215,6 +226,7 @@
                     placeholder="micorreo@correo.com"
                     class="border-0 px-3 mb-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="form.comm_email"
+                    required
                   />
                 </div>
                 <div class="w-full lg:w-6/12 px-4">
@@ -222,7 +234,7 @@
                     class="block text-sm font-medium text-gray-700"
                     htmlfor="grid-password"
                   >
-                    Número de RUC
+                    Número de RUC:
                   </label>
                   <p
                     class="text-red-400 text-sm"
@@ -239,6 +251,7 @@
                     pattern="[+-]?\d+(?:[.,]\d+)?"
                     class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="form.comm_identity_card"
+                    @keydown.space.prevent
                     required
                   />
                 </div>
@@ -250,7 +263,7 @@
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Fecha de Fundación
+                      Fecha de Fundación:
                     </label>
 
                     <jet-input-error :message="errors.date_fndt_comm" />
@@ -270,7 +283,7 @@
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Fecha de la Obra
+                      Fecha de la Obra:
                     </label>
 
                     <jet-input-error :message="errors.date_fndt_work" />
@@ -279,7 +292,6 @@
                       :format="format"
                       :transitions="false"
                       menuClassName="dp-custom-menu"
-                      required
                     />
                   </div>
                 </div>
@@ -290,7 +302,7 @@
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Celular
+                      Celular:
                     </label>
 
                     <jet-input-error :message="errors.comm_cellphone" />
@@ -302,6 +314,7 @@
                       type="text"
                       class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="form.comm_cellphone"
+                      @keydown.space.prevent
                     />
                   </div>
                 </div>
@@ -324,6 +337,7 @@
                       type="text"
                       class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="form.comm_phone"
+                      @keydown.space.prevent
                     />
                   </div>
                 </div>
@@ -493,6 +507,12 @@
             <div v-if="selectMenu.selectedElement == 'Visitas'">
               <visits></visits>
             </div>
+            <div v-if="selectMenu.selectedElement == 'Obras'">
+              <works></works>
+            </div>
+            <div v-if="selectMenu.selectedElement == 'Inventario'">
+              <inventories></inventories>
+            </div>
           </div>
         </div>
       </div>
@@ -529,6 +549,8 @@ import { Pagination } from "swiper";
 import Activities from "@/Pages/Secretary/Communities/Activities/Index";
 import Resumes from "@/Pages/Secretary/Communities/Resumes/Index";
 import Visits from "@/Pages/Secretary/Communities/Visits/Index";
+import Works from "@/Pages/Secretary/Communities/Work/Index";
+import Inventories from "@/Pages/Secretary/Communities/Inventories/Index";
 
 export default defineComponent({
   created() {
@@ -666,6 +688,8 @@ export default defineComponent({
     Activities,
     Resumes,
     Visits,
+    Works,
+    Inventories,
     Datepicker,
     moment,
     Alert,
@@ -677,10 +701,10 @@ export default defineComponent({
       isDisabled: false,
       isTouched: false,
       selectMenu: {
-        selectedElement: "Actividades",
+        selectedElement: null,
         isDisabled: false,
         isTouched: false,
-        options: ["Actividades", "Resumen Anual", "Visitas"],
+        options: ["Actividades", "Resumen Anual", "Visitas", "Obras", "Inventario"],
         loading: false,
         multiSelectUser: null,
         vSelectUser: null,
@@ -779,7 +803,7 @@ export default defineComponent({
         "political_division_id"
       ];
       let response = await axios.get(
-        this.route("secretary.communities.actual-address", {
+        this.route("secretary.address.actual-address", {
           actual_parish: this.community_custom.address["political_division_id"],
         })
       );
@@ -802,7 +826,7 @@ export default defineComponent({
       this.selectThree.options = [];
       axios
         .get(
-          this.route("secretary.daughters-profile.cantons", {
+          this.route("secretary.address.cantons", {
             province_id: province.id,
           })
         )
@@ -826,7 +850,7 @@ export default defineComponent({
 
       axios
         .get(
-          this.route("secretary.daughters-profile.parishes", {
+          this.route("secretary.address.parishes", {
             canton_id: canton.id,
           })
         )
@@ -907,13 +931,5 @@ export default defineComponent({
       this.isTouched = true;
     },
   },
-
-  //   computed: {
-  //     // ejexcc() {
-  //     //   this.$store.dispatch("changeUser", {
-  //     //     newId: this.daughter_custom.id,
-  //     //   });
-  //     // },
-  //   },
 });
 </script>

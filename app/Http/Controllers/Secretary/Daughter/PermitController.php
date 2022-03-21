@@ -26,7 +26,9 @@ class PermitController extends Controller
         }
 
         $user = User::find($user_id);
-        return $user->profile->permits;
+        return Permit::with('address')
+            ->where('profile_id', '=', $user->profile->id)
+            ->get();
     }
 
     /**
@@ -61,17 +63,23 @@ class PermitController extends Controller
                 ->withInput();
         }
         $user = User::find($user_id);
-        $user->profile->permits()->create([
+        $permit = $user->profile->permits()->create([
             'reason' => $request->get('reason'),
             'description' => $request->get('description'),
             'date_province' => $request->get('date_province'),
             'date_general' => $request->get('date_general'),
             'date_out' => $request->get('date_out'),
         ]);
+        if (!$permit->address) {
+            $permit->address()->create([
+                'address' => $request->get('address'),
+                'political_division_id' => $request->get('political_division_id'),
+            ]);
 
-        return redirect()->back()->with([
-            'success' => 'Permiso guardado correctamente!'
-        ]);
+            return redirect()->back()->with([
+                'success' => 'Permiso guardado correctamente!'
+            ]);
+        }
     }
 
     /**
@@ -127,9 +135,9 @@ class PermitController extends Controller
             return response()->json(['error' => 'No existen los datos']);
         }
 
-        $sacrament = Permit::find($permit_id);
+        $permit = Permit::find($permit_id);
 
-        $sacrament->update([
+        $permit->update([
             'reason' => $request->get('reason'),
             'description' => $request->get('description'),
             'date_province' => $request->get('date_province'),
@@ -137,6 +145,12 @@ class PermitController extends Controller
             'date_out' => $request->get('date_out'),
             'date_in' => $request->get('date_in'),
         ]);
+
+        $permit->address()->update([
+            'address' => $request->get('address'),
+            'political_division_id' => $request->get('political_division_id'),
+        ]);
+
 
         return redirect()->back()->with(['success' => 'Permiso actualizado correctamente!']);
     }
@@ -161,8 +175,9 @@ class PermitController extends Controller
             return response()->json(['error' => 'No existen los datos']);
         }
 
-        $sacrament = Permit::find($permit_id);
-        $sacrament->delete();
+        $permit = Permit::find($permit_id);
+        $permit->address()->delete();
+        $permit->delete();
         return redirect()->back()->with(['success' => 'Permiso eliminado correctamente']);
     }
 }

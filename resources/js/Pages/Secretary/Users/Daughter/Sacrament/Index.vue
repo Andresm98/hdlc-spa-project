@@ -15,7 +15,7 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Nombre de Sacramento
+                  Nombre de Sacramento:
                 </label>
 
                 <div :class="{ invalid: isInvalid }">
@@ -41,7 +41,7 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Fecha de Realización del Sacramento
+                Fecha de Realización del Sacramento:
               </label>
 
               <Datepicker
@@ -60,7 +60,7 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Observaciones
+                Observaciones:
               </label>
               <div class="bg-white">
                 <quill-editor
@@ -78,7 +78,7 @@
           <!-- Information Address -->
         </div>
         <jet-button-success type="submit" class="ml-4 mt-4 btn btn-primary"
-          >Crear Record</jet-button-success
+          >Crear Sacramento</jet-button-success
         >
       </form>
 
@@ -164,7 +164,7 @@
                     class="block text-sm font-medium text-gray-700"
                     htmlfor="grid-password"
                   >
-                    Nombre de Sacramento
+                    Nombre de Sacramento:
                   </label>
 
                   <div :class="{ invalid: isInvalid }">
@@ -190,7 +190,7 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Fecha de Realización del Sacramento
+                  Fecha de Realización del Sacramento:
                 </label>
 
                 <Datepicker
@@ -209,7 +209,7 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Observaciones
+                  Observaciones:
                 </label>
                 <div class="bg-white">
                   <quill-editor
@@ -346,12 +346,13 @@ export default {
       value: null,
       options: [
         "Bautismo",
-        "Penitencia",
-        "Eucaristia",
+        // "Penitencia",
+        // "Eucaristia",
+        "Primera Comunión",
         "Confirmación",
-        "Orden Sacerdotal",
-        "Matrimonio",
-        "Unión de Enfermos",
+        // "Orden Sacerdotal",
+        // "Matrimonio",
+        // "Unión de Enfermos",
       ],
       sacramentBeingDeleted: null,
       deleteSacramentForm: this.$inertia.form({

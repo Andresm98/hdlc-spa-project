@@ -519,9 +519,8 @@ export default {
 
   methods: {
     async status() {
-      console.log("perfil ", this.profile);
       let response = await axios.get(
-        this.route("secretary.daughters-profile.actual-address", {
+        this.route("secretary.address.actual-address", {
           actual_parish: this.profile.address["political_division_id"],
         })
       );
@@ -542,7 +541,7 @@ export default {
       this.selectThree.options = [];
       axios
         .get(
-          this.route("secretary.daughters-profile.cantons", {
+          this.route("secretary.address.cantons", {
             province_id: province.id,
           })
         )
@@ -565,7 +564,7 @@ export default {
 
       axios
         .get(
-          this.route("secretary.daughters-profile.parishes", {
+          this.route("secretary.address.parishes", {
             canton_id: canton.id,
           })
         )

@@ -9,6 +9,8 @@ class CommunityActivity extends Model
 {
     use HasFactory;
 
+    //  Variable para asignacion masiva
+    protected $guarded = [];
 
     /**
      *

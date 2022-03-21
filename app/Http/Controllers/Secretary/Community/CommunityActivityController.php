@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Secretary\Community;
 
 use App\Models\Community;
 use Illuminate\Http\Request;
+use App\Models\CommunityActivity;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,7 +18,7 @@ class CommunityActivityController extends Controller
     public function index($community_id)
     {
         $validator = Validator::make(['id' => $community_id], [
-            'id' => ['required', 'exists:community_activities,id']
+            'id' => ['required', 'exists:communities,id']
         ]);
         if ($validator->fails()) {
             return "error";
@@ -44,28 +45,40 @@ class CommunityActivityController extends Controller
      */
     public function store(Request $request, $community_id)
     {
+
         $validator = Validator::make($request->all(), [
-            'name_appointment' => ['required', 'max:100'],
-            'description' => ['required', 'max:2000'],
-            'date_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
-            // 'date_end_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
+            'comm_name_activity' => ['required', 'max:100'],
+            'comm_description_activity' => ['required', 'max:4000'],
+            'comm_date_activity' => ['required', 'date_format:Y-m-d H:i:s'],
+            'comm_nr_daughters' => ['required', 'digits_between:1,1000'],
+            'comm_nr_beneficiaries' => ['required', 'digits_between:1,1000'],
+            'comm_nr_collaborators' => ['required', 'digits_between:1,1000'],
         ]);
 
-        if ($validator->fails()) {
+        $validatorData = Validator::make([
+            'community_id' => $community_id,
+        ], [
+            'community_id' => ['required', 'exists:communities,id'],
+        ]);
+
+        if ($validator->fails() || $validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validator->errors())
                 ->withInput();
         }
-        $user = Community::find($community_id);
-        $user->profile->appointments()->create([
-            'name_appointment' => $request->get('name_appointment'),
-            'description' => $request->get('description'),
-            'date_appointment' => $request->get('date_appointment'),
-            // 'date_end_appointment' => $request->get('date_end_appointment'),
+
+        $community = Community::find($community_id);
+        $community->activities()->create([
+            'comm_name_activity' => $request->get('comm_name_activity'),
+            'comm_description_activity' => $request->get('comm_description_activity'),
+            'comm_date_activity' => $request->get('comm_date_activity'),
+            'comm_nr_daughters' => $request->get('comm_nr_daughters'),
+            'comm_nr_beneficiaries' => $request->get('comm_nr_beneficiaries'),
+            'comm_nr_collaborators' => $request->get('comm_nr_collaborators'),
         ]);
 
         return redirect()->back()->with([
-            'success' => 'Nombramiento guardado correctamente!'
+            'success' => 'Actividad de la comunidad guardada correctamente!',
         ]);
     }
 
@@ -98,9 +111,44 @@ class CommunityActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $community_id, $activity_id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'comm_name_activity' => ['required', 'max:100'],
+            'comm_description_activity' => ['required', 'max:4000'],
+            'comm_date_activity' => ['required', 'date_format:Y-m-d H:i:s'],
+            'comm_nr_daughters' => ['required', 'digits_between:1,1000'],
+            'comm_nr_beneficiaries' => ['required', 'digits_between:1,1000'],
+            'comm_nr_collaborators' => ['required', 'digits_between:1,1000'],
+        ]);
+
+        $validatorData = Validator::make([
+            'community_id' => $community_id,
+            'activity_id' => $activity_id
+        ], [
+            'community_id' => ['required', 'exists:communities,id'],
+            'activity_id' => ['required', 'exists:community_activities,id']
+        ]);
+
+        if ($validator->fails() || $validatorData->fails()) {
+            return redirect()->back()
+                ->withErrors($validator->errors())
+                ->withInput();
+        }
+
+        $activity = CommunityActivity::find($activity_id);
+        $activity->update([
+            'comm_name_activity' => $request->get('comm_name_activity'),
+            'comm_description_activity' => $request->get('comm_description_activity'),
+            'comm_date_activity' => $request->get('comm_date_activity'),
+            'comm_nr_daughters' => $request->get('comm_nr_daughters'),
+            'comm_nr_beneficiaries' => $request->get('comm_nr_beneficiaries'),
+            'comm_nr_collaborators' => $request->get('comm_nr_collaborators'),
+        ]);
+
+        return redirect()->back()->with([
+            'success' => 'Actividad de la comunidad actualizada correctamente!',
+        ]);
     }
 
     /**
@@ -109,8 +157,22 @@ class CommunityActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($community_id, $activity_id)
     {
-        //
+        $validator = Validator::make([
+            'community_id' => $community_id,
+            'activity_id' => $activity_id
+        ], [
+            'community_id' => ['required', 'exists:communities,id'],
+            'activity_id' => ['required', 'exists:community_activities,id']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => 'No existen los datos']);
+        }
+
+        $activity = CommunityActivity::find($activity_id);
+        $activity->delete();
+        return redirect()->back()->with(['success' => 'Permiso eliminado correctamente']);
     }
 }

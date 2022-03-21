@@ -16,4 +16,11 @@ class Permit extends Model
     {
         return $this->belongsTo('App\Models\Profile');
     }
+
+    // Relacion uno a uno polimorfica inversa
+
+    public function address()
+    {
+        return $this->morphOne('App\Models\Address', 'addressable');
+    }
 }

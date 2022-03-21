@@ -85,7 +85,7 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Descripción del Nombramiento
+                Descripción del Nombramiento:
               </label>
               <div class="bg-white">
                 <quill-editor
@@ -101,7 +101,7 @@
           </div>
         </div>
         <jet-button-success type="submit" class="ml-4 mt-4 btn btn-primary"
-          >Crear Record</jet-button-success
+          >Crear Nombramiento</jet-button-success
         >
       </form>
 

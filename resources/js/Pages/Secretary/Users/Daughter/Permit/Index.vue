@@ -22,7 +22,7 @@
                   type="text"
                   minLength="10"
                   maxlength="100"
-                  placeholder="Ingresar Nombre de Título"
+                  placeholder="Ingresar Motivo del Permiso"
                   class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="form.reason"
                   required
@@ -136,6 +136,113 @@
           </div>
 
           <!-- Information Address -->
+
+          <div class="w-full lg:w-full px-4">
+            <div>
+              <label for="address" class="block text-sm font-medium text-gray-700">
+                Dirección de Destino:
+              </label>
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.address">
+                {{ $page.props.errors.address }}
+              </p>
+              <div class="mb-1">
+                <textarea
+                  id="address"
+                  name="address"
+                  rows="1"
+                  class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
+                  v-model="form.address"
+                  placeholder="Agregar la dirección de destino.."
+                  :maxlength="100"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-2/5 px-4 mb-2">
+            <div class="w-full">
+              <label
+                class="block text-sm font-medium text-gray-700"
+                htmlfor="grid-password"
+              >
+                Provincia Destino:
+              </label>
+              <div :class="{ invalid: isInvalid }">
+                <multiselect
+                  :searchable="true"
+                  v-model="selectOne.selectedProvince"
+                  :options="this.allProvinces"
+                  :close-on-select="true"
+                  :clear-on-select="false"
+                  mode="tags"
+                  label="name"
+                  @search-change="onSearchProvincesChange"
+                  @select="onSelectedProvince"
+                  track-by="name"
+                  placeholder="Buscar provincia"
+                >
+                </multiselect>
+                <p class="text-red-400 text-sm" v-show="isInvalid">Obligatorio</p>
+              </div>
+            </div>
+          </div>
+          <div class="w-full lg:w-3/5 px-4 mb-2">
+            <div class="relative w-full">
+              <label
+                class="block text-sm font-medium text-gray-700"
+                htmlfor="grid-password"
+              >
+                Cantón Destino:
+              </label>
+              <div :class="{ invalid: isInvalidCanton }">
+                <multiselect
+                  :searchable="true"
+                  v-model="selectTwo.selectedCanton"
+                  :options="selectTwo.options"
+                  :close-on-select="true"
+                  :clear-on-select="false"
+                  mode="tags"
+                  label="name"
+                  @select="onSelectedCanton"
+                  @search-change="onSearchCantonChange"
+                  track-by="name"
+                  placeholder="Buscar cantón"
+                >
+                </multiselect>
+                <p class="text-sm text-red-400" v-show="isInvalidCanton">Obligatorio</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-12/12 px-4 mb-2">
+            <div class="relative w-full">
+              <label
+                class="block text-sm font-medium text-gray-700"
+                htmlfor="grid-password"
+              >
+                Parroquia Destino:
+              </label>
+              <div :class="{ invalid: isInvalidParish }">
+                <multiselect
+                  :searchable="true"
+                  v-model="selectThree.selectedParish"
+                  :options="selectThree.options"
+                  :close-on-select="true"
+                  :clear-on-select="false"
+                  label="name"
+                  @select="onSelectedParish"
+                  @search-change="onSearchParishChange"
+                  track-by="name"
+                  placeholder="Buscar parroquia"
+                >
+                </multiselect>
+                <p class="text-sm text-red-400" v-show="isInvalidParish">Obligatorio</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Information Address -->
         </div>
         <jet-button-success type="submit" class="ml-4 mt-4 btn btn-primary"
           >Crear Permiso</jet-button-success
@@ -210,7 +317,7 @@
                   type="text"
                   minLength="10"
                   maxlength="100"
-                  placeholder="Ingresar Nombre de Título"
+                  placeholder="Ingresar Motivo del Permiso"
                   class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="deletePermitForm.reason"
                   readonly
@@ -254,7 +361,7 @@
                     type="text"
                     minLength="10"
                     maxlength="100"
-                    placeholder="Ingresar Nombre de Título"
+                    placeholder="Ingresar Motivo del Permiso"
                     class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="updatePermitForm.reason"
                     required
@@ -271,6 +378,113 @@
                 </div>
               </div>
             </div>
+
+            <!-- Information Address -->
+
+            <div class="w-full lg:w-full px-4">
+              <div>
+                <label for="address" class="block text-sm font-medium text-gray-700">
+                  Dirección de Destino:
+                </label>
+                <p class="text-red-400 text-sm" v-show="$page.props.errors.address">
+                  {{ $page.props.errors.address }}
+                </p>
+                <div class="mb-1">
+                  <textarea
+                    id="address"
+                    name="address"
+                    rows="1"
+                    class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
+                    v-model="updatePermitForm.address"
+                    placeholder="Agregar la dirección de destino.."
+                    :maxlength="100"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="w-full lg:w-2/5 px-4 mb-2">
+              <div class="w-full">
+                <label
+                  class="block text-sm font-medium text-gray-700"
+                  htmlfor="grid-password"
+                >
+                  Provincia Destino:
+                </label>
+                <div :class="{ invalid: isInvalid }">
+                  <multiselect
+                    :searchable="true"
+                    v-model="selectOne.selectedProvince"
+                    :options="this.allProvinces"
+                    :close-on-select="true"
+                    :clear-on-select="false"
+                    mode="tags"
+                    label="name"
+                    @search-change="onSearchProvincesChange"
+                    @select="onSelectedProvince"
+                    track-by="name"
+                    placeholder="Buscar provincia"
+                  >
+                  </multiselect>
+                  <p class="text-red-400 text-sm" v-show="isInvalid">Obligatorio</p>
+                </div>
+              </div>
+            </div>
+            <div class="w-full lg:w-3/5 px-4 mb-2">
+              <div class="relative w-full">
+                <label
+                  class="block text-sm font-medium text-gray-700"
+                  htmlfor="grid-password"
+                >
+                  Cantón Destino:
+                </label>
+                <div :class="{ invalid: isInvalidCanton }">
+                  <multiselect
+                    :searchable="true"
+                    v-model="selectTwo.selectedCanton"
+                    :options="selectTwo.options"
+                    :close-on-select="true"
+                    :clear-on-select="false"
+                    mode="tags"
+                    label="name"
+                    @select="onSelectedCanton"
+                    @search-change="onSearchCantonChange"
+                    track-by="name"
+                    placeholder="Buscar cantón"
+                  >
+                  </multiselect>
+                  <p class="text-sm text-red-400" v-show="isInvalidCanton">Obligatorio</p>
+                </div>
+              </div>
+            </div>
+            <div class="w-full lg:w-12/12 px-4 mb-2">
+              <div class="relative w-full">
+                <label
+                  class="block text-sm font-medium text-gray-700"
+                  htmlfor="grid-password"
+                >
+                  Parroquia Destino:
+                </label>
+                <div :class="{ invalid: isInvalidParish }">
+                  <multiselect
+                    :searchable="true"
+                    v-model="selectThree.selectedParish"
+                    :options="selectThree.options"
+                    :close-on-select="true"
+                    :clear-on-select="false"
+                    label="name"
+                    @select="onSelectedParish"
+                    @search-change="onSearchParishChange"
+                    track-by="name"
+                    placeholder="Buscar parroquia"
+                  >
+                  </multiselect>
+                  <p class="text-sm text-red-400" v-show="isInvalidParish">Obligatorio</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Information Address -->
 
             <div class="w-full lg:w-6/12 px-4">
               <div class="relative w-full mb-3">
@@ -366,13 +580,11 @@
                 </div>
               </div>
             </div>
-
-            <!-- Information Address -->
           </div>
         </template>
 
         <template #footer>
-          <jet-secondary-button @click="permitBeingUpdated = null">
+          <jet-secondary-button @click="updatePermitCancel">
             Cancelar
           </jet-secondary-button>
 
@@ -436,6 +648,11 @@ export default {
       date_general: null,
       date_out: null,
       date_in: null,
+      address: null,
+      province_id: null,
+      canton_id: null,
+      parish_id: null,
+      political_division_id: null,
     });
     return {
       date,
@@ -482,7 +699,43 @@ export default {
         date_general: null,
         date_out: null,
         date_in: null,
+        address: null,
+        province_id: null,
+        canton_id: null,
+        parish_id: null,
+        political_division_id: null,
       }),
+
+      //Provinces
+      selectOne: {
+        selectedProvince: undefined,
+        value: 0,
+        isDisabled: false,
+        isTouched: false,
+        options: {
+          type: Array,
+          default: () => [],
+        },
+        loading: false,
+        multiSelectUser: null,
+        vSelectUser: null,
+      },
+      selectTwo: {
+        selectedCanton: undefined,
+        value: 0,
+        options: [],
+        loading: false,
+        multiSelectCanton: null,
+        vSelectCanton: null,
+      },
+      selectThree: {
+        selectedParish: undefined,
+        value: 0,
+        options: [],
+        loading: false,
+        multiSelectParish: null,
+        vSelectParish: null,
+      },
     };
   },
 
@@ -495,6 +748,7 @@ export default {
       return this.value == null;
     },
     ...mapState("daughter", ["profile"]),
+    ...mapState("address", ["allProvinces"]),
     ...mapState("permit", ["permit"]),
     allPermit() {
       axios
@@ -508,8 +762,71 @@ export default {
           this.updateAllPermit(res.data);
         });
     },
+
+    // Validate Multioption
+    isInvalid() {
+      //   console.log("ee", this.selectOne.selectedProvince);
+      return (
+        this.selectOne.selectedProvince == undefined ||
+        this.selectOne.selectedProvince == null
+      );
+    },
+    isInvalidCanton() {
+      //   console.log("ee canton", this.selectTwo.selectedCanton);
+      return (
+        this.selectTwo.selectedCanton == undefined ||
+        this.selectTwo.selectedCanton == null
+      );
+    },
+    isInvalidParish() {
+      //   console.log("ee Parish", this.selectThree.selectedParish);
+      return (
+        this.selectThree.selectedParish == undefined ||
+        this.selectThree.selectedParish == null
+      );
+    },
   },
   watch: {
+    "selectOne.selectedProvince": function () {
+      if (this.selectOne.selectedProvince === null) {
+        this.selectTwo.selectedCanton = null;
+        this.selectThree.selectedParish = null;
+        this.selectTwo.options = [];
+        this.selectThree.options = [];
+        // Clean data Form
+        this.form.province_id = null;
+        this.form.canton_id = null;
+        this.form.parish_id = null;
+        this.form.political_division_id = null;
+        if (this.permitBeingUpdated != null) {
+          this.updatePermitForm.political_division_id = null;
+        }
+      }
+    },
+    "selectTwo.selectedCanton": function () {
+      if (this.selectTwo.selectedCanton === null) {
+        this.selectThree.selectedParish = null;
+        this.selectThree.options = [];
+        // Clean data Form
+        this.form.canton_id = null;
+        this.form.parish_id = null;
+        this.form.political_division_id = null;
+        if (this.permitBeingUpdated != null) {
+          this.updatePermitForm.political_division_id = null;
+        }
+      }
+    },
+    "selectThree.selectedParish": function () {
+      if (this.selectThree.selectedParish === null) {
+        // Clean data Form
+        this.form.parish_id = null;
+        this.form.political_division_id = null;
+
+        if (this.permitBeingUpdated != null) {
+          this.updatePermitForm.political_division_id = null;
+        }
+      }
+    },
     "form.description": function () {
       var limit = 2000;
       const quill = this.$refs.qleditor1;
@@ -534,35 +851,136 @@ export default {
   methods: {
     ...mapActions("permit", ["updateAllPermit"]),
     ...mapGetters("permit", ["getAllPermit"]),
+
+    async status() {
+      let response = await axios.get(
+        this.route("secretary.address.actual-address", {
+          actual_parish: this.updatePermitForm.political_division_id,
+        })
+      );
+      return response.data;
+    },
+
+    onSearchProvincesChange(term) {
+      //   console.log("input data search " + term);
+    },
+
+    onSelectedProvince(province) {
+      console.log("input data selecter " + province.id);
+      this.form.province_id = province.id;
+      this.form.canton_id = null;
+      this.form.parish_id = null;
+      this.form.political_division_id = null;
+      this.selectTwo.selectedCanton = undefined;
+      this.selectThree.selectedParish = undefined;
+      this.selectTwo.options = [];
+      this.selectThree.options = [];
+      if (this.permitBeingUpdated != null) {
+        this.updatePermitForm.political_division_id = null;
+      }
+
+      axios
+        .get(
+          this.route("secretary.address.cantons", {
+            province_id: province.id,
+          })
+        )
+        .then((res) => {
+          //   console.log(res.data);
+          this.selectTwo.options = res.data;
+        });
+    },
+
+    onSearchCantonChange(term) {
+      //   console.log(term);
+    },
+
+    onSelectedCanton(canton) {
+      //   console.log("input data selecter " + canton.id);
+      this.form.canton_id = canton.id;
+      this.form.parish_id = null;
+      this.form.political_division_id = null;
+      this.selectThree.selectedParish = undefined;
+      this.selectThree.options = [];
+      if (this.permitBeingUpdated != null) {
+        this.updatePermitForm.political_division_id = null;
+      }
+
+      axios
+        .get(
+          this.route("secretary.address.parishes", {
+            canton_id: canton.id,
+          })
+        )
+        .then((res) => {
+          //   console.log(res.data);
+          this.selectThree.options = res.data;
+        });
+    },
+
+    onSearchParishChange(term) {
+      //   console.log(term);
+    },
+
+    onSelectedParish(parish) {
+      this.form.parish_id = parish.id;
+      this.form.political_division_id = parish.id;
+      //   console.log("input parish data selecter " + this.form.parish_id);
+
+      if (this.permitBeingUpdated != null) {
+        this.updatePermitForm.political_division_id = parish.id;
+      }
+    },
     submit() {
       this.form.date_province = this.formatDate(this.form.date_province);
       this.form.date_general = this.formatDate(this.form.date_general);
       this.form.date_out = this.formatDate(this.form.date_out);
       //   this.form.date_in = this.formatDate(this.form.date_in);
       //
-      Inertia.post(
-        route("secretary.daughter-profile.permit.store", {
-          user_id: this.profile.user_id,
-        }),
-        this.form,
-        {
-          preserveScroll: true,
-          preserveState: true,
-          onSuccess: () => {
-            setTimeout(() => {
-              this.updateTable();
-            }, 10);
-            this.form.reason = null;
-            this.form.description = null;
-            this.form.date_province = null;
-            this.form.date_general = null;
-            this.form.date_out = null;
-            this.form.date_in = null;
 
-            this.$refs.qleditor1.setHTML("");
-          },
-        }
-      );
+      if (
+        this.isInvalid == false &&
+        this.isInvalidCanton == false &&
+        this.isInvalidParish == false
+      ) {
+        Inertia.post(
+          route("secretary.daughter-profile.permit.store", {
+            user_id: this.profile.user_id,
+          }),
+          this.form,
+          {
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => {
+              setTimeout(() => {
+                this.updateTable();
+              }, 10);
+              this.form.reason = null;
+              this.form.description = null;
+              this.form.date_province = null;
+              this.form.date_general = null;
+              this.form.date_out = null;
+              this.form.date_in = null;
+              this.form.address = null;
+
+              this.$refs.qleditor1.setHTML("");
+              //   Clean address data
+
+              this.selectOne.selectedProvince = null;
+              this.selectTwo.selectedCanton = null;
+              this.selectThree.selectedParish = null;
+              this.selectOne.options = [];
+              this.selectTwo.options = [];
+              this.selectThree.options = [];
+              // Clean data Form
+              this.form.province_id = null;
+              this.form.canton_id = null;
+              this.form.parish_id = null;
+              this.form.political_division_id = null;
+            },
+          }
+        );
+      }
     },
     updateTable() {
       axios
@@ -585,6 +1003,27 @@ export default {
       this.updatePermitForm.date_general = permit.date_general;
       this.updatePermitForm.date_out = permit.date_out;
       this.updatePermitForm.date_in = permit.date_in;
+
+      //   address: null,
+      //   province_id: null,
+      //   canton_id: null,
+      //   parish_id: null,
+      //   political_division_id: null,
+
+      this.updatePermitForm.address = permit.address.address;
+      this.updatePermitForm.political_division_id = permit.address.political_division_id;
+
+      this.status().then((data) => {
+        //   console.log(data);
+        this.selectThree.options = data.parishes;
+        this.selectThree.selectedParish = data.data_parish;
+
+        this.selectTwo.options = data.cantons;
+        this.selectTwo.selectedCanton = data.data_canton;
+
+        this.selectOne.selectedProvince = data.data_province;
+      });
+
       this.permitBeingUpdated = permit;
     },
     updatePermit() {
@@ -598,22 +1037,47 @@ export default {
       if (this.updatePermitForm.date_in != null) {
         this.updatePermitForm.date_in = this.formatDate(this.updatePermitForm.date_in);
       }
-      this.updatePermitForm.put(
-        this.route("secretary.daughter-profile.permit.update", {
-          user_id: this.profile.user_id,
-          permit_id: this.permitBeingUpdated.id,
-        }),
-        {
-          preserveScroll: true,
-          preserveState: true,
-          onSuccess: () => {
-            this.permitBeingUpdated = null;
-            setTimeout(() => {
-              this.updateTable();
-            }, 100);
-          },
-        }
-      );
+
+      if (
+        this.isInvalid == false &&
+        this.isInvalidCanton == false &&
+        this.isInvalidParish == false
+      ) {
+        this.updatePermitForm.put(
+          this.route("secretary.daughter-profile.permit.update", {
+            user_id: this.profile.user_id,
+            permit_id: this.permitBeingUpdated.id,
+          }),
+          {
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => {
+              this.permitBeingUpdated = null;
+              this.updatePermitForm.political_division_id = null;
+              setTimeout(() => {
+                this.updateTable();
+              }, 100);
+            },
+          }
+        );
+      }
+    },
+
+    updatePermitCancel() {
+      this.permitBeingUpdated = null;
+      //   Clean address data
+
+      this.selectOne.selectedProvince = null;
+      this.selectTwo.selectedCanton = null;
+      this.selectThree.selectedParish = null;
+      this.selectOne.options = [];
+      this.selectTwo.options = [];
+      this.selectThree.options = [];
+      // Clean data Form
+      this.form.province_id = null;
+      this.form.canton_id = null;
+      this.form.parish_id = null;
+      this.form.political_division_id = null;
     },
     // Delete
 

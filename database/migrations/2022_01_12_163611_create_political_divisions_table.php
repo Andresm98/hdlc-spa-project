@@ -20,7 +20,7 @@ class CreatePoliticalDivisionsTable extends Migration
             $table->string('political_divisionc_id')->nullable();
 
             $table->string('name');
-            $table->tinyInteger('level');
+            $table->smallInteger('level');
             $table->tinyText('last_level');
 
 

@@ -27,7 +27,7 @@
             </div>
             <div class="w-full lg:w-6/12">
               <label class="block text-sm font-medium text-gray-700">
-                Nombres Completos del Padre:
+                Nombres Completos de la Madre:
               </label>
               <div class="mt-1 rounded-md mx-2">
                 <input

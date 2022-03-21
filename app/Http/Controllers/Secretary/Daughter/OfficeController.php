@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Secretary\Daughter;
 
-use App\Http\Controllers\Controller;
+use App\Models\Office;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class OfficeController extends Controller
 {
@@ -14,8 +15,10 @@ class OfficeController extends Controller
      */
     public function index()
     {
-        //
+        $list_office = Office::all();
+        return $list_office;
     }
+
 
     /**
      * Show the form for creating a new resource.

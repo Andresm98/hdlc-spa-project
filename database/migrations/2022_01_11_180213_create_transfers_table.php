@@ -16,10 +16,10 @@ class CreateTransfersTable extends Migration
         Schema::create('transfers', function (Blueprint $table) {
             $table->id();
 
-            $table->dateTime('adission');
-            $table->dateTime('relocated')->nullable();
-            $table->string('colocation', 40);
-            $table->text('observation');
+            $table->dateTime('transfer_date_adission');
+            $table->dateTime('transfer_date_relocated')->nullable();
+            $table->string('transfer_reason', 100);
+            $table->text('transfer_observation', 4000);
 
             // Asignar la relacion
 

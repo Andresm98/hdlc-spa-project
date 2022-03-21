@@ -35,11 +35,15 @@ class Community extends Model
         return $this->hasMany('App\Models\CommunityResume');
     }
 
-    public function visit()
+    public function visits()
     {
         return $this->hasMany('App\Models\CommunityVisit');
     }
 
+    public function inventory()
+    {
+        return $this->hasOne('App\Models\Inventory');
+    }
     // Relation pne to one inverse polimorph
 
     public function address()

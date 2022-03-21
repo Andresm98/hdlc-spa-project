@@ -18,9 +18,9 @@ class CreateInfoFamiliesTable extends Migration
 
             $table->string('names_father', 100);
             $table->string('names_mother', 100);
-            $table->tinyInteger('nr_sisters');
-            $table->tinyInteger('nr_brothers');
-            $table->tinyInteger('place_of_family');
+            $table->smallInteger('nr_sisters');
+            $table->smallInteger('nr_brothers');
+            $table->smallInteger('place_of_family');
 
             // Asignar el campo de clave primaria.
             $table->unsignedBigInteger('profile_id')->unique();

@@ -22,7 +22,7 @@ const mutations = {
 };
 
 const actions = {
-    updateResume(context, payload) {
+    updateAllVisit(context, payload) {
         context.commit("addVisit", payload);
     },
 };

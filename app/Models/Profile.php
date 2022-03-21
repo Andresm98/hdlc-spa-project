@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Profile extends Model
 {
@@ -22,11 +24,11 @@ class Profile extends Model
 
     //  Relación uno a uno inversa
 
-    public function user()
+    public function user(): BelongsTo
     {
         // BELONG METODO PARA SETEAR LA CLAVE FORANEA
         // Campo especifico en Profile (user_id)
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     // Relacion uno a uno

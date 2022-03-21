@@ -7,7 +7,9 @@ use App\Models\Community;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\AddressController;
+use Illuminate\Support\Str;
 
 class CommunityController extends Controller
 {
@@ -18,7 +20,9 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        $communities_list = Community::paginate(10);
+        $communities_list = Community::where('comm_id', '=', null)
+            ->where('comm_level', '=', 1)
+            ->paginate(10);
         return Inertia::render('Secretary/Communities/Index', compact('communities_list'));
     }
 
@@ -29,7 +33,7 @@ class CommunityController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Secretary/Communities/Create');
     }
 
     /**
@@ -40,7 +44,44 @@ class CommunityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'comm_identity_card' => ['required', 'string', 'max:13'],
+            'comm_name' => ['required', 'max:100'],
+            'comm_cellphone' =>  ['string', 'max:20'],
+            'comm_phone' =>  ['string', 'max:20'],
+            'comm_email' =>  ['required', 'string', 'email', 'max:255', 'unique:communities'],
+            'date_fndt_comm' => ['required', 'date_format:Y-m-d H:i:s'],
+            'date_fndt_work' => ['required', 'date_format:Y-m-d H:i:s'],
+            'rn_collaborators' => ['digits_between:1,1000'],
+            'political_division_id' => ['required', 'exists:political_divisions,id']
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator->errors())
+                ->withInput();
+        }
+        $community = Community::create([
+            'comm_identity_card' =>  $request->get('comm_identity_card'),
+            'comm_name' =>  $request->get('comm_name'),
+            'comm_slug' => Str::slug($request->get('comm_name') . ' ' . random_int(1000, 10000)),
+            'comm_level' => 1,
+            'comm_cellphone' =>   $request->get('comm_cellphone'),
+            'comm_phone' =>   $request->get('comm_phone'),
+            'comm_email' =>  $request->get('comm_email'),
+            'date_fndt_comm' =>  $request->get('date_fndt_comm'),
+            'date_fndt_work' => $request->get('date_fndt_work'),
+            'rn_collaborators' => $request->get('rn_collaborators'),
+        ]);
+        $community->address()->create([
+            'address' => $request->get('address'),
+            'political_division_id' => $request->get('political_division_id'),
+        ]);
+        $community->inventory()->create([
+            'name' => 'Inventario de ' . $community->comm_name,
+            'description' => 'Descripción del inventario de la comunidad ' . $community->comm_name
+        ]);
+
+        return redirect()->route('secretary.communities.edit', $community->comm_slug)->with('success', 'Comunidad creada correctamente.');
     }
 
     /**
@@ -98,17 +139,18 @@ class CommunityController extends Controller
             [
                 'comm_identity_card' => ['required', 'string', 'max:13'],
                 'comm_name' => ['required', 'max:100'],
-                'comm_cellphone' =>  ['string', 'max:15'],
-                'comm_phone' =>  ['string', 'max:15'],
-                'comm_email' =>  ['email', 'max:255'],
+                'comm_cellphone' =>  ['string', 'max:20'],
+                'comm_phone' =>  ['string', 'max:20'],
+                'comm_email' =>  ['required', 'string', 'email', 'max:255', Rule::unique('communities')->ignore($community_id)],
                 'date_fndt_comm' => ['required', 'date_format:Y-m-d H:i:s'],
                 'date_fndt_work' => ['required', 'date_format:Y-m-d H:i:s'],
-                'rn_collaborators' => ['digits_between:1,20'],
+                'rn_collaborators' => ['digits_between:1,1000'],
             ]
         );
+
         if ($validator->fails() || $validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
         $community = Community::find($community_id);
@@ -116,6 +158,7 @@ class CommunityController extends Controller
         $community->update([
             'comm_identity_card' =>  $request->get('comm_identity_card'),
             'comm_name' =>  $request->get('comm_name'),
+            'comm_slug' => Str::slug($request->get('comm_name') . ' ' . random_int(1000, 10000)),
             'comm_cellphone' =>   $request->get('comm_cellphone'),
             'comm_phone' =>   $request->get('comm_phone'),
             'comm_email' =>  $request->get('comm_email'),

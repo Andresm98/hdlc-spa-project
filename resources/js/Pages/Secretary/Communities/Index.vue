@@ -33,11 +33,11 @@
               </alert>
             </div>
 
-            <!-- <Link
-              :href="route('admin.user.create')"
+            <Link
+              :href="route('secretary.communities.create')"
               class="pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-sm rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
-              >Crear usuarios</Link
-            > -->
+              >Crear Comunidades</Link
+            >
             <!-- Container Filters -->
             <div class="container mx-auto">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

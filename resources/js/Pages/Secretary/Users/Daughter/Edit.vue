@@ -352,6 +352,13 @@
             >
               <sacrament></sacrament>
             </div>
+            <div
+              v-if="
+                selectMenu.selectedElement == 'Transferencias' && profile_daughter != null
+              "
+            >
+              <transfer></transfer>
+            </div>
             <!-- <swiper
               :pagination="pagination"
               :modules="modules"
@@ -424,6 +431,7 @@ import Permit from "@/Pages/Secretary/Users/Daughter/Permit/Index";
 import Appointment from "@/Pages/Secretary/Users/Daughter/Appointment/Index";
 import InfoFamily from "@/Pages/Secretary/Users/Daughter/InfoFamily/Index";
 import Sacrament from "@/Pages/Secretary/Users/Daughter/Sacrament/Index";
+import Transfer from "@/Pages/Secretary/Users/Daughter/Transfer/Index";
 
 export default defineComponent({
   created() {
@@ -485,6 +493,7 @@ export default defineComponent({
     AcademicTraining,
     Permit,
     Appointment,
+    Transfer,
     InfoFamily,
     Sacrament,
     Alert,
@@ -507,6 +516,7 @@ export default defineComponent({
           "Sacramentos",
           "Permisos",
           "Nombramientos",
+          "Transferencias",
         ],
         loading: false,
         multiSelectUser: null,

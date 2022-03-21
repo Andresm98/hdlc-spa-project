@@ -86,7 +86,7 @@
           </div>
           <div class="w-full lg:w-2/4">
             <div class="m-2 md:mt-8 lg:mt-8 xl:mt-8">
-              <jet-button-success>Ingresar </jet-button-success>
+              <jet-button-success>Ingresar Estado. S</jet-button-success>
             </div>
           </div>
         </div>

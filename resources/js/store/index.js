@@ -9,11 +9,14 @@ import informationfamily from "./modules/info_family";
 import sacrament from "./modules/sacrament";
 import permit from "./modules/permit";
 import appointment from "./modules/appointment";
+import transfer from "./modules/transfer";
 
 import community from "./modules/communities/community";
 import activity from "./modules/communities/activity";
 import resume from "./modules/communities/resume";
 import visit from "./modules/communities/visit";
+import work from "./modules/communities/work";
+import inventory from "./modules/communities/inventory";
 
 const debug = process.env.NODE_ENV !== "production";
 
@@ -42,6 +45,9 @@ const store = new Vuex.Store({
         activity,
         resume,
         visit,
+        work,
+        transfer,
+        inventory,
     },
     // strict: debug,
 });

@@ -14,16 +14,28 @@ class CreateCommunitiesTable extends Migration
     public function up()
     {
         Schema::create('communities', function (Blueprint $table) {
+
             $table->id();
-            $table->tinyText('comm_identity_card');
+            $table->unsignedBigInteger('comm_id')->nullable();
+            $table->tinyText('comm_identity_card')->nullable();
             $table->string('comm_name');
             $table->string('comm_slug')->unique();
+            $table->smallInteger('comm_level');
             $table->tinyText('comm_cellphone');
             $table->tinyText('comm_phone');
             $table->string('comm_email')->unique();
             $table->dateTime('date_fndt_comm');
-            $table->dateTime('date_fndt_work');
-            $table->integer('rn_collaborators');
+            $table->dateTime('date_fndt_work')->nullable();
+
+            $table->integer('rn_collaborators')->nullable();
+            // Generar la clave foranea recursiva
+
+            $table->foreign('comm_id')
+                ->references('id')
+                ->on('communities')
+                ->onUpdate('set null')
+                ->onDelete('cascade');
+
 
             $table->timestamps();
         });

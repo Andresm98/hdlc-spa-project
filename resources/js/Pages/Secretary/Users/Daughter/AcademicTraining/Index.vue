@@ -14,7 +14,7 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Nombre de Título
+                Nombre de Título:
               </label>
 
               <div>
@@ -36,7 +36,7 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Insitución
+                Insitución:
               </label>
               <input
                 type="text"
@@ -56,7 +56,7 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Fecha de Entrega Título
+                Fecha de Entrega Título:
               </label>
 
               <Datepicker
@@ -75,7 +75,7 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Observaciones
+                Observaciones:
               </label>
               <div class="bg-white">
                 <quill-editor
@@ -93,7 +93,7 @@
           <!-- Information Address -->
         </div>
         <jet-button-success type="submit" class="ml-4 my-4 btn btn-primary"
-          >Crear Record</jet-button-success
+          >Crear Récord</jet-button-success
         >
       </form>
       <hr
