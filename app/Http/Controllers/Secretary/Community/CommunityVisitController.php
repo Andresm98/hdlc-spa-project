@@ -21,7 +21,7 @@ class CommunityVisitController extends Controller
             'id' => ['required', 'exists:communities,id']
         ]);
         if ($validator->fails()) {
-            return "Error no existen datos!";
+            return abort(404);
         }
 
         $community = Community::find($community_id);
@@ -46,7 +46,7 @@ class CommunityVisitController extends Controller
      */
     public function store(Request $request, $community_id)
     {
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'comm_reason_visit' => ['required', 'max:100'],
             'comm_type_visit' => ['required', 'max:50'],
             'comm_description_visit' => ['required', 'max:4000'],
@@ -54,15 +54,18 @@ class CommunityVisitController extends Controller
             'comm_date_end_visit' => ['required', 'date_format:Y-m-d H:i:s'],
         ]);
 
-        $validatorData = Validator::make([
+        $validator = Validator::make([
             'community_id' => $community_id,
         ], [
             'community_id' => ['required', 'exists:communities,id'],
         ]);
 
-        if ($validator->fails() || $validatorData->fails()) {
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 
@@ -111,7 +114,7 @@ class CommunityVisitController extends Controller
      */
     public function update(Request $request, $community_id, $visit_id)
     {
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'comm_reason_visit' => ['required', 'max:100'],
             'comm_type_visit' => ['required', 'max:50'],
             'comm_description_visit' => ['required', 'max:4000'],
@@ -119,7 +122,7 @@ class CommunityVisitController extends Controller
             'comm_date_end_visit' => ['required', 'date_format:Y-m-d H:i:s'],
         ]);
 
-        $validatorData = Validator::make([
+        $validator = Validator::make([
             'community_id' => $community_id,
             'visit_id' => $visit_id
         ], [
@@ -127,9 +130,12 @@ class CommunityVisitController extends Controller
             'visit_id' => ['required', 'exists:community_visits,id']
         ]);
 
-        if ($validator->fails() || $validatorData->fails()) {
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 
@@ -156,7 +162,7 @@ class CommunityVisitController extends Controller
     public function destroy($community_id, $visit_id)
     {
 
-        $validatorData = Validator::make([
+        $validator = Validator::make([
             'community_id' => $community_id,
             'visit_id' => $visit_id
         ], [
@@ -164,9 +170,10 @@ class CommunityVisitController extends Controller
             'visit_id' => ['required', 'exists:community_visits,id']
         ]);
 
-        if ($validatorData->fails()) {
-            return response()->json(['error' => 'No existen los datos!']);
+        if ($validator->fails()) {
+            return abort(404);
         }
+
 
         $visit = CommunityVisit::find($visit_id);
         $visit->delete();

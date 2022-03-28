@@ -495,6 +495,9 @@
             <div v-if="selectMenu.selectedElement == 'Inventario'">
               <inventories></inventories>
             </div>
+            <div v-if="selectMenu.selectedElement == 'Hermanas'">
+              <daughters></daughters>
+            </div>
           </div>
         </div>
       </div>
@@ -532,6 +535,7 @@ import Activities from "@/Pages/Secretary/Communities/Activities/Index";
 import Resumes from "@/Pages/Secretary/Communities/Resumes/Index";
 import Visits from "@/Pages/Secretary/Communities/Visits/Index";
 import Inventories from "@/Pages/Secretary/Communities/Inventories/Index";
+import Daughters from "@/Pages/Secretary/Communities/Daughters/Index";
 
 export default defineComponent({
   created() {
@@ -670,6 +674,7 @@ export default defineComponent({
     Resumes,
     Visits,
     Inventories,
+    Daughters,
     Datepicker,
     moment,
     Alert,
@@ -684,7 +689,7 @@ export default defineComponent({
         selectedElement: null,
         isDisabled: false,
         isTouched: false,
-        options: ["Actividades", "Resumen Anual", "Visitas", "Inventario"],
+        options: ["Actividades", "Resumen Anual", "Visitas", "Inventario", "Hermanas"],
         loading: false,
         multiSelectUser: null,
         vSelectUser: null,

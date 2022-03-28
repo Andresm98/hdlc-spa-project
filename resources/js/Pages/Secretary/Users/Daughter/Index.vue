@@ -194,7 +194,7 @@
 
                             <div class="mx-auto flex gap-10">
                               <!-- Read User -->
-                              <Link
+                              <!-- <Link
                                 :href="
                                   route('admin.user.show', {
                                     slug: user_custom.slug,
@@ -221,7 +221,7 @@
                                     </div>
                                   </div>
                                 </div>
-                              </Link>
+                              </Link> -->
 
                               <!-- Update User -->
                               <Link

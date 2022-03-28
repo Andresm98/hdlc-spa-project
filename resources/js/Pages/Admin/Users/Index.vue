@@ -379,6 +379,15 @@ import Alert from "@/Components/Alert";
 
 export default defineComponent({
   layout: PrincipalLayout,
+  mounted() {
+    this.all;
+  },
+
+  computed: {
+    all() {
+      console.log(this.users_list.data);
+    },
+  },
   props: {
     users_list: Object,
     user_custom: Object,

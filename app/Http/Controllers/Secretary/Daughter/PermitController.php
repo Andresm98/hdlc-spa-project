@@ -49,7 +49,7 @@ class PermitController extends Controller
      */
     public function store(Request $request, $user_id)
     {
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'reason' => ['required', 'max:100'],
             'description' => ['required', 'max:2000'],
             'date_province' => ['required', 'date_format:Y-m-d H:i:s'],
@@ -57,11 +57,22 @@ class PermitController extends Controller
             'date_out' => ['required', 'date_format:Y-m-d H:i:s'],
         ]);
 
+        $validator = Validator::make([
+            'user_id' => $user_id,
+        ], [
+            'user_id' => ['required', 'exists:users,id'],
+        ]);
+
         if ($validator->fails()) {
+            return abort(404);
+        }
+
+        if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validator->errors())
                 ->withInput();
         }
+
         $user = User::find($user_id);
         $permit = $user->profile->permits()->create([
             'reason' => $request->get('reason'),
@@ -131,8 +142,15 @@ class PermitController extends Controller
                 'date_out' => ['required', 'date_format:Y-m-d H:i:s'],
             ]
         );
-        if ($validator->fails() || $validatorData->fails()) {
-            return response()->json(['error' => 'No existen los datos']);
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        if ($validatorData->fails()) {
+            return redirect()->back()
+                ->withErrors($validator->errors())
+                ->withInput();
         }
 
         $permit = Permit::find($permit_id);
@@ -172,7 +190,7 @@ class PermitController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => 'No existen los datos']);
+            return abort(404);
         }
 
         $permit = Permit::find($permit_id);

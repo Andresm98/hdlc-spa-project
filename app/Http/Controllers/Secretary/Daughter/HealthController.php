@@ -21,9 +21,11 @@ class HealthController extends Controller
         $validator = Validator::make(['id' => $user_id], [
             'id' => ['required', 'exists:users,id']
         ]);
+
         if ($validator->fails()) {
             return response()->json(['error' => 'No existen datos.']);
         }
+
         $user = User::find($user_id);
         return $user->profile->healths;
     }
@@ -46,19 +48,29 @@ class HealthController extends Controller
      */
     public function store(Request $request, $user_id)
     {
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'actual_health' => ['required', 'max:4000'],
             'chronic_diseases' => ['required', 'max:4000'],
             'other_health_problems' => ['required', 'max:4000'],
             'consult_date' => ['required', 'date_format:Y-m-d H:i:s'],
         ]);
 
+        $validator = Validator::make([
+            'user_id' => $user_id,
+        ], [
+            'user_id' => ['required', 'exists:users,id'],
+        ]);
+
         if ($validator->fails()) {
-            // return response()->json(['errors' => $validator->errors()]);
+            return abort(404);
+        }
+
+        if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validator->errors())
                 ->withInput();
         }
+
         $user = User::find($user_id);
         $user->profile->healths()->create([
             'actual_health' => $request->get('actual_health'),
@@ -121,8 +133,15 @@ class HealthController extends Controller
                 'consult_date' => ['required', 'date_format:Y-m-d H:i:s'],
             ]
         );
-        if ($validator->fails() || $validatorData->fails()) {
-            return response()->json(['error' => 'No existen los datos']);
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        if ($validatorData->fails()) {
+            return redirect()->back()
+                ->withErrors($validator->errors())
+                ->withInput();
         }
 
         $health = Health::find($health_id);

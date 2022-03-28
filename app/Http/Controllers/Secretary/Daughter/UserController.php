@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers\Secretary\Daughter;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use PDF;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
-use Spatie\Permission\Models\Role;
+use App\Models\Profile;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 // Inject
 
-use App\Http\Controllers\Secretary\Daughter\ProfileController;
+use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Validator;
+
+// Reports
+
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Secretary\Daughter\ProfileController;
 
 class UserController extends Controller
 {
@@ -66,11 +71,11 @@ class UserController extends Controller
             $query->orderBy(request('field'), request('direction'));
         }
 
-        $result_filters = request()->all(['search', 'field', 'direction', 'page']);
+
 
         return Inertia::render('Secretary/Users/Daughter/Index', [
             'daughters_list' => $this->allDaughters($query),
-            'filters' => $result_filters
+            'filters' => request()->all(['search', 'field', 'direction', 'page'])
         ]);
     }
 
@@ -156,46 +161,57 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($id)],
             'roles*' => 'required|exists:roles,id',
             'file' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ]);
+
+        $validator = Validator::make([
+            'id' => $id,
+        ], [
+            'id' => ['required', 'exists:users,id'],
+        ]);
+
         if ($validator->fails()) {
+            return abort(404);
+        }
+
+        if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validator->errors())
                 ->withInput();
-        } else {
-            $user =  User::find($id);
-            if ($request->file('file')) {
-                if (!$user->image) {
-                    $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
-                    Storage::disk('s3')->setVisibility($path, 'private');
-                    $user->image()->create([
-                        'filename' => $path,
-                        'url' => Storage::disk('s3')->url($path)
-                    ]);
-                } else {
-                    Storage::disk('s3')->delete($user->image->filename);
-                    $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
-                    Storage::disk('s3')->setVisibility($path, 'private');
-                    $user->image()->update([
-                        'filename' => $path,
-                        'url' => Storage::disk('s3')->url($path)
-                    ]);
-                }
-            }
-            $user->update(
-                [
-                    'name' => $request->get('name'),
-                    'lastname' => $request->get('lastname'),
-                    'email' => $request->get('email'),
-                ]
-            );
-            return redirect()->back()->with('success', 'Usuario actualizado correctamente.');
         }
+
+        $user =  User::find($id);
+        if ($request->file('file')) {
+            if (!$user->image) {
+                $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
+                Storage::disk('s3')->setVisibility($path, 'private');
+                $user->image()->create([
+                    'filename' => $path,
+                    'url' => Storage::disk('s3')->url($path)
+                ]);
+            } else {
+                Storage::disk('s3')->delete($user->image->filename);
+                $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
+                Storage::disk('s3')->setVisibility($path, 'private');
+                $user->image()->update([
+                    'filename' => $path,
+                    'url' => Storage::disk('s3')->url($path)
+                ]);
+            }
+        }
+        $user->update(
+            [
+                'name' => $request->get('name'),
+                'lastname' => $request->get('lastname'),
+                'email' => $request->get('email'),
+            ]
+        );
+        return redirect()->back()->with('success', 'Usuario actualizado correctamente.');
     }
 
     /**
@@ -207,5 +223,45 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    /**
+     *
+     * Report Info family
+     */
+
+    public function reportInfoProfile($user_id)
+    {
+
+        $user = User::find($user_id);
+
+        // Import Methods
+        $profile_daughter = new ProfileController();
+        $addressClass = new AddressController();
+        $data =   collect(['status' => true]);
+
+        if ($user->profile) {
+            $profile = Profile::with('address')
+                ->with('user')
+                ->where('user_id', '=', $user->id)
+                ->get();
+            $data->put('profile', $profile->first());
+
+
+            if ($user->image) {
+                $image = Storage::disk('s3')->temporaryUrl(
+                    $user->image->filename,
+                    now()->addMinutes(5)
+                );
+                $data->put('image', $image);
+            }
+
+            $pdf = PDF::loadView('reports.daughters.profile', compact('data'));
+            // return $pdf -> download('Usuarios-OpenScience.pdf');
+            return $pdf->setPaper('a4', 'portrait')->stream('PerfilHermana' . $user->name . '.pdf');
+        } else {
+            return "no se puede imprimir";
+        }
     }
 }

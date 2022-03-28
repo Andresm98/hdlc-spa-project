@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Secretary\Community\Inventory;
 
 use App\Models\Section;
 use App\Models\Community;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -61,18 +62,19 @@ class CommunitySectionController extends Controller
             'description' => ['required', 'max:4000'],
         ]);
 
-        if ($validator->fails() || $validatorData->fails()) {
-            // return redirect()->back()
-            //     ->withErrors($validator->errors())
-            //     ->withInput();
-            return redirect()->back()->with([
-                'error' => 'La sección del inventario no fue guardada correctamente, intente de nuevo!',
-            ]);
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        if ($validatorData->fails()) {
+            return redirect()->back()
+                ->withErrors($validatorData->errors())
+                ->withInput();
         }
 
         $commmunity = Community::find($community_id);
         $commmunity->inventory->sections()->create([
             'name' => $request->get('name'),
+            'slug' => Str::slug($commmunity->comm_name . ' ' . $commmunity->id . ' ' . $request->get('name')),
             'description' => $request->get('description')
         ]);
 
@@ -120,14 +122,18 @@ class CommunitySectionController extends Controller
             'section_id' => ['required', 'exists:sections,id']
         ]);
         if ($validator->fails()) {
-            return redirect()->back()->with(['error' => 'No existen datos']);
+            return abort(404);
         }
+
         $section = Section::where('id', '=', $section_id)
             ->where('inventory_id', '=', $inventory_id)
             ->get()
             ->first();
+
+        $commmunity = Community::find($section->commmunity_id);
         $section->update([
             'name' => $request->get('name'),
+            'slug' => Str::slug($commmunity->comm_name . ' ' . $commmunity->id . ' ' . $request->get('name')),
             'description' => $request->get('description'),
         ]);
         return redirect()->back()->with(['success' => 'Sección actualizada correctamente!']);
@@ -141,24 +147,28 @@ class CommunitySectionController extends Controller
      */
     public function destroy($inventory_id, $section_id)
     {
-        $validator = Validator::make([
-            'inventory_id' => $inventory_id,
-            'section_id' => $section_id
-        ], [
-            'inventory_id' => ['required', 'exists:inventories,id'],
-            'section_id' => ['required', 'exists:sections,id']
-        ]);
+        try {
+            $validator = Validator::make([
+                'inventory_id' => $inventory_id,
+                'section_id' => $section_id
+            ], [
+                'inventory_id' => ['required', 'exists:inventories,id'],
+                'section_id' => ['required', 'exists:sections,id']
+            ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->with(['error' => 'No existen datos']);
+            if ($validator->fails()) {
+                return abort(404);
+            }
+
+            $section = Section::where('id', '=', $section_id)
+                ->where('inventory_id', '=', $inventory_id)
+                ->get()
+                ->first();
+            $section->delete();
+
+            return redirect()->back()->with(['success' => 'Sección eliminada correctamente!']);
+        } catch (\Illuminate\Database\QueryException $ex) {
+            return redirect()->back()->with(['error' => 'La sección contiene artículos, no puede ser eliminada.']);
         }
-
-        $section = Section::where('id', '=', $section_id)
-            ->where('inventory_id', '=', $inventory_id)
-            ->get()
-            ->first();
-        $section->delete();
-
-        return redirect()->back()->with(['success' => 'Sección eliminada correctamente!']);
     }
 }

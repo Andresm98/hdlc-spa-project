@@ -47,18 +47,29 @@ class AppointmentController extends Controller
      */
     public function store(Request $request, $user_id)
     {
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'name_appointment' => ['required', 'max:100'],
             'description' => ['required', 'max:2000'],
             'date_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
             // 'date_end_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
         ]);
 
+        $validator = Validator::make([
+            'user_id' => $user_id,
+        ], [
+            'user_id' => ['required', 'exists:users,id'],
+        ]);
+
         if ($validator->fails()) {
+            return abort(404);
+        }
+
+        if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validator->errors())
                 ->withInput();
         }
+
         $user = User::find($user_id);
         $user->profile->appointments()->create([
             'name_appointment' => $request->get('name_appointment'),

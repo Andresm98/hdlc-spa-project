@@ -60,7 +60,7 @@ Route::group(
             ->names('settings');
 
         // FIXME:: Rest METHODS
-        Route::get('jjj', [UserController::class, 'dd'])->name('usersk.create');
-        Route::get('/pdf', [UserController::class, 'PDF']);
+        Route::get('pdf', [UserController::class, 'PDF'])
+            ->name('admin.pdf');
     }
 );

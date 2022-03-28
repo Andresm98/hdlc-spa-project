@@ -6,6 +6,24 @@
       >
         Plantilla de Transferencias
       </h6>
+
+      <div v-if="$page.props.flash != null">
+        <alert
+          v-if="$page.props.flash.success"
+          class="alert"
+          :type_alert_r="(type_alert = 'success')"
+          :message="$page.props.flash.success"
+        >
+        </alert>
+        <alert
+          v-if="$page.props.flash.error"
+          class="alert"
+          :type_alert_r="(type_alert = 'error')"
+          :message="$page.props.flash.error"
+        >
+        </alert>
+      </div>
+
       <form @submit.prevent="submit">
         <div class="flex flex-wrap">
           <div class="w-full lg:w-12/12 px-4">
@@ -113,8 +131,8 @@
                       :max-height="200"
                       :disabled="isDisabled"
                       mode="tags"
-                      label="name"
-                      track-by="name"
+                      label="office_name"
+                      track-by="office_name"
                     ></multiselect>
                   </div>
                 </div>
@@ -378,6 +396,29 @@
               </div>
             </div>
 
+            <div
+              v-if="updateTransferForm.transfer_date_relocated != null"
+              class="w-full lg:w-6/12 px-4"
+            >
+              <div class="relative w-full mb-3">
+                <label
+                  class="block text-sm font-medium text-gray-700"
+                  htmlfor="grid-password"
+                >
+                  Fecha de Relocalización:
+                </label>
+
+                <Datepicker
+                  v-model="updateTransferForm.transfer_date_relocated"
+                  :format="format"
+                  :transitions="false"
+                  menuClassName="dp-custom-menu"
+                  required
+                  readonly
+                />
+              </div>
+            </div>
+
             <!-- Information Address -->
           </div>
         </template>
@@ -414,6 +455,7 @@ import "vue3-date-time-picker/dist/main.css";
 import { ref } from "vue";
 import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
 import JetInputError from "@/Jetstream/InputError";
+import Alert from "@/Components/Alert";
 
 export default {
   props: {
@@ -453,12 +495,14 @@ export default {
           })
         )
         .then((res) => {
+          console.log("computed ", res.data);
           this.updateAllTransfer(res.data);
         });
     },
   },
   // Relashionship with another components
   components: {
+    Alert,
     Datepicker,
     JetButtonSuccess,
     JetButton,

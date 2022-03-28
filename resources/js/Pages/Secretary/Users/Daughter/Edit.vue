@@ -109,14 +109,20 @@
         <div
           class="mt-4 col-start-1 row-start-3 self-center sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2 lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4"
         >
-          <button
+          <a
             type="button"
+            target="_blank"
+            :href="
+              this.route(`secretary.daughters.report.profile`, {
+                user_id: this.daughter_custom.id,
+              })
+            "
             class="bg-blue-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg"
           >
             <!--
                         FIXME: Import Controllers For PDF-->
             Plantilla PDF
-          </button>
+          </a>
         </div>
 
         <div
@@ -574,7 +580,16 @@ export default defineComponent({
         }
       );
     },
-
+    printReport() {
+      Inertia.get(
+        route(`secretary.daughters.report.profile`, {
+          user_id: this.daughter_custom.id,
+        }),
+        {
+          preserveScroll: true,
+        }
+      );
+    },
     onChange(value) {
       this.value = value;
       console.log("aiudaaa> ", value);

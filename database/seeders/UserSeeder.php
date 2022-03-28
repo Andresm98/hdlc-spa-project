@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $users = [
-            'Admin' => 'admin@votetracker.org',
+            'Admin' => 'admin@example.org',
             'Owner' => 'owner@example.com',
             'Collaborator' => 'collaborator@example.com',
             'Staff' => 'staff@example.com',
@@ -87,6 +87,18 @@ class UserSeeder extends Seeder
         }
 
         //  secretary
+        $username = 'secretary  ' . Str::random(15);
+        $slug =  Str::slug($username);
+        $user =  User::create([
+            'username' => $username,
+            'slug' => $slug,
+            'name' => Str::random(15),
+            'lastname' =>  Str::random(15),
+            'email' =>  'secretary@gmail.com',
+            'password' => Hash::make('secret'),
+        ]);
+        $user->assignRole('invited', 'secretary');
+        $this->createTeam($user);
         for ($i = 0; $i <= 60; $i++) {
             $username = 'secretary  ' . Str::random(15);
             $slug =  Str::slug($username);

@@ -264,10 +264,10 @@
 
                               <!-- Delete User -->
 
-                              <!-- <button
+                              <button
                                 @click="
                                   modal_open = true;
-                                  selected_user = user_custom;
+                                  selected_community = community_custom;
                                 "
                               >
                                 <div class="w-auto h-auto">
@@ -290,32 +290,8 @@
                                     </div>
                                   </div>
                                 </div>
-                              </button> -->
+                              </button>
                               <!-- Delete Account Confirmation Modal -->
-                              <div>
-                                <jet-dialog-modal :show="modal_open">
-                                  <template v-slot:title> Eliminar </template>
-
-                                  <template v-slot:content>
-                                    <p class="text-lg text-black">
-                                      ¿Está seguro/a de que desea eliminar la cuenta de
-                                      {{ selected_user.name }}
-                                      ?
-                                    </p>
-                                    Una vez la cuenta es eliminada, todos sus recursos y
-                                    los datos se eliminarán de forma permanente. Por favor
-                                    verifique nuevamente su acción pues es irreversible.
-                                  </template>
-                                  <template v-slot:footer>
-                                    <jet-secondary-button @click="closeModal()">
-                                      Cancelar
-                                    </jet-secondary-button>
-                                    <jet-danger-button class="ml-3" @click="deleteUser()">
-                                      Eliminar Usuario
-                                    </jet-danger-button>
-                                  </template>
-                                </jet-dialog-modal>
-                              </div>
                             </div>
                           </td>
                         </tr>
@@ -329,6 +305,31 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div>
+              <!-- Modal -->
+              <jet-dialog-modal :show="modal_open">
+                <template v-slot:title> Eliminar </template>
+
+                <template v-slot:content>
+                  <p class="text-lg text-black">
+                    ¿Está seguro/a de que desea eliminar la cumunidad
+                    {{ selected_community.comm_name }}
+                    ?
+                  </p>
+                  Una vez la comunidad es eliminada, todos sus recursos y los datos se
+                  eliminarán de forma permanente. Por favor verifique nuevamente su acción
+                  pues es irreversible.
+                </template>
+                <template v-slot:footer>
+                  <jet-secondary-button @click="closeModal()">
+                    Cancelar
+                  </jet-secondary-button>
+                  <jet-danger-button class="ml-3" @click="deleteCommunity()">
+                    Eliminar
+                  </jet-danger-button>
+                </template>
+              </jet-dialog-modal>
             </div>
             <section>
               <pagination
@@ -387,7 +388,7 @@ export default defineComponent({
   data() {
     return {
       modal_open: false,
-      selected_user: Object,
+      selected_community: Object,
       type_alert: null,
       params: {
         // search: this.filters.search,
@@ -396,7 +397,19 @@ export default defineComponent({
       },
     };
   },
-  methods: {},
+  methods: {
+    deleteCommunity: function () {
+      Inertia.delete(
+        route("secretary.communities.delete", {
+          community_id: this.selected_community.id,
+        })
+      );
+      this.modal_open = false;
+    },
+    closeModal() {
+      this.modal_open = false;
+    },
+  },
   watch: {},
 });
 </script>

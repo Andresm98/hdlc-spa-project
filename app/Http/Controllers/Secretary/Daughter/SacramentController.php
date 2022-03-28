@@ -21,7 +21,7 @@ class SacramentController extends Controller
             'id' => ['required', 'exists:users,id']
         ]);
         if ($validator->fails()) {
-            return response()->json(['error' => 'No existen datos.']);
+            return abort(404);
         }
         $user = User::find($user_id);
         return $user->profile->sacraments;
@@ -74,17 +74,28 @@ class SacramentController extends Controller
     public function store(Request $request, $user_id)
     {
 
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'sacrament_name' => ['required', 'max:100'],
             'sacrament_date' => ['required', 'date_format:Y-m-d H:i:s'],
             'observation' => ['required', 'max:4000'],
         ]);
 
+        $validator = Validator::make([
+            'user_id' => $user_id,
+        ], [
+            'user_id' => ['required', 'exists:users,id'],
+        ]);
+
         if ($validator->fails()) {
+            return abort(404);
+        }
+
+        if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validator->errors())
                 ->withInput();
         }
+
         $user = User::find($user_id);
         $user->profile->sacraments()->create([
             'sacrament_name' => $request->get('sacrament_name'),
@@ -145,8 +156,15 @@ class SacramentController extends Controller
                 'observation' => ['required', 'max:4000'],
             ]
         );
-        if ($validator->fails() || $validatorData->fails()) {
-            return response()->json(['error' => 'No existen los datos']);
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        if ($validatorData->fails()) {
+            return redirect()->back()
+                ->withErrors($validator->errors())
+                ->withInput();
         }
 
         $sacrament = Sacrament::find($sacrament_id);
@@ -177,7 +195,7 @@ class SacramentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => 'No existen los datos']);
+            return abort(404);
         }
 
         $sacrament = Sacrament::find($sacrament_id);

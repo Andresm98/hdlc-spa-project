@@ -45,22 +45,25 @@ class CommunityResumeController extends Controller
      */
     public function store(Request $request, $community_id)
     {
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'comm_name_resume' => ['required', 'max:100'],
             'comm_annexed_resume' => ['required', 'max:400'],
             'comm_observation_resume' => ['required', 'max:4000'],
             'comm_date_resume' => ['required', 'date_format:Y-m-d H:i:s'],
         ]);
 
-        $validatorData = Validator::make([
+        $validator = Validator::make([
             'community_id' => $community_id,
         ], [
             'community_id' => ['required', 'exists:communities,id'],
         ]);
 
-        if ($validator->fails() || $validatorData->fails()) {
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 
@@ -108,14 +111,14 @@ class CommunityResumeController extends Controller
      */
     public function update(Request $request, $community_id, $resume_id)
     {
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'comm_name_resume' => ['required', 'max:100'],
             'comm_annexed_resume' => ['required', 'max:400'],
             'comm_observation_resume' => ['required', 'max:4000'],
             'comm_date_resume' => ['required', 'date_format:Y-m-d H:i:s'],
         ]);
 
-        $validatorData = Validator::make([
+        $validator = Validator::make([
             'community_id' => $community_id,
             'resume_id' => $resume_id
         ], [
@@ -123,9 +126,12 @@ class CommunityResumeController extends Controller
             'resume_id' => ['required', 'exists:community_resumes,id']
         ]);
 
-        if ($validator->fails() || $validatorData->fails()) {
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 
@@ -150,7 +156,7 @@ class CommunityResumeController extends Controller
      */
     public function destroy($community_id, $resume_id)
     {
-        $validatorData = Validator::make([
+        $validator = Validator::make([
             'community_id' => $community_id,
             'resume_id' => $resume_id
         ], [
@@ -158,8 +164,8 @@ class CommunityResumeController extends Controller
             'resume_id' => ['required', 'exists:community_resumes,id']
         ]);
 
-        if ($validatorData->fails()) {
-            return response()->json(['error' => 'Error no existen los datos!']);
+        if ($validator->fails()) {
+            return abort(404);
         }
 
         $resume = CommunityResume::find($resume_id);

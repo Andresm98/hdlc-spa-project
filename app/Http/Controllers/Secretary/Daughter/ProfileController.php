@@ -65,31 +65,31 @@ class ProfileController extends Controller
             return redirect()->back()
                 ->withErrors($validator->errors())
                 ->withInput();
-        } else {
-            $user = User::find($request->get("user_id"));
-            if (!$user->profile) {
-                $profile = $user->profile()->create([
-                    'identity_card' => $request->get("identity_card"),
-                    'date_birth' => $request->get("date_birth"),
-                    'date_vocation' => $request->get("date_vocation"),
-                    'date_admission' => $request->get("date_admission"),
-                    'date_send' => $request->get('date_send'),
-                    'date_vote' => $request->get('date_vote'),
-                    'date_death' => $request->get('date_death'),
-                    'cellphone' => $request->get("cellphone"),
-                    'phone' => $request->get("phone"),
-                    'observation' => $request->get("observation"),
-                ]);
+        }
 
-                $profile->address()->create([
-                    'address' => $request->address["address"],
-                    'political_division_id' => $request->address["political_division_id"]
-                ]);
+        $user = User::find($request->get("user_id"));
+        if (!$user->profile) {
+            $profile = $user->profile()->create([
+                'identity_card' => $request->get("identity_card"),
+                'date_birth' => $request->get("date_birth"),
+                'date_vocation' => $request->get("date_vocation"),
+                'date_admission' => $request->get("date_admission"),
+                'date_send' => $request->get('date_send'),
+                'date_vote' => $request->get('date_vote'),
+                'date_death' => $request->get('date_death'),
+                'cellphone' => $request->get("cellphone"),
+                'phone' => $request->get("phone"),
+                'observation' => $request->get("observation"),
+            ]);
 
-                return  redirect()->route('secretary.daughters.edit', $user->slug)->with([
-                    'success' => 'El perfil del usuario fue actualizado correctamente.',
-                ]);
-            }
+            $profile->address()->create([
+                'address' => $request->address["address"],
+                'political_division_id' => $request->address["political_division_id"]
+            ]);
+
+            return  redirect()->route('secretary.daughters.edit', $user->slug)->with([
+                'success' => 'El perfil del usuario fue actualizado correctamente.',
+            ]);
         }
     }
 
@@ -145,31 +145,30 @@ class ProfileController extends Controller
             return redirect()->back()
                 ->withErrors($validator->errors())
                 ->withInput();
-        } else {
+        }
 
-            $user = User::find($profile_custom_id);
-            if ($user->profile) {
-                $user->profile()->update([
-                    'identity_card' => $request->get("identity_card"),
-                    'date_birth' => $request->get("date_birth"),
-                    'date_vocation' => $request->get("date_vocation"),
-                    'date_admission' => $request->get("date_admission"),
-                    'date_send' => $request->get('date_send'),
-                    'date_vote' => $request->get('date_vote'),
-                    'date_death' => $request->get('date_death'),
-                    'cellphone' => $request->get("cellphone"),
-                    'phone' => $request->get("phone"),
-                    'observation' => $request->get("observation"),
-                ]);
-                $user->profile->address()->update([
-                    'address' => $request->address["address"],
-                    'political_division_id' => $request->address["political_division_id"]
-                ]);
+        $user = User::find($profile_custom_id);
+        if ($user->profile) {
+            $user->profile()->update([
+                'identity_card' => $request->get("identity_card"),
+                'date_birth' => $request->get("date_birth"),
+                'date_vocation' => $request->get("date_vocation"),
+                'date_admission' => $request->get("date_admission"),
+                'date_send' => $request->get('date_send'),
+                'date_vote' => $request->get('date_vote'),
+                'date_death' => $request->get('date_death'),
+                'cellphone' => $request->get("cellphone"),
+                'phone' => $request->get("phone"),
+                'observation' => $request->get("observation"),
+            ]);
+            $user->profile->address()->update([
+                'address' => $request->address["address"],
+                'political_division_id' => $request->address["political_division_id"]
+            ]);
 
-                return redirect()->route('secretary.daughters.edit', $user->slug)->with([
-                    'success' => 'El perfil del usuario fue actualizado correctamente.',
-                ]);
-            }
+            return redirect()->route('secretary.daughters.edit', $user->slug)->with([
+                'success' => 'El perfil del usuario fue actualizado correctamente.',
+            ]);
         }
     }
 

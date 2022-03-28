@@ -77,7 +77,11 @@ class WorkController extends Controller
             'rn_collaborators' => ['required', 'integer', 'between:1,1000'],
             'political_division_id' => ['required', 'exists:political_divisions,id']
         ]);
-        if ($validator->fails() || $validatorData->fails()) {
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validatorData->errors())
                 ->withInput();
@@ -172,11 +176,15 @@ class WorkController extends Controller
                 'rn_collaborators' => ['required', 'integer', 'between:1,1000'],
             ]
         );
-        if ($validator->fails() || $validatorData->fails()) {
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
+
         $community = Community::find($work_id);
 
         $community->update([
@@ -225,7 +233,7 @@ class WorkController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response()->json(['error' => 'No se encuentran datos!']);
+                return abort(404);
             }
 
             $work = Community::find($work_id);
@@ -234,7 +242,7 @@ class WorkController extends Controller
 
             return redirect()->back()->with(['success' => 'La obra fue eliminada correctamente']);
         } catch (\Illuminate\Database\QueryException $ex) {
-            return redirect()->back()->with(['error' => $ex->getMessage()]);
+            return redirect()->back()->with(['error' => 'Durante la acción ocurrió el siguiente error: ' . $ex->getMessage()]);
         }
     }
 }

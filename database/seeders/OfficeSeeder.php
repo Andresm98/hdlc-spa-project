@@ -17,20 +17,20 @@ class OfficeSeeder extends Seeder
     {
 
         $office = Office::create([
-            'name'  => 'Superiora',
-            'observation' => 'Es la encargada de dirigir la inst.',
+            'office_name'  => 'Superiora',
+            'office_observation' => 'Es la encargada de dirigir la inst.',
         ]);
         $office = Office::create([
-            'name'  => 'Hermana Sirviente',
-            'observation' => 'Hermana de rango s.',
+            'office_name'  => 'Hermana Sirviente',
+            'office_observation' => 'Hermana de rango s.',
         ]);
         $office = Office::create([
-            'name'  => 'Hermana General',
-            'observation' => 'Hermana de rango g',
+            'office_name'  => 'Hermana General',
+            'office_observation' => 'Hermana de rango g',
         ]);
         $office = Office::create([
-            'name'  => 'Hermanas Novicias',
-            'observation' => 'Hermana de rango novicia.',
+            'office_name'  => 'Hermanas Novicias',
+            'office_observation' => 'Hermana de rango novicia.',
         ]);
     }
 }

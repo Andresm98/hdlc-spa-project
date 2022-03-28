@@ -44,18 +44,29 @@ class InfoFamilyController extends Controller
      */
     public function storeUpdateData(Request $request, $user_id)
     {
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'names_father' => ['required', 'max:100'],
             'names_mother' => ['required', 'max:100'],
             'nr_sisters' => ['required', 'digits_between:1,20'],
             'nr_brothers' => ['required', 'digits_between:1,20'],
             'place_of_family' => ['required', 'digits_between:1,20'],
         ]);
+        $validator = Validator::make([
+            'user_id' => $user_id,
+        ], [
+            'user_id' => ['required', 'exists:users,id'],
+        ]);
+
         if ($validator->fails()) {
+            return abort(404);
+        }
+
+        if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validator->errors())
                 ->withInput();
         }
+
         $user = User::find($user_id);
         // If no exists
         if (!$user->profile->info_family) {

@@ -308,8 +308,8 @@ class UserController extends Controller
     {
         $users = User::all();
         // return view('report', compact('users'));
-        $pdf = PDF::loadView('report', compact('users'));
+        $pdf = PDF::loadView('reports.daughters.profile', compact('users'));
         // return $pdf -> download('Usuarios-OpenScience.pdf');
-        return $pdf->setPaper('a4', 'landscape')->stream('UsuariosHDLC.pdf');
+        return $pdf->setPaper('a4', 'portrait')->stream('UsuariosHDLC.pdf');
     }
 }

@@ -46,7 +46,7 @@ class CommunityActivityController extends Controller
     public function store(Request $request, $community_id)
     {
 
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'comm_name_activity' => ['required', 'max:100'],
             'comm_description_activity' => ['required', 'max:4000'],
             'comm_date_activity' => ['required', 'date_format:Y-m-d H:i:s'],
@@ -55,15 +55,18 @@ class CommunityActivityController extends Controller
             'comm_nr_collaborators' => ['required', 'digits_between:1,1000'],
         ]);
 
-        $validatorData = Validator::make([
+        $validator= Validator::make([
             'community_id' => $community_id,
         ], [
             'community_id' => ['required', 'exists:communities,id'],
         ]);
 
-        if ($validator->fails() || $validatorData->fails()) {
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 
@@ -113,7 +116,7 @@ class CommunityActivityController extends Controller
      */
     public function update(Request $request, $community_id, $activity_id)
     {
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'comm_name_activity' => ['required', 'max:100'],
             'comm_description_activity' => ['required', 'max:4000'],
             'comm_date_activity' => ['required', 'date_format:Y-m-d H:i:s'],
@@ -122,7 +125,7 @@ class CommunityActivityController extends Controller
             'comm_nr_collaborators' => ['required', 'digits_between:1,1000'],
         ]);
 
-        $validatorData = Validator::make([
+        $validator = Validator::make([
             'community_id' => $community_id,
             'activity_id' => $activity_id
         ], [
@@ -130,11 +133,15 @@ class CommunityActivityController extends Controller
             'activity_id' => ['required', 'exists:community_activities,id']
         ]);
 
-        if ($validator->fails() || $validatorData->fails()) {
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
+
 
         $activity = CommunityActivity::find($activity_id);
         $activity->update([
@@ -168,7 +175,7 @@ class CommunityActivityController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => 'No existen los datos']);
+            return abort(404);
         }
 
         $activity = CommunityActivity::find($activity_id);

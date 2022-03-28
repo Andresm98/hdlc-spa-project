@@ -9,6 +9,8 @@ class Article extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     // Relaciones uno a varios inversa
 
     public function sections()

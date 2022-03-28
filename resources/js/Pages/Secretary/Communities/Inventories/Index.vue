@@ -134,11 +134,13 @@
                           class="block mx-2 p-5 leading-normal"
                           >Eliminar</jet-danger-button
                         >
+
                         <jet-button-success
-                          @click="met(section)"
+                          @click="accessArticles(section)"
                           class="block mx-2 p-5 leading-normal"
-                          >Acceder</jet-button-success
                         >
+                          Acceder
+                        </jet-button-success>
                       </section>
                       <br />
 
@@ -309,6 +311,7 @@ import JetButton from "@/Jetstream/Button.vue";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import { Link } from "@inertiajs/inertia-vue3";
 
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
@@ -343,6 +346,7 @@ export default {
     JetDialogModal,
     JetFormSection,
     moment,
+    Link,
     Alert,
   },
   watch: {
@@ -444,6 +448,47 @@ export default {
           this.updateInventory(res.data);
           this.formInventory = this.getInventory();
         });
+
+      //
+      //
+      //
+
+      const headers = { "Content-Type": "application/json" };
+      fetch("https://api.npms.io/v2/search?q=vue", { headers })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Send data: ");
+          console.log("Print: ", data.results);
+        });
+
+      //
+      //
+      //
+
+      fetch(
+        this.route("secretary.communities.inventory.index", {
+          community_id: this.community.id,
+        })
+      )
+        .then(async (response) => {
+          const data = await response.json();
+
+          // check for error response
+          if (!response.ok) {
+            // get error message from body or default to response statusText
+            const error = (data && data.message) || response.statusText;
+            return Promise.reject(error);
+          }
+
+          console.log("Send data 2: ");
+          console.log("Print 2: ", data);
+        })
+        .catch((error) => {
+          this.errorMessage = error;
+          console.error("There was an error!", error);
+        });
+
+      //
     },
 
     section() {
@@ -476,8 +521,20 @@ export default {
         }
       );
     },
-    met(section) {
-      console.log("section is ", section);
+    accessArticles(section) {
+      Inertia.get(
+        this.route(
+          "secretary.communities.articles.index",
+          {
+            section_slug: section.slug,
+          },
+          {
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => {},
+          }
+        )
+      );
     },
     // Update Data Table
 

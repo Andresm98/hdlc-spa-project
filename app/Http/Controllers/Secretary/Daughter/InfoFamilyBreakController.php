@@ -44,17 +44,28 @@ class InfoFamilyBreakController extends Controller
      */
     public function storeUpdateData(Request $request, $user_id)
     {
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'name_family_member' => ['required', 'max:100'],
             'relation' => ['required', 'max:100'],
             'cellphone' => ['required', 'max:20'],
             'phone' => ['required', 'max:20'],
         ]);
+        $validator = Validator::make([
+            'user_id' => $user_id,
+        ], [
+            'user_id' => ['required', 'exists:users,id'],
+        ]);
+
         if ($validator->fails()) {
+            return abort(404);
+        }
+
+        if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validator->errors())
                 ->withInput();
         }
+
         $user = User::find($user_id);
         // If no exists
 

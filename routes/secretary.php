@@ -20,6 +20,8 @@ use App\Http\Controllers\Secretary\Daughter\InfoFamilyBreakController;
 use App\Http\Controllers\Secretary\Community\CommunityResumeController;
 use App\Http\Controllers\Secretary\Daughter\AcademicTrainingController;
 use App\Http\Controllers\Secretary\Community\CommunityActivityController;
+use App\Http\Controllers\Secretary\Community\CommunityDaughterController;
+use App\Http\Controllers\Secretary\Community\Inventory\CommunityArticleController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunitySectionController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityInventoryController;
 
@@ -78,6 +80,9 @@ Route::group(
 
         Route::put('profile/{profile_custom_id}', [ProfileController::class, 'update'])
             ->name('daughters-profile.update');
+
+        Route::get('daughters-charity/report/{user_id}', [UserController::class, 'reportInfoProfile'])
+            ->name('daughters.report.profile');
 
         //  Health Controllers
 
@@ -214,6 +219,9 @@ Route::group([
     Route::put('update/{community_id}', [CommunityController::class, 'update'])
         ->name('communities.update');
 
+    Route::delete('delete/{community_id}', [CommunityController::class, 'destroy'])
+        ->name('communities.delete');
+
     // Works Controllers
 
     Route::get('works/all/{community_id}', [WorkController::class, 'index'])
@@ -276,6 +284,11 @@ Route::group([
     Route::put('visits/update/{community_id}/{visit_id}', [CommunityVisitController::class, 'update'])
         ->name('communities.visit.update');
 
+    // Communities Daughters
+
+    Route::get('daughters/{community_id}', [CommunityDaughterController::class, 'index'])
+        ->name('communities.daughters.index');
+
     // Communities Inventories
 
     Route::get('inventory/all', [CommunityInventoryController::class, 'index'])
@@ -306,4 +319,18 @@ Route::group([
 
     Route::delete('inventory/section/delete/{inventory_id}/{section_id}', [CommunitySectionController::class, 'destroy'])
         ->name('communities.section.delete');
+
+    // Articles Sections
+
+    Route::get('inventory/section/{section_slug}/articles/all', [CommunityArticleController::class, 'index'])
+        ->name('communities.articles.index');
+
+    Route::post('articles/store/{section_slug}', [CommunityArticleController::class, 'store'])
+        ->name('communities.articles.store');
+
+    Route::delete('articles/delete/{article_id}', [CommunityArticleController::class, 'destroy'])
+        ->name('communities.articles.delete');
+
+    Route::put('articles/update/{section_slug}/{article_id}', [CommunityArticleController::class, 'update'])
+        ->name('communities.articles.update');
 });

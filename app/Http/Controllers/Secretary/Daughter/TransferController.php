@@ -23,16 +23,19 @@ class TransferController extends Controller
             'id' => ['required', 'exists:users,id']
         ]);
         if ($validator->fails()) {
-            return response()->json(['error' => 'No existen datos.']);
+            return abort(404);
         }
         $user = User::find($user_id);
-        return $user->profile->transfers;
+        return $user->profile->transfers()
+            ->orderBy('transfer_date_adission', 'DESC')
+            ->get();
     }
 
     public function allCommunities()
     {
         $communities_list = Community::where('comm_id', '=', null)
             ->where('comm_level', '=', 1)
+            ->orWhere('comm_level', '=', 2)
             ->orderBy('comm_name', 'asc')
             ->get();
         return $communities_list;
@@ -68,7 +71,7 @@ class TransferController extends Controller
     public function store(Request $request, $user_id)
     {
 
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'transfer_reason' => ['required', 'max:100'],
             'transfer_date_adission' => ['required', 'date_format:Y-m-d H:i:s'],
             // 'transfer_date_relocated' => ['required', 'date_format:Y-m-d H:i:s'],
@@ -77,12 +80,36 @@ class TransferController extends Controller
             'office_id.id' => ['required', 'exists:offices,id']
         ]);
 
+        $validator = Validator::make([
+            'user_id' => $user_id,
+        ], [
+            'user_id' => ['required', 'exists:users,id'],
+        ]);
+
         if ($validator->fails()) {
+            return abort(404);
+        }
+
+        if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validator->errors())
                 ->withInput();
         }
+
+
         $user = User::find($user_id);
+
+        // Return the last transfer
+        $lastTransfer =  $user->profile->transfers()
+            ->orderBy('transfer_date_adission', 'ASC')
+            ->get()
+            ->last();
+        if ($lastTransfer) {
+            $lastTransfer->update([
+                'transfer_date_relocated' => $request->get('transfer_date_adission'),
+            ]);
+        }
+
         $user->profile->transfers()->create([
             'transfer_reason' => $request->get('transfer_reason'),
             'transfer_date_adission' => $request->get('transfer_date_adission'),
@@ -149,9 +176,16 @@ class TransferController extends Controller
             ]
         );
 
-        if ($validator->fails() || $validatorData->fails()) {
-            return response()->json(['error' => 'No existen los datos']);
+        if ($validator->fails()) {
+            return abort(404);
         }
+
+        if ($validatorData->fails()) {
+            return redirect()->back()
+                ->withErrors($validator->errors())
+                ->withInput();
+        }
+
         $transfer = Transfer::find($transfer_id);
 
         $transfer->update([
@@ -183,11 +217,30 @@ class TransferController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => 'No existen los datos']);
+            return abort(404);
         }
 
+        $user = User::find($user_id);
+
         $transfer = Transfer::find($transfer_id);
+
+        if ($transfer) {
+            if ($transfer->transfer_date_relocated) {
+                return redirect()->back()->with(['error' => 'Transferencia no puede ser eliminada, forma parte del historial!']);
+            }
+        }
+
         $transfer->delete();
+
+        $lastTransfer = $user->profile->transfers()
+            ->orderBy('transfer_date_adission', 'DESC')
+            ->get()
+            ->first();
+        if ($lastTransfer) {
+            $lastTransfer->update([
+                'transfer_date_relocated' => null,
+            ]);
+        }
         return redirect()->back()->with(['success' => 'Transferencia eliminada correctamente']);
     }
 }

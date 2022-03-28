@@ -38,10 +38,28 @@ class CommunitySeeder extends Seeder
             ]);
 
             for ($j = 0; $j <= 2; $j++) {
-                $commmunity->inventory->sections()->create([
-                    'name' => 'Secion ' . $j . ' name for ' . $name_community,
+                $name_section = 'Secion ' . $j . ' name for ' . $name_community;
+
+                $section =    $commmunity->inventory->sections()->create([
+                    'name' => $name_section,
+                    'slug' => Str::slug($name_section),
                     'description' => 'Description section for ' . $name_community . "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."
                 ]);
+
+                for ($u = 0; $u <= 30; $u++) {
+                    $section->articles()->create([
+                        "name" => Str::random(30),
+                        "color" => Str::random(15),
+                        "price" => 10,
+                        "material" => rand(1, 5),
+                        "status" =>  rand(1, 5),
+                        "size" => "0.5",
+                        "brand" => "buena",
+                        "description" => "description product",
+                        "section_id" => $section->id
+                    ]);
+                }
+                $name_section = "";
             }
 
             $name_community = '';
@@ -71,10 +89,28 @@ class CommunitySeeder extends Seeder
                     ]);
 
                     for ($k = 0; $k <= 2; $k++) {
-                        $work->inventory->sections()->create([
-                            'name' => 'Secion ' . $k . ' name for ' . $name_work,
+                        $name_section = 'Secion ' . $k . ' name for ' . $name_work;
+
+                        $section =  $work->inventory->sections()->create([
+                            'name' => $name_section,
+                            'slug' => Str::slug($name_section),
                             'description' => 'Description section for ' . $name_work . "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."
                         ]);
+
+                        for ($u = 0; $u <= 30; $u++) {
+                            $section->articles()->create([
+                                "name" => Str::random(30),
+                                "color" => Str::random(15),
+                                "price" => 10,
+                                "material" => rand(1, 5),
+                                "status" =>  rand(1, 5),
+                                "size" => "0.5",
+                                "brand" => "buena",
+                                "description" => "description product",
+                                "section_id" => $section->id
+                            ]);
+                        }
+                        $name_section = "";
                     }
 
                     $name_work = "";
@@ -102,10 +138,28 @@ class CommunitySeeder extends Seeder
                     ]);
 
                     for ($k = 0; $k <= 2; $k++) {
-                        $work->inventory->sections()->create([
-                            'name' => 'Secion ' . $k . ' name for ' . $name_work,
+                        $name_section = 'Secion ' . $k . ' name for ' . $name_work;
+
+                        $section = $work->inventory->sections()->create([
+                            'name' => $name_section,
+                            'slug' => Str::slug($name_section),
                             'description' => 'Description section for ' . $name_work . "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."
                         ]);
+
+                        for ($u = 0; $u <= 30; $u++) {
+                            $section->articles()->create([
+                                "name" => Str::random(30),
+                                "color" => Str::random(15),
+                                "price" => 10,
+                                "material" => rand(1, 5),
+                                "status" =>  rand(1, 5),
+                                "size" => "0.5",
+                                "brand" => "buena",
+                                "description" => "description product",
+                                "section_id" => $section->id
+                            ]);
+                        }
+                        $name_section = "";
                     }
 
                     $name_work = "";

@@ -22,7 +22,7 @@ class AcademicTrainingController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => 'No existen datos']);
+            return abort(404);
         }
 
         $user = User::find($user_id);
@@ -47,16 +47,27 @@ class AcademicTrainingController extends Controller
      */
     public function store(Request $request, $user_id)
     {
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'name_title' => ['required', 'max:50'],
             'institution' => ['required', 'max:50'],
             'date_title' => ['required', 'date_format:Y-m-d H:i:s'],
             'observation' => ['required', 'max:4000'],
         ]);
 
+
+        $validator = Validator::make([
+            'user_id' => $user_id,
+        ], [
+            'user_id' => ['required', 'exists:users,id'],
+        ]);
+
         if ($validator->fails()) {
+            return abort(404);
+        }
+
+        if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 
@@ -120,8 +131,13 @@ class AcademicTrainingController extends Controller
             'observation' => ['required', 'max:4000'],
         ]);
 
-        if ($validator->fails() || $validatorData->fails()) {
-            return response()->json(['error' => 'No existen los datos']);
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        if ($validatorData->fails()) {
+            return redirect()->back()
+                ->withErrors($validatorData->errors())
+                ->withInput();
         }
 
         $academic = AcademicTraining::find($academic_id);
@@ -151,7 +167,7 @@ class AcademicTrainingController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => 'No existen los datos']);
+            return abort(404);
         }
 
         $academic = AcademicTraining::find($academic_id);

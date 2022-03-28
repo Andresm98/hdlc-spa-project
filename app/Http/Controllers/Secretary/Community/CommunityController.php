@@ -44,7 +44,7 @@ class CommunityController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validatorData = Validator::make($request->all(), [
             'comm_identity_card' => ['required', 'string', 'max:13'],
             'comm_name' => ['required', 'max:100'],
             'comm_cellphone' =>  ['string', 'max:20'],
@@ -55,11 +55,13 @@ class CommunityController extends Controller
             'rn_collaborators' => ['digits_between:1,1000'],
             'political_division_id' => ['required', 'exists:political_divisions,id']
         ]);
-        if ($validator->fails()) {
+
+        if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
+
         $community = Community::create([
             'comm_identity_card' =>  $request->get('comm_identity_card'),
             'comm_name' =>  $request->get('comm_name'),
@@ -148,7 +150,10 @@ class CommunityController extends Controller
             ]
         );
 
-        if ($validator->fails() || $validatorData->fails()) {
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validatorData->errors())
                 ->withInput();
@@ -192,8 +197,26 @@ class CommunityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($community_id)
     {
-        //
+        try {
+            $validator = Validator::make([
+                'community_id' => $community_id,
+            ], [
+                'community_id' => ['required', 'exists:communities,id'],
+            ]);
+
+            if ($validator->fails()) {
+                return abort(404);
+            }
+
+            $community = Community::find($community_id);
+            $community->inventory()->delete();
+            $community->delete();
+
+            return redirect()->back()->with(['success' => 'La comunidad fue eliminada correctamente']);
+        } catch (\Illuminate\Database\QueryException $ex) {
+            return redirect()->back()->with(['error' => 'Durante la acción ocurrió el siguiente error: ' . $ex->getMessage()]);
+        }
     }
 }
