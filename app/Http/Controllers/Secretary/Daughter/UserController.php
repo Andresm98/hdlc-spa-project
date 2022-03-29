@@ -242,8 +242,8 @@ class UserController extends Controller
         $data =   collect(['status' => true]);
 
         if ($user->profile) {
-            $profile = Profile::with('address')
-                ->with('user')
+
+            $profile = Profile::with('user')
                 ->where('user_id', '=', $user->id)
                 ->get();
             $data->put('profile', $profile->first());
@@ -257,11 +257,20 @@ class UserController extends Controller
                 $data->put('image', $image);
             }
 
+            if ($user->profile->info_family) {
+                if ($user->profile->info_family->info_family_break) {
+                    $data->put('info_family',  $user->profile->info_family);
+                }
+                $data->put('info_family',   $user->profile->info_family);
+            }
+
+            $data->put('address',  $addressClass->getActualAddress($data->get('profile')->address->political_division_id));
+
             $pdf = PDF::loadView('reports.daughters.profile', compact('data'));
             // return $pdf -> download('Usuarios-OpenScience.pdf');
-            return $pdf->setPaper('a4', 'portrait')->stream('PerfilHermana' . $user->name . '.pdf');
+            return $pdf->setPaper('a4', 'portrait')->stream('Perfil Hermana ' . $user->name . '.pdf');
         } else {
-            return "no se puede imprimir";
+            return  collect(['message' => true]);
         }
     }
 }

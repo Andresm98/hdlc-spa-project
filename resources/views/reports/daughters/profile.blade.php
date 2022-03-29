@@ -5,67 +5,64 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Hoja de Vida</title>
+        <title>Reporte Hermana {{ $data->get('profile')->user->name }}</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <style>
-            .page-header,
-            .page-header-space {
-                height: 50px;
-            }
-
-            .page-footer,
-            .page-footer-space {
-                height: 50px;
-
-            }
-
-            .page-footer {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                border-top: 1px solid black;
-                /* for demo */
-                background: rgb(45, 43, 155);
-                /* for demo */
-            }
-
-            .page-header {
-                position: fixed;
-                top: 0mm;
-                width: 100%;
-                border-bottom: 1px solid black;
-                /* for demo */
-                background: rgb(45, 43, 155);
-                /* for demo */
-            }
-
-            .page {
-                page-break-after: always;
-                text-align: justify;
-                text-justify: inter-word;
-            }
-
             @page {
-                margin: 20mm
+                margin: 0cm 0cm;
+                font-size: 1em;
             }
 
-            @media print {
-                thead {
-                    display: table-header-group;
-                }
+            body {
+                margin: 2.5cm 2cm 2cm;
+            }
 
-                tfoot {
-                    display: table-footer-group;
-                }
+            header {
+                position: fixed;
+                top: 0cm;
+                left: 0cm;
+                right: 0cm;
+                height: 2.5cm;
+                background-color: #e5e7ee;
+                color: white;
+                text-align: center;
+                /* line-height: 15px; */
+            }
 
-                button {
-                    display: none;
-                }
+            footer {
+                position: fixed;
+                bottom: 0cm;
+                left: 0cm;
+                right: 0cm;
+                height: 1.5cm;
+                background-color: #e5e7ee;
+                color: white;
+                text-align: center;
+                /* line-height: 35px; */
+            }
 
-                body {
-                    margin: 0;
-                }
+            * {
+                box-sizing: border-box;
+            }
+
+            /* Create two equal columns that floats next to each other */
+            .column {
+                float: left;
+                padding: 10px;
+                height: auto;
+                /* Should be removed. Only for demonstration */
+            }
+
+            /* Clear floats after the columns */
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+            p.main {
+                text-align: justify;
             }
 
         </style>
@@ -73,132 +70,188 @@
 </head>
 
 <body>
+    <header>
 
-    <div class="page-header" style="text-align: center; color: white; ">
-        Perfil de la Hermana
-    </div>
+        <div style="margin-top:0.2cm; margin-block-start: 0.2cm; color: #000000">
+            <p style="font-size:20px margin-top:0.2cm;">
+                Compañía Hijas de la Caridad de San Vicente de Paúl ©
+            </p>
+            <p>Perfil de Hermana</p>
+        </div>
+        {{-- <p>Impreso por: {{ auth()->user()->name }}, {{ auth()->user()->title }}.</p> --}}
 
-    <div class="page-footer" style="text-align: center; color: white; ">
-        I'm The Footer
-    </div>
+    </header>
 
-    <table>
+    <main>
+        {{-- Profile --}}
+        <div class="row">
+            <div class="column" style="background-color:rgb(255, 255, 255);    width: 70%;">
+                <ul>
+                    {{-- User --}}
+                    <li style="margin-top:10px;"><strong>Nombres y Apellidos:</strong>
+                        {{ $data->get('profile')->user->name }}
+                        {{ $data->get('profile')->user->lastname }}</li>
 
-        <thead>
-            <tr>
-                <td>
-                    <!--place holder for the fixed-position header-->
-                    <div class="page-header-space"></div>
-                </td>
-            </tr>
-        </thead>
+                    {{-- Profile --}}
+                    <li><strong>Cédula de Identidad:</strong> {{ $data->get('profile')->identity_card }}</li>
+                    <li><strong>Fecha de Nacimiento:
+                        </strong>{{ date('m-d-Y', strtotime($data->get('profile')->date_birth)) }}
+                    </li>
+                    <li><strong>Fecha de Vocación: </strong>
+                        {{ date('m-d-Y', strtotime($data->get('profile')->date_vocation)) }}</li>
+                    <li><strong>Fecha de Adesión: </strong>
+                        {{ date('m-d-Y', strtotime($data->get('profile')->date_admission)) }}</li>
+                    <li><strong>Celular: </strong>{{ $data->get('profile')->cellphone }}</li>
+                    <li><strong>Teléfono: </strong>{{ $data->get('profile')->phone }}</li>
+                    <li><strong>Correo electrónico: </strong>
+                        <p style="color: rgb(44, 47, 226);"> {{ $data->get('profile')->user->email }} </p>
+                    </li>
 
-        <tbody>
-            <tr>
-                <td>
-                    <!--*** CONTENT GOES HERE ***-->
-                    <div class="page">Formulario 1
-                        <br>
-                        <ul>
-                            <li>Cedula de Identidad: {{ $data->get('profile')->identity_card }}</li>
-                            <li>Fecha de Nacimiento: {{ date('m-d-Y', strtotime($data->get('profile')->date_birth)) }}
-                            </li>
-                            <li>Fecha de Vocación:
-                                {{ date('m-d-Y', strtotime($data->get('profile')->date_vocation)) }}</li>
-                            <li>Fecha de Adesión:
-                                {{ date('m-d-Y', strtotime($data->get('profile')->date_admission)) }}</li>
-                            <li>Celular: {{ $data->get('profile')->cellphone }}</li>
-                            <li>Teléfono: {{ $data->get('profile')->phone }}</li>
 
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                        </ul>
+                </ul>
+            </div>
+            <div class="column" style="background-color:rgb(255, 255, 255); width: 30%;">
+                @if ($data->get('image'))
+                    <img style="  border-radius: 10%; margin-left: 20px; margin-top: 25px;"
+                        src="{{ $data->get('image') }}" alt="" width="140" height="220">
+                @else
+                    <img src="https://www.daughtersofcharity.com/wp-content/uploads/2021/05/DOC-SEAS-Logo-footer-236x300.png"
+                        alt="" width="170" height="270" style=" border-radius:
+                        10%; margin-left: 20px; margin-top: 25px; margin-bottom: 5px;">
+                @endif
+            </div>
+        </div>
+        <hr>
+        {{-- Address --}}
+        <strong>Dirección: </strong>
+        <p class="main">
+            {{ $data->get('profile')->address->address }}.
+            ({{ $data->get('address')['data_province'] }} -
+            {{ $data->get('address')['data_canton'] }},
+            {{ $data->get('address')['data_parish'] }}).
+        </p>
+        {{-- End Adress --}}
+        <strong>Observaciones: </strong>
+        {!! $data->get('profile')->observation !!}
+        {{-- End Profile --}}
 
-                        <br>
+        <hr>
 
-                        <img src="{{ $data->get('image') }}" alt="" width="150" height="300">
-                        <br>
-                        Observaciones: {!! $data->get('profile')->observation !!}
-                    </div>
-                    <div class="page">PAGE 2
+        {{-- Info Family --}}
+        @if ($data->get('info_family'))
+            <div style="margin-bottom:10px;">
+                <strong>Información de Contacto: </strong>
+            </div>
 
-                        em leo. Cras pharetra sodales metus. Cras lacus ex, consequat at consequat vel, laoreet ac dui.
-                        Curabitur aliquam, sapien quis congue feugiat, nisi nisl feugiat diam, sed vehicula velit nulla
-                        ac nisl. Aliquam quis nisi euismod massa blandit
-                        pharetra nec eget nunc. Etiam eros ante, auctor sit amet quam vel, fringilla faucibus leo. Morbi
-                        a pulvinar nulla. Praesent sed vulputate nisl. Orci varius natoque penatibus et magnis dis
-                        parturient montes, nascetur ridiculus mus. Aenean commodo
-                        mollis iaculis. Maecenas consectetur enim vitae mollis venenatis. Ut scelerisque pretium orci id
-                        laoreet. In sit amet pharetra diam. Vestibulum in molestie lorem. Nunc gravida, eros non
-                        consequat fermentum, ex orci vestibulum orci, non accumsan
-                        sem velit ac lectus. Vivamus malesuada lacus nec velit dignissim, ac fermentum nulla pretium.
-                        Aenean mi nisi, convallis sed tempor in, porttitor eu libero. Praesent et molestie ante. Duis
-                        suscipit vitae purus sit amet aliquam. Vestibulum lectus
-                        justo, lobortis a purus a, dapibus efficitur metus. Suspendisse potenti. Duis dictum ex lorem.
-                        Suspendisse nec ligula consectetur magna hendrerit ullamcorper et eget mauris. Etiam vestibulum
-                        sodales diam, eget venenatis nunc luctus quis. Ut
-                        fermentum placerat neque ne
-                    </div>
-                    <div class="page" style="line-height: 3;">
-                        PAGE 3 - Long Content
-                        <br /> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tincidunt metus eu
-                        consectetur rutrum. Praesent tempor facilisis dapibus. Aliquam cursus diam ac vehicula pulvinar.
-                        Integer lacinia non odio et condimentum. Aenean faucibus cursus
-                        mi, sed interdum turpis sagittis a. Quisque quis pellentesque mi. Ut erat eros, posuere sed
-                        scelerisque ut, pharetra vitae tellus. Suspendisse ligula sapien, laoreet ac hendrerit sit amet,
-                        viverra vel mi. Pellentesque faucibus nisl et dolor
-                        pharetra, vel mattis massa venenatis. Integer congue condimentum nisi, sed tincidunt velit
-                        tincidunt non. Nulla sagittis sed lorem pretium aliquam. Praesent consectetur volutpat nibh,
-                        quis pulvinar est volutpat id. Cras maximus odio posuere
-                        suscipit venenatis. Donec rhoncus scelerisque metus, in tempus erat rhoncus sed. Morbi massa
-                        sapien, porttitor id urna vel, volutpat blandit velit. Cras sit amet sem eros. Quisque commodo
-                        facilisis tristique. Proin pellentesque sodales rutrum.
-                        Vestibulum purus neque, congue vel dapibus in, venenatis ut felis. Donec et ligula enim. Sed
-                        sapien sapien, tincidunt vitae lectus quis, ultricies rhoncus mi. Nunc dapibus nulla tempus nunc
-                        interdum, sed facilisis ex pellentesque. Nunc vel
-                        lorem leo. Cras pharetra sodales metus. Cras lacus ex, consequat at consequat vel, laoreet ac
-                        dui. Curabitur aliquam, sapien quis congue feugiat, nisi nisl feugiat diam, sed vehicula velit
-                        nulla ac nisl. Aliquam quis nisi euismod massa blandit
-                        pharetra nec eget nunc. Etiam eros ante, auctor sit amet quam vel, fringilla faucibus leo. Morbi
-                        a pulvinar nulla. Praesent sed vulputate nisl. Orci varius natoque penatibus et magnis dis
-                        parturient montes, nascetur ridiculus mus. Aenean commodo
-                        mollis iaculis. Maecenas consectetur enim vitae mollis venenatis. Ut scelerisque pretium orci id
-                        laoreet. In sit amet pharetra diam. Vestibulum in molestie lorem. Nunc gravida, eros non
-                        consequat fermentum, ex orci vestibulum orci, non accumsan
-                        sem velit ac lectus. Vivamus malesuada lacus nec velit dignissim, ac fermentum nulla pretium.
-                        Aenean mi nisi, convallis sed tempor in, porttitor eu libero. Praesent et molestie ante. Duis
-                        suscipit vitae purus sit amet aliquam. Vestibulum lectus
-                        justo, lobortis a purus a, dapibus efficitur metus. Suspendisse potenti. Duis dictum ex lorem.
-                        Suspendisse nec ligula consectetur magna hendrerit ullamcorper et eget mauris. Etiam vestibulum
-                        sodales diam, eget venenatis nunc luctus quis. Ut
-                        fermentum placerat neque nec elementum. Praesent orci erat, rhoncus vitae est eu, dictum
-                        molestie metus. Cras et fermentum elit. Aenean eget augue lacinia, varius ante in, ullamcorper
-                        dolor. Cras viverra purus non egestas consectetur. Nulla
-                        nec dolor ac lectus convallis aliquet sed a metus. Suspendisse eu imperdiet nunc, id pulvinar
-                        risus. Maecenas varius sagittis est, vel fermentum risus accumsan at. Vestibulum sollicitudin
-                        dui pharetra sapien volutpat, id convallis mi vestibulum.
-                        Phasellus commodo sit amet lorem quis imperdiet. Proin nec diam sed urna euismod ultricies at
-                        sed urna. Quisque ornare, nulla et vehicula ultrices, massa purus vehicula urna, ac sodales
-                        lacus leo vitae mi. Sed congue placerat justo at placerat.
-                        Aenean suscipit fringilla vehicula. Quisque iaculis orci vitae arcu commodo maximus. Maecenas
-                        nec nunc rutrum, cursus elit quis, porttitor sapien. Sed ac hendrerit ipsum, lacinia fringilla
-                        velit. Donec ultricies feugiat dictum.
-                    </div>
-                </td>
-            </tr>
-        </tbody>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="font-size:14px;">
+                            Nombres Padre
+                        </th>
+                        <th style="font-size:14px;">
+                            Nombres Madre
+                        </th>
+                    </tr>
+                </thead>
 
-        <tfoot>
-            <tr>
-                <td>
-                    <!--place holder for the fixed-position footer-->
-                    <div class="page-footer-space"></div>
-                </td>
-            </tr>
-        </tfoot>
+                <tbody>
+                    <tr>
+                        <td style="font-size:13px;">{{ $data->get('info_family')->names_father }}</td>
 
-    </table>
+                        <td style="font-size:13px;">{{ $data->get('info_family')->names_mother }}</td>
+                    </tr>
+                </tbody>
+
+                <thead>
+                    <tr style="height: 15px;">
+                        <th style="font-size:14px;">
+                            Número de Hermanos
+                        </th>
+                        <th style="font-size:14px;">
+                            Número de Hermanas
+                        </th>
+                        <th style="font-size:14px;">
+                            Lugar en la Familia
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td style="font-size:13px;">{{ $data->get('info_family')->nr_sisters }}</td>
+                        <td style="font-size:13px;">{{ $data->get('info_family')->nr_brothers }}</td>
+                        <td style="font-size:13px;">{{ $data->get('info_family')->place_of_family }}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+            {{-- Info Break --}}
+            @if ($data->get('info_family')->info_family_break)
+                <div style="margin-bottom:10px;">
+                    <strong>Información de Contacto en donde la hermana hace sus días de descanso: </strong>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr style="height: 15px;">
+                            <th style="font-size:14px;">
+                                Nombres Completos del Familiar
+                            </th>
+                            <th style="font-size:14px;">
+                                Parentesco con el Familiar
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td style="font-size:13px;">
+                                {{ $data->get('info_family')->info_family_break->name_family_member }}</td>
+                            <td style="font-size:13px;">{{ $data->get('info_family')->info_family_break->relation }}
+                            </td>
+                        </tr>
+                    </tbody>
+
+                    <thead>
+                        <tr style="height: 15px;">
+                            <th style="font-size:14px;">
+                                Celular
+                            </th>
+                            <th style="font-size:14px;">
+                                Teléfono
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td style="font-size:13px;">{{ $data->get('info_family')->info_family_break->cellphone }}
+                            </td>
+                            <td style="font-size:13px;">{{ $data->get('info_family')->info_family_break->phone }}
+                            </td>
+                        </tr>
+                    </tbody>
+                    {{-- Info Break --}}
+
+                    {{-- End Info Break --}}
+                </table>
+            @endif
+            {{-- End Info Break --}}
+        @endif
+        {{-- End Info Family --}}
+
+
+    </main>
+
+    <footer>
+        <p
+            style="font-size:12px; margin-left:0.40cm;  margin-right:0.40cm; margin-bottom:0.20cm; margin-top:0.20cm; color:#111631">
+            Fecha Impresión: {{ date('m-d-Y h:i:s a', time()) }}. Pichincha,
+            Ecuador.
+            Este documento fue generado en la plataforma privada de la
+            Compañía Hijas de la Caridad de San Vicente de Paúl ©, Provincia Ecuador.
+        </p>
+    </footer>
 
 </body>
 

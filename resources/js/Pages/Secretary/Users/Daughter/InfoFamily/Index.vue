@@ -236,7 +236,7 @@ export default {
     ...mapState("informationfamily", ["infofamily"]),
     ...mapState("informationfamily", ["infofamilybreak"]),
     isInvalid() {
-      console.log("inva ", this.isTouched, "\n\nopp> ");
+      //   console.log("inva ", this.isTouched, "\n\nopp> ");
       return this.value == null;
     },
 
@@ -288,8 +288,9 @@ export default {
           preserveState: true,
           onSuccess: () => {
             setTimeout(() => {
-              console.log("saved.");
-            }, 1000);
+              //   console.log("saved.");
+              this.isExistData = true;
+            }, 2);
           },
         }
       );
@@ -306,8 +307,9 @@ export default {
             preserveState: true,
             onSuccess: () => {
               setTimeout(() => {
-                console.log("saved.");
-              }, 1000);
+                // console.log("saved.");
+                this.isExistDataInfBreak = true;
+              }, 2);
             },
           }
         );
@@ -321,9 +323,9 @@ export default {
     },
     onChange(value) {
       this.value = value;
-      console.log("aiudaaa> ", value);
+      //   console.log("aiudaaa> ", value);
       if (value.indexOf("Reset me!") !== -1) {
-        console.log("is reset");
+        // console.log("is reset");
         this.value = [];
       }
     },
@@ -334,14 +336,14 @@ export default {
       }
     },
     onTouch() {
-      console.log("is touched");
+      //   console.log("is touched");
       this.isTouched = true;
     },
   },
   setup() {
     const dateinput = ref(new Date());
     function dateSelected(payload) {
-      console.log(payload);
+      //   console.log(payload);
     }
     return { dateinput, dateSelected };
   },

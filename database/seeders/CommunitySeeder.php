@@ -17,7 +17,7 @@ class CommunitySeeder extends Seeder
     public function run()
     {
 
-        for ($i = 0; $i <= 15; $i++) {
+        for ($i = 0; $i <= 5; $i++) {
             $name_community = 'COMUNIDAD ' . Str::random(10);
             $commmunity =    Community::create([
                 'comm_identity_card' => Str::random(10),
@@ -46,7 +46,7 @@ class CommunitySeeder extends Seeder
                     'description' => 'Description section for ' . $name_community . "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."
                 ]);
 
-                for ($u = 0; $u <= 30; $u++) {
+                for ($u = 0; $u <= 5; $u++) {
                     $section->articles()->create([
                         "name" => Str::random(30),
                         "color" => Str::random(15),
@@ -65,9 +65,9 @@ class CommunitySeeder extends Seeder
             $name_community = '';
         }
 
-        for ($i = 1; $i <= 13; $i++) {
+        for ($i = 1; $i <= 3; $i++) {
             if ($i % 2 == 0) {
-                for ($j = 0; $j <= 5; $j++) {
+                for ($j = 0; $j <= 2; $j++) {
                     $name_work = 'OBRA ' . Str::random(14);
                     $work = Community::create([
                         'comm_id' => $i,
@@ -97,7 +97,7 @@ class CommunitySeeder extends Seeder
                             'description' => 'Description section for ' . $name_work . "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."
                         ]);
 
-                        for ($u = 0; $u <= 30; $u++) {
+                        for ($u = 0; $u <= 3; $u++) {
                             $section->articles()->create([
                                 "name" => Str::random(30),
                                 "color" => Str::random(15),
@@ -116,7 +116,7 @@ class CommunitySeeder extends Seeder
                     $name_work = "";
                 }
             } else {
-                for ($j = 0; $j <= 4; $j++) {
+                for ($j = 0; $j <= 2; $j++) {
                     $name_work = 'OBRA ' . Str::random(14);
                     $work =  Community::create([
                         'comm_id' => $i,
@@ -146,7 +146,7 @@ class CommunitySeeder extends Seeder
                             'description' => 'Description section for ' . $name_work . "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."
                         ]);
 
-                        for ($u = 0; $u <= 30; $u++) {
+                        for ($u = 0; $u <= 5; $u++) {
                             $section->articles()->create([
                                 "name" => Str::random(30),
                                 "color" => Str::random(15),

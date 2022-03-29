@@ -269,6 +269,7 @@
           <div class="mt-1 bg-white">
             <quill-editor
               v-model:content="profile.observation"
+              ref="qleditor1"
               contentType="html"
               theme="snow"
               :toolbar="toolbarOptions"
@@ -438,6 +439,16 @@ export default {
         // Clean data Form
         this.form.parish_id = null;
         this.form.political_division_id = null;
+      }
+    },
+    "profile.observation": function () {
+      var limit = 4000;
+      const quill = this.$refs.qleditor1;
+
+      if (quill.getHTML().length <= limit) {
+        this.data_intput_one = quill.getHTML();
+      } else {
+        quill.setHTML(this.data_intput_one);
       }
     },
   },
