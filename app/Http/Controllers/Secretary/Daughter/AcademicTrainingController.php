@@ -26,7 +26,9 @@ class AcademicTrainingController extends Controller
         }
 
         $user = User::find($user_id);
-        return $user->profile->academic_trainings;
+        return $user->profile->academic_trainings()
+        ->orderBy('date_title','DESC')
+        ->get();
     }
 
     /**
@@ -47,14 +49,6 @@ class AcademicTrainingController extends Controller
      */
     public function store(Request $request, $user_id)
     {
-        $validatorData = Validator::make($request->all(), [
-            'name_title' => ['required', 'max:50'],
-            'institution' => ['required', 'max:50'],
-            'date_title' => ['required', 'date_format:Y-m-d H:i:s'],
-            'observation' => ['required', 'max:4000'],
-        ]);
-
-
         $validator = Validator::make([
             'user_id' => $user_id,
         ], [
@@ -64,6 +58,13 @@ class AcademicTrainingController extends Controller
         if ($validator->fails()) {
             return abort(404);
         }
+
+        $validatorData = Validator::make($request->all(), [
+            'name_title' => ['required', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
+            'institution' => ['required', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
+            'date_title' => ['required', 'date_format:Y-m-d H:i:s'],
+            'observation' => ['required', 'max:4000'],
+        ]);
 
         if ($validatorData->fails()) {
             return redirect()->back()
@@ -124,16 +125,17 @@ class AcademicTrainingController extends Controller
             'academic_id' => ['required', 'exists:academic_trainings,id']
         ]);
 
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
         $validatorData = Validator::make($request->all(), [
-            'name_title' => ['required', 'max:50'],
-            'institution' => ['required', 'max:50'],
+            'name_title' => ['required', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
+            'institution' => ['required', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
             'date_title' => ['required', 'date_format:Y-m-d H:i:s'],
             'observation' => ['required', 'max:4000'],
         ]);
 
-        if ($validator->fails()) {
-            return abort(404);
-        }
         if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validatorData->errors())

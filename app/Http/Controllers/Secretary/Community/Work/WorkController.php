@@ -29,6 +29,7 @@ class WorkController extends Controller
         }
         $works_list = Community::where('comm_level', '=', 2)
             ->where('comm_id', '=', $community_id)
+            ->where('comm_status', '=', 1)
             ->get();
         return $works_list;
     }
@@ -74,8 +75,9 @@ class WorkController extends Controller
             'comm_email' =>  ['required', 'string', 'email', 'max:255', 'unique:communities'],
             'date_fndt_comm' => ['required', 'date_format:Y-m-d H:i:s'],
             'date_fndt_work' => ['required', 'date_format:Y-m-d H:i:s'],
-            'rn_collaborators' => ['required', 'integer', 'between:1,1000'],
-            'political_division_id' => ['required', 'exists:political_divisions,id']
+            'rn_collaborators' => ['required', 'integer', 'between:0,1000'],
+            'political_division_id' => ['required', 'exists:political_divisions,id'],
+            'pastoral_id' => ['required', 'exists:pastorals,id']
         ]);
 
         if ($validator->fails()) {
@@ -99,7 +101,8 @@ class WorkController extends Controller
             'date_fndt_comm' =>  $request->get('date_fndt_comm'),
             'date_fndt_work' => $request->get('date_fndt_work'),
             'rn_collaborators' => $request->get('rn_collaborators'),
-
+            'pastoral_id' => $request->get('pastoral_id'),
+            'comm_status' => 1,
         ]);
         $community->address()->create([
             'address' => $request->get('address'),
@@ -141,11 +144,17 @@ class WorkController extends Controller
         $provinces =  $addressClass->getProvinces();
 
         $community_custom = Community::with('address')
+            ->with('pastoral')
             ->where('comm_slug', '=', [$slug])
             ->get()
             ->first();
 
-        return Inertia::render('Secretary/Communities/Work/Edit', compact('community_custom', 'provinces'));
+        $community_principal = Community::where('id', '=', $community_custom->comm_id)
+            ->where('comm_level', '=', 1)
+            ->get()
+            ->first();
+
+        return Inertia::render('Secretary/Communities/Work/Edit', compact('community_custom', 'community_principal', 'provinces'));
     }
 
     /**
@@ -173,7 +182,8 @@ class WorkController extends Controller
                 'comm_email' =>  ['email', 'max:255'],
                 'date_fndt_comm' => ['required', 'date_format:Y-m-d H:i:s'],
                 'date_fndt_work' => ['required', 'date_format:Y-m-d H:i:s'],
-                'rn_collaborators' => ['required', 'integer', 'between:1,1000'],
+                'rn_collaborators' => ['required', 'integer', 'between:0,1000'],
+                'pastoral_id' => ['required', 'exists:pastorals,id'],
             ]
         );
         if ($validator->fails()) {
@@ -190,12 +200,14 @@ class WorkController extends Controller
         $community->update([
             'comm_identity_card' =>  $request->get('comm_identity_card'),
             'comm_name' =>  $request->get('comm_name'),
+            'comm_slug' => Str::slug($request->get('comm_name') . ' ' . random_int(1000, 10000)),
             'comm_cellphone' =>   $request->get('comm_cellphone'),
             'comm_phone' =>   $request->get('comm_phone'),
             'comm_email' =>  $request->get('comm_email'),
             'date_fndt_comm' =>  $request->get('date_fndt_comm'),
             'date_fndt_work' => $request->get('date_fndt_work'),
             'rn_collaborators' => $request->get('rn_collaborators'),
+            'pastoral_id' => $request->get('pastoral_id'),
         ]);
 
         if (!$community->address) {
@@ -214,6 +226,33 @@ class WorkController extends Controller
             return redirect()->route('secretary.works.edit', $community->comm_slug)->with([
                 'success' => 'La obra fue actualizada y la dirección fue actualizada correctamente.',
             ]);
+        }
+    }
+
+    public function updateStatus($work_id)
+    {
+        $validator = Validator::make([
+            'work_id' => $work_id,
+        ], [
+            'work_id' => ['required', 'exists:communities,id'],
+        ]);
+
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        $work = Community::find($work_id);
+        if ($work->comm_status == 1) {
+            $work->update([
+                'comm_status' =>  0,
+            ]);
+            return redirect()->back()->with(['success' => 'La comunidad fue cerrada correctamente.']);
+        } else {
+            $work->update([
+                'comm_status' =>  1,
+            ]);
+            return redirect()->back()->with(['success' => 'La comunidad fue abierta nuevamente correctamente']);
         }
     }
 

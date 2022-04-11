@@ -17,17 +17,25 @@
                 >
                   Nombre de Sacramento:
                 </label>
-
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.sacrament_name"
+                >
+                  {{ $page.props.errors.sacrament_name }}
+                </p>
+                <small>Formato: Escoger uno de los sacramentos.</small>
                 <div :class="{ invalid: isInvalid }">
                   <multiselect
+                    :searchable="true"
                     placeholder="Por favor seleccionar el sacramento específico"
                     select-label="Enter doesn’t work here!"
+                    :close-on-select="true"
+                    :clear-on-select="false"
+                    track-by="sacrament_name"
                     v-model="form.sacrament_name"
                     :options="options"
                     :max-height="200"
                     :disabled="isDisabled"
-                    @input="onChange"
-                    @close="onTouch"
                     @select="onSelect"
                   ></multiselect>
                 </div>
@@ -41,9 +49,12 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Fecha de Realización del Sacramento:
+                Fecha Sacramento:
               </label>
-
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.sacrament_date">
+                {{ $page.props.errors.sacrament_date }}
+              </p>
+              <small>Formato: Fecha de Realización del Sacramento.</small>
               <Datepicker
                 v-model="form.sacrament_date"
                 :format="format"
@@ -62,6 +73,13 @@
               >
                 Observaciones:
               </label>
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.observation">
+                {{ $page.props.errors.observation }}
+              </p>
+              <small
+                >Formato: Opcional, agregar las observaciones relacionadas al
+                sacramento.</small
+              >
               <div class="bg-white">
                 <quill-editor
                   ref="qleditor1"
@@ -74,8 +92,6 @@
               </div>
             </div>
           </div>
-
-          <!-- Information Address -->
         </div>
         <jet-button-success type="submit" class="ml-4 mt-4 btn btn-primary"
           >Crear Sacramento</jet-button-success
@@ -86,35 +102,67 @@
         class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
       />
 
-      <div class="w-full bg-white rounded-lg shadow overflow-y-auto h-52">
-        <ul class="divide-y-2 divide-gray-100">
-          <li class="text-center text-white bg-slate-900">Historial de Sacramentos</li>
-          <li
-            class="p-2 hover:bg-emerald-500 hover:text-white"
-            v-for="(sacrament, index) in this.getAllSacrament()"
-            :key="sacrament"
+      <div class="py-2">
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
+          <div
+            v-if="this.getAllSacrament()"
+            class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <div class="grid gap-5 grid-cols-5">
-              <div class="md:block md:text-sm lg:block lg:text-sm pt-2">
-                {{ index }}
-              </div>
-              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2">
-                {{ sacrament.sacrament_date }}
-              </div>
-              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2"></div>
-              <div>
-                <jet-button @click="confirmationSacramentUpdate(sacrament)"
-                  >Detalles</jet-button
-                >
-              </div>
-              <div>
-                <jet-danger-button @click="confirmationSacramentDelete(sacrament)"
-                  >Eliminar</jet-danger-button
-                >
-              </div>
-            </div>
-          </li>
-        </ul>
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-blue-100">
+                <tr>
+                  <th
+                    scope="col"
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Nombre Sacramento
+                  </th>
+                  <th
+                    scope="col"
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Fecha Sacramento
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr v-for="sacrament in this.getAllSacrament()" :key="sacrament">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    {{ sacrament.sacrament_name }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                    >
+                      {{ this.formatShowDate(sacrament.sacrament_date) }}
+                    </span>
+                  </td>
+                  <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <!-- Components -->
+
+                    <div class="mx-auto flex gap-10">
+                      <jet-button @click="confirmationSacramentUpdate(sacrament)"
+                        >Detalles</jet-button
+                      >
+                      <jet-danger-button @click="confirmationSacramentDelete(sacrament)"
+                        >Eliminar</jet-danger-button
+                      >
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
+            <p class="text-center text-lg">Por el momento no existen registros.</p>
+          </div>
+        </div>
       </div>
 
       <jet-confirmation-modal
@@ -127,13 +175,14 @@
           ¿Está seguro de que desea eliminar el historial de sacramento ?
 
           <div class="w-3/3">
-            <quill-editor
-              refs="ql_deleteditor3"
-              v-model:content="deleteSacramentForm.observation"
-              contentType="html"
-              theme="snow"
-              :readOnly="true"
-            ></quill-editor>
+            <input
+              type="text"
+              minLength="10"
+              maxlength="100"
+              class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              v-model="deleteSacramentForm.sacrament_name"
+              readonly
+            />
           </div>
         </template>
 
@@ -166,17 +215,25 @@
                   >
                     Nombre de Sacramento:
                   </label>
+                  <p
+                    class="text-red-400 text-sm"
+                    v-show="$page.props.errors.sacrament_name"
+                  >
+                    {{ $page.props.errors.sacrament_name }}
+                  </p>
+                  <small>Formato: Escoger uno de los sacramentos.</small>
 
                   <div :class="{ invalid: isInvalid }">
                     <multiselect
+                      :searchable="true"
                       placeholder="Por favor seleccionar el sacramento específico"
                       select-label="Enter doesn’t work here!"
                       v-model="updateSacramentForm.sacrament_name"
                       :options="options"
+                      :close-on-select="true"
+                      :clear-on-select="false"
                       :max-height="200"
                       :disabled="isDisabled"
-                      @input="onChange"
-                      @close="onTouch"
                       @select="onSelect"
                     ></multiselect>
                   </div>
@@ -190,8 +247,15 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Fecha de Realización del Sacramento:
+                  Fecha Sacramento:
                 </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.sacrament_date"
+                >
+                  {{ $page.props.errors.sacrament_date }}
+                </p>
+                <small>Formato: Fecha de Realización del Sacramento.</small>
 
                 <Datepicker
                   v-model="updateSacramentForm.sacrament_date"
@@ -211,6 +275,13 @@
                 >
                   Observaciones:
                 </label>
+                <p class="text-red-400 text-sm" v-show="$page.props.errors.observation">
+                  {{ $page.props.errors.observation }}
+                </p>
+                <small
+                  >Formato: Opcional, agregar las observaciones relacionadas al
+                  sacramento.</small
+                >
                 <div class="bg-white">
                   <quill-editor
                     ref="qleditor1"
@@ -270,7 +341,7 @@ export default {
   },
   computed: {
     isInvalid() {
-      console.log("inva ", this.isTouched, "\n\nopp> ");
+      //   console.log("inva ", this.isTouched, "\n\nopp> ");
       return this.value == null;
     },
     ...mapState("daughter", ["profile"]),
@@ -423,6 +494,9 @@ export default {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
 
+    formatShowDate(value) {
+      return moment(new Date(value)).format("YYYY-MM-DD");
+    },
     confirmationSacramentUpdate(sacrament) {
       this.updateSacramentForm.sacrament_name = sacrament.sacrament_name;
       this.updateSacramentForm.sacrament_date = sacrament.sacrament_date;
@@ -430,9 +504,11 @@ export default {
       this.sacramentBeingUpdated = sacrament;
     },
     updateSacrament() {
-      this.updateSacramentForm.sacrament_date = this.formatDate(
-        this.updateSacramentForm.sacrament_date
-      );
+      if (this.updateSacramentForm.sacrament_date != null) {
+        this.updateSacramentForm.sacrament_date = this.formatDate(
+          this.updateSacramentForm.sacrament_date
+        );
+      }
       this.updateSacramentForm.put(
         this.route("secretary.daughter-profile.sacrament.update", {
           user_id: this.profile.user_id,
@@ -452,7 +528,7 @@ export default {
     },
     // Delete
     confirmationSacramentDelete(sacrament) {
-      this.deleteSacramentForm.observation = sacrament.observation;
+      this.deleteSacramentForm.sacrament_name = sacrament.sacrament_name;
       this.sacramentBeingDeleted = sacrament;
     },
     deleteSacrament() {
@@ -494,20 +570,20 @@ export default {
     },
     onChange(value) {
       this.value = value;
-      console.log("aiudaaa> ", value);
+      //   console.log("aiudaaa> ", value);
       if (value.indexOf("Reset me!") !== -1) {
-        console.log("is reset");
+        // console.log("is reset");
         this.value = [];
       }
     },
     onSelect(option) {
       if (option === "Disable me!") {
-        console.log("is disable");
+        // console.log("is disable");
         this.isDisabled = true;
       }
     },
     onTouch() {
-      console.log("is touched");
+      //   console.log("is touched");
       this.isTouched = true;
     },
   },

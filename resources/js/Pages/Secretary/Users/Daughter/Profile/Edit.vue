@@ -1,15 +1,15 @@
 <template>
   <form
     @submit.prevent="submit"
-    class="bg-gradient-to-r from-slate-800 via-slate-800 to-slate-800 p-2 border-2 rounded-lg"
+    class="bg-gradient-to-r from-gray-200 via-gray-200 to-gray-200 p-2 border-2 rounded-lg"
   >
-    <h6 class="mt-2 mb-4 text-lg font-medium text-center leading-6 text-white uppercase">
+    <h6 class="mt-2 mb-4 text-lg font-medium text-center leading-6 text-black uppercase">
       Editar Perfil Personal
     </h6>
     <div class="flex flex-wrap">
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-white" htmlfor="grid-password">
+          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
             Cédula de Identidad
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.identity_card">
@@ -21,6 +21,7 @@
           >
             Ingresar cédula o RUC válido
           </p>
+          <small>Formato: Cédula Ecuatoriana</small>
           <div>
             <input
               type="text"
@@ -37,12 +38,13 @@
       </div>
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-white" htmlfor="grid-password">
+          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
             Fecha de Nacimiento
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.date_birth">
             {{ $page.props.errors.date_birth }}
           </p>
+          <small>Formato: Necesario</small>
           <Datepicker
             class="border-0 py-0.5 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             v-model="profile.date_birth"
@@ -54,12 +56,13 @@
 
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-white" htmlfor="grid-password">
+          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
             Fecha de Vocación
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.date_vocation">
             {{ $page.props.errors.date_vocation }}
           </p>
+          <small>Formato: Necesario</small>
           <Datepicker
             class="border-0 py-0.5 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             v-model="profile.date_vocation"
@@ -70,12 +73,13 @@
 
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-white" htmlfor="grid-password">
+          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
             Fecha de Admisión
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.date_admission">
             {{ $page.props.errors.date_admission }}
           </p>
+          <small>Formato: Opcional</small>
           <Datepicker
             class="border-0 py-0.5 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             v-model="profile.date_admission"
@@ -86,10 +90,11 @@
 
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-white"> Fecha de Envío </label>
+          <label class="block text-sm font-medium text-black"> Fecha de Envío </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.date_send">
             {{ $page.props.errors.date_send }}
           </p>
+          <small>Formato: Opcional</small>
           <Datepicker
             class="border-0 py-0.5 placeholder-blueGray-300 text-blueGray-300 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             v-model="profile.date_send"
@@ -98,10 +103,11 @@
         </div>
       </div>
       <div class="w-full lg:w-4/12 px-4">
-        <label class="block text-sm font-medium text-white"> Fecha de Votos </label>
+        <label class="block text-sm font-medium text-black"> Fecha de Votos </label>
         <p class="text-red-400 text-sm" v-show="$page.props.errors.date_vote">
           {{ $page.props.errors.date_vote }}
         </p>
+        <small>Formato: Opcional</small>
         <Datepicker
           class="border-0 py-0.5 placeholder-blueGray-300 text-blueGray-300 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
           v-model="profile.date_vote"
@@ -110,10 +116,11 @@
       </div>
 
       <div class="w-full lg:w-4/12 px-4">
-        <label class="block text-sm font-medium text-white"> Fecha Fallecimiento </label>
+        <label class="block text-sm font-medium text-black"> Fecha Fallecimiento </label>
         <p class="text-red-400 text-sm" v-show="$page.props.errors.adate_death">
           {{ $page.props.errors.date_death }}
         </p>
+        <small>Formato: Opcional</small>
         <Datepicker
           class="border-0 py-0.5 placeholder-blueGray-300 text-blueGray-300 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
           v-model="profile.date_death"
@@ -123,18 +130,20 @@
 
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-white" htmlfor="grid-password">
+          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
             Celular
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.cellphone">
             {{ $page.props.errors.cellphone }}
           </p>
+          <small>Formato: 0997643146</small>
           <input
             type="text"
             minLength="10"
-            maxlength="20"
-            pattern="[0-9]+"
-            placeholder="123-4567-890"
+            maxlength="10"
+            pattern="^\d{10}$"
+            title="Ingrese un número de celular con un formato válido, máximo 10digitos."
+            placeholder="0997643146"
             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             v-model="profile.cellphone"
             required
@@ -144,18 +153,21 @@
 
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-white" htmlfor="grid-password">
+          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
             Teléfono Convencional
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.phone">
             {{ $page.props.errors.phone }}
           </p>
+          <small>Formato: 022400111</small>
+
           <input
             type="text"
-            minLength="10"
-            maxlength="20"
-            pattern="[0-9]+"
-            placeholder="123-4567-890"
+            minLength="9"
+            maxlength="9"
+            pattern="^\d{9}$"
+            title="Ingrese un número de celular con un formato válido, máximo 9 digitos."
+            placeholder="022400111"
             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             v-model="profile.phone"
             required
@@ -164,16 +176,19 @@
       </div>
 
       <!-- Address Information -->
-      <hr class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-white hover:border-white" />
+      <hr
+        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-300 hover:border-gray-300"
+      />
 
       <div class="w-full lg:w-full px-4">
         <div>
-          <label for="address" class="block text-sm font-medium text-white">
-            Dirección Actual
+          <label for="address" class="block text-sm font-medium text-black">
+            Dirección Actual:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors['address.address']">
             {{ $page.props.errors["address.address"] }}
           </p>
+          <small>Formato: Ingrese la dirección máximo 100 caracteres.</small>
           <div class="mb-1">
             <textarea
               id="address"
@@ -190,8 +205,8 @@
 
       <div class="w-full lg:w-2/5 px-4 mb-2">
         <div :class="{ invalid: isInvalidProvince }">
-          <label class="block text-sm font-medium text-white" htmlfor="grid-password">
-            Provincia
+          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
+            Provincia:
           </label>
           <div>
             <multiselect
@@ -214,7 +229,7 @@
       </div>
       <div class="w-full lg:w-3/5 px-4 mb-2">
         <div :class="{ invalid: isInvalidCanton }">
-          <label class="block text-sm font-medium text-white" htmlfor="grid-password">
+          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
             Cantón
           </label>
           <multiselect
@@ -237,8 +252,8 @@
 
       <div class="w-full lg:w-12/12 px-4 mb-2">
         <div :class="{ invalid: isInvalidParish }">
-          <label class="block text-sm font-medium text-white" htmlfor="grid-password">
-            Parroquia
+          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
+            Parroquia:
           </label>
           <multiselect
             :searchable="true"
@@ -256,16 +271,23 @@
           <p class="text-red-400 text-sm" v-show="isInvalidParish">Obligatorio</p>
         </div>
       </div>
-      <hr class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-white hover:border-white" />
+      <hr
+        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-300 hover:border-gray-300"
+      />
       <!-- Observations -->
       <div class="w-full lg:w-full px-4">
         <div>
-          <label for="about" class="block text-sm font-medium text-white">
-            Observaciones generales
+          <label for="about" class="block text-sm font-medium text-black">
+            Observaciones generales:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.observation">
             {{ $page.props.errors.observation }}
           </p>
+          <small
+            >Formato: Por favor ingresar las observaciones que usted crea pertinente
+            relacionadas al perfil de la hermana, deberán ser máximo 4000
+            caracteres.</small
+          >
           <div class="mt-1 bg-white">
             <quill-editor
               v-model:content="profile.observation"
@@ -296,12 +318,13 @@
           </div>
         </div>
         <div class="mr-9 ml-9 mt-2 text-center">
-          <p class="text-sm text-white">
-            Fecha creación del perfil: {{ this.formatDate(profile.created_at) }}
+          <p class="text-sm text-black">
+            Fecha creación del perfil:
+            {{ this.formatShowDate(profile.created_at) }}
           </p>
-          <p class="text-sm text-white">
+          <p class="text-sm text-black">
             Fecha actualización del perfil:
-            {{ this.formatDate(profile.updated_at) }}
+            {{ this.formatShowDate(profile.updated_at) }}
           </p>
         </div>
       </div>
@@ -372,7 +395,7 @@ export default {
     validateIdentityCard() {
       this.profile.identity_card = this.profile.identity_card + "";
       //   console.log(typeof identity_card + "" + identity_card);
-      console.log(this.profile.identity_card);
+      //   console.log(this.profile.identity_card);
       if (this.profile.identity_card == null) {
         return false;
       }
@@ -642,6 +665,12 @@ export default {
       }
       return null;
     },
+    formatShowDate(value) {
+      if (value != null) {
+        return moment(new Date(value)).format("YYYY-MM-DD");
+      }
+      return null;
+    },
     inAscOrder(arr) {
       return arr.every(function (_, i) {
         return i == 0 || arr[i] >= arr[i - 1];
@@ -650,9 +679,9 @@ export default {
   },
 
   unmounted() {
-    console.log("before Unmount", this.$page.props.flash);
+    // console.log("before Unmount", this.$page.props.flash);
     this.$page.props.flash = null;
-    console.log("after Unmount", this.$page.props.flash);
+    // console.log("after Unmount", this.$page.props.flash);
   },
 };
 </script>

@@ -29,7 +29,9 @@ class CommunitySeeder extends Seeder
                 'comm_email' => Str::random(10) . '@gmail.com',
                 'date_fndt_comm' => '1900-02-01',
                 'date_fndt_work' => '1900-12-10',
-                'rn_collaborators' => $i * 3
+                'comm_status' => 1,
+                'rn_collaborators' => $i * 3,
+                'pastoral_id' => rand(1, 10)
             ]);
 
             $commmunity->inventory()->create([
@@ -80,7 +82,9 @@ class CommunitySeeder extends Seeder
                         'comm_email' => Str::random(10) . '@gmail.com',
                         'date_fndt_comm' => '1900-02-01',
                         'date_fndt_work' => '1900-12-10',
-                        'rn_collaborators' => $j * 3
+                        'rn_collaborators' => $j * 3,
+                        'comm_status' => 1,
+                        'pastoral_id' => rand(1, 10)
                     ]);
 
                     $work->inventory()->create([
@@ -129,7 +133,9 @@ class CommunitySeeder extends Seeder
                         'comm_email' => Str::random(10) . '@gmail.com',
                         'date_fndt_comm' => '1900-02-01',
                         'date_fndt_work' => '1900-12-10',
-                        'rn_collaborators' => $j * 3
+                        'rn_collaborators' => $j * 3,
+                        'comm_status' => 1,
+                        'pastoral_id' => rand(1, 10)
                     ]);
 
                     $work->inventory()->create([

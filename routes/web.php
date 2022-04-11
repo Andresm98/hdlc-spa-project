@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\TestAWSController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\TestAWSController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\AuthWebAccessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
+Route::get('user/roles', [AuthWebAccessController::class, 'index'])
+    ->name('web.user.roles.index')->middleware('auth');;
 
 Route::get('/image', [TestAWSController::class, 'index'])->name('test.image.index');
 
@@ -38,5 +41,3 @@ Route::post('/image', [TestAWSController::class, 'store'])->name('test.image.cre
 
 
 Route::get('/image/show', [TestAWSController::class, 'show'])->name('test.image.show');
-
-

@@ -19,7 +19,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(ProfileSeeder::class);
         $this->call(OfficeSeeder::class);
+        $this->call(PastoralSeeder::class);
         $this->call(CommunitySeeder::class);
         $this->call(PoliticalDivisionSeeder::class);
+
+        $this->call(AppointmentLevelsSeeder::class);
     }
 }

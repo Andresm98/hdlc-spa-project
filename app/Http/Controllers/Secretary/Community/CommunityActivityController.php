@@ -50,12 +50,12 @@ class CommunityActivityController extends Controller
             'comm_name_activity' => ['required', 'max:100'],
             'comm_description_activity' => ['required', 'max:4000'],
             'comm_date_activity' => ['required', 'date_format:Y-m-d H:i:s'],
-            'comm_nr_daughters' => ['required', 'digits_between:1,1000'],
-            'comm_nr_beneficiaries' => ['required', 'digits_between:1,1000'],
-            'comm_nr_collaborators' => ['required', 'digits_between:1,1000'],
+            'comm_nr_daughters' => 'required|integer|between:1,1000',
+            'comm_nr_beneficiaries' => 'required|integer|between:1,1000',
+            'comm_nr_collaborators' => 'required|integer|between:1,1000',
         ]);
 
-        $validator= Validator::make([
+        $validator = Validator::make([
             'community_id' => $community_id,
         ], [
             'community_id' => ['required', 'exists:communities,id'],
@@ -120,9 +120,9 @@ class CommunityActivityController extends Controller
             'comm_name_activity' => ['required', 'max:100'],
             'comm_description_activity' => ['required', 'max:4000'],
             'comm_date_activity' => ['required', 'date_format:Y-m-d H:i:s'],
-            'comm_nr_daughters' => ['required', 'digits_between:1,1000'],
-            'comm_nr_beneficiaries' => ['required', 'digits_between:1,1000'],
-            'comm_nr_collaborators' => ['required', 'digits_between:1,1000'],
+            'comm_nr_daughters' => 'required|integer|between:1,1000',
+            'comm_nr_beneficiaries' => 'required|integer|between:1,1000',
+            'comm_nr_collaborators' => 'required|integer|between:1,1000',
         ]);
 
         $validator = Validator::make([

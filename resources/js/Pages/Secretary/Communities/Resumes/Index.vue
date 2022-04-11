@@ -11,10 +11,14 @@
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
               <div class="">
-                <label class="block text-sm font-medium text-gray-700">
-                  Nombre Resumen
-                </label>
-
+                <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.comm_name_resume"
+                >
+                  {{ $page.props.errors.comm_name_resume }}
+                </p>
+                <small>Formato: Nombre del resumen anual.</small>
                 <input
                   type="text"
                   minLength="10"
@@ -30,10 +34,14 @@
 
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700">
-                Fecha del Resumen
-              </label>
-
+              <label class="block text-sm font-medium text-gray-700"> Fecha: </label>
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.comm_date_resume"
+              >
+                {{ $page.props.errors.comm_date_resume }}
+              </p>
+              <small>Formato: Fecha del resumen anual.</small>
               <Datepicker
                 :format="format"
                 :transitions="false"
@@ -46,9 +54,17 @@
 
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700">
-                Anexo del Resumen
-              </label>
+              <label class="block text-sm font-medium text-gray-700"> Anexo: </label>
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.comm_annexed_resume"
+              >
+                {{ $page.props.errors.comm_annexed_resume }}
+              </p>
+              <small
+                >Formato: Si existe algún enlace o anexo, adjuntarlo en el presente
+                campo.</small
+              >
               <input
                 minLength="10"
                 maxlength="400"
@@ -65,9 +81,17 @@
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
               <label class="block text-sm font-medium text-gray-700">
-                Observaciones
+                Observaciones:
               </label>
-
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.comm_observation_resume"
+              >
+                {{ $page.props.errors.comm_observation_resume }}
+              </p>
+              <small
+                >Formato: Observaciones de la actividad anual, max 3000 caracteres.</small
+              >
               <div class="bg-white">
                 <quill-editor
                   ref="qleditor1"
@@ -75,7 +99,7 @@
                   theme="snow"
                   :toolbar="toolbarOptions"
                   v-model:content="form.comm_observation_resume"
-                  placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+                  placeholder="Ingresar los datos solicitados..."
                 ></quill-editor>
               </div>
             </div>
@@ -92,32 +116,93 @@
         class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
       />
 
-      <div class="w-full bg-white rounded-lg shadow overflow-y-auto h-52">
-        <ul class="divide-y-2 divide-gray-100">
-          <li class="text-center text-white bg-slate-900">Historial de Resúmenes</li>
-          <li
-            class="p-2 hover:bg-emerald-500 hover:text-white"
-            v-for="resume in this.getAllResume()"
-            :key="resume"
+      <!-- Table -->
+
+      <div class="py-2">
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
+          <div
+            v-if="this.getAllResume()"
+            class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <div class="grid gap-5 grid-cols-5">
-              <div class="md:block md:text-sm lg:block lg:text-sm pt-2">
-                {{ resume.comm_name_resume }}
-              </div>
-              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2"></div>
-              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2"></div>
-              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2"></div>
-              <div>
-                <jet-button @click="confirmationResumeUpdate(resume)"
-                  >Detalles</jet-button
-                >
-                <jet-danger-button @click="confirmationResumeDelete(resume)"
-                  >Eliminar</jet-danger-button
-                >
-              </div>
-            </div>
-          </li>
-        </ul>
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-blue-100">
+                <tr>
+                  <th
+                    scope="col"
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Nombre
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Fecha
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Anexo
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr v-for="resume in this.getAllResume()" :key="resume">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 h-10 w-10">
+                        <svg class="svg-icon mt-1" viewBox="2 2 23 23">
+                          <path
+                            d="M18.092,5.137l-3.977-1.466h-0.006c0.084,0.042-0.123-0.08-0.283,0H13.82L10,5.079L6.178,3.671H6.172c0.076,0.038-0.114-0.076-0.285,0H5.884L1.908,5.137c-0.151,0.062-0.25,0.207-0.25,0.369v10.451c0,0.691,0.879,0.244,0.545,0.369l3.829-1.406l3.821,1.406c0.186,0.062,0.385-0.029,0.294,0l3.822-1.406l3.83,1.406c0.26,0.1,0.543-0.08,0.543-0.369V5.506C18.342,5.344,18.242,5.199,18.092,5.137 M5.633,14.221l-3.181,1.15V5.776l3.181-1.15V14.221z M9.602,15.371l-3.173-1.15V4.626l3.173,1.15V15.371z M13.57,14.221l-3.173,1.15V5.776l3.173-1.15V14.221z M17.547,15.371l-3.182-1.15V4.626l3.182,1.15V15.371z"
+                          ></path>
+                        </svg>
+                      </div>
+                      <div class="ml-4">
+                        <div class="text-sm font-medium text-gray-900">
+                          {{ resume.comm_name_resume.substring(0, 15) }}...
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">
+                      {{ this.formatShowDate(resume.comm_date_resume) }}
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 mr-2"
+                    >
+                      {{ resume.comm_annexed_resume.substring(0, 15) }}...
+                    </span>
+                  </td>
+                  <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <!-- Components -->
+
+                    <div class="mx-auto flex gap-10">
+                      <jet-button @click="confirmationResumeUpdate(resume)"
+                        >Detalles</jet-button
+                      >
+                      <jet-danger-button @click="confirmationResumeDelete(resume)"
+                        >Eliminar</jet-danger-button
+                      >
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
+            <p class="text-center text-lg">Por el momento no existen registros.</p>
+          </div>
+        </div>
       </div>
 
       <jet-confirmation-modal
@@ -154,10 +239,14 @@
             <div class="w-full lg:w-6/12 px-4">
               <div class="relative w-full mb-3">
                 <div class="">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Nombre Resumen
-                  </label>
-
+                  <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+                  <p
+                    class="text-red-400 text-sm"
+                    v-show="$page.props.errors.comm_name_resume"
+                  >
+                    {{ $page.props.errors.comm_name_resume }}
+                  </p>
+                  <small>Formato: Nombre del resumen anual.</small>
                   <input
                     type="text"
                     minLength="10"
@@ -173,10 +262,14 @@
 
             <div class="w-full lg:w-6/12 px-4">
               <div class="relative w-full mb-3">
-                <label class="block text-sm font-medium text-gray-700">
-                  Fecha del Resumen
-                </label>
-
+                <label class="block text-sm font-medium text-gray-700"> Fecha: </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.comm_date_resume"
+                >
+                  {{ $page.props.errors.comm_date_resume }}
+                </p>
+                <small>Formato: Fecha del resumen anual.</small>
                 <Datepicker
                   :format="format"
                   :transitions="false"
@@ -189,9 +282,17 @@
 
             <div class="w-full lg:w-12/12 px-4">
               <div class="relative w-full mb-3">
-                <label class="block text-sm font-medium text-gray-700">
-                  Anexo del Resumen
-                </label>
+                <label class="block text-sm font-medium text-gray-700"> Anexo: </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.comm_annexed_resume"
+                >
+                  {{ $page.props.errors.comm_annexed_resume }}
+                </p>
+                <small
+                  >Formato: Si existe algún enlace o anexo, adjuntarlo en el presente
+                  campo.</small
+                >
                 <input
                   minLength="10"
                   maxlength="400"
@@ -208,9 +309,18 @@
             <div class="w-full lg:w-12/12 px-4">
               <div class="relative w-full mb-3">
                 <label class="block text-sm font-medium text-gray-700">
-                  Observaciones
+                  Observaciones:
                 </label>
-
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.comm_observation_resume"
+                >
+                  {{ $page.props.errors.comm_observation_resume }}
+                </p>
+                <small
+                  >Formato: Observaciones de la actividad anual, max 3000
+                  caracteres.</small
+                >
                 <div class="bg-white">
                   <quill-editor
                     ref="qleditor1"
@@ -426,6 +536,10 @@ export default {
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
+
+    formatShowDate(value) {
+      return moment(new Date(value)).format("YYYY-MM-DD");
+    },
     confirmationResumeUpdate(resume) {
       this.updateResumeForm.comm_name_resume = resume.comm_name_resume;
       this.updateResumeForm.comm_observation_resume = resume.comm_observation_resume;
@@ -435,9 +549,11 @@ export default {
       this.resumeBeingUpdated = resume;
     },
     updateResume() {
-      this.updateResumeForm.comm_date_resume = this.formatDate(
-        this.updateResumeForm.comm_date_resume
-      );
+      if (this.updateResumeForm.comm_date_resume != null) {
+        this.updateResumeForm.comm_date_resume = this.formatDate(
+          this.updateResumeForm.comm_date_resume
+        );
+      }
 
       this.updateResumeForm.put(
         this.route("secretary.communities.resume.update", {

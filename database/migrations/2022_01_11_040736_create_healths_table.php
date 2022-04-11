@@ -27,7 +27,6 @@ class CreateHealthsTable extends Migration
             $table->foreign('profile_id')
                 ->references('id')
                 ->on('profiles')
-                // Permite realizar los cambios desde profile y que la tabla health se vea inmediatamente actualizada o eliminada.
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 

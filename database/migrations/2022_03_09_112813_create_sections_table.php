@@ -29,6 +29,7 @@ class CreateSectionsTable extends Migration
             $table->foreign('inventory_id')
                 ->references('id')
                 ->on('inventories')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
 
             $table->timestamps();

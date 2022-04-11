@@ -1,9 +1,18 @@
+<style>
+/* Toggle A */
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #204de0;
+}
+</style>
+
 <template @scroll="handleScroll">
   <app-layout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-700 leading-tight">
         Editar Comunidades
       </h2>
+
       <div class="text-sm text-blue-700 mt-3 mb-6">
         Bienvenido Usuario: {{ $page.props.user.name }}
       </div>
@@ -190,6 +199,43 @@
               <h6 class="mt-2 text-lg font-medium text-center leading-6 text-gray-900">
                 Información General
               </h6>
+
+              <!-- Toggle A -->
+              <div class="flex items-center justify-center w-full my-4">
+                <label for="toogleA" class="flex items-center cursor-pointer">
+                  <!-- toggle -->
+                  <div class="relative">
+                    <!-- input -->
+                    <input
+                      id="toogleA"
+                      type="checkbox"
+                      class="sr-only"
+                      :value="this.community_custom.comm_level"
+                      @click="changeStatusCommunity()"
+                    />
+                    <!-- line -->
+                    <div class="w-10 h-4 bg-gray-200 rounded-full shadow-inner" />
+                    <!-- dot -->
+                    <div
+                      v-if="this.community_custom.comm_status == 1"
+                      class="absolute w-6 h-6 rounded-full shadow -left-1 -top-1 transition"
+                      style="transform: translateX(100%); background-color: #204de0"
+                    />
+                    <div
+                      v-else
+                      class="absolute w-6 h-6 bg-red-400 rounded-full shadow -left-1 -top-1 transition"
+                    />
+                  </div>
+                </label>
+              </div>
+              <!-- label -->
+              <div class="flex items-center justify-center">
+                <small class="ml-3 text-gray-700 font-medium"
+                  >¿La comunidad se encuentra activa? ¿No / Si?</small
+                >
+              </div>
+              <!-- End toogle -->
+
               <div class="flex flex-wrap">
                 <div class="w-full lg:w-3/3 px-4">
                   <div class="relative w-full mb-3">
@@ -197,9 +243,10 @@
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Nombre de Comunidad:
+                      Nombre:
                     </label>
                     <jet-input-error :message="errors.comm_name" />
+                    <small>Formato: Ingresar nombre de la comunidad.</small>
                     <input
                       type="text"
                       placeholder="Nombre de la comunidad en el Sistema"
@@ -221,6 +268,8 @@
                   </label>
 
                   <jet-input-error :message="errors.comm_email" />
+                  <small>Formato: Ingresar correo electrónico de contacto.</small>
+
                   <input
                     type="email"
                     placeholder="micorreo@correo.com"
@@ -243,6 +292,7 @@
                     Ingresar RUC válido
                   </p>
                   <jet-input-error :message="errors.comm_identity_card" />
+                  <small>Formato: Ingresar RUC Formato Ecuador. </small>
                   <input
                     type="text"
                     minLength="10"
@@ -267,6 +317,9 @@
                     </label>
 
                     <jet-input-error :message="errors.date_fndt_comm" />
+                    <small
+                      >Formato: Ingresar la fecha de fundación de la comunidad.</small
+                    >
                     <Datepicker
                       v-model="form.date_fndt_comm"
                       :format="format"
@@ -287,6 +340,7 @@
                     </label>
 
                     <jet-input-error :message="errors.date_fndt_work" />
+                    <small>Formato: Ingresar la fecha de la obra.</small>
                     <Datepicker
                       v-model="form.date_fndt_work"
                       :format="format"
@@ -306,6 +360,7 @@
                     </label>
 
                     <jet-input-error :message="errors.comm_cellphone" />
+                    <small>Formato: Ingresar un número de celular.</small>
                     <input
                       minLength="10"
                       maxlength="20"
@@ -325,10 +380,11 @@
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Teléfono
+                      Teléfono:
                     </label>
 
                     <jet-input-error :message="errors.comm_phone" />
+                    <small>Formato: Ingresar un número de teléfono.</small>
                     <input
                       minLength="8"
                       maxlength="20"
@@ -342,16 +398,17 @@
                   </div>
                 </div>
 
-                <div class="w-full lg:w-4/12 px-4">
+                <div class="w-full lg:w-3/12 px-4">
                   <div class="relative w-full mb-3">
                     <label
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Número de Colaboradores
+                      Nro. de Colaboradores:
                     </label>
 
                     <jet-input-error :message="errors.rn_collaborators" />
+                    <small>Formato: Número de colaboradores, max 1000.</small>
                     <input
                       minLength="0"
                       maxlength="2000"
@@ -365,6 +422,42 @@
                   </div>
                 </div>
 
+                <div class="w-full lg:w-5/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <label
+                      class="block text-sm font-medium text-gray-700"
+                      htmlfor="grid-password"
+                    >
+                      Pastoral:
+                    </label>
+                    <small
+                      >Formato: Seleccionar la pastoral a la que pertenece la
+                      comunidad.</small
+                    >
+                    <div
+                      :class="{ invalid: isInvalidPastoral }"
+                      v-if="this.allPastoral != null"
+                    >
+                      <multiselect
+                        :searchable="true"
+                        v-model="this.selectFour.selectedPastoral"
+                        :options="this.allPastoral"
+                        :close-on-select="true"
+                        :clear-on-select="false"
+                        mode="tags"
+                        label="name"
+                        @search-change="onSearchPrastoralsChange"
+                        @select="onSelectedPastoral"
+                        track-by="name"
+                        placeholder="Buscar pastoral"
+                      >
+                      </multiselect>
+                      <p class="text-red-400 text-sm" v-show="isInvalidPastoral">
+                        Obligatorio
+                      </p>
+                    </div>
+                  </div>
+                </div>
                 <!-- Information Address -->
                 <hr
                   class="mt-1 mb-3 ml-4 mr-4 border-b-1 border-blueGray-300 hover:border-blueGray-100"
@@ -372,11 +465,15 @@
                 <div class="w-full lg:w-full px-4">
                   <div>
                     <label for="address" class="block text-sm font-medium text-gray-700">
-                      Dirección Actual
+                      Dirección Actual:
                     </label>
                     <p class="text-red-400 text-sm" v-show="$page.props.errors.address">
                       {{ $page.props.errors.address }}
                     </p>
+                    <small
+                      >Formato: Dirección actual en la que se encuentra la
+                      comunidad.</small
+                    >
                     <div class="mb-1">
                       <textarea
                         id="address"
@@ -516,6 +613,9 @@
             <div v-if="selectMenu.selectedElement == 'Hermanas'">
               <daughters></daughters>
             </div>
+            <div v-if="selectMenu.selectedElement == 'Documentos'">
+              <files></files>
+            </div>
           </div>
         </div>
       </div>
@@ -555,11 +655,29 @@ import Visits from "@/Pages/Secretary/Communities/Visits/Index";
 import Works from "@/Pages/Secretary/Communities/Work/Index";
 import Inventories from "@/Pages/Secretary/Communities/Inventories/Index";
 import Daughters from "@/Pages/Secretary/Communities/Daughters/Index";
+import Files from "@/Pages/Secretary/Communities/Files/Index";
 
 export default defineComponent({
   created() {
     // console.log("created " + this.$el);
     this.uploadProvinces(this.provinces);
+
+    // Method fetch
+
+    fetch(this.route("secretary.pastoral.index"))
+      .then(async (response) => {
+        const isJson = response.headers.get("content-type")?.includes("application/json");
+        const data = isJson && (await response.json());
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+        this.allPastoral = data;
+      })
+      .catch((error) => {
+        element.parentElement.innerHTML = `Error: ${error}`;
+        console.error("There was an error!", error);
+      });
   },
 
   beforeMount() {
@@ -639,6 +757,13 @@ export default defineComponent({
         this.selectThree.selectedParish == null
       );
     },
+    isInvalidPastoral() {
+      //   console.log("ee Parish", this.selectThree.selectedParish);
+      return (
+        this.selectFour.selectedPastoral == undefined ||
+        this.selectFour.selectedPastoral == null
+      );
+    },
 
     // Validate ID Card`
     validateIdentityCard() {
@@ -695,6 +820,7 @@ export default defineComponent({
     Works,
     Inventories,
     Daughters,
+    Files,
     Datepicker,
     moment,
     Alert,
@@ -716,6 +842,7 @@ export default defineComponent({
           "Obras",
           "Inventario",
           "Hermanas",
+          "Documentos",
         ],
         loading: false,
         multiSelectUser: null,
@@ -736,6 +863,7 @@ export default defineComponent({
         canton_id: null,
         parish_id: null,
         political_division_id: null,
+        pastoral_id: null,
         file: null,
       }),
       photoPreview: null,
@@ -770,6 +898,15 @@ export default defineComponent({
         multiSelectParish: null,
         vSelectParish: null,
       },
+      selectFour: {
+        selectedPastoral: this.community_custom.pastoral,
+        value: 0,
+        options: [],
+        loading: false,
+        multiSelectPastoral: null,
+        vSelectPastoral: null,
+      },
+      allPastoral: null,
     };
   },
   watch: {
@@ -805,6 +942,20 @@ export default defineComponent({
     },
   },
   methods: {
+    changeStatusCommunity() {
+      Inertia.put(
+        this.route("secretary.communities.status.update", {
+          community_id: this.community_custom.id,
+        }),
+        {
+          preserveScroll: true,
+          preserveState: true,
+          onSuccess: () => {
+            console.log("saved.");
+          },
+        }
+      );
+    },
     handleScroll() {
       console.log(window.scrollY);
       console.log("numme");
@@ -822,6 +973,11 @@ export default defineComponent({
       return response.data;
     },
     ...mapActions("community", ["changeCommunity"]),
+
+    onSearchPrastoralsChange() {},
+    onSelectedPastoral(pastoral) {
+      this.form.pastoral_id = pastoral.id;
+    },
     onSearchProvincesChange(term) {
       //   console.log("input data search " + term);
     },
@@ -904,9 +1060,11 @@ export default defineComponent({
       if (
         this.isInvalidProvince == false &&
         this.isInvalidCanton == false &&
+        this.isInvalidPastoral == false &&
         this.isInvalidParish == false &&
         this.validateIdentityCard == true
       ) {
+        this.form.pastoral_id = this.selectFour.selectedPastoral.id;
         this.form.put(
           route("secretary.communities.update", {
             community_id: this.community_custom.id,

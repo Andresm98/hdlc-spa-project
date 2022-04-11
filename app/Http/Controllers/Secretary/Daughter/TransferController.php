@@ -27,6 +27,8 @@ class TransferController extends Controller
         }
         $user = User::find($user_id);
         return $user->profile->transfers()
+            ->with('office')
+            ->with('community')
             ->orderBy('transfer_date_adission', 'DESC')
             ->get();
     }
@@ -92,7 +94,7 @@ class TransferController extends Controller
 
         if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 
@@ -182,7 +184,7 @@ class TransferController extends Controller
 
         if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 

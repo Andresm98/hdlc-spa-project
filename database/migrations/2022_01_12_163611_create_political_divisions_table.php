@@ -31,9 +31,8 @@ class CreatePoliticalDivisionsTable extends Migration
             $table->foreign('political_divisionc_id')
                 ->references('id')
                 ->on('political_divisions')
-                ->onDelete('cascade');
-
-
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->timestamps();
         });

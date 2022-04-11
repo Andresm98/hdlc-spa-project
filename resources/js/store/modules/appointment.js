@@ -1,10 +1,10 @@
 const state = () => ({
     allAppointment: null,
     appointment: {
-        name_appointment: "",
         description: "",
         date_appointment: "",
         date_end_appointment: "",
+        appointment_level_id: "",
     },
 });
 

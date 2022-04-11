@@ -124,7 +124,16 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $profile_custom_id)
     {
-        $validator = Validator::make($request->all(), [
+
+        $validator = Validator::make(['id' => $profile_custom_id], [
+            'id' => ['required', 'exists:users,id']
+        ]);
+
+        if($validator->fails()){
+            return abort(404);
+        }
+
+        $validatorData = Validator::make($request->all(), [
             // // 'date_birth' => ['required', 'date_format:Y-m-d H:i:s'],
             'user_id' => ['required', 'exists:users,id'],
             'identity_card' => ['required', 'string', 'max:13'],
@@ -141,9 +150,10 @@ class ProfileController extends Controller
             'address.political_division_id' => ['required', 'string', 'exists:political_divisions,id'],
         ]);
 
-        if ($validator->fails()) {
+
+        if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 

@@ -22,6 +22,7 @@ class CommunityController extends Controller
     {
         $communities_list = Community::where('comm_id', '=', null)
             ->where('comm_level', '=', 1)
+            ->where('comm_status', '=', 1)
             ->paginate(10);
         return Inertia::render('Secretary/Communities/Index', compact('communities_list'));
     }
@@ -52,8 +53,9 @@ class CommunityController extends Controller
             'comm_email' =>  ['required', 'string', 'email', 'max:255', 'unique:communities'],
             'date_fndt_comm' => ['required', 'date_format:Y-m-d H:i:s'],
             'date_fndt_work' => ['required', 'date_format:Y-m-d H:i:s'],
-            'rn_collaborators' => ['digits_between:1,1000'],
-            'political_division_id' => ['required', 'exists:political_divisions,id']
+            'rn_collaborators' => ['digits_between:0,1000'],
+            'political_division_id' => ['required', 'exists:political_divisions,id'],
+            'pastoral_id' => ['required', 'exists:pastorals,id']
         ]);
 
         if ($validatorData->fails()) {
@@ -73,6 +75,8 @@ class CommunityController extends Controller
             'date_fndt_comm' =>  $request->get('date_fndt_comm'),
             'date_fndt_work' => $request->get('date_fndt_work'),
             'rn_collaborators' => $request->get('rn_collaborators'),
+            'pastoral_id' => $request->get('pastoral_id'),
+            'comm_status' => 1,
         ]);
         $community->address()->create([
             'address' => $request->get('address'),
@@ -115,6 +119,7 @@ class CommunityController extends Controller
         $provinces =  $addressClass->getProvinces();
 
         $community_custom = Community::with('address')
+            ->with('pastoral')
             ->where('comm_slug', '=', [$slug])
             ->get()
             ->first();
@@ -146,7 +151,8 @@ class CommunityController extends Controller
                 'comm_email' =>  ['required', 'string', 'email', 'max:255', Rule::unique('communities')->ignore($community_id)],
                 'date_fndt_comm' => ['required', 'date_format:Y-m-d H:i:s'],
                 'date_fndt_work' => ['required', 'date_format:Y-m-d H:i:s'],
-                'rn_collaborators' => ['digits_between:1,1000'],
+                'rn_collaborators' => ['digits_between:0,1000'],
+                'pastoral_id' => ['required', 'exists:pastorals,id']
             ]
         );
 
@@ -170,6 +176,7 @@ class CommunityController extends Controller
             'date_fndt_comm' =>  $request->get('date_fndt_comm'),
             'date_fndt_work' => $request->get('date_fndt_work'),
             'rn_collaborators' => $request->get('rn_collaborators'),
+            'pastoral_id' => $request->get('pastoral_id'),
         ]);
 
         if (!$community->address) {
@@ -191,6 +198,33 @@ class CommunityController extends Controller
         }
     }
 
+
+    public function updateStatus($community_id)
+    {
+        $validator = Validator::make([
+            'community_id' => $community_id,
+        ], [
+            'community_id' => ['required', 'exists:communities,id'],
+        ]);
+
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        $community = Community::find($community_id);
+        if ($community->comm_status == 1) {
+            $community->update([
+                'comm_status' =>  0,
+            ]);
+            return redirect()->back()->with(['success' => 'La comunidad fue cerrada correctamente.']);
+        } else {
+            $community->update([
+                'comm_status' =>  1,
+            ]);
+            return redirect()->back()->with(['success' => 'La comunidad fue abierta nuevamente correctamente']);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *

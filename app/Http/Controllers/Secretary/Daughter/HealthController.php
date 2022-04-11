@@ -27,7 +27,9 @@ class HealthController extends Controller
         }
 
         $user = User::find($user_id);
-        return $user->profile->healths;
+        return $user->profile->healths()
+        ->orderBy('consult_date','DESC')
+        ->get();
     }
 
     /**
@@ -67,7 +69,7 @@ class HealthController extends Controller
 
         if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 
@@ -140,7 +142,7 @@ class HealthController extends Controller
 
         if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 

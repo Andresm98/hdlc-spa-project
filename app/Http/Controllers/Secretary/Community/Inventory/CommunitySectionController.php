@@ -58,7 +58,7 @@ class CommunitySectionController extends Controller
         ]);
 
         $validatorData = Validator::make($request->all(), [
-            'name' => ['required', 'max:100'],
+            'name' => ['required', 'max:50'],
             'description' => ['required', 'max:4000'],
         ]);
 
@@ -112,7 +112,7 @@ class CommunitySectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $inventory_id, $section_id)
+    public function update(Request $request, $inventory_id, $section_id, $community_id)
     {
         $validator = Validator::make([
             'inventory_id' => $inventory_id,
@@ -125,12 +125,24 @@ class CommunitySectionController extends Controller
             return abort(404);
         }
 
+        $validatorData = Validator::make($request->all(), [
+            'name' => ['required', 'max:50'],
+            'description' => ['required', 'max:4000'],
+        ]);
+
+        if ($validatorData->fails()) {
+            return redirect()->back()
+                ->withErrors($validatorData->errors())
+                ->withInput();
+        }
+
         $section = Section::where('id', '=', $section_id)
             ->where('inventory_id', '=', $inventory_id)
             ->get()
             ->first();
 
-        $commmunity = Community::find($section->commmunity_id);
+        $commmunity = Community::find($community_id);
+
         $section->update([
             'name' => $request->get('name'),
             'slug' => Str::slug($commmunity->comm_name . ' ' . $commmunity->id . ' ' . $request->get('name')),

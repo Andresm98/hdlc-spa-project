@@ -32,20 +32,22 @@ class CreateTransfersTable extends Migration
             $table->foreign('profile_id')
                 ->references('id')
                 ->on('profiles')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
-            // ->onDelete('cascade');
+
 
             $table->foreign('office_id')
                 ->references('id')
                 ->on('offices')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
-            // ->onDelete('cascade');
+
 
             $table->foreign('community_id')
                 ->references('id')
                 ->on('communities')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
-            // ->onDelete('cascade');
 
             $table->timestamps();
         });

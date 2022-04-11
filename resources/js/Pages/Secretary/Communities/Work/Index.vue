@@ -6,7 +6,30 @@
       >
         Todas las Obras de la Comunidad
       </h6>
-
+      <small
+        >En el presente apartado puede visualizar todas las obras que pertenecen a la
+        comunidad que usted seleccionó previamente, tenga en cuenta que todas aquellas
+        obras que sean creadas de manera directa serán mostradas de manera secuencial a la
+        fecha en la que fueron fundadas. <br /><br />
+        Tenga en cuenta las siguientes considereciones antes de realizar cualquier
+        operación:
+        <ul>
+          <li>
+            1. Si deshabilita una de las obras que pertenecen a la comunidad no aparecerán
+            en el presente listado.
+          </li>
+          <li>
+            2. Si eliminar una de las obras de la presente comunidad tenga en cuenta que
+            tal acción es irreversible.
+          </li>
+          <li>
+            3. Antes de eliminar alguna obra deberá verificar que no tenga ningún dato
+            anexo, por ejemplo: visitas, secciones, resumen u otro objeto que pueda
+            generar que el registro no pueda ser eliminado.
+          </li>
+        </ul>
+      </small>
+      <br />
       <!-- <div
     class="flex flex-col items-center justify-center bg-center bg-cover"
     style="
@@ -23,7 +46,7 @@
                 })
               "
               class="px-2 bg-blue-500 border-2 border-blue-500 text-white text-sm rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
-              >Crear Comunidades</Link
+              >Crear Obras</Link
             >
           </div>
 

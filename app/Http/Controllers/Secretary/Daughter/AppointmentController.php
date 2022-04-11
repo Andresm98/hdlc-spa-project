@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Secretary\Daughter;
 
 use App\Models\User;
+use App\Models\Community;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Appointment;
 use Illuminate\Support\Facades\Validator;
 
 class AppointmentController extends Controller
@@ -26,7 +27,24 @@ class AppointmentController extends Controller
         }
 
         $user = User::find($user_id);
-        return $user->profile->appointments;
+        return $user->profile->appointments()
+        ->with('appointment_level')
+        ->with('community')
+        ->orderBy('date_appointment', 'DESC')
+        ->get();
+    }
+
+    public function getCommunity($community_id)
+    {
+        $validator = Validator::make(['id' => $community_id], [
+            'id' => ['required', 'exists:communities,id']
+        ]);
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        return Community::find($community_id);
     }
 
     /**
@@ -48,7 +66,8 @@ class AppointmentController extends Controller
     public function store(Request $request, $user_id)
     {
         $validatorData = Validator::make($request->all(), [
-            'name_appointment' => ['required', 'max:100'],
+            'appointment_level_id' => ['required', 'exists:appointment_levels,id'],
+            'community_id.id' => ['required', 'exists:communities,id'],
             'description' => ['required', 'max:2000'],
             'date_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
             // 'date_end_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
@@ -66,13 +85,14 @@ class AppointmentController extends Controller
 
         if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 
         $user = User::find($user_id);
         $user->profile->appointments()->create([
-            'name_appointment' => $request->get('name_appointment'),
+            'community_id' => $request->community_id["id"],
+            'appointment_level_id' => $request->get('appointment_level_id'),
             'description' => $request->get('description'),
             'date_appointment' => $request->get('date_appointment'),
             // 'date_end_appointment' => $request->get('date_end_appointment'),
@@ -125,7 +145,8 @@ class AppointmentController extends Controller
         $validatorData = Validator::make(
             $request->all(),
             [
-                'name_appointment' => ['required', 'max:100'],
+                'appointment_level_id.id' => ['required', 'exists:appointment_levels,id'],
+                'community_id.id' => ['required', 'exists:communities,id'],
                 'description' => ['required', 'max:2000'],
                 'date_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
                 // 'date_end_appointment' => ['date_format:Y-m-d H:i:s'],
@@ -138,7 +159,8 @@ class AppointmentController extends Controller
         $appointment = Appointment::find($appointment_id);
 
         $appointment->update([
-            'name_appointment' => $request->get('name_appointment'),
+            'community_id' => $request->community_id["id"],
+            'appointment_level_id' => $request->appointment_level_id["id"],
             'description' => $request->get('description'),
             'date_appointment' => $request->get('date_appointment'),
             'date_end_appointment' => $request->get('date_end_appointment'),

@@ -30,7 +30,9 @@ class CreateCommunityResumesTable extends Migration
             $table->foreign('community_id')
                 ->references('id')
                 ->on('communities')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
+
 
             $table->timestamps();
         });

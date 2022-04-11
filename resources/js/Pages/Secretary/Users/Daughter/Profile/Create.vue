@@ -11,7 +11,7 @@
       <div class="w-full lg:w-4/12 px-4">
         <div class="">
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
-            Cédula de Identidad
+            Cédula de Identidad:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.identity_card">
             {{ $page.props.errors.identity_card }}
@@ -22,6 +22,7 @@
           >
             Ingresar cédula o RUC válido
           </p>
+          <small>Formato: Cédula Ecuatoriana</small>
           <!-- <jet-input-error :message="errors.identity_card" /> -->
           <div>
             <input
@@ -40,11 +41,12 @@
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
-            Fecha de Nacimiento
+            Fecha de Nacimiento:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.date_birth">
             {{ $page.props.errors.date_birth }}
           </p>
+          <small>Formato: Necesario</small>
           <Datepicker
             v-model="form.date_birth"
             :format="format"
@@ -61,11 +63,12 @@
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
-            Fecha de Vocación
+            Fecha de Vocación:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.date_vocation">
             {{ $page.props.errors.date_vocation }}
           </p>
+          <small>Formato: Necesario</small>
           <Datepicker
             class=""
             v-model="form.date_vocation"
@@ -79,11 +82,12 @@
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
-            Fecha de Admisión
+            Fecha de Admisión:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.date_admission">
             {{ $page.props.errors.date_admission }}
           </p>
+          <small>Formato: Opcional</small>
           <Datepicker
             class=""
             v-model="form.date_admission"
@@ -96,11 +100,12 @@
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
-            Fecha de Envío
+            Fecha de Envío:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.date_send">
             {{ $page.props.errors.date_send }}
           </p>
+          <small>Formato: Opcional</small>
           <Datepicker
             class=""
             v-model="form.date_send"
@@ -113,11 +118,12 @@
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
-            Fecha de Votos
+            Fecha de Votos:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.date_vote">
             {{ $page.props.errors.date_vote }}
           </p>
+          <small>Formato: Opcional</small>
           <Datepicker
             class=""
             v-model="form.date_vote"
@@ -130,11 +136,12 @@
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
-            Fecha de Muerte
+            Fecha de Muerte:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.date_death">
             {{ $page.props.errors.date_death }}
           </p>
+          <small>Formato: Opcional</small>
           <Datepicker
             class=""
             v-model="form.date_death"
@@ -147,16 +154,18 @@
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
-            Celular
+            Celular:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.cellphone">
             {{ $page.props.errors.cellphone }}
           </p>
+          <small>Formato: 0997643146</small>
           <input
             type="text"
             minLength="10"
-            maxlength="15"
-            pattern="[0-9]+"
+            maxlength="10"
+            pattern="^\d{10}$"
+            title="Ingrese un número de celular con un formato válido, máximo 15 digitos."
             placeholder="123-4567-890"
             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             v-model="form.cellphone"
@@ -168,16 +177,19 @@
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
-            Teléfono Convencional
+            Teléfono Convencional:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.phone">
             {{ $page.props.errors.phone }}
           </p>
+          <small>Formato: 022400111</small>
+
           <input
             type="text"
-            minLength="10"
-            maxlength="15"
-            pattern="[0-9]+"
+            minLength="9"
+            maxlength="9"
+            pattern="^\d{9}$"
+            title="Ingrese un número de celular con un formato válido, máximo 12 digitos."
             placeholder="123-4567-890"
             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             v-model="form.phone"
@@ -191,11 +203,12 @@
       <div class="w-full lg:w-full px-4">
         <div>
           <label for="address" class="block text-sm font-medium text-gray-700">
-            Dirección Actual
+            Dirección Actual:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.address">
             {{ $page.props.errors.address }}
           </p>
+          <small>Formato: Ingrese la dirección máximo 100 caracteres.</small>
           <div class="mb-1">
             <textarea
               id="address"
@@ -214,7 +227,7 @@
       <div class="w-full lg:w-2/5 px-4 mb-2">
         <div class="w-full">
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
-            Provincia
+            Provincia:
           </label>
           <div :class="{ invalid: isInvalid }">
             <multiselect
@@ -238,7 +251,7 @@
       <div class="w-full lg:w-3/5 px-4 mb-2">
         <div class="relative w-full">
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
-            Cantón
+            Cantón:
           </label>
           <div :class="{ invalid: isInvalidCanton }">
             <multiselect
@@ -263,7 +276,7 @@
       <div class="w-full lg:w-12/12 px-4 mb-2">
         <div class="relative w-full">
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
-            Parroquia
+            Parroquia:
           </label>
           <div :class="{ invalid: isInvalidParish }">
             <multiselect
@@ -288,18 +301,17 @@
       <div class="w-full lg:w-full px-4">
         <div>
           <label for="about" class="block text-sm font-medium text-gray-700">
-            Observaciones generales
+            Observaciones generales:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.observation">
             {{ $page.props.errors.observation }}
           </p>
+          <small
+            >Formato: Por favor ingresar las observaciones que usted crea pertinente
+            relacionadas al perfil de la hermana, deberán ser máximo 2000
+            caracteres.</small
+          >
           <div class="mt-1 bg-white">
-            <!-- <quill-editor
-              v-model:content="form.observation"
-              contentType="html"
-              theme="snow"
-              :toolbar="toolbarOptions"
-            ></quill-editor> -->
             <textarea
               id="observation"
               name="observation"
@@ -308,7 +320,7 @@
               v-model="form.observation"
               placeholder="Agregar las observaciones generales..."
               required
-              :maxlength="4000"
+              :maxlength="200"
             />
           </div>
         </div>

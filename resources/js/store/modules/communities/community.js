@@ -9,6 +9,7 @@ const state = () => ({
         date_fndt_work: null,
         rn_collaborators: null,
         address: null,
+        pastoral_id:null,
     },
 });
 

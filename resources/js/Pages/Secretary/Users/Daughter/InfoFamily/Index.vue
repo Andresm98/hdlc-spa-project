@@ -14,11 +14,18 @@
               <label class="block text-sm font-medium text-gray-700 mr-2">
                 Nombres Completos del Padre:
               </label>
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.names_father">
+                {{ $page.props.errors.names_father }}
+              </p>
+              <small>Formato: José Fernando García García</small>
               <div class="mt-1 rounded-md mx-2">
                 <input
                   type="text"
-                  class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 mr-2"
-                  placeholder="Ingrese los nombres del padre"
+                  placeholder="Ejm: Fuentes Ramos"
+                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  onkeydown="return /[a-z, ]/i.test(event.key)"
+                  onblur="if (this.value == '') {this.value = '';}"
+                  onfocus="if (this.value == '') {this.value = '';}"
                   maxlength="100"
                   v-model="this.infofamily.names_father"
                   required
@@ -29,11 +36,18 @@
               <label class="block text-sm font-medium text-gray-700">
                 Nombres Completos de la Madre:
               </label>
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.names_mother">
+                {{ $page.props.errors.names_mother }}
+              </p>
+              <small>Formato: Andrea Fransheska González González </small>
               <div class="mt-1 rounded-md mx-2">
                 <input
                   type="text"
-                  class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-                  placeholder="Ingrese los nombres de la madre"
+                  placeholder="Ejm: Fuentes Ramos"
+                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  onkeydown="return /[a-z, ]/i.test(event.key)"
+                  onblur="if (this.value == '') {this.value = '';}"
+                  onfocus="if (this.value == '') {this.value = '';}"
                   maxlength="100"
                   v-model="this.infofamily.names_mother"
                   required
@@ -45,6 +59,10 @@
               <label class="block text-sm font-medium text-gray-700">
                 Número de Hermanas:
               </label>
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.nr_sisters">
+                {{ $page.props.errors.nr_sisters }}
+              </p>
+              <small>Formato: 0 - 20</small>
               <div class="mt-1 rounded-md mx-2">
                 <input
                   type="number"
@@ -61,6 +79,10 @@
               <label class="block text-sm font-medium text-gray-700">
                 Número de Hermanos:
               </label>
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.nr_brothers">
+                {{ $page.props.errors.nr_brothers }}
+              </p>
+              <small>Formato: 0 - 20</small>
               <div class="mt-1 rounded-md mx-2">
                 <input
                   type="number"
@@ -78,6 +100,10 @@
               <label class="block text-sm font-medium text-gray-700">
                 Lugar en la Familia:
               </label>
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.place_of_family">
+                {{ $page.props.errors.place_of_family }}
+              </p>
+              <small>Formato: Orden Cronológico</small>
               <div class="mt-1 rounded-md mx-2">
                 <input
                   type="number"
@@ -119,11 +145,21 @@
             <label class="block text-sm font-medium text-gray-700 mr-2">
               Nombres Completos del Familiar:
             </label>
+            <p
+              class="text-red-400 text-sm"
+              v-show="$page.props.errors.name_family_member"
+            >
+              {{ $page.props.errors.name_family_member }}
+            </p>
+            <small>Formato: Andrea González López </small>
             <div class="mt-1 rounded-md mx-2">
               <input
                 type="text"
-                class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 mr-2"
-                placeholder="Ingrese los nombres del familiar"
+                placeholder="Ejm: Fuentes Ramos"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                onkeydown="return /[a-z, ]/i.test(event.key)"
+                onblur="if (this.value == '') {this.value = '';}"
+                onfocus="if (this.value == '') {this.value = '';}"
                 maxlength="100"
                 v-model="this.infofamilybreak.name_family_member"
                 required
@@ -134,11 +170,18 @@
             <label class="block text-sm font-medium text-gray-700">
               Relación del Familiar con la Hermana:
             </label>
+            <p class="text-red-400 text-sm" v-show="$page.props.errors.relation">
+              {{ $page.props.errors.relation }}
+            </p>
+            <small>Formato: Hermano, Primo, etc. </small>
             <div class="mt-1 rounded-md mx-2">
               <input
                 type="text"
-                class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-                placeholder="Ingrese el parentesco"
+                placeholder="Ejm: Primo, Hermano, etc"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                onkeydown="return /[a-z, ]/i.test(event.key)"
+                onblur="if (this.value == '') {this.value = '';}"
+                onfocus="if (this.value == '') {this.value = '';}"
                 maxlength="100"
                 v-model="this.infofamilybreak.relation"
                 required
@@ -150,14 +193,19 @@
             <label class="block text-sm font-medium text-black" htmlfor="grid-password">
               Celular:
             </label>
+            <p class="text-red-400 text-sm" v-show="$page.props.errors.cellphone">
+              {{ $page.props.errors.phone }}
+            </p>
+            <small>Formato: 0997643146</small>
             <div class="mx-2 mt-1">
               <input
                 type="text"
                 minLength="10"
-                maxlength="20"
-                pattern="[0-9]+"
-                placeholder="123-4567-890"
-                class="border-0 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                maxlength="10"
+                pattern="^\d{10}$"
+                title="Ingrese un número de celular con un formato válido, máximo 10digitos."
+                placeholder="0997643146"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 v-model="this.infofamilybreak.cellphone"
                 required
               />
@@ -167,14 +215,19 @@
             <label class="block text-sm font-medium text-black" htmlfor="grid-password">
               Teléfono:
             </label>
+            <p class="text-red-400 text-sm" v-show="$page.props.errors.phone">
+              {{ $page.props.errors.phone }}
+            </p>
+            <small>Formato: 022400111</small>
             <div class="mx-2 mt-1">
               <input
                 type="text"
-                minLength="10"
-                maxlength="20"
-                pattern="[0-9]+"
-                placeholder="123-4567-890"
-                class="border-0 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                minLength="9"
+                maxlength="9"
+                pattern="^\d{9}$"
+                title="Ingrese un número de celular con un formato válido, máximo 9 digitos."
+                placeholder="022400111"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 v-model="this.infofamilybreak.phone"
                 required
               />
@@ -200,16 +253,21 @@
 import { ref, onMounted } from "vue";
 import Datepickerf from "vuejs3-datepicker";
 import { useForm } from "@inertiajs/inertia-vue3";
+import JetInputError from "@/Jetstream/InputError";
 import { mapActions, mapGetters, mapState } from "vuex";
 import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import JetButton from "@/Jetstream/Button.vue";
 import { Inertia } from "@inertiajs/inertia";
 
 export default {
+  props: {
+    errors: null,
+  },
   components: {
     Datepickerf,
     JetButtonSuccess,
     JetButton,
+    JetInputError,
   },
   data() {
     return {

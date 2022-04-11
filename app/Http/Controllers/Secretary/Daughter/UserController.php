@@ -128,7 +128,7 @@ class UserController extends Controller
         $addressClass = new AddressController();
 
         if ($validator->fails()) {
-            abort(404);
+          return   abort(404);
         } else {
             $provinces =  $addressClass->getProvinces();
             $daughter_custom = User::select()
@@ -220,9 +220,27 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        //
+        $validator = Validator::make(['slug' => $slug], [
+            'slug' => ['required', 'string', 'max:50', 'alpha_dash', 'exists:users,slug']
+        ]);
+
+        if ($validator->fails()) {
+            abort(404);
+        } else {
+            $user_custom = User::select('id')
+                ->where('slug', '=', [$slug])
+                ->get()
+                ->first();
+            $user =  User::find($user_custom->id);
+
+            if ($user->id == 1) {
+                return redirect()->route('secretary.daughters.index')->with('error', 'No se puede eliminar.');
+            }
+            $user->delete();
+            return redirect()->route('secretary.daughters.index')->with('success', 'Eliminado correctamente.');
+        }
     }
 
 
@@ -234,7 +252,10 @@ class UserController extends Controller
     public function reportInfoProfile($user_id)
     {
 
+
         $user = User::find($user_id);
+        return Inertia::render('Secretary/Users/Daughter/Reports/Profile', compact('user'));
+
 
         // Import Methods
         $profile_daughter = new ProfileController();

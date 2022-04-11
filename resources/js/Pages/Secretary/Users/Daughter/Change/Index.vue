@@ -4,7 +4,7 @@
       <h6
         class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
       >
-        Plantilla de Transferencias
+        Plantilla de Cambios
       </h6>
 
       <div v-if="$page.props.flash != null">
@@ -32,28 +32,22 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Motivo de la Transferencia:
+                Motivo:
               </label>
-
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.transfer_reason">
+                {{ $page.props.errors.transfer_reason }}
+              </p>
+              <small>Formato: Ingresar el motivo del cambio.</small>
               <div>
                 <input
                   type="text"
                   minLength="10"
                   maxlength="100"
-                  placeholder="Ingresar motivo de la transferencia"
+                  placeholder="Ingresar motivo del cambio"
                   class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="form.transfer_reason"
                   required
                 />
-                <!-- <textarea
-                  id="observation"
-                  name="observation"
-                  rows="6"
-                  class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md m-3"
-                  placeholder="Agregar las observaciones generales..."
-                  required
-                  :maxlength="4000"
-                /> -->
               </div>
             </div>
           </div>
@@ -66,13 +60,23 @@
               >
                 Observaciones:
               </label>
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.transfer_observation"
+              >
+                {{ $page.props.errors.transfer_observation }}
+              </p>
+              <small
+                >Formato: Ingresar las observaciones pertinentes, 3000 caracteres
+                max.</small
+              >
               <div class="bg-white">
                 <quill-editor
                   ref="qleditor1"
                   contentType="html"
                   theme="snow"
                   :toolbar="toolbarOptions"
-                  placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+                  placeholder="Ingresar los datos solicitados..."
                   v-model:content="form.transfer_observation"
                 ></quill-editor>
               </div>
@@ -86,25 +90,31 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Comunidad Transferencia:
+                  Comunidad u Obra:
                 </label>
-
-                <div :class="{ invalid: isInvalid }">
+                <small
+                  >Formato: Seleccionar la comunidad u obra a la que se cambia la
+                  hermana.</small
+                >
+                <div :class="{ invalid: isInvalidCommunity }">
                   <div v-if="this.allWork != null">
                     <multiselect
+                      :searchable="true"
                       placeholder="Por favor seleccionar la comunidad a la que va"
                       select-label="Seleccionar!"
-                      v-model="form.community_id"
+                      v-model="this.form.community_id"
                       :options="this.allWork"
+                      :close-on-select="true"
+                      :clear-on-select="false"
                       :max-height="200"
                       :disabled="isDisabled"
-                      @input="onChange"
-                      @close="onTouch"
                       @select="onSelect"
                       mode="tags"
                       label="comm_name"
-                      track-by="comm_name"
                     ></multiselect>
+                    <p class="text-sm text-red-400" v-show="isInvalidCommunity">
+                      Obligatorio
+                    </p>
                   </div>
                 </div>
               </div>
@@ -118,15 +128,15 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Oficio a Ocupar:
+                  Cargo:
                 </label>
-
-                <div :class="{ invalid: isInvalid }">
+                <small>Formato: Seleccionar el cargo que desempeñará la hermana.</small>
+                <div :class="{ invalid: isInvalidOffice }">
                   <div v-if="this.allOffice != null">
                     <multiselect
                       placeholder="Por favor seleccionar el oficio a ocupar"
                       select-label="Seleccionar!"
-                      v-model="form.office_id"
+                      v-model="this.form.office_id"
                       :options="this.allOffice"
                       :max-height="200"
                       :disabled="isDisabled"
@@ -134,6 +144,9 @@
                       label="office_name"
                       track-by="office_name"
                     ></multiselect>
+                    <p class="text-sm text-red-400" v-show="isInvalidOffice">
+                      Obligatorio
+                    </p>
                   </div>
                 </div>
               </div>
@@ -146,9 +159,15 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Fecha de Ubicación:
+                Fecha Inicio:
               </label>
-
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.transfer_date_adission"
+              >
+                {{ $page.props.errors.transfer_date_adission }}
+              </p>
+              <small>Formato: Fecha de inicio de actividades.</small>
               <Datepicker
                 v-model="form.transfer_date_adission"
                 :format="format"
@@ -161,8 +180,8 @@
 
           <!-- Information Address -->
         </div>
-        <jet-button-success type="submit" class="ml-4 mt-4 btn btn-primary"
-          >Crear Transferencia</jet-button-success
+        <jet-button-success type="submit" class="ml-4 mt-1 btn btn-primary"
+          >Crear Cambio</jet-button-success
         >
       </form>
 
@@ -170,74 +189,172 @@
         class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
       />
 
-      <div class="w-full bg-white rounded-lg shadow overflow-y-auto h-52">
-        <ul class="divide-y-2 divide-gray-100">
-          <li class="text-center text-white bg-slate-900">Historial de Transferencias</li>
-          <li
-            class="p-2 hover:bg-emerald-500 hover:text-white"
-            v-for="(transfer, index) in this.getAllTransfer()"
-            :key="transfer"
+      <!-- Table -->
+
+      <div class="py-2">
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
+          <div
+            v-if="this.getAllTransfer()"
+            class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <div class="grid gap-5 grid-cols-5">
-              <div class="md:block md:text-sm lg:block lg:text-sm pt-2">
-                {{ index }}
-              </div>
-              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2">
-                {{ transfer.transfer_reason }}
-              </div>
-              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2"></div>
-              <div>
-                <jet-button @click="confirmationTransferUpdate(transfer)"
-                  >Detalles</jet-button
-                >
-              </div>
-              <div>
-                <jet-danger-button @click="confirmationTransferDelete(transfer)"
-                  >Eliminar</jet-danger-button
-                >
-              </div>
-            </div>
-          </li>
-        </ul>
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-blue-100">
+                <tr>
+                  <th
+                    scope="col"
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Comunidad/Obra
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Cargo
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Fechas (inicio-fin)
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr v-for="transfer in this.getAllTransfer()" :key="transfer">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 h-10 w-10">
+                        <svg class="svg-icon" viewBox="1 1 18 18">
+                          <path
+                            d="M10,1.529c-4.679,0-8.471,3.792-8.471,8.471c0,4.68,3.792,8.471,8.471,8.471c4.68,0,8.471-3.791,8.471-8.471C18.471,5.321,14.68,1.529,10,1.529 M10,17.579c-4.18,0-7.579-3.399-7.579-7.579S5.82,2.421,10,2.421S17.579,5.82,17.579,10S14.18,17.579,10,17.579 M14.348,10c0,0.245-0.201,0.446-0.446,0.446h-5c-0.246,0-0.446-0.201-0.446-0.446s0.2-0.446,0.446-0.446h5C14.146,9.554,14.348,9.755,14.348,10 M14.348,12.675c0,0.245-0.201,0.446-0.446,0.446h-5c-0.246,0-0.446-0.201-0.446-0.446s0.2-0.445,0.446-0.445h5C14.146,12.229,14.348,12.43,14.348,12.675 M7.394,10c0,0.245-0.2,0.446-0.446,0.446H6.099c-0.245,0-0.446-0.201-0.446-0.446s0.201-0.446,0.446-0.446h0.849C7.194,9.554,7.394,9.755,7.394,10 M7.394,12.675c0,0.245-0.2,0.446-0.446,0.446H6.099c-0.245,0-0.446-0.201-0.446-0.446s0.201-0.445,0.446-0.445h0.849C7.194,12.229,7.394,12.43,7.394,12.675 M14.348,7.325c0,0.246-0.201,0.446-0.446,0.446h-5c-0.246,0-0.446-0.2-0.446-0.446c0-0.245,0.2-0.446,0.446-0.446h5C14.146,6.879,14.348,7.08,14.348,7.325 M7.394,7.325c0,0.246-0.2,0.446-0.446,0.446H6.099c-0.245,0-0.446-0.2-0.446-0.446c0-0.245,0.201-0.446,0.446-0.446h0.849C7.194,6.879,7.394,7.08,7.394,7.325"
+                          ></path>
+                        </svg>
+                      </div>
+                      <div class="ml-4">
+                        <div class="text-sm font-medium text-black hover:text-blue-500">
+                          <div
+                            v-if="
+                              transfer.community.comm_level == 1 &&
+                              transfer.community.comm_id == null
+                            "
+                          >
+                            <a
+                              :href="
+                                route('secretary.communities.edit', {
+                                  slug: transfer.community.comm_slug,
+                                })
+                              "
+                              target="_blank"
+                            >
+                              {{ transfer.community.comm_name.substring(0, 15) }}...
+                            </a>
+                          </div>
+                          <div
+                            v-if="
+                              transfer.community.comm_level == 2 &&
+                              transfer.community.comm_id != null
+                            "
+                          >
+                            <a
+                              :href="
+                                route('secretary.works.edit', {
+                                  slug: transfer.community.comm_slug,
+                                })
+                              "
+                              target="_blank"
+                            >
+                              {{ transfer.community.comm_name.substring(0, 15) }}...
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">
+                      {{ transfer.office.office_name }}
+                    </div>
+                  </td>
+                  <td
+                    class="px-6 py-4 whitespace-nowrap"
+                    v-if="transfer.transfer_date_relocated == null"
+                  >
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                    >
+                      {{ this.formatDateShow(transfer.transfer_date_adission) }} -
+                      {{ this.formatDateShow(transfer.transfer_date_relocated) }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap" v-else>
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                    >
+                      {{ this.formatDateShow(transfer.transfer_date_adission) }} -
+                      {{ this.formatDateShow(transfer.transfer_date_relocated) }}
+                    </span>
+                  </td>
+
+                  <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <!-- Components -->
+
+                    <div class="mx-auto flex gap-10">
+                      <jet-button @click="confirmationTransferUpdate(transfer)"
+                        >Detalles</jet-button
+                      >
+                      <jet-danger-button @click="confirmationTransferDelete(transfer)"
+                        >Eliminar</jet-danger-button
+                      >
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
+            <p class="text-center text-lg">Por el momento no existen registros.</p>
+          </div>
+        </div>
       </div>
 
       <jet-confirmation-modal
         :show="transferBeingDeleted"
         @close="transferBeingDeleted == null"
       >
-        <template #title> Eliminar el historial de Transferencia</template>
+        <template #title> Eliminar el historial del Cambio</template>
 
         <template #content>
-          ¿Está seguro de que desea eliminar la transferencia?
+          ¿Está seguro de que desea eliminar el cambio?
           <div class="w-full lg:w-12/12 px-4">
             <div class="">
               <label
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Motivo de la Transferencia:
+                Motivo:
               </label>
-
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.transfer_reason">
+                {{ $page.props.errors.transfer_reason }}
+              </p>
+              <small>Motivo del cambio.</small>
               <div>
                 <input
                   type="text"
                   minLength="10"
                   maxlength="100"
-                  placeholder="Ingresar motivo de la transferencia"
+                  placeholder="Ingresar motivo del cambio"
                   class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="deleteTransferForm.transfer_reason"
                   readonly
                   required
                 />
-                <!-- <textarea
-                  id="observation"
-                  name="observation"
-                  rows="6"
-                  class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md m-3"
-                  placeholder="Agregar las observaciones generales..."
-                  required
-                  :maxlength="4000"
-                /> -->
               </div>
             </div>
           </div>
@@ -259,7 +376,7 @@
         :show="transferBeingUpdated"
         @close="transferBeingUpdated == null"
       >
-        <template #title> Datos de Registro de la Transferencia</template>
+        <template #title> Datos de Registro del Cambio</template>
 
         <template #content>
           <div class="flex flex-wrap">
@@ -269,28 +386,25 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Motivo de la Transferencia:
+                  Motivo:
                 </label>
-
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.transfer_reason"
+                >
+                  {{ $page.props.errors.transfer_reason }}
+                </p>
+                <small>Formato: Ingresar el motivo del cambio.</small>
                 <div>
                   <input
                     type="text"
                     minLength="10"
                     maxlength="100"
-                    placeholder="Ingresar motivo de la transferencia"
+                    placeholder="Ingresar motivo del cambio"
                     class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="updateTransferForm.transfer_reason"
                     required
                   />
-                  <!-- <textarea
-                  id="observation"
-                  name="observation"
-                  rows="6"
-                  class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md m-3"
-                  placeholder="Agregar las observaciones generales..."
-                  required
-                  :maxlength="4000"
-                /> -->
                 </div>
               </div>
             </div>
@@ -302,25 +416,31 @@
                     class="block text-sm font-medium text-gray-700"
                     htmlfor="grid-password"
                   >
-                    Comunidad Transferencia:
+                    Comunidad u Obra:
                   </label>
-
-                  <div :class="{ invalid: isInvalid }">
+                  <small
+                    >Formato: Seleccionar la comunidad u obra a la que se cambia la
+                    hermana.</small
+                  >
+                  <div :class="{ invalid: isInvalidUpdateCommunity }">
                     <div v-if="this.allWork != null">
                       <multiselect
-                        placeholder="Por favor seleccionar la comunidad a la que va"
+                        :searchable="true"
+                        placeholder="Por favor seleccionar la comunidad de destino"
                         select-label="Seleccionar!"
-                        v-model="selectOne.selectedCommunity"
+                        v-model="this.selectOne.selectedCommunity"
                         :options="this.allWork"
+                        :close-on-select="true"
+                        :clear-on-select="false"
                         :max-height="200"
                         :disabled="isDisabled"
-                        @input="onChange"
-                        @close="onTouch"
                         @select="onSelect"
                         mode="tags"
                         label="comm_name"
-                        track-by="comm_name"
                       ></multiselect>
+                      <p class="text-sm text-red-400" v-show="isInvalidUpdateCommunity">
+                        Obligatorio
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -334,10 +454,11 @@
                     class="block text-sm font-medium text-gray-700"
                     htmlfor="grid-password"
                   >
-                    Oficio a Ocupar:
+                    Cargo:
                   </label>
+                  <small>Formato: Seleccionar el cargo que desempeñará la hermana.</small>
 
-                  <div :class="{ invalid: isInvalid }">
+                  <div :class="{ invalid: isInvalidUpdateOffice }">
                     <div v-if="this.allOffice != null">
                       <multiselect
                         placeholder="Por favor seleccionar el oficio a ocupar"
@@ -347,9 +468,12 @@
                         :max-height="200"
                         :disabled="isDisabled"
                         mode="tags"
-                        label="name"
-                        track-by="name"
+                        label="office_name"
+                        track-by="office_name"
                       ></multiselect>
+                      <p class="text-sm text-red-400" v-show="isInvalidUpdateOffice">
+                        Obligatorio
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -364,6 +488,13 @@
                 >
                   Observaciones:
                 </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.transfer_observation"
+                >
+                  {{ $page.props.errors.transfer_observation }}
+                </p>
+                <small>Formato: Ingresar las observaciones pertinentes.</small>
                 <div class="bg-white">
                   <quill-editor
                     ref="qleditor1"
@@ -383,9 +514,15 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Fecha de Ubicación:
+                  Fecha Inicio:
                 </label>
-
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.transfer_date_adission"
+                >
+                  {{ $page.props.errors.transfer_date_adission }}
+                </p>
+                <small>Formato: Fecha de inicio de actividades.</small>
                 <Datepicker
                   v-model="updateTransferForm.transfer_date_adission"
                   :format="format"
@@ -405,9 +542,9 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Fecha de Relocalización:
+                  Fecha Relocalización:
                 </label>
-
+                <small>No Editable: Fecha de inicio de actividades.</small>
                 <Datepicker
                   v-model="updateTransferForm.transfer_date_relocated"
                   :format="format"
@@ -469,7 +606,7 @@ export default {
     axios
       .get(this.route("secretary.daughter-profile.transfer.communities.index"))
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         this.updateAllWork(res.data);
       });
   },
@@ -478,7 +615,7 @@ export default {
   },
   computed: {
     isInvalid() {
-      console.log("inva ", this.isTouched, "\n\nopp> ");
+      //   console.log("inva ", this.isTouched, "\n\nopp> ");
       return this.value == null;
     },
     ...mapState("daughter", ["profile"]),
@@ -495,9 +632,31 @@ export default {
           })
         )
         .then((res) => {
-          console.log("computed ", res.data);
+          //   console.log("computed ", res.data);
           this.updateAllTransfer(res.data);
         });
+    },
+
+    isInvalidOffice() {
+      return this.form.office_id == undefined || this.form.office_id == null;
+    },
+    isInvalidUpdateOffice() {
+      return (
+        this.selectTwo.selectedOffice == undefined ||
+        this.selectTwo.selectedOffice == null
+      );
+    },
+    isInvalidCommunity() {
+      //   console.log("ee Parish", this.selectThree.selectedParish);
+      return this.form.community_id == undefined || this.form.community_id == null;
+    },
+
+    isInvalidUpdateCommunity() {
+      //   console.log("ee Parish", this.selectThree.selectedParish);
+      return (
+        this.selectOne.selectedCommunity == undefined ||
+        this.selectOne.selectedCommunity == null
+      );
     },
   },
   // Relashionship with another components
@@ -651,42 +810,49 @@ export default {
     ...mapGetters("work", ["getAllWork"]),
 
     submit() {
-      console.log("data send", this.form);
-      this.form.transfer_date_adission = this.formatDate(
-        this.form.transfer_date_adission
-      );
-      this.form.transfer_date_relocated = this.formatDate(
-        this.form.transfer_date_relocated
-      );
-      //
-      Inertia.post(
-        route("secretary.daughter-profile.transfer.store", {
-          user_id: this.profile.user_id,
-        }),
-        this.form,
-        {
-          preserveScroll: true,
-          preserveState: true,
-          onSuccess: () => {
-            setTimeout(() => {
-              this.updateTable();
-            }, 10);
-            this.form.transfer_date_adission = null;
-            this.form.transfer_date_relocated = null;
-            this.form.transfer_reason = null;
-            this.form.transfer_observation = null;
-            this.form.community_id = null;
-            this.form.office_id = null;
-            this.form.profile_id = null;
+      //   console.log("data send", this.form);
+      if (this.form.transfer_date_adission) {
+        this.form.transfer_date_adission = this.formatDate(
+          this.form.transfer_date_adission
+        );
+      }
+      if (this.isInvalidCommunity == false && this.isInvalidOffice == false) {
+        Inertia.post(
+          route("secretary.daughter-profile.transfer.store", {
+            user_id: this.profile.user_id,
+          }),
+          this.form,
+          {
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => {
+              setTimeout(() => {
+                this.updateTable();
+              }, 10);
+              this.form.transfer_date_adission = null;
+              this.form.transfer_date_relocated = null;
+              this.form.transfer_reason = null;
+              this.form.transfer_observation = null;
+              this.form.community_id = null;
+              this.form.office_id = null;
+              this.form.profile_id = null;
 
-            this.$refs.qleditor1.setHTML("");
-          },
-        }
-      );
+              this.$refs.qleditor1.setHTML("");
+            },
+          }
+        );
+      }
     },
 
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
+    },
+
+    formatDateShow(value) {
+      if (value != null) {
+        return moment(new Date(value)).format("YYYY-MM-DD");
+      }
+      return "Vigente";
     },
 
     confirmationTransferUpdate(transfer) {
@@ -714,29 +880,33 @@ export default {
       return response.data;
     },
     updateTransfer() {
-      this.updateTransferForm.transfer_date_adission = this.formatDate(
-        this.updateTransferForm.transfer_date_adission
-      );
+      if (this.updateTransferForm.transfer_date_adission != null) {
+        this.updateTransferForm.transfer_date_adission = this.formatDate(
+          this.updateTransferForm.transfer_date_adission
+        );
+      }
 
       this.updateTransferForm.community_id = this.selectOne.selectedCommunity;
       this.updateTransferForm.office_id = this.selectTwo.selectedOffice;
 
-      this.updateTransferForm.put(
-        this.route("secretary.daughter-profile.transfer.update", {
-          user_id: this.profile.user_id,
-          transfer_id: this.transferBeingUpdated.id,
-        }),
-        {
-          preserveScroll: true,
-          preserveState: true,
-          onSuccess: () => {
-            this.transferBeingUpdated = null;
-            setTimeout(() => {
-              this.updateTable();
-            }, 100);
-          },
-        }
-      );
+      if (this.isInvalidUpdateCommunity == false && this.isInvalidUpdateOffice == false) {
+        this.updateTransferForm.put(
+          this.route("secretary.daughter-profile.transfer.update", {
+            user_id: this.profile.user_id,
+            transfer_id: this.transferBeingUpdated.id,
+          }),
+          {
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => {
+              this.transferBeingUpdated = null;
+              setTimeout(() => {
+                this.updateTable();
+              }, 100);
+            },
+          }
+        );
+      }
     },
     // Delete
     confirmationTransferDelete(transfer) {
@@ -756,7 +926,7 @@ export default {
             (this.transferBeingDeleted = null),
             setTimeout(() => {
               this.updateTable();
-            }, 500)
+            }, 1)
           ),
         }
       );
@@ -782,21 +952,21 @@ export default {
     },
     onChange(value) {
       this.value = value;
-      console.log("aiudaaa> ", value);
+      //   console.log("aiudaaa> ", value);
       if (value.indexOf("Reset me!") !== -1) {
-        console.log("is reset");
+        // console.log("is reset");
         this.value = [];
       }
     },
     onSelect(option) {
       if (option === "Disable me!") {
-        console.log("is disable");
+        // console.log("is disable");
         this.isDisabled = true;
       }
     },
     onTouch() {
-      console.log("is touched");
-      console.log(this.allOffice);
+      //   console.log("is touched");
+      //   console.log(this.allOffice);
       this.isTouched = true;
     },
   },

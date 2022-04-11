@@ -187,8 +187,9 @@
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Nombre de Usuario
+                      Nombre de Usuario:
                     </label>
+                    <small>Formato: No editable</small>
                     <jet-input-error :message="errors.username" />
                     <input
                       type="text"
@@ -204,15 +205,18 @@
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Correo Electrónico
+                      Correo Electrónico:
                     </label>
 
                     <jet-input-error :message="errors.email" />
+                    <small>Formato: Único en el sistema</small>
                     <input
                       type="email"
                       placeholder="micorreo@correo.com"
                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="form.email"
+                      title="Ingrese el un correo electrónico válido."
+                      required
                     />
                   </div>
                   <div class="relative w-full mb-3">
@@ -220,33 +224,45 @@
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Nombres Completos
+                      Nombres Completos:
                     </label>
                     <jet-input-error :message="errors.name" />
+                    <small>Formato: Andrea Fransheska</small>
                     <input
                       type="text"
                       placeholder="Ejm: Lucas Andres"
                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      onkeydown="return /[a-z, ]/i.test(event.key)"
+                      onblur="if (this.value == '') {this.value = '';}"
+                      onfocus="if (this.value == '') {this.value = '';}"
+                      maxlength="100"
                       v-model="form.name"
                     />
                   </div>
+
                   <div class="relative w-full mb-3">
                     <label
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Apellidos Completos
+                      Apellidos Completos:
                     </label>
 
                     <jet-input-error :message="errors.lastname" />
+                    <small>Formato: López Guerra</small>
                     <input
                       type="text"
                       placeholder="Ejm: Fuentes Ramos"
                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      onkeydown="return /[a-z, ]/i.test(event.key)"
+                      onblur="if (this.value == '') {this.value = '';}"
+                      onfocus="if (this.value == '') {this.value = '';}"
+                      maxlength="100"
                       v-model="form.lastname"
                     />
                   </div>
                 </div>
+
                 <div class="w-full lg:w-2/12 px-4">
                   <div class="relative w-full mb-3">
                     <div class="section">
@@ -306,6 +322,11 @@
                   :max-height="250"
                   :searchable="true"
                 ></multiselect>
+                <small
+                  >Por favor tenga en cuenta que las opciones de acuerdo a todas las
+                  hermanas se habilitarán siempre y cuando que la información del perfil
+                  sean editadas y creadas correctamente.</small
+                >
               </div>
             </div>
             <div v-if="selectMenu.selectedElement == 'Perfil'">
@@ -359,44 +380,44 @@
               <sacrament></sacrament>
             </div>
             <div
+              v-if="selectMenu.selectedElement == 'Cambios' && profile_daughter != null"
+            >
+              <changes></changes>
+            </div>
+            <div
               v-if="
-                selectMenu.selectedElement == 'Transferencias' && profile_daughter != null
+                selectMenu.selectedElement == 'Documentos' && profile_daughter != null
               "
             >
-              <transfer></transfer>
+              <files></files>
             </div>
-            <!-- <swiper
-              :pagination="pagination"
-              :modules="modules"
-              class="mySwiper"
-            >
+            <!-- <swiper :pagination="pagination" :modules="modules" class="mySwiper">
               <swiper-slide class="absolute pb-10 pt-10">
-                    <div v-if="profile_daughter == null" class="m-4">
-                        <profile-daughter></profile-daughter>
-                    </div>
-                    <div v-else class="m-4">
-                        <profile-daughter-edit></profile-daughter-edit>
-                    </div>
+                <div v-if="profile_daughter == null" class="m-4">
+                  <profile-daughter></profile-daughter>
+                </div>
+                <div v-else class="m-4">
+                  <profile-daughter-edit></profile-daughter-edit>
+                </div>
               </swiper-slide>
-              <swiper-slide class="pb-10 pt-10 "  v-if="profile_daughter != null">
-                  <info-family></info-family>
+              <swiper-slide class="pb-10 pt-10" v-if="profile_daughter != null">
+                <info-family></info-family>
               </swiper-slide>
-              <swiper-slide class="pb-10 pt-10 "  v-if="profile_daughter != null">
-                  <health></health>
+              <swiper-slide class="pb-10 pt-10" v-if="profile_daughter != null">
+                <health></health>
               </swiper-slide>
-               <swiper-slide class="pb-10 pt-10 "  v-if="profile_daughter != null">
-                  <academic-training></academic-training>
+              <swiper-slide class="pb-10 pt-10" v-if="profile_daughter != null">
+                <academic-training></academic-training>
               </swiper-slide>
-              <swiper-slide class="pb-10 pt-10 "  v-if="profile_daughter != null">
-                  <permit></permit>
+              <swiper-slide class="pb-10 pt-10" v-if="profile_daughter != null">
+                <permit></permit>
               </swiper-slide>
-              <swiper-slide class="pb-10 pt-10 "  v-if="profile_daughter != null">
-                  <appointment></appointment>
+              <swiper-slide class="pb-10 pt-10" v-if="profile_daughter != null">
+                <appointment></appointment>
               </swiper-slide>
-              <swiper-slide class="pb-10 pt-10 "  v-if="profile_daughter != null">
-                  <sacrament></sacrament>
+              <swiper-slide class="pb-10 pt-10" v-if="profile_daughter != null">
+                <sacrament></sacrament>
               </swiper-slide>
-
             </swiper> -->
           </div>
         </div>
@@ -437,7 +458,8 @@ import Permit from "@/Pages/Secretary/Users/Daughter/Permit/Index";
 import Appointment from "@/Pages/Secretary/Users/Daughter/Appointment/Index";
 import InfoFamily from "@/Pages/Secretary/Users/Daughter/InfoFamily/Index";
 import Sacrament from "@/Pages/Secretary/Users/Daughter/Sacrament/Index";
-import Transfer from "@/Pages/Secretary/Users/Daughter/Transfer/Index";
+import Changes from "@/Pages/Secretary/Users/Daughter/Change/Index";
+import Files from "@/Pages/Secretary/Users/Daughter/Files/Index";
 
 export default defineComponent({
   created() {
@@ -446,14 +468,40 @@ export default defineComponent({
   },
 
   beforeMount() {
-    // console.log("mounted " + this.$el);
     if (this.profile_daughter == null) {
       this.changeUserId(this.daughter_custom.id);
     } else {
+      this.selectMenu.options = [
+        "Perfil",
+        "Información Familiar",
+        "Salud Actual",
+        "Récord Académico",
+        "Sacramentos",
+        "Permisos",
+        "Nombramientos",
+        "Cambios",
+        "Documentos",
+      ];
       this.changeUser(this.profile_daughter);
     }
   },
-
+  watch: {
+    profile_daughter: function () {
+      if (this.profile_daughter != null) {
+        this.selectMenu.options = [
+          "Perfil",
+          "Información Familiar",
+          "Salud Actual",
+          "Récord Académico",
+          "Sacramentos",
+          "Permisos",
+          "Nombramientos",
+          "Cambios",
+          "Documentos",
+        ];
+      }
+    },
+  },
   setup() {
     return {
       pagination: {
@@ -478,7 +526,7 @@ export default defineComponent({
   computed: {
     ...mapGetters("daughter", ["actualCount"]),
     isInvalid() {
-      console.log("inva ", this.isTouched, "\n\nopp> ");
+      //   console.log("inva ", this.isTouched, "\n\nopp> ");
 
       return this.value == null;
     },
@@ -499,7 +547,8 @@ export default defineComponent({
     AcademicTraining,
     Permit,
     Appointment,
-    Transfer,
+    Changes,
+    Files,
     InfoFamily,
     Sacrament,
     Alert,
@@ -510,20 +559,12 @@ export default defineComponent({
     return {
       isDisabled: false,
       isTouched: false,
+      isExistProfile: false,
       selectMenu: {
         selectedElement: "Perfil",
         isDisabled: false,
         isTouched: false,
-        options: [
-          "Perfil",
-          "Información Familiar",
-          "Salud Actual",
-          "Récord Académico",
-          "Sacramentos",
-          "Permisos",
-          "Nombramientos",
-          "Transferencias",
-        ],
+        options: ["Perfil"],
         loading: false,
         multiSelectUser: null,
         vSelectUser: null,
@@ -543,8 +584,8 @@ export default defineComponent({
 
   methods: {
     handleScroll() {
-      console.log(window.scrollY);
-      console.log("numme");
+      //   console.log(window.scrollY);
+      //   console.log("numme");
     },
     onSearchProvincesChange() {},
 
@@ -592,20 +633,20 @@ export default defineComponent({
     },
     onChange(value) {
       this.value = value;
-      console.log("aiudaaa> ", value);
+      //   console.log("aiudaaa> ", value);
       if (value.indexOf("Reset me!") !== -1) {
-        console.log("is reset");
+        // console.log("is reset");
         this.value = [];
       }
     },
     onSelect(option) {
       if (option === "Disable me!") {
-        console.log("is disable");
+        // console.log("is disable");
         this.isDisabled = true;
       }
     },
     onTouch() {
-      console.log("is touched");
+      //   console.log("is touched");
       this.isTouched = true;
     },
   },

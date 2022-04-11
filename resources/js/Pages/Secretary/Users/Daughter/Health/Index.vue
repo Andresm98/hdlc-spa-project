@@ -13,6 +13,10 @@
         <p class="text-red-400 text-sm" v-show="$page.props.errors.actual_health">
           {{ $page.props.errors.actual_health }}
         </p>
+        <small
+          >Formato: Estado de salud actual de la hermana, deberá ingresar máximo 4000
+          caracteres.</small
+        >
         <div class="bg-white">
           <quill-editor
             ref="qleditor1"
@@ -20,7 +24,7 @@
             contentType="html"
             theme="snow"
             :toolbar="toolbarOptions"
-            placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+            placeholder="Ingresar los datos solicitados..."
           ></quill-editor>
         </div>
         <label
@@ -32,6 +36,10 @@
         <p class="text-red-500 text-sm" v-show="$page.props.errors.chronic_diseases">
           {{ $page.props.errors.chronic_diseases }}
         </p>
+        <small
+          >Formato: Detallar las enfermedades crónicas que presenta la hermana, deberá
+          ingresar máximo 4000 caracteres.</small
+        >
         <div class="bg-white">
           <quill-editor
             ref="qleditor2"
@@ -39,7 +47,7 @@
             contentType="html"
             theme="snow"
             :toolbar="toolbarOptions"
-            placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+            placeholder="Ingresar los datos solicitados..."
           ></quill-editor>
         </div>
 
@@ -52,6 +60,10 @@
         <p class="text-red-400 text-sm" v-show="$page.props.errors.other_health_problems">
           {{ $page.props.errors.other_health_problems }}
         </p>
+        <small
+          >Formato: Detallar los otros problemas de salud que presenta la hermana, deberá
+          ingresar máximo 4000 caracteres.</small
+        >
         <div class="bg-white">
           <quill-editor
             ref="qleditor3"
@@ -59,7 +71,7 @@
             contentType="html"
             theme="snow"
             :toolbar="toolbarOptions"
-            placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+            placeholder="Ingresar los datos solicitados..."
           ></quill-editor>
         </div>
 
@@ -75,6 +87,7 @@
               <p class="text-red-400 text-sm" v-show="$page.props.errors.consult_date">
                 {{ $page.props.errors.consult_date }}
               </p>
+              <small>Formato: Fecha del día de registro.</small>
               <Datepicker
                 v-model="form.consult_date"
                 :format="format"
@@ -84,10 +97,8 @@
               />
             </div>
           </div>
-          <div class="w-full lg:w-2/4">
-            <div class="m-2 md:mt-8 lg:mt-8 xl:mt-8">
-              <jet-button-success>Ingresar Estado. S</jet-button-success>
-            </div>
+          <div class="w-full lg:w-2/4 lg:mt-11 lg:pl-6">
+            <jet-button-success>Ingresar Estado. S</jet-button-success>
           </div>
         </div>
       </form>
@@ -95,35 +106,59 @@
         class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
       />
       <!-- Table -->
-      <div class="w-full bg-white rounded-lg shadow overflow-y-auto h-52">
-        <ul class="divide-y-2 divide-gray-100">
-          <li class="text-center text-white bg-slate-900">Historial Médico</li>
-          <li
-            class="p-2 hover:bg-emerald-500 hover:text-white"
-            v-for="(health, index) in this.getAllHealth()"
-            :key="health"
+
+      <div class="py-2">
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
+          <div
+            v-if="this.getAllHealth()"
+            class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <div class="grid gap-5 grid-cols-5">
-              <div class="md:block md:text-sm lg:block lg:text-sm pt-2">
-                {{ index }}
-              </div>
-              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2">
-                {{ health.consult_date }}
-              </div>
-              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2"></div>
-              <div>
-                <jet-button @click="confirmationHealthUpdate(health)"
-                  >Detalles</jet-button
-                >
-              </div>
-              <div>
-                <jet-danger-button @click="confirmationHealthDelete(health)"
-                  >Eliminar</jet-danger-button
-                >
-              </div>
-            </div>
-          </li>
-        </ul>
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-blue-100">
+                <tr>
+                  <th
+                    scope="col"
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Fecha Registro
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr v-for="health in this.getAllHealth()" :key="health">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                    >
+                      {{ this.formatShowDate(health.consult_date) }}
+                    </span>
+                  </td>
+                  <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <!-- Components -->
+
+                    <div class="mx-auto flex gap-10">
+                      <jet-button @click="confirmationHealthUpdate(health)"
+                        >Detalles</jet-button
+                      >
+                      <jet-danger-button @click="confirmationHealthDelete(health)"
+                        >Eliminar</jet-danger-button
+                      >
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
+            <p class="text-center text-lg">Por el momento no existen registros.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -134,13 +169,25 @@
     <template #content>
       ¿Está seguro de que desea eliminar el estado de salud ?
 
-      <quill-editor
-        refs="ql_deleteditor3"
-        v-model:content="deleteHealthForm.actual_health"
-        contentType="html"
-        theme="snow"
-        :readOnly="true"
-      ></quill-editor>
+      <div class="flex flex-wrap">
+        <div class="w-full lg:w-2/4 mt-2">
+          <div class="relative w-full mb-3">
+            <label
+              class="block text-sm font-medium text-gray-700"
+              htmlfor="grid-password"
+            >
+              Fecha de Ingreso:
+            </label>
+            <Datepicker
+              v-model="deleteHealthForm.consult_date"
+              :format="format"
+              :transitions="false"
+              menuClassName="dp-custom-menu"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
     </template>
 
     <template #footer>
@@ -168,6 +215,10 @@
       <p class="text-red-400 text-sm" v-show="$page.props.errors.actual_health">
         {{ $page.props.errors.actual_health }}
       </p>
+      <small
+        >Formato: Estado de salud actual de la hermana, deberá ingresar máximo 4000
+        caracteres.</small
+      >
       <div class="bg-white">
         <quill-editor
           ref="qlupdateditor1"
@@ -175,7 +226,7 @@
           contentType="html"
           theme="snow"
           :toolbar="toolbarOptions"
-          placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+          placeholder="Ingresar los datos solicitados..."
         ></quill-editor>
       </div>
 
@@ -185,6 +236,10 @@
       <p class="text-red-500 text-sm" v-show="$page.props.errors.chronic_diseases">
         {{ $page.props.errors.chronic_diseases }}
       </p>
+      <small
+        >Formato: Detallar las enfermedades crónicas que presenta la hermana, deberá
+        ingresar máximo 4000 caracteres.</small
+      >
       <div class="bg-white">
         <quill-editor
           ref="qlupdateditor2"
@@ -192,7 +247,7 @@
           contentType="html"
           theme="snow"
           :toolbar="toolbarOptions"
-          placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+          placeholder="Ingresar los datos solicitados..."
         ></quill-editor>
       </div>
 
@@ -202,6 +257,10 @@
       <p class="text-red-400 text-sm" v-show="$page.props.errors.other_health_problems">
         {{ $page.props.errors.other_health_problems }}
       </p>
+      <small
+        >Formato: Detallar los otros problemas de salud que presenta la hermana, deberá
+        ingresar máximo 4000 caracteres.</small
+      >
       <div class="bg-white">
         <quill-editor
           ref="qlupdateditor3"
@@ -209,7 +268,7 @@
           contentType="html"
           theme="snow"
           :toolbar="toolbarOptions"
-          placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+          placeholder="Ingresar los datos solicitados..."
         ></quill-editor>
       </div>
 
@@ -225,6 +284,7 @@
             <p class="text-red-400 text-sm" v-show="$page.props.errors.consult_date">
               {{ $page.props.errors.consult_date }}
             </p>
+            <small>Formato: Fecha del día de registro.</small>
             <Datepicker
               v-model="updateHealthForm.consult_date"
               :format="format"
@@ -502,11 +562,17 @@ export default {
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
+    formatShowDate(value) {
+      if (value != null) {
+        return moment(new Date(value)).format("YYYY-MM-DD");
+      }
+      return "";
+    },
 
     // Delete Health
 
     confirmationHealthDelete(health) {
-      this.deleteHealthForm.actual_health = health.actual_health;
+      this.deleteHealthForm.consult_date = health.consult_date;
       this.healthBeingDeleted = health;
     },
 
@@ -539,9 +605,12 @@ export default {
       this.healthBeingUpdated = health;
     },
     updateHealthStatus() {
-      this.updateHealthForm.consult_date = this.formatDate(
-        this.updateHealthForm.consult_date
-      );
+      if (this.updateHealthForm.consult_date != null) {
+        this.updateHealthForm.consult_date = this.formatDate(
+          this.updateHealthForm.consult_date
+        );
+      }
+
       this.updateHealthForm.put(
         this.route("secretary.daughter-profile.health.update", {
           user_id: this.profile.user_id,

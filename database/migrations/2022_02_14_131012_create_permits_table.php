@@ -34,7 +34,8 @@ class CreatePermitsTable extends Migration
             $table->foreign('profile_id')
                 ->references('id')
                 ->on('profiles')
-                ->onDelete('set null');
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
 
             $table->timestamps();

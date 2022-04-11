@@ -16,7 +16,10 @@
               >
                 Motivo del Permiso:
               </label>
-
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.reason">
+                {{ $page.props.errors.reason }}
+              </p>
+              <small>Formato: Motivo del permiso.</small>
               <div>
                 <input
                   type="text"
@@ -46,9 +49,12 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Fecha de Consejo Provincial que concede el Permiso:
+                Fecha de Consejo Provincial:
               </label>
-
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.date_province">
+                {{ $page.props.errors.date_province }}
+              </p>
+              <small>Formato: Fecha de Consejo Provincial que concede el Permiso.</small>
               <Datepicker
                 v-model="form.date_province"
                 :format="format"
@@ -65,9 +71,12 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Fecha de Consejo General que concede el Permiso:
+                Fecha de Consejo General:
               </label>
-
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.date_general">
+                {{ $page.props.errors.date_general }}
+              </p>
+              <small>Formato: Fecha de Consejo General que concede el Permiso.</small>
               <Datepicker
                 v-model="form.date_general"
                 :format="format"
@@ -86,7 +95,10 @@
               >
                 Fecha de Salida:
               </label>
-
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.date_out">
+                {{ $page.props.errors.date_out }}
+              </p>
+              <small>Formato: Fecha en la que sale la hermana.</small>
               <Datepicker
                 v-model="form.date_out"
                 :format="format"
@@ -97,7 +109,7 @@
             </div>
           </div>
 
-          <!-- <div class="w-full lg:w-6/12 px-4">
+          <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
               <label
                 class="block text-sm font-medium text-gray-700"
@@ -105,15 +117,19 @@
               >
                 Fecha de Regreso (Eventual):
               </label>
-
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.date_in">
+                {{ $page.props.errors.date_in }}
+              </p>
+              <small>Formato: Fecha en la que regresa la hermana.</small>
               <Datepicker
                 v-model="form.date_in"
                 :format="format"
                 :transitions="false"
                 menuClassName="dp-custom-menu"
+                required
               />
             </div>
-          </div> -->
+          </div>
           <div class="w-full lg:w-full px-4">
             <div class="relative w-full mb-3">
               <label
@@ -122,6 +138,10 @@
               >
                 Descripción del Permiso
               </label>
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+                {{ $page.props.errors.description }}
+              </p>
+              <small>Formato: Agregar la descripción del permiso.</small>
               <div class="bg-white">
                 <quill-editor
                   v-model:content="form.description"
@@ -129,7 +149,7 @@
                   contentType="html"
                   theme="snow"
                   :toolbar="toolbarOptions"
-                  placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+                  placeholder="Ingresar los datos solicitados..."
                 ></quill-editor>
               </div>
             </div>
@@ -140,11 +160,12 @@
           <div class="w-full lg:w-full px-4">
             <div>
               <label for="address" class="block text-sm font-medium text-gray-700">
-                Dirección de Destino:
+                Dirección:
               </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.address">
                 {{ $page.props.errors.address }}
               </p>
+              <small>Formato: Agregar la dirección de destino.</small>
               <div class="mb-1">
                 <textarea
                   id="address"
@@ -253,35 +274,82 @@
         class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
       />
 
-      <div class="w-full bg-white rounded-lg shadow overflow-y-auto h-52">
-        <ul class="divide-y-2 divide-gray-100">
-          <li class="text-center text-white bg-slate-900">Historial de Permisos</li>
-          <li
-            class="p-2 hover:bg-emerald-500 hover:text-white"
-            v-for="(permit, index) in this.getAllPermit()"
-            :key="permit"
+      <div class="py-2">
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
+          <div
+            v-if="this.getAllPermit()"
+            class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <div class="grid gap-5 grid-cols-5">
-              <div class="md:block md:text-sm lg:block lg:text-sm pt-2">
-                {{ index }}
-              </div>
-              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2">
-                {{ permit.reason }}
-              </div>
-              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2"></div>
-              <div>
-                <jet-button @click="confirmationPermitUpdate(permit)"
-                  >Detalles</jet-button
-                >
-              </div>
-              <div>
-                <jet-danger-button @click="confirmationPermitDelete(permit)"
-                  >Eliminar</jet-danger-button
-                >
-              </div>
-            </div>
-          </li>
-        </ul>
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-blue-100">
+                <tr>
+                  <th
+                    scope="col"
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Motivo
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Fechas (provincial-general)
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Fechas (salida-regreso)
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr v-for="permit in this.getAllPermit()" :key="permit">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    {{ permit.reason.substring(0, 10) }}...
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                    >
+                      {{ this.formatShowDate(permit.date_province) }} -
+                      {{ this.formatShowDate(permit.date_general) }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                    >
+                      {{ this.formatShowDate(permit.date_out) }} -
+                      {{ this.formatShowDate(permit.date_in) }}
+                    </span>
+                  </td>
+                  <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <!-- Components -->
+
+                    <div class="mx-auto flex gap-10">
+                      <jet-button @click="confirmationPermitUpdate(permit)"
+                        >Detalles</jet-button
+                      >
+                      <jet-danger-button @click="confirmationPermitDelete(permit)"
+                        >Eliminar</jet-danger-button
+                      >
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
+            <p class="text-center text-lg">Por el momento no existen registros.</p>
+          </div>
+        </div>
       </div>
 
       <jet-confirmation-modal
@@ -292,16 +360,6 @@
 
         <template #content>
           ¿Está seguro de que desea eliminar el historial del permiso ?
-
-          <div class="w-3/3">
-            <quill-editor
-              refs="ql_deleteditor3"
-              v-model:content="deletePermitForm.description"
-              contentType="html"
-              theme="snow"
-              :readOnly="true"
-            ></quill-editor>
-          </div>
 
           <div class="w-full lg:w-12/12 px-4">
             <div class="">
@@ -355,6 +413,10 @@
                 >
                   Motivo del Permiso:
                 </label>
+                <p class="text-red-400 text-sm" v-show="$page.props.errors.reason">
+                  {{ $page.props.errors.reason }}
+                </p>
+                <small>Formato: Motivo del permiso.</small>
 
                 <div>
                   <input
@@ -366,15 +428,6 @@
                     v-model="updatePermitForm.reason"
                     required
                   />
-                  <!-- <textarea
-                  id="observation"
-                  name="observation"
-                  rows="6"
-                  class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md m-3"
-                  placeholder="Agregar las observaciones generales..."
-                  required
-                  :maxlength="4000"
-                /> -->
                 </div>
               </div>
             </div>
@@ -384,11 +437,12 @@
             <div class="w-full lg:w-full px-4">
               <div>
                 <label for="address" class="block text-sm font-medium text-gray-700">
-                  Dirección de Destino:
+                  Dirección:
                 </label>
                 <p class="text-red-400 text-sm" v-show="$page.props.errors.address">
                   {{ $page.props.errors.address }}
                 </p>
+                <small>Formato: Agregar la dirección de destino.</small>
                 <div class="mb-1">
                   <textarea
                     id="address"
@@ -492,8 +546,14 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Fecha de Consejo Provincial que concede el Permiso:
+                  Fecha de Consejo Provincial:
                 </label>
+                <p class="text-red-400 text-sm" v-show="$page.props.errors.date_province">
+                  {{ $page.props.errors.date_province }}
+                </p>
+                <small
+                  >Formato: Fecha de Consejo Provincial que concede el Permiso.</small
+                >
 
                 <Datepicker
                   v-model="updatePermitForm.date_province"
@@ -511,8 +571,12 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Fecha de Consejo General que concede el Permiso:
+                  Fecha de Consejo General:
                 </label>
+                <p class="text-red-400 text-sm" v-show="$page.props.errors.date_general">
+                  {{ $page.props.errors.date_general }}
+                </p>
+                <small>Formato: Fecha de Consejo General que concede el Permiso.</small>
 
                 <Datepicker
                   v-model="updatePermitForm.date_general"
@@ -532,7 +596,10 @@
                 >
                   Fecha de Salida:
                 </label>
-
+                <p class="text-red-400 text-sm" v-show="$page.props.errors.date_out">
+                  {{ $page.props.errors.date_out }}
+                </p>
+                <small>Formato: Fecha en la que sale la hermana.</small>
                 <Datepicker
                   v-model="updatePermitForm.date_out"
                   :format="format"
@@ -551,6 +618,10 @@
                 >
                   Fecha de Regreso (Eventual):
                 </label>
+                <p class="text-red-400 text-sm" v-show="$page.props.errors.date_in">
+                  {{ $page.props.errors.date_in }}
+                </p>
+                <small>Formato: Fecha en la que regresa la hermana.</small>
 
                 <Datepicker
                   v-model="updatePermitForm.date_in"
@@ -568,6 +639,10 @@
                 >
                   Descripción del Permiso
                 </label>
+                <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+                  {{ $page.props.errors.description }}
+                </p>
+                <small>Formato: Agregar la descripción del permiso.</small>
                 <div class="bg-white">
                   <quill-editor
                     v-model:content="updatePermitForm.description"
@@ -743,10 +818,6 @@ export default {
     this.allPermit;
   },
   computed: {
-    isInvalid() {
-      console.log("inva ", this.isTouched, "\n\nopp> ");
-      return this.value == null;
-    },
     ...mapState("daughter", ["profile"]),
     ...mapState("address", ["allProvinces"]),
     ...mapState("permit", ["permit"]),
@@ -758,7 +829,7 @@ export default {
           })
         )
         .then((res) => {
-          console.log(res.data);
+          //   console.log(res.data);
           this.updateAllPermit(res.data);
         });
     },
@@ -866,7 +937,7 @@ export default {
     },
 
     onSelectedProvince(province) {
-      console.log("input data selecter " + province.id);
+      //   console.log("input data selecter " + province.id);
       this.form.province_id = province.id;
       this.form.canton_id = null;
       this.form.parish_id = null;
@@ -935,9 +1006,8 @@ export default {
       this.form.date_province = this.formatDate(this.form.date_province);
       this.form.date_general = this.formatDate(this.form.date_general);
       this.form.date_out = this.formatDate(this.form.date_out);
-      //   this.form.date_in = this.formatDate(this.form.date_in);
+      this.form.date_in = this.formatDate(this.form.date_in);
       //
-
       if (
         this.isInvalid == false &&
         this.isInvalidCanton == false &&
@@ -1109,6 +1179,12 @@ export default {
 
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
+    },
+    formatShowDate(value) {
+      if (value != null) {
+        return moment(new Date(value)).format("YYYY-MM-DD");
+      }
+      return "eventual";
     },
   },
 };

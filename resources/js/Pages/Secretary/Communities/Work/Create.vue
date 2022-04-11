@@ -176,9 +176,11 @@
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Nombre de Obra:
+                      Nombre:
                     </label>
                     <jet-input-error :message="errors.comm_name" />
+                    <small>Formato: Ingresar el nombre de la obra.</small>
+
                     <input
                       type="text"
                       placeholder="Nombre de la obra en el Sistema"
@@ -200,6 +202,7 @@
                   </label>
 
                   <jet-input-error :message="errors.comm_email" />
+                  <small>Formato: Ingresar un correo de contacto.</small>
                   <input
                     type="email"
                     placeholder="micorreo@correo.com"
@@ -222,6 +225,7 @@
                     Ingresar RUC válido
                   </p>
                   <jet-input-error :message="errors.comm_identity_card" />
+                  <small>Formato: Ingresar RUC Formato Ecuador. </small>
                   <input
                     type="text"
                     minLength="10"
@@ -246,6 +250,7 @@
                     </label>
 
                     <jet-input-error :message="errors.date_fndt_comm" />
+                    <small>Formato: Ingresar la fecha de fundación de la obra.</small>
                     <Datepicker
                       v-model="form.date_fndt_comm"
                       :format="format"
@@ -266,6 +271,7 @@
                     </label>
 
                     <jet-input-error :message="errors.date_fndt_work" />
+                    <small>Formato: Ingresar la fecha de la obra.</small>
                     <Datepicker
                       v-model="form.date_fndt_work"
                       :format="format"
@@ -285,6 +291,7 @@
                     </label>
 
                     <jet-input-error :message="errors.comm_cellphone" />
+                    <small>Formato: Ingresar un número de celular.</small>
                     <input
                       minLength="10"
                       maxlength="20"
@@ -304,10 +311,11 @@
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Teléfono
+                      Teléfono:
                     </label>
 
                     <jet-input-error :message="errors.comm_phone" />
+                    <small>Formato: Ingresar un número de teléfono.</small>
                     <input
                       minLength="8"
                       maxlength="20"
@@ -321,19 +329,21 @@
                   </div>
                 </div>
 
-                <div class="w-full lg:w-4/12 px-4">
+                <div class="w-full lg:w-3/12 px-4">
                   <div class="relative w-full mb-3">
                     <label
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Número de Colaboradores
+                      Nro. de Colaboradores:
                     </label>
 
                     <jet-input-error :message="errors.rn_collaborators" />
+                    <small>Formato: Número de colaboradores, max 1000.</small>
+
                     <input
                       minLength="0"
-                      maxLength="2000"
+                      maxLength="1000"
                       pattern="[0-9]+"
                       placeholder="Nro. de Colaboradores"
                       type="number"
@@ -345,6 +355,42 @@
                   </div>
                 </div>
 
+                <div class="w-full lg:w-5/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <label
+                      class="block text-sm font-medium text-gray-700"
+                      htmlfor="grid-password"
+                    >
+                      Pastoral:
+                    </label>
+                    <small
+                      >Formato: Seleccionar la pastoral a la que pertenece la
+                      comunidad.</small
+                    >
+                    <div
+                      :class="{ invalid: isInvalidPastoral }"
+                      v-if="this.allPastoral != null"
+                    >
+                      <multiselect
+                        :searchable="true"
+                        v-model="selectFour.selectedPastoral"
+                        :options="this.allPastoral"
+                        :close-on-select="true"
+                        :clear-on-select="false"
+                        mode="tags"
+                        label="name"
+                        @search-change="onSearchPrastoralsChange"
+                        @select="onSelectedPastoral"
+                        track-by="name"
+                        placeholder="Buscar pastoral"
+                      >
+                      </multiselect>
+                      <p class="text-red-400 text-sm" v-show="isInvalidPastoral">
+                        Obligatorio
+                      </p>
+                    </div>
+                  </div>
+                </div>
                 <!-- Information Address -->
                 <hr
                   class="mt-1 mb-3 ml-4 mr-4 border-b-1 border-blueGray-300 hover:border-blueGray-100"
@@ -352,11 +398,15 @@
                 <div class="w-full lg:w-full px-4">
                   <div>
                     <label for="address" class="block text-sm font-medium text-gray-700">
-                      Dirección Actual
+                      Dirección Actual:
                     </label>
                     <p class="text-red-400 text-sm" v-show="$page.props.errors.address">
                       {{ $page.props.errors.address }}
                     </p>
+                    <small
+                      >Formato: Dirección actual en la que se encuentra la
+                      comunidad.</small
+                    >
                     <div class="mb-1">
                       <textarea
                         id="address"
@@ -500,6 +550,23 @@ export default {
     axios.get(this.route("secretary.address.province")).then((res) => {
       this.uploadProvinces(res.data);
     });
+
+    // Method fetch
+
+    fetch(this.route("secretary.pastoral.index"))
+      .then(async (response) => {
+        const isJson = response.headers.get("content-type")?.includes("application/json");
+        const data = isJson && (await response.json());
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+        this.allPastoral = data;
+      })
+      .catch((error) => {
+        element.parentElement.innerHTML = `Error: ${error}`;
+        console.error("There was an error!", error);
+      });
   },
 
   setup() {
@@ -522,6 +589,7 @@ export default {
       canton_id: null,
       parish_id: null,
       political_division_id: null,
+      pastoral_id: null,
       file: null,
     });
     return { form, format, date };
@@ -558,6 +626,15 @@ export default {
         multiSelectParish: null,
         vSelectParish: null,
       },
+      selectFour: {
+        selectedPastoral: undefined,
+        value: 0,
+        options: [],
+        loading: false,
+        multiSelectPastoral: null,
+        vSelectPastoral: null,
+      },
+      allPastoral: null,
     };
   },
   layout: PrincipalLayout,
@@ -597,6 +674,14 @@ export default {
       return (
         this.selectThree.selectedParish == undefined ||
         this.selectThree.selectedParish == null
+      );
+    },
+
+    isInvalidPastoral() {
+      //   console.log("ee Parish", this.selectThree.selectedParish);
+      return (
+        this.selectFour.selectedPastoral == undefined ||
+        this.selectFour.selectedPastoral == null
       );
     },
 
@@ -689,7 +774,10 @@ export default {
       );
       return response.data;
     },
-
+    onSearchPrastoralsChange() {},
+    onSelectedPastoral(pastoral) {
+      this.form.pastoral_id = pastoral.id;
+    },
     onSearchProvincesChange(term) {
       //   console.log("input data search " + term);
     },
@@ -767,6 +855,7 @@ export default {
         this.isInvalidProvince == false &&
         this.isInvalidCanton == false &&
         this.isInvalidParish == false &&
+        this.isInvalidPastoral == false &&
         this.validateIdentityCard == true
       ) {
         this.form.post(

@@ -322,7 +322,7 @@
       <template v-slot:footer>
         <jet-secondary-button @click="closeModal()"> Cancelar </jet-secondary-button>
         <jet-danger-button class="ml-3" @click="deleteUser()">
-          Eliminar Usuario
+          Eliminar Hermana
         </jet-danger-button>
       </template>
     </jet-dialog-modal>
@@ -389,7 +389,7 @@ export default defineComponent({
     },
 
     deleteUser: function () {
-      Inertia.delete(route("admin.user.destroy", { slug: this.selected_user.slug }));
+      Inertia.delete(route("secretary.user.destroy", { slug: this.selected_user.slug }));
       this.modal_open = false;
     },
     closeModal() {

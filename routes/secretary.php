@@ -15,12 +15,16 @@ use App\Http\Controllers\Secretary\Community\CommunityController;
 use App\Http\Controllers\Secretary\Community\Work\WorkController;
 use App\Http\Controllers\Secretary\Daughter\InfoFamilyController;
 use App\Http\Controllers\Secretary\Daughter\AppointmentController;
+use App\Http\Controllers\Secretary\Daughter\FilesDaughterController;
 use App\Http\Controllers\Secretary\Community\CommunityVisitController;
+use App\Http\Controllers\Secretary\Community\FilesCommunityController;
 use App\Http\Controllers\Secretary\Daughter\InfoFamilyBreakController;
 use App\Http\Controllers\Secretary\Community\CommunityResumeController;
 use App\Http\Controllers\Secretary\Daughter\AcademicTrainingController;
+use App\Http\Controllers\Secretary\Daughter\AppointmentLevelController;
 use App\Http\Controllers\Secretary\Community\CommunityActivityController;
 use App\Http\Controllers\Secretary\Community\CommunityDaughterController;
+use App\Http\Controllers\Secretary\Community\CommunityPastoralController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityArticleController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunitySectionController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityInventoryController;
@@ -48,6 +52,21 @@ Route::get('address/profile/address/{actual_parish}', [AddressController::class,
 Route::get('offices/all', [OfficeController::class, 'index'])
     ->name('offices.index');
 
+
+// Appointments Levels Controllers
+
+Route::get('appointment_levels/{status}/{id}', [AppointmentLevelController::class, 'index'])
+    ->name('appointment.levels.index');
+
+Route::get('appointment-data/{appointment_level_id}', [AppointmentLevelController::class, 'appointmentLevelData'])
+    ->name('appointment-data.index');
+
+// Pastoral Controllers
+
+Route::get('pastorals/all', [CommunityPastoralController::class, 'index'])
+    ->name('pastoral.index');
+
+
 Route::group(
     ['middleware' => ['role:secretary']],
     function () {
@@ -68,6 +87,9 @@ Route::group(
 
         Route::put('daughters-charity/update/{daughter_custom}', [UserController::class, 'update'])
             ->name('daughters.update');
+
+        Route::delete('daughters-charity/delete/{slug}', [UserController::class, 'destroy'])
+            ->name('user.destroy');
 
         Route::get('daughters-charity/show/{slug}', [UserController::class, 'show'])
             ->name('daughters.show');
@@ -156,10 +178,13 @@ Route::group(
         Route::put('profile/permit/update/{user_id}/{permit_id}', [PermitController::class, 'update'])
             ->name('daughter-profile.permit.update');
 
-        //  Permits Controllers
+        //  Appointments Controllers
 
         Route::get('profile/appointment/{user_id}', [AppointmentController::class, 'index'])
             ->name('daughter-profile.appointment.index');
+
+        Route::get('profile/appointment/community/{community_id}', [AppointmentController::class, 'getCommunity'])
+            ->name('daughter-profile.appointment.community.index');
 
         Route::post('profile/appointment/store/{user_id}', [AppointmentController::class, 'store'])
             ->name('daughter-profile.appointment.store');
@@ -189,6 +214,26 @@ Route::group(
 
         Route::get('profile/transfer/communities/all', [TransferController::class, 'allCommunities'])
             ->name('daughter-profile.transfer.communities.index');
+
+        // Files
+
+        Route::get('profile/files/{user_id}', [FilesDaughterController::class, 'index'])
+            ->name('daughter-profile.files.index');
+
+        Route::get('profile/files/show/{file_id}', [FilesDaughterController::class, 'show'])
+            ->name('daughter-profile.files.show');
+
+        Route::post('profile/files/{user_id}', [FilesDaughterController::class, 'store'])
+            ->name('daughter-profile.files.store');
+
+        Route::get('profile/files/edit/{file_id}', [FilesDaughterController::class, 'edit'])
+            ->name('daughter-profile.files.edit');
+
+        Route::post('profile/files/update/{user_id}/{file_id}', [FilesDaughterController::class, 'update'])
+            ->name('daughter-profile.files.update');
+
+        Route::delete('profile/files/delete/{file_id}', [FilesDaughterController::class, 'destroy'])
+            ->name('daughter-profile.files.delete');
     }
 );
 
@@ -219,6 +264,9 @@ Route::group([
     Route::put('update/{community_id}', [CommunityController::class, 'update'])
         ->name('communities.update');
 
+    Route::put('update/status/{community_id}', [CommunityController::class, 'updateStatus'])
+        ->name('communities.status.update');
+
     Route::delete('delete/{community_id}', [CommunityController::class, 'destroy'])
         ->name('communities.delete');
 
@@ -238,6 +286,9 @@ Route::group([
 
     Route::put('works/update/{work_id}', [WorkController::class, 'update'])
         ->name('works.update');
+
+    Route::put('works/update/status/{work_id}', [WorkController::class, 'updateStatus'])
+        ->name('works.status.update');
 
     Route::delete('works/delete/{work_id}', [WorkController::class, 'destroy'])
         ->name('works.delete');
@@ -314,7 +365,7 @@ Route::group([
     Route::post('inventory/section/store/{community_id}', [CommunitySectionController::class, 'store'])
         ->name('communities.section.store');
 
-    Route::put('inventory/section/update/{inventory_id}/{section_id}', [CommunitySectionController::class, 'update'])
+    Route::put('inventory/section/update/{inventory_id}/{section_id}/{community_id}', [CommunitySectionController::class, 'update'])
         ->name('communities.section.update');
 
     Route::delete('inventory/section/delete/{inventory_id}/{section_id}', [CommunitySectionController::class, 'destroy'])
@@ -333,4 +384,24 @@ Route::group([
 
     Route::put('articles/update/{section_slug}/{article_id}', [CommunityArticleController::class, 'update'])
         ->name('communities.articles.update');
+
+    // Files
+
+    Route::get('files/{community_id}', [FilesCommunityController::class, 'index'])
+        ->name('communities.files.index');
+
+    Route::get('files/show/{file_id}', [FilesCommunityController::class, 'show'])
+        ->name('communities.files.show');
+
+    Route::post('files/{community_id}', [FilesCommunityController::class, 'store'])
+        ->name('communities.files.store');
+
+    Route::get('files/edit/{file_id}', [FilesCommunityController::class, 'edit'])
+        ->name('communities.files.edit');
+
+    Route::post('files/update/{community_id}/{file_id}', [FilesCommunityController::class, 'update'])
+        ->name('communities.files.update');
+
+    Route::delete('files/delete/{file_id}', [FilesCommunityController::class, 'destroy'])
+        ->name('communities.files.delete');
 });

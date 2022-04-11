@@ -84,4 +84,11 @@ class Profile extends Model
     {
         return $this->morphOne('App\Models\Address', 'addressable');
     }
+
+    // Relacion uno a varios polimorfica
+
+    public function files()
+    {
+        return $this->morphMany('App\Models\File', 'fileable');
+    }
 }

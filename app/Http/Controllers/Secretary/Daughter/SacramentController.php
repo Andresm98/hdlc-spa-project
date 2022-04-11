@@ -24,7 +24,10 @@ class SacramentController extends Controller
             return abort(404);
         }
         $user = User::find($user_id);
-        return $user->profile->sacraments;
+        return $user->profile->sacraments()
+        ->orderBy('sacrament_date','DESC')
+        ->get();
+
     }
 
     /**
@@ -92,7 +95,7 @@ class SacramentController extends Controller
 
         if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 
@@ -163,7 +166,7 @@ class SacramentController extends Controller
 
         if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 

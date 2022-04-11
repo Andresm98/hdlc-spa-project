@@ -11,12 +11,17 @@
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
               <div class="">
-                <label class="block text-sm font-medium text-gray-700">
-                  Nombre Actividad:
-                </label>
+                <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.comm_name_activity"
+                >
+                  {{ $page.props.errors.comm_name_activity }}
+                </p>
+                <small>Formato: Nombre de la Actividad.</small>
                 <input
                   type="text"
-                  minLength="10"
+                  minLength="5"
                   maxlength="100"
                   placeholder="Ingresar nombre actividad"
                   class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -32,7 +37,13 @@
               <label class="block text-sm font-medium text-gray-700">
                 Fecha de Actividad:
               </label>
-
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.comm_date_activity"
+              >
+                {{ $page.props.errors.comm_date_activity }}
+              </p>
+              <small>Formato: Fecha en la que se realiza la actividad.</small>
               <Datepicker
                 :format="format"
                 :transitions="false"
@@ -48,7 +59,15 @@
               <label class="block text-sm font-medium text-gray-700">
                 Descripción:
               </label>
-
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.comm_description_activity"
+              >
+                {{ $page.props.errors.comm_description_activity }}
+              </p>
+              <small
+                >Formato: Ingresar la descripción de la actividad que se realiza.</small
+              >
               <div class="bg-white">
                 <quill-editor
                   ref="qleditor1"
@@ -68,9 +87,15 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="nr_daughters"
               >
-                Número de Hermanas:
+                Nro. de Hermanas:
               </label>
-
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.comm_nr_daughters"
+              >
+                {{ $page.props.errors.comm_nr_daughters }}
+              </p>
+              <small>Formato: Número de hermanas.</small>
               <input
                 type="number"
                 name="nr_daughters"
@@ -90,9 +115,15 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="nr_beneficiaries"
               >
-                Número de Beneficiarios:
+                Nro. de Beneficiarios:
               </label>
-
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.comm_nr_beneficiaries"
+              >
+                {{ $page.props.errors.comm_nr_beneficiaries }}
+              </p>
+              <small>Formato: Número de beneficiarios.</small>
               <input
                 type="number"
                 class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -112,9 +143,15 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="nr_collaborators"
               >
-                Número de Colaboradores:
+                Nro. de Colaboradores:
               </label>
-
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.comm_nr_collaborators"
+              >
+                {{ $page.props.errors.comm_nr_collaborators }}
+              </p>
+              <small>Formato: Número de colaboradores.</small>
               <input
                 type="number"
                 class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -136,35 +173,106 @@
       </form>
 
       <hr
-        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
+        class="w-full mt-2 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
       />
 
-      <div class="w-full bg-white rounded-lg shadow overflow-y-auto h-52">
-        <ul class="divide-y-2 divide-gray-100">
-          <li class="text-center text-white bg-slate-900">Historial de Actividades</li>
-          <li
-            class="p-2 hover:bg-emerald-500 hover:text-white"
-            v-for="activity in this.getAllActivity()"
-            :key="activity"
+      <!-- Table -->
+
+      <div class="py-2">
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
+          <div
+            v-if="this.getAllActivity()"
+            class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <div class="grid gap-5 grid-cols-5">
-              <div class="md:block md:text-sm lg:block lg:text-sm pt-2">
-                {{ activity.comm_name_activity }}
-              </div>
-              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2"></div>
-              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2"></div>
-              <div class="hidden md:block md:text-sm lg:block lg:text-sm pt-2"></div>
-              <div>
-                <jet-button @click="confirmationActivityUpdate(activity)"
-                  >Detalles</jet-button
-                >
-                <jet-danger-button @click="confirmationActivityDelete(activity)"
-                  >Eliminar</jet-danger-button
-                >
-              </div>
-            </div>
-          </li>
-        </ul>
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-blue-100">
+                <tr>
+                  <th
+                    scope="col"
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Nombre
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Fecha
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Hermanas - Beneficiarios - Colaboradores
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr v-for="activity in this.getAllActivity()" :key="activity">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 h-10 w-10">
+                        <svg class="svg-icon mt-1" viewBox="2 2 23 23">
+                          <path
+                            d="M14.467,1.771H5.533c-0.258,0-0.47,0.211-0.47,0.47v15.516c0,0.414,0.504,0.634,0.802,0.331L10,13.955l4.136,4.133c0.241,0.241,0.802,0.169,0.802-0.331V2.241C14.938,1.982,14.726,1.771,14.467,1.771 M13.997,16.621l-3.665-3.662c-0.186-0.186-0.479-0.186-0.664,0l-3.666,3.662V2.711h7.994V16.621z"
+                          ></path>
+                        </svg>
+                      </div>
+                      <div class="ml-4">
+                        <div class="text-sm font-medium text-gray-900">
+                          {{ activity.comm_name_activity.substring(0, 15) }}...
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">
+                      {{ this.formatShowDate(activity.comm_date_activity) }}
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 mr-2"
+                    >
+                      {{ activity.comm_nr_daughters }}
+                    </span>
+                    <span
+                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 mr-2"
+                    >
+                      {{ activity.comm_nr_beneficiaries }}
+                    </span>
+                    <span
+                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 mr-2"
+                    >
+                      {{ activity.comm_nr_collaborators }}
+                    </span>
+                  </td>
+                  <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <!-- Components -->
+
+                    <div class="mx-auto flex gap-10">
+                      <jet-button @click="confirmationActivityUpdate(activity)"
+                        >Detalles</jet-button
+                      >
+                      <jet-danger-button @click="confirmationActivityDelete(activity)"
+                        >Eliminar</jet-danger-button
+                      >
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
+            <p class="text-center text-lg">Por el momento no existen registros.</p>
+          </div>
+        </div>
       </div>
 
       <jet-confirmation-modal
@@ -201,12 +309,17 @@
             <div class="w-full lg:w-6/12 px-4">
               <div class="relative w-full mb-3">
                 <div class="">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Nombre Actividad:
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+                  <p
+                    class="text-red-400 text-sm"
+                    v-show="$page.props.errors.comm_name_activity"
+                  >
+                    {{ $page.props.errors.comm_name_activity }}
+                  </p>
+                  <small>Formato: Nombre de la Actividad.</small>
                   <input
                     type="text"
-                    minLength="10"
+                    minLength="5"
                     maxlength="100"
                     placeholder="Ingresar nombre actividad"
                     class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -222,7 +335,13 @@
                 <label class="block text-sm font-medium text-gray-700">
                   Fecha de Actividad:
                 </label>
-
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.comm_date_activity"
+                >
+                  {{ $page.props.errors.comm_date_activity }}
+                </p>
+                <small>Formato: Fecha en la que se realiza la actividad.</small>
                 <Datepicker
                   :format="format"
                   :transitions="false"
@@ -238,7 +357,15 @@
                 <label class="block text-sm font-medium text-gray-700">
                   Descripción:
                 </label>
-
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.comm_description_activity"
+                >
+                  {{ $page.props.errors.comm_description_activity }}
+                </p>
+                <small
+                  >Formato: Ingresar la descripción de la actividad que se realiza.</small
+                >
                 <div class="bg-white">
                   <quill-editor
                     ref="qleditor1"
@@ -258,9 +385,15 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="nr_daughters"
                 >
-                  Número de Hermanas:
+                  Nro. de Hermanas:
                 </label>
-
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.comm_nr_daughters"
+                >
+                  {{ $page.props.errors.comm_nr_daughters }}
+                </p>
+                <small>Formato: Número de hermanas.</small>
                 <input
                   type="number"
                   name="nr_daughters"
@@ -280,9 +413,15 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="nr_beneficiaries"
                 >
-                  Número de Beneficiarios:
+                  Nro. de Beneficiarios:
                 </label>
-
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.comm_nr_beneficiaries"
+                >
+                  {{ $page.props.errors.comm_nr_beneficiaries }}
+                </p>
+                <small>Formato: Número de beneficiarios.</small>
                 <input
                   type="number"
                   class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -302,9 +441,15 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="nr_collaborators"
                 >
-                  Número de Colaboradores:
+                  Nro. de Colaboradores:
                 </label>
-
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.comm_nr_collaborators"
+                >
+                  {{ $page.props.errors.comm_nr_collaborators }}
+                </p>
+                <small>Formato: Número de colaboradores.</small>
                 <input
                   type="number"
                   class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -527,6 +672,12 @@ export default {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
 
+    formatShowDate(value) {
+      if (value != null) {
+        return moment(new Date(value)).format("YYYY-MM-DD");
+      }
+      return "";
+    },
     // Update
 
     confirmationActivityUpdate(activity) {
@@ -541,9 +692,11 @@ export default {
       this.activityBeingUpdated = activity;
     },
     updateActivity() {
-      this.updateActivityForm.comm_date_activity = this.formatDate(
-        this.updateActivityForm.comm_date_activity
-      );
+      if (this.updateActivityForm.comm_date_activity != null) {
+        this.updateActivityForm.comm_date_activity = this.formatDate(
+          this.updateActivityForm.comm_date_activity
+        );
+      }
 
       this.updateActivityForm.put(
         this.route("secretary.communities.activity.update", {

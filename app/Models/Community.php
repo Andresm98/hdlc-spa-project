@@ -25,6 +25,11 @@ class Community extends Model
         return $this->hasMany('App\Models\Transfer');
     }
 
+    public function appointments()
+    {
+        return $this->hasMany('App\Models\Appointment');
+    }
+
     public function activities()
     {
         return $this->hasMany('App\Models\CommunityActivity');
@@ -51,7 +56,17 @@ class Community extends Model
         return $this->morphOne('App\Models\Address', 'addressable');
     }
 
-    // Relation one to one
+    // Relation one to one inverse
 
+    public function pastoral()
+    {
+        return $this->belongsTo('App\Models\Pastoral');
+    }
 
+    // Relacion uno a varios polimorfica
+
+    public function files()
+    {
+        return $this->morphMany('App\Models\File', 'fileable');
+    }
 }

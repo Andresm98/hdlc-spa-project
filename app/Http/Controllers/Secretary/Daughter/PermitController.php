@@ -49,12 +49,14 @@ class PermitController extends Controller
      */
     public function store(Request $request, $user_id)
     {
+
         $validatorData = Validator::make($request->all(), [
             'reason' => ['required', 'max:100'],
             'description' => ['required', 'max:2000'],
             'date_province' => ['required', 'date_format:Y-m-d H:i:s'],
             'date_general' => ['required', 'date_format:Y-m-d H:i:s'],
             'date_out' => ['required', 'date_format:Y-m-d H:i:s'],
+            'date_in' => ['required', 'date_format:Y-m-d H:i:s'],
         ]);
 
         $validator = Validator::make([
@@ -69,7 +71,7 @@ class PermitController extends Controller
 
         if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 
@@ -80,6 +82,7 @@ class PermitController extends Controller
             'date_province' => $request->get('date_province'),
             'date_general' => $request->get('date_general'),
             'date_out' => $request->get('date_out'),
+            'date_in' => $request->get('date_in'),
         ]);
         if (!$permit->address) {
             $permit->address()->create([
@@ -140,6 +143,7 @@ class PermitController extends Controller
                 'date_province' => ['required', 'date_format:Y-m-d H:i:s'],
                 'date_general' => ['required', 'date_format:Y-m-d H:i:s'],
                 'date_out' => ['required', 'date_format:Y-m-d H:i:s'],
+                'date_in' => ['required', 'date_format:Y-m-d H:i:s'],
             ]
         );
 
@@ -149,7 +153,7 @@ class PermitController extends Controller
 
         if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 

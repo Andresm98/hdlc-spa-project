@@ -15,4 +15,14 @@ class Appointment extends Model
     {
         return $this->belongsTo('App\Models\Profile');
     }
+
+    public function community()
+    {
+        return $this->belongsTo('App\Models\Community');
+    }
+
+    public function appointment_level()
+    {
+        return $this->belongsTo('App\Models\AppointmentLevel');
+    }
 }

@@ -98,7 +98,14 @@ class CommunityInventoryController extends Controller
      */
     public function update(Request $request, $inventory_id)
     {
-        $validation = Validator::make([
+        $validation = Validator::make(['inventory_id' => $inventory_id], [
+            'inventory_id' => ['required', 'exists:inventories,id']
+        ]);
+
+        if ($validation->fails()) {
+            return abort(404);
+        }
+        $validationData = Validator::make([
             'name' => $request->get('name'),
             'description' => $request->get('description'),
             'id' => $inventory_id
@@ -108,8 +115,10 @@ class CommunityInventoryController extends Controller
             'id' => ['required', 'exists:inventories,id']
         ]);
 
-        if ($validation->fails()) {
-            return response()->json(['error' => 'No se encuentran datos!']);
+        if ($validationData->fails()) {
+            return  redirect()->back()
+                ->withErrors($validationData->errors())
+                ->withInput();
         }
 
         $inventory = Inventory::find($inventory_id);

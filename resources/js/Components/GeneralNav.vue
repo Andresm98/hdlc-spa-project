@@ -1,7 +1,10 @@
 <template>
-  <nav class="bg-gradient-to-r from-orange-400 to-blue-500  hover:from-red-400 hover:to-blue-700 border-b border-gray-100 w-full">
+  <nav
+    class="bg-gradient-to-r from-orange-400 to-blue-500 hover:from-red-400 hover:to-blue-700 border-b border-gray-100 w-full"
+  >
     <!-- <nav class="bg-slate-800 transparent border-b border-gray-100">  -->
     <!-- Primary Navigation Menu -->
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16">
         <div class="flex">
@@ -26,11 +29,7 @@
             >
               Origin SPA
             </jet-nav-link>
-            <jet-nav-link
-
-            >
-              Origin SPA
-            </jet-nav-link>
+            <jet-nav-link> Origin SPA </jet-nav-link>
           </div>
         </div>
 
@@ -172,13 +171,18 @@
                   Perfil
                 </jet-dropdown-link>
 
-                <jet-dropdown-link :href="route('admin.welcome')">
-                  Administración Sistema
-                </jet-dropdown-link>
-
-                <jet-dropdown-link :href="route('secretary.welcome')">
-                  Gestión Secretaría
-                </jet-dropdown-link>
+                <div v-for="role in this.allRoles" :key="role">
+                  <div v-if="role.name == 'super admin'">
+                    <jet-dropdown-link :href="route('admin.welcome')">
+                      Administración Sistema
+                    </jet-dropdown-link>
+                  </div>
+                  <div v-if="role.name == 'secretary'">
+                    <jet-dropdown-link :href="route('secretary.welcome')">
+                      Gestión Secretaría
+                    </jet-dropdown-link>
+                  </div>
+                </div>
 
                 <jet-dropdown-link
                   :href="route('api-tokens.index')"
@@ -274,7 +278,7 @@
             :href="route('profile.show')"
             :active="route().current('profile.show')"
           >
-            Profile
+            Perfil
           </jet-responsive-nav-link>
 
           <jet-responsive-nav-link
@@ -285,23 +289,36 @@
             API Tokens
           </jet-responsive-nav-link>
 
+          <div v-for="role in this.allRoles" :key="role">
+            <div v-if="role.name == 'super admin'">
+              <jet-responsive-nav-link :href="route('admin.welcome')">
+                Administración Sistema
+              </jet-responsive-nav-link>
+            </div>
+            <div v-if="role.name == 'secretary'">
+              <jet-responsive-nav-link :href="route('secretary.welcome')">
+                Gestión Secretaría
+              </jet-responsive-nav-link>
+            </div>
+          </div>
+
           <!-- Authentication -->
           <form method="POST" @submit.prevent="logout">
-            <jet-responsive-nav-link as="button"> Log Out </jet-responsive-nav-link>
+            <jet-responsive-nav-link as="button"> Salir </jet-responsive-nav-link>
           </form>
 
           <!-- Team Management -->
           <template v-if="$page.props.jetstream.hasTeamFeatures">
             <div class="border-t border-gray-200"></div>
 
-            <div class="block px-4 py-2 text-xs text-gray-400">Manage Team</div>
+            <div class="block px-4 py-2 text-xs text-gray-400">Administrar Equipos</div>
 
             <!-- Team Settings -->
             <jet-responsive-nav-link
               :href="route('teams.show', $page.props.user.current_team)"
               :active="route().current('teams.show')"
             >
-              Team Settings
+              Configuraciones
             </jet-responsive-nav-link>
 
             <jet-responsive-nav-link
@@ -309,7 +326,7 @@
               :active="route().current('teams.create')"
               v-if="$page.props.jetstream.canCreateTeams"
             >
-              Create New Team
+              Crear nuevo equipo
             </jet-responsive-nav-link>
 
             <div class="border-t border-gray-200"></div>
@@ -360,6 +377,11 @@ import JetNavLink from "@/Jetstream/NavLink.vue";
 import JetResponsiveNavLink from "@/Jetstream/ResponsiveNavLink.vue";
 
 export default {
+  mounted() {
+    axios.get(this.route("web.user.roles.index")).then((response) => {
+      this.allRoles = response.data;
+    });
+  },
   components: {
     Head,
     Dropdown,
@@ -385,6 +407,7 @@ export default {
   data() {
     return {
       showingNavigationDropdown: false,
+      allRoles: null,
     };
   },
 

@@ -158,12 +158,15 @@
         <div
           class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
         >
-          <div class="bg-slate-200 hover:bg-slate-100 rounded-lg">
+          <div class="bg-gray-100 hover:bg-slate-100 rounded-lg">
             <form @submit.prevent="submit" class="">
               <div class="rounded-t bg-white mb-0 px-6 py-6">
                 <div class="text-center flex justify-between">
-                  <h6 class="text-lg font-medium leading-6 text-gray-900">
-                    Tarjeta de Información General de la Obra
+                  <h6 class="text-sm font-medium leading-6 text-gray-900">
+                    Tarjeta de Información General de la Obra, perteneciente a
+                    <h5 class="text-sm font-extrabold leading-6 text-black">
+                      {{ this.community_principal.comm_name }}
+                    </h5>
                   </h6>
                   <button
                     class="bg-blue-500 hover:bg-blue-700 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
@@ -177,6 +180,43 @@
               <h6 class="mt-2 text-lg font-medium text-center leading-6 text-gray-900">
                 Información General
               </h6>
+
+              <!-- Toggle A -->
+              <div class="flex items-center justify-center w-full my-4">
+                <label for="toogleA" class="flex items-center cursor-pointer">
+                  <!-- toggle -->
+                  <div class="relative">
+                    <!-- input -->
+                    <input
+                      id="toogleA"
+                      type="checkbox"
+                      class="sr-only"
+                      :value="this.community_custom.comm_level"
+                      @click="changeStatusCommunity()"
+                    />
+                    <!-- line -->
+                    <div class="w-10 h-4 bg-gray-200 rounded-full shadow-inner" />
+                    <!-- dot -->
+                    <div
+                      v-if="this.community_custom.comm_status == 1"
+                      class="absolute w-6 h-6 rounded-full shadow -left-1 -top-1 transition"
+                      style="transform: translateX(100%); background-color: #204de0"
+                    />
+                    <div
+                      v-else
+                      class="absolute w-6 h-6 bg-red-400 rounded-full shadow -left-1 -top-1 transition"
+                    />
+                  </div>
+                </label>
+              </div>
+              <!-- label -->
+              <div class="flex items-center justify-center">
+                <small class="ml-3 text-gray-700 font-medium"
+                  >¿La comunidad se encuentra activa? ¿No / Si?</small
+                >
+              </div>
+              <!-- End toogle -->
+
               <div class="flex flex-wrap">
                 <div class="w-full lg:w-3/3 px-4">
                   <div class="relative w-full mb-3">
@@ -327,19 +367,19 @@
                   </div>
                 </div>
 
-                <div class="w-full lg:w-4/12 px-4">
+                <div class="w-full lg:w-3/12 px-4">
                   <div class="relative w-full mb-3">
                     <label
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
-                      Número de Colaboradores
+                      Nro. de Colaboradores
                     </label>
 
                     <jet-input-error :message="errors.rn_collaborators" />
                     <input
                       minLength="0"
-                      maxlength="2000"
+                      maxlength="1000"
                       pattern="[0-9]+"
                       placeholder="Nro. de Colaboradores"
                       type="number"
@@ -350,6 +390,39 @@
                   </div>
                 </div>
 
+                <div class="w-full lg:w-5/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <label
+                      class="block text-sm font-medium text-gray-700"
+                      htmlfor="grid-password"
+                    >
+                      Pastoral
+                    </label>
+
+                    <div
+                      :class="{ invalid: isInvalidPastoral }"
+                      v-if="this.allPastoral != null"
+                    >
+                      <multiselect
+                        :searchable="true"
+                        v-model="this.selectFour.selectedPastoral"
+                        :options="this.allPastoral"
+                        :close-on-select="true"
+                        :clear-on-select="false"
+                        mode="tags"
+                        label="name"
+                        @search-change="onSearchPrastoralsChange"
+                        @select="onSelectedPastoral"
+                        track-by="name"
+                        placeholder="Buscar pastoral"
+                      >
+                      </multiselect>
+                      <p class="text-red-400 text-sm" v-show="isInvalidPastoral">
+                        Obligatorio
+                      </p>
+                    </div>
+                  </div>
+                </div>
                 <!-- Information Address -->
                 <hr
                   class="mt-1 mb-3 ml-4 mr-4 border-b-1 border-blueGray-300 hover:border-blueGray-100"
@@ -498,6 +571,9 @@
             <div v-if="selectMenu.selectedElement == 'Hermanas'">
               <daughters></daughters>
             </div>
+            <div v-if="selectMenu.selectedElement == 'Documentos'">
+              <files></files>
+            </div>
           </div>
         </div>
       </div>
@@ -536,11 +612,29 @@ import Resumes from "@/Pages/Secretary/Communities/Resumes/Index";
 import Visits from "@/Pages/Secretary/Communities/Visits/Index";
 import Inventories from "@/Pages/Secretary/Communities/Inventories/Index";
 import Daughters from "@/Pages/Secretary/Communities/Daughters/Index";
+import Files from "@/Pages/Secretary/Communities/Files/Index";
 
 export default defineComponent({
   created() {
     // console.log("created " + this.$el);
     this.uploadProvinces(this.provinces);
+
+    // Method fetch
+
+    fetch(this.route("secretary.pastoral.index"))
+      .then(async (response) => {
+        const isJson = response.headers.get("content-type")?.includes("application/json");
+        const data = isJson && (await response.json());
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+        this.allPastoral = data;
+      })
+      .catch((error) => {
+        element.parentElement.innerHTML = `Error: ${error}`;
+        console.error("There was an error!", error);
+      });
   },
 
   beforeMount() {
@@ -585,6 +679,7 @@ export default defineComponent({
     };
   },
   props: {
+    community_principal: Object,
     community_custom: Object,
     errors: null,
     image: String,
@@ -618,6 +713,13 @@ export default defineComponent({
       return (
         this.selectThree.selectedParish == undefined ||
         this.selectThree.selectedParish == null
+      );
+    },
+    isInvalidPastoral() {
+      //   console.log("ee Parish", this.selectThree.selectedParish);
+      return (
+        this.selectFour.selectedPastoral == undefined ||
+        this.selectFour.selectedPastoral == null
       );
     },
 
@@ -675,6 +777,7 @@ export default defineComponent({
     Visits,
     Inventories,
     Daughters,
+    Files,
     Datepicker,
     moment,
     Alert,
@@ -689,7 +792,14 @@ export default defineComponent({
         selectedElement: null,
         isDisabled: false,
         isTouched: false,
-        options: ["Actividades", "Resumen Anual", "Visitas", "Inventario", "Hermanas"],
+        options: [
+          "Actividades",
+          "Resumen Anual",
+          "Visitas",
+          "Inventario",
+          "Hermanas",
+          "Documentos",
+        ],
         loading: false,
         multiSelectUser: null,
         vSelectUser: null,
@@ -709,6 +819,7 @@ export default defineComponent({
         canton_id: null,
         parish_id: null,
         political_division_id: null,
+        pastoral_id: null,
         file: null,
       }),
       photoPreview: null,
@@ -743,6 +854,15 @@ export default defineComponent({
         multiSelectParish: null,
         vSelectParish: null,
       },
+      selectFour: {
+        selectedPastoral: this.community_custom.pastoral,
+        value: 0,
+        options: [],
+        loading: false,
+        multiSelectPastoral: null,
+        vSelectPastoral: null,
+      },
+      allPastoral: null,
     };
   },
   watch: {
@@ -778,6 +898,20 @@ export default defineComponent({
     },
   },
   methods: {
+    changeStatusCommunity() {
+      Inertia.put(
+        this.route("secretary.works.status.update", {
+          work_id: this.community_custom.id,
+        }),
+        {
+          preserveScroll: true,
+          preserveState: true,
+          onSuccess: () => {
+            console.log("saved.");
+          },
+        }
+      );
+    },
     handleScroll() {
       console.log(window.scrollY);
       console.log("numme");
@@ -795,6 +929,11 @@ export default defineComponent({
       return response.data;
     },
     ...mapActions("community", ["changeCommunity"]),
+
+    onSearchPrastoralsChange() {},
+    onSelectedPastoral(pastoral) {
+      this.form.pastoral_id = pastoral.id;
+    },
     onSearchProvincesChange(term) {
       //   console.log("input data search " + term);
     },
@@ -877,9 +1016,11 @@ export default defineComponent({
       if (
         this.isInvalidProvince == false &&
         this.isInvalidCanton == false &&
+        this.isInvalidPastoral == false &&
         this.isInvalidParish == false &&
         this.validateIdentityCard == true
       ) {
+        this.form.pastoral_id = this.selectFour.selectedPastoral.id;
         this.form.put(
           route("secretary.works.update", {
             work_id: this.community_custom.id,

@@ -28,7 +28,9 @@ class CreateAcademicTrainingsTable extends Migration
             // Generar la clave foranea para la relacion uno a muchos (profile->academic_training)
             $table->foreign('profile_id')
                 ->references('id')->on('profiles')
-                ->onDelete('set null');
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
 
             $table->timestamps();
         });

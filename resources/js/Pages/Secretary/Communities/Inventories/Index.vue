@@ -30,11 +30,14 @@
                 <label class="block text-sm font-medium text-gray-700">
                   Inventario:
                 </label>
-
+                <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
+                  {{ $page.props.errors.name }}
+                </p>
+                <small>Formato: Ingresar el nombre del inventario.</small>
                 <input
                   type="text"
-                  minLength="10"
-                  maxlength="100"
+                  minLength="5"
+                  maxlength="50"
                   placeholder="Ingresar nombre del inventario"
                   class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="formInventory.name"
@@ -49,6 +52,10 @@
               <label class="block text-sm font-medium text-gray-700">
                 Descripción:
               </label>
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+                {{ $page.props.errors.description }}
+              </p>
+              <small>Formato: Ingresar la descripción del inventario.</small>
               <div class="bg-white">
                 <div v-if="formInventory.description != null">
                   <quill-editor
@@ -120,7 +127,7 @@
                     >{{ section.name }}</label
                   >
                   <div
-                    class="w-full tab-content overflow-hidden border-l-2 bg-gray-100 border-green-500 leading-normal"
+                    class="w-full tab-content overflow-hidden border-l-2 bg-gray-100 border-blue-500 leading-normal"
                   >
                     <div class="p-5 overflow-y-auto h-60">
                       <section>
@@ -166,20 +173,22 @@
         :show="sectionBeingCreated"
         @close="sectionBeingCreated == null"
       >
-        <template #title> Datos de Nueva Sección</template>
+        <template #title> Datos de la nueva sección</template>
 
         <template #content>
           <div class="flex flex-wrap">
             <div class="w-full lg:w-12/12 px-4">
               <div class="relative w-full mb-3">
                 <div class="">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Nombre Sección:
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+                  <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
+                    {{ $page.props.errors.name }}
+                  </p>
+                  <small>Formato: Ingresar el nombre de la sección.</small>
                   <input
                     type="text"
-                    minLength="10"
-                    maxlength="100"
+                    minLength="5"
+                    maxlength="50"
                     placeholder="Ingresar nombre de la sección"
                     class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="createSectionForm.name"
@@ -193,6 +202,13 @@
                 <label class="block text-sm font-medium text-gray-700">
                   Descripción:
                 </label>
+                <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+                  {{ $page.props.errors.description }}
+                </p>
+                <small
+                  >Formato: Ingresar la descripción de la sección, max 3000
+                  caracteres.</small
+                >
                 <div class="bg-white">
                   <quill-editor
                     ref="qlcreateditor1"
@@ -200,7 +216,7 @@
                     theme="snow"
                     :toolbar="toolbarOptions"
                     v-model:content="createSectionForm.description"
-                    placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+                    placeholder="Ingresar los datos solicitados..."
                   ></quill-editor>
                 </div>
               </div>
@@ -255,9 +271,11 @@
             <div class="w-full lg:w-12/12 px-4">
               <div class="relative w-full mb-3">
                 <div class="">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Nombre Sección:
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+                  <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
+                    {{ $page.props.errors.name }}
+                  </p>
+                  <small>Formato: Ingresar el nombre de la sección.</small>
                   <input
                     type="text"
                     minLength="10"
@@ -275,6 +293,13 @@
                 <label class="block text-sm font-medium text-gray-700">
                   Descripción:
                 </label>
+                <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+                  {{ $page.props.errors.description }}
+                </p>
+                <small
+                  >Formato: Ingresar la descripción de la sección, max 3000
+                  caracteres.</small
+                >
                 <div class="bg-white">
                   <quill-editor
                     ref="qlcreateditor1"
@@ -282,7 +307,7 @@
                     theme="snow"
                     :toolbar="toolbarOptions"
                     v-model:content="updateSectionForm.description"
-                    placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+                    placeholder="Ingresar los datos solicitados..."
                   ></quill-editor>
                 </div>
               </div>
@@ -590,6 +615,7 @@ export default {
         this.route("secretary.communities.section.update", {
           inventory_id: this.formInventory.id,
           section_id: this.sectionBeingUpdated.id,
+          community_id: this.community.id,
         }),
         {
           preserveScroll: true,
@@ -665,9 +691,9 @@ for (x = 0; x < myRadios.length; x++) {
   font-size: 1.25rem; /*.text-xl*/
   padding: 1.25rem; /*.p-5*/
   border-left-width: 2px; /*.border-l-2*/
-  border-color: #55cf5f; /*.border-indigo*/
+  border-color: #5586cf; /*.border-indigo*/
   background-color: #f8fafc; /*.bg-gray-100 */
-  color: #66d151; /*.text-indigo*/
+  color: #5189d1; /*.text-indigo*/
 }
 /* Icon */
 .tab label::after {
@@ -702,12 +728,12 @@ for (x = 0; x < myRadios.length; x++) {
 /* Icon formatting - open */
 .tab input[type="checkbox"]:checked + label::after {
   transform: rotate(315deg);
-  background-color: #5db655; /*.bg-indigo*/
+  background-color: #5577b6; /*.bg-indigo*/
   color: #f8fafc; /*.text-grey-lightest*/
 }
 .tab input[type="radio"]:checked + label::after {
   transform: rotateX(180deg);
-  background-color: #5db655; /*.bg-indigo*/
+  background-color: #5586cf; /*.bg-indigo*/
   color: #f8fafc; /*.text-grey-lightest*/
 }
 </style>
