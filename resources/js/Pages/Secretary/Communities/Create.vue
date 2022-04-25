@@ -13,6 +13,8 @@
       :message="$page.props.flash.success"
     >
     </alert>
+    <operation></operation>
+    <br />
     <section
       class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg m-1"
     >
@@ -532,6 +534,7 @@ import Alert from "@/Components/Alert";
 import { ref } from "vue";
 import Datepicker from "vue3-date-time-picker";
 import moment from "moment";
+import Operation from "@/Components/Operation";
 import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
@@ -642,7 +645,7 @@ export default {
     JetLabel,
     JetButton,
     JetCheckbox,
-
+    Operation,
     Datepicker,
     moment,
     Alert,

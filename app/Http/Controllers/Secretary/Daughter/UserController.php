@@ -6,19 +6,21 @@ use PDF;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Profile;
+use App\Exports\UsersExport;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 
 // Inject
 
-use Spatie\Permission\Models\Permission;
-use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 
 // Reports
 
+use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Secretary\Daughter\ProfileController;
 
@@ -128,7 +130,7 @@ class UserController extends Controller
         $addressClass = new AddressController();
 
         if ($validator->fails()) {
-          return   abort(404);
+            return   abort(404);
         } else {
             $provinces =  $addressClass->getProvinces();
             $daughter_custom = User::select()
@@ -242,6 +244,15 @@ class UserController extends Controller
             return redirect()->route('secretary.daughters.index')->with('success', 'Eliminado correctamente.');
         }
     }
+
+    //  TODO: Export Excel
+
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
+
 
 
     /**

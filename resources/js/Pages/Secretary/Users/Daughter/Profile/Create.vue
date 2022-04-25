@@ -84,13 +84,13 @@
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
             Fecha de Admisión:
           </label>
-          <p class="text-red-400 text-sm" v-show="$page.props.errors.date_admission">
-            {{ $page.props.errors.date_admission }}
+          <p class="text-red-400 text-sm" v-show="$page.props.errors.date_vocation">
+            {{ $page.props.errors.date_vocation }}
           </p>
           <small>Formato: Opcional</small>
           <Datepicker
             class=""
-            v-model="form.date_admission"
+            v-model="form.date_vocation"
             :format="format"
             :transitions="false"
             menuClassName="dp-custom-menu"

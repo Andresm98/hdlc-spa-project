@@ -19,8 +19,8 @@ class CreateAppointmentLevelsTable extends Migration
 
             $table->unsignedBigInteger('appointment_levelc_id')->nullable();
 
-            $table->string('name');
-            $table->string('description');
+            $table->string('name', 50);
+            $table->string('description', 4000);
             $table->smallInteger('level');
             $table->tinyText('last_level');
 
@@ -31,7 +31,7 @@ class CreateAppointmentLevelsTable extends Migration
             $table->foreign('appointment_levelc_id')
                 ->references('id')
                 ->on('appointment_levels')
-                ->onDelete('cascade')
+                // ->onDelete('cascade')
                 ->onUpdate('cascade');
 
 

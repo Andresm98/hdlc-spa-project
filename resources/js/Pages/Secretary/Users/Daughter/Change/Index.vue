@@ -178,6 +178,30 @@
             </div>
           </div>
 
+          <div class="w-full lg:w-6/12 px-4">
+            <div class="relative w-full mb-3">
+              <label
+                class="block text-sm font-medium text-gray-700"
+                htmlfor="grid-password"
+              >
+                Fecha Culminación:
+              </label>
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.transfer_date_relocated"
+              >
+                {{ $page.props.errors.transfer_date_relocated }}
+              </p>
+              <small>Formato: Fecha de cierre de actividades (opcional).</small>
+              <Datepicker
+                v-model="form.transfer_date_relocated"
+                :format="format"
+                :transitions="false"
+                menuClassName="dp-custom-menu"
+              />
+            </div>
+          </div>
+
           <!-- Information Address -->
         </div>
         <jet-button-success type="submit" class="ml-4 mt-1 btn btn-primary"
@@ -544,14 +568,12 @@
                 >
                   Fecha Relocalización:
                 </label>
-                <small>No Editable: Fecha de inicio de actividades.</small>
+                <small>Opcional: Fecha de inicio de actividades.</small>
                 <Datepicker
                   v-model="updateTransferForm.transfer_date_relocated"
                   :format="format"
                   :transitions="false"
                   menuClassName="dp-custom-menu"
-                  required
-                  readonly
                 />
               </div>
             </div>
@@ -816,6 +838,12 @@ export default {
           this.form.transfer_date_adission
         );
       }
+      if (this.form.transfer_date_relocated) {
+        this.form.transfer_date_relocated = this.formatDate(
+          this.form.transfer_date_relocated
+        );
+      }
+
       if (this.isInvalidCommunity == false && this.isInvalidOffice == false) {
         Inertia.post(
           route("secretary.daughter-profile.transfer.store", {
@@ -883,6 +911,11 @@ export default {
       if (this.updateTransferForm.transfer_date_adission != null) {
         this.updateTransferForm.transfer_date_adission = this.formatDate(
           this.updateTransferForm.transfer_date_adission
+        );
+      }
+      if (this.updateTransferForm.transfer_date_relocated != null) {
+        this.updateTransferForm.transfer_date_relocated = this.formatDate(
+          this.updateTransferForm.transfer_date_relocated
         );
       }
 

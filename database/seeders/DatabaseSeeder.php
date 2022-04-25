@@ -14,15 +14,16 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        $this->call(AppointmentLevelsSeeder::class);
+        $this->call(OfficeSeeder::class);
         $this->call(PermissionSeeder::class);
+        $this->call(PoliticalDivisionSeeder::class);
+        $this->call(PastoralSeeder::class);
+        $this->call(CommunitySeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(ProfileSeeder::class);
-        $this->call(OfficeSeeder::class);
-        $this->call(PastoralSeeder::class);
-        $this->call(CommunitySeeder::class);
-        $this->call(PoliticalDivisionSeeder::class);
 
-        $this->call(AppointmentLevelsSeeder::class);
+
     }
 }

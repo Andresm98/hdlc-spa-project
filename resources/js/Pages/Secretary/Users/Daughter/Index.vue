@@ -60,7 +60,9 @@
             <section class="pl-4">
               <pagination class="mt-6 mb-5" :links="daughters_list.links" />
             </section>
-
+            <small class="ml-6">
+              Se encontraron {{ daughters_list.total }} hermanas.</small
+            >
             <div class="py-2">
               <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

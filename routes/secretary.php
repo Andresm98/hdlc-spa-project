@@ -22,6 +22,7 @@ use App\Http\Controllers\Secretary\Daughter\InfoFamilyBreakController;
 use App\Http\Controllers\Secretary\Community\CommunityResumeController;
 use App\Http\Controllers\Secretary\Daughter\AcademicTrainingController;
 use App\Http\Controllers\Secretary\Daughter\AppointmentLevelController;
+use App\Http\Controllers\Secretary\Community\CommunityRealityController;
 use App\Http\Controllers\Secretary\Community\CommunityActivityController;
 use App\Http\Controllers\Secretary\Community\CommunityDaughterController;
 use App\Http\Controllers\Secretary\Community\CommunityPastoralController;
@@ -47,6 +48,9 @@ Route::get('address/parishes/{parish_id}', [AddressController::class, 'getFinalA
 Route::get('address/profile/address/{actual_parish}', [AddressController::class, 'getSaveAddress'])
     ->name('address.actual-address');
 
+Route::get('address/profile/address_format/{actual_parish}', [AddressController::class, 'getActualAddress'])
+    ->name('address.address-format');
+
 // Offices Controllers
 
 Route::get('offices/all', [OfficeController::class, 'index'])
@@ -65,7 +69,10 @@ Route::get('appointment-data/{appointment_level_id}', [AppointmentLevelControlle
 
 Route::get('pastorals/all', [CommunityPastoralController::class, 'index'])
     ->name('pastoral.index');
+// TODO: Excel report
 
+Route::get('users/export', [UserController::class, 'export'])
+    ->name('users.report');
 
 Route::group(
     ['middleware' => ['role:secretary']],
@@ -270,6 +277,12 @@ Route::group([
     Route::delete('delete/{community_id}', [CommunityController::class, 'destroy'])
         ->name('communities.delete');
 
+    Route::get('exportExcel', [CommunityController::class, 'exportExcel'])
+        ->name('communities.export.excel');
+
+    Route::get('exportCSV', [CommunityController::class, 'exportCSV'])
+        ->name('communities.export.csv');
+
     // Works Controllers
 
     Route::get('works/all/{community_id}', [WorkController::class, 'index'])
@@ -385,7 +398,7 @@ Route::group([
     Route::put('articles/update/{section_slug}/{article_id}', [CommunityArticleController::class, 'update'])
         ->name('communities.articles.update');
 
-    // Files
+    // Files Controllers
 
     Route::get('files/{community_id}', [FilesCommunityController::class, 'index'])
         ->name('communities.files.index');
@@ -404,4 +417,9 @@ Route::group([
 
     Route::delete('files/delete/{file_id}', [FilesCommunityController::class, 'destroy'])
         ->name('communities.files.delete');
+
+    // Reality Controllers
+
+    Route::get('reality/', [CommunityRealityController::class, 'index'])
+        ->name('communities.reality.index');
 });

@@ -2,13 +2,16 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Seeder;
 use App\Models\Team;
 use App\Models\User;
-use Laravel\Jetstream\Jetstream;
+use App\Models\Office;
+use App\Models\Community;
 use Illuminate\Support\Str;
+use Illuminate\Database\Seeder;
+use Laravel\Jetstream\Jetstream;
+use App\Models\PoliticalDivision;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserSeeder extends Seeder
@@ -21,11 +24,11 @@ class UserSeeder extends Seeder
     public function run()
     {
         $users = [
-            'Admin' => 'admin@example.org',
-            'Owner' => 'owner@example.com',
-            'Collaborator' => 'collaborator@example.com',
-            'Staff' => 'staff@example.com',
-            'Volunteer' => 'volunteer@example.com',
+            'Admin' => 'admin@gmail.com',
+            'Owner' => 'owner@gmail.com',
+            'Collaborator' => 'collaborator@gmail.com',
+            'Staff' => 'staff@gmail.com',
+            'Volunteer' => 'volunteer@gmail.com',
         ];
         foreach ($users as $name => $email) {
             DB::transaction(function () use ($name, $email) {
@@ -38,17 +41,17 @@ class UserSeeder extends Seeder
                     'password' => Hash::make('secret'),
                 ]), function (User $user) {
                     $this->createTeam($user);
-                    $user->assignRole('invited', 'super admin');
+                    $user->assignRole('super admin');
                 });
             });
         }
         // Create one team
-        $team = $this->createBigTeam('owner@example.com');
+        $team = $this->createBigTeam('owner@gmail.com');
 
 
         // assign to team
         $role = 'collaborator';
-        $email = 'collaborator@example.com';
+        $email = 'collaborator@gmail.com';
         $team->users()->attach(
             Jetstream::findUserByEmailOrFail($email),
             ['role' => $role]
@@ -56,14 +59,14 @@ class UserSeeder extends Seeder
 
 
         $role = 'staff';
-        $email = 'staff@example.com';
+        $email = 'staff@gmail.com';
         $team->users()->attach(
             Jetstream::findUserByEmailOrFail($email),
             ['role' => $role]
         );
 
         $role = 'volunteer';
-        $email = 'volunteer@example.com';
+        $email = 'volunteer@gmail.com';
         $team->users()->attach(
             Jetstream::findUserByEmailOrFail($email),
             ['role' => $role]
@@ -97,8 +100,9 @@ class UserSeeder extends Seeder
             'email' =>  'secretary@gmail.com',
             'password' => Hash::make('secret'),
         ]);
-        $user->assignRole('invited', 'secretary');
+        $user->assignRole('secretary');
         $this->createTeam($user);
+
         for ($i = 0; $i <= 60; $i++) {
             $username = 'secretary  ' . Str::random(15);
             $slug =  Str::slug($username);
@@ -110,13 +114,22 @@ class UserSeeder extends Seeder
                 'email' =>  $slug .  '@gmail.com',
                 'password' => Hash::make('secret'),
             ]);
-            $user->assignRole('invited', 'secretary');
+            $user->assignRole('secretary');
             $this->createTeam($user);
         }
 
 
         //  daughter
-        for ($i = 0; $i <= 100; $i++) {
+        for ($i = 0; $i <= 200; $i++) {
+            // Convert to timetamps
+            $min = strtotime('1900-02-01 00:00:00');
+            $max = strtotime('2022-02-01 00:00:00');
+
+            // Generate random number using above bounds
+            $val = rand($min, $max);
+
+            // Convert back to desired date format
+
             $username = 'daughter  ' . Str::random(15);
             $slug =  Str::slug($username);
             $user =  User::create([
@@ -127,7 +140,55 @@ class UserSeeder extends Seeder
                 'email' =>  $slug . '@gmail.com',
                 'password' => Hash::make('secret'),
             ]);
-            $user->assignRole('invited', 'daughter');
+            $user->assignRole('daughter');
+
+            $political_division_id =   PoliticalDivision::where('level', '=', 3)
+                ->where('last_level', '=', 'Y')
+                ->inRandomOrder()
+                ->first();
+
+            $profile = $user->profile()->create([
+                'identity_card' => '1004280135',
+                'date_birth' => date('Y-m-d H:i:s', rand($min, $max)),
+                'date_vocation' => date('Y-m-d H:i:s', $val),
+                'date_admission' => date('Y-m-d H:i:s', $val),
+                'date_send' => date('Y-m-d H:i:s', rand($min, $max)),
+                'date_vote' => date('Y-m-d H:i:s', rand($min, $max)),
+                'date_death' => date('Y-m-d H:i:s', rand($min, $max)),
+                'cellphone' => '09967316479',
+                'phone' => '022405124',
+                'observation' => 'Observation of ' . $user->name,
+            ]);
+
+            if (strlen($political_division_id->id) == 6) {
+                $profile->address()->create([
+                    'address' => 'Dirr de ' . $user->name,
+                    'political_division_id' =>  $political_division_id->id . '',
+                ]);
+            } else {
+                $profile->address()->create([
+                    'address' => 'Dirr de ' . $user->name,
+                    'political_division_id' => '0' . $political_division_id->id . '',
+                ]);
+            }
+
+            $comm =  Community::where('comm_status', '=', 1)
+                ->inRandomOrder()
+                ->first();
+
+            $office =  Office::select('*')
+                ->inRandomOrder()
+                ->first();
+
+            $profile->transfers()->create([
+                'transfer_reason' => 'Reason of ' . $user->name,
+                'transfer_date_adission' => date('Y-m-d H:i:s', rand($min, $max)),
+                // 'transfer_date_relocated' => $request->get('transfer_date_relocated'),
+                'transfer_observation' => 'Observation transfer of ' . $user->name,
+                'community_id' => $comm->id,
+                'office_id' =>  $office->id,
+            ]);
+
             $this->createTeam($user);
         }
     }

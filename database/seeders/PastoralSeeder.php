@@ -17,13 +17,12 @@ class PastoralSeeder extends Seeder
         $pastoral = [
             ['Educativa', 'La presente pastoral pertenece a pastorales educativas.'],
             ['Salud', 'La presente pastoral pertenece a pastorales de salud.'],
-            ['Social', 'La presente pastoral pertenece a pastorales sociales.'],
+            ['Social y nuestras pobrezas', 'La presente pastoral pertenece a pastorales sociales y nuestras pobrezas.'],
             ['Obras diversas y parroquiales', 'La presente pastoral pertenece a pastorales obras diversas y parroquiales.'],
-            ['Nuestras pobrezas', 'La presente pastoral pertenece a pastorales nuestras pobrezas.'],
-            ['Casa de espiritualidad', 'La presente pastoral pertenece a pastorales casa de espiritualidad.'],
+            ['Casa de retiro', 'La presente pastoral pertenece a pastorales casa de retiro.'],
             ['Casa de hermanas mayores', 'La presente pastoral pertenece a las casas de hermanas mayores.'],
             ['Casa de formación', 'La presente pastoral pertenece a pastorales de casa de formación.'],
-            ['Casa y curia provincial', 'La presente pastoral pertenece a pastorales de casa de curia y provincia.'],
+            ['Casa provincial', 'La presente pastoral pertenece a pastorales de casa de provincia.'],
             ['Seminario interprovincial', 'La presente pastoral pertenece a pastorales de seminario interprovincial.'],
         ];
 

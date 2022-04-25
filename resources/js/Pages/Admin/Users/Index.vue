@@ -32,12 +32,44 @@
             <Link
               :href="route('admin.user.create')"
               class="pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-sm rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
-              >Crear usuarios</Link
+              >Crear Usuarios</Link
             >
             <!-- Container Filters -->
             <div class="container mx-auto">
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
                 <div
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm m-4 bg-gray-100"
+                >
+                  <search-filter
+                    v-model="params.search"
+                    class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    @reset="reset"
+                  >
+                    <label class="block text-gray-700">Rol:</label>
+                    <select
+                      v-model="params.role"
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    >
+                      <option :value="null">-</option>
+                      <option value="super admin">Administradores</option>
+                      <option value="daughter">Hermanas</option>
+                      <option value="secretary">Secretarias</option>
+                      <option value="invited">Invitados</option>
+                    </select>
+                    <!--
+                    <label class="block text-gray-700">Filtrar:</label>
+                    <select
+                      v-model="params.trashed"
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    >
+                      <option :value="null">-</option>
+                      <option value="daughters">Hermanas</option>
+                      <option value="collaborators">Colaboradores</option>
+                      <option value="invited">Invitados</option>
+                    </select> -->
+                  </search-filter>
+                </div>
+                <!-- <div
                   class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
                 >
                   <input
@@ -49,49 +81,12 @@
                     placeholder="Nombre"
                     class="focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
-                </div>
-                <div
-                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
-                >
-                  <input
-                    type="text"
-                    name="email-address"
-                    v-model="params.search"
-                    id="email"
-                    autocomplete="Search"
-                    placeholder="Nombre"
-                    class="focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  />
-                </div>
-                <div
-                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
-                >
-                  <input
-                    type="text"
-                    name="email-address"
-                    v-model="params.search"
-                    id="email"
-                    autocomplete="Search"
-                    placeholder="Nombre"
-                    class="focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  />
-                </div>
-                <div
-                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
-                >
-                  <input
-                    type="text"
-                    name="email-address"
-                    v-model="params.search"
-                    id="email"
-                    autocomplete="Search"
-                    placeholder="Nombre"
-                    class="focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  />
-                </div>
+                </div> -->
               </div>
             </div>
             <!-- End container Filters -->
+
+            <small class="ml-6"> Se encontraron {{ users_list.total }} resultados.</small>
             <section class="pl-4">
               <pagination class="mt-6 mb-5" :links="users_list.links" />
             </section>
@@ -111,7 +106,7 @@
                             class="text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             <span
-                              class="inline-flex px-6 py-3 w-full justify-between"
+                              class="inline-flex px-6 py-3 w-full justify-between hover:cursor-pointer"
                               @click="sort('name')"
                               >Nombre
 
@@ -144,7 +139,7 @@
                             class="text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             <span
-                              class="inline-flex px-6 py-3 w-full justify-between"
+                              class="inline-flex px-6 py-3 w-full justify-between hover:cursor-pointer"
                               @click="sort('email')"
                               >Correo
                               <svg
@@ -175,13 +170,13 @@
                             scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
-                            Correo
+                            Estado
                           </th>
                           <th
                             scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
-                            Estado
+                            Acciones
                           </th>
                         </tr>
                       </thead>
@@ -366,7 +361,7 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/Pagination";
 import { Inertia } from "@inertiajs/inertia";
 import "sweetalert2/dist/sweetalert2.min.css";
-import { pickBy, throttle } from "lodash";
+import { pickBy, throttle, mapValues } from "lodash";
 
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
@@ -375,6 +370,7 @@ import JetInputError from "@/Jetstream/InputError.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 
 import TextInput from "@/Components/TextInput";
+import SearchFilter from "@/Components/SearchFilter";
 import Alert from "@/Components/Alert";
 
 export default defineComponent({
@@ -385,7 +381,7 @@ export default defineComponent({
 
   computed: {
     all() {
-      console.log(this.users_list.data);
+      //   console.log(this.users_list.data);
     },
   },
   props: {
@@ -402,6 +398,7 @@ export default defineComponent({
     JetInput,
     JetInputError,
     JetSecondaryButton,
+    SearchFilter,
     TextInput,
     Alert,
   },
@@ -414,6 +411,7 @@ export default defineComponent({
         search: this.filters.search,
         field: this.filters.field,
         direction: this.filters.direction,
+        role: this.filters.role,
       },
     };
   },
@@ -430,6 +428,9 @@ export default defineComponent({
     closeModal() {
       this.modal_open = false;
     },
+    reset() {
+      this.params = mapValues(this.params, () => null);
+    },
   },
   watch: {
     params: {
@@ -438,6 +439,7 @@ export default defineComponent({
         this.$inertia.get(this.route("admin.users.index"), params, {
           replace: true,
           preserveState: true,
+          preserveScroll: true,
         });
       }, 150),
       deep: true,

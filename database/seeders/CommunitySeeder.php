@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Community;
-
 use Illuminate\Support\Str;
+
+use Illuminate\Database\Seeder;
+use App\Models\PoliticalDivision;
 
 class CommunitySeeder extends Seeder
 {
@@ -17,7 +18,17 @@ class CommunitySeeder extends Seeder
     public function run()
     {
 
-        for ($i = 0; $i <= 5; $i++) {
+        for ($i = 0; $i <= 100; $i++) {
+
+            // Convert to timetamps
+            $min = strtotime('1900-02-01 00:00:00');
+            $max = strtotime('2022-02-01 00:00:00');
+
+            // Generate random number using above bounds
+            $val = rand($min, $max);
+
+            // Convert back to desired date format
+
             $name_community = 'COMUNIDAD ' . Str::random(10);
             $commmunity =    Community::create([
                 'comm_identity_card' => Str::random(10),
@@ -27,12 +38,30 @@ class CommunitySeeder extends Seeder
                 'comm_cellphone' =>  Str::random(6),
                 'comm_phone' => Str::random(6),
                 'comm_email' => Str::random(10) . '@gmail.com',
-                'date_fndt_comm' => '1900-02-01',
-                'date_fndt_work' => '1900-12-10',
-                'comm_status' => 1,
+                'date_fndt_comm' =>  date('Y-m-d H:i:s', $val),
+                'date_fndt_work' =>  date('Y-m-d H:i:s', $val),
+                'comm_status' => rand(1, 0),
                 'rn_collaborators' => $i * 3,
-                'pastoral_id' => rand(1, 10)
+                'pastoral_id' => rand(1, 9)
             ]);
+            $political_division_id =   PoliticalDivision::where('level', '=', 3)
+                ->where('last_level', '=', 'Y')
+                ->inRandomOrder()
+                ->first();
+
+            if (strlen($political_division_id->id) == 6) {
+                $commmunity->address()->create([
+                    'address' => 'Dirr de ' . $name_community,
+                    'political_division_id' => '' . $political_division_id->id . '',
+                ]);
+            } else {
+                $commmunity->address()->create([
+                    'address' => 'Dirr de ' . $name_community,
+                    'political_division_id' => '0' . $political_division_id->id . '',
+                ]);
+            }
+
+
 
             $commmunity->inventory()->create([
                 'name' => $name_community,
@@ -70,6 +99,16 @@ class CommunitySeeder extends Seeder
         for ($i = 1; $i <= 3; $i++) {
             if ($i % 2 == 0) {
                 for ($j = 0; $j <= 2; $j++) {
+
+                    // Convert to timetamps
+                    $min = strtotime('1900-02-01 00:00:00');
+                    $max = strtotime('2022-02-01 00:00:00');
+
+                    // Generate random number using above bounds
+                    $val = rand($min, $max);
+
+                    // Convert back to desired date format
+
                     $name_work = 'OBRA ' . Str::random(14);
                     $work = Community::create([
                         'comm_id' => $i,
@@ -80,12 +119,27 @@ class CommunitySeeder extends Seeder
                         'comm_cellphone' =>  Str::random(6),
                         'comm_phone' => Str::random(6),
                         'comm_email' => Str::random(10) . '@gmail.com',
-                        'date_fndt_comm' => '1900-02-01',
-                        'date_fndt_work' => '1900-12-10',
+                        'date_fndt_comm' =>  date('Y-m-d H:i:s', $val),
+                        'date_fndt_work' =>  date('Y-m-d H:i:s', $val),
                         'rn_collaborators' => $j * 3,
                         'comm_status' => 1,
-                        'pastoral_id' => rand(1, 10)
+                        'pastoral_id' => rand(1, 9)
                     ]);
+                    $political_division_id =   PoliticalDivision::where('level', '=', 3)
+                        ->where('last_level', '=', 'Y')
+                        ->inRandomOrder()
+                        ->first();
+                    if (strlen($political_division_id->id) == 6) {
+                        $work->address()->create([
+                            'address' => 'Dirr de ' . $name_work,
+                            'political_division_id' => '' . $political_division_id->id . '',
+                        ]);
+                    } else {
+                        $work->address()->create([
+                            'address' => 'Dirr de ' . $name_work,
+                            'political_division_id' => '0' . $political_division_id->id . '',
+                        ]);
+                    }
 
                     $work->inventory()->create([
                         'name' => $name_work,
@@ -121,6 +175,14 @@ class CommunitySeeder extends Seeder
                 }
             } else {
                 for ($j = 0; $j <= 2; $j++) {
+                    // Convert to timetamps
+                    $min = strtotime('1900-02-01 00:00:00');
+                    $max = strtotime('2022-02-01 00:00:00');
+
+                    // Generate random number using above bounds
+                    $val = rand($min, $max);
+
+                    // Convert back to desired date format
                     $name_work = 'OBRA ' . Str::random(14);
                     $work =  Community::create([
                         'comm_id' => $i,
@@ -131,12 +193,27 @@ class CommunitySeeder extends Seeder
                         'comm_cellphone' =>  Str::random(6),
                         'comm_phone' => Str::random(6),
                         'comm_email' => Str::random(10) . '@gmail.com',
-                        'date_fndt_comm' => '1900-02-01',
-                        'date_fndt_work' => '1900-12-10',
+                        'date_fndt_comm' =>  date('Y-m-d H:i:s', $val),
+                        'date_fndt_work' =>  date('Y-m-d H:i:s', $val),
                         'rn_collaborators' => $j * 3,
                         'comm_status' => 1,
-                        'pastoral_id' => rand(1, 10)
+                        'pastoral_id' => rand(1, 9)
                     ]);
+                    $political_division_id =   PoliticalDivision::where('level', '=', 3)
+                        ->where('last_level', '=', 'Y')
+                        ->inRandomOrder()
+                        ->first();
+                    if (strlen($political_division_id->id) == 6) {
+                        $work->address()->create([
+                            'address' => 'Dirr de ' . $name_work,
+                            'political_division_id' => '' . $political_division_id->id . '',
+                        ]);
+                    } else {
+                        $work->address()->create([
+                            'address' => 'Dirr de ' . $name_work,
+                            'political_division_id' => '0' . $political_division_id->id . '',
+                        ]);
+                    }
 
                     $work->inventory()->create([
                         'name' => $name_work,

@@ -72,16 +72,6 @@ class TransferController extends Controller
      */
     public function store(Request $request, $user_id)
     {
-
-        $validatorData = Validator::make($request->all(), [
-            'transfer_reason' => ['required', 'max:100'],
-            'transfer_date_adission' => ['required', 'date_format:Y-m-d H:i:s'],
-            // 'transfer_date_relocated' => ['required', 'date_format:Y-m-d H:i:s'],
-            'transfer_observation' => ['required', 'max:4000'],
-            'community_id.id' => ['required', 'exists:communities,id'],
-            'office_id.id' => ['required', 'exists:offices,id']
-        ]);
-
         $validator = Validator::make([
             'user_id' => $user_id,
         ], [
@@ -90,6 +80,25 @@ class TransferController extends Controller
 
         if ($validator->fails()) {
             return abort(404);
+        }
+
+        if ($request->get('transfer_date_relocated')) {
+            $validatorData = Validator::make($request->all(), [
+                'transfer_reason' => ['required', 'max:100'],
+                'transfer_date_adission' => ['required', 'date', 'before:transfer_date_relocated', 'date_format:Y-m-d H:i:s'],
+                'transfer_date_relocated' => ['required', 'date', 'after:transfer_date_adission', 'date_format:Y-m-d H:i:s'],
+                'transfer_observation' => ['required', 'max:4000'],
+                'community_id.id' => ['required', 'exists:communities,id'],
+                'office_id.id' => ['required', 'exists:offices,id']
+            ]);
+        } else {
+            $validatorData = Validator::make($request->all(), [
+                'transfer_reason' => ['required', 'max:100'],
+                'transfer_date_adission' => ['required', 'date', 'before:transfer_date_relocated', 'date_format:Y-m-d H:i:s'],
+                'transfer_observation' => ['required', 'max:4000'],
+                'community_id.id' => ['required', 'exists:communities,id'],
+                'office_id.id' => ['required', 'exists:offices,id']
+            ]);
         }
 
         if ($validatorData->fails()) {
@@ -101,21 +110,34 @@ class TransferController extends Controller
 
         $user = User::find($user_id);
 
-        // Return the last transfer
-        $lastTransfer =  $user->profile->transfers()
-            ->orderBy('transfer_date_adission', 'ASC')
-            ->get()
-            ->last();
-        if ($lastTransfer) {
-            $lastTransfer->update([
-                'transfer_date_relocated' => $request->get('transfer_date_adission'),
-            ]);
+        if ($request->get('transfer_date_relocated') == null) {
+            $comprobationTransfer = $user->profile->transfers()
+                ->where('transfer_date_relocated')
+                ->get();
+
+            if ($comprobationTransfer) {
+                return redirect()->back()->with([
+                    'error' => 'No puede ingresar el registro ya existe un cambio vigente, revise la fecha de relocalización!'
+                ]);
+            }
         }
+
+        // Return the last transfer
+        // $lastTransfer =  $user->profile->transfers()
+        //     ->orderBy('transfer_date_adission', 'ASC')
+        //     ->get()
+        //     ->last();
+
+        // if ($lastTransfer) {
+        //     $lastTransfer->update([
+        //         'transfer_date_relocated' => $request->get('transfer_date_adission'),
+        //     ]);
+        // }
 
         $user->profile->transfers()->create([
             'transfer_reason' => $request->get('transfer_reason'),
             'transfer_date_adission' => $request->get('transfer_date_adission'),
-            // 'transfer_date_relocated' => $request->get('transfer_date_relocated'),
+            'transfer_date_relocated' => $request->get('transfer_date_relocated'),
             'transfer_observation' => $request->get('transfer_observation'),
             'community_id' => $request->community_id["id"],
             'office_id' => $request->office_id["id"],
@@ -166,20 +188,27 @@ class TransferController extends Controller
             'transfer_id' => ['required', 'exists:transfers,id']
         ]);
 
-        $validatorData = Validator::make(
-            $request->all(),
-            [
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        if ($request->get('transfer_date_relocated')) {
+            $validatorData = Validator::make($request->all(), [
                 'transfer_reason' => ['required', 'max:100'],
-                'transfer_date_adission' => ['required', 'date_format:Y-m-d H:i:s'],
-                // 'transfer_date_relocated' => ['required', 'date_format:Y-m-d H:i:s'],
+                'transfer_date_adission' => ['required', 'date', 'before:transfer_date_relocated', 'date_format:Y-m-d H:i:s'],
+                'transfer_date_relocated' => ['required', 'date', 'after:transfer_date_adission', 'date_format:Y-m-d H:i:s'],
                 'transfer_observation' => ['required', 'max:4000'],
                 'community_id.id' => ['required', 'exists:communities,id'],
                 'office_id.id' => ['required', 'exists:offices,id']
-            ]
-        );
-
-        if ($validator->fails()) {
-            return abort(404);
+            ]);
+        } else {
+            $validatorData = Validator::make($request->all(), [
+                'transfer_reason' => ['required', 'max:100'],
+                'transfer_date_adission' => ['required', 'date', 'before:transfer_date_relocated', 'date_format:Y-m-d H:i:s'],
+                'transfer_observation' => ['required', 'max:4000'],
+                'community_id.id' => ['required', 'exists:communities,id'],
+                'office_id.id' => ['required', 'exists:offices,id']
+            ]);
         }
 
         if ($validatorData->fails()) {
@@ -188,12 +217,25 @@ class TransferController extends Controller
                 ->withInput();
         }
 
+        $user = User::find($user_id);
+
+        if ($request->get('transfer_date_relocated') == null) {
+            $comprobationTransfer = $user->profile->transfers()
+                ->where('transfer_date_relocated')
+                ->get();
+
+            if ($comprobationTransfer) {
+                return redirect()->back()->with([
+                    'error' => 'No puede ingresar el registro ya existe un cambio vigente, revise la fecha de relocalización!'
+                ]);
+            }
+        }
         $transfer = Transfer::find($transfer_id);
 
         $transfer->update([
             'transfer_reason' => $request->get('transfer_reason'),
             'transfer_date_adission' => $request->get('transfer_date_adission'),
-            // 'transfer_date_relocated' => $request->get('transfer_date_relocated'),
+            'transfer_date_relocated' => $request->get('transfer_date_relocated'),
             'transfer_observation' => $request->get('transfer_observation'),
             'community_id' => $request->community_id["id"],
             'office_id' => $request->office_id["id"],
@@ -226,23 +268,20 @@ class TransferController extends Controller
 
         $transfer = Transfer::find($transfer_id);
 
-        if ($transfer) {
-            if ($transfer->transfer_date_relocated) {
-                return redirect()->back()->with(['error' => 'Transferencia no puede ser eliminada, forma parte del historial!']);
-            }
-        }
 
         $transfer->delete();
 
-        $lastTransfer = $user->profile->transfers()
-            ->orderBy('transfer_date_adission', 'DESC')
-            ->get()
-            ->first();
-        if ($lastTransfer) {
-            $lastTransfer->update([
-                'transfer_date_relocated' => null,
-            ]);
-        }
+        // $lastTransfer = $user->profile->transfers()
+        //     ->orderBy('transfer_date_adission', 'DESC')
+        //     ->get()
+        //     ->first();
+
+
+        // if ($lastTransfer) {
+        //     $lastTransfer->update([
+        //         'transfer_date_relocated' => null,
+        //     ]);
+        // }
         return redirect()->back()->with(['success' => 'Transferencia eliminada correctamente']);
     }
 }

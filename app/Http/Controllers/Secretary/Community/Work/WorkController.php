@@ -229,7 +229,7 @@ class WorkController extends Controller
         }
     }
 
-    public function updateStatus($work_id)
+    public function updateStatus(Request $request, $work_id)
     {
         $validator = Validator::make([
             'work_id' => $work_id,
@@ -237,20 +237,32 @@ class WorkController extends Controller
             'work_id' => ['required', 'exists:communities,id'],
         ]);
 
-
         if ($validator->fails()) {
             return abort(404);
         }
 
         $work = Community::find($work_id);
         if ($work->comm_status == 1) {
+
+            $validatorData = Validator::make($request->all(), [
+                'dateCloseCommunity' => ['date_format:Y-m-d H:i:s'],
+            ]);
+
+            if ($validatorData->fails()) {
+                return redirect()->back()
+                    ->withErrors($validatorData->errors())
+                    ->withInput();
+            }
+
             $work->update([
                 'comm_status' =>  0,
+                'date_close' =>  $request->get('dateCloseCommunity'),
             ]);
             return redirect()->back()->with(['success' => 'La comunidad fue cerrada correctamente.']);
         } else {
             $work->update([
                 'comm_status' =>  1,
+                'date_close' =>  null,
             ]);
             return redirect()->back()->with(['success' => 'La comunidad fue abierta nuevamente correctamente']);
         }

@@ -9,6 +9,8 @@ class AppointmentLevel extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function appointment()
     {
         return $this->hasMany('App\Models\Appointment');

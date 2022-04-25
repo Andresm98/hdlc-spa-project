@@ -14,10 +14,9 @@
         <template #title> Crear Roles en el Sistema </template>
 
         <template #description>
-          Los permisos permiten que un rol tenga ciertos privilegios en el
-          sistema, por lo tanto es necesario que cada uno de ellos sea
-          correctamente validado y escogido. El sistema cuenta con la siguiente
-          categoría de roles.
+          Los permisos permiten que un rol tenga ciertos privilegios en el sistema, por lo
+          tanto es necesario que cada uno de ellos sea correctamente validado y escogido.
+          El sistema cuenta con la siguiente categoría de roles.
         </template>
 
         <template #form>
@@ -31,10 +30,7 @@
               v-model="createApiTokenForm.name"
               autofocus
             />
-            <jet-input-error
-              :message="createApiTokenForm.errors.name"
-              class="mt-2"
-            />
+            <jet-input-error :message="createApiTokenForm.errors.name" class="mt-2" />
           </div>
 
           <!-- Token Permissions -->
@@ -51,9 +47,7 @@
                     :value="permission.id"
                     v-model:checked="createApiTokenForm.permissions"
                   />
-                  <span class="ml-2 text-sm text-gray-600">{{
-                    permission.name
-                  }}</span>
+                  <span class="ml-2 text-sm text-gray-600">{{ permission.name }}</span>
                 </label>
               </div>
             </div>
@@ -61,19 +55,16 @@
         </template>
 
         <template #actions>
-          <jet-action-message
-            :on="createApiTokenForm.recentlySuccessful"
-            class="mr-3"
-          >
+          <jet-action-message :on="createApiTokenForm.recentlySuccessful" class="mr-3">
             Creado.
           </jet-action-message>
 
-          <jet-button
+          <jet-button-success
             :class="{ 'opacity-25': createApiTokenForm.processing }"
             :disabled="createApiTokenForm.processing"
+            class="ml-4 mt-4 btn btn-primary"
+            >Crear</jet-button-success
           >
-            Crear
-          </jet-button>
         </template>
       </jet-form-section>
 
@@ -86,9 +77,8 @@
             <template #title> Administrar Roles del Sistema </template>
 
             <template #description>
-              Puede eliminar cualquiera de los roles existentes, tenga cuidado
-              con aquellos de mayor rango, para más información consulte la
-              documentación.
+              Puede eliminar cualquiera de los roles existentes, tenga cuidado con
+              aquellos de mayor rango, para más información consulte la documentación.
             </template>
             <!-- API Token List -->
             <template #content>
@@ -104,31 +94,14 @@
 
                   <div class="flex items-center">
                     <div
-                      class="
-                        hidden
-                        md:block md:text-sm md:text-gray-700
-                        lg:block lg:text-sm lg:text-gray-400
-                      "
+                      class="hidden md:block md:text-sm md:text-gray-700 lg:block lg:text-sm lg:text-gray-400"
                       v-if="role.created_at"
                     >
-                      Creado en {{ role.created_at }}
+                      Creado en {{ this.formatShowDate(role.created_at) }}
                     </div>
 
                     <button
-                      class="
-                        bg-emerald-500
-                        pt-2
-                        pb-2
-                        pr-2
-                        pl-2
-                        ml-4
-                        mr-4
-                        rounded-md
-                        cursor-pointer
-                        text-sm
-                        hover:bg-emerald-600
-                        text-white
-                      "
+                      class="bg-blue-500 pt-2 pb-2 pr-2 pl-2 ml-4 mr-4 rounded-md cursor-pointer text-sm hover:bg-blue-600 text-white"
                       @click="manageApiTokenPermissions(role)"
                       v-if="availablePermissions.length > 0"
                     >
@@ -136,18 +109,7 @@
                     </button>
 
                     <button
-                      class="
-                        bg-red-500
-                        pt-2
-                        pb-2
-                        pr-2
-                        pl-2
-                        rounded-md
-                        cursor-pointer
-                        text-sm
-                        hover:bg-red-600
-                        text-white
-                      "
+                      class="bg-red-500 pt-2 pb-2 pr-2 pl-2 rounded-md cursor-pointer text-sm hover:bg-red-600 text-white"
                       @click="confirmApiTokenDeletion(role)"
                     >
                       Eliminar
@@ -161,30 +123,19 @@
       </div>
 
       <!-- Token Value Modal -->
-      <jet-dialog-modal
-        :show="displayingToken"
-        @close="displayingToken = false"
-      >
+      <jet-dialog-modal :show="displayingToken" @close="displayingToken = false">
         <template #title
-          ><h2 class="text-green-300">Rol Creado Correctamente</h2></template
+          ><h2 class="text-gray-800">Rol Creado Correctamente</h2></template
         >
 
         <template #content>
           <div>
-            Recuerde que el rol que acaba de crear puede ser asignados a uno o
-            más usuarios en el sistema
+            Recuerde que el rol que acaba de crear puede ser asignados a uno o más
+            usuarios en el sistema
           </div>
 
           <div
-            class="
-              mt-4
-              bg-gray-100
-              px-4
-              py-2
-              rounded
-              font-mono
-              text-sm text-gray-500
-            "
+            class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-gray-500"
             v-if="$page.props.jetstream.flash.token"
           >
             {{ $page.props.jetstream.flash.token }}
@@ -209,10 +160,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <jet-label for="name" value="Nombre" />
-              <jet-input-error
-                :message="updateApiTokenForm.errors.name"
-                class="mt-2"
-              />
+              <jet-input-error :message="updateApiTokenForm.errors.name" class="mt-2" />
               <jet-input
                 id="name"
                 type="text"
@@ -229,9 +177,7 @@
                   :value="permission.id"
                   v-model:checked="updateApiTokenForm.permissions"
                 />
-                <span class="ml-2 text-sm text-gray-600">{{
-                  permission.name
-                }}</span>
+                <span class="ml-2 text-sm text-gray-600">{{ permission.name }}</span>
               </label>
             </div>
           </div>
@@ -295,6 +241,7 @@ import JetButton from "@/Jetstream/Button.vue";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import JetFormSection from "@/Jetstream/FormSection.vue";
 import JetInput from "@/Jetstream/Input.vue";
 import JetCheckbox from "@/Jetstream/Checkbox.vue";
@@ -303,6 +250,7 @@ import JetLabel from "@/Jetstream/Label.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import JetSectionBorder from "@/Jetstream/SectionBorder.vue";
 import PrincipalLayout from "@/Components/Admin/PrincipalLayout";
+import moment from "moment";
 import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
 
 export default defineComponent({
@@ -312,6 +260,7 @@ export default defineComponent({
     JetButton,
     JetConfirmationModal,
     JetDangerButton,
+    JetButtonSuccess,
     JetDialogModal,
     JetFormSection,
     JetInput,
@@ -348,6 +297,12 @@ export default defineComponent({
   },
 
   methods: {
+    formatShowDate(value) {
+      if (value != null) {
+        return moment(new Date(value)).format("YYYY-MM-DD");
+      }
+      return "";
+    },
     createApiToken() {
       this.createApiTokenForm.post(route("admin.roles.store"), {
         preserveScroll: true,

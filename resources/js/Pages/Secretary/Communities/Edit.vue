@@ -35,6 +35,8 @@ input:checked ~ .dot {
       >
       </alert>
     </div>
+    <operation></operation>
+    <br />
     <section
       class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg m-1"
     >
@@ -233,6 +235,29 @@ input:checked ~ .dot {
                 <small class="ml-3 text-gray-700 font-medium"
                   >¿La comunidad se encuentra activa? ¿No / Si?</small
                 >
+              </div>
+
+              <div class="flex items-center justify-center">
+                <div v-if="this.community_custom.date_close != null">
+                  <div class="flex flex-wrap">
+                    <div class="w-full lg:w-12/12">
+                      <div class="relative w-full mb-3">
+                        <jet-input-error :message="errors.date_close" />
+                        <small class="justify-center text-red-500"
+                          >Fecha de cierre de la comunidad.</small
+                        >
+                        <Datepicker
+                          v-model="this.community_custom.date_close"
+                          :format="format"
+                          :transitions="false"
+                          menuClassName="dp-custom-menu"
+                          required
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <!-- End toogle -->
 
@@ -620,6 +645,48 @@ input:checked ~ .dot {
         </div>
       </div>
     </section>
+
+    <!-- Community Status Modal -->
+    <jet-dialog-modal :show="displayingStatus" @close="displayingStatus = false">
+      <template #title
+        ><h2 class="text-slate-600">Cambiar el estado de la comunidad</h2></template
+      >
+
+      <template #content>
+        <div>
+          Ingrese la fecha en la que la comunidad u obra se cerró.
+
+          <div class="flex flex-wrap">
+            <div class="w-full lg:w-8/12 px-4">
+              <div class="relative w-full mt-3">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.dateCloseCommunity"
+                >
+                  {{ $page.props.errors.dateCloseCommunity }}
+                </p>
+                <small>Formato: Ingresar la fecha de cierre de la comunidad.</small>
+                <Datepicker
+                  v-model="updatedStatusPastoralForm.dateCloseCommunity"
+                  :format="format"
+                  :transitions="false"
+                  menuClassName="dp-custom-menu"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template #footer>
+        <jet-secondary-button @click="displayingStatus = false">
+          Cerrar
+        </jet-secondary-button>
+
+        <jet-button class="ml-3" @click="storeStatusCommunity"> Guardar </jet-button>
+      </template>
+    </jet-dialog-modal>
   </app-layout>
 </template>
 <script>
@@ -630,6 +697,8 @@ import { Inertia } from "@inertiajs/inertia";
 import JetInputError from "@/Jetstream/InputError";
 import JetInput from "@/Jetstream/Input";
 import JetLabel from "@/Jetstream/Label";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetButton from "@/Jetstream/Button";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import JetCheckbox from "@/Jetstream/Checkbox";
@@ -637,6 +706,7 @@ import Alert from "@/Components/Alert";
 import { ref } from "vue";
 import Datepicker from "vue3-date-time-picker";
 import moment from "moment";
+import Operation from "@/Components/Operation";
 import { mapState, mapActions, mapGetters } from "vuex";
 
 // Import Swiper Vue.js components
@@ -813,6 +883,8 @@ export default defineComponent({
     JetInput,
     JetLabel,
     JetButton,
+    JetDialogModal,
+    JetSecondaryButton,
     JetCheckbox,
     Activities,
     Resumes,
@@ -825,6 +897,7 @@ export default defineComponent({
     moment,
     Alert,
     AppLayout,
+    Operation,
   },
 
   data() {
@@ -907,6 +980,10 @@ export default defineComponent({
         vSelectPastoral: null,
       },
       allPastoral: null,
+      displayingStatus: false,
+      updatedStatusPastoralForm: this.$inertia.form({
+        dateCloseCommunity: null,
+      }),
     };
   },
   watch: {
@@ -943,7 +1020,36 @@ export default defineComponent({
   },
   methods: {
     changeStatusCommunity() {
-      Inertia.put(
+      if (
+        this.community_custom.date_close == null &&
+        this.community_custom.comm_status == 1
+      ) {
+        this.displayingStatus = true;
+      } else {
+        this.displayingStatus = false;
+        Inertia.put(
+          this.route("secretary.communities.status.update", {
+            community_id: this.community_custom.id,
+          }),
+          {
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => {
+              this.displayingStatus = false;
+            },
+          }
+        );
+      }
+    },
+
+    storeStatusCommunity() {
+      if (this.updatedStatusPastoralForm.dateCloseCommunity != null) {
+        this.updatedStatusPastoralForm.dateCloseCommunity = this.formatDate(
+          this.updatedStatusPastoralForm.dateCloseCommunity
+        );
+      }
+
+      this.updatedStatusPastoralForm.put(
         this.route("secretary.communities.status.update", {
           community_id: this.community_custom.id,
         }),
@@ -951,11 +1057,13 @@ export default defineComponent({
           preserveScroll: true,
           preserveState: true,
           onSuccess: () => {
-            console.log("saved.");
+            this.displayingStatus = false;
+            this.updatedStatusPastoralForm.reset();
           },
         }
       );
     },
+
     handleScroll() {
       console.log(window.scrollY);
       console.log("numme");

@@ -23,29 +23,6 @@
       </Link>
       <hr :class="isUrl('system/admin/welcome') ? 'text-white' : 'hidden'" />
     </div>
-    <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/system/admin/users/all">
-        <icon
-          name="users"
-          class="mr-2 w-4 h-4"
-          :class="
-            isUrl('system/admin/users/all')
-              ? 'fill-white'
-              : 'fill-gray-400 group-hover:fill-white'
-          "
-        />
-        <div
-          :class="
-            isUrl('system/admin/users/all')
-              ? 'text-white'
-              : 'text-gray-400 group-hover:text-white'
-          "
-        >
-          Usuarios
-        </div>
-      </Link>
-      <hr :class="isUrl('system/admin/users/all') ? 'text-white' : 'hidden'" />
-    </div>
 
     <div class="mb-4">
       <Link class="group flex items-center py-3" :href="route('admin.roles.index')">
@@ -69,6 +46,104 @@
         </div>
       </Link>
       <hr :class="isUrl('system/admin/roles') ? 'text-white' : 'hidden'" />
+    </div>
+
+    <div class="mb-4">
+      <Link class="group flex items-center py-3" :href="route('admin.pastoral.index')">
+        <icon
+          name="roles"
+          class="mr-2 w-4 h-4"
+          :class="
+            isUrl('system/admin/pastoral')
+              ? 'fill-white'
+              : 'fill-gray-400 group-hover:fill-white'
+          "
+        />
+        <div
+          :class="
+            isUrl('system/admin/pastoral')
+              ? 'text-white'
+              : 'text-gray-400 group-hover:text-white'
+          "
+        >
+          Pastorales
+        </div>
+      </Link>
+      <hr :class="isUrl('system/admin/pastoral') ? 'text-white' : 'hidden'" />
+    </div>
+
+    <div class="mb-4">
+      <Link class="group flex items-center py-3" :href="route('admin.office.index')">
+        <icon
+          name="roles"
+          class="mr-2 w-4 h-4"
+          :class="
+            isUrl('system/admin/office')
+              ? 'fill-white'
+              : 'fill-gray-400 group-hover:fill-white'
+          "
+        />
+        <div
+          :class="
+            isUrl('system/admin/office')
+              ? 'text-white'
+              : 'text-gray-400 group-hover:text-white'
+          "
+        >
+          Oficios
+        </div>
+      </Link>
+      <hr :class="isUrl('system/admin/office') ? 'text-white' : 'hidden'" />
+    </div>
+
+    <div class="mb-4">
+      <Link
+        class="group flex items-center py-3"
+        :href="route('admin.appointmentlevel.index')"
+      >
+        <icon
+          name="roles"
+          class="mr-2 w-4 h-4"
+          :class="
+            isUrl('system/admin/appointmentlevel')
+              ? 'fill-white'
+              : 'fill-gray-400 group-hover:fill-white'
+          "
+        />
+        <div
+          :class="
+            isUrl('system/admin/appointmentlevel')
+              ? 'text-white'
+              : 'text-gray-400 group-hover:text-white'
+          "
+        >
+          Consejo y Curia
+        </div>
+      </Link>
+      <hr :class="isUrl('system/admin/appointmentlevel') ? 'text-white' : 'hidden'" />
+    </div>
+    <div class="mb-4">
+      <Link class="group flex items-center py-3" href="/system/admin/users/all">
+        <icon
+          name="users"
+          class="mr-2 w-4 h-4"
+          :class="
+            isUrl('system/admin/users/all')
+              ? 'fill-white'
+              : 'fill-gray-400 group-hover:fill-white'
+          "
+        />
+        <div
+          :class="
+            isUrl('system/admin/users/all')
+              ? 'text-white'
+              : 'text-gray-400 group-hover:text-white'
+          "
+        >
+          Usuarios
+        </div>
+      </Link>
+      <hr :class="isUrl('system/admin/users/all') ? 'text-white' : 'hidden'" />
     </div>
     <div class="mb-4">
       <Link class="group flex items-center py-3" :href="route('admin.settings.index')">

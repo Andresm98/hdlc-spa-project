@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Secretary\Community;
 
 use Inertia\Inertia;
+use App\Models\Address;
+use App\Models\Pastoral;
 use App\Models\Community;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use App\Http\Controllers\AddressController;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Validation\Rule;
+use App\Exports\CommunityExport;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\AddressController;
 
 class CommunityController extends Controller
 {
@@ -20,11 +25,90 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        $communities_list = Community::where('comm_id', '=', null)
-            ->where('comm_level', '=', 1)
-            ->where('comm_status', '=', 1)
-            ->paginate(10);
-        return Inertia::render('Secretary/Communities/Index', compact('communities_list'));
+
+        $validator = Validator::make(request()->all(), [
+            'direction' => ['in:asc,desc'],
+            'field' => ['in:comm_name,comm_email,pastoral_id'],
+            'active' =>  ['integer', 'between:1,2'],
+            'pastoral' =>  ['integer', 'exists:pastorals,id'],
+            'dateStart' => ['date_format:Y-m-d H:i:s'],
+            'perPage' =>  ['integer'],
+        ]);
+
+        $addressClass = new AddressController();
+        $provinces =  $addressClass->getProvinces();
+
+        if ($validator->fails()) {
+            return redirect()->back()->with(['error' => 'No se encuentran resultados.']);
+        }
+
+        $query = Community::query();
+
+        if (request('search')) {
+            $query->where('comm_name', 'LIKE', '%' . request('search') . '%');
+        }
+
+        if (request()->has(['field', 'direction'])) {
+            $query->orderBy(request('field'), request('direction'));
+        }
+
+        if (request('pastoral')) {
+            $query->where('pastoral_id', '=', request('pastoral'));
+        }
+
+        if (request('dateStart')) {
+            $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
+                'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
+                'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
+            ]);
+            if ($validatorData->fails()) {
+                $query->orderBy('date_fndt_comm', 'desc');
+                return redirect()->back()
+                    ->withErrors($validatorData->errors());
+            } else {
+                $query->whereBetween('date_fndt_comm', [request('dateStart'), request('dateEnd')]);
+                $query->orderBy('date_fndt_comm', 'desc');
+            }
+        }
+
+        if (request('active')) {
+            if (request('active') == 2) {
+                $query->where('comm_status', '=', 0);
+            } else {
+                $query->where('comm_status', '=', request('active'));
+            }
+        }
+
+        if (request('perProvince')) {
+            $address = Address::whereHasMorph(
+                'addressable',
+                [Community::class],
+                function (Builder $query) {
+                    return   $query->where('political_division_id', 'LIKE', request('perProvince') . '%');
+                }
+            )->get();
+
+            $index = array();
+            foreach ($address as $ob) {
+                $ob->addressable_id;
+                $index[] = $ob->addressable_id;
+            }
+            $query->whereIn('id', $index);
+        }
+
+        $pastorals = Pastoral::all();
+
+        return Inertia::render('Secretary/Communities/Index', [
+            'provinces' => $provinces,
+            'communities_list' => $query
+                ->where('comm_level', '=', 1)
+                ->with('pastoral')
+                ->with('address')
+                ->paginate(request('perPage'))
+                ->appends(request()->query()),
+            'pastorals' => $pastorals,
+            'filters' => request()->all(['search', 'field', 'direction', 'page', 'active', 'pastoral', 'dateStart', 'dateEnd', 'perProvince', 'perPage'])
+        ]);
     }
 
     /**
@@ -53,7 +137,7 @@ class CommunityController extends Controller
             'comm_email' =>  ['required', 'string', 'email', 'max:255', 'unique:communities'],
             'date_fndt_comm' => ['required', 'date_format:Y-m-d H:i:s'],
             'date_fndt_work' => ['required', 'date_format:Y-m-d H:i:s'],
-            'rn_collaborators' => ['digits_between:0,1000'],
+            'rn_collaborators' => ['integer', 'between:1,1000'],
             'political_division_id' => ['required', 'exists:political_divisions,id'],
             'pastoral_id' => ['required', 'exists:pastorals,id']
         ]);
@@ -151,7 +235,7 @@ class CommunityController extends Controller
                 'comm_email' =>  ['required', 'string', 'email', 'max:255', Rule::unique('communities')->ignore($community_id)],
                 'date_fndt_comm' => ['required', 'date_format:Y-m-d H:i:s'],
                 'date_fndt_work' => ['required', 'date_format:Y-m-d H:i:s'],
-                'rn_collaborators' => ['digits_between:0,1000'],
+                'rn_collaborators' => ['integer', 'between:1,1000'],
                 'pastoral_id' => ['required', 'exists:pastorals,id']
             ]
         );
@@ -199,7 +283,7 @@ class CommunityController extends Controller
     }
 
 
-    public function updateStatus($community_id)
+    public function updateStatus(Request $request, $community_id)
     {
         $validator = Validator::make([
             'community_id' => $community_id,
@@ -207,20 +291,32 @@ class CommunityController extends Controller
             'community_id' => ['required', 'exists:communities,id'],
         ]);
 
-
         if ($validator->fails()) {
             return abort(404);
         }
 
         $community = Community::find($community_id);
         if ($community->comm_status == 1) {
+
+            $validatorData = Validator::make($request->all(), [
+                'dateCloseCommunity' => ['date_format:Y-m-d H:i:s'],
+            ]);
+
+            if ($validatorData->fails()) {
+                return redirect()->back()
+                    ->withErrors($validatorData->errors())
+                    ->withInput();
+            }
+
             $community->update([
                 'comm_status' =>  0,
+                'date_close' =>  $request->get('dateCloseCommunity'),
             ]);
             return redirect()->back()->with(['success' => 'La comunidad fue cerrada correctamente.']);
         } else {
             $community->update([
                 'comm_status' =>  1,
+                'date_close' =>  null,
             ]);
             return redirect()->back()->with(['success' => 'La comunidad fue abierta nuevamente correctamente']);
         }
@@ -253,4 +349,18 @@ class CommunityController extends Controller
             return redirect()->back()->with(['error' => 'Durante la acción ocurrió el siguiente error: ' . $ex->getMessage()]);
         }
     }
+
+    //  TODO: Export Excel
+
+    public function exportExcel()
+    {
+        return (new CommunityExport(request()))->download('communidades.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+      //  TODO: Export CSV
+
+      public function exportCSV()
+      {
+          return (new CommunityExport(request()))->download('communidades.csv', \Maatwebsite\Excel\Excel::CSV);
+      }
 }

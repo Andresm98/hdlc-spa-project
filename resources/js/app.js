@@ -8,6 +8,7 @@ import VueMultiselect from "vue-multiselect";
 import store from "./store/index.js";
 import Datepicker from "vue3-date-time-picker";
 import { QuillEditor } from "@vueup/vue-quill";
+import { Bar } from 'vue-chartjs'
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
@@ -23,6 +24,7 @@ createInertiaApp({
             .component("multiselect", VueMultiselect)
             .component("datepicker", Datepicker)
             .component("QuillEditor", QuillEditor)
+            .component("Bar", Bar)
             .mixin({ methods: { route } })
             .mount(el);
     },

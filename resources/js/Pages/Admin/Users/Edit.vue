@@ -6,6 +6,20 @@
         Bienvenido Usuario: {{ $page.props.user.name }}
       </div>
     </template>
+            <alert
+              v-if="$page.props.flash.success"
+              class="alert"
+              :type_alert_r="(type_alert = 'success')"
+              :message="$page.props.flash.success"
+            >
+            </alert>
+            <alert
+              v-if="$page.props.flash.error"
+              class="alert"
+              :type_alert_r="(type_alert = 'error')"
+              :message="$page.props.flash.error"
+            >
+            </alert>
 
     <section
       class="
@@ -413,6 +427,7 @@ import JetInput from "@/Jetstream/Input";
 import JetLabel from "@/Jetstream/Label";
 import JetButton from "@/Jetstream/Button";
 import PrincipalLayout from "@/Components/Admin/PrincipalLayout";
+import Alert from "@/Components/Alert";
 import JetCheckbox from "@/Jetstream/Checkbox";
 
 export default defineComponent({
@@ -433,11 +448,13 @@ export default defineComponent({
     JetLabel,
     JetButton,
     JetCheckbox,
+    Alert,
   },
 
   data() {
     return {
-      form: useForm({
+      form: this.$inertia.form({
+        _method: "put",
         username: this.user_custom.username,
         name: this.user_custom.name,
         lastname: this.user_custom.lastname,
@@ -456,15 +473,16 @@ export default defineComponent({
       this.url = URL.createObjectURL(file);
     },
     submit() {
-      Inertia.post(
-        route(`admin.user.update`, { user_custom: this.user_custom }),
+      this.form.post(
+        route("admin.user.update", { user_custom: this.user_custom }),
         {
-          _method: "put",
-          name: this.form.name,
-          lastname: this.form.lastname,
-          email: this.form.email,
-          roles: this.form.roles,
-          file: this.form.file,
+          preserveScroll: true,
+          preserveState: true,
+          onSuccess: () => {
+            setTimeout(() => {
+              console.log("saved.");
+            }, 1000);
+          },
         }
       );
     },

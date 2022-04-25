@@ -16,8 +16,8 @@ class CreatePastoralsTable extends Migration
         Schema::create('pastorals', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->string('description');
+            $table->string('name', 100)->unique();
+            $table->string('description', 200);
 
             $table->timestamps();
         });

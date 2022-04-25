@@ -2,9 +2,13 @@
 
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\OfficeController;
+use App\Http\Controllers\Admin\PastoralController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\AppointmentLevelController;
+use App\Http\Controllers\Admin\AppointmentLevelCategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,10 +58,40 @@ Route::group(
         Route::resource('admin/roles', RoleController::class)
             ->names('roles');
 
+        // Group Crud Pastoral
+
+        Route::resource('admin/pastoral', PastoralController::class)
+            ->names('pastoral');
+
+        // Group Crud Pastoral
+
+        Route::resource('admin/office', OfficeController::class)
+            ->names('office');
+
+        // Group Crud Appointment Level
+
+        Route::resource('admin/appointmentlevel',  AppointmentLevelController::class)
+            ->names('appointmentlevel');
+
+        // Group Crud Appointment Level Category
+
+        Route::get('admin/appointmentlevelcategory/all/{id}', [AppointmentLevelCategoryController::class, 'index'])
+            ->name('appointmentlevelcategory.index');
+
+        Route::post('admin/appointmentlevelcategory/store/{id}', [AppointmentLevelCategoryController::class, 'store'])
+            ->name('appointmentlevelcategory.store');
+
+        Route::put('admin/appointmentlevelcategory/update/{appointmentlevel}', [AppointmentLevelCategoryController::class, 'update'])
+            ->name('appointmentlevelcategory.update');
+
+        Route::delete('admin/appointmentlevelcategory/delete/{appointmentlevel}', [AppointmentLevelCategoryController::class, 'destroy'])
+            ->name('appointmentlevelcategory.destroy');
+
         //  Group Crud
 
         Route::resource('admin/settings', SettingsController::class)
             ->names('settings');
+
 
         // FIXME:: Rest METHODS
         Route::get('pdf', [UserController::class, 'PDF'])

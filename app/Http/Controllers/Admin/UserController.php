@@ -52,10 +52,16 @@ class UserController extends Controller
         // if (!$user->hasTeamPermission($team, 'edit')) {
         //     abort(403, "No tiene permisos");
         // }
-        request()->validate([
+        $validator = Validator::make(request()->all(), [
             'direction' => ['in:asc,desc'],
-            'field' => ['in:name,email']
+            'field' => ['in:name,email'],
+            'role' => ['exists:roles,name']
         ]);
+
+
+        if ($validator->fails()) {
+            return redirect()->back()->with(['error' => 'No se encuentran resultados.']);
+        }
 
         $query = User::query();
 
@@ -66,11 +72,18 @@ class UserController extends Controller
         if (request()->has(['field', 'direction'])) {
             $query->orderBy(request('field'), request('direction'));
         }
+
+        if (request('role')) {
+            $query->whereHas("roles", function ($q) {
+                $q->where("name", "=", request('role'));
+            });
+        }
+
         return Inertia::render('Admin/Users/Index', [
             'users_list' => $query
                 ->paginate(10)
                 ->appends(request()->query()),
-            'filters' => request()->all(['search', 'field', 'direction', 'page'])
+            'filters' => request()->all(['search', 'field', 'direction', 'page', 'role'])
         ]);
     }
 
@@ -225,6 +238,7 @@ class UserController extends Controller
         ]);
         if ($validator->fails()) {
             return redirect()->back()
+                ->with('error', 'Usuario no fue actualizado correctamente.')
                 ->withErrors($validator->errors())
                 ->withInput();
         } else {
@@ -255,7 +269,7 @@ class UserController extends Controller
                 ]
             );
             $user->roles()->sync($request->roles);
-            return redirect()->route('admin.users.index')->with('success', 'Usuario actualizado correctamente.');
+            return redirect()->back()->with('success', 'Usuario actualizado correctamente.');
         }
     }
 

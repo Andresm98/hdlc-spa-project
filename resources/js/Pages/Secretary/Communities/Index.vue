@@ -32,27 +32,153 @@
               >
               </alert>
             </div>
+            <operation></operation>
+            <br />
 
-            <Link
-              :href="route('secretary.communities.create')"
-              class="pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-sm rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
-              >Crear Comunidades</Link
-            >
             <!-- Container Filters -->
             <div class="container mx-auto">
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm bg-gray-100"
+                >
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Filtros de Búsqueda</small
+                  >
+
+                  <search-filter
+                    v-model="params.search"
+                    class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    @reset="reset"
+                  >
+                    <small class="block text-gray-700">Estado:</small>
+                    <select
+                      v-model="params.active"
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    >
+                      <option :value="null">Todos</option>
+                      <option value="1">Abiertas</option>
+                      <option value="2">Cerradas</option>
+                    </select>
+
+                    <small class="block text-gray-700 mt-2">Pastoral:</small>
+
+                    <select
+                      v-model="params.pastoral"
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    >
+                      <option :value="null">Todas</option>
+                      <option
+                        v-for="pastoral in pastorals"
+                        :key="pastoral"
+                        :value="pastoral.id"
+                      >
+                        {{ pastoral.name }}
+                      </option>
+                    </select>
+
+                    <small class="block text-gray-700 mt-2">Por Provincia:</small>
+                    <select
+                      v-model="params.perProvince"
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    >
+                      <option :value="null">Todas</option>
+                      <option
+                        v-for="province in provinces"
+                        :key="province"
+                        :value="province.id"
+                      >
+                        {{ province.name }}
+                      </option>
+                    </select>
+
+                    <small class="block text-gray-700 mt-2">Por página:</small>
+                    <select
+                      v-model="params.perPage"
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    >
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option :value="null">15</option>
+                      <option value="20">20</option>
+                    </select>
+                  </search-filter>
+                </div>
+
                 <div
                   class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
                 >
-                  <!-- <input
-                    type="text"
-                    name="email-address"
-                    v-model="params.search"
-                    id="email"
-                    autocomplete="Search"
-                    placeholder="Nombre"
-                    class="focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  /> -->
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Fecha de Fundación</small
+                  >
+                  <p class="text-red-400 text-sm" v-show="$page.props.errors.dateStart">
+                    {{ $page.props.errors.dateStart }}
+                  </p>
+                  <Datepicker
+                    v-model="params.dateStart"
+                    :format="format"
+                    :transitions="false"
+                    menuClassName="dp-custom-menu"
+                    required
+                  />
+                  <small class="justify-content-center ml-6">Deste - Hasta</small>
+                  <p class="text-red-400 text-sm" v-show="$page.props.errors.dateEnd">
+                    {{ $page.props.errors.dateEnd }}
+                  </p>
+                  <Datepicker
+                    v-model="params.dateEnd"
+                    :format="format"
+                    :transitions="false"
+                    menuClassName="dp-custom-menu"
+                    required
+                  />
+                </div>
+
+                <div
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
+                >
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Exportar Listas</small
+                  >
+                  <div
+                    class="md:text-md flex items-center justify-between p-4 w-full text-sm md:px-12 md:py-0"
+                  >
+                    <dropdown class="mt-1" placement="bottom-end">
+                      <template #default>
+                        <div class="group flex items-center cursor-pointer select-none">
+                          <div
+                            class="mr-1 text-gray-700 group-hover:text-blue-600 focus:text-blue-600 whitespace-nowrap"
+                          >
+                            <span
+                              class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-gray-200 text-gray-800"
+                              >&nbsp;Filtros</span
+                            >
+                          </div>
+                          <icon
+                            class="w-5 h-5 fill-gray-700 group-hover:fill-blue-600 focus:fill-blue-600"
+                            name="cheveron-down"
+                          />
+                        </div>
+                      </template>
+                      <template #dropdown>
+                        <div class="mt-2 py-2 text-sm bg-white rounded shadow-xl">
+                          <a
+                            class="block px-6 py-2 hover:text-white hover:bg-blue-500"
+                            target="_blank"
+                            :href="
+                              route('secretary.communities.export.excel', this.params)
+                            "
+                            >Excel</a
+                          >
+                          <a
+                            class="block px-6 py-2 hover:text-white hover:bg-blue-500"
+                            target="_blank"
+                            :href="route('secretary.communities.export.csv', this.params)"
+                            >CSV</a
+                          >
+                        </div>
+                      </template>
+                    </dropdown>
+                  </div>
                 </div>
               </div>
             </div>
@@ -60,7 +186,9 @@
             <section class="pl-4">
               <pagination class="mt-6 mb-5" :links="communities_list.links" />
             </section>
-
+            <small class="ml-6">
+              Se encontraron {{ communities_list.total }} comunidades.</small
+            >
             <div class="py-2">
               <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -77,12 +205,13 @@
                           >
                             <span
                               class="inline-flex px-6 py-3 w-full justify-between"
-                              @click="sort('name')"
+                              @click="sort('comm_name')"
                               >Nombre
 
                               <svg
                                 v-if="
-                                  params.field === 'name' && params.direction === 'asc'
+                                  params.field === 'comm_name' &&
+                                  params.direction === 'asc'
                                 "
                                 class="h-6 w-6"
                                 viewBox="0 0 20 20"
@@ -93,7 +222,8 @@
                               </svg>
                               <svg
                                 v-if="
-                                  params.field === 'name' && params.direction === 'desc'
+                                  params.field === 'comm_name' &&
+                                  params.direction === 'desc'
                                 "
                                 class="h-6 w-6"
                                 viewBox="0 0 20 20"
@@ -110,11 +240,12 @@
                           >
                             <span
                               class="inline-flex px-6 py-3 w-full justify-between"
-                              @click="sort('email')"
+                              @click="sort('comm_email')"
                               >Correo
                               <svg
                                 v-if="
-                                  params.field === 'email' && params.direction === 'asc'
+                                  params.field === 'comm_email' &&
+                                  params.direction === 'asc'
                                 "
                                 class="h-6 w-6"
                                 viewBox="0 0 20 20"
@@ -125,7 +256,8 @@
                               </svg>
                               <svg
                                 v-if="
-                                  params.field === 'email' && params.direction === 'desc'
+                                  params.field === 'comm_email' &&
+                                  params.direction === 'desc'
                                 "
                                 class="h-6 w-6"
                                 viewBox="0 0 20 20"
@@ -140,13 +272,47 @@
                             scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
-                            Correo
+                            Estado
                           </th>
                           <th
                             scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
-                            Estado
+                            <span
+                              class="inline-flex px-6 py-3 w-full justify-between"
+                              @click="sort('pastoral_id')"
+                              >Pastoral
+                              <svg
+                                v-if="
+                                  params.field === 'pastoral_id' &&
+                                  params.direction === 'asc'
+                                "
+                                class="h-6 w-6"
+                                viewBox="0 0 20 20"
+                              >
+                                <path
+                                  d="M13.889,11.611c-0.17,0.17-0.443,0.17-0.612,0l-3.189-3.187l-3.363,3.36c-0.171,0.171-0.441,0.171-0.612,0c-0.172-0.169-0.172-0.443,0-0.611l3.667-3.669c0.17-0.17,0.445-0.172,0.614,0l3.496,3.493C14.058,11.167,14.061,11.443,13.889,11.611 M18.25,10c0,4.558-3.693,8.25-8.25,8.25c-4.557,0-8.25-3.692-8.25-8.25c0-4.557,3.693-8.25,8.25-8.25C14.557,1.75,18.25,5.443,18.25,10 M17.383,10c0-4.07-3.312-7.382-7.383-7.382S2.618,5.93,2.618,10S5.93,17.381,10,17.381S17.383,14.07,17.383,10"
+                                ></path>
+                              </svg>
+                              <svg
+                                v-if="
+                                  params.field === 'pastoral_id' &&
+                                  params.direction === 'desc'
+                                "
+                                class="h-6 w-6"
+                                viewBox="0 0 20 20"
+                              >
+                                <path
+                                  d="M13.962,8.885l-3.736,3.739c-0.086,0.086-0.201,0.13-0.314,0.13S9.686,12.71,9.6,12.624l-3.562-3.56C5.863,8.892,5.863,8.611,6.036,8.438c0.175-0.173,0.454-0.173,0.626,0l3.25,3.247l3.426-3.424c0.173-0.172,0.451-0.172,0.624,0C14.137,8.434,14.137,8.712,13.962,8.885 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.148,17.521,17.521,14.147,17.521,10"
+                                ></path>
+                              </svg>
+                            </span>
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                          >
+                            Acciones
                           </th>
                         </tr>
                       </thead>
@@ -177,8 +343,14 @@
                                   {{ community_custom.comm_name }}
                                 </div>
                                 <div class="text-sm text-gray-500">
-                                  {{ community_custom.comm_name }}
+                                  Teléfono: {{ community_custom.comm_phone }}
                                 </div>
+                                <span
+                                  class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
+                                >
+                                  Fecha Fundación:
+                                  {{ formatDateShow(community_custom.date_fndt_comm) }}
+                                </span>
                               </div>
                             </div>
                           </td>
@@ -189,10 +361,35 @@
                             <!-- <div class="text-sm text-gray-500">Ecuador</div> -->
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
-                            <span
-                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                            <div v-if="community_custom.comm_status == 1">
+                              <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                              >
+                                Abierta
+                              </span>
+                            </div>
+                            <div v-else>
+                              <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                              >
+                                Cerrada
+                              </span>
+                            </div>
+                            <!-- <span
+                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
                             >
-                              Activo
+                              {{
+                                this.showAddress(
+                                  community_custom.address.political_division_id
+                                )
+                              }}
+                            </span> -->
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            <span
+                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
+                            >
+                              {{ community_custom.pastoral.name }}
                             </span>
                           </td>
                           <td
@@ -354,24 +551,53 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/Pagination";
 import { Inertia } from "@inertiajs/inertia";
 import "sweetalert2/dist/sweetalert2.min.css";
-import { pickBy, throttle } from "lodash";
+import { ref } from "vue";
+import { pickBy, throttle, mapValues } from "lodash";
 
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetInput from "@/Jetstream/Input.vue";
 import JetInputError from "@/Jetstream/InputError.vue";
+import moment from "moment";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import Dropdown from "@/Components/Dropdown";
+import Icon from "@/Components/Icon";
 
 import TextInput from "@/Components/TextInput";
 import Alert from "@/Components/Alert";
+import SearchFilter from "@/Components/SearchFilter";
+import Operation from "@/Components/Operation";
 import { mapActions } from "vuex";
+import Datepicker from "vue3-date-time-picker";
 
 export default defineComponent({
   layout: PrincipalLayout,
   props: {
     communities_list: Object,
+    pastorals: Object,
     community_custom: Object,
     filters: Object,
+    provinces: {
+      type: Array,
+    },
+  },
+  setup() {
+    const date = ref(new Date());
+    var format = (date) => {
+      const format = "YYYY-MM-DD";
+      return moment(date).format(format);
+    };
+    return {
+      date,
+      format,
+      pagination: {
+        clickable: true,
+        renderBullet: function (index, className) {
+          return '<span class="' + className + '">' + (index + 1) + "</span>";
+        },
+      },
+      modules: [Pagination],
+    };
   },
   components: {
     Link,
@@ -384,20 +610,66 @@ export default defineComponent({
     JetSecondaryButton,
     TextInput,
     Alert,
+    Datepicker,
+    moment,
+    SearchFilter,
+    Dropdown,
+    Operation,
+    Icon,
   },
   data() {
     return {
       modal_open: false,
+      docenteSeleccionado: {},
       selected_community: Object,
       type_alert: null,
+      allAddress: [],
       params: {
-        // search: this.filters.search,
-        // field: this.filters.field,
-        // direction: this.filters.direction,
+        search: this.filters.search,
+        field: this.filters.field,
+        direction: this.filters.direction,
+        active: this.filters.active,
+        pastoral: this.filters.pastoral,
+        dateStart: this.filters.dateStart,
+        dateEnd: this.filters.dateEnd,
+        perPage: this.filters.perPage,
+        perProvince: this.filters.perProvince,
       },
     };
   },
+  mounted() {},
   methods: {
+    showAddress(value) {
+      const response = this.resolveAddress(value).then((data) => {
+        console.log(data.data_province);
+        this.allAddress = data.data_province;
+        return data.data_province;
+      });
+      return "Dirección: " + response;
+    },
+    async resolveAddress(value) {
+      const response = await axios.get(
+        route("secretary.address.address-format", { actual_parish: value })
+      );
+      return response.data;
+    },
+    formatDate(value) {
+      if (value != null) {
+        return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
+      }
+      return null;
+    },
+    formatDateShow(value) {
+      if (value != null) {
+        return moment(new Date(value)).format("YYYY-MM-DD");
+      }
+      return null;
+    },
+
+    sort(field) {
+      this.params.field = field;
+      this.params.direction = this.params.direction === "asc" ? "desc" : "asc";
+    },
     deleteCommunity: function () {
       Inertia.delete(
         route("secretary.communities.delete", {
@@ -409,7 +681,32 @@ export default defineComponent({
     closeModal() {
       this.modal_open = false;
     },
+    reset() {
+      this.params = mapValues(this.params, () => null);
+    },
+    dataParams() {
+      console.log("Lool", this.params);
+      return this.params;
+    },
   },
-  watch: {},
+  watch: {
+    params: {
+      handler: throttle(function () {
+        if (this.params.dateStart != null) {
+          this.params.dateStart = this.formatDate(this.params.dateStart);
+        }
+        if (this.params.dateEnd != null) {
+          this.params.dateEnd = this.formatDate(this.params.dateEnd);
+        }
+        let params = pickBy(this.params);
+        this.$inertia.get(this.route("secretary.communities.index"), params, {
+          replace: true,
+          preserveState: true,
+          preserveScroll: true,
+        });
+      }, 10),
+      deep: true,
+    },
+  },
 });
 </script>

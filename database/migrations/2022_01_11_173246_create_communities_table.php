@@ -27,6 +27,7 @@ class CreateCommunitiesTable extends Migration
             $table->string('comm_email')->unique();
             $table->dateTime('date_fndt_comm');
             $table->dateTime('date_fndt_work')->nullable();
+            $table->dateTime('date_close')->nullable();
             $table->integer('rn_collaborators')->nullable();
 
             // Generar campo para clave foranea
@@ -44,8 +45,7 @@ class CreateCommunitiesTable extends Migration
             $table->foreign('pastoral_id')
                 ->references('id')
                 ->on('pastorals')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onUpdate('cascade');
 
 
             $table->timestamps();
