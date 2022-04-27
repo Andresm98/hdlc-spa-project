@@ -149,16 +149,29 @@ class UserSeeder extends Seeder
 
             $profile = $user->profile()->create([
                 'identity_card' => '1004280135',
+                'status' => rand(1, 3),
                 'date_birth' => date('Y-m-d H:i:s', rand($min, $max)),
                 'date_vocation' => date('Y-m-d H:i:s', $val),
                 'date_admission' => date('Y-m-d H:i:s', $val),
                 'date_send' => date('Y-m-d H:i:s', rand($min, $max)),
                 'date_vote' => date('Y-m-d H:i:s', rand($min, $max)),
-                'date_death' => date('Y-m-d H:i:s', rand($min, $max)),
                 'cellphone' => '09967316479',
                 'phone' => '022405124',
                 'observation' => 'Observation of ' . $user->name,
             ]);
+
+            if ($profile->status == 2) {
+                $profile->update([
+                    'date_death' => date('Y-m-d H:i:s', $val),
+                ]);
+            }
+            if ($profile->status == 3) {
+                $profile->update([
+                    'date_exit' => date('Y-m-d H:i:s', $val),
+                ]);
+            }
+
+
 
             if (strlen($political_division_id->id) == 6) {
                 $profile->address()->create([

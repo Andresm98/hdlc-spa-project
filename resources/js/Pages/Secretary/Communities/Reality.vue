@@ -382,7 +382,7 @@ import { Inertia } from "@inertiajs/inertia";
 import JetInputError from "@/Jetstream/InputError";
 import Alert from "@/Components/Alert";
 import { ref } from "vue";
-import Operation from "@/Components/Operation";
+import Operation from "@/Components/Secretary/Community/Operation";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import Chart from "@/Pages/Secretary/Communities/Chart";
 import Dropdown from "@/Components/Dropdown";

@@ -94,6 +94,7 @@
             :format="format"
             :transitions="false"
             menuClassName="dp-custom-menu"
+            readonly
           />
         </div>
       </div>
@@ -133,7 +134,7 @@
           />
         </div>
       </div>
-      <div class="w-full lg:w-4/12 px-4">
+      <!-- <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
             Fecha de Muerte:
@@ -150,7 +151,7 @@
             menuClassName="dp-custom-menu"
           />
         </div>
-      </div>
+      </div> -->
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
           <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
@@ -371,7 +372,7 @@ export default {
       date_admission: null,
       date_send: null,
       date_vote: null,
-      date_death: null,
+      //   date_death: null,
       cellphone: null,
       phone: null,
       observation: null,
@@ -636,7 +637,7 @@ export default {
         date_admission: this.formatDate(this.form.date_admission),
         date_send: this.formatDate(this.form.date_send),
         date_vote: this.formatDate(this.form.date_vote),
-        date_death: this.formatDate(this.form.date_death),
+        // date_death: this.formatDate(this.form.date_death),
         user_id: this.profile.user_id,
         //  Address Object
         address: {

@@ -18,7 +18,7 @@ class CommunitySeeder extends Seeder
     public function run()
     {
 
-        for ($i = 0; $i <= 100; $i++) {
+        for ($i = 0; $i <= 120; $i++) {
 
             // Convert to timetamps
             $min = strtotime('1900-02-01 00:00:00');
@@ -44,6 +44,13 @@ class CommunitySeeder extends Seeder
                 'rn_collaborators' => $i * 3,
                 'pastoral_id' => rand(1, 9)
             ]);
+
+            if ($commmunity->comm_status == 0) {
+                $commmunity->update([
+                    'date_close' => date('Y-m-d H:i:s', $val),
+                ]);
+            }
+
             $political_division_id =   PoliticalDivision::where('level', '=', 3)
                 ->where('last_level', '=', 'Y')
                 ->inRandomOrder()

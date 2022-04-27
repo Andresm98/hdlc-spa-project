@@ -15,7 +15,8 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-
+            //  1 = Activa, 2 = Fallecida, 3 = Retirada
+            $table->tinyInteger('status');
             $table->tinyText('identity_card');
             $table->dateTime('date_birth');
             $table->dateTime('date_vocation')->nullable();
@@ -23,6 +24,7 @@ class CreateProfilesTable extends Migration
             $table->dateTime('date_send')->nullable();
             $table->dateTime('date_vote')->nullable();
             $table->dateTime('date_death')->nullable();
+            $table->dateTime('date_exit')->nullable();
             $table->char('cellphone', 20);
             $table->char('phone', 20);
             $table->longText('observation', 4000);

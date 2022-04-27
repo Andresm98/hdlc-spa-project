@@ -32,7 +32,8 @@
               >
               </alert>
             </div>
-
+            <operation></operation>
+            <br />
             <!-- <Link
               :href="route('admin.user.create')"
               class="pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-sm rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
@@ -40,23 +41,77 @@
             > -->
             <!-- Container Filters -->
             <div class="container mx-auto">
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div
-                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm bg-gray-100"
                 >
-                  <input
-                    type="text"
-                    name="email-address"
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Filtros de Búsqueda</small
+                  >
+
+                  <search-filter
                     v-model="params.search"
-                    id="email"
-                    autocomplete="Search"
-                    placeholder="Nombre"
-                    class="focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  />
+                    class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    @reset="reset"
+                  >
+                    <small class="block text-gray-700">Estado:</small>
+                    <select
+                      v-model="params.status"
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    >
+                      <option :value="null">Todos</option>
+                      <option value="1">Activas</option>
+                      <option value="2">Fallecidas</option>
+                      <option value="3">Retiradas</option>
+                    </select>
+
+                    <!-- <small class="block text-gray-700 mt-2">Pastoral:</small>
+
+                    <select
+                      v-model="params.pastoral"
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    >
+                      <option :value="null">Todas</option>
+                      <option
+                        v-for="pastoral in pastorals"
+                        :key="pastoral"
+                        :value="pastoral.id"
+                      >
+                        {{ pastoral.name }}
+                      </option>
+                    </select> -->
+
+                    <small class="block text-gray-700 mt-2">Por Provincia:</small>
+                    <select
+                      v-model="params.perProvince"
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    >
+                      <option :value="null">Todas</option>
+                      <option
+                        v-for="province in provinces"
+                        :key="province"
+                        :value="province.id"
+                      >
+                        {{ province.name }}
+                      </option>
+                    </select>
+
+                    <small class="block text-gray-700 mt-2">Por página:</small>
+                    <select
+                      v-model="params.perPage"
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    >
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option :value="null">15</option>
+                      <option value="20">20</option>
+                    </select>
+                  </search-filter>
                 </div>
               </div>
             </div>
             <!-- End container Filters -->
+
             <section class="pl-4">
               <pagination class="mt-6 mb-5" :links="daughters_list.links" />
             </section>
@@ -142,13 +197,13 @@
                             scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
-                            Correo
+                            Estado
                           </th>
                           <th
                             scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
-                            Estado
+                            Operaciones
                           </th>
                         </tr>
                       </thead>
@@ -183,11 +238,36 @@
                             <!-- <div class="text-sm text-gray-500">Ecuador</div> -->
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
-                            <span
-                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                            >
-                              Activo
-                            </span>
+                            <div v-if="user_custom.profile != null">
+                              <div v-if="user_custom.profile.status == 1">
+                                <span
+                                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                >
+                                  Vigente
+                                </span>
+                              </div>
+                              <div v-if="user_custom.profile.status == 2">
+                                <span
+                                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                                >
+                                  Fallecida
+                                </span>
+                              </div>
+                              <div v-if="user_custom.profile.status == 3">
+                                <span
+                                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                                >
+                                  Retirada
+                                </span>
+                              </div>
+                            </div>
+                            <div v-else>
+                              <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
+                              >
+                                Pendiente
+                              </span>
+                            </div>
                           </td>
                           <td
                             class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
@@ -341,7 +421,8 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/Pagination";
 import { Inertia } from "@inertiajs/inertia";
 import "sweetalert2/dist/sweetalert2.min.css";
-import { pickBy, throttle } from "lodash";
+import moment from "moment";
+import { pickBy, throttle, mapValues } from "lodash";
 
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
@@ -349,9 +430,12 @@ import JetInput from "@/Jetstream/Input.vue";
 import JetInputError from "@/Jetstream/InputError.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 
+import SearchFilter from "@/Components/SearchFilter";
 import TextInput from "@/Components/TextInput";
 import Alert from "@/Components/Alert";
 import { mapActions } from "vuex";
+import Operation from "@/Components/Secretary/Daughter/Operation";
+import Datepicker from "vue3-date-time-picker";
 
 export default defineComponent({
   layout: PrincipalLayout,
@@ -359,6 +443,9 @@ export default defineComponent({
     daughters_list: Object,
     user_custom: Object,
     filters: Object,
+    provinces: {
+      type: Array,
+    },
   },
   components: {
     Link,
@@ -371,6 +458,10 @@ export default defineComponent({
     JetSecondaryButton,
     TextInput,
     Alert,
+    Datepicker,
+    moment,
+    SearchFilter,
+    Operation,
   },
   data() {
     return {
@@ -381,6 +472,12 @@ export default defineComponent({
         search: this.filters.search,
         field: this.filters.field,
         direction: this.filters.direction,
+        status: this.filters.status,
+        pastoral: this.filters.pastoral,
+        dateStart: this.filters.dateStart,
+        dateEnd: this.filters.dateEnd,
+        perPage: this.filters.perPage,
+        perProvince: this.filters.perProvince,
       },
     };
   },
@@ -389,13 +486,30 @@ export default defineComponent({
       this.params.field = field;
       this.params.direction = this.params.direction === "asc" ? "desc" : "asc";
     },
-
+    formatDate(value) {
+      if (value != null) {
+        return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
+      }
+      return null;
+    },
+    formatDateShow(value) {
+      if (value != null) {
+        return moment(new Date(value)).format("YYYY-MM-DD");
+      }
+      return null;
+    },
     deleteUser: function () {
       Inertia.delete(route("secretary.user.destroy", { slug: this.selected_user.slug }));
       this.modal_open = false;
     },
     closeModal() {
       this.modal_open = false;
+    },
+    reset() {
+      this.params = mapValues(this.params, () => null);
+    },
+    dataParams() {
+      return this.params;
     },
   },
   watch: {
@@ -404,6 +518,7 @@ export default defineComponent({
         let params = pickBy(this.params);
         this.$inertia.get(this.route("secretary.daughters.index"), params, {
           replace: true,
+          preserveScroll: true,
           preserveState: true,
         });
       }, 150),

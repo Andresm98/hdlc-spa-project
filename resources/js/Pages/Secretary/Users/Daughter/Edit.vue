@@ -13,6 +13,9 @@
       :message="$page.props.flash.success"
     >
     </alert> -->
+    <operation></operation>
+    <br />
+
     <section
       class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg m-1"
     >
@@ -334,7 +337,9 @@
                 <profile-daughter></profile-daughter>
               </div>
               <div v-else class="m-4">
-                <profile-daughter-edit></profile-daughter-edit>
+                <profile-daughter-edit
+                  :slug="daughter_custom.slug"
+                ></profile-daughter-edit>
               </div>
             </div>
             <div
@@ -460,6 +465,7 @@ import InfoFamily from "@/Pages/Secretary/Users/Daughter/InfoFamily/Index";
 import Sacrament from "@/Pages/Secretary/Users/Daughter/Sacrament/Index";
 import Changes from "@/Pages/Secretary/Users/Daughter/Change/Index";
 import Files from "@/Pages/Secretary/Users/Daughter/Files/Index";
+import Operation from "@/Components/Secretary/Daughter/Operation";
 
 export default defineComponent({
   created() {
@@ -553,6 +559,7 @@ export default defineComponent({
     Sacrament,
     Alert,
     AppLayout,
+    Operation,
   },
 
   data() {

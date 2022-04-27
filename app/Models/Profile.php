@@ -12,8 +12,8 @@ class Profile extends Model
     use HasFactory;
 
     protected $fillable = [
-        'identity_card', 'date_birth', 'date_vocation',
-        'date_admission', 'date_send', 'date_vote', 'date_death', 'cellphone', 'phone', 'observation'
+        'identity_card', 'status', 'date_birth', 'date_vocation',
+        'date_admission', 'date_send', 'date_vote', 'date_death', 'date_exit', 'cellphone', 'phone', 'observation'
     ];
 
     /**

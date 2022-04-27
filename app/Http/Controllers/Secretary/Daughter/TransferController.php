@@ -115,7 +115,7 @@ class TransferController extends Controller
                 ->where('transfer_date_relocated')
                 ->get();
 
-            if ($comprobationTransfer) {
+            if (count($comprobationTransfer) > 0) {
                 return redirect()->back()->with([
                     'error' => 'No puede ingresar el registro ya existe un cambio vigente, revise la fecha de relocalización!'
                 ]);
@@ -224,7 +224,7 @@ class TransferController extends Controller
                 ->where('transfer_date_relocated')
                 ->get();
 
-            if ($comprobationTransfer) {
+            if (count($comprobationTransfer) > 0) {
                 return redirect()->back()->with([
                     'error' => 'No puede ingresar el registro ya existe un cambio vigente, revise la fecha de relocalización!'
                 ]);

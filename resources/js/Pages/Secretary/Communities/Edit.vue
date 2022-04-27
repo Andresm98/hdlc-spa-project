@@ -706,7 +706,7 @@ import Alert from "@/Components/Alert";
 import { ref } from "vue";
 import Datepicker from "vue3-date-time-picker";
 import moment from "moment";
-import Operation from "@/Components/Operation";
+import Operation from "@/Components/Secretary/Community/Operation";
 import { mapState, mapActions, mapGetters } from "vuex";
 
 // Import Swiper Vue.js components

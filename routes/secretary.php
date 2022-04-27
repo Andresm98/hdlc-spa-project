@@ -9,6 +9,7 @@ use App\Http\Controllers\Secretary\Daughter\HealthController;
 use App\Http\Controllers\Secretary\Daughter\OfficeController;
 use App\Http\Controllers\Secretary\Daughter\PermitController;
 use App\Http\Controllers\Secretary\Daughter\ProfileController;
+use App\Http\Controllers\Secretary\Daughter\RealityController;
 use App\Http\Controllers\Secretary\Daughter\TransferController;
 use App\Http\Controllers\Secretary\Daughter\SacramentController;
 use App\Http\Controllers\Secretary\Community\CommunityController;
@@ -89,6 +90,12 @@ Route::group(
         Route::get('daughters-charity/all', [UserController::class, 'index'])
             ->name('daughters.index');
 
+        Route::get('daughters-charity/create', [UserController::class, 'create'])
+            ->name('daughters.create');
+
+        Route::post('daughters-charity/store', [UserController::class, 'store'])
+            ->name('daughters.store');
+
         Route::get('daughters-charity/edit/{slug}', [UserController::class, 'edit'])
             ->name('daughters.edit');
 
@@ -109,6 +116,9 @@ Route::group(
 
         Route::put('profile/{profile_custom_id}', [ProfileController::class, 'update'])
             ->name('daughters-profile.update');
+
+        Route::put('update/status/{profile_id}', [ProfileController::class, 'updateStatus'])
+            ->name('daughters-profile.status.update');
 
         Route::get('daughters-charity/report/{user_id}', [UserController::class, 'reportInfoProfile'])
             ->name('daughters.report.profile');
@@ -241,6 +251,11 @@ Route::group(
 
         Route::delete('profile/files/delete/{file_id}', [FilesDaughterController::class, 'destroy'])
             ->name('daughter-profile.files.delete');
+
+        // Reality Controllers
+
+        Route::get('reality/', [RealityController::class, 'index'])
+            ->name('daughters.reality.index');
     }
 );
 

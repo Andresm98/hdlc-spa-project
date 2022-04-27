@@ -3,23 +3,28 @@
 namespace App\Http\Controllers\Secretary\Daughter;
 
 use PDF;
+use App\Models\Team;
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Address;
 use App\Models\Profile;
+use Illuminate\Support\Str;
 use App\Exports\UsersExport;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
 
 // Inject
 
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 // Reports
 
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Secretary\Daughter\ProfileController;
@@ -40,15 +45,6 @@ class UserController extends Controller
         return Inertia::render('Secretary/Welcome', compact('users', 'roles', 'permissions'));
     }
 
-    function allDaughters($query)
-    {
-        return   $query->whereHas("roles", function ($q) {
-            $q->where("name", "daughter");
-        })
-            ->paginate(10)
-            ->appends(request()->query());
-    }
-
     public function index()
     {
 
@@ -63,7 +59,14 @@ class UserController extends Controller
             'field' => ['in:name,email']
         ]);
 
+        $addressClass = new AddressController();
+        $provinces =  $addressClass->getProvinces();
+
         $query = User::query();
+
+        $query->whereHas("roles", function ($q) {
+            $q->where("name", "daughter");
+        });
 
         if (request('search')) {
             $query->where('name', 'LIKE', '%' . request('search') . '%');
@@ -73,11 +76,39 @@ class UserController extends Controller
             $query->orderBy(request('field'), request('direction'));
         }
 
+        if (request('status')) {
+            $query->whereHas("profile", function ($q) {
+                $q->where("status", '=', request('status'));
+            });
+        }
 
+        if (request('perProvince')) {
+            $query->whereHas("profile", function ($q) {
+                $address = Address::whereHasMorph(
+                    'addressable',
+                    [Profile::class],
+                    function (Builder $query) {
+                        return   $query->where('political_division_id', 'LIKE', request('perProvince') . '%');
+                    }
+                )->get();
+
+                $index = array();
+                foreach ($address as $ob) {
+                    $ob->addressable_id;
+                    $index[] = $ob->addressable_id;
+                }
+
+                $q->whereIn('id', $index);
+            });
+        }
 
         return Inertia::render('Secretary/Users/Daughter/Index', [
-            'daughters_list' => $this->allDaughters($query),
-            'filters' => request()->all(['search', 'field', 'direction', 'page'])
+            'provinces' => $provinces,
+            'daughters_list' => $query
+                ->with('profile')
+                ->paginate(request('perPage'))
+                ->appends(request()->query()),
+            'filters' => request()->all(['search', 'field', 'direction', 'page', 'status', 'pastoral', 'dateStart', 'dateEnd', 'perProvince', 'perPage'])
         ]);
     }
 
@@ -88,7 +119,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Secretary/Users/Daughter/Create');
     }
 
     /**
@@ -99,7 +130,42 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|max:60|unique:users',
+            'name' => 'required|string|max:60',
+            'lastname' => 'required|string|max:60',
+            'email' => 'required|string|email|max:60|unique:users',
+            'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator->errors())
+                ->withInput();
+        }
+
+        $user = tap(User::create([
+            'username' => $request->get('username'),
+            'slug' => Str::slug($request->get('username') . '-' . random_int(100, 10000)),
+            'name' => $request->get('name'),
+            'lastname' => $request->get('lastname'),
+            'email' => $request->get('email'),
+            'password' => Str::random(233),
+        ]), function (User $user) {
+            $this->createTeam($user);
+        });
+
+        $user->assignRole('daughter');
+        // Input File
+        $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
+        Storage::disk('s3')->setVisibility($path, 'private');
+        $user->image()->create([
+            'filename' => $path,
+            'url' => Storage::disk('s3')->url($path)
+        ]);
+        return redirect()->route('secretary.daughters.edit', $user->slug)->with([
+            'success' => 'Hermana creada correctamente.',
+        ]);
     }
 
     /**
@@ -131,27 +197,27 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             return   abort(404);
-        } else {
-            $provinces =  $addressClass->getProvinces();
-            $daughter_custom = User::select()
-                ->where('slug', '=', [$slug])
-                ->get()
-                ->first();
-
-            $user = User::find($daughter_custom->id);
-            $profile_daughter =   $profile_daughter->specificProfile($daughter_custom->id);
-
-            // return $addressClass->getSaveAddress($profile_daughter->address->political_division_id);
-
-            if ($daughter_custom->image) {
-                $image = Storage::disk('s3')->temporaryUrl(
-                    $daughter_custom->image->filename,
-                    now()->addMinutes(5)
-                );
-                return Inertia::render('Secretary/Users/Daughter/Edit', compact('daughter_custom', 'image', 'profile_daughter', 'provinces'));
-            }
-            return Inertia::render('Secretary/Users/Daughter/Edit', compact('daughter_custom', 'profile_daughter', 'provinces'));
         }
+
+        $provinces =  $addressClass->getProvinces();
+        $daughter_custom = User::select()
+            ->where('slug', '=', [$slug])
+            ->get()
+            ->first();
+
+        $user = User::find($daughter_custom->id);
+        $profile_daughter =   $profile_daughter->specificProfile($daughter_custom->id);
+
+        // return $addressClass->getSaveAddress($profile_daughter->address->political_division_id);
+
+        if ($daughter_custom->image) {
+            $image = Storage::disk('s3')->temporaryUrl(
+                $daughter_custom->image->filename,
+                now()->addMinutes(5)
+            );
+            return Inertia::render('Secretary/Users/Daughter/Edit', compact('daughter_custom', 'image', 'profile_daughter', 'provinces'));
+        }
+        return Inertia::render('Secretary/Users/Daughter/Edit', compact('daughter_custom', 'profile_daughter', 'provinces'));
     }
 
     /**
@@ -216,6 +282,8 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Usuario actualizado correctamente.');
     }
 
+
+
     /**
      * Remove the specified resource from storage.
      *
@@ -243,6 +311,15 @@ class UserController extends Controller
             $user->delete();
             return redirect()->route('secretary.daughters.index')->with('success', 'Eliminado correctamente.');
         }
+    }
+
+    protected function createTeam(User $user)
+    {
+        $user->ownedTeams()->save(Team::forceCreate([
+            'user_id' => $user->id,
+            'name' => explode(' Equipo de ', $user->name, 2)[0] . "",
+            'personal_team' => true,
+        ]));
     }
 
     //  TODO: Export Excel

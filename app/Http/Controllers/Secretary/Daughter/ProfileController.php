@@ -70,13 +70,13 @@ class ProfileController extends Controller
         $user = User::find($request->get("user_id"));
         if (!$user->profile) {
             $profile = $user->profile()->create([
+                'status' => 1,
                 'identity_card' => $request->get("identity_card"),
                 'date_birth' => $request->get("date_birth"),
                 'date_vocation' => $request->get("date_vocation"),
                 'date_admission' => $request->get("date_vocation"),
                 'date_send' => $request->get('date_send'),
                 'date_vote' => $request->get('date_vote'),
-                'date_death' => $request->get('date_death'),
                 'cellphone' => $request->get("cellphone"),
                 'phone' => $request->get("phone"),
                 'observation' => $request->get("observation"),
@@ -129,7 +129,7 @@ class ProfileController extends Controller
             'id' => ['required', 'exists:users,id']
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return abort(404);
         }
 
@@ -166,7 +166,6 @@ class ProfileController extends Controller
                 'date_admission' => $request->get("date_vocation"),
                 'date_send' => $request->get('date_send'),
                 'date_vote' => $request->get('date_vote'),
-                'date_death' => $request->get('date_death'),
                 'cellphone' => $request->get("cellphone"),
                 'phone' => $request->get("phone"),
                 'observation' => $request->get("observation"),
@@ -180,6 +179,68 @@ class ProfileController extends Controller
                 'success' => 'El perfil del usuario fue actualizado correctamente.',
             ]);
         }
+    }
+
+
+    public function updateStatus(Request $request, $profile_id)
+    {
+        $validator = Validator::make([
+            'profile_id' => $profile_id,
+        ], [
+            'profile_id' => ['required', 'exists:profiles,id'],
+        ]);
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        $profile = Profile::find($profile_id);
+
+        if ($request->get('operation') == 1) {
+            $profile->update([
+                'status' =>  1,
+                'date_death' => null,
+                'date_exit' => null
+            ]);
+        }
+        if ($request->get('operation') == 2) {
+            $validatorData = Validator::make($request->all(), [
+                'dateDeathProfile' => ['required', 'date_format:Y-m-d H:i:s'],
+            ]);
+
+            if ($validatorData->fails()) {
+                return redirect()->back()
+                    ->withErrors($validatorData->errors())
+                    ->withInput();
+            }
+
+            $profile->update([
+                'status' =>  2,
+                'date_death' => $request->get('dateDeathProfile'),
+                'date_exit' => null
+            ]);
+        }
+        if ($request->get('operation') == 3) {
+            $validatorData = Validator::make($request->all(), [
+                'dateExitProfile' => ['required', 'date_format:Y-m-d H:i:s'],
+            ]);
+
+            if ($validatorData->fails()) {
+                return redirect()->back()
+                    ->withErrors($validatorData->errors())
+                    ->withInput();
+            }
+
+            $profile->update([
+                'status' =>  3,
+                'date_death' => null,
+                'date_exit' => $request->get('dateExitProfile')
+            ]);
+        }
+
+        return  redirect()->route('secretary.daughters.edit', $profile->user->slug)->with([
+            'success' => 'El perfil de la hermana fue actualizado correctamente.',
+        ]);
     }
 
     /**

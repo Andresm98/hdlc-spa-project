@@ -321,6 +321,7 @@ class CommunityController extends Controller
             return redirect()->back()->with(['success' => 'La comunidad fue abierta nuevamente correctamente']);
         }
     }
+
     /**
      * Remove the specified resource from storage.
      *

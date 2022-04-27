@@ -1,3 +1,11 @@
+<style>
+/* Toggle A */
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #20c736;
+}
+</style>
+
 <template>
   <form
     @submit.prevent="submit"
@@ -6,6 +14,102 @@
     <h6 class="mt-2 mb-4 text-lg font-medium text-center leading-6 text-black uppercase">
       Editar Perfil Personal
     </h6>
+
+    <!-- Toggle A -->
+    <div class="flex items-center justify-center w-full my-4">
+      <label for="toogleA" class="flex items-center cursor-pointer">
+        <!-- toggle -->
+        <div class="relative">
+          <!-- input -->
+          <input
+            id="toogleA"
+            type="checkbox"
+            class="sr-only"
+            @click="changeStatusProfile()"
+          />
+          <!-- line -->
+          <div class="w-16 h-4 bg-gray-300 rounded-full shadow-inner" />
+          <!-- dot  -->
+          <!--  1 = Activa, 2 = Fallecida, 3 = Retirada -->
+          <!-- Activa -->
+          <div
+            v-if="this.profile.status == 3"
+            class="absolute w-9 h-6 rounded-full shadow -left-1 -top-1 transition"
+            style="transform: translateX(100%); background-color: #204de0"
+          />
+          <!-- Retirada -->
+          <div
+            v-if="this.profile.status == 1"
+            class="absolute w-9 h-6 rounded-full shadow -left-1 -top-1 transition"
+            style="transform: translateX(50%); background-color: #5dc720"
+          />
+          <!-- Fallecida -->
+          <div
+            v-if="this.profile.status == 2"
+            class="absolute w-9 h-6 bg-red-500 rounded-full shadow -left-1 -top-1 transition"
+          />
+        </div>
+      </label>
+    </div>
+    <!-- label -->
+
+    <div class="flex items-center justify-center">
+      <small class="ml-3 text-gray-700 font-medium">Fallecida / Activo / Retirada </small>
+    </div>
+    <div class="flex items-center justify-center">
+      <br /><br />
+      <div v-if="profile.status == 1">(Actual: Activo)</div>
+      <div v-if="profile.status == 2">
+        (Actual: Fallecida)
+
+        <div class="flex items-center justify-center">
+          <div v-if="profile.date_death != null">
+            <div class="flex flex-wrap">
+              <div class="w-full lg:w-12/12">
+                <div class="relative w-full mb-3">
+                  <small class="justify-center text-red-500"
+                    >Fecha de muerte de la hermana.</small
+                  >
+                  <Datepicker
+                    v-model="profile.date_death"
+                    :format="format"
+                    :transitions="false"
+                    menuClassName="dp-custom-menu"
+                    required
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="profile.status == 3">
+        (Actual: Retirada)
+        <div class="flex items-center justify-center">
+          <div v-if="profile.date_exit != null">
+            <div class="flex flex-wrap">
+              <div class="w-full lg:w-12/12">
+                <div class="relative w-full mb-3">
+                  <small class="justify-center text-red-500"
+                    >Fecha de retiro de la hermana.</small
+                  >
+                  <Datepicker
+                    v-model="profile.date_exit"
+                    :format="format"
+                    :transitions="false"
+                    menuClassName="dp-custom-menu"
+                    required
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="flex flex-wrap">
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
@@ -84,6 +188,7 @@
             class="border-0 py-0.5 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             v-model="profile.date_vocation"
             :format="format"
+            readonly
           />
         </div>
       </div>
@@ -115,7 +220,7 @@
         />
       </div>
 
-      <div class="w-full lg:w-4/12 px-4">
+      <!-- <div class="w-full lg:w-4/12 px-4">
         <label class="block text-sm font-medium text-black"> Fecha Fallecimiento </label>
         <p class="text-red-400 text-sm" v-show="$page.props.errors.adate_death">
           {{ $page.props.errors.date_death }}
@@ -126,7 +231,7 @@
           v-model="profile.date_death"
           :format="format"
         />
-      </div>
+      </div> -->
 
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
@@ -334,6 +439,122 @@
       >Actualizar Perfil</jet-button
     >
   </form>
+
+  <!-- Community Status Modal -->
+  <jet-dialog-modal :show="displayingStatus" @close="displayingStatus = false">
+    <template #title
+      ><h2 class="text-slate-600">Cambiar el estado del Perfil</h2>
+      <div class="mt-2 flex items-center justify-center">
+        <span
+          class="mx-2 px-1 inline-flex text-sm leading-5 font-semibold rounded-sm bg-gray-100 text-gray-800"
+          >&nbsp;Seleccionar:
+        </span>
+
+        <span
+          v-show="profile.status != 1"
+          class="hover:cursor-pointer mx-2 px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-green-200 text-green-800"
+          @click="changeOperation(1)"
+          >&nbsp;Vigente</span
+        >
+        <span
+          v-show="profile.status != 2"
+          class="hover:cursor-pointer px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-red-200 text-red-800"
+          @click="changeOperation(2)"
+          >&nbsp;Fallecimiento</span
+        >
+
+        <span
+          v-show="profile.status != 3"
+          class="hover:cursor-pointer mx-2 px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-200 text-blue-800"
+          @click="changeOperation(3)"
+          >&nbsp;Salida</span
+        >
+      </div>
+    </template>
+
+    <template #content>
+      <div v-if="liveOperationChange == 1">
+        Guarde los cambios para habilitar otra vez el perfil de la hermana en la compañía.
+
+        <div class="flex flex-wrap">
+          <div class="w-full lg:w-12/12 px-4">
+            <div class="relative w-full mt-3">
+              <small
+                >Observaciones: Tenga en cuenta que una vez que haya guardado los
+                presentes cambios la fecha de fallecimiento y la fecha de salida de la
+                compañía quedarán eliminadas. Por lo tanto la hermana queda habilitada por
+                completo en la compañía.</small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="liveOperationChange == 2">
+        Ingrese la fecha en la que la hermana falleció.
+
+        <div class="flex flex-wrap">
+          <div class="w-full lg:w-8/12 px-4">
+            <div class="relative w-full mt-3">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.dateDeathProfile"
+              >
+                {{ $page.props.errors.dateDeathProfile }}
+              </p>
+              <small>Formato: Ingresar la fecha de muerte de la hermana.</small>
+              <Datepicker
+                v-model="updatedStatusProfileForm.dateDeathProfile"
+                :format="format"
+                :transitions="false"
+                menuClassName="dp-custom-menu"
+                required
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="liveOperationChange == 3">
+        Ingrese la fecha en la que la hermana salió de la compañía.
+
+        <div class="flex flex-wrap">
+          <div class="w-full lg:w-8/12 px-4">
+            <div class="relative w-full mt-3">
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.dateExitProfile">
+                {{ $page.props.errors.dateExitProfile }}
+              </p>
+              <small
+                >Formato: Ingresar la fecha de finalización de actividades de la
+                hermana.</small
+              >
+              <Datepicker
+                v-model="updatedStatusProfileForm.dateExitProfile"
+                :format="format"
+                :transitions="false"
+                menuClassName="dp-custom-menu"
+                required
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template #footer>
+      <jet-secondary-button @click="displayingStatus = false">
+        Cerrar
+      </jet-secondary-button>
+
+      <jet-button
+        class="ml-3"
+        @click="storeStatusProfile"
+        v-show="liveOperationChange != null"
+      >
+        Guardar
+      </jet-button>
+    </template>
+  </jet-dialog-modal>
 </template>
 
 <script>
@@ -343,13 +564,22 @@ import JetButton from "@/Jetstream/Button";
 import moment from "moment";
 import "vue3-date-time-picker/dist/main.css";
 import { mapState, mapMutations, mapGetters } from "vuex";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import { Inertia } from "@inertiajs/inertia";
 
 export default {
-  components: { Datepicker, JetButton, moment },
+  components: {
+    Datepicker,
+    JetButton,
+    moment,
+    JetDialogModal,
+    JetSecondaryButton,
+  },
   props: {
     daughter_custom: Object,
     errors: [],
+    slug: null,
   },
   mounted() {
     this.status().then((data) => {
@@ -548,10 +778,59 @@ export default {
         multiSelectParish: null,
         vSelectParish: null,
       },
+      displayingStatus: false,
+      liveOperationChange: null,
+      updatedStatusProfileForm: this.$inertia.form({
+        dateDeathProfile: null,
+        dateExitProfile: null,
+        operation: null,
+      }),
     };
   },
 
   methods: {
+    changeStatusProfile() {
+      this.displayingStatus = true;
+    },
+    changeOperation(value) {
+      this.updatedStatusProfileForm.reset();
+      this.liveOperationChange = value;
+    },
+    storeStatusProfile() {
+      this.updatedStatusProfileForm.operation = this.liveOperationChange;
+      if (this.updatedStatusProfileForm.dateDeathProfile != null) {
+        this.updatedStatusProfileForm.dateDeathProfile = this.formatDate(
+          this.updatedStatusProfileForm.dateDeathProfile
+        );
+      }
+
+      if (this.updatedStatusProfileForm.dateExitProfile != null) {
+        this.updatedStatusProfileForm.dateExitProfile = this.formatDate(
+          this.updatedStatusProfileForm.dateExitProfile
+        );
+      }
+
+      this.updatedStatusProfileForm.put(
+        this.route("secretary.daughters-profile.status.update", {
+          profile_id: this.profile.id,
+        }),
+        {
+          onSuccess: () => {
+            this.displayingStatus = false;
+            this.liveOperationChange = null;
+            this.updatedStatusProfileForm.reset();
+            this.$inertia.get(
+              this.route("secretary.daughters.edit", {
+                slug: this.slug,
+              }),
+              {
+                preserveScroll: true,
+              }
+            );
+          },
+        }
+      );
+    },
     async status() {
       let response = await axios.get(
         this.route("secretary.address.actual-address", {

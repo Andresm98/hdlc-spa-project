@@ -70,7 +70,7 @@
               dark:sm:text-slate-400
             "
           >
-            Información General de Hermana
+            Información General del Usuario
           </p>
         </div>
         <div
@@ -248,7 +248,7 @@
                                     <h6
                                         class="text-lg font-medium leading-6 text-gray-900"
                                     >
-                                        Tarjeta de Información General Hermana
+                                        Tarjeta de Información Usuario
                                     </h6>
                                     <button
                                         class="bg-blue-500 hover:bg-blue-700 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
