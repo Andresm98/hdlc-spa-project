@@ -50,7 +50,16 @@
                     class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     @reset="reset"
                   >
-                    <small class="block text-gray-700">Estado:</small>
+                    <small class="block text-gray-700">Tipo:</small>
+                    <select
+                      v-model="params.type"
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    >
+                      <option :value="null">Todas</option>
+                      <option value="1">Comunidades</option>
+                      <option value="2">Obras</option>
+                    </select>
+                    <small class="block text-gray-700 mt-2">Estado:</small>
                     <select
                       v-model="params.active"
                       class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -323,18 +332,29 @@
                         >
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
-                              <div class="flex-shrink-0 h-10 w-10">
-                                <!-- <img
-                                  class="h-10 w-10 rounded-full"
-                                  :src="community_custom.profile_photo_url"
-                                  alt=""
-                                /> -->
+                              <div
+                                class="flex-shrink-0 h-10 w-10"
+                                v-if="community_custom.comm_level === 1"
+                              >
                                 <svg
                                   class="svg-icon border-2 rounded-full"
                                   viewBox="-2.5 -1 25 25"
                                 >
                                   <path
                                     d="M18.121,9.88l-7.832-7.836c-0.155-0.158-0.428-0.155-0.584,0L1.842,9.913c-0.262,0.263-0.073,0.705,0.292,0.705h2.069v7.042c0,0.227,0.187,0.414,0.414,0.414h3.725c0.228,0,0.414-0.188,0.414-0.414v-3.313h2.483v3.313c0,0.227,0.187,0.414,0.413,0.414h3.726c0.229,0,0.414-0.188,0.414-0.414v-7.042h2.068h0.004C18.331,10.617,18.389,10.146,18.121,9.88 M14.963,17.245h-2.896v-3.313c0-0.229-0.186-0.415-0.414-0.415H8.342c-0.228,0-0.414,0.187-0.414,0.415v3.313H5.032v-6.628h9.931V17.245z M3.133,9.79l6.864-6.868l6.867,6.868H3.133z"
+                                  ></path>
+                                </svg>
+                              </div>
+                              <div
+                                class="flex-shrink-0 h-10 w-10"
+                                v-if="community_custom.comm_level === 2"
+                              >
+                                <svg
+                                  class="svg-icon border-2 rounded-full"
+                                  viewBox="-2.5 -1 25 25"
+                                >
+                                  <path
+                                    d="M17.283,5.549h-5.26V4.335c0-0.222-0.183-0.404-0.404-0.404H8.381c-0.222,0-0.404,0.182-0.404,0.404v1.214h-5.26c-0.223,0-0.405,0.182-0.405,0.405v9.71c0,0.223,0.182,0.405,0.405,0.405h14.566c0.223,0,0.404-0.183,0.404-0.405v-9.71C17.688,5.731,17.506,5.549,17.283,5.549 M8.786,4.74h2.428v0.809H8.786V4.74z M16.879,15.26H3.122v-4.046h5.665v1.201c0,0.223,0.182,0.404,0.405,0.404h1.618c0.222,0,0.405-0.182,0.405-0.404v-1.201h5.665V15.26z M9.595,9.583h0.81v2.428h-0.81V9.583zM16.879,10.405h-5.665V9.19c0-0.222-0.183-0.405-0.405-0.405H9.191c-0.223,0-0.405,0.183-0.405,0.405v1.215H3.122V6.358h13.757V10.405z"
                                   ></path>
                                 </svg>
                               </div>
@@ -345,6 +365,7 @@
                                 <div class="text-sm text-gray-500">
                                   Teléfono: {{ community_custom.comm_phone }}
                                 </div>
+
                                 <span
                                   class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
                                 >
@@ -397,7 +418,10 @@
                           >
                             <!-- Components -->
 
-                            <div class="mx-auto flex gap-10">
+                            <div
+                              class="mx-auto flex gap-10"
+                              v-if="community_custom.comm_level == 1"
+                            >
                               <!-- Update Community -->
 
                               <Link
@@ -482,6 +506,133 @@
                                   </div>
                                 </div>
                               </button>
+                            </div>
+
+                            <!--
+                                Works
+                                Individuals
+                            -->
+
+                            <div
+                              class="mx-auto flex gap-10"
+                              v-if="community_custom.comm_level == 2"
+                            >
+                              <!-- Update Community -->
+
+                              <div v-if="community_custom.comm_id != null">
+                                <Link
+                                  :href="
+                                    route('secretary.works.edit', {
+                                      slug: community_custom.comm_slug,
+                                    })
+                                  "
+                                >
+                                  <div class="w-auto h-auto">
+                                    <div class="flex-1 h-full">
+                                      <div
+                                        class="flex items-center justify-center flex-1 h-full p-2 border border-green-500 text-white shadow rounded-lg hover:bg-green-50 hover:text-zinc-300"
+                                      >
+                                        <div class="relative">
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 text-green-500"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                          >
+                                            <path
+                                              d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                                            />
+                                          </svg>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </Link>
+                              </div>
+                              <div v-else>
+                                <Link
+                                  :href="
+                                    route('secretary.worksindividual.edit', {
+                                      slug: community_custom.comm_slug,
+                                    })
+                                  "
+                                >
+                                  <div class="w-auto h-auto">
+                                    <div class="flex-1 h-full">
+                                      <div
+                                        class="flex items-center justify-center flex-1 h-full p-2 border border-green-500 text-white shadow rounded-lg hover:bg-green-50 hover:text-zinc-300"
+                                      >
+                                        <div class="relative">
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 text-green-500"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                          >
+                                            <path
+                                              d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                                            />
+                                          </svg>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </Link>
+                              </div>
+
+                              <!-- Print Community -->
+                              <Link href="#">
+                                <div class="w-auto h-auto">
+                                  <div class="flex-1 h-full">
+                                    <div
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-blue-800 text-white shadow rounded-lg hover:bg-blue-50 hover:text-zinc-300"
+                                    >
+                                      <div class="relative">
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          class="h-5 w-5 text-blue-800"
+                                          viewBox="0 0 20 20"
+                                          fill="currentColor"
+                                        >
+                                          <path
+                                            d="M17.453,12.691V7.723 M17.453,12.691V7.723 M1.719,12.691V7.723 M18.281,12.691V7.723 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M7.309,13.312h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,13.312,7.309,13.312 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M16.625,6.066h-1.449V3.168c0-0.228-0.186-0.414-0.414-0.414H5.238c-0.228,0-0.414,0.187-0.414,0.414v2.898H3.375c-0.913,0-1.656,0.743-1.656,1.656v4.969c0,0.913,0.743,1.656,1.656,1.656h1.449v2.484c0,0.228,0.187,0.414,0.414,0.414h9.523c0.229,0,0.414-0.187,0.414-0.414v-2.484h1.449c0.912,0,1.656-0.743,1.656-1.656V7.723C18.281,6.81,17.537,6.066,16.625,6.066 M5.652,3.582h8.695v2.484H5.652V3.582zM14.348,16.418H5.652v-4.969h8.695V16.418z M17.453,12.691c0,0.458-0.371,0.828-0.828,0.828h-1.449v-2.484c0-0.228-0.186-0.414-0.414-0.414H5.238c-0.228,0-0.414,0.186-0.414,0.414v2.484H3.375c-0.458,0-0.828-0.37-0.828-0.828V7.723c0-0.458,0.371-0.828,0.828-0.828h13.25c0.457,0,0.828,0.371,0.828,0.828V12.691z M7.309,13.312h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,13.312,7.309,13.312M7.309,15.383h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,15.383,7.309,15.383 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555"
+                                          ></path>
+                                        </svg>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </Link>
+
+                              <!-- Delete Community -->
+
+                              <button
+                                @click="
+                                  modal_open = true;
+                                  selected_community = community_custom;
+                                "
+                              >
+                                <div class="w-auto h-auto">
+                                  <div class="flex-1 h-full">
+                                    <div
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-red-500 text-white shadow rounded-lg hover:bg-red-50 hover:text-zinc-300"
+                                    >
+                                      <div class="relative">
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          class="h-5 w-5 text-red-500"
+                                          viewBox="0 0 20 20"
+                                          fill="currentColor"
+                                        >
+                                          <path
+                                            d="M17.114,3.923h-4.589V2.427c0-0.252-0.207-0.459-0.46-0.459H7.935c-0.252,0-0.459,0.207-0.459,0.459v1.496h-4.59c-0.252,0-0.459,0.205-0.459,0.459c0,0.252,0.207,0.459,0.459,0.459h1.51v12.732c0,0.252,0.207,0.459,0.459,0.459h10.29c0.254,0,0.459-0.207,0.459-0.459V4.841h1.511c0.252,0,0.459-0.207,0.459-0.459C17.573,4.127,17.366,3.923,17.114,3.923M8.394,2.886h3.214v0.918H8.394V2.886z M14.686,17.114H5.314V4.841h9.372V17.114z M12.525,7.306v7.344c0,0.252-0.207,0.459-0.46,0.459s-0.458-0.207-0.458-0.459V7.306c0-0.254,0.205-0.459,0.458-0.459S12.525,7.051,12.525,7.306M8.394,7.306v7.344c0,0.252-0.207,0.459-0.459,0.459s-0.459-0.207-0.459-0.459V7.306c0-0.254,0.207-0.459,0.459-0.459S8.394,7.051,8.394,7.306"
+                                          ></path>
+                                        </svg>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </button>
                               <!-- Delete Account Confirmation Modal -->
                             </div>
                           </td>
@@ -504,7 +655,7 @@
 
                 <template v-slot:content>
                   <p class="text-lg text-black">
-                    ¿Está seguro/a de que desea eliminar la cumunidad
+                    ¿Está seguro/a de que desea eliminar la cumunidad u obra
                     {{ selected_community.comm_name }}
                     ?
                   </p>
@@ -516,7 +667,10 @@
                   <jet-secondary-button @click="closeModal()">
                     Cancelar
                   </jet-secondary-button>
-                  <jet-danger-button class="ml-3" @click="deleteCommunity()">
+                  <jet-danger-button
+                    class="ml-3"
+                    @click="deleteCommunity(selected_community.comm_levele)"
+                  >
                     Eliminar
                   </jet-danger-button>
                 </template>
@@ -623,23 +777,32 @@ export default defineComponent({
         field: this.filters.field,
         direction: this.filters.direction,
         active: this.filters.active,
+        type: this.filters.type,
         pastoral: this.filters.pastoral,
         dateStart: this.filters.dateStart,
         dateEnd: this.filters.dateEnd,
         perPage: this.filters.perPage,
         perProvince: this.filters.perProvince,
       },
+      arrayAddress: [],
     };
   },
   mounted() {},
   methods: {
     showAddress(value) {
-      const response = this.resolveAddress(value).then((data) => {
-        console.log(data.data_province);
-        this.allAddress = data.data_province;
-        return data.data_province;
-      });
-      return "Dirección: " + response;
+      const address = fetch(
+        route("secretary.address.address-format", { actual_parish: value })
+      )
+        .then((response) => response.json()) //2
+        .then((data) => {
+          this.arrayAddress.push(data.data_province);
+          return data.data_province; //3
+        });
+      //   const printAddress = async () => {
+      //     console.log(address);
+      //     return await address;
+      //   };
+      //   return "ay" + printAddress();
     },
     async resolveAddress(value) {
       const response = await axios.get(
@@ -664,12 +827,21 @@ export default defineComponent({
       this.params.field = field;
       this.params.direction = this.params.direction === "asc" ? "desc" : "asc";
     },
-    deleteCommunity: function () {
-      Inertia.delete(
-        route("secretary.communities.delete", {
-          community_id: this.selected_community.id,
-        })
-      );
+    deleteCommunity: function (value) {
+      if (value == 1) {
+        Inertia.delete(
+          route("secretary.communities.delete", {
+            community_id: this.selected_community.id,
+          })
+        );
+      } else if (value == 1) {
+        Inertia.delete(
+          route("secretary.works.delete", {
+            community_id: this.selected_community.id,
+          })
+        );
+      }
+
       this.modal_open = false;
     },
     closeModal() {

@@ -17,6 +17,11 @@ class Transfer extends Model
      *
      */
 
+    public function appointments()
+    {
+        return $this->hasMany('App\Models\Appointment');
+    }
+
 
     //  Relacion uno a uno
 

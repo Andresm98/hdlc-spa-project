@@ -77,6 +77,30 @@
       <hr :class="isUrl('system/admin/roles') ? 'text-white' : 'hidden'" />
     </div>
     <div class="mb-4">
+      <Link class="group flex items-center py-3" :href="route('secretary.events.index')">
+        <icon
+          name="settings"
+          class="mr-2 w-4 h-4"
+          :class="
+            isUrl('secretary/events/all')
+              ? 'fill-white'
+              : 'fill-gray-400 group-hover:fill-white'
+          "
+        />
+        <div
+          :class="
+            isUrl('secretary/events/all')
+              ? 'text-white'
+              : 'text-gray-400 group-hover:text-white'
+          "
+        >
+          Eventos
+        </div>
+      </Link>
+      <hr :class="isUrl('secretary/events/all') ? 'text-white' : 'hidden'" />
+    </div>
+
+    <div class="mb-4">
       <Link class="group flex items-center py-3" :href="route('admin.settings.index')">
         <icon
           name="settings"

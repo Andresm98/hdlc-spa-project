@@ -8,18 +8,19 @@ use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Address;
 use App\Models\Profile;
+use App\Models\Pastoral;
 use Illuminate\Support\Str;
 use App\Exports\UsersExport;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 // Inject
 
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 
 // Reports
 
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Secretary\Daughter\ProfileController;
+use App\Models\Transfer;
 
 class UserController extends Controller
 {
@@ -78,7 +80,18 @@ class UserController extends Controller
 
         if (request('status')) {
             $query->whereHas("profile", function ($q) {
-                $q->where("status", '=', request('status'));
+                $q->where("status", request('status'));
+            });
+        }
+
+        if (request('pastoral')) {
+            $query->whereHas("profile", function ($q) {
+                $q->whereHas("transfers", function ($qtransfer) {
+                    $qtransfer->where("transfer_date_relocated", null)
+                        ->whereHas("community", function ($qtransfer) {
+                            $qtransfer->where("pastoral_id", request('pastoral'));
+                        });
+                });
             });
         }
 
@@ -97,17 +110,17 @@ class UserController extends Controller
                     $ob->addressable_id;
                     $index[] = $ob->addressable_id;
                 }
-
                 $q->whereIn('id', $index);
             });
         }
-
+        $pastorals = Pastoral::all();
         return Inertia::render('Secretary/Users/Daughter/Index', [
             'provinces' => $provinces,
             'daughters_list' => $query
                 ->with('profile')
                 ->paginate(request('perPage'))
                 ->appends(request()->query()),
+            'pastorals' => $pastorals,
             'filters' => request()->all(['search', 'field', 'direction', 'page', 'status', 'pastoral', 'dateStart', 'dateEnd', 'perProvince', 'perPage'])
         ]);
     }
@@ -133,6 +146,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|max:60|unique:users',
             'name' => 'required|string|max:60',
+            'fullnamecomm' => 'required|string|max:60',
             'lastname' => 'required|string|max:60',
             'email' => 'required|string|email|max:60|unique:users',
             'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -148,6 +162,7 @@ class UserController extends Controller
             'username' => $request->get('username'),
             'slug' => Str::slug($request->get('username') . '-' . random_int(100, 10000)),
             'name' => $request->get('name'),
+            'fullnamecomm' => $request->get('fullnamecomm'),
             'lastname' => $request->get('lastname'),
             'email' => $request->get('email'),
             'password' => Str::random(233),
@@ -188,7 +203,7 @@ class UserController extends Controller
     public function edit($slug)
     {
         $validator = Validator::make(['slug' => $slug], [
-            'slug' => ['required', 'string', 'max:50', 'alpha_dash', 'exists:users,slug']
+            'slug' => ['required', 'string', 'alpha_dash', 'exists:users,slug']
         ]);
 
         // Import Methods
@@ -231,6 +246,7 @@ class UserController extends Controller
     {
         $validatorData = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
+            'fullnamecomm' => 'required|string|max:60',
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($id)],
             'roles*' => 'required|exists:roles,id',
@@ -275,6 +291,7 @@ class UserController extends Controller
         $user->update(
             [
                 'name' => $request->get('name'),
+                'fullnamecomm' => $request->get('fullnamecomm'),
                 'lastname' => $request->get('lastname'),
                 'email' => $request->get('email'),
             ]

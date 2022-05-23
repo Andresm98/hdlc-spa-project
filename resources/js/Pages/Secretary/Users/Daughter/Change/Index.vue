@@ -24,190 +24,43 @@
         </alert>
       </div>
 
-      <form @submit.prevent="submit">
-        <div class="flex flex-wrap">
-          <div class="w-full lg:w-12/12 px-4">
-            <div class="">
-              <label
-                class="block text-sm font-medium text-gray-700"
-                htmlfor="grid-password"
-              >
-                Motivo:
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.transfer_reason">
-                {{ $page.props.errors.transfer_reason }}
-              </p>
-              <small>Formato: Ingresar el motivo del cambio.</small>
-              <div>
-                <input
-                  type="text"
-                  minLength="10"
-                  maxlength="100"
-                  placeholder="Ingresar motivo del cambio"
-                  class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  v-model="form.transfer_reason"
-                  required
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="w-full lg:w-full px-4">
-            <div class="relative w-full mb-3">
-              <label
-                class="block text-sm font-medium text-gray-700"
-                htmlfor="grid-password"
-              >
-                Observaciones:
-              </label>
-              <p
-                class="text-red-400 text-sm"
-                v-show="$page.props.errors.transfer_observation"
-              >
-                {{ $page.props.errors.transfer_observation }}
-              </p>
-              <small
-                >Formato: Ingresar las observaciones pertinentes, 3000 caracteres
-                max.</small
-              >
-              <div class="bg-white">
-                <quill-editor
-                  ref="qleditor1"
-                  contentType="html"
-                  theme="snow"
-                  :toolbar="toolbarOptions"
-                  placeholder="Ingresar los datos solicitados..."
-                  v-model:content="form.transfer_observation"
-                ></quill-editor>
-              </div>
-            </div>
-          </div>
-
-          <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <div class="">
-                <label
-                  class="block text-sm font-medium text-gray-700"
-                  htmlfor="grid-password"
-                >
-                  Comunidad u Obra:
-                </label>
-                <small
-                  >Formato: Seleccionar la comunidad u obra a la que se cambia la
-                  hermana.</small
-                >
-                <div :class="{ invalid: isInvalidCommunity }">
-                  <div v-if="this.allWork != null">
-                    <multiselect
-                      :searchable="true"
-                      placeholder="Por favor seleccionar la comunidad a la que va"
-                      select-label="Seleccionar!"
-                      v-model="this.form.community_id"
-                      :options="this.allWork"
-                      :close-on-select="true"
-                      :clear-on-select="false"
-                      :max-height="200"
-                      :disabled="isDisabled"
-                      @select="onSelect"
-                      mode="tags"
-                      label="comm_name"
-                    ></multiselect>
-                    <p class="text-sm text-red-400" v-show="isInvalidCommunity">
-                      Obligatorio
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <div class="">
-                <label
-                  class="block text-sm font-medium text-gray-700"
-                  htmlfor="grid-password"
-                >
-                  Cargo:
-                </label>
-                <small>Formato: Seleccionar el cargo que desempeñará la hermana.</small>
-                <div :class="{ invalid: isInvalidOffice }">
-                  <div v-if="this.allOffice != null">
-                    <multiselect
-                      placeholder="Por favor seleccionar el oficio a ocupar"
-                      select-label="Seleccionar!"
-                      v-model="this.form.office_id"
-                      :options="this.allOffice"
-                      :max-height="200"
-                      :disabled="isDisabled"
-                      mode="tags"
-                      label="office_name"
-                      track-by="office_name"
-                    ></multiselect>
-                    <p class="text-sm text-red-400" v-show="isInvalidOffice">
-                      Obligatorio
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <label
-                class="block text-sm font-medium text-gray-700"
-                htmlfor="grid-password"
-              >
-                Fecha Inicio:
-              </label>
-              <p
-                class="text-red-400 text-sm"
-                v-show="$page.props.errors.transfer_date_adission"
-              >
-                {{ $page.props.errors.transfer_date_adission }}
-              </p>
-              <small>Formato: Fecha de inicio de actividades.</small>
-              <Datepicker
-                v-model="form.transfer_date_adission"
-                :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
-                required
-              />
-            </div>
-          </div>
-
-          <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <label
-                class="block text-sm font-medium text-gray-700"
-                htmlfor="grid-password"
-              >
-                Fecha Culminación:
-              </label>
-              <p
-                class="text-red-400 text-sm"
-                v-show="$page.props.errors.transfer_date_relocated"
-              >
-                {{ $page.props.errors.transfer_date_relocated }}
-              </p>
-              <small>Formato: Fecha de cierre de actividades (opcional).</small>
-              <Datepicker
-                v-model="form.transfer_date_relocated"
-                :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
-              />
-            </div>
-          </div>
-
-          <!-- Information Address -->
+      <div class="p-4 bg-white border-2 rounded-lg my-2">
+        <p>
+          En la siguiente ficha usted puede visualizar la plantilla de nombramientos, para
+          ingresar nombramientos tenga en cuenta que todos se reflejan a nivel de
+          Compañía, para ello existen tres principales categorías (Nivel de Provincia,
+          Nivel de Comunidad Local y Nivel de Obras).
+        </p>
+        <ul class="list-disc pl-5 pt-2">
+          <!-- Province -->
+          <li><strong>Nivel Provincial</strong></li>
+          <li>Visitadora provincial (1).</li>
+          <li>Asistenta provincial (1).</li>
+          <li>Consejeras Provinciales (4).</li>
+          <li>Secretaria Provincial (1).</li>
+          <li>Ecónoma Provincial (1).</li>
+          <!--  Local Community -->
+          <li><strong>Nivel Comunidad Local</strong></li>
+          <li>Hermana Sirviente (1).</li>
+          <li>Asistente Local (1).</li>
+          <li>Secretaria Local (1).</li>
+          <li>Ecónoma Local (1).</li>
+          <li>Hermanas Compañeras.</li>
+          <li>Hermana Seminario.</li>
+          <!-- Work -->
+          <li><strong>Nivel de Obras</strong></li>
+          <li>Representante Legal (1).</li>
+          <li>Rector/a (1).</li>
+          <li>Director/a (1).</li>
+        </ul>
+        <div class="content-center mt-2">
+          <jet-button-success
+            @click="confirmationTransferCreate()"
+            class="block mx-2 p-5 leading-normal"
+            >¿Desea crear un nuevo cambio?</jet-button-success
+          >
         </div>
-        <jet-button-success type="submit" class="ml-4 mt-1 btn btn-primary"
-          >Crear Cambio</jet-button-success
-        >
-      </form>
+      </div>
 
       <hr
         class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
@@ -230,12 +83,12 @@
                   >
                     Comunidad/Obra
                   </th>
-                  <th
+                  <!-- <th
                     scope="col"
                     class="text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Cargo
-                  </th>
+                  </th> -->
                   <th
                     scope="col"
                     class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
@@ -301,11 +154,11 @@
                       </div>
                     </div>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
+                  <!-- <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm text-gray-900">
                       {{ transfer.office.office_name }}
                     </div>
-                  </td>
+                  </td> -->
                   <td
                     class="px-6 py-4 whitespace-nowrap"
                     v-if="transfer.transfer_date_relocated == null"
@@ -313,7 +166,8 @@
                     <span
                       class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                     >
-                      {{ this.formatDateShow(transfer.transfer_date_adission) }} -
+                      {{ this.formatDateShow(transfer.transfer_date_adission) }}
+                      -
                       {{ this.formatDateShow(transfer.transfer_date_relocated) }}
                     </span>
                   </td>
@@ -321,7 +175,8 @@
                     <span
                       class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
                     >
-                      {{ this.formatDateShow(transfer.transfer_date_adission) }} -
+                      {{ this.formatDateShow(transfer.transfer_date_adission) }}
+                      -
                       {{ this.formatDateShow(transfer.transfer_date_relocated) }}
                     </span>
                   </td>
@@ -347,6 +202,382 @@
           </div>
         </div>
       </div>
+
+      <!-- Post Data Form -->
+      <jet-dialog-modal
+        :max-width="'input-md'"
+        :show="transferBeingCreated"
+        @close="transferBeingCreated == null"
+      >
+        <template #title> Datos del Nuevo Cambio</template>
+
+        <template #content>
+          <div
+            v-if="Object.keys($page.props.errors).length !== 0"
+            class="px-4 py-4 bg-gray-100 rounded-sm"
+          >
+            <p>Por favor revise los errores que se muestran a continuación:</p>
+            <div v-for="error in $page.props.errors" :key="error">
+              <p class="text-red-500 text-sm">{{ error }}</p>
+            </div>
+          </div>
+
+          <form @submit.prevent="submit">
+            <div class="flex flex-wrap" v-if="navigationOp == 1">
+              <div class="w-full md:w-5/5 mx-auto">
+                <h4
+                  class="text-lg font-medium text-center leading-6 text-gray-900 uppercase my-2"
+                >
+                  <strong>Datos del Cambio</strong>
+                </h4>
+              </div>
+              <div class="w-full lg:w-12/12 px-4">
+                <div class="">
+                  <label
+                    class="block text-sm font-medium text-gray-700"
+                    htmlfor="grid-password"
+                  >
+                    Motivo:
+                  </label>
+
+                  <small>Formato: Ingresar el motivo del cambio.</small>
+                  <div>
+                    <input
+                      type="text"
+                      minLength="10"
+                      maxlength="100"
+                      placeholder="Ingresar motivo del cambio"
+                      class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      v-model="form.transfer.transfer_reason"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-full lg:w-full px-4">
+                <div class="relative w-full mb-3">
+                  <label
+                    class="block text-sm font-medium text-gray-700"
+                    htmlfor="grid-password"
+                  >
+                    Observaciones:
+                  </label>
+
+                  <small
+                    >Formato: Ingresar las observaciones pertinentes, 3000 caracteres
+                    max.</small
+                  >
+                  <div class="bg-white">
+                    <quill-editor
+                      ref="qleditor1"
+                      contentType="html"
+                      theme="snow"
+                      :toolbar="toolbarOptions"
+                      placeholder="Ingresar los datos solicitados..."
+                      v-model:content="form.transfer.transfer_observation"
+                    ></quill-editor>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  <div class="">
+                    <label
+                      class="block text-sm font-medium text-gray-700"
+                      htmlfor="grid-password"
+                    >
+                      Comunidad u Obra:
+                    </label>
+                    <small
+                      >Formato: Seleccionar la comunidad u obra a la que se cambia la
+                      hermana.</small
+                    >
+                    <div :class="{ invalid: isInvalidCommunity }">
+                      <div v-if="this.allWork != null">
+                        <multiselect
+                          :searchable="true"
+                          placeholder="Por favor seleccionar la comunidad a la que va"
+                          select-label="Seleccionar!"
+                          v-model="this.form.transfer.community_id"
+                          :options="this.allWork"
+                          :close-on-select="true"
+                          :clear-on-select="false"
+                          :max-height="200"
+                          :disabled="isDisabled"
+                          @select="onSelect"
+                          mode="tags"
+                          label="comm_name"
+                        ></multiselect>
+                        <p class="text-sm text-red-400" v-show="isInvalidCommunity">
+                          Obligatorio
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="w-full lg:w-6/12 px-4">
+            <div class="relative w-full mb-3">
+              <div class="">
+                <label
+                  class="block text-sm font-medium text-gray-700"
+                  htmlfor="grid-password"
+                >
+                  Cargo:
+                </label>
+                <small>Formato: Seleccionar el cargo que desempeñará la hermana.</small>
+                <div :class="{ invalid: isInvalidOffice }">
+                  <div v-if="this.allOffice != null">
+                    <multiselect
+                      placeholder="Por favor seleccionar el oficio a ocupar"
+                      select-label="Seleccionar!"
+                      v-model="this.form.office_id"
+                      :options="this.allOffice"
+                      :max-height="200"
+                      :disabled="isDisabled"
+                      mode="tags"
+                      label="office_name"
+                      track-by="office_name"
+                    ></multiselect>
+                    <p class="text-sm text-red-400" v-show="isInvalidOffice">
+                      Obligatorio
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label
+                    class="block text-sm font-medium text-gray-700"
+                    htmlfor="grid-password"
+                  >
+                    Fecha Inicio:
+                  </label>
+
+                  <small>Formato: Fecha de inicio de actividades.</small>
+                  <Datepicker
+                    v-model="form.transfer.transfer_date_adission"
+                    :format="format"
+                    :transitions="false"
+                    menuClassName="dp-custom-menu"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label
+                    class="block text-sm font-medium text-gray-700"
+                    htmlfor="grid-password"
+                  >
+                    Fecha Culminación:
+                  </label>
+
+                  <small>Formato: Fecha de cierre de actividades (opcional).</small>
+                  <Datepicker
+                    v-model="form.transfer.transfer_date_relocated"
+                    :format="format"
+                    :transitions="false"
+                    menuClassName="dp-custom-menu"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap" v-if="navigationOp == 2">
+              <div class="w-full md:w-5/5 mx-auto">
+                <h4
+                  class="text-lg font-medium text-center leading-6 text-gray-900 uppercase my-2"
+                >
+                  <strong>Nombramientos asignados al Cambio</strong>
+                </h4>
+              </div>
+              <div class="flex flex-wrap">
+                <div class="w-full lg:w-6/12 px-4">
+                  <div class="">
+                    <label
+                      class="block text-sm font-medium text-gray-700"
+                      htmlfor="grid-password"
+                    >
+                      Nivel:
+                    </label>
+
+                    <small>Formato: Seleccionar el nivel del permiso.</small>
+                    <div :class="{ invalid: isInvalidLevel }">
+                      <multiselect
+                        :searchable="true"
+                        v-model="selectLevel.selectedLevel"
+                        :options="selectLevel.options"
+                        placeholder="Buscar Categoría"
+                        label="name"
+                        track-by="name"
+                        :multiple="true"
+                        :taggable="true"
+                      >
+                      </multiselect>
+                      <p class="text-sm text-red-400" v-show="isInvalidLevel">
+                        Obligatorio
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="w-full lg:w-6/12 px-4">
+                  <div class="">
+                    <label
+                      class="block text-sm font-medium text-gray-700"
+                      htmlfor="grid-password"
+                    >
+                      Título:
+                    </label>
+                    <small>Formato: Seleccionar el nombramiento específico.</small>
+                    <div :class="{ invalid: isInvalidLevelCategory }">
+                      <multiselect
+                        :searchable="true"
+                        v-model="selectCategory.selectedLevelCategory"
+                        :options="selectCategory.options"
+                        placeholder="Buscar Categoría"
+                        label="name"
+                        track-by="name"
+                        :multiple="true"
+                        :taggable="true"
+                      >
+                      </multiselect>
+                      <p class="text-sm text-red-400" v-show="isInvalidLevelCategory">
+                        Obligatorio
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-full lg:w-6/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <label
+                      class="block text-sm font-medium text-gray-700 pt-4"
+                      htmlfor="grid-password"
+                    >
+                      Comunidad:
+                    </label>
+                    <small
+                      >Formato: Seleccionar la comunidad u obra en la que cumplirá sus
+                      funciones.</small
+                    >
+                    <div :class="{ invalid: isInvalidCommunityTwo }">
+                      <div v-if="this.allWork != null">
+                        <multiselect
+                          :searchable="true"
+                          placeholder="Por favor seleccionar la comunidad a la que va"
+                          select-label="Seleccionar!"
+                          v-model="form.appointment.community_id"
+                          :options="this.allWork"
+                          :close-on-select="true"
+                          :clear-on-select="false"
+                          :max-height="200"
+                          :disabled="isDisabled"
+                          @select="onSelect"
+                          mode="tags"
+                          label="comm_name"
+                        ></multiselect>
+                        <p class="text-sm text-red-400" v-show="isInvalidCommunityTwo">
+                          Obligatorio
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-full lg:w-6/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <label
+                      class="block text-sm font-medium text-gray-700 pt-4"
+                      htmlfor="grid-password"
+                    >
+                      Fecha Inicio:
+                    </label>
+
+                    <small>Formato: Fecha que en la que se asigna el nombramiento.</small>
+                    <Datepicker
+                      :format="format"
+                      :transitions="false"
+                      menuClassName="dp-custom-menu"
+                      v-model="form.appointment.date_appointment"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="w-full lg:w-6/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <label
+                      class="block text-sm font-medium text-gray-700 pt-4"
+                      htmlfor="grid-password"
+                    >
+                      Fecha Culminación:
+                    </label>
+
+                    <small
+                      >Formato: Fecha que en la que finalizó el nombramiento
+                      (opcional).</small
+                    >
+                    <Datepicker
+                      :format="format"
+                      :transitions="false"
+                      menuClassName="dp-custom-menu"
+                      v-model="form.appointment.date_end_appointment"
+                    />
+                  </div>
+                </div>
+
+                <div class="w-full lg:w-full px-4">
+                  <div class="relative w-full mb-3">
+                    <label
+                      class="block text-sm font-medium text-gray-700"
+                      htmlfor="grid-password"
+                    >
+                      Descripción:
+                    </label>
+
+                    <small>Formato: Descripción del nombramiento.</small>
+                    <div class="bg-white">
+                      <quill-editor
+                        v-model:content="form.appointment.description"
+                        ref="qleditor1"
+                        contentType="html"
+                        theme="snow"
+                        :toolbar="toolbarOptions"
+                        placeholder="Ingresar los datos solicitados..."
+                      ></quill-editor>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </template>
+
+        <template #footer>
+          <jet-secondary-button @click="cancelCreation()">
+            Cancelar
+          </jet-secondary-button>
+
+          <jet-button class="ml-3" @click="navigation(1)" v-if="navigationOp == 1">
+            Siguiente
+          </jet-button>
+
+          <jet-button class="ml-3" @click="navigation(2)" v-if="navigationOp == 2">
+            Anterior
+          </jet-button>
+
+          <jet-button-success class="ml-3" @click="submit" v-if="navigationOp == 2">
+            Guardar
+          </jet-button-success>
+        </template>
+      </jet-dialog-modal>
 
       <jet-confirmation-modal
         :show="transferBeingDeleted"
@@ -403,7 +634,23 @@
         <template #title> Datos de Registro del Cambio</template>
 
         <template #content>
-          <div class="flex flex-wrap">
+          <div
+            v-if="Object.keys($page.props.errors).length !== 0"
+            class="px-4 py-4 bg-gray-100 rounded-sm"
+          >
+            <p>Por favor revise los errores que se muestran a continuación:</p>
+            <div v-for="error in $page.props.errors" :key="error">
+              <p class="text-red-500 text-sm">{{ error }}</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap" v-if="navigationOp == 1">
+            <div class="w-full md:w-5/5 mx-auto">
+              <h4
+                class="text-lg font-medium text-center leading-6 text-gray-900 uppercase my-2"
+              >
+                <strong>Datos del Cambio</strong>
+              </h4>
+            </div>
             <div class="w-full lg:w-12/12 px-4">
               <div class="">
                 <label
@@ -433,7 +680,7 @@
               </div>
             </div>
 
-            <div class="w-full lg:w-6/12 px-4">
+            <div class="w-full lg:w-12/12 px-4">
               <div class="relative w-full mb-3">
                 <div class="">
                   <label
@@ -471,7 +718,7 @@
               </div>
             </div>
 
-            <div class="w-full lg:w-6/12 px-4">
+            <!-- <div class="w-full lg:w-6/12 px-4">
               <div class="relative w-full mb-3">
                 <div class="">
                   <label
@@ -502,7 +749,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="w-full lg:w-full px-4">
               <div class="relative w-full mb-3">
@@ -525,7 +772,7 @@
                     contentType="html"
                     theme="snow"
                     :toolbar="toolbarOptions"
-                    placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+                    placeholder="Ingresar loss datos solicitados, puede ingresar 3000 caracteres como máximo..."
                     v-model:content="updateTransferForm.transfer_observation"
                   ></quill-editor>
                 </div>
@@ -577,14 +824,91 @@
 
             <!-- Information Address -->
           </div>
+          <div class="flex flex-wrap" v-if="navigationOp == 2">
+            <div class="w-full bg-white rounded-lg shadow-lg lg:w-3/3">
+              <ul
+                class="divide-y-2 divide-gray-400"
+                v-if="Object.keys(this.allAppointmentsTransfer).length !== 0"
+              >
+                <div v-for="data in this.allAppointmentsTransfer" :key="data">
+                  <li
+                    class="flex justify-between p-3 hover:rounded-lg hover:text-white tab w-full overflow-hidden border-t"
+                    :class="
+                      data.date_end_appointment != null
+                        ? 'hover:bg-red-500'
+                        : 'hover:bg-emerald-600'
+                    "
+                  >
+                    {{ data.appointment_level.name }}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="w-6 h-6 hover:cursor-pointer"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </li>
+                  <div class="tab w-full overflow-hidden border-t">
+                    <div
+                      class="w-full tab-content overflow-hidden border-l-2 bg-gray-100 leading-normal"
+                      :class="
+                        data.date_end_appointment != null
+                          ? 'border-red-500'
+                          : 'border-emerald-500'
+                      "
+                    >
+                      <div class="p-5 overflow-y-auto h-40">
+                        Comunidad:
+                        {{ data.community.comm_name }}
+                        <br />
+                        Fecha del Nombramiento:
+                        {{ formatDateShow(data.date_appointment) }}
+                        <br />
+                        <div v-if="data.date_end_appointment != null">
+                          Fecha de Culminación:
+                          {{ formatDateShow(data.date_end_appointment) }}
+                        </div>
+
+                        <quill-editor
+                          class="mt-2"
+                          contentType="html"
+                          theme="snow"
+                          toolbar="minimal"
+                          v-model:content="data.description"
+                          :readOnly="true"
+                        ></quill-editor>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ul>
+            </div>
+          </div>
         </template>
 
         <template #footer>
-          <jet-secondary-button @click="transferBeingUpdated = null">
-            Cancelar
-          </jet-secondary-button>
+          <jet-secondary-button @click="cancelUpdate()"> Cancelar </jet-secondary-button>
 
-          <jet-button-success class="ml-3" @click="updateTransfer">
+          <jet-button class="ml-3" @click="navigation(1)" v-if="navigationOp == 1">
+            Siguiente
+          </jet-button>
+
+          <jet-button class="ml-3" @click="navigation(2)" v-if="navigationOp == 2">
+            Anterior
+          </jet-button>
+
+          <jet-button-success
+            class="ml-3"
+            @click="updateTransfer"
+            v-if="navigationOp == 2"
+          >
             Actualizar
           </jet-button-success>
         </template>
@@ -615,7 +939,11 @@ import Alert from "@/Components/Alert";
 
 export default {
   props: {
-    errors: [],
+    errors: {
+      transfer: {
+        transfer_reason: null,
+      },
+    },
   },
   created() {
     axios.get(this.route("secretary.offices.index")).then((res) => {
@@ -631,6 +959,8 @@ export default {
   },
   mounted() {
     this.allTransfer;
+    this.allAppointment;
+    this.allAppointmentLevel;
   },
   computed: {
     isInvalid() {
@@ -642,6 +972,10 @@ export default {
     ...mapState("transfer", ["allOffice"]),
     ...mapState("work", ["work"]),
     ...mapState("work", ["allWork"]),
+
+    //
+    ...mapState("daughter", ["profile"]),
+    ...mapState("appointment", ["appointment"]),
 
     allTransfer() {
       axios
@@ -656,6 +990,30 @@ export default {
         });
     },
 
+    allAppointment() {
+      axios
+        .get(
+          this.route("secretary.daughter-profile.appointment.index", {
+            user_id: this.profile.user_id,
+          })
+        )
+        .then((res) => {
+          this.updateAllAppointment(res.data);
+        });
+    },
+    allAppointmentLevel() {
+      axios
+        .get(
+          this.route("secretary.appointment.levels.index", {
+            id: 0,
+            status: 1,
+          })
+        )
+        .then((res) => {
+          this.selectLevel.options = res.data;
+          this.selectOneUpdate.options = res.data;
+        });
+    },
     isInvalidOffice() {
       return this.form.office_id == undefined || this.form.office_id == null;
     },
@@ -667,7 +1025,46 @@ export default {
     },
     isInvalidCommunity() {
       //   console.log("ee Parish", this.selectThree.selectedParish);
-      return this.form.community_id == undefined || this.form.community_id == null;
+      return (
+        this.form.transfer.community_id == undefined ||
+        this.form.transfer.community_id == null
+      );
+    },
+    isInvalidCommunityTwo() {
+      //   console.log("ee Parish", this.selectThree.selectedParish);
+      return (
+        this.form.appointment.community_id == undefined ||
+        this.form.appointment.community_id == null
+      );
+    },
+
+    isInvalidLevel() {
+      return (
+        this.selectLevel.selectedLevel == undefined ||
+        Object.keys(this.selectLevel.selectedLevel).length === 0
+      );
+    },
+    isInvalidLevelCategory() {
+      return (
+        this.selectCategory.selectedLevelCategory == undefined ||
+        Object.keys(this.selectCategory.selectedLevelCategory).length === 0
+      );
+    },
+
+    // Validate Multioption
+    isInvalidLevelUpdate() {
+      //   console.log("ee", this.selectOne.selectedProvince);
+      return (
+        this.selectOneUpdate.selectedLevel == undefined ||
+        this.selectOneUpdate.selectedLevel == null
+      );
+    },
+    isInvalidLevelCategoryUpdate() {
+      //   console.log("ee canton", this.selectTwo.selectedCanton);
+      return (
+        this.selectTwoUpdate.selectedLevelCategory == undefined ||
+        this.selectTwoUpdate.selectedLevelCategory == null
+      );
     },
 
     isInvalidUpdateCommunity() {
@@ -700,19 +1097,10 @@ export default {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
-    const form = useForm({
-      transfer_date_adission: null,
-      transfer_date_relocated: null,
-      transfer_reason: null,
-      transfer_observation: null,
-      profile_id: null,
-      community_id: null,
-      office_id: null,
-    });
+
     return {
       date,
       format,
-      form,
     };
   },
 
@@ -737,7 +1125,7 @@ export default {
 
         ["clean"], // remove formatting button
       ],
-
+      navigationOp: 1,
       selectOne: {
         selectedCommunity: undefined,
         value: 0,
@@ -776,6 +1164,8 @@ export default {
         "Matrimonio",
         "Unión de Enfermos",
       ],
+      form: null,
+      transferBeingCreated: null,
       transferBeingDeleted: null,
       deleteTransferForm: this.$inertia.form({
         transfer_date_adission: null,
@@ -796,31 +1186,163 @@ export default {
         community_id: null,
         office_id: null,
       }),
+
+      appointmentBeingDeleted: null,
+
+      deleteAppointmentForm: this.$inertia.form({
+        description: null,
+        date_appointment: null,
+        date_end_appointment: null,
+        appointment_level_id: null,
+        community_id: null,
+      }),
+      appointmentBeingUpdated: null,
+      updateAppointmentForm: this.$inertia.form({
+        description: null,
+        date_appointment: null,
+        date_end_appointment: null,
+        appointment_level_id: null,
+        community_id: null,
+      }),
+
+      //   Selects
+
+      selectLevel: {
+        selectedLevel: undefined,
+        value: 0,
+        isDisabled: false,
+        isTouched: false,
+        options: [],
+        loading: false,
+        multiSelectLevel: null,
+        vSelectLevel: null,
+      },
+      selectCategory: {
+        selectedLevelCategory: undefined,
+        value: 0,
+        isDisabled: false,
+        isTouched: false,
+        options: [],
+        loading: false,
+        multiSelectLevelCategory: null,
+        vSelectLevelCategory: null,
+      },
+      selectThree: {
+        selectedCommunity: undefined,
+        value: 0,
+        isDisabled: false,
+        isTouched: false,
+        options: [],
+        loading: false,
+        multiSelectCommunity: null,
+        vSelectCommunity: null,
+      },
+      selectOneUpdate: {
+        selectedLevel: undefined,
+        value: 0,
+        isDisabled: false,
+        isTouched: false,
+        options: [],
+        loading: false,
+        multiSelectLevel: null,
+        vSelectLevel: null,
+      },
+      selectTwoUpdate: {
+        selectedLevelCategory: undefined,
+        value: 0,
+        isDisabled: false,
+        isTouched: false,
+        options: [],
+        loading: false,
+        multiSelectLevelCategory: null,
+        vSelectLevelCategory: null,
+      },
+
+      isDisabled: false,
+      isTouched: false,
+      value: null,
+      allAppointmentsTransfer: null,
     };
   },
   watch: {
-    "form.transfer_observation": function () {
+    "selectLevel.selectedLevel": function () {
+      this.selectCategory.options = [];
+      for (var level in this.selectLevel.selectedLevel) {
+        axios
+          .get(
+            this.route("secretary.appointment.levels.index", {
+              id: this.selectLevel.selectedLevel[level].id,
+              status: 2,
+            })
+          )
+          .then((res) => {
+            for (var index in res.data) {
+              this.selectCategory.options.push(res.data[index]);
+            }
+          });
+      }
+      if (this.isInvalidLevel) {
+        this.selectCategory.options = [];
+        this.selectCategory.selectedLevelCategory = [];
+      }
+    },
+
+    "selectOneUpdate.selectedLevel": function () {
+      if (this.selectOneUpdate.selectedLevel === null) {
+        this.selectTwoUpdate.selectedLevelCategory = null;
+        this.selectTwoUpdate.options = [];
+        // Clean data Form
+        this.form.appointment_level_id = null;
+
+        if (this.permitBeingUpdated != null) {
+          this.updatePermitForm.political_division_id = null;
+        }
+      }
+    },
+    "selectCategory.selectedLevelCategory": function () {
+      if (this.selectCategory.selectedLevelCategory === null) {
+        // Clean data Form
+        this.form.appointment_level_id = null;
+        if (this.permitBeingUpdated != null) {
+          this.updatePermitForm.political_division_id = null;
+        }
+      }
+    },
+    "selectTwoUpdate.selectedLevelCategory": function () {
+      if (this.selectTwoUpdate.selectedLevelCategory === null) {
+        // Clean data Form
+        this.form.appointment_level_id = null;
+        if (this.permitBeingUpdated != null) {
+          this.updatePermitForm.political_division_id = null;
+        }
+      }
+    },
+    "form.transfer.transfer_observation": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
-
-      if (quill.getHTML().length <= limit) {
-        this.data_intput_one = quill.getHTML();
-      } else {
-        quill.setHTML(this.data_intput_one);
+      if (quill != null) {
+        if (quill.getHTML().length <= limit) {
+          this.data_intput_one = quill.getHTML();
+        } else {
+          quill.setHTML(this.data_intput_one);
+        }
       }
     },
     "updateTransferForm.transfer_observation": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
-
-      if (quill.getHTML().length <= limit) {
-        this.data_intput_one = quill.getHTML();
-      } else {
-        quill.setHTML(this.data_intput_one);
+      if (quill != null) {
+        if (quill.getHTML().length <= limit) {
+          this.data_intput_one = quill.getHTML();
+        } else {
+          quill.setHTML(this.data_intput_one);
+        }
       }
     },
   },
   methods: {
+    ...mapActions("appointment", ["updateAllAppointment"]),
+    ...mapGetters("appointment", ["getAllAppointment"]),
     ...mapActions("transfer", ["updateAllTransfer"]),
     ...mapActions("transfer", ["updateAllOffice"]),
     ...mapActions("transfer", ["getAllOffice"]),
@@ -828,20 +1350,105 @@ export default {
     ...mapActions("work", ["updateAllWork"]),
     ...mapGetters("work", ["getAllWork"]),
 
+    navigation(op) {
+      if (op == 1) {
+        this.navigationOp = 2;
+      } else {
+        this.navigationOp = 1;
+      }
+    },
+    // Create Data
+
+    cancelCreation() {
+      this.transferBeingCreated = null;
+      this.navigationOp = 1;
+    },
+    cancelUpdate() {
+      this.transferBeingUpdated = null;
+      this.navigationOp = 1;
+    },
+    confirmationTransferCreate() {
+      this.form = this.$inertia.form({
+        transfer: {
+          transfer_date_adission: null,
+          transfer_date_relocated: null,
+          transfer_reason: null,
+          transfer_observation: null,
+          profile_id: null,
+          community_id: null,
+          office_id: null,
+        },
+        appointment: {
+          description: null,
+          date_appointment: null,
+          date_end_appointment: null,
+          appointment_level_id: null,
+          community_id: null,
+        },
+      });
+      this.transferBeingCreated = this.form;
+    },
+    onSearchLevelChange() {},
+    onSelectedLevel(level) {
+      this.form.appointment_level_id = null;
+
+      this.selectTwoUpdate.selectedLevelCategory = undefined;
+
+      this.selectTwoUpdate.options = [];
+      axios
+        .get(
+          this.route("secretary.appointment.levels.index", {
+            id: level.id,
+            status: 2,
+          })
+        )
+        .then((res) => {
+          this.selectTwoUpdate.options = res.data;
+        });
+    },
+
+    onSearchLevelCategoryChange() {},
+    onSelectedCategoryLevel(category) {
+      this.form.appointment_level_id = category.id;
+
+      if (this.appointmentBeingUpdated != null) {
+        this.updateAppointmentForm.appointment_level_id = category.id;
+      }
+    },
     submit() {
       //   console.log("data send", this.form);
-      if (this.form.transfer_date_adission) {
-        this.form.transfer_date_adission = this.formatDate(
-          this.form.transfer_date_adission
+      this.form.transfer.community_id = this.form.transfer.community_id.id;
+      this.form.appointment.community_id = this.form.appointment.community_id.id;
+      if (this.form.transfer.transfer_date_adission) {
+        this.form.transfer.transfer_date_adission = this.formatDate(
+          this.form.transfer.transfer_date_adission
         );
       }
-      if (this.form.transfer_date_relocated) {
-        this.form.transfer_date_relocated = this.formatDate(
-          this.form.transfer_date_relocated
+      if (this.form.transfer.transfer_date_relocated) {
+        this.form.transfer.transfer_date_relocated = this.formatDate(
+          this.form.transfer.transfer_date_relocated
         );
       }
+      //
 
-      if (this.isInvalidCommunity == false && this.isInvalidOffice == false) {
+      if (this.form.appointment.date_appointment != null) {
+        this.form.appointment.date_appointment = this.formatDate(
+          this.form.appointment.date_appointment
+        );
+      }
+      if (this.form.appointment.date_end_appointment != null) {
+        this.form.appointment.date_end_appointment = this.formatDate(
+          this.form.appointment.date_end_appointment
+        );
+      }
+      this.form.appointment.appointment_level_id = this.selectCategory.selectedLevelCategory;
+
+      //   if (this.isInvalidCommunity == false && this.isInvalidOffice == false) {
+      if (
+        // this.isInvalidCommunity == false &&
+        this.isInvalidLevel == false &&
+        this.isInvalidLevelCategory == false
+      ) {
         Inertia.post(
           route("secretary.daughter-profile.transfer.store", {
             user_id: this.profile.user_id,
@@ -853,16 +1460,28 @@ export default {
             onSuccess: () => {
               setTimeout(() => {
                 this.updateTable();
-              }, 10);
-              this.form.transfer_date_adission = null;
-              this.form.transfer_date_relocated = null;
-              this.form.transfer_reason = null;
-              this.form.transfer_observation = null;
-              this.form.community_id = null;
-              this.form.office_id = null;
-              this.form.profile_id = null;
+                this.form.transfer.transfer_date_adission = null;
+                this.form.transfer.transfer_date_relocated = null;
+                this.form.transfer.transfer_reason = null;
+                this.form.transfer.transfer_observation = null;
+                this.form.transfer.community_id = null;
+                this.form.transfer.office_id = null;
+                this.form.transfer.profile_id = null;
+                //
+                this.form.appointment.appointment_level_id = null;
+                this.form.appointment.community_id = null;
+                this.form.appointment.description = null;
+                this.form.appointment.date_appointment = null;
 
-              this.$refs.qleditor1.setHTML("");
+                this.selectLevel.selectedLevel = null;
+                this.selectCategory.selectedLevelCategory = null;
+                this.selectCategory.options = [];
+                this.selectThree.selectedCommunity = null;
+                this.selectThree.options = [];
+                this.transferBeingCreated = null;
+                this.navigationOp = 1;
+                this.$refs.qleditor1.setHTML("");
+              }, 10);
             },
           }
         );
@@ -894,6 +1513,16 @@ export default {
         this.selectTwo.selectedOffice = data.office;
       });
 
+      axios
+        .get(
+          this.route("secretary.daughter-profile.transfer.appointments.index", {
+            transfer_id: transfer.id,
+          })
+        )
+        .then((response) => {
+          this.allAppointmentsTransfer = response.data;
+        });
+
       this.transferBeingUpdated = transfer;
     },
     async status(transfer) {
@@ -919,7 +1548,8 @@ export default {
       this.updateTransferForm.community_id = this.selectOne.selectedCommunity;
       this.updateTransferForm.office_id = this.selectTwo.selectedOffice;
 
-      if (this.isInvalidUpdateCommunity == false && this.isInvalidUpdateOffice == false) {
+      //   if (this.isInvalidUpdateCommunity == false && this.isInvalidUpdateOffice == false) {
+      if (this.isInvalidUpdateCommunity == false) {
         this.updateTransferForm.put(
           this.route("secretary.daughter-profile.transfer.update", {
             user_id: this.profile.user_id,
@@ -932,6 +1562,7 @@ export default {
               this.transferBeingUpdated = null;
               setTimeout(() => {
                 this.updateTable();
+                this.navigationOp = 1;
               }, 100);
             },
           }

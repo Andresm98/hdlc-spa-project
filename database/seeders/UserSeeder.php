@@ -8,10 +8,12 @@ use App\Models\Office;
 use App\Models\Community;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use App\Models\AppointmentLevel;
 use Laravel\Jetstream\Jetstream;
 use App\Models\PoliticalDivision;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\AddressController;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserSeeder extends Seeder
@@ -36,6 +38,7 @@ class UserSeeder extends Seeder
                     'username' => 'usernamehdlc' . $name,
                     'slug' => Str::slug('usernamehdlc ' . $name),
                     'name' => $name,
+                    'fullnamecomm' => $name,
                     'lastname' => 'last-' . $name,
                     'email' => $email,
                     'password' => Hash::make('secret'),
@@ -74,13 +77,14 @@ class UserSeeder extends Seeder
 
         // invited
 
-        for ($i = 0; $i <= 60; $i++) {
+        for ($i = 0; $i <= 5; $i++) {
             $username = 'invited  ' . Str::random(15);
             $slug =  Str::slug($username);
             $user =  User::create([
                 'username' => $username,
                 'slug' => $slug,
                 'name' => Str::random(15),
+                'fullnamecomm' => Str::random(15),
                 'lastname' =>  Str::random(15),
                 'email' =>  $slug .  '@gmail.com',
                 'password' => Hash::make('secret'),
@@ -96,6 +100,7 @@ class UserSeeder extends Seeder
             'username' => $username,
             'slug' => $slug,
             'name' => Str::random(15),
+            'fullnamecomm' => Str::random(15),
             'lastname' =>  Str::random(15),
             'email' =>  'secretary@gmail.com',
             'password' => Hash::make('secret'),
@@ -103,103 +108,441 @@ class UserSeeder extends Seeder
         $user->assignRole('secretary');
         $this->createTeam($user);
 
-        for ($i = 0; $i <= 60; $i++) {
-            $username = 'secretary  ' . Str::random(15);
-            $slug =  Str::slug($username);
-            $user =  User::create([
-                'username' => $username,
-                'slug' => $slug,
-                'name' => Str::random(15),
-                'lastname' =>  Str::random(15),
-                'email' =>  $slug .  '@gmail.com',
-                'password' => Hash::make('secret'),
-            ]);
-            $user->assignRole('secretary');
-            $this->createTeam($user);
-        }
-
+        // for ($i = 0; $i <= 60; $i++) {
+        //     $username = 'secretary  ' . Str::random(15);
+        //     $slug =  Str::slug($username);
+        //     $user =  User::create([
+        //         'username' => $username,
+        //         'slug' => $slug,
+        //         'name' => Str::random(15),
+        //         'fullnamecomm' => Str::random(15),
+        //         'lastname' =>  Str::random(15),
+        //         'email' =>  $slug .  '@gmail.com',
+        //         'password' => Hash::make('secret'),
+        //     ]);
+        //     $user->assignRole('secretary');
+        //     $this->createTeam($user);
+        // }
 
         //  daughter
-        for ($i = 0; $i <= 200; $i++) {
-            // Convert to timetamps
-            $min = strtotime('1900-02-01 00:00:00');
-            $max = strtotime('2022-02-01 00:00:00');
+        // for ($i = 0; $i <= 1; $i++) {
+        // Convert to timetamps
+        // $min = strtotime('1900-02-01 00:00:00');
+        // $max = strtotime('2022-02-01 00:00:00');
 
-            // Generate random number using above bounds
-            $val = rand($min, $max);
+        // Generate random number using above bounds
+        // $val = rand($min, $max);
 
-            // Convert back to desired date format
+        // Convert back to desired date format
 
-            $username = 'daughter  ' . Str::random(15);
-            $slug =  Str::slug($username);
+        // $username = 'daughter  ' . Str::random(15);
+        // $slug =  Str::slug($username);
+        // $user =  User::create([
+        //     'username' => $username,
+        //     'slug' => $slug,
+        //     'name' => Str::random(15),
+        //     'fullnamecomm' => Str::random(15),
+        //     'lastname' =>  Str::random(15),
+        //     'email' =>  $slug . '@gmail.com',
+        //     'password' => Hash::make('secret'),
+        // ]);
+        // $user->assignRole('daughter');
+
+        // $political_division_id =   PoliticalDivision::where('level', '=', 3)
+        //     ->where('last_level', '=', 'Y')
+        //     ->inRandomOrder()
+        //     ->first();
+
+        // $profile = $user->profile()->create([
+        //     'identity_card' => '1004280135',
+        //     'status' => rand(1, 3),
+        //     'date_birth' => date('Y-m-d H:i:s', rand($min, $max)),
+        //     'date_vocation' => date('Y-m-d H:i:s', $val),
+        //     'date_admission' => date('Y-m-d H:i:s', $val),
+        //     'date_send' => date('Y-m-d H:i:s', rand($min, $max)),
+        //     'date_vote' => date('Y-m-d H:i:s', rand($min, $max)),
+        //     'cellphone' => '09967316479',
+        //     'phone' => '022405124',
+        //     'observation' => 'Observation of ' . $user->name,
+        // ]);
+
+        // if ($profile->status == 2) {
+        //     $profile->update([
+        //         'date_death' => date('Y-m-d H:i:s', $val),
+        //     ]);
+        // }
+        // if ($profile->status == 3) {
+        //     $profile->update([
+        //         'date_exit' => date('Y-m-d H:i:s', $val),
+        //     ]);
+        // }
+
+        // if (strlen($political_division_id->id) == 6) {
+        //     $profile->address()->create([
+        //         'address' => 'Dirr de ' . $user->name,
+        //         'political_division_id' =>  $political_division_id->id . '',
+        //     ]);
+        // } else {
+        //     $profile->address()->create([
+        //         'address' => 'Dirr de ' . $user->name,
+        //         'political_division_id' => '0' . $political_division_id->id . '',
+        //     ]);
+        // }
+
+        // $comm =  Community::where('comm_status', '=', 1)
+        //     ->inRandomOrder()
+        //     ->first();
+
+
+        // $transferData = $profile->transfers()->create([
+        //     'transfer_reason' => 'Reason of ' . $user->name,
+        //     'transfer_date_adission' => date('Y-m-d H:i:s', rand($min, $max)),
+        // 'transfer_date_relocated' => $request->get('transfer_date_relocated'),
+        //     'transfer_observation' => 'Observation transfer of ' . $user->name,
+        //     'community_id' => $comm->id,
+        // ]);
+
+
+        // $appointment =  AppointmentLevel::select('*')
+        //     ->where('level', '=', 2)
+        //     ->where('last_level', '=', 'Y')
+        //     ->inRandomOrder()
+        //     ->first();
+
+        // $profile->appointments()->create([
+        //     'community_id' =>  $comm->id,
+        //     'appointment_level_id' => $appointment->id,
+        //     'description' => 'Description transfer of ' . $user->name,
+        //     'date_appointment' => date('Y-m-d H:i:s', rand($min, $max)),
+        //     'transfer_id' => $transferData->id,
+        // ]);
+        //     $this->createTeam($user);
+        // }
+
+
+
+        $array =  [
+            // [
+            //     // User
+            //     'Zoila Dorila', 'Aguilera Pruna', 'Zoila',
+            //     'comunidadsclbquito@gmail.com',
+            //     // Profile
+            //     '0900902065', '1935-11-29 00:00:00', '1958-03-13 00:00:00',
+            //     '1963-03-15 00:00:00', '0999027645',
+            //     // Community
+            //     33
+            // ],
+
+            ["Zoila Dorila", "Aguilera Pruna", "Zoila", "comunidadsclbquito@gmail.com", "900902065", "1935-12-29", "1958-03-13", "1963-03-15", "999027645", 33],
+            ["Carmen Isabel", "Alban Figueroa", "Carmen", "carmitaisabel@hotmail.com", "1100262649", "1946-05-02", "1969-03-15", "1974-03-15", "999027645", 33],
+            ["Martha Alicia", "Albuja Vasconez", "Martha", "hdlcinmaculada1885@gmail.com", "1700354499", "1942-06-01", "1968-03-15", "1973-03-15", "981506242", 23],
+            ["Elizabeth Narcisa", "Alcivar Alcivar", "Elizabeth", "e.alcivar@hotmail.com", "1304588633", "1964-01-18", "1996-09-21", "2003-03-15", "983199414", 40],
+            ["María Cecilia", "Alcivar Alcivar", "María Cecilia", "casasantaluisahdlc@gmail.com", "1305236877", "1966-03-28", "1996-09-21", "2003-03-15", "939943545", 35],
+            ["Jenny Angélica", "Almeida  Maldonado", "Angélica", "angy_jaam86@hotmail.com", "1721904280", "1986-10-24", "2007-09-27", "2013-08-15", "980829151", 35],
+            ["Blanca Leonor", "Altamirano Guevara", "Leonor", "blancaaltamirano18@hotmail.com", "1701919332", "1939-09-18", "1958-10-16", "1963-11-01", "993622513", 11],
+            ["Mariana Olimpia", "Altamirano Hurtado", "Mariana", "casahermaprovi@gmail.com", "1800401778", "1930-12-22", "1950-12-23", "1955-12-25", "993724591", 20],
+            ["Patricia Alexandra", "Arcos Arroba", "Patricia", "patriciaarcosjmv@hotmail.com", "1803100476", "1977-11-24", "1998-09-27", "2004-11-27", "997527160", 14],
+            ["María Magdalena", "Arevalo Estrada", "María Magdalena", "malenae64@gmail.com", "1708834849", "1964-09-02", "1982-09-27", "1987-09-27", "981186917", 36],
+            ["Inés María", "Arevalo Estrada", "Inés", "ineshdlc@gmail.com", "601619240", "1962-07-15", "1982-09-27", "1987-09-27", "999116504", 1],
+            ["María Renée", "Arevalo Hernandez", "María", "arevalo1952@hotmail.com", "1704593894", "1952-12-05", "1972-09-27", "1977-09-27", "991228282", 15],
+            ["Anatolia Elodia", "Arias Paredes", "Anatolia", "casabetania2016@gmail.com", "600513113", "1921-12-22", "1944-08-06", "1949-08-15", "981843740", 34],
+            ["Alba Rosalía", "Arreaga Rivas", "Alba", "albaarreaga473@gmail.com", "1701772798", "1946-02-09", "1965-11-09", "1970-11-27", "958731012", 19],
+            ["Hilda Beatriz", "Arteaga Cadena", "Hilda", "hildaarteaga@gmail.com", "400125134", "1946-05-12", "1973-03-15", "1978-09-27", "981850190", 33],
+            ["Lidia Lucrecia", "Arteaga Montenegro", "Lidia", "liarteaga@yahoo.com", "1001653508", "1965-11-23", "1989-11-27", "1995-12-08", "998035763", 30],
+            ["Susana Servilla", "Asencio Moran", "Susana", "susanaservilla@gmail.com", "902639731", "1934-05-24", "1956-10-26", "1961-11-01", "993724591", 19],
+            ["María Leonor", "Astudillo Pallmay", " Leonor", "sorleas@hotmail.com", "1705150397", "1954-12-03", "1977-03-15", "1982-03-15", "997623563", 5],
+            ["Vilma Mercedes", "Aucapiña Tipan", "Vilma", "vilmamerat@yahoo.com", "1802272003", "1967-04-22", "1987-11-27", "1993-11-27", "967612416", 1],
+            ["Leonor Rosalía", "Balcazar Vega", "Leonor", "balcazarleonor09@yahoo.com", "1714378138", "1980-09-04", "2016-05-31", "2022-03-19", "979503549", 14],
+            ["Gladis Vilma", "Barragan Gonsalez", "Gladis", "gladisb70@yahoo.es", "201215712", "1970-11-20", "1996-09-21", "2003-03-15", "987235243", 48],
+            ["Rosa Margarita", "Barreiro Gorozabel", "Rosa", "svpecheandia@gmail.com", "1302605827", "1956-09-15", "1983-03-15", "1988-11-26", "985872321", 17],
+            ["Claudia María", "Barreiro Zambrano", "Claudia", "sorclaudiambz@hotmail.com", "1310436389", "1982-10-05", "2007-09-27", "2013-08-15", "982551131", 5],
+            ["Digna Emérita", "Barrionuevo Barrionuevo", "Digna", "emeritaba-@hotmail.com", "1713275418", "1974-10-25", "1996-09-21", "2003-03-15", "984328634", 35],
+            ["Alicia de Lourdes", "Bedoya Arguello", "Alicia", "aloubed@yahoo.es", "1700685470", "1946-12-23", "1966-01-26", "1971-03-15", "990985905", 36],
+            ["María Inés", "Benitez Marcillo", " Inés", "casabetania2016@gmail.com", "1700609074", "1931-04-05", "1950-01-30", "1955-02-02", "981843740", 34],
+            ["María Teresa", "Bermudez Espinoza", "María Teresa", "mariateresabermudez@gmail.com", "1701785006", "1927-11-13", "1965-08-06", "1970-09-27", "993724591", 19],
+            ["Elena María", "Berrezueta Jara", "María Elena", "casabetania2016@gmail.com", "1700056474", "1929-12-08", "1957-08-06", "1962-08-15", "981843740", 34],
+            ["Nancy Elena", "Brito Cabezas", "Nancy", "nbritocabezas@gmail.com", "101503456", "1955-03-22", "1974-09-27", "1979-09-27", "997588708", 1],
+            ["Rosa T Marilina", "Burgos Sornoza", "Rosa T", "oasismarillac2015@gmail.com", "1702059971", "1938-08-04", "1958-01-03", "1963-02-02", "993359409", 12],
+            ["Yessenia Ivanova", "Cabrera Arteaga", "Yessenia", "yessihdlc2016@gmail.com", "1150061388", "1994-07-05", "2016-05-31", "2022-03-19", "986567970", 22],
+            ["Silvia Monserrat", "Cabrera Chica", "Silvia", "sorsilviapecesito@hotmail.com ", "102864618", "1973-02-28", "1997-09-27", "2004-03-15", "985897950", 37],
+            // ["Sara  Maritza", "Cadena  Ruiz", "Sara", "sorsaracadenahdlc@hotmail.com", "1713417069", "1976-10-16", "2004-09-27", "2010-11-27", "988272117",],
+            ["Gloria Susana", "Caiza Ushiña", " Susana", "glosu180@gmail.com", "1801667005", "1961-11-18", "1980-09-27", "1986-03-15", "960207216", 45],
+            ["María Piedad", "Cajamarca Quinde", "María Piedad", "maria1piedad@hotmail.com", "916117898", "1975-05-17", "1998-09-27", "2004-03-15", "968695257", 29],
+            ["Rosa Elvira", "Calle Aulestia", "Cecilia", "oasismarillac2015@gmail.com", "1702741727", "1927-09-27", "1954-05-25", "1959-05-31", "993359409", 12],
+            ["Roxana del Carmen", "Cambisaca Diaz", "Roxana", "cadyroxy@hotmail.com", "1104182934", "1985-07-14", "2012-11-27", "2019-05-09", "968797150", 41],
+            ["Esperanza", "Campoverde Jaramillo", " Esperanza", "cesperanza75@yahoo.es", "1705750535", "1951-10-09", "1974-09-27", "1979-09-27", "959631659", 25],
+            ["Bertha Alicia", "Cardenas Almeida", "Bertha Alicia", "oasismarillac2015@gmail.com", "1700303082", "1945-08-27", "1963-04-25", "1968-11-27", "999086615", 13],
+            ["Bertha Beatriz", "Cargua Parra", "Bertha Beatriz", "bertabeatrizcargua@gmail.com", "600767917", "1950-01-08", "1973-09-27", "1978-09-27", "981650911", 19],
+            ["Nancy Araceli", "Carrera Escobar", "Nancy", "nancycarrera14@hotmail.com", "903930006", "1950-06-14", "1978-03-15", "1983-03-12", "984049440", 20],
+            ["Lucrecia", "Carrillo Cervantes", "Lucrecia", "casabetania2016@gmail.com", "903082923", "1939-03-16", "1959-11-25", "1964-11-27", "981843740", 34],
+            ["Emma Isabel", "Carrion Torres", "Emma", "oasismarillac2015@gmail.com", "902505288", "1933-05-10", "1957-08-06", "1962-08-15", "993359409", 12],
+            ["Miriam Susana", "Casa Casa", " Susana", "susy17c@hotmail.com", "502526379", "1979-02-16", "2000-09-27", "2005-11-27", "986579646", 38],
+            ["Luisa Marina", "Casanova Mejia", "Lucía", "emiliazumarragahdlc@gmail.com", "1700302829", "1924-12-14", "1945-10-30", "1950-11-01", "990552463", 8],
+            ["Susana", "Castillo Alvarez", "Susana", "emiliazumarragahdlc@gmail.com", "1700302423", "1943-08-11", "1964-12-18", "1969-12-25", "990552463", 8],
+            ["Estela Marina", "Castro Ceron", "Estela", "medamilacho@gmail.com", "400828331", "1966-04-26", "1988-11-27", "1994-03-15", "986591042", 18],
+            ["María Josefina", "Castro Pesantez", " Josefina", "casabetania2016@gmail.com", "902642487", "1941-01-22", "1964-01-22", "1969-03-15", "981843740", 34],
+            ["Rosa Beatriz Alicia", "Cervantes Duran", " Alicia", "oasismarillac2015@gmail.com", "1700302860", "1932-08-30", "1949-12-06", "1954-12-08", "993359409", 12],
+            ["Rosario del Carmen", "Cervantes Yepez", "Carmen", "carmenrocio610@hotmail.com", "1703445468", "1950-10-22", "1968-09-27", "1973-09-27", "981816813", 1],
+            ["Rosa Eelvina", "Cevallos Lopez", "Genovena", "casabetania2016@gmail.com", "1700302928", "1929-07-24", "1948-01-27", "1953-02-02", "981843740", 34],
+            ["Blanca María", "Cevallos Nuñez", "Blanca", "emiliazumarragahdlc@gmail.com", "903983781", "1932-01-30", "1955-08-06", "1960-08-15", "990552463", 8],
+            ["Mariana de Jesús", "Chamba Gonzalez", "Mariana", "sor_mariana7@hotmail.com", "1703369817", "1951-06-02", "1970-03-15", "1975-03-15", "997883051", 24],
+            ["Ana Isabel", "Chanchay Cuasquer", "Ana Isabel", "anaisa1408@hotmail.es", "1712309804", "1973-08-14", "1999-10-07", "2005-11-27", "980532682", 11],
+            ["María Dolores", "Chicaiza Maisincho", "María Dolores", "lvdani1953@gmail.com", "1704964871", "1958-10-19", "1979-03-15", "1984-03-15", "987925113", 9],
+            ["Enma Ernestina", "Chico Leon", "Enma Ernestina", "getsemanihdlc@gmail.com", "901284745", "1943-07-24", "1964-08-01", "1969-08-15", "993622513", 11],
+            ["Alba Alexandra", "Chorlango Garcia", "Alba", "economaecuador@gmail.com", "1002422549", "1977-03-15", "2002-10-07", "2008-11-27", "985922279", 1],
+            ["Carmen Beatriz", "Cisneros Serrano", "Carmen", "oasismarillac2015@gmail.com", "1700302803", "1929-11-19", "1950-12-23", "1955-12-25", "993359409", 12],
+            ["María Silvia", "Clavijo Carrera", " Silvia", "clavijocarrerasilvia@gmail.com", "1709794935", "1975-02-13", "2000-09-27", "2006-03-15", "989420843", 7],
+            ["Jenny Amparo", "Coca Arias", "Jenny", "jennyamparito@hotmail.com", "1715947642", "1980-10-04", "2012-11-27", "2019-02-02", "959214343", 46],
+            ["María Elvia", "Cojitambo Medina", " Elvia", "elvia.cojitambo@yahoo.com", "700606080", "1948-12-02", "1970-03-15", "1975-03-15", "991203377", 24],
+            ["Teresa de Jesús", "Coronel Hernandez", "Teresa", "tjesus_coronel@yahoo.es", "1200883187", "1955-12-31", "1977-09-27", "1983-03-12", "981356269", 13],
+            ["María Leonor", "Cortez Centeno", "Susana", "casabetania2016@gmail.com", "903098747", "1928-09-03", "1947-11-24", "1953-07-19", "981843740", 34],
+            ["Inés Piedad", "Costa Songor", "Inés", "casabetania2016@gmail.com", "1702179845", "1936-03-23", "1956-07-17", "1961-07-19", "981843740", 34],
+            ["María Sonia", "Cuasapaz Lucero", " Sonia", "marisony58@gmail.com", "400555031", "1958-07-09", "1985-11-27", "1991-03-15", "987321599", 24],
+            ["Mercedes Noemí", "Cuesta Jimemez", " Noemí", "casabetania2016@gmail.com", "905971529", "1954-01-13", "1973-03-15", "1978-09-27", "959246298", 34],
+            ["Mariana de Jesús", "Cueva Vaca", "Mariana", "marycvloja@hotmail.com", "1100571452", "1951-04-23", "1971-09-27", "1976-09-27", "985782632", 14],
+            ["Peregrina", "Cumbicos Cumbicos", "Peregrina", "comunidadcatacocha11@gmail.com", "903146124", "1940-01-29", "1962-03-04", "1967-03-15", "981375953", 6],
+            ["Judith Marina", "Delgado Soto", "Judith", "oasismarillac2015@gmail.com", "1800724740", "1934-05-10", "1956-07-17", "1961-11-01", "993359409", 12],
+            ["Nelly Beatriz", "Diaz Yaguana", "Nelly", "nebediya_2007@yahoo.es", "1103166045", "1974-06-05", "1994-11-26", "2000-11-27", "984064316", 38],
+            ["Flor Marina de Jesús", "Dominguez Solorzano", "Flor Marina", "florjedoso46@gmail.com", "1700302522", "1945-12-28", "1964-12-18", "1969-12-25", "988644193", 19],
+            ["Rosario", "Egas Teran", "Rosario", "olimpitateran@gmail.com", "700362049", "1941-10-20", "1960-11-11", "1966-05-31", "990524141", 4],
+            ["Blanca Fabiola", "Endara Tafur", " Fabiola", "comuninmaculadapillaro@hotmail.com", "1000364123", "1930-12-05", "1970-03-15", "1975-03-15", "982249518", 28],
+            ["María Leonor", "Enriquez Lopez", "María Leonor", "oasismarillac2015@gmail.com", "700390537", "1921-04-14", "1945-10-30", "1950-12-25", "993359409", 12],
+            ["Lida Benilda", "Escaleras Cueva", "Lida", "oasismarillac2015@gmail.com", "1100507845", "1944-11-04", "1969-09-27", "1974-09-27", "993359409", 12],
+            ["Germania del Rocío", "Escobar Arguero", "Rocío", "rcescobar6@gmail.com", "1707656763", "1962-06-07", "1983-09-27", "1988-11-26", "939754907", 21],
+            ["Aída Leonor", "Escobar Pozo", "Bernardita", "comuninmaculadapillaro@hotmail.com", "1702222819", "1926-04-12", "1956-07-17", "1961-07-19", "990552463", 8],
+            ["Micaela Yolanda", "Espinel Pazuña", "Micaela", "espinelmicaela92@gmail.com", "550265805", "1995-11-17", "2018-11-27", null, "992526521", 15],
+            ["Mariana de Jesús", "Espinoza Pasquel", "Mariana", "pastoralformacion.hdlc@gmail.com", "902882612", "1950-09-22", "1969-03-15", "1974-03-15", "980476197", 1],
+            ["María Esthela", "Estrella Almeida", " Esthela", "comunidadlocaluefliloja@gmail.com", "1100133170", "1941-10-09", "1962-08-02", "1967-08-15", "998295924", 24],
+            ["Clara Aurora", "Falconi Sosa", "Clara", "oasismarillac2015@gmail.com", "1700925074", "1929-02-20", "1950-12-23", "1955-12-25", "993359409", 12],
+            ["Olga María", "Feijoo Romero", " María", "casamisionalmargaritanaseau@hotmail.com", "1700302993", "1940-08-13", "1961-11-26", "1967-11-27", "986569055", 40],
+            ["Norma María", "Figueroa Donoso", "Norma", "normafido@hotmail.com", "904243110", "1951-05-18", "1985-11-27", "1992-03-16", "997492906", 48],
+            ["Magdalena de Lourdes", "Flores Chavez", "Magdalena", "uefliccdad@yahoo.com", "500104864", "1947-05-09", "1966-11-27", "1971-11-27", "939754907", 21],
+            ["Gabriela Vicenta", "Galindo Andrade", "Odila", "oasismarillac2015@gmail.com", "1700302373", "1926-03-22", "1948-01-27", "1953-02-02", "993359409", 12],
+            ["Amalia Ethel", "Gallardo Roman", "Amalia", "oasismarillac2015@gmail.com", "1700303157", "1932-10-17", "1960-12-23", "1965-12-25", "993359409", 12],
+            ["Mariana de Jesús", "Garcia Rodriguez", "Margarita", "comunidadsclbquito@gmail.com", "100686104", "1936-05-10", "1956-04-28", "1961-05-01", "999027645", 33],
+            ["María Hilda", "Garzon Acosta", " Hilda", "emiliazumarragahdlc@gmail.com", "1701935023", "1933-11-15", "1952-03-07", "1957-03-15", "990552463", 8],
+            ["Nila de Lourdes", "Gomez Ayora", "Nila", "alinahdlc@gmail.com", "1102361100", "1963-05-15", "1984-11-27", "1991-03-15", "984371393", 31],
+            ["Laura Narcisa", "Gonzalez Cajamarca", " Narcisa", "lauranarcisagc@gmail.com", "702410119", "1967-04-30", "1990-11-27", "1996-03-15", "994705781", 16],
+            ["Carmen Rocío", "Gonzalez Medina", "Carmen", "carmenrocio610@hotmail.com", "1900244151", "1969-06-10", "1991-11-27", "1996-11-27", "980633098", 48],
+            ["María Augusta", "Gordillo Perez", "María Augusta", "pastoralsocialecu@gmail.com", "1001990553", "1974-12-30", "1994-11-26", "2000-11-27", "993524170", 1],
+            ["Sabina Melania", "Granda Encalada", "Melania", "sormelaniagranda@yahoo.com", "1101841680", "1961-12-30", "1983-03-15", "1988-11-26", "997917503", 39],
+            ["Evangelina María", "Guachi Criollo", " María", "hogarsanvip2017@gmail.com", "1801044924", "1952-08-11", "1982-09-27", "1987-09-27", "998035763", 30],
+            ["Katty María", "Gualan Macas", "Katty", "gk909986@gmail.com", "1900797943", "1996-01-30", "2018-11-27", null, "997240882", 9],
+            ["Magdalena Fabiola", "Guaman Oña", "Fabiola", "magfbygo@hotmail.fr", "501807325", "1973-05-22", "1994-11-26", "2000-11-27", "968263939", 1],
+            // ["Geovanna Maricela","Guanoluisa Guanoluisa","Geovanna" ,"govamary@gmail.com","1718608688","1990-10-22","2020-11-27","3137373885",],
+            ["Nelly Helen", "Guapas Enriquez", "Nelly", "hogarsanvip2017@gmail.com", "1700302571", "1946-03-26", "1965-05-29", "1970-11-27", "984371393", 31],
+            ["Bertha Yolanda", "Guerrero Pazmiño", " Yolanda", "berthaygp@gmail.com", "1100210341", "1939-03-11", "1961-04-26", "1966-05-31", "995354953", 21],
+            ["Zoila Amelia", "Guevara Tenesaca", "Zoila", "zoilameghc@hotmail.com", "100321108", "1941-03-05", "1961-02-12", "1966-03-15", "989612771", 33],
+            ["Elvia Mariana", "Guizado Guzman", "Elvia", "elviaguizadog@hotmail.com", "200502813", "1952-06-02", "1977-03-15", "1982-03-15", "961060533", 49],
+            ["Romelia Alicia", "Haro Davila", " Alicia", "alirome37@yahoo.es", "600234546", "1950-12-05", "1972-03-15", "1977-09-27", "995776915", 36],
+            ["Gladys Angela", "Hernandez Velastegui", " Angela", "oasismarillac2015@gmail.com", "1800521518", "1942-11-28", "1960-12-23", "1965-12-25", "993359409", 12],
+            ["Rosa Guillermina", "Herrera Pacheco", " Guillermina", "casahermaprovi@gmail.com", "1700081159", "1934-06-25", "1957-04-25", "1962-05-01", "993724591", 19],
+            ["Jenny Cristina", "Herrera Pillajo", "Cristina", "crisjenny2009@hotmail.com", "1717167827", "1981-03-29", "2008-09-27", "2014-09-27", "934346670", 1],
+            ["Paulina Susana", "Huaraca  Salazar", "Paulina", "hdlcpau@hotmail.com", "1717577041", "1982-11-15", "2004-09-27", "2010-10-27", "981792404", 22],
+            ["Mariana Domitila", "Hurtado Arellano", "Mariana", "casabetania2016@gmail.com", "1700303058", "1941-01-13", "1960-02-17", "1965-03-15", "981843740", 12],
+            ["Yonny Maritza", "Imaicela Pardo", " Maritza", "maryimaicela@hotmail.com", "1103780233", "1979-09-09", "2002-10-07", "2008-11-27", "985642246", 9],
+            ["Emma Lucinda", "Jacome Vallejos", "Emma", "hogarsanvip2017@gmail.com", "1701925768", "1944-06-07", "1966-02-18", "1971-03-15", "998035763", 30],
+            ["María Agustina", "Jara Camacho", "María Agustina", "maritinahdlc@gmail.com", "1101851374", "1958-11-08", "1981-05-31", "1986-11-27", "990524141", 4],
+            ["Rosa Victoria", "Jara Jara", "Rosa", "casabetania2016@gmail.com", "600269310", "1926-10-05", "1947-08-06", "1952-12-25", "981843740", 34],
+            ["Umbelina Pastoriza", "Jara Jara", "Inés", "casabetania2016@gmail.com", "600545479", "1931-06-19", "1947-06-09", "1954-12-08", "981843740", 34],
+            ["Lourdes Victoria", "Jaramillo Bermudez", "Lourdes", "lourdes_jaramillo.18@hotmail.com", "953743507", "1995-06-16", "2018-11-27", null, "989920646", 22],
+            ["Olga Francisca", "Jaramillo Carrion", "Olga", "casahermaprovi@gmail.com", "1101610481", "1949-06-16", "1984-11-27", "1991-03-15", "984355648", 20],
+            ["Clara Luz", "Jimenez Alvarado", "Clara Luz", "oasismarillac2015@gmail.com", "700333958", "1938-01-04", "1959-01-31", "1964-02-02", "993359409", 12],
+            ["Rosa Isabel", "Landazuri Soto", "Isabel", "oasismarillac2015@gmail.com", "1100222817", "1930-09-08", "1951-03-13", "1956-03-15", "993359409", 12],
+            ["Blanca Rosa", "Landi Lema", "Rosa", "rosalandi7@gmail.com", "300802071", "1962-11-01", "1991-11-26", "1996-11-27", "986569055", 40],
+            ["Mariana de Jesús", "Lara Villagran", "Mariana", "hdlcinmaculada1885@gmail.com", "1300411434", "1939-12-19", "1957-12-05", "1962-12-08", "986754146", 23],
+            ["Cecilia Beatriz", "Lazcano Peñafiel", "Cecilia", "cecibachita@yahoo.com", "1704521481", "1954-03-08", "1972-03-15", "1977-09-27", "992746513", 7],
+            ["Ulvia Sulema", "Leiva Herrera", "Sulema", "sulemahdlc@yahoo.com", "702281668", "1968-04-11", "1989-11-27", "1995-12-08", "984656202", 12],
+            ["María Maclovia", "Lema  Tenenuela", "Maclovia", "sulemahdlc@yahoo.com", "603280306", "1977-03-13", "2004-09-27", "2010-11-27", "0998864136", 43],
+            ["Lucila Angélica", "Lema Almeida", "Lucila", "misionsanvicentedepaul@gmail.com", "1700839994", "1946-02-18", "1970-03-15", "1975-03-15", "994161563", 22],
+            ["Lucrecia", "Lema Tenenuela", "Lucrecia", "Luc_ky2009@hotmail.com", "603617879", "1983-05-01", "2011-08-15", "2017-11-25", "994161563", 27],
+            ["Dolores del Rosario", "Leon Toledo", "Rosario", "casahermaprovi@gmail.com", "1700527995", "1943-04-20", "1962-08-02", "1968-02-02", "993724591", 19],
+            ["Martha Cecilia", "Llive Benavides", "Martha", "casahermaprovi@gmail.com", "400763009", "1964-02-02", "1984-11-27", "1991-11-27", "989829337", 17],
+            ["Ana Luisa", "Llive Benavides", "Ana Luisa", "svpecheandia@gmail.com", "400763017", "1961-09-24", "1984-11-27", "1991-03-15", "985969776", 29],
+            ["María Yolanda", "Llumiquinga Muela", "Yolanda", "anallive2009@hotmail.com", "1702716380", "1948-12-21", "1968-09-27", "1974-03-15", "998925164", 7],
+            ["María Teresa", "Loor Vergara", "María Teresa", "casasantaluisahdlc@gmail.com", "1300710439", "1944-03-03", "1970-09-27", "1975-09-27", "997775205", 35],
+            ["María Concepción", "Lopez Arevalo", "María", "comunidadhml@gmail.com", "1300892187", "1941-02-16", "1960-05-31", "1965-05-31", "985642246", 9],
+            ["Yolanda Piedad", "Lopez Lopez", "Yolanda", "soryolandalopez@yahoo.es", "600484018", "1941-11-06", "1967-09-27", "1972-09-27", "999225546", 16],
+            ["Maria Fátima", "Lopez Vera", "Fátima", "fatiimalopez@hotmail.com", "927643510", "1994-01-25", "2018-11-27", null, "986377409", 18],
+            ["Rosa Delia", "Lozada Basantes", " Delia", "casabetania2016@gmail.com", "1300945209", "1929-02-17", "1950-11-25", "1955-11-27", "981843740", 34],
+            ["Victoria Esther", "Lozada Flores", "Victoria", "comunidadsclbquito@gmail.com", "903047066", "1937-07-16", "1961-09-12", "1966-09-27", "999027645", 33],
+            ["Ricardina Janeth", "Lugo  Mendieta", " Janeth", "comunidadcatacocha11@gmail.com", "917074718", "1975-04-03", "2003-11-27", "2010-09-26", "981375953", 6],
+            ["Justa Elida", "Luzuriaga Gonzalez", "Inés", "orocomunidad@gmail.com", "1700302647", "1942-07-19", "1960-03-11", "1965-09-08", "988059804", 25],
+            ["Alexandra María", "Macias Peña", "Alexandra", "jazalex2009@hotmail.com", "1204219818", "1974-03-25", "1999-10-07", "2005-11-27", "982766600", 17],
+            ["Ana María", "Maldonado Aguilar", "Ana María", "anamaramaldonado@gmail.com", "1102366927", "1963-08-06", "1983-09-27", "1990-03-15", "997917594", 1],
+            ["Doraliza del Carmen", "Maldonado Riofrio", "Doraliza", "doralizamr@yahoo.com", "1101785127", "1954-03-21", "1979-03-15", "1984-03-15", "993558803", 45],
+            ["Hilda Felicia", "Malla Ortega", "Hilda", "hildamallaortega@gmail.com", "1900240183", "1969-01-25", "1990-11-27", "1996-03-15", "993724591", 19],
+            ["Lida Victoria", "Maza Tandazo", "Lida", "marialucilapaneluisa@yahoo.es", "1101728127", "1959-02-14", "1984-03-15", "1990-03-15", "986051287", 42],
+            ["Geovanna Esmeralda", "Mejia Aguilar", "Geovanna", "meagui22@hotmail.com", "400876645", "1967-11-22", "1990-11-27", "1996-11-27", "995397988", 35],
+            ["Clara Adeliza", "Melendrez Espin", "Clara", "clarymelendrez@hotmail.com", "201210291", "1972-09-11", "1997-09-27", "2004-03-15", "990414651", 47],
+            ["Julia Isabel", "Mendoza  Muñoz", "Julia", "oasismarillac2015@gmail.com", "802531350", "1982-03-29", "2003-11-27", "2010-11-27", "985844786", 12],
+            ["Ida Gloria", "Merino Cuzco", " Gloria", "casamisionaltriunfo@gmail.com", "600743629", "1948-05-23", "1971-03-15", "1976-03-15", "991228282", 15],
+            ["María Magdalena", "Mestanza Lombeida", "María Magdalena", "magdamml@hotmail.com", "200866986", "1964-02-19", "1983-03-15", "1990-03-15", "981843740", 34],
+            ["María Noemí", "Milan Aguilar", "María Noemí", "mary_1990-m@hotmail.com", "1600608705", "1990-08-10", "2012-11-27", "2019-05-09", "939757788", 9],
+            ["Blanca Noemí", "Miño Godoy", " Noemí", "lulunoe1665@gmail.com", "1708840606", "1965-03-16", "1985-11-27", "1991-03-15", "985586471", 4],
+            ["Gladys Susana", "Mise Cofre", " Susana", "gladysmise@yahoo.es", "1710183789", "1971-03-21", "1990-11-27", "1996-03-15", "993622513", 11],
+            ["Fausta Targelia", "Montesdeoca Cedeño", "Fausta", "casaprovincialhdlc@gmail.com", "1700082298", "1932-12-19", "1955-03-05", "1960-03-15", "994190917", 1],
+            ["Edith Amelia", "Mora Aguilar", "Edith", "casahermaprovi@gmail.com", "1700302472", "1941-04-10", "1965-03-13", "1970-03-16", "999137285", 19],
+            ["Laura Marina", "Moya Perez", "Laura", "molaurap@yahoo.es", "1710344522", "1967-11-29", "1996-09-21", "2003-03-15", "984795709", 3],
+            ["Rosa Rebeca", "Muñoz Bernal", " Rebeca", "casahermaprovi@gmail.com", "100263243", "1932-09-19", "1952-03-07", "1957-03-15", "993724591", 19],
+            ["María Teresa", "Muñoz Molina", "María Teresa", "uelmachachi@gmail.com", "700079767", "1940-10-10", "1959-01-31", "1964-02-02", "997703449", 32],
+            ["Sara Loide", "Naranjo Ortega", "Sara", "naranjoortegasara@yahoo.com", "500704226", "1952-05-02", "1973-09-27", "1978-09-27", "939842050", 18],
+            ["Gertrudis Mónica", "Navarrete Vinueza", "Mónica", "emiliazumarragahdlc@gmail.com", "1701920322", "1934-03-30", "1954-08-06", "1959-08-15", "990552463", 8],
+            ["Mirian Elizabeth", "Neira Mejia", " Elizabeth", "mieli_hdlc@hotmail.com", "1104858137", "1989-03-21", "2011-08-15", "2017-11-25", "985969288", 39],
+            ["María de Jesús Dolores", "Noboa Lopez", "María Elena", "emiliazumarragahdlc@gmail.com", "1700607391", "1929-03-09", "1949-03-12", "1954-03-15", "990552463", 8],
+            ["Rosa María", "Nuñez Herrera", "Rosa", "oasismarillac2015@gmail.com", "1200052254", "1931-03-30", "1963-11-21", "1968-11-27", "993359409", 12],
+            ["Catalina Francisca", "Olvera Tobar", "Catalina", "casahermaprovi@gmail.com", "905940888", "1958-03-05", "1979-03-15", "1984-03-15", "984049440", 20],
+            ["Aída Beatriz", "Orbe Bastidas", "Aída", "uelmachachi@gmail.com", "1702159953", "1947-09-08", "1969-09-27", "1974-09-27", "997703449", 32],
+            ["María Esther", "Ortega Cajilema", "María Esther", "estherort59@gmail.com", "604797522", "1988-07-27", "2012-11-27", "2019-02-02", "967888198", 22],
+            [" Guadalupe", "Pabon Castro", " Guadalupe", "comunidadsclbquito@gmail.com", "1700302399", "1946-01-24", "1964-08-01", "1969-08-15", "999027645", 33],
+            ["Carmita Teresa", "Paladines Guevara", "Carmita", "carmitapg.2014@gmail.com", "1001064235", "1951-01-06", "1973-03-15", "1978-09-27", "989979140", 38],
+            ["Elida Isabel", "Paliz", "Isabel", "casaprovincialhdlc@gmail.com", "200003846", "1939-04-26", "1966-11-27", "1971-11-27", "985862407", 2],
+            ["Ritha Elizabeth", "Palma Carrera", " Elizabeth", "rithapalma@yahoo.com", "500919147", "1959-03-04", "1980-09-27", "1986-03-15", "995654794", 27],
+            ["María Lucila", "Paneluisa Vargas", " Lucila", "marialucilapaneluisa@yahoo.es", "1707294581", "1960-09-26", "1982-03-15", "1987-09-27", "991271164", 41],
+            ["Ana Lucía", "Paredes Camacho", "Ana Lucía", "luisitahdlcatuntaqui@gmail.com", "1000400455", "1936-10-25", "1956-10-26", "1962-03-15", "991271164", 4],
+            ["Mercedes del Carmen", "Paredes Grijalva", "Carmen", "sorcarmipagri@yahoo.com", "500022140", "1947-05-13", "1967-09-27", "1972-09-27", "993359409", 12],
+            ["Adriana de Jesús", "Paredes Ipanaque", "Adriana", "getsemanihdlc@gmail.com", "902106186", "1948-03-04", "1984-03-15", "1990-03-15", "993622513", 11],
+            ["Beatriz Helena", "Paredes Robalino", " Helena", "helparo@hotmail.es", "1709155137", "1965-08-13", "1985-11-27", "1992-09-25", "986789979", 36],
+            ["Teresita de Jesús", "Parra Alvarez", "Teresita", "hogarmiguelleoncuenca@gmail.com", "700317985", "1943-04-23", "1963-11-21", "1968-11-27", "992548220", 9],
+            ["María Rosario", "Pastor Vargas", " Rosario", "casaprovincialhdlc@gmail.com", "1100194115", "1940-07-17", "1963-08-09", "1969-03-15", "981816813", 2],
+            ["Carmen Melania", "Patiño Jaramillo", "Carmen", "carmepa22@hotmail.com", "1704841939", "1951-02-02", "1970-09-27", "1975-09-27", "959016316", 41],
+            ["Teresa Piedad", "Patiño Jaramillo", "Teresa", "hcsangabriel@gmail.com", "1704088358", "1949-03-28", "1968-09-27", "1973-09-27", "994936913", 41],
+            ["Norma Olivia", "Patiño Quezada", "Norma", "norolipq12@hotmail.com", "1102549761", "1964-06-12", "1987-11-27", "1993-11-27", "981426114", 2],
+            ["Maria Gladys", "Paucar Melendres", "Maria", "orocomunidad@gmail.com", "1301176044", "1942-10-12", "1960-07-14", "1965-07-19", "983638053", 26],
+            ["Elvia", "Paucar Paucar", "Elvia", "elviapaucarpaucar@hotmail.com", "1101438313", "1950-06-07", "1978-03-15", "1983-03-15", "961060533", 28],
+            ["Juana Albertina", "Peña Jumbo", "Albertina", "orocomunidad@gmail.com", "1101429726", "1947-06-12", "1972-09-27", "1977-09-27", "990311556", 26],
+            ["Laura Guillermina", "Peralta Cardenas", "Josefina", "casabetania2016@gmail.com", "500111307", "1931-02-03", "1950-04-29", "1955-05-01", "981843740", 34],
+            ["Bertha Elena", "Perez Ayala", "Bertha", "uelmachachi@gmail.com", "700573207", "1938-05-27", "1961-09-12", "1966-09-27", "997703449", 21],
+            ["Teresa Carlota", "Perez Pazmiño", "Teresa", "hdelacaridadotavalo@gmail.com", "1701679043", "1930-09-19", "1952-11-23", "1957-11-27", "997917728", 27],
+            ["Mercedes Antonieta", "Piedra Solis", "Mercedes", "casabetania2016@gmail.com", "600091599", "1931-11-09", "1954-03-12", "1959-03-15", "981843740", 34],
+            ["Flora Margarita", "Pinoargote Pacheco", "Flora", "florapi@hotmail.com", "1700302431", "1929-02-22", "1953-03-22", "1958-03-25", "998491576", 12],
+            ["Julia Leonor", "Polo Bonilla", " Leonor", "haieobraltg@hotmail.com", "1700527987", "1936-02-22", "1959-01-31", "1964-02-02", "994161563", 22],
+            ["Narciza del Pilar", "Pozo Vinueza", "Narciza", "pilepv304@hotmail.com", "400914057", "1970-04-30", "1999-10-07", "2006-09-27", "990323719", 21],
+            ["Blanca Ofelia", "Proaño Andrade", "Blanca", "blancamariaec@yahoo.com", "400221925", "1934-07-08", "1951-12-04", "1957-05-31", "999185046", 9],
+            ["María Zoila", "Punina Guano", " Zoila", "zoilapunina@hotmail.com", "201022746", "1965-04-25", "1993-11-27", "1999-11-27", "968160240", 39],
+            ["María Elena", "Quevedo Flores", "María Elena", "maryelenaqf2012@gmail.com", "602487225", "1971-09-30", "1992-11-26", "1997-11-27", "996018346", 43],
+            ["Martha Beatriz", "Quinatoa Olmedo", "Martha", "hdlcesmeraldas@gmail.com", "1701838060", "1938-01-23", "1958-04-30", "1963-05-01", "999225546", 16],
+            ["María Emilia", "Quisphe Cajilema", "María Emilia", "mariaehdlc@gmail.com", "1704841921", "1953-10-15", "1971-09-27", "1976-09-27", "986754146", 23],
+            ["Martha Leonor", "Ramirez Campos", "Martha", "csluisatosagua@gmail.com", "912092756", "1963-01-18", "1996-09-21", "2003-03-15", "984328634", 46],
+            ["Luzmila Antonieta", "Ramos Avila", "Luzmila", "oasismarillac2015@gmail.com", "1701663252", "1936-09-19", "1954-08-06", "1959-08-15", "993359409", 12],
+            ["Carmen Amelia", "Reinoso Mazorra", "María del Carmen", "comunidadhccayambe@gmail.com", "900838202", "1936-07-16", "1959-03-24", "1964-04-04", "984164121", 7],
+            ["Cecilia", "Reinoso Olvera", "Cecilia", "casaprovincialhdlc@gmail.com", "1700302902", "1927-11-22", "1948-08-06", "1953-08-15", "993724591", 19],
+            ["Mirtha Eslerida", "Rey Rios", "Mirtha", "emiliazumarragahdlc@gmail.com", "903047074", "1939-06-29", "1963-11-21", "1968-11-27", "990552463", 8],
+            ["María Lucrecia", "Riera Troya", "Rosa", "casabetania2016@gmail.com", "200174035", "1928-02-20", "1954-08-06", "1959-08-15", "981843740", 34],
+            ["Ligia Yolanda Beatriz", "Riofrio Suarez", "Beatriz", "casabetania2016@gmail.com", "1700302514", "1941-03-07", "1964-12-18", "1969-12-25", "998448186", 34],
+            ["Laura Piedad", "Robalino Diaz", "Laura", "hsanvip@andinanet.net", "1700303108", "1938-06-17", "1960-02-17", "1965-03-15", "998035763", 30],
+            ["Lilia América", "Rodriguez Palacios", "Lilia", "emiliazumarragahdlc@gmail.com", "1701906412", "1929-05-01", "1951-11-16", "1956-11-27", "990552463", 8],
+            ["María Emperatriz", "Rodriguez Ramirez", "Patricia", "oasismarillac2015@gmail.com", "100162981", "1929-08-29", "1948-12-19", "1953-12-25", "993359409", 12],
+            ["Laura Piedad", "Rodriguez Zapata", " Piedad", "emiliazumarragahdlc@gmail.com", "1700302753", "1929-07-23", "1946-08-06", "1951-09-27", "990552463", 8],
+            ["María Rosa", "Rojas Apolo", "María Rosa", "casaprovincialhdlc@gmail.com", "1800530154", "1932-09-08", "1953-04-29", "1958-05-01", "958809658", 2],
+            ["Elvita Piedad", "Rojas Encalada", " Piedad", "meagui22@hotmail.com", "1700302787", "1937-04-09", "1960-03-11", "1965-03-15", "967172409", 12],
+            ["Ruth Grimaneza", "Roldan Torres", "Ruth", "ruthroldn@yahoo.es", "1100133188", "1942-11-06", "1959-11-25", "1964-11-27", "997917728", 27],
+            ["Mariana Esther", "Romero Cabezas", "Mariana", "comunidadsclbquito@gmail.com", "1700930173", "1940-01-26", "1959-05-22", "1964-05-31", "999027645", 33],
+            ["Luz Isabel", "Romero Espinoza", " Isabel", "luziroes07@outlook.es", "700291008", "1947-05-23", "1968-09-27", "1973-09-27", "997309165", 17],
+            ["Bertha Oliva", "Romero Jimenez", " Oliva", "hdlcinmaculada1885@gmail.com", "701103426", "1954-11-30", "1973-09-27", "1978-09-27", "996512266", 21],
+            ["Mercedes del Carmen", "Romero Lopez", "Mercedes", "sormeches@yahoo.com", "1001810538", "1965-11-27", "1983-09-27", "1988-11-26", "998157547", 2],
+            ["Lucía Irene", "Rosero Chausa", "Lucía", "lucyrene29@hotmail.com", "401183777", "1975-03-29", "2000-09-27", "2006-03-15", "989655150", 41],
+            ["María Eufemia", "Rubio Borja", "María Eufemia", "emiliazumarragahdlc@gmail.com", "900838210", "1938-10-16", "1960-02-17", "1965-08-15", "990552463", 8],
+            ["Paula Bertha", "Salazar Gonzaga", "Paola", "casaprovincialhdlc@gmail.com", "1101438719", "1953-06-07", "1975-04-20", "1980-05-31", "969484899", 2],
+            ["María Catalina", "Salgado Granja", "Catalina", "catysal@outlook.es", "1701919654", "1944-01-16", "1963-03-06", "1968-03-15", "994166115", 3],
+            ["Hilda Faviola", "Salguero Malliquinga", "Hilda", "shildafaviola@gmail.com", "1700303215", "1946-12-24", "1966-07-02", "1971-07-19", "990552463", 8],
+            ["María Elena", "Samaniego Valdivieso", "María Elena", "emiliazumarragahdlc@gmail.com", "1700302662", "1924-04-28", "1955-03-25", "1960-03-15", "990552463", 8],
+            ["Olga María", "Sanchez Procel", "Olga", "oasismarillac2015@gmail.com", "1000385888", "1932-02-11", "1955-08-06", "1960-12-08", "993359409", 12],
+            ["Cemira", "Sanchez Sanchez", "Cemira", "casahermaprovi@gmail.com", "900541293", "1938-01-01", "1962-07-12", "1967-07-19", "999137285", 19],
+            ["Sandra Gabriela", "Santin Ochoa", "Sandra", "28m1975@gmail.com", "1103463459", "1975-05-28", "2007-09-27", "2013-08-15", "983888651", 33],
+            ["Carmen de Jesús", "Sarango Cueva", "Carmen", "casamisionalmargaritanaseau@hotmail.com", "903220101", "1933-10-21", "1953-03-22", "1958-03-25", "986569055", 40],
+            ["Concepción Adelina", "Sarchi Guayasamin", " Adelina", "adesarchi@hotmail.com", "1800421180", "1943-12-26", "1966-11-27", "1971-11-27", "988509757", 22],
+            ["Gladys Leonor", "Sasig Unapanta", "Gladys", "sorgla20@hotmail.com", "1708077183", "1964-11-20", "1983-09-27", "1988-11-26", "983774389", 10],
+            ["Sara Guadalupe", "Segovia Freire", "Sara", "casabetania2016@gmail.com", "600050025", "1944-05-20", "1967-09-27", "1972-09-27", "961595482", 34],
+            ["Luz María Bernardita", "Serrano Serrano", "Luz María", "casabetania2016@gmail.com", "101812642", "1961-08-21", "1981-05-31", "1986-11-27", "994250607", 8],
+            ["Olga Marina", "Sillo Gallardo", " Marina", "marinahc14@gmail.com", "1706244454", "1959-01-28", "1983-09-27", "1990-03-15", "980602377", 9],
+            ["Rita", "Soto Betancourth", "Rita", "casabetania2016@gmail.com", "1000223048", "1946-11-26", "1963-08-09", "1968-08-15", "981843740", 34],
+            ["Jenny Alexandra", "Suquillo Rivera", "Jenny", "sorjenny21@yahoo.com", "1711275899", "1971-06-21", "2001-10-07", "2007-11-27", "989812817", 2],
+            ["Teresa de Jesús", "Tacuri Carabajo", "Teresa", "terejesust@yahoo.com", "900758558", "1950-03-07", "1969-03-15", "1974-03-15", "985414760", 7],
+            ["Jesús Cristina", "Tapia Pazmiño", " Cristina", "casaprovincialhdlc@gmail.com", "1701925479", "1931-12-11", "1964-03-23", "1969-03-25", "981816813", 2],
+            ["Emérita Eudofia", "Tapia Revelo", "Emérita", "emiliazumarragahdlc@gmail.com", "500113402", "1941-10-02", "1962-03-04", "1967-03-15", "990552463", 8],
+            ["Toa Miriam", "Tenenuela Yaule", "Toa", "miriansita-94@outlook.com", "604833798", "1994-04-17", "2016-05-31", "2022-03-19", "990594365", 39],
+            ["Luisa Clementina", "Teran Teran", " Clementina", "comunidadhml@gmail.com", "600459671", "1919-06-19", "1941-03-12", "1946-03-15", "995397988", 35],
+            ["Martha Luz", "Tisalema Peralta", "Martha", "malut26@gmail.com", "1802542744", "1971-09-26", "1992-11-26", "1997-11-27", "982249518", 28],
+            ["Laura Celina", "Toledo Romero", "Laura", "ambatocentrosocialsvp@gmail.com", "900559378", "1944-11-11", "1969-09-27", "1974-09-27", "984795709", 3],
+            ["Guillermina", "Torres Flores", "Guillermina", "oasismarillac2015@gmail.com", "200069730", "1939-02-28", "1957-12-05", "1962-12-08", "997800005", 12],
+            ["Nardi Jaqueline", "Torres Marin", "Nardi", "narditorres@hotmail.com", "1103164974", "1973-09-01", "1992-11-26", "1997-11-27", "981846810", 26],
+            ["Nelly María", "Torres Matamoros", "Nelly", "sornellytorresm@yahoo.es", "1703142917", "1950-08-02", "1970-09-27", "1975-09-27", "979789044", 29],
+            ["Lucrecia", "Toscano Parra", " Lucrecia", "oasismarillac2015@gmail.com", "600160741", "1934-10-14", "1956-03-05", "1961-03-15", "993359409",12],
+            ["Clara Luz", "Trujillo Gonzalez", "Clara", "casabetania2016@gmail.com", "100768225", "1921-03-26", "1944-03-11", "1949-03-15", "981843740", 34],
+            ["Dolores Virginia", "Ullauri Armijos", "Virginia", "oasismarillac2015@gmail.com", "1701926485", "1934-08-03", "1958-08-09", "1963-08-15", "993359409", 12],
+            ["Mery Mercy", "Ullco Cruz", "Mery", "uc783@hotmail.com", "1716364409", "1983-04-17", "2012-11-27", "2019-02-02", "999903205", 14],
+            ["Blanca España", "Valarezo Martinez", "Blanca", "valarezoblanca@hotmail.com", "1100210333", "1943-12-04", "1962-11-14", "1968-05-31", "981487026", 21],
+            ["Gloria de Jesús", "Valle Moya", "Gloria", "sorgloriavalle@hotmail.com", "1800211151", "1946-11-27", "1972-09-27", "1977-09-27", "997465841", 36],
+            ["María Angélica", "Valverde Freire", " Angélica", "oasismarillac2015@gmail.com", "1000135275", "1939-09-02", "1959-11-25", "1965-05-31", "993359409", 12],
+            ["Elsa Cecilia", "Vargas Aguas", " Cecilia", "comunidadsclbquito@gmail.com", "1101487591", "1952-03-20", "1973-03-15", "1978-09-27", "991265897", 33],
+            ["Ligia Moraima", "Vargas Aguilera", "Ligia", "casabetania2016@gmail.com", "1702322544", "1948-04-04", "1966-08-15", "1971-08-15", "981843740", 8],
+            ["Esthela Marina", "Vargas Benavides", "Esthela", "casahermaprovi@gmail.com", "1701788315", "1929-07-03", "1948-03-12", "1953-03-15", "993724591", 20],
+            ["María Silvia", "Vargas Redin", "María", "casahermaprovi@gmail.com", "903241156", "1942-05-15", "1968-09-27", "1973-09-27", "989824155", 19],
+            ["Delia María", "Vasquez Jimenez", "Delia", "casabetania2016@gmail.com", "902624865", "1929-04-21", "1952-11-23", "1958-03-25", "981843740", 34],
+            ["Mélida Violeta", "Velastegui Dominguez", "Mélida", "ambatocentrosocialsvp@gmail.com", "1701595157", "1936-12-31", "1964-01-22", "1969-03-15", "984795709", 3],
+            ["Esthela Lucía", "Villalba Coloma", " Lucía", "oasismarillac2015@gmail.com", "600100671", "1931-09-17", "1952-06-27", "1957-06-29", "993359409", 12],
+            ["Amable Ernestina", "Villalba Coloma", " Ernestina", "casabetania2016@gmail.com", "1700302837", "1934-02-17", "1952-06-27", "1957-06-29", "985450018", 26],
+            ["Ximena Verónica", "Vinueza Vinueza", " Verónica", "sorveronicavinueza@yahoo.com", "401227624", "1977-11-06", "1999-10-07", "2005-11-27", "999225546", 16],
+            ["Cruz Angela", "Vivanco Samaniego", "Cruz Angela", "sorangelavivanco@hotmail.com", "1102313440", "1963-05-03", "1998-09-27", "2004-03-15", "993109371", 33],
+            ["Angela Ramona", "Vivas Montalvan", "Angelita", "casamisionaltriunfo@gmail.com", "600100697", "1936-07-26", "1959-05-22", "1964-05-31", "989523356", 15],
+            ["Alegría Azucena", "Vizuete Chacon", "Alegría", "misionsanvicentedepaul@gmail.com", "501351837", "1962-08-16", "1984-03-15", "1990-03-15", "988290113", 43],
+            ["Martha Mercedes", "Vizuete Chacon", "Martha", "marthamercedesvizuetechacon@yahoo.es", "501732879", "1968-06-24", "2000-09-27", "2006-11-27", "983137063", 8],
+            ["Angélica Gonzalina", "Vizuete Peñafiel", "Angélica", "hdlcinmaculada1885@gmail.com", "600696223", "1948-09-18", "1968-09-27", "1973-09-27", "996533979", 23],
+            ["Gabriela  Violeta", "Yepez  Imbaquingo", "Gabriela", "sorgaby01@hotmail.com", "1002860110", "1981-07-21", "2003-11-27", "2009-12-08", "985409031", 47],
+        ];
+
+        $addressClass = new AddressController();
+
+        foreach ($array as list(
+            $name, $lastname, $fullnamecomm, $email,
+            $id_card, $date_birth, $date_vocation,
+            $date_vote, $cellphone, $community_id
+        )) {
+            if (strlen($id_card) == 9) {
+                $id_card = '0' . $id_card;
+            }
+            $username = 'daughter ' . $name . ' ' . $lastname . ' ' . $id_card;
             $user =  User::create([
+                'name' => $name,
+                'lastname' => $lastname,
+                'fullnamecomm' => $fullnamecomm,
+                'email' =>  Str::slug($name . $lastname . $fullnamecomm) . "@correo.com",
                 'username' => $username,
-                'slug' => $slug,
-                'name' => Str::random(15),
-                'lastname' =>  Str::random(15),
-                'email' =>  $slug . '@gmail.com',
-                'password' => Hash::make('secret'),
+                'slug' => Str::slug($username),
+                'password' => Hash::make("secret"),
             ]);
             $user->assignRole('daughter');
-
-            $political_division_id =   PoliticalDivision::where('level', '=', 3)
-                ->where('last_level', '=', 'Y')
-                ->inRandomOrder()
-                ->first();
-
+            if ($date_vote != null) {
+                $date_vote =  $date_vote . " 00:00:00";
+            } else {
+                $date_vote = null;
+            }
             $profile = $user->profile()->create([
-                'identity_card' => '1004280135',
-                'status' => rand(1, 3),
-                'date_birth' => date('Y-m-d H:i:s', rand($min, $max)),
-                'date_vocation' => date('Y-m-d H:i:s', $val),
-                'date_admission' => date('Y-m-d H:i:s', $val),
-                'date_send' => date('Y-m-d H:i:s', rand($min, $max)),
-                'date_vote' => date('Y-m-d H:i:s', rand($min, $max)),
-                'cellphone' => '09967316479',
-                'phone' => '022405124',
-                'observation' => 'Observation of ' . $user->name,
+                'identity_card' => $id_card,
+                'status' => 1,
+                'date_birth' => $date_birth . " 00:00:00",
+                'date_vocation' => $date_vocation . " 00:00:00",
+                'date_admission' => null,
+                'date_send' => null,
+                'date_vote' => $date_vote,
+                'cellphone' => "0" . $cellphone,
+                'phone' => null,
+                'observation' => 'Observación de la hermana ' . $user->name . ' ' . $user->lastname,
             ]);
 
-            if ($profile->status == 2) {
-                $profile->update([
-                    'date_death' => date('Y-m-d H:i:s', $val),
-                ]);
-            }
-            if ($profile->status == 3) {
-                $profile->update([
-                    'date_exit' => date('Y-m-d H:i:s', $val),
-                ]);
-            }
+            $community =  Community::find($community_id);
 
-
-
-            if (strlen($political_division_id->id) == 6) {
-                $profile->address()->create([
-                    'address' => 'Dirr de ' . $user->name,
-                    'political_division_id' =>  $political_division_id->id . '',
-                ]);
-            } else {
-                $profile->address()->create([
-                    'address' => 'Dirr de ' . $user->name,
-                    'political_division_id' => '0' . $political_division_id->id . '',
-                ]);
-            }
-
-            $comm =  Community::where('comm_status', '=', 1)
-                ->inRandomOrder()
-                ->first();
-
-            $office =  Office::select('*')
-                ->inRandomOrder()
-                ->first();
+            $profile->address()->create([
+                'address' => $community->address->address,
+                'political_division_id' => $community->address->political_division_id,
+            ]);
 
             $profile->transfers()->create([
-                'transfer_reason' => 'Reason of ' . $user->name,
-                'transfer_date_adission' => date('Y-m-d H:i:s', rand($min, $max)),
-                // 'transfer_date_relocated' => $request->get('transfer_date_relocated'),
-                'transfer_observation' => 'Observation transfer of ' . $user->name,
-                'community_id' => $comm->id,
-                'office_id' =>  $office->id,
+                'transfer_reason' => 'Razón del cambio de la hermana ' . $user->name,
+                'transfer_date_adission' => '2022-01-05 00:00:00',
+                'transfer_observation' => 'Observaciones relacionadas al cambio de la hermana ' . $user->name,
+                'community_id' => $community->id,
             ]);
 
             $this->createTeam($user);

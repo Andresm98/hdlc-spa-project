@@ -46,9 +46,14 @@ class CommunityDaughterController extends Controller
         return DB::table('users')
             ->join('profiles', 'profiles.user_id', '=', 'users.id')
             ->join('transfers', 'transfers.profile_id', '=', 'profiles.id')
-            ->join('offices', 'offices.id', '=', 'transfers.office_id')
+            // ->join('appointments', 'appointments.transfer_id', '=', 'transfers.id')
+            // ->join('appointment_levels', 'appointment_levels.id', '=', 'appointments.appointment_level_id')
+
             ->where('transfers.community_id', '=', $community_id)
             ->where('transfers.transfer_date_relocated', '=', null)
+            //
+            // ->select('users.*','appointment_levels.name as name_appoinment')
+            ->select('users.*')
             ->get();
 
         // return DB::table('transfers')

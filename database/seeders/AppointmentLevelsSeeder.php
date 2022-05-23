@@ -54,6 +54,7 @@ class AppointmentLevelsSeeder extends Seeder
             [2, 'Secretaria Local', 'El presente nombre de categoría pertenece al rango de Secretaria Local'],
             [2, 'Ecónoma Local', 'El presente nombre de categoría pertenece al rango de Ecónoma Local'],
             [2, 'Hermana Compañera', 'El presente nombre de categoría pertenece al rango deHermana Compañera'],
+            [2, 'Hermana Seminario', 'El presente nombre de categoría pertenece al rango deHermana Seminario'],
 
             // Level Works
             [3, 'Representante Legal', 'El presente nombre de categoría pertenece al rango de Representante Legal'],

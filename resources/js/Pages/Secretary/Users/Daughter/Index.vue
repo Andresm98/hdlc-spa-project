@@ -106,6 +106,22 @@
                       <option :value="null">15</option>
                       <option value="20">20</option>
                     </select>
+
+                    <small class="block text-gray-700 mt-2">Pastoral:</small>
+
+                    <select
+                      v-model="params.pastoral"
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    >
+                      <option :value="null">Todas</option>
+                      <option
+                        v-for="pastoral in pastorals"
+                        :key="pastoral"
+                        :value="pastoral.id"
+                      >
+                        {{ pastoral.name }}
+                      </option>
+                    </select>
                   </search-filter>
                 </div>
               </div>
@@ -441,6 +457,7 @@ export default defineComponent({
   layout: PrincipalLayout,
   props: {
     daughters_list: Object,
+    pastorals: Object,
     user_custom: Object,
     filters: Object,
     provinces: {

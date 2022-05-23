@@ -25,7 +25,7 @@ class CreateTransfersTable extends Migration
 
             $table->unsignedBigInteger('profile_id');
             $table->unsignedBigInteger('community_id');
-            $table->unsignedBigInteger('office_id');
+            // $table->unsignedBigInteger('office_id');
 
             // Generar la clave foranea.
 
@@ -36,12 +36,11 @@ class CreateTransfersTable extends Migration
                 ->onUpdate('cascade');
 
 
-            $table->foreign('office_id')
-                ->references('id')
-                ->on('offices')
-                // ->onDelete('cascade')
-                ->onUpdate('cascade');
-
+            // $table->foreign('office_id')
+            //     ->references('id')
+            //     ->on('offices')
+            // ->onDelete('cascade')
+            // ->onUpdate('cascade');
 
             $table->foreign('community_id')
                 ->references('id')

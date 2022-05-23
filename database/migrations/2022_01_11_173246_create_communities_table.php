@@ -22,7 +22,7 @@ class CreateCommunitiesTable extends Migration
             $table->string('comm_name');
             $table->string('comm_slug')->unique();
             $table->smallInteger('comm_level');
-            $table->tinyText('comm_cellphone');
+            $table->tinyText('comm_cellphone')->nullable();
             $table->tinyText('comm_phone');
             $table->string('comm_email')->unique();
             $table->dateTime('date_fndt_comm');
@@ -33,6 +33,7 @@ class CreateCommunitiesTable extends Migration
             // Generar campo para clave foranea
 
             $table->unsignedBigInteger('pastoral_id');
+            $table->unsignedBigInteger('zone_id')->nullable();
 
             // Generar la clave foranea recursiva
 
@@ -45,6 +46,11 @@ class CreateCommunitiesTable extends Migration
             $table->foreign('pastoral_id')
                 ->references('id')
                 ->on('pastorals')
+                ->onUpdate('cascade');
+
+                $table->foreign('zone_id')
+                ->references('id')
+                ->on('zones')
                 ->onUpdate('cascade');
 
 

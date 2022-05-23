@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Community;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
@@ -42,7 +43,7 @@ class WorkController extends Controller
     public function create($community_slug)
     {
         $validator = Validator::make(['slug' => $community_slug], [
-            'slug' => ['required', 'string', 'max:50', 'alpha_dash', 'exists:communities,comm_slug']
+            'slug' => ['required', 'string', 'alpha_dash', 'exists:communities,comm_slug']
         ]);
         if ($validator->fails()) {
             abort(404);
@@ -64,17 +65,17 @@ class WorkController extends Controller
     public function store(Request $request, $community_id)
     {
         $validator = Validator::make(['id' => $community_id], [
-            'id' => ['required', 'string', 'max:50', 'alpha_dash', 'exists:communities,id']
+            'id' => ['required', 'exists:communities,id']
         ]);
 
         $validatorData = Validator::make($request->all(), [
             'comm_identity_card' => ['required', 'string', 'max:13'],
-            'comm_name' => ['required', 'max:100'],
-            'comm_cellphone' =>  ['string', 'max:20'],
+            'comm_name' => ['required', 'max:1000'],
+            'comm_cellphone' =>  ['nullable', 'string', 'max:20'],
             'comm_phone' =>  ['string', 'max:20'],
             'comm_email' =>  ['required', 'string', 'email', 'max:255', 'unique:communities'],
             'date_fndt_comm' => ['required', 'date_format:Y-m-d H:i:s'],
-            'date_fndt_work' => ['required', 'date_format:Y-m-d H:i:s'],
+            'date_fndt_work' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'rn_collaborators' => ['required', 'integer', 'between:0,1000'],
             'political_division_id' => ['required', 'exists:political_divisions,id'],
             'pastoral_id' => ['required', 'exists:pastorals,id']
@@ -135,7 +136,7 @@ class WorkController extends Controller
     public function edit($slug)
     {
         $validator = Validator::make(['slug' => $slug], [
-            'slug' => ['required', 'string', 'max:50', 'alpha_dash', 'exists:communities,comm_slug']
+            'slug' => ['required', 'string', 'alpha_dash', 'exists:communities,comm_slug']
         ]);
         if ($validator->fails()) {
             abort(404);
@@ -145,6 +146,7 @@ class WorkController extends Controller
 
         $community_custom = Community::with('address')
             ->with('pastoral')
+            ->with('zone')
             ->where('comm_slug', '=', [$slug])
             ->get()
             ->first();
@@ -166,29 +168,32 @@ class WorkController extends Controller
      */
     public function update(Request $request, $work_id)
     {
-
         $validator = Validator::make([
             'work_id' => $work_id,
         ], [
             'work_id' => ['required', 'exists:communities,id'],
         ]);
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
         $validatorData = Validator::make(
             $request->all(),
             [
                 'comm_identity_card' => ['required', 'string', 'max:13'],
-                'comm_name' => ['required', 'max:100'],
-                'comm_cellphone' =>  ['string', 'max:20'],
+                'comm_name' => ['required', 'max:1000'],
+                'comm_cellphone' =>  ['nullable', 'string', 'max:20'],
                 'comm_phone' =>  ['string', 'max:20'],
-                'comm_email' =>  ['email', 'max:255'],
+                'comm_email' =>  ['required', 'string', 'email', 'max:255', Rule::unique('communities')->ignore($work_id)],
                 'date_fndt_comm' => ['required', 'date_format:Y-m-d H:i:s'],
-                'date_fndt_work' => ['required', 'date_format:Y-m-d H:i:s'],
-                'rn_collaborators' => ['required', 'integer', 'between:0,1000'],
+                'date_fndt_work' => ['nullable',  'date_format:Y-m-d H:i:s'],
+                'rn_collaborators' => ['integer', 'between:1,1000'],
                 'pastoral_id' => ['required', 'exists:pastorals,id'],
+                'zone_id' => ['nullable', 'exists:zones,id']
             ]
         );
-        if ($validator->fails()) {
-            return abort(404);
-        }
+
         if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validatorData->errors())
@@ -208,6 +213,7 @@ class WorkController extends Controller
             'date_fndt_work' => $request->get('date_fndt_work'),
             'rn_collaborators' => $request->get('rn_collaborators'),
             'pastoral_id' => $request->get('pastoral_id'),
+            'zone_id' => $request->get('zone_id'),
         ]);
 
         if (!$community->address) {

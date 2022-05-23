@@ -9,6 +9,8 @@ import store from "./store/index.js";
 import Datepicker from "vue3-date-time-picker";
 import { QuillEditor } from "@vueup/vue-quill";
 import { Bar } from 'vue-chartjs'
+import { SetupCalendar, Calendar, DatePicker } from 'v-calendar';
+
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
@@ -21,9 +23,12 @@ createInertiaApp({
             .use(plugin)
             .use(store)
             .use(VueSweetalert2)
+            .use(SetupCalendar)
             .component("multiselect", VueMultiselect)
             .component("datepicker", Datepicker)
             .component("QuillEditor", QuillEditor)
+            .component("Calendar", Calendar)
+            .component("VDatePicker", DatePicker)
             .component("Bar", Bar)
             .mixin({ methods: { route } })
             .mount(el);

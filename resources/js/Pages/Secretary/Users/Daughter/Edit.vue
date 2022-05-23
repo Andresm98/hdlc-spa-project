@@ -227,6 +227,27 @@
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
                     >
+                      Nombres de Comunidad:
+                    </label>
+                    <jet-input-error :message="errors.fullnamecomm" />
+                    <small>Opcional: Sor Jenito</small>
+                    <input
+                      type="text"
+                      placeholder="Ejm: Lucas Andres"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      onkeydown="return /[a-z, ]/i.test(event.key)"
+                      onblur="if (this.value == '') {this.value = '';}"
+                      onfocus="if (this.value == '') {this.value = '';}"
+                      maxlength="100"
+                      v-model="form.fullnamecomm"
+                    />
+                  </div>
+
+                  <div class="relative w-full mb-3">
+                    <label
+                      class="block text-sm font-medium text-gray-700"
+                      htmlfor="grid-password"
+                    >
                       Nombres Completos:
                     </label>
                     <jet-input-error :message="errors.name" />
@@ -580,6 +601,7 @@ export default defineComponent({
       form: useForm({
         username: this.daughter_custom.username,
         name: this.daughter_custom.name,
+        fullnamecomm: this.daughter_custom.fullnamecomm,
         lastname: this.daughter_custom.lastname,
         email: this.daughter_custom.email,
         file: null,
@@ -619,6 +641,7 @@ export default defineComponent({
         {
           _method: "put",
           name: this.form.name,
+          fullnamecomm: this.form.fullnamecomm,
           lastname: this.form.lastname,
           email: this.form.email,
           file: this.form.file,

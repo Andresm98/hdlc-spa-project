@@ -25,8 +25,8 @@ class CreateProfilesTable extends Migration
             $table->dateTime('date_vote')->nullable();
             $table->dateTime('date_death')->nullable();
             $table->dateTime('date_exit')->nullable();
-            $table->char('cellphone', 20);
-            $table->char('phone', 20);
+            $table->char('cellphone', 20)->nullable();
+            $table->char('phone', 20)->nullable();
             $table->longText('observation', 4000);
 
             // Asignar el campo de clave primaria.

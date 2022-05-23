@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ZoneController;
 use App\Http\Controllers\Admin\OfficeController;
 use App\Http\Controllers\Admin\PastoralController;
 use App\Http\Controllers\Admin\SettingsController;
@@ -67,6 +68,11 @@ Route::group(
 
         Route::resource('admin/office', OfficeController::class)
             ->names('office');
+
+        // Group Crud Zone
+
+        Route::resource('admin/zone', ZoneController::class)
+            ->names('zone');
 
         // Group Crud Appointment Level
 

@@ -122,6 +122,31 @@
       </Link>
       <hr :class="isUrl('system/admin/appointmentlevel') ? 'text-white' : 'hidden'" />
     </div>
+
+    <div class="mb-4">
+      <Link class="group flex items-center py-3" :href="route('admin.zone.index')">
+        <icon
+          name="roles"
+          class="mr-2 w-4 h-4"
+          :class="
+            isUrl('system/admin/zone')
+              ? 'fill-white'
+              : 'fill-gray-400 group-hover:fill-white'
+          "
+        />
+        <div
+          :class="
+            isUrl('system/admin/zone')
+              ? 'text-white'
+              : 'text-gray-400 group-hover:text-white'
+          "
+        >
+          Zonas
+        </div>
+      </Link>
+      <hr :class="isUrl('system/admin/zone') ? 'text-white' : 'hidden'" />
+    </div>
+
     <div class="mb-4">
       <Link class="group flex items-center py-3" href="/system/admin/users/all">
         <icon

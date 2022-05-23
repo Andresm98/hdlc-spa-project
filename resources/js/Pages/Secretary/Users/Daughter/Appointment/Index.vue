@@ -1,11 +1,31 @@
 <template>
   <div class="w-full shadow sm:rounded-md">
-    <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
-      <h6
-        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
+    <div v-if="$page.props.flash != null">
+      <alert
+        v-if="$page.props.flash.success"
+        class="alert"
+        :type_alert_r="(type_alert = 'success')"
+        :message="$page.props.flash.success"
       >
-        Plantilla de Nombramientos
-      </h6>
+      </alert>
+    </div>
+    <div v-if="$page.props.flash != null">
+      <alert
+        v-if="$page.props.flash.error"
+        class="alert"
+        :type_alert_r="(type_alert = 'error')"
+        :message="$page.props.flash.error"
+      >
+      </alert>
+    </div>
+    <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
+      <div class="my-4">
+        <div class="w-full md:w-5/5 mx-auto">
+          <h4 class="text-lg font-medium text-center leading-6 text-gray-900 uppercase">
+            <strong>Plantilla de Nombramientos</strong>
+          </h4>
+        </div>
+      </div>
       <form @submit.prevent="submit">
         <div class="flex flex-wrap">
           <div class="w-full lg:w-6/12 px-4">
@@ -21,16 +41,13 @@
               <div :class="{ invalid: isInvalidLevel }">
                 <multiselect
                   :searchable="true"
-                  v-model="selectOne.selectedLevel"
-                  :options="selectOne.options"
-                  :close-on-select="true"
-                  :clear-on-select="false"
-                  mode="tags"
+                  v-model="selectLevel.selectedLevel"
+                  :options="selectLevel.options"
+                  placeholder="Buscar Categoría"
                   label="name"
-                  @search-change="onSearchLevelChange"
-                  @select="onSelectedLevel"
                   track-by="name"
-                  placeholder="Buscar Nivel"
+                  :multiple="true"
+                  :taggable="true"
                 >
                 </multiselect>
                 <p class="text-sm text-red-400" v-show="isInvalidLevel">Obligatorio</p>
@@ -49,16 +66,13 @@
               <div :class="{ invalid: isInvalidLevelCategory }">
                 <multiselect
                   :searchable="true"
-                  v-model="selectTwo.selectedLevelCategory"
-                  :options="selectTwo.options"
-                  :close-on-select="true"
-                  :clear-on-select="false"
-                  mode="tags"
-                  label="name"
-                  @search-change="onSearchLevelCategoryChange"
-                  @select="onSelectedCategoryLevel"
-                  track-by="name"
+                  v-model="selectCategory.selectedLevelCategory"
+                  :options="selectCategory.options"
                   placeholder="Buscar Categoría"
+                  label="name"
+                  track-by="name"
+                  :multiple="true"
+                  :taggable="true"
                 >
                 </multiselect>
                 <p class="text-sm text-red-400" v-show="isInvalidLevelCategory">
@@ -165,6 +179,14 @@
 
       <!-- Table -->
 
+      Nombrambientos Vigentes
+
+      <jet-button-success
+        type="submit"
+        class="ml-4 mt-4 btn btn-primary"
+        @action="createAppointmentActual"
+        >Crear Nombramiento</jet-button-success
+      >
       <div class="py-2">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
           <div
@@ -188,6 +210,12 @@
                   </th>
                   <th
                     scope="col"
+                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Cambio
+                  </th>
+                  <th
+                    scope="col"
                     class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Fechas (inicio-fin)
@@ -201,7 +229,10 @@
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="appointment in this.getAllAppointment()" :key="appointment">
+                <tr
+                  v-for="appointment in this.getAllAppointment().listActual"
+                  :key="appointment"
+                >
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                       <div class="flex-shrink-0 h-10 w-10">
@@ -255,6 +286,198 @@
                     <div class="text-sm text-gray-900">
                       {{ appointment.appointment_level.name }}
                     </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      v-if="appointment.transfer.transfer_date_relocated === null"
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-green-100 text-green-800"
+                    >
+                      {{ appointment.transfer.transfer_reason.substring(0, 15) }} <br />
+                      {{ this.formatDateShow(appointment.transfer.transfer_date_adission)
+                      }}<br />
+                      {{
+                        this.formatDateShow(appointment.transfer.transfer_date_relocated)
+                      }}
+                    </span>
+                    <span
+                      v-else
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
+                    >
+                      {{ appointment.transfer.transfer_reason.substring(0, 15) }} <br />
+                      {{ this.formatDateShow(appointment.transfer.transfer_date_adission)
+                      }}<br />
+                      {{
+                        this.formatDateShow(appointment.transfer.transfer_date_relocated)
+                      }}
+                    </span>
+                  </td>
+                  <td
+                    class="px-6 py-4 whitespace-nowrap"
+                    v-if="appointment.date_end_appointment == null"
+                  >
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                    >
+                      {{ this.formatDateShow(appointment.date_appointment) }} -
+                      {{ this.formatDateShow(appointment.date_end_appointment) }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap" v-else>
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                    >
+                      {{ this.formatDateShow(appointment.date_appointment) }} -
+                      {{ this.formatDateShow(appointment.date_end_appointment) }}
+                    </span>
+                  </td>
+
+                  <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <!-- Components -->
+
+                    <div class="mx-auto flex gap-10">
+                      <jet-button @click="confirmationAppointmentUpdate(appointment)"
+                        >Detalles</jet-button
+                      >
+                      <jet-danger-button
+                        @click="confirmationAppointmentDelete(appointment)"
+                        >Eliminar</jet-danger-button
+                      >
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
+            <p class="text-center text-lg">Por el momento no existen registros.</p>
+          </div>
+        </div>
+      </div>
+
+      Nombrambientos Antiguos
+      <div class="py-2">
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
+          <div
+            v-if="this.getAllAppointment()"
+            class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
+          >
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-blue-100">
+                <tr>
+                  <th
+                    scope="col"
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Comunidad/Obra
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Cargo
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Cambio
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Fechas (inicio-fin)
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                  >
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr
+                  v-for="appointment in this.getAllAppointment().listOld"
+                  :key="appointment"
+                >
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 h-10 w-10">
+                        <svg class="svg-icon" viewBox="2 2 23 23">
+                          <path
+                            d="M17.283,5.549h-5.26V4.335c0-0.222-0.183-0.404-0.404-0.404H8.381c-0.222,0-0.404,0.182-0.404,0.404v1.214h-5.26c-0.223,0-0.405,0.182-0.405,0.405v9.71c0,0.223,0.182,0.405,0.405,0.405h14.566c0.223,0,0.404-0.183,0.404-0.405v-9.71C17.688,5.731,17.506,5.549,17.283,5.549 M8.786,4.74h2.428v0.809H8.786V4.74z M16.879,15.26H3.122v-4.046h5.665v1.201c0,0.223,0.182,0.404,0.405,0.404h1.618c0.222,0,0.405-0.182,0.405-0.404v-1.201h5.665V15.26z M9.595,9.583h0.81v2.428h-0.81V9.583zM16.879,10.405h-5.665V9.19c0-0.222-0.183-0.405-0.405-0.405H9.191c-0.223,0-0.405,0.183-0.405,0.405v1.215H3.122V6.358h13.757V10.405z"
+                          ></path>
+                        </svg>
+                      </div>
+                      <div class="ml-4">
+                        <div class="text-sm font-medium text-black hover:text-blue-500">
+                          <div
+                            v-if="
+                              appointment.community.comm_level == 1 &&
+                              appointment.community.comm_id == null
+                            "
+                          >
+                            <a
+                              :href="
+                                route('secretary.communities.edit', {
+                                  slug: appointment.community.comm_slug,
+                                })
+                              "
+                              target="_blank"
+                            >
+                              {{ appointment.community.comm_name.substring(0, 15) }}...
+                            </a>
+                          </div>
+                          <div
+                            v-if="
+                              appointment.community.comm_level == 2 &&
+                              appointment.community.comm_id != null
+                            "
+                          >
+                            <a
+                              :href="
+                                route('secretary.works.edit', {
+                                  slug: appointment.community.comm_slug,
+                                })
+                              "
+                              target="_blank"
+                            >
+                              {{ appointment.community.comm_name.substring(0, 15) }}...
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">
+                      {{ appointment.appointment_level.name }}
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      v-if="appointment.transfer.transfer_date_relocated === null"
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-green-100 text-green-800"
+                    >
+                      {{ appointment.transfer.transfer_reason.substring(0, 15) }} <br />
+                      {{ this.formatDateShow(appointment.transfer.transfer_date_adission)
+                      }}<br />
+                      {{
+                        this.formatDateShow(appointment.transfer.transfer_date_relocated)
+                      }}
+                    </span>
+                    <span
+                      v-else
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
+                    >
+                      {{ appointment.transfer.transfer_reason.substring(0, 15) }} <br />
+                      {{ this.formatDateShow(appointment.transfer.transfer_date_adission)
+                      }}<br />
+                      {{
+                        this.formatDateShow(appointment.transfer.transfer_date_relocated)
+                      }}
+                    </span>
                   </td>
                   <td
                     class="px-6 py-4 whitespace-nowrap"
@@ -367,61 +590,59 @@
         <template #content>
           <div class="flex flex-wrap">
             <div class="w-full lg:w-6/12 px-4">
-              <div class="">
-                <label
-                  class="block text-sm font-medium text-gray-700"
-                  htmlfor="grid-password"
+              <label
+                class="block text-sm font-medium text-gray-700"
+                htmlfor="grid-password"
+              >
+                Nivel:
+              </label>
+              <small>Formato: Seleccionar el nivel del permiso.</small>
+              <div :class="{ invalid: isInvalidLevelUpdate }">
+                <multiselect
+                  :searchable="true"
+                  v-model="selectOneUpdate.selectedLevel"
+                  :options="selectOneUpdate.options"
+                  :close-on-select="true"
+                  :clear-on-select="false"
+                  mode="tags"
+                  label="name"
+                  @search-change="onSearchLevelChange"
+                  @select="onSelectedLevel"
+                  track-by="name"
+                  placeholder="Buscar Nivel"
                 >
-                  Nivel:
-                </label>
-                <small>Formato: Seleccionar el nivel del permiso.</small>
-                <div :class="{ invalid: isInvalidLevel }">
-                  <multiselect
-                    :searchable="true"
-                    v-model="selectOne.selectedLevel"
-                    :options="selectOne.options"
-                    :close-on-select="true"
-                    :clear-on-select="false"
-                    mode="tags"
-                    label="name"
-                    @search-change="onSearchLevelChange"
-                    @select="onSelectedLevel"
-                    track-by="name"
-                    placeholder="Buscar Nivel"
-                  >
-                  </multiselect>
-                  <p class="text-sm text-red-400" v-show="isInvalidLevel">Obligatorio</p>
-                </div>
+                </multiselect>
+                <p class="text-sm text-red-400" v-show="isInvalidLevelUpdate">
+                  Obligatorio
+                </p>
               </div>
             </div>
             <div class="w-full lg:w-6/12 px-4">
-              <div class="">
-                <label
-                  class="block text-sm font-medium text-gray-700"
-                  htmlfor="grid-password"
+              <label
+                class="block text-sm font-medium text-gray-700"
+                htmlfor="grid-password"
+              >
+                Título:
+              </label>
+              <small>Formato: Seleccionar el nombramiento específico.</small>
+              <div :class="{ invalid: isInvalidLevelCategoryUpdate }">
+                <multiselect
+                  :searchable="true"
+                  v-model="selectTwoUpdate.selectedLevelCategory"
+                  :options="selectTwoUpdate.options"
+                  :close-on-select="true"
+                  :clear-on-select="false"
+                  mode="tags"
+                  label="name"
+                  @search-change="onSearchLevelCategoryChange"
+                  @select="onSelectedCategoryLevel"
+                  track-by="name"
+                  placeholder="Buscar Categoría"
                 >
-                  Título:
-                </label>
-                <small>Formato: Seleccionar el nombramiento específico.</small>
-                <div :class="{ invalid: isInvalidLevelCategory }">
-                  <multiselect
-                    :searchable="true"
-                    v-model="selectTwo.selectedLevelCategory"
-                    :options="selectTwo.options"
-                    :close-on-select="true"
-                    :clear-on-select="false"
-                    mode="tags"
-                    label="name"
-                    @search-change="onSearchLevelCategoryChange"
-                    @select="onSelectedCategoryLevel"
-                    track-by="name"
-                    placeholder="Buscar Categoría"
-                  >
-                  </multiselect>
-                  <p class="text-sm text-red-400" v-show="isInvalidLevelCategory">
-                    Obligatorio
-                  </p>
-                </div>
+                </multiselect>
+                <p class="text-sm text-red-400" v-show="isInvalidLevelCategoryUpdate">
+                  Obligatorio
+                </p>
               </div>
             </div>
 
@@ -443,8 +664,8 @@
                       :searchable="true"
                       placeholder="Por favor seleccionar la comunidad a la que va"
                       select-label="Seleccionar!"
-                      v-model="this.selectThree.selectedCommunity"
-                      :options="this.allWork"
+                      v-model="selectThree.selectedCommunity"
+                      :options="allWork"
                       :close-on-select="true"
                       :clear-on-select="false"
                       :max-height="200"
@@ -560,6 +781,7 @@ import JetButton from "@/Jetstream/Button.vue";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import Alert from "@/Components/Alert";
 
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
@@ -588,6 +810,7 @@ export default {
     JetInput,
     JetInputError,
     moment,
+    Alert,
   },
   //  Setup all data
   setup() {
@@ -596,17 +819,10 @@ export default {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
-    const form = useForm({
-      description: null,
-      date_appointment: null,
-      date_end_appointment: null,
-      appointment_level_id: null,
-      community_id: null,
-    });
+
     return {
       date,
       format,
-      form,
     };
   },
 
@@ -632,6 +848,15 @@ export default {
         ["clean"], // remove formatting button
       ],
       appointmentBeingDeleted: null,
+      appointmentBeingCreated: null,
+      form: this.$inertia.form({
+        description: null,
+        date_appointment: null,
+        date_end_appointment: null,
+        appointment_level_id: null,
+        community_id: null,
+      }),
+
       deleteAppointmentForm: this.$inertia.form({
         description: null,
         date_appointment: null,
@@ -650,7 +875,7 @@ export default {
 
       //   Selects
 
-      selectOne: {
+      selectLevel: {
         selectedLevel: undefined,
         value: 0,
         isDisabled: false,
@@ -660,7 +885,7 @@ export default {
         multiSelectLevel: null,
         vSelectLevel: null,
       },
-      selectTwo: {
+      selectCategory: {
         selectedLevelCategory: undefined,
         value: 0,
         isDisabled: false,
@@ -679,6 +904,26 @@ export default {
         loading: false,
         multiSelectCommunity: null,
         vSelectCommunity: null,
+      },
+      selectOneUpdate: {
+        selectedLevel: undefined,
+        value: 0,
+        isDisabled: false,
+        isTouched: false,
+        options: [],
+        loading: false,
+        multiSelectLevel: null,
+        vSelectLevel: null,
+      },
+      selectTwoUpdate: {
+        selectedLevelCategory: undefined,
+        value: 0,
+        isDisabled: false,
+        isTouched: false,
+        options: [],
+        loading: false,
+        multiSelectLevelCategory: null,
+        vSelectLevelCategory: null,
       },
 
       isDisabled: false,
@@ -705,18 +950,34 @@ export default {
 
     // Validate Multioption
     isInvalidLevel() {
-      //   console.log("ee", this.selectOne.selectedProvince);
       return (
-        this.selectOne.selectedLevel == undefined || this.selectOne.selectedLevel == null
+        this.selectLevel.selectedLevel == undefined ||
+        Object.keys(this.selectLevel.selectedLevel).length === 0
       );
     },
     isInvalidLevelCategory() {
-      //   console.log("ee canton", this.selectTwo.selectedCanton);
       return (
-        this.selectTwo.selectedLevelCategory == undefined ||
-        this.selectTwo.selectedLevelCategory == null
+        this.selectCategory.selectedLevelCategory == undefined ||
+        Object.keys(this.selectCategory.selectedLevelCategory).length === 0
       );
     },
+
+    // Validate Multioption
+    isInvalidLevelUpdate() {
+      //   console.log("ee", this.selectOne.selectedProvince);
+      return (
+        this.selectOneUpdate.selectedLevel == undefined ||
+        this.selectOneUpdate.selectedLevel == null
+      );
+    },
+    isInvalidLevelCategoryUpdate() {
+      //   console.log("ee canton", this.selectTwo.selectedCanton);
+      return (
+        this.selectTwoUpdate.selectedLevelCategory == undefined ||
+        this.selectTwoUpdate.selectedLevelCategory == null
+      );
+    },
+
     isInvalidCommunity() {
       //   console.log("ee Parish", this.selectThree.selectedParish);
       return this.form.community_id == undefined || this.form.community_id == null;
@@ -736,6 +997,7 @@ export default {
           })
         )
         .then((res) => {
+          console.log("app ", res.data);
           this.updateAllAppointment(res.data);
         });
     },
@@ -748,15 +1010,38 @@ export default {
           })
         )
         .then((res) => {
-          this.selectOne.options = res.data;
+          this.selectLevel.options = res.data;
+          this.selectOneUpdate.options = res.data;
         });
     },
   },
   watch: {
-    "selectOne.selectedLevel": function () {
-      if (this.selectOne.selectedLevel === null) {
-        this.selectTwo.selectedLevelCategory = null;
-        this.selectTwo.options = [];
+    "selectLevel.selectedLevel": function () {
+      this.selectCategory.options = [];
+      for (var level in this.selectLevel.selectedLevel) {
+        axios
+          .get(
+            this.route("secretary.appointment.levels.index", {
+              id: this.selectLevel.selectedLevel[level].id,
+              status: 2,
+            })
+          )
+          .then((res) => {
+            for (var index in res.data) {
+              this.selectCategory.options.push(res.data[index]);
+            }
+          });
+      }
+      if (this.isInvalidLevel) {
+        this.selectCategory.options = [];
+        this.selectCategory.selectedLevelCategory = [];
+      }
+    },
+
+    "selectOneUpdate.selectedLevel": function () {
+      if (this.selectOneUpdate.selectedLevel === null) {
+        this.selectTwoUpdate.selectedLevelCategory = null;
+        this.selectTwoUpdate.options = [];
         // Clean data Form
         this.form.appointment_level_id = null;
 
@@ -765,8 +1050,8 @@ export default {
         }
       }
     },
-    "selectTwo.selectedLevelCategory": function () {
-      if (this.selectTwo.selectedLevelCategory === null) {
+    "selectCategory.selectedLevelCategory": function () {
+      if (this.selectCategory.selectedLevelCategory === null) {
         // Clean data Form
         this.form.appointment_level_id = null;
         if (this.permitBeingUpdated != null) {
@@ -774,26 +1059,37 @@ export default {
         }
       }
     },
-
+    "selectTwoUpdate.selectedLevelCategory": function () {
+      if (this.selectTwoUpdate.selectedLevelCategory === null) {
+        // Clean data Form
+        this.form.appointment_level_id = null;
+        if (this.permitBeingUpdated != null) {
+          this.updatePermitForm.political_division_id = null;
+        }
+      }
+    },
     "form.description": function () {
       var limit = 2000;
       const quill = this.$refs.qleditor1;
-
-      if (quill.getHTML().length <= limit) {
-        this.data_intput_one = quill.getHTML();
-      } else {
-        quill.setHTML(this.data_intput_one);
+      if (quill != null) {
+        if (quill.getHTML().length <= limit) {
+          this.data_intput_one = quill.getHTML();
+        } else {
+          quill.setHTML(this.data_intput_one);
+        }
       }
     },
     "updateAppointmentForm.description": function () {
       var limit = 2000;
-      const quill = this.$refs.qleditor1;
-
-      if (quill.getHTML().length <= limit) {
-        this.data_intput_one = quill.getHTML();
-      } else {
-        quill.setHTML(this.data_intput_one);
-      }
+      console.log("ey");
+      //   const quill = this.$refs.qleditor1;
+      //   if (quill != null) {
+      //     if (quill.getHTML().length <= limit) {
+      //       this.data_intput_one = quill.getHTML();
+      //     } else {
+      //       quill.setHTML(this.data_intput_one);
+      //     }
+      //   }
     },
   },
   methods: {
@@ -802,13 +1098,18 @@ export default {
     ...mapActions("work", ["updateAllWork"]),
     ...mapGetters("work", ["getAllWork"]),
 
+    // Appoinment Actual
+    confirmationCreateAppointmentActual() {
+      appointmentBeingCreated;
+    },
+
     onSearchLevelChange() {},
     onSelectedLevel(level) {
       this.form.appointment_level_id = null;
 
-      this.selectTwo.selectedLevelCategory = undefined;
+      this.selectTwoUpdate.selectedLevelCategory = undefined;
 
-      this.selectTwo.options = [];
+      this.selectTwoUpdate.options = [];
       axios
         .get(
           this.route("secretary.appointment.levels.index", {
@@ -817,7 +1118,7 @@ export default {
           })
         )
         .then((res) => {
-          this.selectTwo.options = res.data;
+          this.selectTwoUpdate.options = res.data;
         });
     },
 
@@ -835,6 +1136,7 @@ export default {
       if (this.form.date_appointment != null) {
         this.form.date_appointment = this.formatDate(this.form.date_appointment);
       }
+      this.form.appointment_level_id = this.selectCategory.selectedLevelCategory;
 
       if (
         this.isInvalidLevel == false &&
@@ -859,9 +1161,9 @@ export default {
               this.form.description = null;
               this.form.date_appointment = null;
 
-              this.selectOne.selectedLevel = null;
-              this.selectTwo.selectedLevelCategory = null;
-              this.selectTwo.options = [];
+              this.selectLevel.selectedLevel = null;
+              this.selectCategory.selectedLevelCategory = null;
+              this.selectCategory.options = [];
               this.selectThree.selectedCommunity = null;
               this.selectThree.options = [];
 
@@ -883,7 +1185,7 @@ export default {
         });
     },
 
-    // Update
+    // Update_this2
 
     confirmationAppointmentUpdate(appointment) {
       this.updateAppointmentForm.name_appointment = appointment.name_appointment;
@@ -892,7 +1194,7 @@ export default {
       this.updateAppointmentForm.date_end_appointment = appointment.date_end_appointment;
 
       this.status(appointment).then((data) => {
-        this.selectOne.selectedLevel = data.level;
+        this.selectOneUpdate.selectedLevel = data.level;
         axios
           .get(
             this.route("secretary.appointment.levels.index", {
@@ -901,7 +1203,7 @@ export default {
             })
           )
           .then((res) => {
-            this.selectTwo.options = res.data;
+            this.selectTwoUpdate.options = res.data;
           });
 
         axios
@@ -915,7 +1217,7 @@ export default {
             this.selectThree.selectedCommunity = res.data;
           });
 
-        this.selectTwo.selectedLevelCategory = data.levelCategory;
+        this.selectTwoUpdate.selectedLevelCategory = data.levelCategory;
       });
 
       this.appointmentBeingUpdated = appointment;
@@ -929,9 +1231,9 @@ export default {
       return response.data;
     },
     cancelUpdateAppointment() {
-      this.selectOne.selectedLevel = null;
-      this.selectTwo.selectedLevelCategory = null;
-      this.selectTwo.options = [];
+      this.selectOneUpdate.selectedLevel = null;
+      this.selectTwoUpdate.selectedLevelCategory = null;
+      this.selectTwoUpdate.options = [];
       this.selectThree.selectedCommunity = null;
       this.selectThree.options = [];
       this.appointmentBeingUpdated = null;
@@ -946,7 +1248,7 @@ export default {
         );
       }
 
-      this.updateAppointmentForm.appointment_level_id = this.selectTwo.selectedLevelCategory;
+      this.updateAppointmentForm.appointment_level_id = this.selectTwoUpdate.selectedLevelCategory;
       this.updateAppointmentForm.community_id = this.selectThree.selectedCommunity;
 
       this.updateAppointmentForm.put(
@@ -962,9 +1264,9 @@ export default {
             setTimeout(() => {
               this.updateTable();
             }, 1);
-            this.selectOne.selectedLevel = null;
-            this.selectTwo.selectedLevelCategory = null;
-            this.selectTwo.options = [];
+            this.selectOneUpdate.selectedLevel = null;
+            this.selectTwoUpdate.selectedLevelCategory = null;
+            this.selectTwoUpdate.options = [];
             this.selectThree.selectedCommunity = null;
             this.selectThree.options = [];
             this.appointmentBeingUpdated = null;
@@ -975,7 +1277,7 @@ export default {
 
     // Delete
     confirmationAppointmentDelete(appointment) {
-      this.deleteAppointmentForm.name_appointment = appointment.name_appointment;
+      this.deleteAppointmentForm.name_appointment = appointment.appointment_level.name;
       this.deleteAppointmentForm.description = appointment.description;
       this.deleteAppointmentForm.date_appointment = appointment.date_appointment;
       this.deleteAppointmentForm.date_end_appointment = appointment.date_end_appointment;

@@ -179,7 +179,7 @@
                           <div v-for="comm in groupCommunities" :key="comm">
                             <div v-if="comm.pastoral_id == pastoral.id">
                               <a
-                                :href="'all?active=1&pastoral=' + pastoral.id"
+                                :href="'all?active=1&type=1&pastoral=' + pastoral.id"
                                 class="hover:cursor-pointer"
                               >
                                 {{ comm.total }}
@@ -195,7 +195,7 @@
                           <div v-for="works in groupWorks" :key="works">
                             <div v-if="works.pastoral_id == pastoral.id">
                               <a
-                                :href="'all?active=1&pastoral=' + pastoral.id"
+                                :href="'all?active=1&type=2&pastoral=' + pastoral.id"
                                 class="hover:cursor-pointer"
                               >
                                 {{ works.total }}
@@ -209,9 +209,13 @@
                           class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
                         >
                           <div v-for="daughters in groupDaughters" :key="daughters">
-                            <div v-if="daughters.pastoral_id == pastoral.id">
+                            <div v-if="pastoral.id === daughters.pastoral_id">
                               <a
-                                :href="'all?active=1&pastoral=' + pastoral.id"
+                                :href="
+                                  route('secretary.daughters.index') +
+                                  '?status=1&pastoral=' +
+                                  pastoral.id
+                                "
                                 class="hover:cursor-pointer"
                               >
                                 {{ daughters.total }}

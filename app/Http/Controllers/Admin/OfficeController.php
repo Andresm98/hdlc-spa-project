@@ -55,7 +55,7 @@ class OfficeController extends Controller
 
         Office::create([
             'office_name' => $request->get('office_name'),
-            'office_observation' => $request->get('office_name'),
+            'office_observation' => $request->get('office_observation'),
         ]);
         return redirect()->back()->with(['success' => 'Oficio creado correctamente.']);
     }
@@ -100,7 +100,7 @@ class OfficeController extends Controller
 
         $office->update([
             'office_name' => $request->get('office_name'),
-            'office_observation' => $request->get('office_name'),
+            'office_observation' => $request->get('office_observation'),
         ]);
 
         return redirect()->back()->with(['success' => 'Officio actualizado correctamente.']);

@@ -20,16 +20,36 @@ class OfficeSeeder extends Seeder
         //     'office_name'  => 'Superiora',
         //     'office_observation' => 'Es la encargada de dirigir la inst.',
         // ]);
-        $office = Office::create([
+        Office::create([
             'office_name'  => 'Hermana Sirviente',
             'office_observation' => 'Hermana de rango superior.',
         ]);
-        $office = Office::create([
+        Office::create([
             'office_name'  => 'Hermana Compañera',
             'office_observation' => 'Hermana de rango medio',
         ]);
-        $office = Office::create([
+        Office::create([
             'office_name'  => 'Hermana Seminario',
+            'office_observation' => 'Hermana de rango inicial.',
+        ]);
+        Office::create([
+            'office_name'  => 'Visitadora Provincial',
+            'office_observation' => 'Hermana de rango inicial.',
+        ]);
+        Office::create([
+            'office_name'  => 'Asistente Provincial',
+            'office_observation' => 'Hermana de rango inicial.',
+        ]);
+        Office::create([
+            'office_name'  => 'Consejera Provincial',
+            'office_observation' => 'Hermana de rango inicial.',
+        ]);
+        Office::create([
+            'office_name'  => 'Secretaria Provincial',
+            'office_observation' => 'Hermana de rango inicial.',
+        ]);
+        Office::create([
+            'office_name'  => 'Ecónoma Provincial',
             'office_observation' => 'Hermana de rango inicial.',
         ]);
     }

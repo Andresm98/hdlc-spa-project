@@ -14,12 +14,12 @@
               >
                 Nombre
               </th>
-              <th
+              <!-- <th
                 scope="col"
                 class="text-left text-xs font-medium text-black uppercase tracking-wider"
               >
                 Cargo
-              </th>
+              </th> -->
               <th
                 scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
@@ -57,12 +57,12 @@
                   </div>
                 </div>
               </td>
-              <td class="px-6 py-4 whitespace-nowrap">
+              <!-- <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-gray-900">
-                  {{ user_custom.office_name }}
+                  {{ user_custom.name_appoinment }}
                 </div>
-                <!-- <div class="text-sm text-gray-500">Ecuador</div> -->
-              </td>
+
+              </td> -->
               <td class="px-6 py-4 whitespace-nowrap">
                 <span
                   class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"

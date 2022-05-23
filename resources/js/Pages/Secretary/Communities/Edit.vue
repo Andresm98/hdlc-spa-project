@@ -284,7 +284,7 @@ input:checked ~ .dot {
               </div>
 
               <div class="flex flex-wrap">
-                <div class="w-full lg:w-6/12 px-4">
+                <div class="w-full lg:w-4/12 px-4">
                   <label
                     class="block text-sm font-medium text-gray-700"
                     htmlfor="grid-password"
@@ -303,7 +303,7 @@ input:checked ~ .dot {
                     required
                   />
                 </div>
-                <div class="w-full lg:w-6/12 px-4">
+                <div class="w-full lg:w-4/12 px-4">
                   <label
                     class="block text-sm font-medium text-gray-700"
                     htmlfor="grid-password"
@@ -329,6 +329,36 @@ input:checked ~ .dot {
                     @keydown.space.prevent
                     required
                   />
+                </div>
+                <div class="w-full lg:w-4/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <label
+                      class="block text-sm font-medium text-gray-700"
+                      htmlfor="grid-password"
+                    >
+                      Zona:
+                    </label>
+                    <small
+                      >Opcional: Seleccionar una zona a la que pertenezca la
+                      comunidad.</small
+                    >
+                    <div v-if="this.allZone != null">
+                      <multiselect
+                        :searchable="true"
+                        v-model="this.selectFive.selectedZone"
+                        :options="this.allZone"
+                        :close-on-select="true"
+                        :clear-on-select="false"
+                        mode="tags"
+                        label="name"
+                        @search-change="onSearchZonesChange"
+                        @select="onSelectedZone"
+                        track-by="name"
+                        placeholder="Buscar zona"
+                      >
+                      </multiselect>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="flex flex-wrap">
@@ -471,7 +501,7 @@ input:checked ~ .dot {
                         :clear-on-select="false"
                         mode="tags"
                         label="name"
-                        @search-change="onSearchPrastoralsChange"
+                        @search-change="onSearchPastoralsChange"
                         @select="onSelectedPastoral"
                         track-by="name"
                         placeholder="Buscar pastoral"
@@ -748,6 +778,23 @@ export default defineComponent({
         element.parentElement.innerHTML = `Error: ${error}`;
         console.error("There was an error!", error);
       });
+
+    // Method fetch Zones
+
+    fetch(this.route("secretary.zone.index"))
+      .then(async (response) => {
+        const isJson = response.headers.get("content-type")?.includes("application/json");
+        const data = isJson && (await response.json());
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+        this.allZone = data;
+      })
+      .catch((error) => {
+        element.parentElement.innerHTML = `Error: ${error} `;
+        console.log("There was an error", error);
+      });
   },
 
   beforeMount() {
@@ -807,33 +854,34 @@ export default defineComponent({
 
     // Validate Multioption
     isInvalidProvince() {
-      //   console.log("ee", this.selectOne.selectedProvince);
       return (
         this.selectOne.selectedProvince == undefined ||
         this.selectOne.selectedProvince == null
       );
     },
     isInvalidCanton() {
-      //   console.log("ee canton", this.selectTwo.selectedCanton);
       return (
         this.selectTwo.selectedCanton == undefined ||
         this.selectTwo.selectedCanton == null
       );
     },
     isInvalidParish() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectThree.selectedParish == undefined ||
         this.selectThree.selectedParish == null
       );
     },
     isInvalidPastoral() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectFour.selectedPastoral == undefined ||
         this.selectFour.selectedPastoral == null
       );
     },
+    // isInvalidZone() {
+    //   return (
+    //     this.selectFive.selectedZone == undefined || this.selectFive.selectedZone == null
+    //   );
+    // },
 
     // Validate ID Card`
     validateIdentityCard() {
@@ -937,6 +985,7 @@ export default defineComponent({
         parish_id: null,
         political_division_id: null,
         pastoral_id: null,
+        zone_id: null,
         file: null,
       }),
       photoPreview: null,
@@ -979,7 +1028,16 @@ export default defineComponent({
         multiSelectPastoral: null,
         vSelectPastoral: null,
       },
+      selectFive: {
+        selectedZone: this.community_custom.zone,
+        value: 0,
+        options: [],
+        loading: false,
+        multiSelectZone: null,
+        vSelectZone: null,
+      },
       allPastoral: null,
+      allZone: null,
       displayingStatus: false,
       updatedStatusPastoralForm: this.$inertia.form({
         dateCloseCommunity: null,
@@ -1082,9 +1140,14 @@ export default defineComponent({
     },
     ...mapActions("community", ["changeCommunity"]),
 
-    onSearchPrastoralsChange() {},
+    onSearchPastoralsChange() {},
     onSelectedPastoral(pastoral) {
       this.form.pastoral_id = pastoral.id;
+    },
+
+    onSearchZonesChange() {},
+    onSelectedZone(zone) {
+      this.form.zone_id = zone.id;
     },
     onSearchProvincesChange(term) {
       //   console.log("input data search " + term);
@@ -1163,8 +1226,9 @@ export default defineComponent({
     },
     submit() {
       this.form.date_fndt_comm = this.formatDate(this.form.date_fndt_comm);
-      this.form.date_fndt_work = this.formatDate(this.form.date_fndt_work);
-
+      if (this.form.date_fndt_work != null) {
+        this.form.date_fndt_work = this.formatDate(this.form.date_fndt_work);
+      }
       if (
         this.isInvalidProvince == false &&
         this.isInvalidCanton == false &&
@@ -1173,6 +1237,9 @@ export default defineComponent({
         this.validateIdentityCard == true
       ) {
         this.form.pastoral_id = this.selectFour.selectedPastoral.id;
+        if (this.selectFive.selectedZone != null) {
+          this.form.zone_id = this.selectFive.selectedZone.id;
+        }
         this.form.put(
           route("secretary.communities.update", {
             community_id: this.community_custom.id,
@@ -1182,7 +1249,7 @@ export default defineComponent({
             preserveState: true,
             onSuccess: () => {
               setTimeout(() => {
-                console.log("saved.");
+                this.form.reset();
               }, 1000);
             },
           }

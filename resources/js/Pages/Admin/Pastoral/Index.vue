@@ -198,7 +198,7 @@
         :show="pastoralBeingDeleted"
         @close="pastoralBeingDeleted = null"
       >
-        <template #title> Eliminar el Rol </template>
+        <template #title> Eliminar la Pastoral </template>
 
         <template #content>
           <h5>

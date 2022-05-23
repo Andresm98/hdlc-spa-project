@@ -304,6 +304,24 @@
                                             v-model="form.email"
                                         />
                                     </div>
+                                     <div class="relative w-full mb-3">
+                                        <label
+                                            class="block text-sm font-medium text-gray-700"
+
+                                        >
+                                            Nombre de Comunidad
+                                        </label>
+                                        <jet-input-error
+                                            :message="errors.fullnamecomm"
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Ejm: Sor Jenito"
+                                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                            v-model="form.fullnamecomm"
+                                        />
+                                    </div>
+
                                     <div class="relative w-full mb-3">
                                         <label
                                             class="block text-sm font-medium text-gray-700"
@@ -316,7 +334,7 @@
                                         />
                                         <input
                                             type="text"
-                                            placeholder="Ejm: Lucas Andres"
+                                            placeholder="Ejm: Andrea Ivett"
                                             class="border-0 px-3 py-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                             v-model="form.name"
                                         />
@@ -432,7 +450,8 @@ export default {
     JetLabel,
     JetButton,
     SimpleUpload,
-    SelectInput,Operation
+    SelectInput,
+    Operation,
   },
   data() {
     return {
@@ -452,6 +471,7 @@ export default {
       username: null,
       lastname: null,
       name: null,
+      fullnamecomm: null,
       email: null,
       password: null,
       file: null,

@@ -25,11 +25,11 @@ class CommunityController extends Controller
      */
     public function index()
     {
-
         $validator = Validator::make(request()->all(), [
             'direction' => ['in:asc,desc'],
             'field' => ['in:comm_name,comm_email,pastoral_id'],
             'active' =>  ['integer', 'between:1,2'],
+            'type' =>  ['integer', 'between:1,2'],
             'pastoral' =>  ['integer', 'exists:pastorals,id'],
             'dateStart' => ['date_format:Y-m-d H:i:s'],
             'perPage' =>  ['integer'],
@@ -79,6 +79,10 @@ class CommunityController extends Controller
             }
         }
 
+        if (request('type')) {
+            $query->where('comm_level', request('type'));
+        }
+
         if (request('perProvince')) {
             $address = Address::whereHasMorph(
                 'addressable',
@@ -101,13 +105,12 @@ class CommunityController extends Controller
         return Inertia::render('Secretary/Communities/Index', [
             'provinces' => $provinces,
             'communities_list' => $query
-                ->where('comm_level', '=', 1)
                 ->with('pastoral')
                 ->with('address')
                 ->paginate(request('perPage'))
                 ->appends(request()->query()),
             'pastorals' => $pastorals,
-            'filters' => request()->all(['search', 'field', 'direction', 'page', 'active', 'pastoral', 'dateStart', 'dateEnd', 'perProvince', 'perPage'])
+            'filters' => request()->all(['search', 'field', 'direction', 'page', 'active', 'type', 'pastoral', 'dateStart', 'dateEnd', 'perProvince', 'perPage'])
         ]);
     }
 
@@ -131,12 +134,12 @@ class CommunityController extends Controller
     {
         $validatorData = Validator::make($request->all(), [
             'comm_identity_card' => ['required', 'string', 'max:13'],
-            'comm_name' => ['required', 'max:100'],
-            'comm_cellphone' =>  ['string', 'max:20'],
+            'comm_name' => ['required', 'max:1000'],
+            'comm_cellphone' =>  ['nullable', 'string', 'max:20'],
             'comm_phone' =>  ['string', 'max:20'],
             'comm_email' =>  ['required', 'string', 'email', 'max:255', 'unique:communities'],
             'date_fndt_comm' => ['required', 'date_format:Y-m-d H:i:s'],
-            'date_fndt_work' => ['required', 'date_format:Y-m-d H:i:s'],
+            'date_fndt_work' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'rn_collaborators' => ['integer', 'between:1,1000'],
             'political_division_id' => ['required', 'exists:political_divisions,id'],
             'pastoral_id' => ['required', 'exists:pastorals,id']
@@ -194,7 +197,7 @@ class CommunityController extends Controller
     public function edit($slug)
     {
         $validator = Validator::make(['slug' => $slug], [
-            'slug' => ['required', 'string', 'max:50', 'alpha_dash', 'exists:communities,comm_slug']
+            'slug' => ['required', 'string', 'alpha_dash', 'exists:communities,comm_slug']
         ]);
         if ($validator->fails()) {
             abort(404);
@@ -204,9 +207,14 @@ class CommunityController extends Controller
 
         $community_custom = Community::with('address')
             ->with('pastoral')
+            ->with('zone')
             ->where('comm_slug', '=', [$slug])
             ->get()
             ->first();
+
+        if ($community_custom->comm_level != 1) {
+            abort(404);
+        }
 
         return Inertia::render('Secretary/Communities/Edit', compact('community_custom', 'provinces'));
     }
@@ -229,14 +237,15 @@ class CommunityController extends Controller
             $request->all(),
             [
                 'comm_identity_card' => ['required', 'string', 'max:13'],
-                'comm_name' => ['required', 'max:100'],
-                'comm_cellphone' =>  ['string', 'max:20'],
+                'comm_name' => ['required', 'max:1000'],
+                'comm_cellphone' =>  ['nullable', 'string', 'max:20'],
                 'comm_phone' =>  ['string', 'max:20'],
                 'comm_email' =>  ['required', 'string', 'email', 'max:255', Rule::unique('communities')->ignore($community_id)],
                 'date_fndt_comm' => ['required', 'date_format:Y-m-d H:i:s'],
-                'date_fndt_work' => ['required', 'date_format:Y-m-d H:i:s'],
+                'date_fndt_work' => ['nullable',  'date_format:Y-m-d H:i:s'],
                 'rn_collaborators' => ['integer', 'between:1,1000'],
-                'pastoral_id' => ['required', 'exists:pastorals,id']
+                'pastoral_id' => ['required', 'exists:pastorals,id'],
+                'zone_id' => ['nullable', 'exists:zones,id']
             ]
         );
 
@@ -250,6 +259,10 @@ class CommunityController extends Controller
         }
         $community = Community::find($community_id);
 
+        if ($community->comm_level != 1) {
+            abort(404);
+        }
+
         $community->update([
             'comm_identity_card' =>  $request->get('comm_identity_card'),
             'comm_name' =>  $request->get('comm_name'),
@@ -261,6 +274,7 @@ class CommunityController extends Controller
             'date_fndt_work' => $request->get('date_fndt_work'),
             'rn_collaborators' => $request->get('rn_collaborators'),
             'pastoral_id' => $request->get('pastoral_id'),
+            'zone_id' => $request->get('zone_id'),
         ]);
 
         if (!$community->address) {
@@ -296,6 +310,11 @@ class CommunityController extends Controller
         }
 
         $community = Community::find($community_id);
+
+        if ($community->comm_level != 1) {
+            abort(404);
+        }
+
         if ($community->comm_status == 1) {
 
             $validatorData = Validator::make($request->all(), [
@@ -358,10 +377,10 @@ class CommunityController extends Controller
         return (new CommunityExport(request()))->download('communidades.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
 
-      //  TODO: Export CSV
+    //  TODO: Export CSV
 
-      public function exportCSV()
-      {
-          return (new CommunityExport(request()))->download('communidades.csv', \Maatwebsite\Excel\Excel::CSV);
-      }
+    public function exportCSV()
+    {
+        return (new CommunityExport(request()))->download('communidades.csv', \Maatwebsite\Excel\Excel::CSV);
+    }
 }

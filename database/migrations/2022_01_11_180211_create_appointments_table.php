@@ -26,6 +26,7 @@ a<?php
                 $table->unsignedBigInteger('appointment_level_id');
                 $table->unsignedBigInteger('profile_id');
                 $table->unsignedBigInteger('community_id');
+                $table->unsignedBigInteger('transfer_id')->nullable();
 
 
                 // Generate foreign key
@@ -45,6 +46,12 @@ a<?php
                 $table->foreign('community_id')
                     ->references('id')
                     ->on('communities')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
+
+                $table->foreign('transfer_id')
+                    ->references('id')
+                    ->on('transfers')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
 

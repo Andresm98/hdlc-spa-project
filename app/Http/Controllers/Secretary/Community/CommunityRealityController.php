@@ -30,13 +30,13 @@ class CommunityRealityController extends Controller
         $groupCommunities = Community::select("pastoral_id", DB::raw("count(*) as total"))
             ->groupBy('pastoral_id')
             ->where('comm_status', '=', 1)
-            ->where('comm_id', '=', null)
+            ->where('comm_level',  1)
             ->get();
 
         $groupWorks = Community::select("pastoral_id", DB::raw("count(*) as total"))
             ->groupBy('pastoral_id')
             ->where('comm_status', '=', 1)
-            ->where('comm_id', '!=', null)
+            ->where('comm_level', 2)
             ->get();
 
         $pastorals = Pastoral::select('id', 'name')
@@ -46,7 +46,7 @@ class CommunityRealityController extends Controller
         // SELECT * FROM `transfers` WHERE community_id=
         $transfers = Transfer::select('community_id', DB::raw('count(*) as total'))
             ->with('community')
-            ->where('transfer_date_relocated', '=', null)
+            ->where('transfer_date_relocated', null)
             ->groupBy('community_id')
             ->get();
 
@@ -55,14 +55,15 @@ class CommunityRealityController extends Controller
         foreach ($pastorals as $pastoral) {
             $count = 0;
             foreach ($transfers as $trans) {
+                $data =  $pastoral->id;
                 if ($pastoral->id == $trans->community->pastoral_id) {
-                    $data =  $pastoral->id;
                     $count += $trans->total;
                 }
             }
             array_push($groupDaughters, ['pastoral_id' => $data, 'total' => $count]);
         }
 
+        $groupDaughters;
         return Inertia::render('Secretary/Communities/Reality', [
             'groupCommunities' => $groupCommunities,
             'groupWorks' => $groupWorks,

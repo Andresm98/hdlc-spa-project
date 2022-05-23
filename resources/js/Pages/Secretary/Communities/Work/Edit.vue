@@ -106,6 +106,7 @@
             <p class="text-black dark:text-white">Quito, Ecuador</p>
           </dd>
         </dl>
+        {{ $page.props.errors }}vggg
         <div
           class="mt-4 col-start-1 row-start-3 self-center sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2 lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4"
         >
@@ -162,13 +163,27 @@
             <form @submit.prevent="submit" class="">
               <div class="rounded-t bg-white mb-0 px-6 py-6">
                 <div class="text-center flex justify-between">
-                  <h6 class="text-sm font-medium leading-6 text-gray-900">
-                    Tarjeta de Información General de la Obra, perteneciente a la
-                    comunidad:
-                    <h5 class="text-sm font-extrabold leading-6 text-black">
-                      {{ this.community_principal.comm_name }}
-                    </h5>
-                  </h6>
+                  <div v-if="community_principal != null">
+                    <h6 class="text-sm font-medium leading-6 text-gray-900">
+                      Tarjeta de Información General de la Obra, perteneciente a la
+                      comunidad:
+                      <h5 class="text-sm font-extrabold leading-6 text-black">
+                        <span
+                          class="text-sm font-extrabold leading-6 text-white bg-emerald-600 my-1 px-2 rounded-lg hover:cursor-pointer"
+                        >
+                          <a
+                            :href="
+                              route('secretary.communities.edit', {
+                                slug: community_principal.comm_slug,
+                              })
+                            "
+                          >
+                            {{ this.community_principal.comm_name }}
+                          </a>
+                        </span>
+                      </h5>
+                    </h6>
+                  </div>
                   <button
                     class="bg-blue-500 hover:bg-blue-700 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                     type="submit"
@@ -224,7 +239,7 @@
                       <div class="relative w-full mb-3">
                         <jet-input-error :message="errors.date_close" />
                         <small class="justify-center text-red-500"
-                          >Fecha de cierre de la comunidad.</small
+                          >Fecha de cierre de la obra.</small
                         >
                         <Datepicker
                           v-model="this.community_custom.date_close"
@@ -250,7 +265,11 @@
                     >
                       Nombre de Obra:
                     </label>
-                    <jet-input-error :message="errors.comm_name" />
+                    <p class="text-red-400 text-sm" v-show="$page.props.errors.comm_name">
+                      {{ $page.props.errors.comm_name }}
+                    </p>
+                    <small>Formato: Ingresar nombre de la comunidad.</small>
+
                     <input
                       type="text"
                       placeholder="Nombre de la obra en el Sistema"
@@ -262,15 +281,18 @@
               </div>
 
               <div class="flex flex-wrap">
-                <div class="w-full lg:w-6/12 px-4">
+                <div class="w-full lg:w-4/12 px-4">
                   <label
                     class="block text-sm font-medium text-gray-700"
                     htmlfor="grid-password"
                   >
                     Correo Electrónico:
                   </label>
+                  <p class="text-red-400 text-sm" v-show="$page.props.errors.comm_email">
+                    {{ $page.props.errors.comm_email }}
+                  </p>
+                  <small>Formato: Ingresar correo electrónico de contacto.</small>
 
-                  <jet-input-error :message="errors.comm_email" />
                   <input
                     type="email"
                     placeholder="micorreo@correo.com"
@@ -278,7 +300,7 @@
                     v-model="form.comm_email"
                   />
                 </div>
-                <div class="w-full lg:w-6/12 px-4">
+                <div class="w-full lg:w-4/12 px-4">
                   <label
                     class="block text-sm font-medium text-gray-700"
                     htmlfor="grid-password"
@@ -291,7 +313,8 @@
                   >
                     Ingresar RUC válido
                   </p>
-                  <jet-input-error :message="errors.comm_identity_card" />
+                  <small>Formato: Ingresar RUC Formato Ecuador. </small>
+
                   <input
                     type="text"
                     minLength="10"
@@ -304,6 +327,36 @@
                     required
                   />
                 </div>
+                <div class="w-full lg:w-4/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <label
+                      class="block text-sm font-medium text-gray-700"
+                      htmlfor="grid-password"
+                    >
+                      Zona:
+                    </label>
+                    <small
+                      >Opcional: Seleccionar una zona a la que pertenezca la
+                      comunidad.</small
+                    >
+                    <div v-if="this.allZone != null">
+                      <multiselect
+                        :searchable="true"
+                        v-model="this.selectFive.selectedZone"
+                        :options="this.allZone"
+                        :close-on-select="true"
+                        :clear-on-select="false"
+                        mode="tags"
+                        label="name"
+                        @search-change="onSearchZonesChange"
+                        @select="onSelectedZone"
+                        track-by="name"
+                        placeholder="Buscar zona"
+                      >
+                      </multiselect>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="flex flex-wrap">
                 <div class="w-full lg:w-4/12 px-4">
@@ -314,8 +367,15 @@
                     >
                       Fecha de Fundación:
                     </label>
-
-                    <jet-input-error :message="errors.date_fndt_comm" />
+                    <p
+                      class="text-red-400 text-sm"
+                      v-show="$page.props.errors.date_fndt_comm"
+                    >
+                      {{ $page.props.errors.date_fndt_comm }}
+                    </p>
+                    <small
+                      >Formato: Ingresar la fecha de fundación de la comunidad.</small
+                    >
                     <Datepicker
                       v-model="form.date_fndt_comm"
                       :format="format"
@@ -334,8 +394,14 @@
                     >
                       Fecha de la Obra:
                     </label>
+                    <p
+                      class="text-red-400 text-sm"
+                      v-show="$page.props.errors.date_fndt_work"
+                    >
+                      {{ $page.props.errors.date_fndt_work }}
+                    </p>
+                    <small>Formato: Ingresar la fecha de la obra.</small>
 
-                    <jet-input-error :message="errors.date_fndt_work" />
                     <Datepicker
                       v-model="form.date_fndt_work"
                       :format="format"
@@ -353,8 +419,14 @@
                     >
                       Celular:
                     </label>
+                    <p
+                      class="text-red-400 text-sm"
+                      v-show="$page.props.errors.comm_cellphone"
+                    >
+                      {{ $page.props.errors.comm_cellphone }}
+                    </p>
+                    <small>Formato: Ingresar un número de celular.</small>
 
-                    <jet-input-error :message="errors.comm_cellphone" />
                     <input
                       minLength="10"
                       maxlength="20"
@@ -376,8 +448,14 @@
                     >
                       Teléfono
                     </label>
+                    <p
+                      class="text-red-400 text-sm"
+                      v-show="$page.props.errors.comm_phone"
+                    >
+                      {{ $page.props.errors.comm_phone }}
+                    </p>
+                    <small>Formato: Ingresar un número de teléfono.</small>
 
-                    <jet-input-error :message="errors.comm_phone" />
                     <input
                       minLength="8"
                       maxlength="20"
@@ -400,7 +478,14 @@
                       Nro. de Colaboradores
                     </label>
 
-                    <jet-input-error :message="errors.rn_collaborators" />
+                    <p
+                      class="text-red-400 text-sm"
+                      v-show="$page.props.errors.rn_collaborators"
+                    >
+                      {{ $page.props.errors.rn_collaborators }}
+                    </p>
+                    <small>Formato: Número de colaboradores, max 1000.</small>
+
                     <input
                       minLength="0"
                       maxlength="1000"
@@ -422,7 +507,10 @@
                     >
                       Pastoral
                     </label>
-
+                    <small
+                      >Formato: Seleccionar la pastoral a la que pertenece la
+                      comunidad.</small
+                    >
                     <div
                       :class="{ invalid: isInvalidPastoral }"
                       v-if="this.allPastoral != null"
@@ -435,7 +523,7 @@
                         :clear-on-select="false"
                         mode="tags"
                         label="name"
-                        @search-change="onSearchPrastoralsChange"
+                        @search-change="onSearchPastoralsChange"
                         @select="onSelectedPastoral"
                         track-by="name"
                         placeholder="Buscar pastoral"
@@ -459,6 +547,10 @@
                     <p class="text-red-400 text-sm" v-show="$page.props.errors.address">
                       {{ $page.props.errors.address }}
                     </p>
+                    <small
+                      >Formato: Dirección actual en la que se encuentra la
+                      comunidad.</small
+                    >
                     <div class="mb-1">
                       <textarea
                         id="address"
@@ -703,6 +795,23 @@ export default defineComponent({
         element.parentElement.innerHTML = `Error: ${error}`;
         console.error("There was an error!", error);
       });
+
+    // Method fetch Zones
+
+    fetch(this.route("secretary.zone.index"))
+      .then(async (response) => {
+        const isJson = response.headers.get("content-type")?.includes("application/json");
+        const data = isJson && (await response.json());
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+        this.allZone = data;
+      })
+      .catch((error) => {
+        element.parentElement.innerHTML = `Error: ${error} `;
+        console.log("There was an error", error);
+      });
   },
 
   beforeMount() {
@@ -890,6 +999,7 @@ export default defineComponent({
         parish_id: null,
         political_division_id: null,
         pastoral_id: null,
+        zone_id: null,
         file: null,
       }),
       photoPreview: null,
@@ -932,7 +1042,16 @@ export default defineComponent({
         multiSelectPastoral: null,
         vSelectPastoral: null,
       },
+      selectFive: {
+        selectedZone: this.community_custom.zone,
+        value: 0,
+        options: [],
+        loading: false,
+        multiSelectZone: null,
+        vSelectZone: null,
+      },
       allPastoral: null,
+      allZone: null,
       displayingStatus: false,
       updatedStatusPastoralForm: this.$inertia.form({
         dateCloseCommunity: null,
@@ -1035,9 +1154,13 @@ export default defineComponent({
     },
     ...mapActions("community", ["changeCommunity"]),
 
-    onSearchPrastoralsChange() {},
+    onSearchPastoralsChange() {},
     onSelectedPastoral(pastoral) {
       this.form.pastoral_id = pastoral.id;
+    },
+    onSearchZonesChange() {},
+    onSelectedZone(zone) {
+      this.form.zone_id = zone.id;
     },
     onSearchProvincesChange(term) {
       //   console.log("input data search " + term);
@@ -1116,8 +1239,9 @@ export default defineComponent({
     },
     submit() {
       this.form.date_fndt_comm = this.formatDate(this.form.date_fndt_comm);
-      this.form.date_fndt_work = this.formatDate(this.form.date_fndt_work);
-
+      if (this.form.date_fndt_work != null) {
+        this.form.date_fndt_work = this.formatDate(this.form.date_fndt_work);
+      }
       if (
         this.isInvalidProvince == false &&
         this.isInvalidCanton == false &&
@@ -1126,6 +1250,9 @@ export default defineComponent({
         this.validateIdentityCard == true
       ) {
         this.form.pastoral_id = this.selectFour.selectedPastoral.id;
+        if (this.selectFive.selectedZone != null) {
+          this.form.zone_id = this.selectFive.selectedZone.id;
+        }
         this.form.put(
           route("secretary.works.update", {
             work_id: this.community_custom.id,
@@ -1135,7 +1262,7 @@ export default defineComponent({
             preserveState: true,
             onSuccess: () => {
               setTimeout(() => {
-                console.log("saved.");
+                this.form.reset();
               }, 1000);
             },
           }

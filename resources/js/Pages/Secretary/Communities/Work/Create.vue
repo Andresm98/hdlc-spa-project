@@ -760,7 +760,6 @@ export default {
   methods: {
     handleScroll() {
       console.log(window.scrollY);
-      console.log("numme");
     },
     async status() {
       this.form.address = this.community_custom.address["address"];
@@ -849,7 +848,9 @@ export default {
     },
     submit() {
       this.form.date_fndt_comm = this.formatDate(this.form.date_fndt_comm);
-      this.form.date_fndt_work = this.formatDate(this.form.date_fndt_work);
+      if (this.form.date_fndt_work != null) {
+        this.form.date_fndt_work = this.formatDate(this.form.date_fndt_work);
+      }
 
       if (
         this.isInvalidProvince == false &&

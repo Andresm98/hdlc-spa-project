@@ -850,8 +850,10 @@ export default {
     },
     submit() {
       this.form.date_fndt_comm = this.formatDate(this.form.date_fndt_comm);
-      this.form.date_fndt_work = this.formatDate(this.form.date_fndt_work);
 
+      if (this.form.date_fndt_work != null) {
+        this.form.date_fndt_work = this.formatDate(this.form.date_fndt_work);
+      }
       if (
         this.isInvalidProvince == false &&
         this.isInvalidCanton == false &&

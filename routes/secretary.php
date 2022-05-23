@@ -4,6 +4,7 @@ use App\Models\Appointment;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Secretary\Events\EventController;
 use App\Http\Controllers\Secretary\Daughter\UserController;
 use App\Http\Controllers\Secretary\Daughter\HealthController;
 use App\Http\Controllers\Secretary\Daughter\OfficeController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\Secretary\Community\Work\WorkController;
 use App\Http\Controllers\Secretary\Daughter\InfoFamilyController;
 use App\Http\Controllers\Secretary\Daughter\AppointmentController;
 use App\Http\Controllers\Secretary\Daughter\FilesDaughterController;
+use App\Http\Controllers\Secretary\Community\CommunityZoneController;
 use App\Http\Controllers\Secretary\Community\CommunityVisitController;
 use App\Http\Controllers\Secretary\Community\FilesCommunityController;
 use App\Http\Controllers\Secretary\Daughter\InfoFamilyBreakController;
@@ -27,9 +29,11 @@ use App\Http\Controllers\Secretary\Community\CommunityRealityController;
 use App\Http\Controllers\Secretary\Community\CommunityActivityController;
 use App\Http\Controllers\Secretary\Community\CommunityDaughterController;
 use App\Http\Controllers\Secretary\Community\CommunityPastoralController;
+use App\Http\Controllers\Secretary\Appointments\AppointmentGlobalController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityArticleController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunitySectionController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityInventoryController;
+use App\Http\Controllers\Secretary\Community\WorkIndividual\WorkIndividualController;
 
 
 // Address Controllers
@@ -70,6 +74,12 @@ Route::get('appointment-data/{appointment_level_id}', [AppointmentLevelControlle
 
 Route::get('pastorals/all', [CommunityPastoralController::class, 'index'])
     ->name('pastoral.index');
+
+// Zones Controllers
+
+Route::get('zones/all', [CommunityZoneController::class, 'index'])
+    ->name('zone.index');
+
 // TODO: Excel report
 
 Route::get('users/export', [UserController::class, 'export'])
@@ -107,6 +117,18 @@ Route::group(
 
         Route::get('daughters-charity/show/{slug}', [UserController::class, 'show'])
             ->name('daughters.show');
+
+        // Appointments Global Controllers
+
+        Route::get('daughters-charity/appointments/all', [AppointmentGlobalController::class, 'index'])
+            ->name('daughters.appointments.index');
+
+        // Reality Controllers
+
+        Route::get('daughters-charity/reality', [RealityController::class, 'index'])
+            ->name('daughters.reality.index');
+
+        //  Profile Controllers
 
         Route::get("daughters-charity/profile/{id}", [ProfileController::class, "specificProfile"])
             ->name("daughter-profile.index");
@@ -232,6 +254,9 @@ Route::group(
         Route::get('profile/transfer/communities/all', [TransferController::class, 'allCommunities'])
             ->name('daughter-profile.transfer.communities.index');
 
+        Route::get('profile/transfer/transfer/appointents/{transfer_id}', [TransferController::class, 'allAppointments'])
+            ->name('daughter-profile.transfer.appointments.index');
+
         // Files
 
         Route::get('profile/files/{user_id}', [FilesDaughterController::class, 'index'])
@@ -251,11 +276,6 @@ Route::group(
 
         Route::delete('profile/files/delete/{file_id}', [FilesDaughterController::class, 'destroy'])
             ->name('daughter-profile.files.delete');
-
-        // Reality Controllers
-
-        Route::get('reality/', [RealityController::class, 'index'])
-            ->name('daughters.reality.index');
     }
 );
 
@@ -320,6 +340,26 @@ Route::group([
 
     Route::delete('works/delete/{work_id}', [WorkController::class, 'destroy'])
         ->name('works.delete');
+
+    // Works Individual
+
+    Route::get('worksindividual/create', [WorkIndividualController::class, 'create'])
+        ->name('worksindividual.create');
+
+    Route::post('worksindividual/store', [WorkIndividualController::class, 'store'])
+        ->name('worksindividual.store');
+
+    Route::get('worksindividual/edit/{slug}', [WorkIndividualController::class, 'edit'])
+        ->name('worksindividual.edit');
+
+    Route::put('worksindividual/update/{work_id}', [WorkIndividualController::class, 'update'])
+        ->name('worksindividual.update');
+
+    Route::put('worksindividual/update/status/{work_id}', [WorkIndividualController::class, 'updateStatus'])
+        ->name('worksindividual.status.update');
+
+    Route::delete('worksindividual/delete/{work_id}', [WorkIndividualController::class, 'destroy'])
+        ->name('worksindividual.delete');
 
     // Communities Activities
 
@@ -438,3 +478,27 @@ Route::group([
     Route::get('reality/', [CommunityRealityController::class, 'index'])
         ->name('communities.reality.index');
 });
+
+/* =======================
+        Global Events Proccess
+=======================*/
+
+Route::group(
+    [
+        'middleware' => ['role:secretary'],
+        'prefix' => 'events'
+    ],
+    function () {
+        Route::get('events/all', [EventController::class, 'index'])
+            ->name('events.index');
+
+        Route::post('events/store', [EventController::class, 'store'])
+            ->name('events.store');
+
+        Route::put('events/update/{event_id}', [EventController::class, 'update'])
+            ->name('events.update');
+
+        Route::get('events/delete/{event_id}', [EventController::class, 'destroy'])
+            ->name('events.delete');
+    }
+);

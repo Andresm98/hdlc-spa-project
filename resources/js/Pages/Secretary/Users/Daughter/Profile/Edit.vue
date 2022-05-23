@@ -271,11 +271,10 @@ input:checked ~ .dot {
             minLength="9"
             maxlength="9"
             pattern="^\d{9}$"
-            title="Ingrese un número de celular con un formato válido, máximo 9 digitos."
+            title="Ingrese un número de telf. con un formato válido, máximo 9 digitos."
             placeholder="022400111"
             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             v-model="profile.phone"
-            required
           />
         </div>
       </div>

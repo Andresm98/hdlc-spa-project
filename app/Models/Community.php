@@ -63,6 +63,11 @@ class Community extends Model
         return $this->belongsTo('App\Models\Pastoral');
     }
 
+    public function zone()
+    {
+        return $this->belongsTo('App\Models\Zone');
+    }
+
     // Relacion uno a varios polimorfica
 
     public function files()

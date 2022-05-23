@@ -29,6 +29,7 @@ class CreateNewUser implements CreatesNewUsers
             'name' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'fullnamecomm' => ['required', 'string', 'max:255'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
         ])->validate();
@@ -37,6 +38,7 @@ class CreateNewUser implements CreatesNewUsers
             return tap(User::create([
                 'username' => $input['username'],
                 'name' => $input['name'],
+                'fullnamecomm' => $input['fullnamecomm'],
                 'lastname' => $input['lastname'],
                 'slug' => Str::slug($input['username'] . '-' . random_int(100, 10000)),
                 'email' => $input['email'],

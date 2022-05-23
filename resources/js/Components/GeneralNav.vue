@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="bg-gradient-to-r from-orange-400 to-blue-500 hover:from-red-400 hover:to-blue-700 border-b border-gray-100 w-full"
+    class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-600 hover:to-blue-700 border-b border-gray-100 w-full"
   >
     <!-- <nav class="bg-slate-800 transparent border-b border-gray-100">  -->
     <!-- Primary Navigation Menu -->
@@ -248,7 +248,7 @@
           :href="route('dashboard')"
           :active="route().current('dashboard')"
         >
-          Dashboard
+          <div class="text-white">Dashboard</div>
         </jet-responsive-nav-link>
       </div>
 
@@ -264,10 +264,10 @@
           </div>
 
           <div>
-            <div class="font-medium text-base text-gray-800">
+            <div class="font-medium text-base text-white">
               {{ $page.props.user.name }}
             </div>
-            <div class="font-medium text-sm text-gray-500">
+            <div class="font-medium text-sm text-white">
               {{ $page.props.user.email }}
             </div>
           </div>
@@ -278,7 +278,7 @@
             :href="route('profile.show')"
             :active="route().current('profile.show')"
           >
-            Perfil
+            <div class="text-white">Perfil</div>
           </jet-responsive-nav-link>
 
           <jet-responsive-nav-link
@@ -286,39 +286,41 @@
             :active="route().current('api-tokens.index')"
             v-if="$page.props.jetstream.hasApiFeatures"
           >
-            API Tokens
+            <div class="text-white">API Tokens</div>
           </jet-responsive-nav-link>
 
           <div v-for="role in this.allRoles" :key="role">
             <div v-if="role.name == 'super admin'">
               <jet-responsive-nav-link :href="route('admin.welcome')">
-                Administración Sistema
+                <div class="text-white">Administración Sistema</div>
               </jet-responsive-nav-link>
             </div>
             <div v-if="role.name == 'secretary'">
               <jet-responsive-nav-link :href="route('secretary.welcome')">
-                Gestión Secretaría
+                <div class="text-white">Gestión Secretaría</div>
               </jet-responsive-nav-link>
             </div>
           </div>
 
           <!-- Authentication -->
           <form method="POST" @submit.prevent="logout">
-            <jet-responsive-nav-link as="button"> Salir </jet-responsive-nav-link>
+            <jet-responsive-nav-link as="button">
+              <div class="text-white">Salir</div>
+            </jet-responsive-nav-link>
           </form>
 
           <!-- Team Management -->
           <template v-if="$page.props.jetstream.hasTeamFeatures">
             <div class="border-t border-gray-200"></div>
 
-            <div class="block px-4 py-2 text-xs text-gray-400">Administrar Equipos</div>
+            <div class="block px-4 py-2 text-xs text-white">Administrar Equipos</div>
 
             <!-- Team Settings -->
             <jet-responsive-nav-link
               :href="route('teams.show', $page.props.user.current_team)"
               :active="route().current('teams.show')"
             >
-              Configuraciones
+              <div class="text-white">Configuraciones</div>
             </jet-responsive-nav-link>
 
             <jet-responsive-nav-link
@@ -326,13 +328,13 @@
               :active="route().current('teams.create')"
               v-if="$page.props.jetstream.canCreateTeams"
             >
-              Crear nuevo equipo
+              <div class="text-white">Crear nuevo equipo</div>
             </jet-responsive-nav-link>
 
             <div class="border-t border-gray-200"></div>
 
             <!-- Team Switcher -->
-            <div class="block px-4 py-2 text-xs text-gray-400">Switch Teams</div>
+            <div class="block px-4 py-2 text-xs text-gray-400">Cambiar equipo</div>
 
             <template v-for="team in $page.props.user.all_teams" :key="team.id">
               <form @submit.prevent="switchToTeam(team)">
