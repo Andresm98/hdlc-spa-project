@@ -9,37 +9,106 @@
       </div>
     </template>
     <section
-      class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg m-1"
+      class="
+        bg-gray-200
+        dark:bg-slate-800
+        y-1
+        px-4
+        sm:p-6
+        md:py-10 md:px-8
+        pt-2
+        pb-4
+        rounded-lg
+        sm:m-2
+        lg:m-3
+        md:m-4
+      "
     >
       <div
-        class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
+        class="
+          max-w-4xl
+          mx-auto
+          grid grid-cols-1
+          lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2
+        "
       >
         <div
-          class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 lg:row-start-1"
+          class="
+            relative
+            p-3
+            col-start-1
+            row-start-1
+            flex flex-col-reverse
+            rounded-lg
+            bg-gradient-to-t
+            from-black/75
+            via-black/0
+            sm:bg-none sm:row-start-2 sm:p-0
+            lg:row-start-1
+          "
         >
           <h1
-            class="mt-1 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
+            class="
+              mt-1
+              text-lg
+              font-semibold
+              text-black
+              sm:text-black
+              md:text-2xl
+              dark:sm:text-white
+            "
           >
             Provincia Ecuador
           </h1>
           <p
-            class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
+            class="
+              text-sm
+              leading-4
+              font-medium
+              text-black
+              sm:text-black
+              dark:sm:text-slate-400
+            "
           >
             Información General de Eventos
           </p>
         </div>
         <div
-          class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
+          class="
+            grid
+            gap-4
+            col-start-1 col-end-3
+            row-start-1
+            sm:mb-6 sm:grid-cols-4
+            lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0
+          "
         >
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_2.png"
             alt=""
-            class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 lg:col-span-full"
+            class="
+              w-full
+              h-60
+              object-cover
+              rounded-lg
+              sm:h-52 sm:col-span-2
+              lg:col-span-full
+            "
             loading="lazy"
           />
         </div>
         <dl
-          class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2"
+          class="
+            mt-4
+            text-xs
+            font-medium
+            flex
+            items-center
+            row-start-2
+            sm:mt-1 sm:row-start-3
+            md:mt-2.5
+            lg:row-start-2
+          "
         >
           <dt class="sr-only">Visto</dt>
           <dd class="text-indigo-600 flex items-center dark:text-indigo-400">
@@ -57,7 +126,9 @@
                 stroke-linejoin="round"
               />
             </svg>
-            <span>0.00 <span class="text-slate-400 font-normal">(0)</span></span>
+            <span
+              >0.00 <span class="text-slate-400 font-normal">(0)</span></span
+            >
           </dd>
           <dt class="sr-only">Ubicación por defecto - Ecuador</dt>
           <dd class="flex items-center">
@@ -89,19 +160,13 @@
             <p class="text-black dark:text-white">Quito, Ecuador</p>
           </dd>
         </dl>
-        <div
-          class="mt-4 col-start-1 row-start-3 self-center sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2 lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4"
-        >
-          <div
-            class="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 text-black dark:text-white"
-          >
-            <p>
-              La presente plantiflla de información se relaciona a todos los eventos que
-              se realizan en el la compañía de las Hijas de la Caridad de San Vicente de
-              Paúl.
-            </p>
-          </div>
-        </div>
+      </div>
+      <div class="mt-2">
+        <p>
+          La presente plantiflla de información se relaciona a todos los eventos
+          que se realizan en el la compañía de las Hijas de la Caridad de San
+          Vicente de Paúl.
+        </p>
       </div>
     </section>
     <br />
@@ -109,7 +174,19 @@
       <section class="flex-shrink-0">
         <button
           @click="confirmCreateEvent()"
-          class="pt-1 pb-1 pl-4 pr-4 m-4 bg-blue-500 border-2 border-blue-500 text-white text-sm rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
+          class="
+            pt-1
+            pb-1
+            pl-4
+            pr-4
+            m-4
+            bg-blue-500
+            border-2 border-blue-500
+            text-white text-sm
+            rounded-lg
+            hover:bg-blue-500 hover:text-gray-100
+            focus:border-4 focus:border-blue-300
+          "
         >
           Crear Eventos
         </button>
@@ -120,7 +197,13 @@
     <div class="container mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <div
-          class="justify-center text-sm border-1 border-gray-300 rounded-sm bg-gray-100"
+          class="
+            justify-center
+            text-sm
+            border-1 border-gray-300
+            rounded-sm
+            bg-gray-100
+          "
         >
           <small class="justify-content-center ml-20 uppercase"
             >Filtros de Búsqueda</small
@@ -128,7 +211,13 @@
 
           <search-filter
             v-model="params.search"
-            class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            class="
+              border border-blue-300
+              rounded-md
+              shadow-sm
+              focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
+              sm:text-sm
+            "
             @reset="reset"
           >
             <!-- <v-date-picker v-model="params.date" is-required :format="format">
@@ -141,11 +230,22 @@
               </template>
             </v-date-picker> -->
 
-            <small class="block text-gray-700 mt-2">Pastoral:</small>
+            <small class="block text-gray-700 mt-2">Tipo de evento:</small>
 
             <select
               v-model="params.type"
-              class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              class="
+                mt-1
+                block
+                w-full
+                px-3
+                border border-gray-300
+                bg-white
+                rounded-md
+                shadow-sm
+                focus:outline-none focus:ring-blue-500 focus:border-blue-500
+                sm:text-sm
+              "
             >
               <option :value="null">Todas</option>
               <option value="1">Comunidad</option>
@@ -157,32 +257,83 @@
         </div>
 
         <div
-          class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
+          class="
+            justify-center
+            text-sm
+            border-1 border-gray-300
+            rounded-sm
+            p-1
+            bg-gray-100
+          "
         >
           <small class="block text-gray-700">Estado:</small>
-          <Datepicker :format="format" v-model="params.date" monthPicker autoApply />
+          <Datepicker
+            :format="format"
+            v-model="params.date"
+            monthPicker
+            autoApply
+          />
         </div>
 
         <div
-          class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
+          class="
+            justify-center
+            text-sm
+            border-1 border-gray-300
+            rounded-sm
+            p-1
+            bg-gray-100
+          "
         >
-          <small class="justify-content-center ml-20 uppercase">Exportar Listas</small>
+          <small class="justify-content-center ml-20 uppercase"
+            >Exportar Listas</small
+          >
           <div
-            class="md:text-md flex items-center justify-between p-4 w-full text-sm md:px-12 md:py-0"
+            class="
+              md:text-md
+              flex
+              items-center
+              justify-between
+              p-4
+              w-full
+              text-sm
+              md:px-12 md:py-0
+            "
           >
             <dropdown class="mt-1" placement="bottom-end">
               <template #default>
                 <div class="group flex items-center cursor-pointer select-none">
                   <div
-                    class="mr-1 text-gray-700 group-hover:text-blue-600 focus:text-blue-600 whitespace-nowrap"
+                    class="
+                      mr-1
+                      text-gray-700
+                      group-hover:text-blue-600
+                      focus:text-blue-600
+                      whitespace-nowrap
+                    "
                   >
                     <span
-                      class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-gray-200 text-gray-800"
+                      class="
+                        px-1
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-sm
+                        bg-gray-200
+                        text-gray-800
+                      "
                       >&nbsp;Filtros</span
                     >
                   </div>
                   <icon
-                    class="w-5 h-5 fill-gray-700 group-hover:fill-blue-600 focus:fill-blue-600"
+                    class="
+                      w-5
+                      h-5
+                      fill-gray-700
+                      group-hover:fill-blue-600
+                      focus:fill-blue-600
+                    "
                     name="cheveron-down"
                   />
                 </div>
@@ -192,13 +343,17 @@
                   <a
                     class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                     target="_blank"
-                    :href="route('secretary.communities.export.excel', this.params)"
+                    :href="
+                      route('secretary.communities.export.excel', this.params)
+                    "
                     >Excel</a
                   >
                   <a
                     class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                     target="_blank"
-                    :href="route('secretary.communities.export.csv', this.params)"
+                    :href="
+                      route('secretary.communities.export.csv', this.params)
+                    "
                     >CSV</a
                   >
                 </div>
@@ -228,14 +383,32 @@
           <div class="flex flex-col h-full z-10 overflow-hidden">
             <span
               @click="listEvent(day.id)"
-              class="day-label text-sm text-black hover:cursor-pointer mt-3 mb-1 md:mx-2 lg:mx-4 rounded-sm bg-gray-200"
+              class="
+                day-label
+                text-sm text-black
+                hover:cursor-pointer
+                mt-3
+                mb-1
+                md:mx-2
+                lg:mx-4
+                rounded-sm
+                bg-gray-200
+              "
               >{{ day.day }}</span
             >
             <div class="overflow-y-auto">
               <div v-for="attr in attributes" :key="attr">
                 <p
                   v-if="attr.customData.status == 2"
-                  class="text-xs p-1 mt-0 mb-1 hover:cursor-pointer rounded-full mx-5"
+                  class="
+                    text-xs
+                    p-1
+                    mt-0
+                    mb-1
+                    hover:cursor-pointer
+                    rounded-full
+                    mx-5
+                  "
                   :class="attr.customData.class"
                   @click="confirmUpdateEvent(attr)"
                 >
@@ -270,7 +443,9 @@
         <div class="w-full lg:w-6/12 px-2">
           <div class="relative w-full mb-3">
             <div class="">
-              <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Nombre:
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
                 {{ $page.props.errors.name }}
               </p>
@@ -279,7 +454,21 @@
                 minLength="10"
                 maxlength="100"
                 placeholder="Ingresar nombre"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="createEventForm.name"
                 required
               />
@@ -289,7 +478,9 @@
         <div class="w-full lg:w-6/12 px-2">
           <div class="relative w-full mb-3">
             <div class="">
-              <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Nombre:
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.type">
                 {{ $page.props.errors.type }}
               </p>
@@ -298,7 +489,20 @@
                 id="material"
                 name="material"
                 autocomplete="article-material"
-                class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                class="
+                  mt-1
+                  block
+                  w-full
+                  px-3
+                  border border-gray-300
+                  bg-white
+                  rounded-md
+                  shadow-sm
+                  focus:outline-none
+                  focus:ring-indigo-500
+                  focus:border-indigo-500
+                  sm:text-sm
+                "
               >
                 <option value="1">Comunidad</option>
                 <option value="2">Extracomunitaria</option>
@@ -311,8 +515,13 @@
 
         <div class="w-full">
           <div class="relative w-full px-2">
-            <label class="block text-sm font-medium text-gray-700"> Descripción </label>
-            <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+            <label class="block text-sm font-medium text-gray-700">
+              Descripción
+            </label>
+            <p
+              class="text-red-400 text-sm"
+              v-show="$page.props.errors.description"
+            >
               {{ $page.props.errors.description }}
             </p>
             <textarea
@@ -321,7 +530,16 @@
               name="about"
               rows="3"
               maxlength="2000"
-              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+              class="
+                shadow-sm
+                focus:ring-blue-500 focus:border-blue-500
+                mt-1
+                block
+                w-full
+                sm:text-sm
+                border border-gray-300
+                rounded-md
+              "
               placeholder="Ingresar descripción"
             />
           </div>
@@ -352,7 +570,10 @@
               <label class="block text-sm font-medium text-gray-700 mt-2">
                 Fecha Fin:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.datesEnd">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.datesEnd"
+              >
                 {{ $page.props.errors.datesEnd }}
               </p>
               <Datepicker
@@ -372,7 +593,9 @@
         Cancelar
       </jet-secondary-button>
 
-      <jet-button-success class="ml-3" @click="createEvent"> Crear </jet-button-success>
+      <jet-button-success class="ml-3" @click="createEvent">
+        Crear
+      </jet-button-success>
     </template>
   </jet-dialog-modal>
 
@@ -390,7 +613,9 @@
         <div class="w-full lg:w-6/12 px-2">
           <div class="relative w-full mb-3">
             <div class="">
-              <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Nombre:
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
                 {{ $page.props.errors.name }}
               </p>
@@ -399,7 +624,21 @@
                 minLength="10"
                 maxlength="100"
                 placeholder="Ingresar nombre"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="updateEventForm.name"
                 required
               />
@@ -409,7 +648,9 @@
         <div class="w-full lg:w-6/12 px-2">
           <div class="relative w-full mb-3">
             <div class="">
-              <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Nombre:
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.type">
                 {{ $page.props.errors.type }}
               </p>
@@ -418,7 +659,20 @@
                 id="material"
                 name="material"
                 autocomplete="article-material"
-                class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                class="
+                  mt-1
+                  block
+                  w-full
+                  px-3
+                  border border-gray-300
+                  bg-white
+                  rounded-md
+                  shadow-sm
+                  focus:outline-none
+                  focus:ring-indigo-500
+                  focus:border-indigo-500
+                  sm:text-sm
+                "
               >
                 <option value="1">Comunidad</option>
                 <option value="2">Extracomunitaria</option>
@@ -431,8 +685,13 @@
 
         <div class="w-full">
           <div class="relative w-full px-2">
-            <label class="block text-sm font-medium text-gray-700"> Descripción </label>
-            <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+            <label class="block text-sm font-medium text-gray-700">
+              Descripción
+            </label>
+            <p
+              class="text-red-400 text-sm"
+              v-show="$page.props.errors.description"
+            >
               {{ $page.props.errors.description }}
             </p>
             <textarea
@@ -441,7 +700,16 @@
               name="about"
               rows="3"
               maxlength="2000"
-              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+              class="
+                shadow-sm
+                focus:ring-blue-500 focus:border-blue-500
+                mt-1
+                block
+                w-full
+                sm:text-sm
+                border border-gray-300
+                rounded-md
+              "
               placeholder="Ingresar descripción"
             />
           </div>
@@ -472,7 +740,10 @@
               <label class="block text-sm font-medium text-gray-700 mt-2">
                 Fecha Fin:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.datesEnd">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.datesEnd"
+              >
                 {{ $page.props.errors.datesEnd }}
               </p>
               <Datepicker
@@ -492,7 +763,9 @@
         Cancelar
       </jet-secondary-button>
 
-      <jet-danger-button class="ml-3" @click="deleteEvent"> Eliminar </jet-danger-button>
+      <jet-danger-button class="ml-3" @click="deleteEvent">
+        Eliminar
+      </jet-danger-button>
       <jet-button-success class="ml-3" @click="updateEvent">
         Actualizar
       </jet-button-success>
@@ -742,7 +1015,9 @@ export default {
     createEvent() {
       this.createEventForm.dates = this.formatDate(this.createEventForm.dates);
       if (this.createEventForm.datesEnd != null) {
-        this.createEventForm.datesEnd = this.formatDate(this.createEventForm.datesEnd);
+        this.createEventForm.datesEnd = this.formatDate(
+          this.createEventForm.datesEnd
+        );
       }
 
       this.createEventForm.post(this.route("secretary.events.store"), {
@@ -757,7 +1032,9 @@ export default {
     confirmUpdateEvent(event) {
       this.updateEventForm.dates = this.formatDate(event.customData.dates);
       if (event.customData.datesEnd != null) {
-        this.updateEventForm.datesEnd = this.formatDate(event.customData.datesEnd);
+        this.updateEventForm.datesEnd = this.formatDate(
+          event.customData.datesEnd
+        );
       }
       this.updateEventForm.name = event.customData.title;
       this.updateEventForm.description = event.customData.description;
@@ -769,7 +1046,9 @@ export default {
     updateEvent() {
       this.updateEventForm.dates = this.formatDate(this.updateEventForm.dates);
       if (this.updateEventForm.datesEnd != null) {
-        this.updateEventForm.datesEnd = this.formatDate(this.updateEventForm.datesEnd);
+        this.updateEventForm.datesEnd = this.formatDate(
+          this.updateEventForm.datesEnd
+        );
       }
 
       this.updateEventForm.put(

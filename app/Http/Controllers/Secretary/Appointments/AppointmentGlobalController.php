@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Secretary\Appointments;
 
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
+use App\Models\AppointmentLevel;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class AppointmentGlobalController extends Controller
 {
@@ -14,7 +18,66 @@ class AppointmentGlobalController extends Controller
      */
     public function index()
     {
-        return "gg";
+
+        $query = Appointment::query();
+        $query->with('profile.user')
+            ->with('appointment_level')
+            ->with('community')
+            ->with('transfer')
+            ->get();
+
+        if (request('search')) {
+            $query->whereHas('profile.user', function ($q) {
+                $q->where('name', 'LIKE', '%' . request('search') . '%')
+                    ->orWhere('lastname', 'LIKE', '%' . request('search') . '%');
+            });
+        }
+        if (request('type')) {
+            $query->whereHas('appointment_level', function ($q) {
+                $q->where('appointment_levelc_id', request('type'));
+            });
+        }
+
+        if (request('status')) {
+            if (request('status') == 1) {
+                $query->where('date_end_appointment',  null);
+            } else if (request('status') == 2) {
+                $query->where('date_end_appointment', '!=', null);
+            }
+        }
+
+        if (request('level')) {
+            $query->whereHas('appointment_level', function ($q) {
+                $q->where('id', request('level'));
+            });
+        }
+
+        if (request('dateStart')) {
+            $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
+                'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
+                'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
+            ]);
+            if ($validatorData->fails()) {
+                $query->orderBy('date_appointment', 'desc');
+                return redirect()->back()
+                    ->withErrors($validatorData->errors());
+            } else {
+                $query->whereBetween('date_appointment', [request('dateStart'), request('dateEnd')]);
+                $query->orderBy('date_appointment', 'desc');
+            }
+        }
+        //  Data
+        $levels = AppointmentLevel::where('level', 2)->get();
+        $categories = AppointmentLevel::where('level', 1)->get();
+
+        return Inertia::render('Secretary/Appointments/Index', [
+            'appointments' => $query
+                ->paginate(10)
+                ->appends(request()->query()),
+            'filters' => request()->all(['date', 'type', 'search', 'status', 'level', 'dateStart', 'dateEnd']),
+            'levels' => $levels,
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -78,8 +141,20 @@ class AppointmentGlobalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($appointment_id)
     {
-        //
+        $validator = Validator::make([
+            'appointment_id' => $appointment_id
+        ], [
+            'appointment_id' => ['required', 'exists:appointments,id']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => 'No existen los datos']);
+        }
+
+        $appointment = Appointment::find($appointment_id);
+        $appointment->delete();
+        return redirect()->back()->with(['success' => 'Nombramiento eliminado correctamente!!']);
     }
 }

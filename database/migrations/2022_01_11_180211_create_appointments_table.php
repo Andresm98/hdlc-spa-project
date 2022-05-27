@@ -25,7 +25,7 @@ a<?php
                 // Asign field foreign key
                 $table->unsignedBigInteger('appointment_level_id');
                 $table->unsignedBigInteger('profile_id');
-                $table->unsignedBigInteger('community_id');
+                $table->unsignedBigInteger('community_id')->nullable();
                 $table->unsignedBigInteger('transfer_id')->nullable();
 
 

@@ -60,7 +60,7 @@ class CommunitySeeder extends Seeder
                 'Nombre de Inventario ', 'Descripción del Inventario '
             ],
             [
-                1, null, '0917074718', 'Hospital "José Miguel Rosillo" de Cariamanga', 2,
+                1, null, '0917074718', 'Hospital "José Miguel Rosillo"', 2,
                 '072689638', 'cariamanga.hdlc@gmail.com', '1965-03-04 00:00:00', 2,
                 //  Address
                 'Avenida Loja y José Miguel Rosillo', '110201',
@@ -68,7 +68,7 @@ class CommunitySeeder extends Seeder
                 'Nombre de Inventario ', 'Descripción del Inventario '
             ],
             [
-                1, null, '0917074718', 'Hospital "Dr. Guido Díaz Jumbo" de Catacocha" de Cariamanga', 2,
+                1, null, '0917074718', 'Hospital "Dr. Guido Díaz Jumbo"', 2,
                 '072683010', 'comunidadcatacocha11@gmail.com', '1969-02-04 00:00:00', 2,
                 //  Address
                 'Av. Shiriculapo y Larinuma', '110901',
@@ -141,7 +141,7 @@ class CommunitySeeder extends Seeder
             ],
             [
                 1, null, '1704593894', 'Casa Misional "El Triunfo"', 1,
-                '072010567 ', 'casamisionaltriunfo@gmail.com', '1978-02-22 00:00:00', 4,
+                '072010567', 'casamisionaltriunfo@gmail.com', '1978-02-22 00:00:00', 4,
                 //  Address
                 'Anselmo Di-Lorenzo 1002 y 9 de Octubre', '090950',
                 // Inventory
@@ -149,7 +149,7 @@ class CommunitySeeder extends Seeder
             ],
             [
                 1, null, '0600484018', 'Casa "La Anunciación"', 1,
-                '072010567 ', 'hdlcesmeraldas@gmail.com', '1985-02-16 00:00:00', 2,
+                '072010567', 'hdlcesmeraldas@gmail.com', '1985-02-16 00:00:00', 2,
                 //  Address
                 'Galápagos - B° 20 de noviembre y calle El Oro', '080103',
                 // Inventory
@@ -157,7 +157,7 @@ class CommunitySeeder extends Seeder
             ],
             [
                 1, null, '0700291008', 'Casa Misional "San Vicente de Paúl"', 1,
-                '032970204 ', 'svpechandia@gmail.com', '1995-07-05 00:00:00', 4,
+                '032970204', 'svpechandia@gmail.com', '1995-07-05 00:00:00', 4,
                 //  Address
                 'Avenida 5 de Octubre, Calle Ángel Polivio Chávez', '020450',
                 // Inventory
@@ -172,7 +172,7 @@ class CommunitySeeder extends Seeder
                 'Nombre de Inventario ', 'Descripción del Inventario '
             ],
             [
-                1, null, '0991462481001', 'Unidad Educativa "De la Providencia"', 1,
+                1, null, '0991462481001', 'Unidad Educativa "La Providencia"', 1,
                 '042400328', 'casahermaprovi@gmail.com', '1905-12-30 00:00:00', 1,
                 //  Address
                 'Calle Eloy Alfaro, entre Gómez Rendón y Brasil', '090150',

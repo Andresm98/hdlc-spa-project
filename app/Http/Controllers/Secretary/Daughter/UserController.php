@@ -71,7 +71,8 @@ class UserController extends Controller
         });
 
         if (request('search')) {
-            $query->where('name', 'LIKE', '%' . request('search') . '%');
+            $query->where('name', 'LIKE', '%' . request('search') . '%')
+                ->orWhere('lastname', 'LIKE', '%' . request('search') . '%');
         }
 
         if (request()->has(['field', 'direction'])) {

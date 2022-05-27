@@ -19,6 +19,7 @@ use App\Http\Controllers\Secretary\Daughter\InfoFamilyController;
 use App\Http\Controllers\Secretary\Daughter\AppointmentController;
 use App\Http\Controllers\Secretary\Daughter\FilesDaughterController;
 use App\Http\Controllers\Secretary\Community\CommunityZoneController;
+use App\Http\Controllers\Secretary\Transfer\TransferGlobalController;
 use App\Http\Controllers\Secretary\Community\CommunityVisitController;
 use App\Http\Controllers\Secretary\Community\FilesCommunityController;
 use App\Http\Controllers\Secretary\Daughter\InfoFamilyBreakController;
@@ -117,11 +118,6 @@ Route::group(
 
         Route::get('daughters-charity/show/{slug}', [UserController::class, 'show'])
             ->name('daughters.show');
-
-        // Appointments Global Controllers
-
-        Route::get('daughters-charity/appointments/all', [AppointmentGlobalController::class, 'index'])
-            ->name('daughters.appointments.index');
 
         // Reality Controllers
 
@@ -486,7 +482,6 @@ Route::group([
 Route::group(
     [
         'middleware' => ['role:secretary'],
-        'prefix' => 'events'
     ],
     function () {
         Route::get('events/all', [EventController::class, 'index'])
@@ -500,5 +495,43 @@ Route::group(
 
         Route::get('events/delete/{event_id}', [EventController::class, 'destroy'])
             ->name('events.delete');
+    }
+);
+
+
+Route::group(
+    [
+        'middleware' => ['role:secretary'],
+    ],
+    function () {
+        Route::get('appoinments/all', [AppointmentGlobalController::class, 'index'])
+            ->name('appoinments.index');
+
+        Route::post('appoinments/store', [AppointmentGlobalController::class, 'store'])
+            ->name('appoinments.store');
+
+        Route::put('appoinments/update/{appoinment_id}', [AppointmentGlobalController::class, 'update'])
+            ->name('appoinments.update');
+
+        Route::delete('appoinments/delete/{appoinment_id}', [AppointmentGlobalController::class, 'destroy'])
+            ->name('appoinments.delete');
+    }
+);
+Route::group(
+    [
+        'middleware' => ['role:secretary'],
+    ],
+    function () {
+        Route::get('transfers/all', [TransferGlobalController::class, 'index'])
+            ->name('transfers.index');
+
+        Route::post('transfers/store', [TransferGlobalController::class, 'store'])
+            ->name('transfers.store');
+
+        Route::put('transfers/update/{transfer_id}', [TransferGlobalController::class, 'update'])
+            ->name('transfers.update');
+
+        Route::delete('transfers/delete/{transfer_id}', [TransferGlobalController::class, 'destroy'])
+            ->name('transfers.delete');
     }
 );

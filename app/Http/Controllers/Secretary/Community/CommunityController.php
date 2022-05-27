@@ -165,13 +165,25 @@ class CommunityController extends Controller
             'pastoral_id' => $request->get('pastoral_id'),
             'comm_status' => 1,
         ]);
+
+        $community->inventory()->create([
+            'name' => 'Inventario de ' . $community->comm_name,
+            'description' => 'Descripción del inventario de la comunidad ' . $community->comm_name
+        ]);
+
         $community->address()->create([
             'address' => $request->get('address'),
             'political_division_id' => $request->get('political_division_id'),
         ]);
-        $community->inventory()->create([
-            'name' => 'Inventario de ' . $community->comm_name,
-            'description' => 'Descripción del inventario de la comunidad ' . $community->comm_name
+
+        $addressClass = new AddressController();
+        $arrayAddress =  $addressClass->getActualAddress($request->get('political_division_id'));
+        $data_province = $arrayAddress["data_province"];
+        $data_canton = $arrayAddress["data_canton"];
+
+        $community->update([
+            'comm_name' => $community->comm_name . ' de ' .  $data_province . ', ' . $data_canton,
+            'comm_slug' => Str::slug($community->comm_name . ' de ' . $arrayAddress["data_province"] . ' ' . $arrayAddress["data_parish"]),
         ]);
 
         return redirect()->route('secretary.communities.edit', $community->comm_slug)->with('success', 'Comunidad creada correctamente.');
@@ -216,7 +228,13 @@ class CommunityController extends Controller
             abort(404);
         }
 
-        return Inertia::render('Secretary/Communities/Edit', compact('community_custom', 'provinces'));
+        $arrayAddress =  $addressClass->getActualAddress($community_custom->address->political_division_id);
+        $data_province = $arrayAddress["data_province"];
+        $data_canton = $arrayAddress["data_canton"];
+        $prefix = strstr($community_custom->comm_name, ' de ' .  $data_province . ', ' . $data_canton, true);
+        $postfix = ' de ' .  $data_province . ', ' . $data_canton;
+
+        return Inertia::render('Secretary/Communities/Edit', compact('community_custom', 'provinces', 'prefix', 'postfix'));
     }
 
     /**
@@ -282,14 +300,42 @@ class CommunityController extends Controller
                 'address' => $request->get('address'),
                 'political_division_id' => $request->get('political_division_id'),
             ]);
+
+            $addressClass = new AddressController();
+            $arrayAddress =  $addressClass->getActualAddress($request->get('political_division_id'));
+            $data_province = $arrayAddress["data_province"];
+            $data_canton = $arrayAddress["data_canton"];
+
+            $community->update([
+                'comm_name' => $community->comm_name . ' de ' .  $data_province . ', ' . $data_canton,
+                'comm_slug' => Str::slug($community->comm_name . ' de ' . $arrayAddress["data_province"] . ' ' . $arrayAddress["data_parish"]),
+            ]);
+
             return redirect()->route('secretary.communities.edit', $community->comm_slug)->with([
                 'success' => 'La comunidad fue actualizada y la dirección fue creada correctamente.',
             ]);
         } else {
+
+            $addressClass = new AddressController();
+            $arrayAddress =  $addressClass->getActualAddress($community->address->political_division_id);
+            $data_province = $arrayAddress["data_province"];
+            $data_canton = $arrayAddress["data_canton"];
+            $nameCommunity = strstr($community->comm_name, ' de ' .  $data_province . ', ' . $data_canton, true);
+
             $community->address()->update([
                 'address' => $request->get('address'),
                 'political_division_id' => $request->get('political_division_id'),
             ]);
+
+            $arrayAddress =  $addressClass->getActualAddress($request->get('political_division_id'));
+            $data_province = $arrayAddress["data_province"];
+            $data_canton = $arrayAddress["data_canton"];
+
+            $community->update([
+                'comm_name' => $nameCommunity  . ' de ' .  $data_province . ', ' . $data_canton,
+                'comm_slug' => Str::slug($nameCommunity . ' de ' . $arrayAddress["data_province"] . ' ' . $arrayAddress["data_parish"]),
+            ]);
+
             return redirect()->route('secretary.communities.edit', $community->comm_slug)->with([
                 'success' => 'La comunidad fue actualizada y la dirección fue actualizada correctamente.',
             ]);

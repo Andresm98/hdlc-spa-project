@@ -31,28 +31,7 @@
           Compañía, para ello existen tres principales categorías (Nivel de Provincia,
           Nivel de Comunidad Local y Nivel de Obras).
         </p>
-        <ul class="list-disc pl-5 pt-2">
-          <!-- Province -->
-          <li><strong>Nivel Provincial</strong></li>
-          <li>Visitadora provincial (1).</li>
-          <li>Asistenta provincial (1).</li>
-          <li>Consejeras Provinciales (4).</li>
-          <li>Secretaria Provincial (1).</li>
-          <li>Ecónoma Provincial (1).</li>
-          <!--  Local Community -->
-          <li><strong>Nivel Comunidad Local</strong></li>
-          <li>Hermana Sirviente (1).</li>
-          <li>Asistente Local (1).</li>
-          <li>Secretaria Local (1).</li>
-          <li>Ecónoma Local (1).</li>
-          <li>Hermanas Compañeras.</li>
-          <li>Hermana Seminario.</li>
-          <!-- Work -->
-          <li><strong>Nivel de Obras</strong></li>
-          <li>Representante Legal (1).</li>
-          <li>Rector/a (1).</li>
-          <li>Director/a (1).</li>
-        </ul>
+
         <div class="content-center mt-2">
           <jet-button-success
             @click="confirmationTransferCreate()"

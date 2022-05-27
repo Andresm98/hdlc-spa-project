@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Secretary\Daughter;
 
 use App\Models\User;
+use App\Models\Transfer;
 use App\Models\Community;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
@@ -27,12 +28,14 @@ class AppointmentController extends Controller
         }
 
         $user = User::find($user_id);
+
         return  response()->json([
             'listActual' =>   $user->profile->appointments()
                 ->with('appointment_level')
                 ->with('community')
                 ->with('transfer')
                 ->where('date_end_appointment', null)
+                ->where('transfer_id', '!=', null)
                 ->orderBy('date_appointment', 'DESC')
                 ->get(),
             'listOld' =>   $user->profile->appointments()
@@ -40,24 +43,30 @@ class AppointmentController extends Controller
                 ->with('community')
                 ->with('transfer')
                 ->where('date_end_appointment', '!=', null)
+                ->where('community_id', '!=', null)
                 ->orderBy('date_appointment', 'DESC')
                 ->get(),
             'listIndividualActual' =>   $user->profile->appointments()
                 ->with('appointment_level')
-                ->with('community')
-                ->with('transfer')
                 ->where('date_end_appointment', null)
                 ->where('transfer_id', null)
+                ->where('community_id', null)
                 ->orderBy('date_appointment', 'DESC')
                 ->get(),
             'listIndividualOld' =>   $user->profile->appointments()
                 ->with('appointment_level')
-                ->with('community')
-                ->with('transfer')
                 ->where('date_end_appointment', '!=', null)
                 ->where('transfer_id', null)
+                ->where('community_id', null)
                 ->orderBy('date_appointment', 'DESC')
                 ->get(),
+            //
+            'lastTransfer' => $user->profile->transfers()
+                ->where('transfer_date_relocated', null)
+                ->with('community')
+                ->get()
+                ->first()
+
         ]);
     }
 
@@ -92,13 +101,6 @@ class AppointmentController extends Controller
      */
     public function store(Request $request, $user_id)
     {
-        $validatorData = Validator::make($request->all(), [
-            // 'appointment_level_id' => ['required', 'exists:appointment_levels,id'],
-            'community_id' => ['required', 'exists:communities,id'],
-            'description' => ['required', 'max:2000'],
-            'date_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
-            // 'date_end_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
-        ]);
 
         $validator = Validator::make([
             'user_id' => $user_id,
@@ -110,137 +112,182 @@ class AppointmentController extends Controller
             return abort(404);
         }
 
-        if ($validatorData->fails()) {
-            return redirect()->back()
-                ->withErrors($validatorData->errors())
-                ->withInput();
-        }
-
         $user = User::find($user_id);
 
-        $array = $request->get('appointment_level_id');
-
-        // Get Actual Appointment
-
-        $lastAppointment = $user->profile->appointments()
-            ->where("date_end_appointment", null)
-            ->get()
-            ->last();
-
-        // Set if community_id is equal in the last register
-
-        if ($lastAppointment) {
-            if ($request->community_id["id"] == $lastAppointment->community_id) {
-                foreach ($array as $data) {
-                    $comprobationAppointment =   $user->profile->appointments()
-                        ->where('appointment_level_id', $data['id'])
-                        ->where('date_end_appointment', null)
-                        ->get();
-
-                    if ($comprobationAppointment->count()) {
-                        return redirect()->back()->with(['error' => 'El nombramiento ' . $data['name'] . ' no puede ser almacenado, ya existe un registro vigente.']);
-                    }
-
-                    $user->profile->appointments()->create([
-                        'community_id' => $request->community_id["id"],
-                        'appointment_level_id' =>  $data['id'],
-                        'description' => $request->get('description'),
-                        'date_appointment' => $request->get('date_appointment'),
-                        // 'date_end_appointment' => $request->get('date_end_appointment'),
-                    ]);
-                }
-                return redirect()->back()->with([
-                    'success' => 'Nombramiento guardado correctamente!'
-                ]);
-            } else {
-                // Set Actual Date in List Active Appointments
-
-                $user->profile->appointments()
-                    ->where("date_end_appointment", null)
-                    ->update(['date_end_appointment' =>  $request->get('date_appointment')]);
-
-                foreach ($array as $data) {
-
-                    $comprobationAppointment =   $user->profile->appointments()
-                        ->where('appointment_level_id',  $data['id'])
-                        ->where('date_end_appointment',  null)
-                        ->get();
-
-                    if ($comprobationAppointment->count()) {
-                        return redirect()->back()->with(['error' => 'El nombramiento ' . $data['name'] . ' no puede ser almacenado, ya existe un registro vigente.']);
-                    }
-
-                    $user->profile->appointments()->create([
-                        'community_id' => $request->community_id["id"],
-                        'appointment_level_id' =>  $data['id'],
-                        'description' => $request->get('description'),
-                        'date_appointment' => $request->get('date_appointment'),
-                        // 'date_end_appointment' => $request->get('date_end_appointment'),
-                    ]);
-                }
-
-                $user->profile->transfers()
-                    ->where("transfer_date_relocated", null)
-                    ->update(['transfer_date_relocated' =>  $request->get('date_appointment')]);
-
-                $user->profile->transfers()->create([
-                    'transfer_reason' => 'Razón del cambio',
-                    'transfer_date_adission' => $request->get('date_appointment'),
-                    // 'transfer_date_relocated' => $request->get('transfer_date_relocated'),
-                    'transfer_observation' => 'Observaciones del cambio ',
-                    'community_id' => $request->community_id["id"],
-                    // 'office_id' => $request->office_id["id"],
-                ]);
-
-                return redirect()->back()->with([
-                    'success' => 'Nombramiento guardado correctamente!'
-                ]);
+        if ($request->community_id != null && $request->transfer != null) {
+            $validatorData = Validator::make($request->all(), [
+                'community_id.id' => ['required', 'exists:communities,id'],
+                'description' => ['required', 'max:2000'],
+                'date_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
+                'transfer.id' => ['required', 'exists:transfers,id'],
+                // 'date_end_appointmnt' => ['nullable', 'date_format:Y-m-d H:i:s'],
+            ]);
+            if ($validatorData->fails()) {
+                return redirect()->back()
+                    ->withErrors($validatorData->errors())
+                    ->withInput();
             }
-        } else {
-
-            // Set Actual Date in List Active Appointments
-
-            $user->profile->appointments()
-                ->where("date_end_appointment", null)
-                ->update(['date_end_appointment' =>  $request->get('date_appointment')]);
+            $array = $request->appointment_level_id;
 
             foreach ($array as $data) {
-
-                $comprobationAppointment =   $user->profile->appointments()
-                    ->where('appointment_level_id',  $data['id'])
-                    ->where('date_end_appointment',  null)
-                    ->get();
-
-                if ($comprobationAppointment->count()) {
-                    return redirect()->back()->with(['error' => 'El nombramiento ' . $data['name'] . ' no puede ser almacenado, ya existe un registro vigente.']);
-                }
-
                 $user->profile->appointments()->create([
-                    'community_id' => $request->community_id["id"],
+                    'community_id' => $request->community_id['id'],
                     'appointment_level_id' =>  $data['id'],
-                    'description' => $request->get('description'),
-                    'date_appointment' => $request->get('date_appointment'),
-                    // 'date_end_appointment' => $request->get('date_end_appointment'),
+                    'description' => $request->description,
+                    'date_appointment' => $request->date_appointment,
+                    // 'date_end_appointment' => $request->appointment['date_end_appointment'],
+                    'transfer_id' => $request->transfer["id"],
                 ]);
             }
-
-            $user->profile->transfers()
-                ->where("transfer_date_relocated", null)
-                ->update(['transfer_date_relocated' =>  $request->get('date_appointment')]);
-
-            $user->profile->transfers()->create([
-                'transfer_reason' => 'Razón del cambio',
-                'transfer_date_adission' => $request->get('date_appointment'),
-                // 'transfer_date_relocated' => $request->get('transfer_date_relocated'),
-                'transfer_observation' => 'Observaciones del cambio ',
-                'community_id' => $request->community_id["id"],
-                // 'office_id' => $request->office_id["id"],
-            ]);
-
             return redirect()->back()->with([
-                'success' => 'Nombramiento guardado correctamente!'
+                'success' => 'Nombramientos guardados correctamente!'
+            ]);
+        } else {
+            $validatorData = Validator::make($request->all(), [
+                'description' => ['required', 'max:2000'],
+                'date_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
+                // 'date_end_appointmnt' => ['nullable', 'date_format:Y-m-d H:i:s'],
+            ]);
+            if ($validatorData->fails()) {
+                return redirect()->back()
+                    ->withErrors($validatorData->errors())
+                    ->withInput();
+            }
+            $array = $request->appointment_level_id;
+
+            foreach ($array as $data) {
+                $user->profile->appointments()->create([
+                    'appointment_level_id' =>  $data['id'],
+                    'description' => $request->description,
+                    'date_appointment' => $request->date_appointment,
+                    // 'date_end_appointment' => $request->appointment['date_end_appointment'],
+                ]);
+            }
+            return redirect()->back()->with([
+                'success' => 'Nombramientos individuales guardados correctamente!'
             ]);
         }
+
+
+        // $lastAppointment = $user->profile->appointments()
+        //     ->where("date_end_appointment", null)
+        //     ->get()
+        //     ->last();
+
+        // // Set if community_id is equal in the last register
+
+        // if ($lastAppointment) {
+        //     if ($request->community_id["id"] == $lastAppointment->community_id) {
+        //         foreach ($array as $data) {
+        //             $comprobationAppointment =   $user->profile->appointments()
+        //                 ->where('appointment_level_id', $data['id'])
+        //                 ->where('date_end_appointment', null)
+        //                 ->get();
+
+        //             if ($comprobationAppointment->count()) {
+        //                 return redirect()->back()->with(['error' => 'El nombramiento ' . $data['name'] . ' no puede ser almacenado, ya existe un registro vigente.']);
+        //             }
+
+        //             $user->profile->appointments()->create([
+        //                 'community_id' => $request->community_id["id"],
+        //                 'appointment_level_id' =>  $data['id'],
+        //                 'description' => $request->get('description'),
+        //                 'date_appointment' => $request->get('date_appointment'),
+        //                 // 'date_end_appointment' => $request->get('date_end_appointment'),
+        //             ]);
+        //         }
+        //         return redirect()->back()->with([
+        //             'success' => 'Nombramiento guardado correctamente!'
+        //         ]);
+        //     } else {
+        //         // Set Actual Date in List Active Appointments
+
+        //         $user->profile->appointments()
+        //             ->where("date_end_appointment", null)
+        //             ->update(['date_end_appointment' =>  $request->get('date_appointment')]);
+
+        //         foreach ($array as $data) {
+
+        //             $comprobationAppointment =   $user->profile->appointments()
+        //                 ->where('appointment_level_id',  $data['id'])
+        //                 ->where('date_end_appointment',  null)
+        //                 ->get();
+
+        //             if ($comprobationAppointment->count()) {
+        //                 return redirect()->back()->with(['error' => 'El nombramiento ' . $data['name'] . ' no puede ser almacenado, ya existe un registro vigente.']);
+        //             }
+
+        //             $user->profile->appointments()->create([
+        //                 'community_id' => $request->community_id["id"],
+        //                 'appointment_level_id' =>  $data['id'],
+        //                 'description' => $request->get('description'),
+        //                 'date_appointment' => $request->get('date_appointment'),
+        //                 // 'date_end_appointment' => $request->get('date_end_appointment'),
+        //             ]);
+        //         }
+
+        //         $user->profile->transfers()
+        //             ->where("transfer_date_relocated", null)
+        //             ->update(['transfer_date_relocated' =>  $request->get('date_appointment')]);
+
+        //         $user->profile->transfers()->create([
+        //             'transfer_reason' => 'Razón del cambio',
+        //             'transfer_date_adission' => $request->get('date_appointment'),
+        //             // 'transfer_date_relocated' => $request->get('transfer_date_relocated'),
+        //             'transfer_observation' => 'Observaciones del cambio ',
+        //             'community_id' => $request->community_id["id"],
+        //             // 'office_id' => $request->office_id["id"],
+        //         ]);
+
+        //         return redirect()->back()->with([
+        //             'success' => 'Nombramiento guardado correctamente!'
+        //         ]);
+        //     }
+        // } else {
+
+        //     // Set Actual Date in List Active Appointments
+
+        //     $user->profile->appointments()
+        //         ->where("date_end_appointment", null)
+        //         ->update(['date_end_appointment' =>  $request->get('date_appointment')]);
+
+        //     foreach ($array as $data) {
+
+        //         $comprobationAppointment =   $user->profile->appointments()
+        //             ->where('appointment_level_id',  $data['id'])
+        //             ->where('date_end_appointment',  null)
+        //             ->get();
+
+        //         if ($comprobationAppointment->count()) {
+        //             return redirect()->back()->with(['error' => 'El nombramiento ' . $data['name'] . ' no puede ser almacenado, ya existe un registro vigente.']);
+        //         }
+
+        //         $user->profile->appointments()->create([
+        //             'community_id' => $request->community_id["id"],
+        //             'appointment_level_id' =>  $data['id'],
+        //             'description' => $request->get('description'),
+        //             'date_appointment' => $request->get('date_appointment'),
+        //             // 'date_end_appointment' => $request->get('date_end_appointment'),
+        //         ]);
+        //     }
+
+        //     $user->profile->transfers()
+        //         ->where("transfer_date_relocated", null)
+        //         ->update(['transfer_date_relocated' =>  $request->get('date_appointment')]);
+
+        //     $user->profile->transfers()->create([
+        //         'transfer_reason' => 'Razón del cambio',
+        //         'transfer_date_adission' => $request->get('date_appointment'),
+        //         // 'transfer_date_relocated' => $request->get('transfer_date_relocated'),
+        //         'transfer_observation' => 'Observaciones del cambio ',
+        //         'community_id' => $request->community_id["id"],
+        //         // 'office_id' => $request->office_id["id"],
+        //     ]);
+
+        //     return redirect()->back()->with([
+        //         'success' => 'Nombramiento guardado correctamente!'
+        //     ]);
+        // }
     }
 
     /**
@@ -282,31 +329,35 @@ class AppointmentController extends Controller
             'appointment_id' => ['required', 'exists:appointments,id']
         ]);
 
-        $validatorData = Validator::make(
-            $request->all(),
-            [
-                'appointment_level_id.id' => ['required', 'exists:appointment_levels,id'],
-                'community_id.id' => ['required', 'exists:communities,id'],
-                'description' => ['required', 'max:2000'],
-                'date_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
-            ]
-        );
-        if ($validator->fails() || $validatorData->fails()) {
-            return response()->json(['error' => 'No existen los datos']);
+        if ($validator->fails()) {
+            return abort(404);
         }
-
-        $appointment = Appointment::find($appointment_id);
 
         $user = User::find($user_id);
 
-        $comprobationAppointment =   $user->profile->appointments()
-            ->where('appointment_level_id',  $request->appointment_level_id["id"])
-            ->where('date_end_appointment', null)
-            ->get()
-            ->last();
+        $appointment = Appointment::find($appointment_id);
 
-        if ($comprobationAppointment) {
-            if ($comprobationAppointment->id == $appointment->id) {
+        $transfer = Transfer::find($appointment->transfer_id);
+
+        if ($transfer) {
+            if ($transfer->transfer_date_relocated == null) {
+                $validatorData = Validator::make(
+                    $request->all(),
+                    [
+                        'appointment_level_id.id' => ['required', 'exists:appointment_levels,id'],
+                        'community_id.id' => ['required', 'exists:communities,id'],
+                        'description' => ['required', 'max:2000'],
+                        'date_appointment' => ['required', 'date', 'before:date_end_appointment', 'date_format:Y-m-d H:i:s'],
+                        'date_end_appointment' => ['nullable', 'date', 'after:date_appointment', 'date_format:Y-m-d H:i:s'],
+                    ]
+                );
+
+                if ($validatorData->fails()) {
+                    return redirect()->back()
+                        ->withErrors($validatorData->errors())
+                        ->withInput();
+                }
+
                 $appointment->update([
                     'community_id' => $request->community_id["id"],
                     'appointment_level_id' => $request->appointment_level_id["id"],
@@ -314,37 +365,107 @@ class AppointmentController extends Controller
                     'date_appointment' => $request->get('date_appointment'),
                     'date_end_appointment' => $request->get('date_end_appointment'),
                 ]);
-                return redirect()->back()->with(['success' => 'Nombramiento actualizado correctamente!']);
+                return redirect()->back()->with(['success' => 'Nombramiento del cambio actualizado correctamente!']);
             } else {
-                return redirect()->back()->with(['error' => 'El nombramiento no puede ser actualizado, ya existe un registro vigente.']);
+                $validatorData = Validator::make(
+                    $request->all(),
+                    [
+                        'appointment_level_id.id' => ['required', 'exists:appointment_levels,id'],
+                        'community_id.id' => ['required', 'exists:communities,id'],
+                        'description' => ['required', 'max:2000'],
+                        'date_appointment' => ['required', 'date', 'before:date_end_appointment', 'date_format:Y-m-d H:i:s'],
+                        'date_end_appointment' => ['required', 'date', 'after:date_appointment', 'date_format:Y-m-d H:i:s'],
+                    ]
+                );
+
+                if ($validatorData->fails()) {
+                    return redirect()->back()
+                        ->withErrors($validatorData->errors())
+                        ->withInput();
+                }
+
+                $appointment->update([
+                    'community_id' => $request->community_id["id"],
+                    'appointment_level_id' => $request->appointment_level_id["id"],
+                    'description' => $request->get('description'),
+                    'date_appointment' => $request->get('date_appointment'),
+                    'date_end_appointment' => $request->get('date_end_appointment'),
+                ]);
+                return redirect()->back()->with(['success' => 'Nombramiento antiguo actualizado correctamente!']);
             }
+        } else {
+            $validatorData = Validator::make(
+                $request->all(),
+                [
+                    'appointment_level_id.id' => ['required', 'exists:appointment_levels,id'],
+                    'description' => ['required', 'max:2000'],
+                    'date_appointment' => ['required', 'date', 'before:date_end_appointment', 'date_format:Y-m-d H:i:s'],
+                    'date_end_appointment' => ['nullable', 'date', 'after:date_appointment', 'date_format:Y-m-d H:i:s'],
+                ]
+            );
+
+            if ($validatorData->fails()) {
+                return redirect()->back()
+                    ->withErrors($validatorData->errors())
+                    ->withInput();
+            }
+
+            $appointment->update([
+                'appointment_level_id' => $request->appointment_level_id["id"],
+                'description' => $request->get('description'),
+                'date_appointment' => $request->get('date_appointment'),
+                'date_end_appointment' => $request->get('date_end_appointment'),
+            ]);
+            return redirect()->back()->with(['success' => 'Nombramiento Individual actualizado correctamente!']);
         }
 
-        $validatorData = Validator::make(
-            $request->all(),
-            [
-                'appointment_level_id.id' => ['required', 'exists:appointment_levels,id'],
-                'community_id.id' => ['required', 'exists:communities,id'],
-                'description' => ['required', 'max:2000'],
-                'date_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
-                'date_end_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
-            ]
-        );
 
-        if ($validatorData->fails()) {
-            return redirect()->back()
-                ->withErrors($validatorData->errors())
-                ->withInput();
-        }
+        // $comprobationAppointment =   $user->profile->appointments()
+        //     ->where('appointment_level_id',  $request->appointment_level_id["id"])
+        //     ->where('date_end_appointment', null)
+        //     ->get()
+        //     ->last();
 
-        $appointment->update([
-            'community_id' => $request->community_id["id"],
-            'appointment_level_id' => $request->appointment_level_id["id"],
-            'description' => $request->get('description'),
-            'date_appointment' => $request->get('date_appointment'),
-            'date_end_appointment' => $request->get('date_end_appointment'),
-        ]);
-        return redirect()->back()->with(['success' => 'Nombramiento actualizado correctamente!']);
+        // if ($comprobationAppointment) {
+        //     if ($comprobationAppointment->id == $appointment->id) {
+        //         $appointment->update([
+        //             'community_id' => $request->community_id["id"],
+        //             'appointment_level_id' => $request->appointment_level_id["id"],
+        //             'description' => $request->get('description'),
+        //             'date_appointment' => $request->get('date_appointment'),
+        //             'date_end_appointment' => $request->get('date_end_appointment'),
+        //         ]);
+        //         return redirect()->back()->with(['success' => 'Nombramiento actualizado correctamente!']);
+        //     } else {
+        //         return redirect()->back()->with(['error' => 'El nombramiento no puede ser actualizado, ya existe un registro vigente.']);
+        //     }
+        // }
+
+        // $validatorData = Validator::make(
+        //     $request->all(),
+        //     [
+        //         'appointment_level_id.id' => ['required', 'exists:appointment_levels,id'],
+        //         'community_id.id' => ['required', 'exists:communities,id'],
+        //         'description' => ['required', 'max:2000'],
+        //         'date_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
+        //         'date_end_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
+        //     ]
+        // );
+
+        // if ($validatorData->fails()) {
+        //     return redirect()->back()
+        //         ->withErrors($validatorData->errors())
+        //         ->withInput();
+        // }
+
+        // $appointment->update([
+        //     'community_id' => $request->community_id["id"],
+        //     'appointment_level_id' => $request->appointment_level_id["id"],
+        //     'description' => $request->get('description'),
+        //     'date_appointment' => $request->get('date_appointment'),
+        //     'date_end_appointment' => $request->get('date_end_appointment'),
+        // ]);
+        // return redirect()->back()->with(['success' => 'Nombramiento actualizado correctamente!']);
     }
 
     /**

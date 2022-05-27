@@ -113,6 +113,16 @@ class WorkController extends Controller
             'name' => 'Inventario de ' . $community->comm_name,
             'description' => 'Descripción del inventario de la obra ' . $community->comm_name
         ]);
+
+        $addressClass = new AddressController();
+        $arrayAddress =  $addressClass->getActualAddress($request->get('political_division_id'));
+        $data_province = $arrayAddress["data_province"];
+        $data_canton = $arrayAddress["data_canton"];
+
+        $community->update([
+            'comm_name' => $community->comm_name . ' de ' .  $data_province . ', ' . $data_canton,
+            'comm_slug' => Str::slug($community->comm_name . ' de ' . $arrayAddress["data_province"] . ' ' . $arrayAddress["data_parish"]),
+        ]);
         return redirect()->route('secretary.works.edit', $community->comm_slug)->with('success', 'Obra creada correctamente.');
     }
 
@@ -151,12 +161,22 @@ class WorkController extends Controller
             ->get()
             ->first();
 
+        if ($community_custom->comm_level != 2  || $community_custom->comm_id == null) {
+            abort(404);
+        }
+
         $community_principal = Community::where('id', '=', $community_custom->comm_id)
             ->where('comm_level', '=', 1)
             ->get()
             ->first();
 
-        return Inertia::render('Secretary/Communities/Work/Edit', compact('community_custom', 'community_principal', 'provinces'));
+        $arrayAddress =  $addressClass->getActualAddress($community_custom->address->political_division_id);
+        $data_province = $arrayAddress["data_province"];
+        $data_canton = $arrayAddress["data_canton"];
+        $prefix = strstr($community_custom->comm_name, ' de ' .  $data_province . ', ' . $data_canton, true);
+        $postfix = ' de ' .  $data_province . ', ' . $data_canton;
+
+        return Inertia::render('Secretary/Communities/Work/Edit', compact('community_custom', 'community_principal', 'provinces', 'prefix', 'postfix'));
     }
 
     /**
@@ -221,14 +241,42 @@ class WorkController extends Controller
                 'address' => $request->get('address'),
                 'political_division_id' => $request->get('political_division_id'),
             ]);
+
+            $addressClass = new AddressController();
+            $arrayAddress =  $addressClass->getActualAddress($request->get('political_division_id'));
+            $data_province = $arrayAddress["data_province"];
+            $data_canton = $arrayAddress["data_canton"];
+
+            $community->update([
+                'comm_name' => $community->comm_name . ' de ' .  $data_province . ', ' . $data_canton,
+                'comm_slug' => Str::slug($community->comm_name . ' de ' . $arrayAddress["data_province"] . ' ' . $arrayAddress["data_parish"]),
+            ]);
+
             return redirect()->route('secretary.works.edit', $community->comm_slug)->with([
                 'success' => 'La obra fue actualizada y la dirección fue creada correctamente.',
             ]);
         } else {
+
+            $addressClass = new AddressController();
+            $arrayAddress =  $addressClass->getActualAddress($community->address->political_division_id);
+            $data_province = $arrayAddress["data_province"];
+            $data_canton = $arrayAddress["data_canton"];
+            $nameCommunity = strstr($community->comm_name, ' de ' .  $data_province . ', ' . $data_canton, true);
+
             $community->address()->update([
                 'address' => $request->get('address'),
                 'political_division_id' => $request->get('political_division_id'),
             ]);
+
+            $arrayAddress =  $addressClass->getActualAddress($request->get('political_division_id'));
+            $data_province = $arrayAddress["data_province"];
+            $data_canton = $arrayAddress["data_canton"];
+
+            $community->update([
+                'comm_name' => $nameCommunity  . ' de ' .  $data_province . ', ' . $data_canton,
+                'comm_slug' => Str::slug($nameCommunity . ' de ' . $arrayAddress["data_province"] . ' ' . $arrayAddress["data_parish"]),
+            ]);
+
             return redirect()->route('secretary.works.edit', $community->comm_slug)->with([
                 'success' => 'La obra fue actualizada y la dirección fue actualizada correctamente.',
             ]);

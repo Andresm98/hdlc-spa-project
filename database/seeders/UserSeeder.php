@@ -468,7 +468,7 @@ class UserSeeder extends Seeder
             ["Guillermina", "Torres Flores", "Guillermina", "oasismarillac2015@gmail.com", "200069730", "1939-02-28", "1957-12-05", "1962-12-08", "997800005", 12],
             ["Nardi Jaqueline", "Torres Marin", "Nardi", "narditorres@hotmail.com", "1103164974", "1973-09-01", "1992-11-26", "1997-11-27", "981846810", 26],
             ["Nelly María", "Torres Matamoros", "Nelly", "sornellytorresm@yahoo.es", "1703142917", "1950-08-02", "1970-09-27", "1975-09-27", "979789044", 29],
-            ["Lucrecia", "Toscano Parra", " Lucrecia", "oasismarillac2015@gmail.com", "600160741", "1934-10-14", "1956-03-05", "1961-03-15", "993359409",12],
+            ["Lucrecia", "Toscano Parra", " Lucrecia", "oasismarillac2015@gmail.com", "600160741", "1934-10-14", "1956-03-05", "1961-03-15", "993359409", 12],
             ["Clara Luz", "Trujillo Gonzalez", "Clara", "casabetania2016@gmail.com", "100768225", "1921-03-26", "1944-03-11", "1949-03-15", "981843740", 34],
             ["Dolores Virginia", "Ullauri Armijos", "Virginia", "oasismarillac2015@gmail.com", "1701926485", "1934-08-03", "1958-08-09", "1963-08-15", "993359409", 12],
             ["Mery Mercy", "Ullco Cruz", "Mery", "uc783@hotmail.com", "1716364409", "1983-04-17", "2012-11-27", "2019-02-02", "999903205", 14],
@@ -538,11 +538,19 @@ class UserSeeder extends Seeder
                 'political_division_id' => $community->address->political_division_id,
             ]);
 
-            $profile->transfers()->create([
+            $transfer =  $profile->transfers()->create([
                 'transfer_reason' => 'Razón del cambio de la hermana ' . $user->name,
                 'transfer_date_adission' => '2022-01-05 00:00:00',
                 'transfer_observation' => 'Observaciones relacionadas al cambio de la hermana ' . $user->name,
                 'community_id' => $community->id,
+            ]);
+
+            $transfer->appointments()->create([
+                'community_id' => $transfer->community_id,
+                'appointment_level_id' =>  14,
+                'description' => "Descripción del nombramiento",
+                'date_appointment' => '2022-01-05 00:00:00',
+                'profile_id' => $profile->id,
             ]);
 
             $this->createTeam($user);

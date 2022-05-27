@@ -269,13 +269,21 @@
                       {{ $page.props.errors.comm_name }}
                     </p>
                     <small>Formato: Ingresar nombre de la comunidad.</small>
-
-                    <input
-                      type="text"
-                      placeholder="Nombre de la obra en el Sistema"
-                      class="border-0 px-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      v-model="form.comm_name"
-                    />
+                    <div class="mt-1 flex rounded-md shadow-sm">
+                      <input
+                        type="text"
+                        name="company-website"
+                        id="company-website"
+                        class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
+                        placeholder="www.example.com"
+                        v-model="this.nameComplete"
+                      />
+                      <span
+                        class="inline-flex items-center px-3 rounded-r-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"
+                      >
+                        {{ this.postfix }}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -864,6 +872,8 @@ export default defineComponent({
     provinces: {
       type: Array,
     },
+    prefix: null,
+    postfix: null,
   },
   computed: {
     ...mapGetters("daughter", ["actualCount"]),
@@ -965,6 +975,7 @@ export default defineComponent({
 
   data() {
     return {
+      nameComplete: this.prefix,
       isDisabled: false,
       isTouched: false,
       selectMenu: {
@@ -1249,6 +1260,7 @@ export default defineComponent({
         this.isInvalidParish == false &&
         this.validateIdentityCard == true
       ) {
+        this.form.comm_name = this.nameComplete + "" + this.postfix;
         this.form.pastoral_id = this.selectFour.selectedPastoral.id;
         if (this.selectFive.selectedZone != null) {
           this.form.zone_id = this.selectFive.selectedZone.id;
