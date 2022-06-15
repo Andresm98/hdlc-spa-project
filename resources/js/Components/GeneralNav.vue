@@ -1,6 +1,13 @@
 <template>
   <nav
-    class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-600 hover:to-blue-700 border-b border-gray-100 w-full"
+    class="
+      bg-gradient-to-r
+      from-blue-600
+      to-blue-700
+      hover:from-blue-600 hover:to-blue-700
+      border-b border-gray-100
+      w-full
+    "
   >
     <!-- <nav class="bg-slate-800 transparent border-b border-gray-100">  -->
     <!-- Primary Navigation Menu -->
@@ -23,12 +30,16 @@
             >
               Bienvenido
             </jet-nav-link>
-            <jet-nav-link
-              :href="route('dashboard')"
-              :active="route().current('dashboard')"
-            >
-              Origin SPA
-            </jet-nav-link>
+            <div v-for="role in this.allRoles" :key="role">
+              <jet-nav-link
+                class="pt-2"
+                v-show="role.name == 'daughter'"
+                :href="route('daughter.welcome')"
+                :active="route().current('daughter.welcome')"
+                >Información Personal
+              </jet-nav-link>
+            </div>
+
             <jet-nav-link> Origin SPA </jet-nav-link>
           </div>
         </div>
@@ -45,7 +56,23 @@
                 <span class="inline-flex rounded-md">
                   <button
                     type="button"
-                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition"
+                    class="
+                      inline-flex
+                      items-center
+                      px-3
+                      py-2
+                      border border-transparent
+                      text-sm
+                      leading-4
+                      font-medium
+                      rounded-md
+                      text-gray-500
+                      bg-white
+                      hover:bg-gray-50 hover:text-gray-700
+                      focus:outline-none focus:bg-gray-50
+                      active:bg-gray-50
+                      transition
+                    "
                   >
                     {{ $page.props.user.current_team.name }}
 
@@ -94,7 +121,10 @@
                       Cambiar Equipos
                     </div>
 
-                    <template v-for="team in $page.props.user.all_teams" :key="team.id">
+                    <template
+                      v-for="team in $page.props.user.all_teams"
+                      :key="team.id"
+                    >
                       <form @submit.prevent="switchToTeam(team)">
                         <jet-dropdown-link as="button">
                           <div class="flex items-center">
@@ -129,7 +159,14 @@
               <template #trigger>
                 <button
                   v-if="$page.props.jetstream.managesProfilePhotos"
-                  class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition"
+                  class="
+                    flex
+                    text-sm
+                    border-2 border-transparent
+                    rounded-full
+                    focus:outline-none focus:border-gray-300
+                    transition
+                  "
                 >
                   <img
                     class="h-8 w-8 rounded-full object-cover"
@@ -141,7 +178,22 @@
                 <span v-else class="inline-flex rounded-md">
                   <button
                     type="button"
-                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition"
+                    class="
+                      inline-flex
+                      items-center
+                      px-3
+                      py-2
+                      border border-transparent
+                      text-sm
+                      leading-4
+                      font-medium
+                      rounded-md
+                      text-gray-500
+                      bg-white
+                      hover:text-gray-700
+                      focus:outline-none
+                      transition
+                    "
                   >
                     {{ $page.props.user.name }}
 
@@ -206,9 +258,24 @@
         <div class="-mr-2 flex items-center sm:hidden">
           <button
             @click="showingNavigationDropdown = !showingNavigationDropdown"
-            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition"
+            class="
+              inline-flex
+              items-center
+              justify-center
+              p-2
+              rounded-md
+              text-gray-400
+              hover:text-gray-500 hover:bg-gray-100
+              focus:outline-none focus:bg-gray-100 focus:text-gray-500
+              transition
+            "
           >
-            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+            <svg
+              class="h-6 w-6"
+              stroke="currentColor"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
               <path
                 :class="{
                   hidden: showingNavigationDropdown,
@@ -255,7 +322,10 @@
       <!-- Responsive Settings Options -->
       <div class="pt-4 pb-1 border-t border-gray-200">
         <div class="flex items-center px-4">
-          <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 mr-3">
+          <div
+            v-if="$page.props.jetstream.managesProfilePhotos"
+            class="shrink-0 mr-3"
+          >
             <img
               class="h-10 w-10 rounded-full object-cover"
               :src="$page.props.user.profile_photo_url"
@@ -313,7 +383,9 @@
           <template v-if="$page.props.jetstream.hasTeamFeatures">
             <div class="border-t border-gray-200"></div>
 
-            <div class="block px-4 py-2 text-xs text-white">Administrar Equipos</div>
+            <div class="block px-4 py-2 text-xs text-white">
+              Administrar Equipos
+            </div>
 
             <!-- Team Settings -->
             <jet-responsive-nav-link
@@ -334,7 +406,9 @@
             <div class="border-t border-gray-200"></div>
 
             <!-- Team Switcher -->
-            <div class="block px-4 py-2 text-xs text-gray-400">Cambiar equipo</div>
+            <div class="block px-4 py-2 text-xs text-gray-400">
+              Cambiar equipo
+            </div>
 
             <template v-for="team in $page.props.user.all_teams" :key="team.id">
               <form @submit.prevent="switchToTeam(team)">
@@ -350,7 +424,9 @@
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      <path
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      ></path>
                     </svg>
                     <div>{{ team.name }}</div>
                   </div>

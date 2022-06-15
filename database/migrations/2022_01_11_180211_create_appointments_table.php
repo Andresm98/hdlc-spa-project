@@ -15,7 +15,8 @@ a<?php
         {
             Schema::create('appointments', function (Blueprint $table) {
                 $table->id();
-
+                // 1 = Active, 0 : Historial
+                $table->tinyInteger('status');
                 // Create fields
                 $table->mediumText('description', 2000);
                 $table->dateTime('date_appointment');

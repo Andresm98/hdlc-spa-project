@@ -2,7 +2,16 @@
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
       <h6
-        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
+        class="
+          mt-2
+          mb-2
+          text-lg
+          font-medium
+          text-center
+          leading-6
+          text-gray-900
+          uppercase
+        "
       >
         Plantilla de Resumen de la Comunidad
       </h6>
@@ -11,7 +20,9 @@
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
               <div class="">
-                <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+                <label class="block text-sm font-medium text-gray-700">
+                  Nombre:
+                </label>
                 <p
                   class="text-red-400 text-sm"
                   v-show="$page.props.errors.comm_name_resume"
@@ -24,7 +35,21 @@
                   minLength="10"
                   maxlength="100"
                   placeholder="Ingresar nombre del resumen"
-                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    border-0
+                    px-3
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
                   v-model="form.comm_name_resume"
                   required
                 />
@@ -34,7 +59,9 @@
 
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700"> Fecha: </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Fecha:
+              </label>
               <p
                 class="text-red-400 text-sm"
                 v-show="$page.props.errors.comm_date_resume"
@@ -44,8 +71,7 @@
               <small>Formato: Fecha del resumen anual.</small>
               <Datepicker
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 v-model="form.comm_date_resume"
                 required
               />
@@ -54,7 +80,9 @@
 
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700"> Anexo: </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Anexo:
+              </label>
               <p
                 class="text-red-400 text-sm"
                 v-show="$page.props.errors.comm_annexed_resume"
@@ -62,14 +90,28 @@
                 {{ $page.props.errors.comm_annexed_resume }}
               </p>
               <small
-                >Formato: Si existe algún enlace o anexo, adjuntarlo en el presente
-                campo.</small
+                >Formato: Si existe algún enlace o anexo, adjuntarlo en el
+                presente campo.</small
               >
               <input
                 minLength="10"
                 maxlength="400"
                 type="text"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 name="anexed"
                 placeholder="Ingresar el anexo del resumen"
                 v-model="form.comm_annexed_resume"
@@ -90,7 +132,8 @@
                 {{ $page.props.errors.comm_observation_resume }}
               </p>
               <small
-                >Formato: Observaciones de la actividad anual, max 3000 caracteres.</small
+                >Formato: Observaciones de la actividad anual, max 3000
+                caracteres.</small
               >
               <div class="bg-white">
                 <quill-editor
@@ -113,7 +156,15 @@
       </form>
 
       <hr
-        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
+        class="
+          w-full
+          mt-1
+          mb-3
+          ml-4
+          mr-4
+          border-b-1 border-gray-400
+          hover:border-gray-400
+        "
       />
 
       <!-- Table -->
@@ -129,25 +180,54 @@
                 <tr>
                   <th
                     scope="col"
-                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      pl-4
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Nombre
                   </th>
                   <th
                     scope="col"
-                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Fecha
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Anexo
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Acciones
                   </th>
@@ -178,19 +258,38 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span
-                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 mr-2"
+                      class="
+                        px-3
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-yellow-100
+                        text-yellow-800
+                        mr-2
+                      "
                     >
                       {{ resume.comm_annexed_resume.substring(0, 15) }}...
                     </span>
                   </td>
-                  <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <td
+                    class="
+                      px-3
+                      py-4
+                      whitespace-nowrap
+                      text-right text-sm
+                      font-medium
+                    "
+                  >
                     <!-- Components -->
 
                     <div class="mx-auto flex gap-10">
                       <jet-button @click="confirmationResumeUpdate(resume)"
                         >Detalles</jet-button
                       >
-                      <jet-danger-button @click="confirmationResumeDelete(resume)"
+                      <jet-danger-button
+                        @click="confirmationResumeDelete(resume)"
                         >Eliminar</jet-danger-button
                       >
                     </div>
@@ -200,7 +299,9 @@
             </table>
           </div>
           <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
-            <p class="text-center text-lg">Por el momento no existen registros.</p>
+            <p class="text-center text-lg">
+              Por el momento no existen registros.
+            </p>
           </div>
         </div>
       </div>
@@ -239,7 +340,9 @@
             <div class="w-full lg:w-6/12 px-4">
               <div class="relative w-full mb-3">
                 <div class="">
-                  <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+                  <label class="block text-sm font-medium text-gray-700">
+                    Nombre:
+                  </label>
                   <p
                     class="text-red-400 text-sm"
                     v-show="$page.props.errors.comm_name_resume"
@@ -252,7 +355,21 @@
                     minLength="10"
                     maxlength="100"
                     placeholder="Ingresar nombre del resumen"
-                    class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    class="
+                      border-0
+                      px-3
+                      placeholder-blueGray-300
+                      text-blueGray-600
+                      bg-white
+                      rounded
+                      text-sm
+                      shadow
+                      focus:outline-none focus:ring
+                      w-full
+                      ease-linear
+                      transition-all
+                      duration-150
+                    "
                     v-model="updateResumeForm.comm_name_resume"
                     required
                   />
@@ -262,7 +379,9 @@
 
             <div class="w-full lg:w-6/12 px-4">
               <div class="relative w-full mb-3">
-                <label class="block text-sm font-medium text-gray-700"> Fecha: </label>
+                <label class="block text-sm font-medium text-gray-700">
+                  Fecha:
+                </label>
                 <p
                   class="text-red-400 text-sm"
                   v-show="$page.props.errors.comm_date_resume"
@@ -272,8 +391,7 @@
                 <small>Formato: Fecha del resumen anual.</small>
                 <Datepicker
                   :format="format"
-                  :transitions="false"
-                  menuClassName="dp-custom-menu"
+                  autoApply
                   v-model="updateResumeForm.comm_date_resume"
                   required
                 />
@@ -282,7 +400,9 @@
 
             <div class="w-full lg:w-12/12 px-4">
               <div class="relative w-full mb-3">
-                <label class="block text-sm font-medium text-gray-700"> Anexo: </label>
+                <label class="block text-sm font-medium text-gray-700">
+                  Anexo:
+                </label>
                 <p
                   class="text-red-400 text-sm"
                   v-show="$page.props.errors.comm_annexed_resume"
@@ -290,14 +410,28 @@
                   {{ $page.props.errors.comm_annexed_resume }}
                 </p>
                 <small
-                  >Formato: Si existe algún enlace o anexo, adjuntarlo en el presente
-                  campo.</small
+                  >Formato: Si existe algún enlace o anexo, adjuntarlo en el
+                  presente campo.</small
                 >
                 <input
                   minLength="10"
                   maxlength="400"
                   type="text"
-                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    border-0
+                    px-3
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
                   name="anexed"
                   placeholder="Ingresar el anexo del resumen"
                   v-model="updateResumeForm.comm_annexed_resume"
@@ -542,7 +676,8 @@ export default {
     },
     confirmationResumeUpdate(resume) {
       this.updateResumeForm.comm_name_resume = resume.comm_name_resume;
-      this.updateResumeForm.comm_observation_resume = resume.comm_observation_resume;
+      this.updateResumeForm.comm_observation_resume =
+        resume.comm_observation_resume;
       this.updateResumeForm.comm_date_resume = resume.comm_date_resume;
       this.updateResumeForm.comm_annexed_resume = resume.comm_annexed_resume;
 
@@ -576,7 +711,8 @@ export default {
     // // Delete
     confirmationResumeDelete(resume) {
       this.deleteResumeForm.comm_name_resume = resume.comm_name_resume;
-      this.deleteResumeForm.comm_observation_resume = resume.comm_observation_resume;
+      this.deleteResumeForm.comm_observation_resume =
+        resume.comm_observation_resume;
       this.deleteResumeForm.comm_date_resume = resume.comm_date_resume;
 
       this.resumeBeingDeleted = resume;

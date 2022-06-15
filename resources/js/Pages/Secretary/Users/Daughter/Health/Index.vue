@@ -2,20 +2,35 @@
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
       <h6
-        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
+        class="
+          mt-2
+          mb-2
+          text-lg
+          font-medium
+          text-center
+          leading-6
+          text-gray-900
+          uppercase
+        "
       >
         Plantilla de Estado de Salud de la Hermana
       </h6>
       <form @submit.prevent="submit">
-        <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
+        <label
+          class="block text-sm font-medium text-gray-700"
+          htmlfor="grid-password"
+        >
           Estado de Salud Actual:
         </label>
-        <p class="text-red-400 text-sm" v-show="$page.props.errors.actual_health">
+        <p
+          class="text-red-400 text-sm"
+          v-show="$page.props.errors.actual_health"
+        >
           {{ $page.props.errors.actual_health }}
         </p>
         <small
-          >Formato: Estado de salud actual de la hermana, deberá ingresar máximo 4000
-          caracteres.</small
+          >Formato: Estado de salud actual de la hermana, deberá ingresar máximo
+          4000 caracteres.</small
         >
         <div class="bg-white">
           <quill-editor
@@ -33,12 +48,15 @@
         >
           Enfermedades Crónicas:
         </label>
-        <p class="text-red-500 text-sm" v-show="$page.props.errors.chronic_diseases">
+        <p
+          class="text-red-500 text-sm"
+          v-show="$page.props.errors.chronic_diseases"
+        >
           {{ $page.props.errors.chronic_diseases }}
         </p>
         <small
-          >Formato: Detallar las enfermedades crónicas que presenta la hermana, deberá
-          ingresar máximo 4000 caracteres.</small
+          >Formato: Detallar las enfermedades crónicas que presenta la hermana,
+          deberá ingresar máximo 4000 caracteres.</small
         >
         <div class="bg-white">
           <quill-editor
@@ -57,12 +75,15 @@
         >
           Otros Problemas de Salud:
         </label>
-        <p class="text-red-400 text-sm" v-show="$page.props.errors.other_health_problems">
+        <p
+          class="text-red-400 text-sm"
+          v-show="$page.props.errors.other_health_problems"
+        >
           {{ $page.props.errors.other_health_problems }}
         </p>
         <small
-          >Formato: Detallar los otros problemas de salud que presenta la hermana, deberá
-          ingresar máximo 4000 caracteres.</small
+          >Formato: Detallar los otros problemas de salud que presenta la
+          hermana, deberá ingresar máximo 4000 caracteres.</small
         >
         <div class="bg-white">
           <quill-editor
@@ -84,15 +105,17 @@
               >
                 Fecha de Ingreso:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.consult_date">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.consult_date"
+              >
                 {{ $page.props.errors.consult_date }}
               </p>
               <small>Formato: Fecha del día de registro.</small>
               <Datepicker
                 v-model="form.consult_date"
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 required
               />
             </div>
@@ -103,7 +126,15 @@
         </div>
       </form>
       <hr
-        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
+        class="
+          w-full
+          mt-1
+          mb-3
+          ml-4
+          mr-4
+          border-b-1 border-gray-400
+          hover:border-gray-400
+        "
       />
       <!-- Table -->
 
@@ -118,13 +149,26 @@
                 <tr>
                   <th
                     scope="col"
-                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      pl-4
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Fecha Registro
                   </th>
                   <th
                     scope="col"
-                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Acciones
                   </th>
@@ -134,19 +178,37 @@
                 <tr v-for="health in this.getAllHealth()" :key="health">
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                      class="
+                        px-2
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-green-100
+                        text-green-800
+                      "
                     >
                       {{ this.formatShowDate(health.consult_date) }}
                     </span>
                   </td>
-                  <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <td
+                    class="
+                      px-3
+                      py-4
+                      whitespace-nowrap
+                      text-right text-sm
+                      font-medium
+                    "
+                  >
                     <!-- Components -->
 
                     <div class="mx-auto flex gap-10">
                       <jet-button @click="confirmationHealthUpdate(health)"
                         >Detalles</jet-button
                       >
-                      <jet-danger-button @click="confirmationHealthDelete(health)"
+                      <jet-danger-button
+                        @click="confirmationHealthDelete(health)"
                         >Eliminar</jet-danger-button
                       >
                     </div>
@@ -156,14 +218,19 @@
             </table>
           </div>
           <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
-            <p class="text-center text-lg">Por el momento no existen registros.</p>
+            <p class="text-center text-lg">
+              Por el momento no existen registros.
+            </p>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <jet-confirmation-modal :show="healthBeingDeleted" @close="healthBeingDeleted == null">
+  <jet-confirmation-modal
+    :show="healthBeingDeleted"
+    @close="healthBeingDeleted == null"
+  >
     <template #title> Eliminar el estado de Salud</template>
 
     <template #content>
@@ -181,8 +248,7 @@
             <Datepicker
               v-model="deleteHealthForm.consult_date"
               :format="format"
-              :transitions="false"
-              menuClassName="dp-custom-menu"
+              autoApply
               readonly
             />
           </div>
@@ -209,15 +275,18 @@
     <template #title> Datos de Registro de Salud</template>
 
     <template #content>
-      <label class="block text-sm font-medium text-black" htmlfor="grid-password">
+      <label
+        class="block text-sm font-medium text-black"
+        htmlfor="grid-password"
+      >
         Estado de Salud Actual:
       </label>
       <p class="text-red-400 text-sm" v-show="$page.props.errors.actual_health">
         {{ $page.props.errors.actual_health }}
       </p>
       <small
-        >Formato: Estado de salud actual de la hermana, deberá ingresar máximo 4000
-        caracteres.</small
+        >Formato: Estado de salud actual de la hermana, deberá ingresar máximo
+        4000 caracteres.</small
       >
       <div class="bg-white">
         <quill-editor
@@ -230,15 +299,21 @@
         ></quill-editor>
       </div>
 
-      <label class="mt-2 block text-sm font-medium text-gray-700" htmlfor="grid-password">
+      <label
+        class="mt-2 block text-sm font-medium text-gray-700"
+        htmlfor="grid-password"
+      >
         Enfermedades Crónicas:
       </label>
-      <p class="text-red-500 text-sm" v-show="$page.props.errors.chronic_diseases">
+      <p
+        class="text-red-500 text-sm"
+        v-show="$page.props.errors.chronic_diseases"
+      >
         {{ $page.props.errors.chronic_diseases }}
       </p>
       <small
-        >Formato: Detallar las enfermedades crónicas que presenta la hermana, deberá
-        ingresar máximo 4000 caracteres.</small
+        >Formato: Detallar las enfermedades crónicas que presenta la hermana,
+        deberá ingresar máximo 4000 caracteres.</small
       >
       <div class="bg-white">
         <quill-editor
@@ -251,15 +326,21 @@
         ></quill-editor>
       </div>
 
-      <label class="mt-2 block text-sm font-medium text-gray-700" htmlfor="grid-password">
+      <label
+        class="mt-2 block text-sm font-medium text-gray-700"
+        htmlfor="grid-password"
+      >
         Otros Problemas de Salud:
       </label>
-      <p class="text-red-400 text-sm" v-show="$page.props.errors.other_health_problems">
+      <p
+        class="text-red-400 text-sm"
+        v-show="$page.props.errors.other_health_problems"
+      >
         {{ $page.props.errors.other_health_problems }}
       </p>
       <small
-        >Formato: Detallar los otros problemas de salud que presenta la hermana, deberá
-        ingresar máximo 4000 caracteres.</small
+        >Formato: Detallar los otros problemas de salud que presenta la hermana,
+        deberá ingresar máximo 4000 caracteres.</small
       >
       <div class="bg-white">
         <quill-editor
@@ -281,15 +362,17 @@
             >
               Fecha de Ingreso:
             </label>
-            <p class="text-red-400 text-sm" v-show="$page.props.errors.consult_date">
+            <p
+              class="text-red-400 text-sm"
+              v-show="$page.props.errors.consult_date"
+            >
               {{ $page.props.errors.consult_date }}
             </p>
             <small>Formato: Fecha del día de registro.</small>
             <Datepicker
               v-model="updateHealthForm.consult_date"
               :format="format"
-              :transitions="false"
-              menuClassName="dp-custom-menu"
+              autoApply
               required
             />
           </div>
@@ -601,7 +684,8 @@ export default {
       this.updateHealthForm.consult_date = health.consult_date;
       this.updateHealthForm.actual_health = health.actual_health;
       this.updateHealthForm.chronic_diseases = health.chronic_diseases;
-      this.updateHealthForm.other_health_problems = health.other_health_problems;
+      this.updateHealthForm.other_health_problems =
+        health.other_health_problems;
       this.healthBeingUpdated = health;
     },
     updateHealthStatus() {

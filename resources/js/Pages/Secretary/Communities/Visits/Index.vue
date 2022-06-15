@@ -2,7 +2,16 @@
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
       <h6
-        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
+        class="
+          mt-2
+          mb-2
+          text-lg
+          font-medium
+          text-center
+          leading-6
+          text-gray-900
+          uppercase
+        "
       >
         Plantilla de Visitas
       </h6>
@@ -11,7 +20,9 @@
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
               <div class="">
-                <label class="block text-sm font-medium text-gray-700"> Razón: </label>
+                <label class="block text-sm font-medium text-gray-700">
+                  Razón:
+                </label>
                 <p
                   class="text-red-400 text-sm"
                   v-show="$page.props.errors.comm_reason_visit"
@@ -24,7 +35,22 @@
                   minLength="10"
                   maxlength="100"
                   placeholder="Ingresar razón visita"
-                  class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    border-0
+                    px-3
+                    my-2
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
                   v-model="form.comm_reason_visit"
                   required
                 />
@@ -35,7 +61,9 @@
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
               <div class="">
-                <label class="block text-sm font-medium text-gray-700"> Tipo: </label>
+                <label class="block text-sm font-medium text-gray-700">
+                  Tipo:
+                </label>
                 <p
                   class="text-red-400 text-sm"
                   v-show="$page.props.errors.comm_type_visit"
@@ -48,7 +76,20 @@
                   id="material"
                   name="material"
                   autocomplete="article-material"
-                  class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  class="
+                    mt-1
+                    block
+                    w-full
+                    px-3
+                    border border-gray-300
+                    bg-white
+                    rounded-md
+                    shadow-sm
+                    focus:outline-none
+                    focus:ring-indigo-500
+                    focus:border-indigo-500
+                    sm:text-sm
+                  "
                 >
                   <option value="1">Fraterna</option>
                   <option value="2">Regular</option>
@@ -69,7 +110,9 @@
               >
                 {{ $page.props.errors.comm_description_visit }}
               </p>
-              <small>Formato: Descripción de la visita, máx 3000 caracteres.</small>
+              <small
+                >Formato: Descripción de la visita, máx 3000 caracteres.</small
+              >
               <div class="bg-white">
                 <quill-editor
                   ref="qleditor1"
@@ -100,8 +143,7 @@
               <small>Formato: Fecha en la que inicia la visita.</small>
               <Datepicker
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 v-model="form.comm_date_init_visit"
                 required
               />
@@ -125,8 +167,7 @@
               <small>Formato: Fecha en la que termina la visita.</small>
               <Datepicker
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 v-model="form.comm_date_end_visit"
                 required
               />
@@ -141,7 +182,15 @@
       </form>
 
       <hr
-        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
+        class="
+          w-full
+          mt-1
+          mb-3
+          ml-4
+          mr-4
+          border-b-1 border-gray-400
+          hover:border-gray-400
+        "
       />
       <!-- Data Table  -->
 
@@ -156,25 +205,54 @@
                 <tr>
                   <th
                     scope="col"
-                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      pl-4
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Razón
                   </th>
                   <th
                     scope="col"
-                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Tipo
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Fecha Inicio - Fin
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Acciones
                   </th>
@@ -218,17 +296,45 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span
-                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 mr-2"
+                      class="
+                        px-3
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-yellow-100
+                        text-yellow-800
+                        mr-2
+                      "
                     >
                       {{ this.formatShowDate(visit.comm_date_init_visit) }}
                     </span>
                     <span
-                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 mr-2"
+                      class="
+                        px-3
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-red-100
+                        text-red-800
+                        mr-2
+                      "
                     >
                       {{ this.formatShowDate(visit.comm_date_end_visit) }}
                     </span>
                   </td>
-                  <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <td
+                    class="
+                      px-3
+                      py-4
+                      whitespace-nowrap
+                      text-right text-sm
+                      font-medium
+                    "
+                  >
                     <!-- Components -->
 
                     <div class="mx-auto flex gap-10">
@@ -245,7 +351,9 @@
             </table>
           </div>
           <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
-            <p class="text-center text-lg">Por el momento no existen registros.</p>
+            <p class="text-center text-lg">
+              Por el momento no existen registros.
+            </p>
           </div>
         </div>
       </div>
@@ -285,7 +393,9 @@
             <div class="w-full lg:w-6/12 px-4">
               <div class="relative w-full mb-3">
                 <div class="">
-                  <label class="block text-sm font-medium text-gray-700"> Razón: </label>
+                  <label class="block text-sm font-medium text-gray-700">
+                    Razón:
+                  </label>
                   <p
                     class="text-red-400 text-sm"
                     v-show="$page.props.errors.comm_reason_visit"
@@ -298,7 +408,22 @@
                     minLength="10"
                     maxlength="100"
                     placeholder="Ingresar razón visita"
-                    class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    class="
+                      border-0
+                      px-3
+                      my-2
+                      placeholder-blueGray-300
+                      text-blueGray-600
+                      bg-white
+                      rounded
+                      text-sm
+                      shadow
+                      focus:outline-none focus:ring
+                      w-full
+                      ease-linear
+                      transition-all
+                      duration-150
+                    "
                     v-model="updateVisitForm.comm_reason_visit"
                     required
                   />
@@ -309,7 +434,9 @@
             <div class="w-full lg:w-6/12 px-4">
               <div class="relative w-full mb-3">
                 <div class="">
-                  <label class="block text-sm font-medium text-gray-700"> Tipo: </label>
+                  <label class="block text-sm font-medium text-gray-700">
+                    Tipo:
+                  </label>
                   <p
                     class="text-red-400 text-sm"
                     v-show="$page.props.errors.comm_type_visit"
@@ -322,7 +449,20 @@
                     id="material"
                     name="material"
                     autocomplete="article-material"
-                    class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    class="
+                      mt-1
+                      block
+                      w-full
+                      px-3
+                      border border-gray-300
+                      bg-white
+                      rounded-md
+                      shadow-sm
+                      focus:outline-none
+                      focus:ring-indigo-500
+                      focus:border-indigo-500
+                      sm:text-sm
+                    "
                   >
                     <option value="1">Fraterna</option>
                     <option value="2">Regular</option>
@@ -343,7 +483,10 @@
                 >
                   {{ $page.props.errors.comm_description_visit }}
                 </p>
-                <small>Formato: Descripción de la visita, máx 3000 caracteres.</small>
+                <small
+                  >Formato: Descripción de la visita, máx 3000
+                  caracteres.</small
+                >
                 <div class="bg-white">
                   <quill-editor
                     ref="qleditor1"
@@ -374,8 +517,7 @@
                 <small>Formato: Fecha en la que inicia la visita.</small>
                 <Datepicker
                   :format="format"
-                  :transitions="false"
-                  menuClassName="dp-custom-menu"
+                  autoApply
                   v-model="updateVisitForm.comm_date_init_visit"
                   required
                 />
@@ -399,8 +541,7 @@
                 <small>Formato: Fecha en la que termina la visita.</small>
                 <Datepicker
                   :format="format"
-                  :transitions="false"
-                  menuClassName="dp-custom-menu"
+                  autoApply
                   v-model="updateVisitForm.comm_date_end_visit"
                   required
                 />
@@ -582,8 +723,12 @@ export default {
     ...mapActions("visit", ["updateAllVisit"]),
     ...mapGetters("visit", ["getAllVisit"]),
     submit() {
-      this.form.comm_date_init_visit = this.formatDate(this.form.comm_date_init_visit);
-      this.form.comm_date_end_visit = this.formatDate(this.form.comm_date_end_visit);
+      this.form.comm_date_init_visit = this.formatDate(
+        this.form.comm_date_init_visit
+      );
+      this.form.comm_date_end_visit = this.formatDate(
+        this.form.comm_date_end_visit
+      );
       //
       Inertia.post(
         route("secretary.communities.visit.store", {
@@ -622,7 +767,8 @@ export default {
     confirmationVisitUpdate(visit) {
       this.updateVisitForm.comm_reason_visit = visit.comm_reason_visit;
       this.updateVisitForm.comm_type_visit = visit.comm_type_visit;
-      this.updateVisitForm.comm_description_visit = visit.comm_description_visit;
+      this.updateVisitForm.comm_description_visit =
+        visit.comm_description_visit;
       this.updateVisitForm.comm_date_init_visit = visit.comm_date_init_visit;
       this.updateVisitForm.comm_date_end_visit = visit.comm_date_end_visit;
 

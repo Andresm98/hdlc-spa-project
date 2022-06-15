@@ -37,8 +37,9 @@ class TransferController extends Controller
     public function allCommunities()
     {
         $communities_list = Community::where('comm_id', '=', null)
-            ->where('comm_level', '=', 1)
-            ->orWhere('comm_level', '=', 2)
+            ->where('comm_level', 1)
+            ->where('comm_status', 1)
+            ->orWhere('comm_level', 2)
             ->orderBy('comm_name', 'asc')
             ->get();
         return $communities_list;
@@ -83,7 +84,6 @@ class TransferController extends Controller
      */
     public function store(Request $request, $user_id)
     {
-
         $validator = Validator::make([
             'user_id' => $user_id,
         ], [
@@ -95,192 +95,111 @@ class TransferController extends Controller
         }
 
         $user = User::find($user_id);
+        // Get transfers active
+        $countTransfer = count($user->profile->transfers->where('status', 1));
 
-        // Get Actual Transfer
+        if ($countTransfer > 0 &&  $request->transfer['status'] == 1) {
+            return redirect()->back()->with(['error' => 'Error, existe un cambio vigente!']);
+        }
 
-        $lastTransfer = $user->profile->transfers()
-            ->where("transfer_date_relocated", null)
-            ->get()
-            ->last();
+        if ($request->transfer['status'] == 0) {
+            $validatorData = Validator::make($request->all(), [
+                'transfer.transfer_reason' => ['required', 'max:100'],
+                'transfer.transfer_date_adission' => ['required', 'date', 'before:transfer.transfer_date_relocated', 'date_format:Y-m-d H:i:s'],
+                'transfer.transfer_date_relocated' => ['required', 'date', 'after:transfers.transfer_date_adission', 'date_format:Y-m-d H:i:s'],
+                'transfer.transfer_observation' => ['required', 'max:4000'],
+                'transfer.community_id' => ['required', 'exists:communities,id'],
+                'transfer.status' => ['required', 'digits_between:0,1'],
+                //
+                'appointment.description' => ['required', 'max:2000'],
+                'appointment.date_appointment' => ['required', 'date', 'before:appointment.date_end_appointment', 'date_format:Y-m-d H:i:s'],
+                'appointment.date_end_appointment' => ['required', 'date', 'after:appointment.date_appointment', 'date_format:Y-m-d H:i:s'],
+            ]);
 
-        if ($lastTransfer) {
-            if ($request->transfer['transfer_date_relocated'] != null || $request->appointment['date_end_appointment'] != null) {
-                $validatorData = Validator::make($request->all(), [
-                    'transfer.transfer_reason' => ['required', 'max:100'],
-                    'transfer.transfer_date_adission' => ['required', 'date', 'before:transfer.transfer_date_relocated', 'date_format:Y-m-d H:i:s'],
-                    'transfer.transfer_date_relocated' => ['required', 'date', 'after:transfers.transfer_date_adission', 'date_format:Y-m-d H:i:s'],
-                    'transfer.transfer_observation' => ['required', 'max:4000'],
-                    'transfer.community_id' => ['required', 'exists:communities,id'],
-                    //
-                    'appointment.community_id' => ['required', 'exists:communities,id'],
-                    'appointment.description' => ['required', 'max:2000'],
-                    'appointment.date_appointment' => ['required', 'date', 'before:appointment.date_end_appointment', 'date_format:Y-m-d H:i:s'],
-                    'appointment.date_end_appointment' => ['required', 'date', 'after:appointment.date_appointment', 'date_format:Y-m-d H:i:s'],
-                ]);
+            if ($validatorData->fails()) {
+                return redirect()->back()
+                    ->withErrors($validatorData->errors())
+                    ->withInput();
+            }
+            $transfer =  $user->profile->transfers()->create([
+                'transfer_reason' => $request->transfer['transfer_reason'],
+                'transfer_date_adission' => $request->transfer['transfer_date_adission'],
+                'transfer_date_relocated' => $request->transfer['transfer_date_relocated'],
+                'transfer_observation' => $request->transfer['transfer_observation'],
+                'community_id' => $request->transfer['community_id'],
+                'status' => $request->transfer['status'],
+            ]);
 
-                if ($validatorData->fails()) {
-                    return redirect()->back()
-                        ->withErrors($validatorData->errors())
-                        ->withInput();
-                }
-                $transfer =  $user->profile->transfers()->create([
-                    'transfer_reason' => $request->transfer['transfer_reason'],
-                    'transfer_date_adission' => $request->transfer['transfer_date_adission'],
-                    'transfer_date_relocated' => $request->transfer['transfer_date_relocated'],
-                    'transfer_observation' => $request->transfer['transfer_observation'],
+            $array = $request->appointment['appointment_level_id'];
+
+            foreach ($array as $data) {
+                $user->profile->appointments()->create([
                     'community_id' => $request->transfer['community_id'],
-                ]);
-
-                $array = $request->appointment['appointment_level_id'];
-
-                foreach ($array as $data) {
-                    $user->profile->appointments()->create([
-                        'community_id' => $request->appointment['community_id'],
-                        'appointment_level_id' =>  $data['id'],
-                        'description' => $request->appointment['description'],
-                        'date_appointment' => $request->appointment['date_appointment'],
-                        'date_end_appointment' => $request->appointment['date_end_appointment'],
-                        'transfer_id' => $transfer->id,
-                    ]);
-                }
-                return redirect()->back()->with([
-                    'success' => 'Transferencia guardada correctamente!'
-                ]);
-            } else {
-                // Validate Data
-                $validatorData = Validator::make($request->all(), [
-                    'transfer.transfer_reason' => ['required', 'max:100'],
-                    'transfer.transfer_date_adission' => ['required', 'date', 'date_format:Y-m-d H:i:s'],
-                    'transfer.transfer_observation' => ['required', 'max:4000'],
-                    'transfer.community_id' => ['required', 'exists:communities,id'],
-                    //
-                    'appointment.community_id' => ['required', 'exists:communities,id'],
-                    'appointment.description' => ['required', 'max:2000'],
-                    'appointment.date_appointment' => ['required', 'date', 'date_format:Y-m-d H:i:s'],
-                ]);
-
-                if ($validatorData->fails()) {
-                    return redirect()->back()
-                        ->withErrors($validatorData->errors())
-                        ->withInput();
-                }
-
-                // Update Old Transfer and Appointments
-                $lastTransfer->update([
-                    'transfer_date_relocated' => $request->transfer['transfer_date_adission']
-                ]);
-
-                $user->profile->appointments()
-                    ->where('transfer_id', $lastTransfer->id)
-                    ->update(['date_end_appointment' =>  $request->appointment['date_appointment']]);
-
-                // Store Data
-                $transfer =  $user->profile->transfers()->create([
-                    'transfer_reason' => $request->transfer['transfer_reason'],
-                    'transfer_date_adission' => $request->transfer['transfer_date_adission'],
-                    'transfer_date_relocated' => $request->transfer['transfer_date_relocated'],
-                    'transfer_observation' => $request->transfer['transfer_observation'],
-                    'community_id' => $request->transfer['community_id'],
-                ]);
-
-                $array = $request->appointment['appointment_level_id'];
-
-                foreach ($array as $data) {
-                    $user->profile->appointments()->create([
-                        'community_id' => $request->appointment['community_id'],
-                        'appointment_level_id' =>  $data['id'],
-                        'description' => $request->appointment['description'],
-                        'date_appointment' => $request->appointment['date_appointment'],
-                        'date_end_appointment' => $request->appointment['date_end_appointment'],
-                        'transfer_id' => $transfer->id,
-                    ]);
-                }
-                return redirect()->back()->with([
-                    'success' => 'Transferencia guardada correctamente!'
+                    'appointment_level_id' =>  $data['id'],
+                    'description' => $request->appointment['description'],
+                    'date_appointment' => $request->appointment['date_appointment'],
+                    'date_end_appointment' => $request->appointment['date_end_appointment'],
+                    'transfer_id' => $transfer->id,
+                    'status' => $request->transfer['status'],
                 ]);
             }
+
+            return redirect()->back()->with([
+                'success' => 'Transferencia guardada correctamente!'
+            ]);
         } else {
-            if ($request->transfer['transfer_date_relocated'] != null || $request->appointment['date_end_appointment'] != null) {
-                $validatorData = Validator::make($request->all(), [
-                    'transfer.transfer_reason' => ['required', 'max:100'],
-                    'transfer.transfer_date_adission' => ['required', 'date', 'before:transfer.transfer_date_relocated', 'date_format:Y-m-d H:i:s'],
-                    'transfer.transfer_date_relocated' => ['required', 'date', 'after:transfers.transfer_date_adission', 'date_format:Y-m-d H:i:s'],
-                    'transfer.transfer_observation' => ['required', 'max:4000'],
-                    'transfer.community_id' => ['required', 'exists:communities,id'],
-                    //
-                    'appointment.community_id' => ['required', 'exists:communities,id'],
-                    'appointment.description' => ['required', 'max:2000'],
-                    'appointment.date_appointment' => ['required', 'date', 'before:appointment.date_end_appointment', 'date_format:Y-m-d H:i:s'],
-                    'appointment.date_end_appointment' => ['required', 'date', 'after:appointment.date_appointment', 'date_format:Y-m-d H:i:s'],
-                ]);
 
-                if ($validatorData->fails()) {
-                    return redirect()->back()
-                        ->withErrors($validatorData->errors())
-                        ->withInput();
-                }
-                $transfer =  $user->profile->transfers()->create([
-                    'transfer_reason' => $request->transfer['transfer_reason'],
-                    'transfer_date_adission' => $request->transfer['transfer_date_adission'],
-                    'transfer_date_relocated' => $request->transfer['transfer_date_relocated'],
-                    'transfer_observation' => $request->transfer['transfer_observation'],
+
+
+
+            $validatorData = Validator::make($request->all(), [
+                'transfer.transfer_reason' => ['required', 'max:100'],
+                'transfer.transfer_date_adission' => ['required', 'date', 'before:transfer.transfer_date_relocated', 'date_format:Y-m-d H:i:s'],
+                'transfer.transfer_observation' => ['required', 'max:4000'],
+                'transfer.community_id' => ['required', 'exists:communities,id'],
+                //
+                'appointment.description' => ['required', 'max:2000'],
+                'appointment.date_appointment' => ['required', 'date', 'before:appointment.date_end_appointment', 'date_format:Y-m-d H:i:s'],
+            ]);
+
+            if ($validatorData->fails()) {
+                return redirect()->back()
+                    ->withErrors($validatorData->errors())
+                    ->withInput();
+            }
+            $transfer =  $user->profile->transfers()->create([
+                'transfer_reason' => $request->transfer['transfer_reason'],
+                'transfer_date_adission' => $request->transfer['transfer_date_adission'],
+                'transfer_observation' => $request->transfer['transfer_observation'],
+                'community_id' => $request->transfer['community_id'],
+                'status' => $request->transfer['status'],
+            ]);
+
+            $array = $request->appointment['appointment_level_id'];
+
+            foreach ($array as $data) {
+                $user->profile->appointments()->create([
                     'community_id' => $request->transfer['community_id'],
-                ]);
-
-                $array = $request->appointment['appointment_level_id'];
-
-                foreach ($array as $data) {
-                    $user->profile->appointments()->create([
-                        'community_id' => $request->appointment['community_id'],
-                        'appointment_level_id' =>  $data['id'],
-                        'description' => $request->appointment['description'],
-                        'date_appointment' => $request->appointment['date_appointment'],
-                        'date_end_appointment' => $request->appointment['date_end_appointment'],
-                        'transfer_id' => $transfer->id,
-                    ]);
-                }
-                return redirect()->back()->with([
-                    'success' => 'Transferencia guardada correctamente!'
-                ]);
-            } else {
-                $validatorData = Validator::make($request->all(), [
-                    'transfer.transfer_reason' => ['required', 'max:100'],
-                    'transfer.transfer_date_adission' => ['required', 'date',  'date_format:Y-m-d H:i:s'],
-                    'transfer.transfer_observation' => ['required', 'max:4000'],
-                    'transfer.community_id' => ['required', 'exists:communities,id'],
-                    //
-                    'appointment.community_id' => ['required', 'exists:communities,id'],
-                    'appointment.description' => ['required', 'max:2000'],
-                    'appointment.date_appointment' => ['required', 'date', 'date_format:Y-m-d H:i:s'],
-                ]);
-
-                if ($validatorData->fails()) {
-                    return redirect()->back()
-                        ->withErrors($validatorData->errors())
-                        ->withInput();
-                }
-                $transfer =  $user->profile->transfers()->create([
-                    'transfer_reason' => $request->transfer['transfer_reason'],
-                    'transfer_date_adission' => $request->transfer['transfer_date_adission'],
-                    'transfer_observation' => $request->transfer['transfer_observation'],
-                    'community_id' => $request->transfer['community_id'],
-                ]);
-
-                $array = $request->appointment['appointment_level_id'];
-
-                foreach ($array as $data) {
-                    $user->profile->appointments()->create([
-                        'community_id' => $request->appointment['community_id'],
-                        'appointment_level_id' =>  $data['id'],
-                        'description' => $request->appointment['description'],
-                        'date_appointment' => $request->appointment['date_appointment'],
-                        'transfer_id' => $transfer->id,
-                    ]);
-                }
-                return redirect()->back()->with([
-                    'success' => 'Transferencia guardada correctamente!'
+                    'appointment_level_id' =>  $data['id'],
+                    'description' => $request->appointment['description'],
+                    'date_appointment' => $request->appointment['date_appointment'],
+                    'transfer_id' => $transfer->id,
+                    'status' => $request->transfer['status'],
                 ]);
             }
+
+            // Update User Address
+
+            $community = Community::find($request->transfer['community_id']);
+            $community->address;
+            $user->profile->address()->update([
+                'address' =>    $community->address->address,
+                'political_division_id' =>     $community->address->political_division_id,
+            ]);
+
+            return redirect()->back()->with([
+                'success' => 'Transferencia guardada correctamente!'
+            ]);
         }
     }
 
@@ -315,7 +234,6 @@ class TransferController extends Controller
      */
     public function update(Request $request, $user_id, $transfer_id)
     {
-
         $validator = Validator::make([
             'user_id' => $user_id,
             'transfer_id' => $transfer_id
@@ -328,86 +246,86 @@ class TransferController extends Controller
             return abort(404);
         }
 
-
         $user = User::find($user_id);
 
         $transfer = Transfer::find($transfer_id);
 
-        // Get Actual Transfer
+        // Get permissions active
+        $countTransfers = count($user->profile->transfers
+            ->where('status', 1)->where('id', '!=', $transfer->id));
 
-        $lastTransfer = $user->profile->transfers()
-            ->where("transfer_date_relocated", null)
-            ->get()
-            ->last();
-
-        if ($lastTransfer) {
-            if ($transfer_id == $lastTransfer->id) {
-
-                $validatorData = Validator::make($request->all(), [
-                    'transfer_reason' => ['required', 'max:100'],
-                    'transfer_date_adission' => ['required', 'date', 'before:transfer_date_relocated', 'date_format:Y-m-d H:i:s'],
-                    'transfer_date_relocated' => ['nullable', 'date', 'after:transfer_date_adission', 'date_format:Y-m-d H:i:s'],
-                    'transfer_observation' => ['required', 'max:4000'],
-                    'community_id.id' => ['required', 'exists:communities,id'],
-                ]);
-
-                if ($validatorData->fails()) {
-                    return redirect()->back()
-                        ->withErrors($validatorData->errors())
-                        ->withInput();
-                }
-
-                $transfer->update([
-                    'transfer_reason' => $request->get('transfer_reason'),
-                    'transfer_date_adission' => $request->get('transfer_date_adission'),
-                    'transfer_date_relocated' => $request->get('transfer_date_relocated'),
-                    'transfer_observation' => $request->get('transfer_observation'),
-                    'community_id' => $request->community_id["id"],
-                ]);
-
-                $transfer->appointments()
-                    ->where('transfer_id', $transfer->id)
-                    ->update([
-                        'community_id' => $request->community_id["id"],
-                        'date_appointment' => $request->get('transfer_date_adission'),
-                        'date_end_appointment' => $request->get('transfer_date_relocated'),
-                    ]);
-
-                return redirect()->back()->with(['success' => 'Cambio actualizado correctamente']);
-            }
+        if ($request->get('status') == 1 &&  $countTransfers > 0) {
+            return redirect()->back()->with(['error' => 'Error, existe un cambio vigente!']);
         }
 
-        $validatorData = Validator::make($request->all(), [
-            'transfer_reason' => ['required', 'max:100'],
-            'transfer_date_adission' => ['required', 'date', 'before:transfer_date_relocated', 'date_format:Y-m-d H:i:s'],
-            'transfer_date_relocated' => ['required', 'date', 'after:transfer_date_adission', 'date_format:Y-m-d H:i:s'],
-            'transfer_observation' => ['required', 'max:4000'],
-            'community_id.id' => ['required', 'exists:communities,id'],
-        ]);
-
-        if ($validatorData->fails()) {
-            return redirect()->back()
-                ->withErrors($validatorData->errors())
-                ->withInput();
-        }
-
-        $transfer->update([
-            'transfer_reason' => $request->get('transfer_reason'),
-            'transfer_date_adission' => $request->get('transfer_date_adission'),
-            'transfer_date_relocated' => $request->get('transfer_date_relocated'),
-            'transfer_observation' => $request->get('transfer_observation'),
-            'community_id' => $request->community_id["id"],
-        ]);
-
-        $transfer->appointments()
-            ->where('transfer_id', $transfer->id)
-            ->update([
-                'community_id' => $request->community_id["id"],
-                'date_appointment' => $request->get('transfer_date_adission'),
-                'date_end_appointment' => $request->get('transfer_date_relocated'),
+        if ($request->get('status') == 1) {
+            $validatorData = Validator::make($request->all(), [
+                'transfer_reason' => ['required', 'max:100'],
+                'transfer_date_adission' => ['required', 'date', 'before:transfer_date_relocated', 'date_format:Y-m-d H:i:s'],
+                'transfer_observation' => ['required', 'max:4000'],
+                'status' => ['required', 'digits_between:0,1'],
+                'community_id.id' => ['required', 'exists:communities,id'],
             ]);
 
-        return redirect()->back()->with(['success' => 'Historial de cambio actualizada correctamente']);
+            if ($validatorData->fails()) {
+                return redirect()->back()
+                    ->withErrors($validatorData->errors())
+                    ->withInput();
+            }
+
+            $transfer->update([
+                'transfer_reason' => $request->get('transfer_reason'),
+                'transfer_date_adission' => $request->get('transfer_date_adission'),
+                'transfer_observation' => $request->get('transfer_observation'),
+                'status' => $request->get('status'),
+                'community_id' => $request->community_id["id"],
+            ]);
+
+            $transfer->appointments()
+                ->where('transfer_id', $transfer->id)
+                ->update([
+                    'community_id' => $request->community_id["id"],
+                    // 'date_appointment' => $request->get('transfer_date_adission'),
+                    // 'status' => $request->get('status'),
+                ]);
+
+            return redirect()->back()->with(['success' => 'Registro del cambio actualizada correctamente']);
+        } else {
+            $validatorData = Validator::make($request->all(), [
+                'transfer_reason' => ['required', 'max:100'],
+                'transfer_date_adission' => ['required', 'date', 'before:transfer_date_relocated', 'date_format:Y-m-d H:i:s'],
+                'transfer_date_relocated' => ['required', 'date', 'after:transfer_date_adission', 'date_format:Y-m-d H:i:s'],
+                'transfer_observation' => ['required', 'max:4000'],
+                'status' => ['required', 'digits_between:0,1'],
+                'community_id.id' => ['required', 'exists:communities,id'],
+            ]);
+
+            if ($validatorData->fails()) {
+                return redirect()->back()
+                    ->withErrors($validatorData->errors())
+                    ->withInput();
+            }
+
+            $transfer->update([
+                'transfer_reason' => $request->get('transfer_reason'),
+                'transfer_date_adission' => $request->get('transfer_date_adission'),
+                'transfer_date_relocated' => $request->get('transfer_date_relocated'),
+                'transfer_observation' => $request->get('transfer_observation'),
+                'status' => $request->get('status'),
+                'community_id' => $request->community_id["id"],
+            ]);
+
+            $transfer->appointments()
+                ->where('transfer_id', $transfer->id)
+                ->update([
+                    'community_id' => $request->community_id["id"],
+                    'date_appointment' => $request->get('transfer_date_adission'),
+                    'date_end_appointment' => $request->get('transfer_date_relocated'),
+                    'status' => $request->get('status'),
+                ]);
+
+            return redirect()->back()->with(['success' => 'Registro de cambio actualizada correctamente']);
+        }
     }
 
     /**
@@ -434,20 +352,7 @@ class TransferController extends Controller
 
         $transfer = Transfer::find($transfer_id);
 
-
         $transfer->delete();
-
-        // $lastTransfer = $user->profile->transfers()
-        //     ->orderBy('transfer_date_adission', 'DESC')
-        //     ->get()
-        //     ->first();
-
-
-        // if ($lastTransfer) {
-        //     $lastTransfer->update([
-        //         'transfer_date_relocated' => null,
-        //     ]);
-        // }
         return redirect()->back()->with(['success' => 'Transferencia eliminada correctamente']);
     }
 }

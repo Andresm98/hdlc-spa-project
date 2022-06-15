@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Secretary\Community;
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Address;
 use App\Models\Pastoral;
 use App\Models\Community;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Validation\Rule;
 use App\Exports\CommunityExport;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
@@ -335,6 +337,26 @@ class CommunityController extends Controller
                 'comm_name' => $nameCommunity  . ' de ' .  $data_province . ', ' . $data_canton,
                 'comm_slug' => Str::slug($nameCommunity . ' de ' . $arrayAddress["data_province"] . ' ' . $arrayAddress["data_parish"]),
             ]);
+
+            // Update All Address in the store data daughters
+            $users = DB::table('users')
+                //
+                ->select('users.*')
+                //
+                ->join('profiles', 'profiles.user_id', '=', 'users.id')
+                ->join('transfers', 'transfers.profile_id', '=', 'profiles.id')
+                //
+                ->where('transfers.community_id', '=', $community_id)
+                ->where('transfers.transfer_date_relocated', '=', null)
+                ->get();
+
+            foreach ($users as $user) {
+                $user = User::find($user->id);
+                $user->profile->address()->update([
+                    'address' => $request->get('address'),
+                    'political_division_id' => $request->get('political_division_id'),
+                ]);
+            }
 
             return redirect()->route('secretary.communities.edit', $community->comm_slug)->with([
                 'success' => 'La comunidad fue actualizada y la dirección fue actualizada correctamente.',

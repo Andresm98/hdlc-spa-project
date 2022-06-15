@@ -11,9 +11,27 @@
     <section class="py-1 bg-gray">
       <div class="w-full lg:w-full">
         <div
-          class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
+          class="
+            relative
+            flex flex-col
+            min-w-0
+            break-words
+            w-full
+            mb-6
+            shadow-lg
+            rounded-lg
+            bg-blueGray-100
+            border-0
+          "
         >
-          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+          <div
+            class="
+              shadow
+              overflow-hidden
+              border-b border-gray-200
+              sm:rounded-lg
+            "
+          >
             <alert
               v-if="$page.props.flash.success"
               class="alert"
@@ -31,30 +49,72 @@
 
             <Link
               :href="route('admin.user.create')"
-              class="pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-sm rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
+              class="
+                pt-12
+                pb-1
+                pl-4
+                pr-4
+                bg-blue-500
+                border-2 border-blue-500
+                text-white text-sm
+                rounded-lg
+                hover:bg-blue-500 hover:text-gray-100
+                focus:border-4 focus:border-blue-300
+              "
               >Crear Usuarios</Link
             >
             <!-- Container Filters -->
             <div class="container mx-auto">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
                 <div
-                  class="justify-center text-sm border-1 border-gray-300 rounded-sm m-4 bg-gray-100"
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    m-4
+                    bg-gray-100
+                  "
                 >
                   <search-filter
                     v-model="params.search"
-                    class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    class="
+                      border border-blue-300
+                      rounded-md
+                      shadow-sm
+                      focus:outline-none
+                      focus:ring-indigo-500
+                      focus:border-indigo-500
+                      sm:text-sm
+                    "
                     @reset="reset"
                   >
                     <label class="block text-gray-700">Rol:</label>
                     <select
                       v-model="params.role"
-                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      class="
+                        mt-1
+                        block
+                        w-full
+                        px-3
+                        border border-gray-300
+                        bg-white
+                        rounded-md
+                        shadow-sm
+                        focus:outline-none
+                        focus:ring-blue-500
+                        focus:border-blue-500
+                        sm:text-sm
+                      "
                     >
-                      <option :value="null">-</option>
-                      <option value="super admin">Administradores</option>
-                      <option value="daughter">Hermanas</option>
-                      <option value="secretary">Secretarias</option>
-                      <option value="invited">Invitados</option>
+                      <option :value="null">Todas</option>
+                      <option
+                        v-for="role in roles"
+                        :key="role"
+                        :value="role.name"
+                      >
+                        {{ role.name }}
+                      </option>
                     </select>
                     <!--
                     <label class="block text-gray-700">Filtrar:</label>
@@ -86,7 +146,9 @@
             </div>
             <!-- End container Filters -->
 
-            <small class="ml-6"> Se encontraron {{ users_list.total }} resultados.</small>
+            <small class="ml-6">
+              Se encontraron {{ users_list.total }} resultados.</small
+            >
             <section class="pl-4">
               <pagination class="mt-6 mb-5" :links="users_list.links" />
             </section>
@@ -94,7 +156,16 @@
             <div class="py-2">
               <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                  <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                  <div
+                    class="
+                      py-2
+                      align-middle
+                      inline-block
+                      min-w-full
+                      sm:px-6
+                      lg:px-8
+                    "
+                  >
                     <table
                       v-if="users_list.data.length > 0"
                       class="min-w-full divide-y divide-gray-200"
@@ -103,16 +174,30 @@
                         <tr>
                           <th
                             scope="col"
-                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             <span
-                              class="inline-flex px-6 py-3 w-full justify-between hover:cursor-pointer"
+                              class="
+                                inline-flex
+                                px-6
+                                py-3
+                                w-full
+                                justify-between
+                                hover:cursor-pointer
+                              "
                               @click="sort('name')"
                               >Nombre
 
                               <svg
                                 v-if="
-                                  params.field === 'name' && params.direction === 'asc'
+                                  params.field === 'name' &&
+                                  params.direction === 'asc'
                                 "
                                 class="h-6 w-6"
                                 viewBox="0 0 20 20"
@@ -123,7 +208,8 @@
                               </svg>
                               <svg
                                 v-if="
-                                  params.field === 'name' && params.direction === 'desc'
+                                  params.field === 'name' &&
+                                  params.direction === 'desc'
                                 "
                                 class="h-6 w-6"
                                 viewBox="0 0 20 20"
@@ -136,15 +222,29 @@
                           </th>
                           <th
                             scope="col"
-                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             <span
-                              class="inline-flex px-6 py-3 w-full justify-between hover:cursor-pointer"
+                              class="
+                                inline-flex
+                                px-6
+                                py-3
+                                w-full
+                                justify-between
+                                hover:cursor-pointer
+                              "
                               @click="sort('email')"
                               >Correo
                               <svg
                                 v-if="
-                                  params.field === 'email' && params.direction === 'asc'
+                                  params.field === 'email' &&
+                                  params.direction === 'asc'
                                 "
                                 class="h-6 w-6"
                                 viewBox="0 0 20 20"
@@ -155,7 +255,8 @@
                               </svg>
                               <svg
                                 v-if="
-                                  params.field === 'email' && params.direction === 'desc'
+                                  params.field === 'email' &&
+                                  params.direction === 'desc'
                                 "
                                 class="h-6 w-6"
                                 viewBox="0 0 20 20"
@@ -168,20 +269,39 @@
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             Estado
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             Acciones
                           </th>
                         </tr>
                       </thead>
                       <tbody class="bg-white divide-y divide-gray-200">
-                        <tr v-for="user_custom in users_list.data" :key="user_custom.id">
+                        <tr
+                          v-for="user_custom in users_list.data"
+                          :key="user_custom.id"
+                        >
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                               <div class="flex-shrink-0 h-10 w-10">
@@ -209,13 +329,28 @@
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             <span
-                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                              class="
+                                px-2
+                                inline-flex
+                                text-xs
+                                leading-5
+                                font-semibold
+                                rounded-full
+                                bg-green-100
+                                text-green-800
+                              "
                             >
                               Activo
                             </span>
                           </td>
                           <td
-                            class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
+                            class="
+                              px-3
+                              py-4
+                              whitespace-nowrap
+                              text-right text-sm
+                              font-medium
+                            "
                           >
                             <!-- Components -->
 
@@ -231,7 +366,19 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="flex items-center justify-center flex-1 h-full p-2 border border-blue-800 text-white shadow rounded-lg hover:bg-blue-50 hover:text-zinc-300"
+                                      class="
+                                        flex
+                                        items-center
+                                        justify-center
+                                        flex-1
+                                        h-full
+                                        p-2
+                                        border border-blue-800
+                                        text-white
+                                        shadow
+                                        rounded-lg
+                                        hover:bg-blue-50 hover:text-zinc-300
+                                      "
                                     >
                                       <div class="relative">
                                         <svg
@@ -261,7 +408,19 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="flex items-center justify-center flex-1 h-full p-2 border border-green-500 text-white shadow rounded-lg hover:bg-green-50 hover:text-zinc-300"
+                                      class="
+                                        flex
+                                        items-center
+                                        justify-center
+                                        flex-1
+                                        h-full
+                                        p-2
+                                        border border-green-500
+                                        text-white
+                                        shadow
+                                        rounded-lg
+                                        hover:bg-green-50 hover:text-zinc-300
+                                      "
                                     >
                                       <div class="relative">
                                         <svg
@@ -290,7 +449,19 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="flex items-center justify-center flex-1 h-full p-2 border border-red-500 text-white shadow rounded-lg hover:bg-red-50 hover:text-zinc-300"
+                                      class="
+                                        flex
+                                        items-center
+                                        justify-center
+                                        flex-1
+                                        h-full
+                                        p-2
+                                        border border-red-500
+                                        text-white
+                                        shadow
+                                        rounded-lg
+                                        hover:bg-red-50 hover:text-zinc-300
+                                      "
                                     >
                                       <div class="relative">
                                         <svg
@@ -315,7 +486,10 @@
                         </tr>
                       </tbody>
                     </table>
-                    <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
+                    <div
+                      v-else
+                      class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg"
+                    >
                       <p class="text-center text-lg">
                         No existen datos que coincidan con su búsqueda
                       </p>
@@ -325,7 +499,10 @@
               </div>
             </div>
             <section>
-              <pagination class="mt-2 mb-6 pl-4 align-center" :links="users_list.links" />
+              <pagination
+                class="mt-2 mb-6 pl-4 align-center"
+                :links="users_list.links"
+              />
             </section>
           </div>
         </div>
@@ -340,11 +517,14 @@
           {{ selected_user.name }}
           ?
         </p>
-        Una vez la cuenta es eliminada, todos sus recursos y los datos se eliminarán de
-        forma permanente. Por favor verifique nuevamente su acción pues es irreversible.
+        Una vez la cuenta es eliminada, todos sus recursos y los datos se
+        eliminarán de forma permanente. Por favor verifique nuevamente su acción
+        pues es irreversible.
       </template>
       <template v-slot:footer>
-        <jet-secondary-button @click="closeModal()"> Cancelar </jet-secondary-button>
+        <jet-secondary-button @click="closeModal()">
+          Cancelar
+        </jet-secondary-button>
         <jet-danger-button class="ml-3" @click="deleteUser()">
           Eliminar Usuario
         </jet-danger-button>
@@ -387,6 +567,7 @@ export default defineComponent({
   props: {
     users_list: Object,
     user_custom: Object,
+    roles: Object,
     filters: Object,
   },
   components: {
@@ -422,7 +603,9 @@ export default defineComponent({
     },
 
     deleteUser: function () {
-      Inertia.delete(route("admin.user.destroy", { slug: this.selected_user.slug }));
+      Inertia.delete(
+        route("admin.user.destroy", { slug: this.selected_user.slug })
+      );
       this.modal_open = false;
     },
     closeModal() {

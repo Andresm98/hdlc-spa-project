@@ -1,7 +1,9 @@
 <template>
   <app-layout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-700 leading-tight">Crear Comunidades</h2>
+      <h2 class="font-semibold text-xl text-gray-700 leading-tight">
+        Crear Comunidades
+      </h2>
       <div class="text-sm text-blue-700 mt-3 mb-6">
         Bienvenido Usuario: {{ $page.props.user.name }}
       </div>
@@ -16,49 +18,133 @@
     <operation></operation>
     <br />
     <section
-      class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg m-1"
+      class="
+        bg-gray-200
+        dark:bg-slate-800
+        y-1
+        px-4
+        sm:p-6
+        md:py-10 md:px-8
+        pt-2
+        pb-4
+        rounded-lg
+        m-1
+      "
     >
       <div
-        class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
+        class="
+          max-w-4xl
+          mx-auto
+          grid grid-cols-1
+          lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2
+        "
       >
         <div
-          class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 lg:row-start-1"
+          class="
+            relative
+            p-3
+            col-start-1
+            row-start-1
+            flex flex-col-reverse
+            rounded-lg
+            bg-gradient-to-t
+            from-black/75
+            via-black/0
+            sm:bg-none sm:row-start-2 sm:p-0
+            lg:row-start-1
+          "
         >
           <h1
-            class="mt-1 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
+            class="
+              mt-1
+              text-lg
+              font-semibold
+              text-black
+              sm:text-black
+              md:text-2xl
+              dark:sm:text-white
+            "
           >
             Provincia Ecuador
           </h1>
           <p
-            class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
+            class="
+              text-sm
+              leading-4
+              font-medium
+              text-black
+              sm:text-black
+              dark:sm:text-slate-400
+            "
           >
             Información General de la Comunidad
           </p>
         </div>
         <div
-          class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
+          class="
+            grid
+            gap-4
+            col-start-1 col-end-3
+            row-start-1
+            sm:mb-6 sm:grid-cols-4
+            lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0
+          "
         >
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_2.png"
             alt=""
-            class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 lg:col-span-full"
+            class="
+              w-full
+              h-60
+              object-cover
+              rounded-lg
+              sm:h-52 sm:col-span-2
+              lg:col-span-full
+            "
             loading="lazy"
           />
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_3.png"
             alt=""
-            class="hidden w-full h-52 object-cover rounded-lg sm:block sm:col-span-2 md:col-span-1 lg:row-start-2 lg:col-span-2 lg:h-32"
+            class="
+              hidden
+              w-full
+              h-52
+              object-cover
+              rounded-lg
+              sm:block sm:col-span-2
+              md:col-span-1
+              lg:row-start-2 lg:col-span-2 lg:h-32
+            "
             loading="lazy"
           />
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_1.png"
             alt=""
-            class="hidden w-full h-52 object-cover rounded-lg md:block lg:row-start-2 lg:col-span-2 lg:h-32"
+            class="
+              hidden
+              w-full
+              h-52
+              object-cover
+              rounded-lg
+              md:block
+              lg:row-start-2 lg:col-span-2 lg:h-32
+            "
             loading="lazy"
           />
         </div>
         <dl
-          class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2"
+          class="
+            mt-4
+            text-xs
+            font-medium
+            flex
+            items-center
+            row-start-2
+            sm:mt-1 sm:row-start-3
+            md:mt-2.5
+            lg:row-start-2
+          "
         >
           <dt class="sr-only">Visto</dt>
           <dd class="text-indigo-600 flex items-center dark:text-indigo-400">
@@ -76,7 +162,9 @@
                 stroke-linejoin="round"
               />
             </svg>
-            <span>0.00 <span class="text-slate-400 font-normal">(0)</span></span>
+            <span
+              >0.00 <span class="text-slate-400 font-normal">(0)</span></span
+            >
           </dd>
           <dt class="sr-only">Ubicación por defecto - Ecuador</dt>
           <dd class="flex items-center">
@@ -109,15 +197,31 @@
           </dd>
         </dl>
         <div
-          class="mt-4 col-start-1 row-start-3 self-center sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2 lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4"
+          class="
+            mt-4
+            col-start-1
+            row-start-3
+            self-center
+            sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2
+            lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4
+          "
         >
           <div
-            class="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 text-black dark:text-white"
+            class="
+              mt-4
+              text-sm
+              leading-6
+              col-start-1
+              sm:col-span-2
+              lg:mt-6 lg:row-start-4 lg:col-span-1
+              text-black
+              dark:text-white
+            "
           >
             <p>
-              La presente plantiflla de información se relaciona con los datos principales
-              de la comunidad a la que desea modificar al sistema, por lo que deberá
-              verificar los datos a ingresar.
+              La presente plantiflla de información se relaciona con los datos
+              principales de la comunidad a la que desea modificar al sistema,
+              por lo que deberá verificar los datos a ingresar.
             </p>
             <ul class="list-disc pl-5">
               <li class="dark:text-white">
@@ -131,7 +235,9 @@
                 </p>
               </li>
               <li class="dark:text-white">
-                <p class="text-sm uppercase dark:text-white">Números de contacto.</p>
+                <p class="text-sm uppercase dark:text-white">
+                  Números de contacto.
+                </p>
               </li>
               <li class="dark:text-white">
                 <p class="text-sm uppercase dark:text-white">
@@ -139,7 +245,9 @@
                 </p>
               </li>
               <li class="dark:text-white">
-                <p class="text-sm uppercase dark:text-white">Número de colaboradores.</p>
+                <p class="text-sm uppercase dark:text-white">
+                  Número de colaboradores.
+                </p>
               </li>
             </ul>
           </div>
@@ -150,7 +258,18 @@
     <section class="py-1 bg-slate-800 rounded-lg m-1">
       <div class="w-full lg:w-5/6 px-4 mx-auto mt-6">
         <div
-          class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
+          class="
+            relative
+            flex flex-col
+            min-w-0
+            break-words
+            w-full
+            mb-6
+            shadow-lg
+            rounded-lg
+            bg-blueGray-100
+            border-0
+          "
         >
           <div class="bg-neutral-100 hover:bg-gray-100 rounded-lg">
             <form @submit.prevent="submit" class="">
@@ -160,7 +279,26 @@
                     Tarjeta de Información General de la Comunidad
                   </h6>
                   <button
-                    class="bg-green-500 hover:bg-green-700 text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                    class="
+                      bg-green-500
+                      hover:bg-green-700
+                      text-white
+                      active:bg-green-600
+                      font-bold
+                      uppercase
+                      text-xs
+                      px-4
+                      py-2
+                      rounded
+                      shadow
+                      hover:shadow-md
+                      outline-none
+                      focus:outline-none
+                      mr-1
+                      ease-linear
+                      transition-all
+                      duration-150
+                    "
                     type="submit"
                   >
                     Crear Comunidad
@@ -168,7 +306,16 @@
                 </div>
               </div>
               <hr />
-              <h6 class="mt-2 text-lg font-medium text-center leading-6 text-gray-900">
+              <h6
+                class="
+                  mt-2
+                  text-lg
+                  font-medium
+                  text-center
+                  leading-6
+                  text-gray-900
+                "
+              >
                 Información General
               </h6>
               <div class="flex flex-wrap">
@@ -185,7 +332,21 @@
                     <input
                       type="text"
                       placeholder="Nombre de la comunidad en el Sistema"
-                      class="border-0 px-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      class="
+                        border-0
+                        px-3
+                        placeholder-blueGray-300
+                        text-black
+                        bg-white
+                        rounded
+                        text-sm
+                        shadow
+                        focus:outline-none focus:ring
+                        w-full
+                        ease-linear
+                        transition-all
+                        duration-150
+                      "
                       v-model="form.comm_name"
                       required
                     />
@@ -202,11 +363,28 @@
                     Correo Electrónico:
                   </label>
                   <jet-input-error :message="errors.comm_email" />
-                  <small>Formato: Ingresar un correo electrónico de contacto.</small>
+                  <small
+                    >Formato: Ingresar un correo electrónico de contacto.</small
+                  >
                   <input
                     type="email"
                     placeholder="micorreo@correo.com"
-                    class="border-0 px-3 mb-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    class="
+                      border-0
+                      px-3
+                      mb-3
+                      placeholder-blueGray-300
+                      text-blueGray-600
+                      bg-white
+                      rounded
+                      text-sm
+                      shadow
+                      focus:outline-none focus:ring
+                      w-full
+                      ease-linear
+                      transition-all
+                      duration-150
+                    "
                     v-model="form.comm_email"
                     required
                   />
@@ -220,7 +398,10 @@
                   </label>
                   <p
                     class="text-red-400 text-sm"
-                    v-show="!validateIdentityCard || this.form.comm_identity_card == ''"
+                    v-show="
+                      !validateIdentityCard ||
+                      this.form.comm_identity_card == ''
+                    "
                   >
                     Ingresar RUC válido
                   </p>
@@ -232,7 +413,21 @@
                     maxlength="13"
                     placeholder="0102211274 ó 0102211274001"
                     pattern="[+-]?\d+(?:[.,]\d+)?"
-                    class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    class="
+                      border-0
+                      px-3
+                      placeholder-blueGray-300
+                      text-blueGray-600
+                      bg-white
+                      rounded
+                      text-sm
+                      shadow
+                      focus:outline-none focus:ring
+                      w-full
+                      ease-linear
+                      transition-all
+                      duration-150
+                    "
                     v-model="form.comm_identity_card"
                     @keydown.space.prevent
                     required
@@ -250,13 +445,13 @@
                     </label>
                     <jet-input-error :message="errors.date_fndt_comm" />
                     <small
-                      >Formato: Ingresar la fecha de fundación de la comunidad.</small
+                      >Formato: Ingresar la fecha de fundación de la
+                      comunidad.</small
                     >
                     <Datepicker
                       v-model="form.date_fndt_comm"
                       :format="format"
-                      :transitions="false"
-                      menuClassName="dp-custom-menu"
+                      autoApply
                       required
                     />
                   </div>
@@ -275,8 +470,6 @@
                     <Datepicker
                       v-model="form.date_fndt_work"
                       :format="format"
-                      :transitions="false"
-                      menuClassName="dp-custom-menu"
                     />
                   </div>
                 </div>
@@ -298,7 +491,21 @@
                       pattern="[0-9]+"
                       placeholder="123-4567-890"
                       type="text"
-                      class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      class="
+                        border-0
+                        px-3
+                        placeholder-blueGray-300
+                        text-blueGray-600
+                        bg-white
+                        rounded
+                        text-sm
+                        shadow
+                        focus:outline-none focus:ring
+                        w-full
+                        ease-linear
+                        transition-all
+                        duration-150
+                      "
                       v-model="form.comm_cellphone"
                       @keydown.space.prevent
                     />
@@ -323,7 +530,21 @@
                       pattern="[0-9]+"
                       placeholder="123-4567-890"
                       type="text"
-                      class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      class="
+                        border-0
+                        px-3
+                        placeholder-blueGray-300
+                        text-blueGray-600
+                        bg-white
+                        rounded
+                        text-sm
+                        shadow
+                        focus:outline-none focus:ring
+                        w-full
+                        ease-linear
+                        transition-all
+                        duration-150
+                      "
                       v-model="form.comm_phone"
                       @keydown.space.prevent
                     />
@@ -347,7 +568,21 @@
                       pattern="[0-9]+"
                       placeholder="Nro. de Colaboradores"
                       type="number"
-                      class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      class="
+                        border-0
+                        px-3
+                        placeholder-blueGray-300
+                        text-blueGray-600
+                        bg-white
+                        rounded
+                        text-sm
+                        shadow
+                        focus:outline-none focus:ring
+                        w-full
+                        ease-linear
+                        transition-all
+                        duration-150
+                      "
                       v-model="form.rn_collaborators"
                       @keydown.space.prevent
                       required
@@ -385,7 +620,10 @@
                         placeholder="Buscar pastoral"
                       >
                       </multiselect>
-                      <p class="text-red-400 text-sm" v-show="isInvalidPastoral">
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="isInvalidPastoral"
+                      >
                         Obligatorio
                       </p>
                     </div>
@@ -393,14 +631,27 @@
                 </div>
                 <!-- Information Address -->
                 <hr
-                  class="mt-1 mb-3 ml-4 mr-4 border-b-1 border-blueGray-300 hover:border-blueGray-100"
+                  class="
+                    mt-1
+                    mb-3
+                    ml-4
+                    mr-4
+                    border-b-1 border-blueGray-300
+                    hover:border-blueGray-100
+                  "
                 />
                 <div class="w-full lg:w-full px-4">
                   <div>
-                    <label for="address" class="block text-sm font-medium text-gray-700">
+                    <label
+                      for="address"
+                      class="block text-sm font-medium text-gray-700"
+                    >
                       Dirección Actual:
                     </label>
-                    <p class="text-red-400 text-sm" v-show="$page.props.errors.address">
+                    <p
+                      class="text-red-400 text-sm"
+                      v-show="$page.props.errors.address"
+                    >
                       {{ $page.props.errors.address }}
                     </p>
                     <small
@@ -412,7 +663,17 @@
                         id="address"
                         name="address"
                         rows="1"
-                        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
+                        class="
+                          shadow-sm
+                          focus:ring-blue-500 focus:border-blue-500
+                          mt-1
+                          mb-2
+                          block
+                          w-full
+                          sm:text-sm
+                          border border-gray-300
+                          rounded-md
+                        "
                         v-model="form.address"
                         placeholder="Agregar la dirección actual.."
                         :maxlength="100"
@@ -422,7 +683,10 @@
                   </div>
                 </div>
                 <div class="w-full lg:w-4/12 px-4">
-                  <div class="relative w-full mb-3" v-if="this.allProvinces != null">
+                  <div
+                    class="relative w-full mb-3"
+                    v-if="this.allProvinces != null"
+                  >
                     <label
                       class="block text-sm font-medium text-gray-700"
                       htmlfor="grid-password"
@@ -444,7 +708,10 @@
                         placeholder="Buscar provincia"
                       >
                       </multiselect>
-                      <p class="text-red-400 text-sm" v-show="isInvalidProvince">
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="isInvalidProvince"
+                      >
                         Obligatorio
                       </p>
                     </div>
@@ -511,7 +778,14 @@
               </div>
             </form>
             <hr
-              class="mt-1 mb-3 ml-4 mr-4 border-b-1 border-blueGray-300 hover:border-blueGray-100"
+              class="
+                mt-1
+                mb-3
+                ml-4
+                mr-4
+                border-b-1 border-blueGray-300
+                hover:border-blueGray-100
+              "
             />
           </div>
         </div>
@@ -555,7 +829,9 @@ export default {
 
     fetch(this.route("secretary.pastoral.index"))
       .then(async (response) => {
-        const isJson = response.headers.get("content-type")?.includes("application/json");
+        const isJson = response.headers
+          .get("content-type")
+          ?.includes("application/json");
         const data = isJson && (await response.json());
         if (!response.ok) {
           const error = (data && data.message) || response.status;
@@ -703,7 +979,10 @@ export default {
         var dec, final_value, pivote;
         dec = final_value = pivote = 0;
 
-        if (province_code >= 0 && (province_code <= 24 || province_code == 30)) {
+        if (
+          province_code >= 0 &&
+          (province_code <= 24 || province_code == 30)
+        ) {
           if (digit.length == 13) {
             digit.splice(9, 3);
           }
@@ -711,7 +990,9 @@ export default {
             index % 2 == 0
               ? (pivote = digit[index] * coefficient[0])
               : (pivote = digit[index] * coefficient[1]);
-            pivote >= 10 ? (final_value += pivote - 9) : (final_value += pivote);
+            pivote >= 10
+              ? (final_value += pivote - 9)
+              : (final_value += pivote);
             pivote = 0;
           }
           dec = final_value + (10 - (final_value % 10));
@@ -764,9 +1045,8 @@ export default {
     },
     async status() {
       this.form.address = this.community_custom.address["address"];
-      this.form.political_division_id = this.community_custom.address[
-        "political_division_id"
-      ];
+      this.form.political_division_id =
+        this.community_custom.address["political_division_id"];
       let response = await axios.get(
         this.route("secretary.address.actual-address", {
           actual_parish: this.community_custom.address["political_division_id"],

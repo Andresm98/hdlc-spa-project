@@ -10,32 +10,64 @@
             <tr>
               <th
                 scope="col"
-                class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                class="
+                  pl-4
+                  text-left text-xs
+                  font-medium
+                  text-black
+                  uppercase
+                  tracking-wider
+                "
               >
                 Nombre
               </th>
-              <!-- <th
-                scope="col"
-                class="text-left text-xs font-medium text-black uppercase tracking-wider"
-              >
-                Cargo
-              </th> -->
               <th
                 scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                class="
+                  text-left text-xs
+                  font-medium
+                  text-black
+                  uppercase
+                  tracking-wider
+                "
+              >
+                Cargo
+              </th>
+              <th
+                scope="col"
+                class="
+                  px-6
+                  py-3
+                  text-left text-xs
+                  font-medium
+                  text-black
+                  uppercase
+                  tracking-wider
+                "
               >
                 Estado
               </th>
               <th
                 scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                class="
+                  px-6
+                  py-3
+                  text-left text-xs
+                  font-medium
+                  text-black
+                  uppercase
+                  tracking-wider
+                "
               >
                 Acciones
               </th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="user_custom in daughters_list.data" :key="user_custom.id">
+            <tr
+              v-for="user_custom in daughters_list.data"
+              :key="user_custom.id"
+            >
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div class="flex-shrink-0 h-10 w-10">
@@ -54,27 +86,95 @@
                     <div class="text-sm text-gray-500">
                       {{ user_custom.lastname }}
                     </div>
+                    <span
+                      v-if="
+                        user_custom.comm_name && user_custom.comm_level == 1
+                      "
+                      class="
+                        px-2
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-cyan-100
+                        text-cyan-800
+                      "
+                    >
+                      {{ user_custom.comm_name }}
+                    </span>
+                    <div v-if="user_custom.comm_slug">
+                      <a
+                        :href="
+                          route('secretary.works.edit', {
+                            slug: user_custom.comm_slug,
+                          })
+                        "
+                      >
+                        <span
+                          v-if="
+                            user_custom.comm_name && user_custom.comm_level == 2
+                          "
+                          class="
+                            px-2
+                            inline-flex
+                            text-xs
+                            leading-5
+                            font-semibold
+                            rounded-full
+                            bg-lime-100
+                            text-lime-800
+                          "
+                        >
+                          {{ user_custom.comm_name }}
+                        </span>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </td>
-              <!-- <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">
-                  {{ user_custom.name_appoinment }}
-                </div>
-
-              </td> -->
               <td class="px-6 py-4 whitespace-nowrap">
                 <span
-                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                  class="
+                    px-2
+                    inline-flex
+                    text-sm
+                    leading-5
+                    font-semibold
+                    rounded-sm
+                    bg-blue-100
+                    text-blue-700
+                  "
+                >
+                  {{ user_custom.name_appoinment }}
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span
+                  class="
+                    px-2
+                    inline-flex
+                    text-xs
+                    leading-5
+                    font-semibold
+                    rounded-full
+                    bg-green-100
+                    text-green-800
+                  "
                 >
                   Activo
                 </span>
               </td>
-              <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <!-- Components -->
-
+              <td
+                class="
+                  px-3
+                  py-4
+                  whitespace-nowrap
+                  text-right text-sm
+                  font-medium
+                "
+              >
                 <div class="mx-auto flex gap-10">
-                  <!-- Update User -->
                   <Link
                     :href="
                       route('secretary.daughters.edit', {
@@ -85,7 +185,19 @@
                     <div class="w-auto h-auto">
                       <div class="flex-1 h-full">
                         <div
-                          class="flex items-center justify-center flex-1 h-full p-2 border border-green-500 text-white shadow rounded-lg hover:bg-green-50 hover:text-zinc-300"
+                          class="
+                            flex
+                            items-center
+                            justify-center
+                            flex-1
+                            h-full
+                            p-2
+                            border border-green-500
+                            text-white
+                            shadow
+                            rounded-lg
+                            hover:bg-green-50 hover:text-zinc-300
+                          "
                         >
                           <div class="relative">
                             <svg
@@ -136,6 +248,7 @@ export default {
   computed: {
     ...mapState("community", ["community"]),
     allDaughters() {
+      //   console.log("into", this.community.id);
       axios
         .get(
           this.route("secretary.communities.daughters.index", {
@@ -144,7 +257,7 @@ export default {
         )
         .then((res) => {
           if (res.data.length > 0) {
-            console.log(res.data);
+            // console.log("console ", res.data);
             this.daughters_list = res;
           }
         });

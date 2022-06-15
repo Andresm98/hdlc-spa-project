@@ -20,6 +20,8 @@ class CreatePermitsTable extends Migration
 
             $table->string('reason', 100);
             $table->text('description', 2000);
+            // 1 = Active, 0 : Historial
+            $table->tinyInteger('status');
             $table->dateTime('date_province');
             $table->dateTime('date_general');
             $table->dateTime('date_out');

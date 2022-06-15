@@ -100,7 +100,7 @@ class CommunitySeeder extends Seeder
                 'Nombre de Inventario ', 'Descripción del Inventario '
             ],
             [
-                1, null, '1000000000', 'Escuela "Daniel Hermida"', 1,
+                1, 9, '1000000000', 'Escuela "Daniel Hermida"', 2,
                 '072835328', 'lvdani1953@gmail.com', '1870-12-18 00:00:00', 3,
                 //  Address
                 'Juan Jaramillo 1078 y General Torres', '010150',
@@ -356,7 +356,7 @@ class CommunitySeeder extends Seeder
                 'Nombre de Inventario ', 'Descripción del Inventario '
             ],
             [
-                1, null, '0491509252001', 'Unidad Educativa Fiscomisional "Medalla Milagrosa"', 1,
+                1, 41, '0491509252001', 'Unidad Educativa Fiscomisional "Medalla Milagrosa"', 2,
                 '062287145', 'uemmilagrosa36@yahoo.es', '1936-11-27 00:00:00', 1,
                 //  Address
                 'Gran Colombia y Julio Andrade', '040250',
@@ -416,6 +416,22 @@ class CommunitySeeder extends Seeder
                 '022282996', 'postulantadosancarlos@gmail.com', '1979-04-02 00:00:00', 7,
                 //  Address
                 'Calle Bolívar Oe6 110 e Imbabura', '170103',
+                // Inventory
+                'Nombre de Inventario ', 'Descripción del Inventario '
+            ],
+            [
+                1, 1, '1791304841001', 'Curia Provincial', 2,
+                '022282996', 'curiaprovincialsancarlos@gmail.com', '1979-04-02 00:00:00', 7,
+                //  Address
+                'Calle Bolívar Oe6 110 e Imbabura', '170103',
+                // Inventory
+                'Nombre de Inventario ', 'Descripción del Inventario '
+            ],
+            [
+                1, null, '1900244151', 'Otras', 1,
+                '072605229', 'otracomunidadhdlc@hotmail.com', '1967-11-05 00:00:00', 4,
+                //  Address
+                'Otra dirección', '999999',
                 // Inventory
                 'Nombre de Inventario ', 'Descripción del Inventario '
             ],

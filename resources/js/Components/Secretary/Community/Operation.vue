@@ -3,36 +3,45 @@
     <section class="flex-shrink-0">
       <Link
         :href="route('secretary.communities.index')"
-        class="uppercase pt-12 pb-1 pl-4 pr-4 bg-red-500 border-2 border-red-500 text-white text-xs rounded-lg hover:bg-red-500 hover:text-gray-100 focus:border-4 focus:border-red-300"
+        :class="
+          isUrl('secretary/communities/all')
+            ? ' uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-700 border-2 border-blue-700 text-white text-xs rounded-lg hover:bg-blue-700 hover:text-gray-100 focus:border-4 focus:border-blue-500'
+            : 'uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-xs rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300'
+        "
         >Inicio</Link
       >
     </section>
     <section class="flex-shrink-0">
       <Link
         :href="route('secretary.communities.create')"
-        class="uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-xs rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
-        >Crear Comunidades</Link
-      >
-    </section>
-    <section class="flex-shrink-0">
-      <Link
-        :href="route('secretary.communities.reality.index')"
-        class="uppercase pt-12 pb-1 pl-4 pr-4 bg-green-500 border-2 border-green-500 text-white text-xs rounded-lg hover:bg-green-500 hover:text-gray-100 focus:border-4 focus:border-green-300"
-        >Realidad de la Provincia</Link
-      >
-    </section>
-    <section class="flex-shrink-0">
-      <Link
-        :href="route('secretary.communities.create')"
-        class="uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-xs rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
+        :class="
+          isUrl('secretary/communities/create')
+            ? ' uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-700 border-2 border-blue-700 text-white text-xs rounded-lg hover:bg-blue-700 hover:text-gray-100 focus:border-4 focus:border-blue-500'
+            : 'uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-xs rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300'
+        "
         >Crear Comunidades</Link
       >
     </section>
     <section class="flex-shrink-0">
       <Link
         :href="route('secretary.worksindividual.create')"
-        class="uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-xs rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
-        >Crear Obras</Link
+             :class="
+          isUrl('secretary/communities/worksindividual/create')
+            ? ' uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-700 border-2 border-blue-700 text-white text-xs rounded-lg hover:bg-blue-700 hover:text-gray-100 focus:border-4 focus:border-blue-500'
+            : 'uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-xs rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300'
+        "
+        >Crear Obras Individuales</Link
+      >
+    </section>
+    <section class="flex-shrink-0">
+      <Link
+        :href="route('secretary.communities.reality.index')"
+        :class="
+          isUrl('secretary/communities/reality')
+            ? ' uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-700 border-2 border-blue-700 text-white text-xs rounded-lg hover:bg-blue-700 hover:text-gray-100 focus:border-4 focus:border-blue-500'
+            : 'uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-xs rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300'
+        "
+        >Realidad de la Provincia</Link
       >
     </section>
   </div>
@@ -42,5 +51,14 @@ import { Link } from "@inertiajs/inertia-vue3";
 
 export default {
   components: { Link },
+  methods: {
+    isUrl(...urls) {
+      let currentUrl = this.$page.url.substr(1);
+      if (urls[0] === "") {
+        return currentUrl === "";
+      }
+      return urls.filter((url) => currentUrl.startsWith(url)).length;
+    },
+  },
 };
 </script>

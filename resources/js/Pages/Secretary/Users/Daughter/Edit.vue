@@ -1,7 +1,7 @@
 <template @scroll="handleScroll">
   <app-layout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-700 leading-tight">Editar Usuarios</h2>
+      <h2 class="font-semibold text-xl text-gray-700 leading-tight">Editar Hermanas</h2>
       <div class="text-sm text-blue-700 mt-3 mb-6">
         Bienvenido Usuario: {{ $page.props.user.name }}
       </div>

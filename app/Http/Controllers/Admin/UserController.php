@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Team;
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
-
 use PDF;
+use App\Models\Team;
+use App\Models\User;
+use Inertia\Inertia;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -66,7 +67,11 @@ class UserController extends Controller
         $query = User::query();
 
         if (request('search')) {
-            $query->where('name', 'LIKE', '%' . request('search') . '%');
+            $search = request('search');
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'LIKE', '%' . $search . '%');
+                $query->orWhere('lastname', 'LIKE', '%' . $search . '%');
+            });
         }
 
         if (request()->has(['field', 'direction'])) {
@@ -79,10 +84,12 @@ class UserController extends Controller
             });
         }
 
+        $roles  = Role::all();
         return Inertia::render('Admin/Users/Index', [
             'users_list' => $query
                 ->paginate(10)
                 ->appends(request()->query()),
+            'roles' => $roles,
             'filters' => request()->all(['search', 'field', 'direction', 'page', 'role'])
         ]);
     }
@@ -129,17 +136,17 @@ class UserController extends Controller
 
         $user = tap(User::create([
             'username' => $request->get('username'),
-            'slug' => Str::slug($request->get('username') . '-' . random_int(100, 10000)),
+            'slug' => Str::slug($request->get('name') . '-' . $request->get('lastname') . '-' . random_int(100, 10000)),
             'name' => $request->get('name'),
             'lastname' => $request->get('lastname'),
             'email' => $request->get('email'),
-            'password' => Str::random(233),
+            'password' => Hash::make("secret"),
         ]), function (User $user) {
             $this->createTeam($user);
         });
 
         // Input File
-        $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
+        $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->id, 's3');
         Storage::disk('s3')->setVisibility($path, 'private');
         $user->image()->create([
             'filename' => $path,
@@ -245,7 +252,7 @@ class UserController extends Controller
             $user =  User::find($id);
             if ($request->file('file')) {
                 if (!$user->image) {
-                    $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
+                    $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->id, 's3');
                     Storage::disk('s3')->setVisibility($path, 'private');
                     $user->image()->create([
                         'filename' => $path,
@@ -253,7 +260,7 @@ class UserController extends Controller
                     ]);
                 } else {
                     Storage::disk('s3')->delete($user->image->filename);
-                    $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
+                    $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->id, 's3');
                     Storage::disk('s3')->setVisibility($path, 'private');
                     $user->image()->update([
                         'filename' => $path,

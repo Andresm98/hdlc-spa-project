@@ -46,6 +46,7 @@ class PoliticalDivisionSeeder extends Seeder
             ['22',  'ORELLANA'],
             ['23',  'SANTO DOMINGO DE LOS TSACHILAS'],
             ['24',  'SANTA ELENA'],
+            ['99',  'OTROS'],
         ];
 
         foreach ($provinces as list($pol_id, $name)) {
@@ -283,6 +284,7 @@ class PoliticalDivisionSeeder extends Seeder
             ['2401', '24', 'SANTA ELENA'],
             ['2402', '24', 'LA LIBERTAD'],
             ['2403', '24', 'SALINAS'],
+            ['9999', '99', 'OTROS'],
             // ['9001', '90', 'LAS GOLONDRINAS'],
             // ['9003', '90', 'MANGA DEL CURA'],
             // ['9004', '90', 'EL PIEDRERO'],
@@ -1700,6 +1702,8 @@ class PoliticalDivisionSeeder extends Seeder
             // ['900151', '9001', 'LAS GOLONDRINAS'],
             // ['900351', '9003', 'MANGA DEL CURA'],
             // ['900451', '9004', 'EL PIEDRERO'],
+            ['999999', '9999', 'OTROS'],
+
         ];
 
         foreach ($parishs as list($pol_id, $polc_id, $name)) {

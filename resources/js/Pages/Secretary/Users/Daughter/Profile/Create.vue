@@ -2,7 +2,16 @@
   <!-- {{$daughter_custom}} -->
   <form @submit.prevent="submit" class="bg-gray-100 p-2 border-2 rounded-lg">
     <h6
-      class="mt-2 mb-4 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
+      class="
+        mt-2
+        mb-4
+        text-lg
+        font-medium
+        text-center
+        leading-6
+        text-gray-900
+        uppercase
+      "
     >
       Crear Perfil Personal
     </h6>
@@ -10,10 +19,16 @@
     <div class="flex flex-wrap">
       <div class="w-full lg:w-4/12 px-4">
         <div class="">
-          <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
             Cédula de Identidad:
           </label>
-          <p class="text-red-400 text-sm" v-show="$page.props.errors.identity_card">
+          <p
+            class="text-red-400 text-sm"
+            v-show="$page.props.errors.identity_card"
+          >
             {{ $page.props.errors.identity_card }}
           </p>
           <p
@@ -31,7 +46,22 @@
               maxlength="13"
               placeholder="0102211274 ó 0102211274001"
               pattern="[+-]?\d+(?:[.,]\d+)?"
-              class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              class="
+                border-0
+                px-3
+                py-3
+                placeholder-blueGray-300
+                text-blueGray-600
+                bg-white
+                rounded
+                text-sm
+                shadow
+                focus:outline-none focus:ring
+                w-full
+                ease-linear
+                transition-all
+                duration-150
+              "
               v-model="form.identity_card"
               required
             />
@@ -40,21 +70,23 @@
       </div>
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
             Fecha de Nacimiento:
           </label>
-          <p class="text-red-400 text-sm" v-show="$page.props.errors.date_birth">
+          <p
+            class="text-red-400 text-sm"
+            v-show="$page.props.errors.date_birth"
+          >
             {{ $page.props.errors.date_birth }}
           </p>
           <small>Formato: Necesario</small>
           <Datepicker
             v-model="form.date_birth"
             :format="format"
-            @blur="blur"
-            @focus="muestra"
-            @closed="cerrado"
-            :transitions="false"
-            menuClassName="dp-custom-menu"
+            autoApply
             required
           />
         </div>
@@ -62,99 +94,83 @@
 
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
             Fecha de Vocación:
           </label>
-          <p class="text-red-400 text-sm" v-show="$page.props.errors.date_vocation">
+          <p
+            class="text-red-400 text-sm"
+            v-show="$page.props.errors.date_vocation"
+          >
             {{ $page.props.errors.date_vocation }}
           </p>
           <small>Formato: Necesario</small>
-          <Datepicker
-            class=""
-            v-model="form.date_vocation"
-            :format="format"
-            :transitions="false"
-            menuClassName="dp-custom-menu"
-          />
+          <Datepicker v-model="form.date_vocation" :format="format" autoApply />
         </div>
       </div>
 
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
             Fecha de Admisión:
           </label>
-          <p class="text-red-400 text-sm" v-show="$page.props.errors.date_vocation">
+          <p
+            class="text-red-400 text-sm"
+            v-show="$page.props.errors.date_vocation"
+          >
             {{ $page.props.errors.date_vocation }}
           </p>
           <small>Formato: Opcional</small>
           <Datepicker
-            class=""
             v-model="form.date_vocation"
             :format="format"
-            :transitions="false"
-            menuClassName="dp-custom-menu"
+            autoApply
             readonly
           />
         </div>
       </div>
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
             Fecha de Envío:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.date_send">
             {{ $page.props.errors.date_send }}
           </p>
           <small>Formato: Opcional</small>
-          <Datepicker
-            class=""
-            v-model="form.date_send"
-            :format="format"
-            :transitions="false"
-            menuClassName="dp-custom-menu"
-          />
+          <Datepicker v-model="form.date_send" :format="format" autoApply />
         </div>
       </div>
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
             Fecha de Votos:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.date_vote">
             {{ $page.props.errors.date_vote }}
           </p>
           <small>Formato: Opcional</small>
-          <Datepicker
-            class=""
-            v-model="form.date_vote"
-            :format="format"
-            :transitions="false"
-            menuClassName="dp-custom-menu"
-          />
+          <Datepicker v-model="form.date_vote" :format="format" autoApply />
         </div>
       </div>
-      <!-- <div class="w-full lg:w-4/12 px-4">
-        <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
-            Fecha de Muerte:
-          </label>
-          <p class="text-red-400 text-sm" v-show="$page.props.errors.date_death">
-            {{ $page.props.errors.date_death }}
-          </p>
-          <small>Formato: Opcional</small>
-          <Datepicker
-            class=""
-            v-model="form.date_death"
-            :format="format"
-            :transitions="false"
-            menuClassName="dp-custom-menu"
-          />
-        </div>
-      </div> -->
+
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
             Celular:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.cellphone">
@@ -168,7 +184,22 @@
             pattern="^\d{10}$"
             title="Ingrese un número de celular con un formato válido, máximo 15 digitos."
             placeholder="123-4567-890"
-            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            class="
+              border-0
+              px-3
+              py-3
+              placeholder-blueGray-300
+              text-blueGray-600
+              bg-white
+              rounded
+              text-sm
+              shadow
+              focus:outline-none focus:ring
+              w-full
+              ease-linear
+              transition-all
+              duration-150
+            "
             v-model="form.cellphone"
             required
           />
@@ -177,7 +208,10 @@
 
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
             Teléfono Convencional:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.phone">
@@ -192,7 +226,22 @@
             pattern="^\d{9}$"
             title="Ingrese un número de celular con un formato válido, máximo 12 digitos."
             placeholder="123-4567-890"
-            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            class="
+              border-0
+              px-3
+              py-3
+              placeholder-blueGray-300
+              text-blueGray-600
+              bg-white
+              rounded
+              text-sm
+              shadow
+              focus:outline-none focus:ring
+              w-full
+              ease-linear
+              transition-all
+              duration-150
+            "
             v-model="form.phone"
             required
           />
@@ -215,7 +264,17 @@
               id="address"
               name="address"
               rows="1"
-              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
+              class="
+                shadow-sm
+                focus:ring-blue-500 focus:border-blue-500
+                mt-1
+                mb-2
+                block
+                w-full
+                sm:text-sm
+                border border-gray-300
+                rounded-md
+              "
               v-model="form.address"
               placeholder="Agregar la dirección actual.."
               :maxlength="100"
@@ -227,7 +286,10 @@
 
       <div class="w-full lg:w-2/5 px-4 mb-2">
         <div class="w-full">
-          <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
             Provincia:
           </label>
           <div :class="{ invalid: isInvalid }">
@@ -251,7 +313,10 @@
       </div>
       <div class="w-full lg:w-3/5 px-4 mb-2">
         <div class="relative w-full">
-          <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
             Cantón:
           </label>
           <div :class="{ invalid: isInvalidCanton }">
@@ -269,14 +334,19 @@
               placeholder="Buscar cantón"
             >
             </multiselect>
-            <p class="text-sm text-red-400" v-show="isInvalidCanton">Obligatorio</p>
+            <p class="text-sm text-red-400" v-show="isInvalidCanton">
+              Obligatorio
+            </p>
           </div>
         </div>
       </div>
 
       <div class="w-full lg:w-12/12 px-4 mb-2">
         <div class="relative w-full">
-          <label class="block text-sm font-medium text-gray-700" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
             Parroquia:
           </label>
           <div :class="{ invalid: isInvalidParish }">
@@ -293,7 +363,9 @@
               placeholder="Buscar parroquia"
             >
             </multiselect>
-            <p class="text-sm text-red-400" v-show="isInvalidParish">Obligatorio</p>
+            <p class="text-sm text-red-400" v-show="isInvalidParish">
+              Obligatorio
+            </p>
           </div>
         </div>
       </div>
@@ -304,20 +376,32 @@
           <label for="about" class="block text-sm font-medium text-gray-700">
             Observaciones generales:
           </label>
-          <p class="text-red-400 text-sm" v-show="$page.props.errors.observation">
+          <p
+            class="text-red-400 text-sm"
+            v-show="$page.props.errors.observation"
+          >
             {{ $page.props.errors.observation }}
           </p>
           <small
-            >Formato: Por favor ingresar las observaciones que usted crea pertinente
-            relacionadas al perfil de la hermana, deberán ser máximo 2000
-            caracteres.</small
+            >Formato: Por favor ingresar las observaciones que usted crea
+            pertinente relacionadas al perfil de la hermana, deberán ser máximo
+            2000 caracteres.</small
           >
           <div class="mt-1 bg-white">
             <textarea
               id="observation"
               name="observation"
               rows="6"
-              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+              class="
+                shadow-sm
+                focus:ring-blue-500 focus:border-blue-500
+                mt-1
+                block
+                w-full
+                sm:text-sm
+                border border-gray-300
+                rounded-md
+              "
               v-model="form.observation"
               placeholder="Agregar las observaciones generales..."
               required
@@ -425,7 +509,10 @@ export default {
       if (this.form.identity_card == null) {
         return false;
       }
-      if (this.form.identity_card.length == 10 || this.form.identity_card.length == 13) {
+      if (
+        this.form.identity_card.length == 10 ||
+        this.form.identity_card.length == 13
+      ) {
         const digit = this.form.identity_card.split("").map(Number);
         //   console.log(digit);
         const coefficient = [2, 1];
@@ -434,7 +521,10 @@ export default {
         var dec, final_value, pivote;
         dec = final_value = pivote = 0;
 
-        if (province_code >= 0 && (province_code <= 24 || province_code == 30)) {
+        if (
+          province_code >= 0 &&
+          (province_code <= 24 || province_code == 30)
+        ) {
           if (digit.length == 13) {
             digit.splice(9, 3);
           }
@@ -442,7 +532,9 @@ export default {
             index % 2 == 0
               ? (pivote = digit[index] * coefficient[0])
               : (pivote = digit[index] * coefficient[1]);
-            pivote >= 10 ? (final_value += pivote - 9) : (final_value += pivote);
+            pivote >= 10
+              ? (final_value += pivote - 9)
+              : (final_value += pivote);
             pivote = 0;
           }
           dec = final_value + (10 - (final_value % 10));

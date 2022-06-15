@@ -9,9 +9,28 @@ input:checked ~ .dot {
 <template>
   <form
     @submit.prevent="submit"
-    class="bg-gradient-to-r from-gray-200 via-gray-200 to-gray-200 p-2 border-2 rounded-lg"
+    class="
+      bg-gradient-to-r
+      from-gray-200
+      via-gray-200
+      to-gray-200
+      p-2
+      border-2
+      rounded-lg
+    "
   >
-    <h6 class="mt-2 mb-4 text-lg font-medium text-center leading-6 text-black uppercase">
+    <h6
+      class="
+        mt-2
+        mb-4
+        text-lg
+        font-medium
+        text-center
+        leading-6
+        text-black
+        uppercase
+      "
+    >
       Editar Perfil Personal
     </h6>
 
@@ -34,19 +53,47 @@ input:checked ~ .dot {
           <!-- Activa -->
           <div
             v-if="this.profile.status == 3"
-            class="absolute w-9 h-6 rounded-full shadow -left-1 -top-1 transition"
+            class="
+              absolute
+              w-9
+              h-6
+              rounded-full
+              shadow
+              -left-1
+              -top-1
+              transition
+            "
             style="transform: translateX(100%); background-color: #204de0"
           />
           <!-- Retirada -->
           <div
             v-if="this.profile.status == 1"
-            class="absolute w-9 h-6 rounded-full shadow -left-1 -top-1 transition"
+            class="
+              absolute
+              w-9
+              h-6
+              rounded-full
+              shadow
+              -left-1
+              -top-1
+              transition
+            "
             style="transform: translateX(50%); background-color: #5dc720"
           />
           <!-- Fallecida -->
           <div
             v-if="this.profile.status == 2"
-            class="absolute w-9 h-6 bg-red-500 rounded-full shadow -left-1 -top-1 transition"
+            class="
+              absolute
+              w-9
+              h-6
+              bg-red-500
+              rounded-full
+              shadow
+              -left-1
+              -top-1
+              transition
+            "
           />
         </div>
       </label>
@@ -54,7 +101,9 @@ input:checked ~ .dot {
     <!-- label -->
 
     <div class="flex items-center justify-center">
-      <small class="ml-3 text-gray-700 font-medium">Fallecida / Activo / Retirada </small>
+      <small class="ml-3 text-gray-700 font-medium"
+        >Fallecida / Activo / Retirada
+      </small>
     </div>
     <div class="flex items-center justify-center">
       <br /><br />
@@ -73,8 +122,7 @@ input:checked ~ .dot {
                   <Datepicker
                     v-model="profile.date_death"
                     :format="format"
-                    :transitions="false"
-                    menuClassName="dp-custom-menu"
+                    autoApply
                     required
                     readonly
                   />
@@ -97,8 +145,7 @@ input:checked ~ .dot {
                   <Datepicker
                     v-model="profile.date_exit"
                     :format="format"
-                    :transitions="false"
-                    menuClassName="dp-custom-menu"
+                    autoApply
                     required
                     readonly
                   />
@@ -113,10 +160,16 @@ input:checked ~ .dot {
     <div class="flex flex-wrap">
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-black"
+            htmlfor="grid-password"
+          >
             Cédula de Identidad
           </label>
-          <p class="text-red-400 text-sm" v-show="$page.props.errors.identity_card">
+          <p
+            class="text-red-400 text-sm"
+            v-show="$page.props.errors.identity_card"
+          >
             {{ $page.props.errors.identity_card }}
           </p>
           <p
@@ -126,31 +179,52 @@ input:checked ~ .dot {
             Ingresar cédula o RUC válido
           </p>
           <small>Formato: Cédula Ecuatoriana</small>
-          <div>
+
             <input
               type="text"
               minLength="10"
               maxlength="13"
               placeholder="0102211274 ó 0102211274001"
               pattern="[+-]?\d+(?:[.,]\d+)?"
-              class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              class="
+                border-0
+                px-3
+                py-3
+                placeholder-blueGray-300
+                text-blueGray-600
+                bg-white
+                rounded
+                text-sm
+                shadow
+                focus:outline-none focus:ring
+                w-full
+                ease-linear
+                transition-all
+                duration-150
+              "
               v-model="profile.identity_card"
               required
             />
-          </div>
+
         </div>
       </div>
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-black"
+            htmlfor="grid-password"
+          >
             Fecha de Nacimiento
           </label>
-          <p class="text-red-400 text-sm" v-show="$page.props.errors.date_birth">
+          <p
+            class="text-red-400 text-sm"
+            v-show="$page.props.errors.date_birth"
+          >
             {{ $page.props.errors.date_birth }}
           </p>
           <small>Formato: Necesario</small>
           <Datepicker
-            class="border-0 py-0.5 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            autoApply
             v-model="profile.date_birth"
             :format="format"
             required
@@ -160,15 +234,21 @@ input:checked ~ .dot {
 
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-black"
+            htmlfor="grid-password"
+          >
             Fecha de Vocación
           </label>
-          <p class="text-red-400 text-sm" v-show="$page.props.errors.date_vocation">
+          <p
+            class="text-red-400 text-sm"
+            v-show="$page.props.errors.date_vocation"
+          >
             {{ $page.props.errors.date_vocation }}
           </p>
           <small>Formato: Necesario</small>
           <Datepicker
-            class="border-0 py-0.5 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            autoApply
             v-model="profile.date_vocation"
             :format="format"
           />
@@ -177,17 +257,23 @@ input:checked ~ .dot {
 
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-black"
+            htmlfor="grid-password"
+          >
             Fecha de Admisión
           </label>
-          <p class="text-red-400 text-sm" v-show="$page.props.errors.date_vocation">
+          <p
+            class="text-red-400 text-sm"
+            v-show="$page.props.errors.date_vocation"
+          >
             {{ $page.props.errors.date_vocation }}
           </p>
           <small>Formato: Opcional</small>
           <Datepicker
-            class="border-0 py-0.5 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             v-model="profile.date_vocation"
             :format="format"
+            autoApply
             readonly
           />
         </div>
@@ -195,47 +281,32 @@ input:checked ~ .dot {
 
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-black"> Fecha de Envío </label>
+          <label class="block text-sm font-medium text-black">
+            Fecha de Envío
+          </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.date_send">
             {{ $page.props.errors.date_send }}
           </p>
           <small>Formato: Opcional</small>
-          <Datepicker
-            class="border-0 py-0.5 placeholder-blueGray-300 text-blueGray-300 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-            v-model="profile.date_send"
-            :format="format"
-          />
+          <Datepicker autoApply v-model="profile.date_send" :format="format" />
         </div>
       </div>
       <div class="w-full lg:w-4/12 px-4">
-        <label class="block text-sm font-medium text-black"> Fecha de Votos </label>
+        <label class="block text-sm font-medium text-black">
+          Fecha de Votos
+        </label>
         <p class="text-red-400 text-sm" v-show="$page.props.errors.date_vote">
           {{ $page.props.errors.date_vote }}
         </p>
         <small>Formato: Opcional</small>
-        <Datepicker
-          class="border-0 py-0.5 placeholder-blueGray-300 text-blueGray-300 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          v-model="profile.date_vote"
-          :format="format"
-        />
+        <Datepicker autoApply v-model="profile.date_vote" :format="format" />
       </div>
-
-      <!-- <div class="w-full lg:w-4/12 px-4">
-        <label class="block text-sm font-medium text-black"> Fecha Fallecimiento </label>
-        <p class="text-red-400 text-sm" v-show="$page.props.errors.adate_death">
-          {{ $page.props.errors.date_death }}
-        </p>
-        <small>Formato: Opcional</small>
-        <Datepicker
-          class="border-0 py-0.5 placeholder-blueGray-300 text-blueGray-300 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          v-model="profile.date_death"
-          :format="format"
-        />
-      </div> -->
-
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-black"
+            htmlfor="grid-password"
+          >
             Celular
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.cellphone">
@@ -249,7 +320,22 @@ input:checked ~ .dot {
             pattern="^\d{10}$"
             title="Ingrese un número de celular con un formato válido, máximo 10digitos."
             placeholder="0997643146"
-            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            class="
+              border-0
+              px-3
+              py-3
+              placeholder-blueGray-300
+              text-blueGray-600
+              bg-white
+              rounded
+              text-sm
+              shadow
+              focus:outline-none focus:ring
+              w-full
+              ease-linear
+              transition-all
+              duration-150
+            "
             v-model="profile.cellphone"
             required
           />
@@ -258,7 +344,10 @@ input:checked ~ .dot {
 
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
-          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-black"
+            htmlfor="grid-password"
+          >
             Teléfono Convencional
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.phone">
@@ -273,7 +362,22 @@ input:checked ~ .dot {
             pattern="^\d{9}$"
             title="Ingrese un número de telf. con un formato válido, máximo 9 digitos."
             placeholder="022400111"
-            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            class="
+              border-0
+              px-3
+              py-3
+              placeholder-blueGray-300
+              text-blueGray-600
+              bg-white
+              rounded
+              text-sm
+              shadow
+              focus:outline-none focus:ring
+              w-full
+              ease-linear
+              transition-all
+              duration-150
+            "
             v-model="profile.phone"
           />
         </div>
@@ -281,7 +385,15 @@ input:checked ~ .dot {
 
       <!-- Address Information -->
       <hr
-        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-300 hover:border-gray-300"
+        class="
+          w-full
+          mt-1
+          mb-3
+          ml-4
+          mr-4
+          border-b-1 border-gray-300
+          hover:border-gray-300
+        "
       />
 
       <div class="w-full lg:w-full px-4">
@@ -289,7 +401,10 @@ input:checked ~ .dot {
           <label for="address" class="block text-sm font-medium text-black">
             Dirección Actual:
           </label>
-          <p class="text-red-400 text-sm" v-show="$page.props.errors['address.address']">
+          <p
+            class="text-red-400 text-sm"
+            v-show="$page.props.errors['address.address']"
+          >
             {{ $page.props.errors["address.address"] }}
           </p>
           <small>Formato: Ingrese la dirección máximo 100 caracteres.</small>
@@ -298,7 +413,17 @@ input:checked ~ .dot {
               id="address"
               name="address"
               rows="1"
-              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
+              class="
+                shadow-sm
+                focus:ring-blue-500 focus:border-blue-500
+                mt-1
+                mb-2
+                block
+                w-full
+                sm:text-sm
+                border border-gray-300
+                rounded-md
+              "
               v-model="profile.address['address']"
               placeholder="Agregar la dirección actual.."
               :maxlength="100"
@@ -309,7 +434,10 @@ input:checked ~ .dot {
 
       <div class="w-full lg:w-2/5 px-4 mb-2">
         <div :class="{ invalid: isInvalidProvince }">
-          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-black"
+            htmlfor="grid-password"
+          >
             Provincia:
           </label>
           <div>
@@ -327,13 +455,18 @@ input:checked ~ .dot {
               placeholder="Buscar provincia"
             >
             </multiselect>
-            <p class="text-red-400 text-sm" v-show="isInvalidProvince">Obligatorio</p>
+            <p class="text-red-400 text-sm" v-show="isInvalidProvince">
+              Obligatorio
+            </p>
           </div>
         </div>
       </div>
       <div class="w-full lg:w-3/5 px-4 mb-2">
         <div :class="{ invalid: isInvalidCanton }">
-          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-black"
+            htmlfor="grid-password"
+          >
             Cantón
           </label>
           <multiselect
@@ -350,13 +483,18 @@ input:checked ~ .dot {
             placeholder="Buscar cantón"
           >
           </multiselect>
-          <p class="text-red-400 text-sm" v-show="isInvalidCanton">Obligatorio</p>
+          <p class="text-red-400 text-sm" v-show="isInvalidCanton">
+            Obligatorio
+          </p>
         </div>
       </div>
 
       <div class="w-full lg:w-12/12 px-4 mb-2">
         <div :class="{ invalid: isInvalidParish }">
-          <label class="block text-sm font-medium text-black" htmlfor="grid-password">
+          <label
+            class="block text-sm font-medium text-black"
+            htmlfor="grid-password"
+          >
             Parroquia:
           </label>
           <multiselect
@@ -372,11 +510,21 @@ input:checked ~ .dot {
             placeholder="Buscar parroquia"
           >
           </multiselect>
-          <p class="text-red-400 text-sm" v-show="isInvalidParish">Obligatorio</p>
+          <p class="text-red-400 text-sm" v-show="isInvalidParish">
+            Obligatorio
+          </p>
         </div>
       </div>
       <hr
-        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-300 hover:border-gray-300"
+        class="
+          w-full
+          mt-1
+          mb-3
+          ml-4
+          mr-4
+          border-b-1 border-gray-300
+          hover:border-gray-300
+        "
       />
       <!-- Observations -->
       <div class="w-full lg:w-full px-4">
@@ -384,13 +532,16 @@ input:checked ~ .dot {
           <label for="about" class="block text-sm font-medium text-black">
             Observaciones generales:
           </label>
-          <p class="text-red-400 text-sm" v-show="$page.props.errors.observation">
+          <p
+            class="text-red-400 text-sm"
+            v-show="$page.props.errors.observation"
+          >
             {{ $page.props.errors.observation }}
           </p>
           <small
-            >Formato: Por favor ingresar las observaciones que usted crea pertinente
-            relacionadas al perfil de la hermana, deberán ser máximo 4000
-            caracteres.</small
+            >Formato: Por favor ingresar las observaciones que usted crea
+            pertinente relacionadas al perfil de la hermana, deberán ser máximo
+            4000 caracteres.</small
           >
           <div class="mt-1 bg-white">
             <quill-editor
@@ -445,26 +596,68 @@ input:checked ~ .dot {
       ><h2 class="text-slate-600">Cambiar el estado del Perfil</h2>
       <div class="mt-2 flex items-center justify-center">
         <span
-          class="mx-2 px-1 inline-flex text-sm leading-5 font-semibold rounded-sm bg-gray-100 text-gray-800"
+          class="
+            mx-2
+            px-1
+            inline-flex
+            text-sm
+            leading-5
+            font-semibold
+            rounded-sm
+            bg-gray-100
+            text-gray-800
+          "
           >&nbsp;Seleccionar:
         </span>
 
         <span
           v-show="profile.status != 1"
-          class="hover:cursor-pointer mx-2 px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-green-200 text-green-800"
+          class="
+            hover:cursor-pointer
+            mx-2
+            px-1
+            inline-flex
+            text-xs
+            leading-5
+            font-semibold
+            rounded-sm
+            bg-green-200
+            text-green-800
+          "
           @click="changeOperation(1)"
           >&nbsp;Vigente</span
         >
         <span
           v-show="profile.status != 2"
-          class="hover:cursor-pointer px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-red-200 text-red-800"
+          class="
+            hover:cursor-pointer
+            px-1
+            inline-flex
+            text-xs
+            leading-5
+            font-semibold
+            rounded-sm
+            bg-red-200
+            text-red-800
+          "
           @click="changeOperation(2)"
           >&nbsp;Fallecimiento</span
         >
 
         <span
           v-show="profile.status != 3"
-          class="hover:cursor-pointer mx-2 px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-200 text-blue-800"
+          class="
+            hover:cursor-pointer
+            mx-2
+            px-1
+            inline-flex
+            text-xs
+            leading-5
+            font-semibold
+            rounded-sm
+            bg-blue-200
+            text-blue-800
+          "
           @click="changeOperation(3)"
           >&nbsp;Salida</span
         >
@@ -473,16 +666,17 @@ input:checked ~ .dot {
 
     <template #content>
       <div v-if="liveOperationChange == 1">
-        Guarde los cambios para habilitar otra vez el perfil de la hermana en la compañía.
+        Guarde los cambios para habilitar otra vez el perfil de la hermana en la
+        compañía.
 
         <div class="flex flex-wrap">
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mt-3">
               <small
-                >Observaciones: Tenga en cuenta que una vez que haya guardado los
-                presentes cambios la fecha de fallecimiento y la fecha de salida de la
-                compañía quedarán eliminadas. Por lo tanto la hermana queda habilitada por
-                completo en la compañía.</small
+                >Observaciones: Tenga en cuenta que una vez que haya guardado
+                los presentes cambios la fecha de fallecimiento y la fecha de
+                salida de la compañía quedarán eliminadas. Por lo tanto la
+                hermana queda habilitada por completo en la compañía.</small
               >
             </div>
           </div>
@@ -505,8 +699,7 @@ input:checked ~ .dot {
               <Datepicker
                 v-model="updatedStatusProfileForm.dateDeathProfile"
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 required
               />
             </div>
@@ -520,7 +713,10 @@ input:checked ~ .dot {
         <div class="flex flex-wrap">
           <div class="w-full lg:w-8/12 px-4">
             <div class="relative w-full mt-3">
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.dateExitProfile">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.dateExitProfile"
+              >
                 {{ $page.props.errors.dateExitProfile }}
               </p>
               <small
@@ -530,8 +726,7 @@ input:checked ~ .dot {
               <Datepicker
                 v-model="updatedStatusProfileForm.dateExitProfile"
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 required
               />
             </div>
@@ -640,7 +835,10 @@ export default {
         var dec, final_value, pivote;
         dec = final_value = pivote = 0;
 
-        if (province_code >= 0 && (province_code <= 24 || province_code == 30)) {
+        if (
+          province_code >= 0 &&
+          (province_code <= 24 || province_code == 30)
+        ) {
           if (digit.length == 13) {
             digit.splice(9, 3);
           }
@@ -648,7 +846,9 @@ export default {
             index % 2 == 0
               ? (pivote = digit[index] * coefficient[0])
               : (pivote = digit[index] * coefficient[1]);
-            pivote >= 10 ? (final_value += pivote - 9) : (final_value += pivote);
+            pivote >= 10
+              ? (final_value += pivote - 9)
+              : (final_value += pivote);
             pivote = 0;
           }
           dec = final_value + (10 - (final_value % 10));
@@ -909,7 +1109,9 @@ export default {
     submit() {
       this.profile.date_birth = this.formatDate(this.profile.date_birth);
       this.profile.date_vocation = this.formatDate(this.profile.date_vocation);
-      this.profile.date_admission = this.formatDate(this.profile.date_admission);
+      this.profile.date_admission = this.formatDate(
+        this.profile.date_admission
+      );
 
       this.profile.date_send = this.formatDate(this.profile.date_send);
       this.profile.date_vote = this.formatDate(this.profile.date_vote);

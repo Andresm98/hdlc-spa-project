@@ -27,8 +27,8 @@ class AcademicTrainingController extends Controller
 
         $user = User::find($user_id);
         return $user->profile->academic_trainings()
-        ->orderBy('date_title','DESC')
-        ->get();
+            ->orderBy('date_title', 'DESC')
+            ->get();
     }
 
     /**
@@ -61,7 +61,7 @@ class AcademicTrainingController extends Controller
 
         $validatorData = Validator::make($request->all(), [
             'name_title' => ['required', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
-            'institution' => ['required', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
+            'institution' => ['required', 'max:50'],
             'date_title' => ['required', 'date_format:Y-m-d H:i:s'],
             'observation' => ['required', 'max:4000'],
         ]);
@@ -131,7 +131,7 @@ class AcademicTrainingController extends Controller
 
         $validatorData = Validator::make($request->all(), [
             'name_title' => ['required', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
-            'institution' => ['required', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
+            'institution' => ['required', 'max:50'],
             'date_title' => ['required', 'date_format:Y-m-d H:i:s'],
             'observation' => ['required', 'max:4000'],
         ]);

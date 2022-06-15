@@ -1,11 +1,44 @@
+<style>
+/* Toggle A */
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #4fe789;
+}
+</style>
 <template>
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
       <h6
-        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
+        class="
+          mt-2
+          mb-2
+          text-lg
+          font-medium
+          text-center
+          leading-6
+          text-gray-900
+          uppercase
+        "
       >
         Plantilla de Permisos de Hermana
       </h6>
+
+      <div v-if="$page.props.flash != null">
+        <alert
+          v-if="$page.props.flash.success"
+          class="alert"
+          :type_alert_r="(type_alert = 'success')"
+          :message="$page.props.flash.success"
+        >
+        </alert>
+        <alert
+          v-if="$page.props.flash.error"
+          class="alert"
+          :type_alert_r="(type_alert = 'error')"
+          :message="$page.props.flash.error"
+        >
+        </alert>
+      </div>
       <form @submit.prevent="submit">
         <div class="flex flex-wrap">
           <div class="w-full lg:w-12/12 px-4">
@@ -16,7 +49,10 @@
               >
                 Motivo del Permiso:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.reason">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.reason"
+              >
                 {{ $page.props.errors.reason }}
               </p>
               <small>Formato: Motivo del permiso.</small>
@@ -26,7 +62,22 @@
                   minLength="10"
                   maxlength="100"
                   placeholder="Ingresar Motivo del Permiso"
-                  class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    border-0
+                    px-3
+                    my-2
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
                   v-model="form.reason"
                   required
                 />
@@ -51,15 +102,20 @@
               >
                 Fecha de Consejo Provincial:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.date_province">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.date_province"
+              >
                 {{ $page.props.errors.date_province }}
               </p>
-              <small>Formato: Fecha de Consejo Provincial que concede el Permiso.</small>
+              <small
+                >Formato: Fecha de Consejo Provincial que concede el
+                Permiso.</small
+              >
               <Datepicker
                 v-model="form.date_province"
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 required
               />
             </div>
@@ -73,15 +129,20 @@
               >
                 Fecha de Consejo General:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.date_general">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.date_general"
+              >
                 {{ $page.props.errors.date_general }}
               </p>
-              <small>Formato: Fecha de Consejo General que concede el Permiso.</small>
+              <small
+                >Formato: Fecha de Consejo General que concede el
+                Permiso.</small
+              >
               <Datepicker
                 v-model="form.date_general"
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 required
               />
             </div>
@@ -95,15 +156,17 @@
               >
                 Fecha de Salida:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.date_out">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.date_out"
+              >
                 {{ $page.props.errors.date_out }}
               </p>
               <small>Formato: Fecha en la que sale la hermana.</small>
               <Datepicker
                 v-model="form.date_out"
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 required
               />
             </div>
@@ -117,15 +180,17 @@
               >
                 Fecha de Regreso (Eventual):
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.date_in">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.date_in"
+              >
                 {{ $page.props.errors.date_in }}
               </p>
               <small>Formato: Fecha en la que regresa la hermana.</small>
               <Datepicker
                 v-model="form.date_in"
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 required
               />
             </div>
@@ -138,7 +203,10 @@
               >
                 Descripción del Permiso
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.description"
+              >
                 {{ $page.props.errors.description }}
               </p>
               <small>Formato: Agregar la descripción del permiso.</small>
@@ -159,10 +227,16 @@
 
           <div class="w-full lg:w-full px-4">
             <div>
-              <label for="address" class="block text-sm font-medium text-gray-700">
+              <label
+                for="address"
+                class="block text-sm font-medium text-gray-700"
+              >
                 Dirección:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.address">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.address"
+              >
                 {{ $page.props.errors.address }}
               </p>
               <small>Formato: Agregar la dirección de destino.</small>
@@ -171,7 +245,17 @@
                   id="address"
                   name="address"
                   rows="1"
-                  class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
+                  class="
+                    shadow-sm
+                    focus:ring-blue-500 focus:border-blue-500
+                    mt-1
+                    mb-2
+                    block
+                    w-full
+                    sm:text-sm
+                    border border-gray-300
+                    rounded-md
+                  "
                   v-model="form.address"
                   placeholder="Agregar la dirección de destino.."
                   :maxlength="100"
@@ -204,7 +288,9 @@
                   placeholder="Buscar provincia"
                 >
                 </multiselect>
-                <p class="text-red-400 text-sm" v-show="isInvalid">Obligatorio</p>
+                <p class="text-red-400 text-sm" v-show="isInvalid">
+                  Obligatorio
+                </p>
               </div>
             </div>
           </div>
@@ -231,7 +317,9 @@
                   placeholder="Buscar cantón"
                 >
                 </multiselect>
-                <p class="text-sm text-red-400" v-show="isInvalidCanton">Obligatorio</p>
+                <p class="text-sm text-red-400" v-show="isInvalidCanton">
+                  Obligatorio
+                </p>
               </div>
             </div>
           </div>
@@ -258,7 +346,9 @@
                   placeholder="Buscar parroquia"
                 >
                 </multiselect>
-                <p class="text-sm text-red-400" v-show="isInvalidParish">Obligatorio</p>
+                <p class="text-sm text-red-400" v-show="isInvalidParish">
+                  Obligatorio
+                </p>
               </div>
             </div>
           </div>
@@ -271,7 +361,15 @@
       </form>
 
       <hr
-        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
+        class="
+          w-full
+          mt-1
+          mb-3
+          ml-4
+          mr-4
+          border-b-1 border-gray-400
+          hover:border-gray-400
+        "
       />
 
       <div class="py-2">
@@ -285,25 +383,54 @@
                 <tr>
                   <th
                     scope="col"
-                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      pl-4
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Motivo
                   </th>
                   <th
                     scope="col"
-                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Fechas (provincial-general)
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Fechas (salida-regreso)
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Acciones
                   </th>
@@ -312,11 +439,64 @@
               <tbody class="bg-white divide-y divide-gray-200">
                 <tr v-for="permit in this.getAllPermit()" :key="permit">
                   <td class="px-6 py-4 whitespace-nowrap">
-                    {{ permit.reason.substring(0, 10) }}...
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="ml-4">
+                      <div class="w-6/8 ...">
+                        <div
+                          class="
+                            whitespace-normal
+                            text-sm
+                            font-semibold
+                            text-gray-900
+                          "
+                        >
+                          {{ permit.reason }}
+                        </div>
+                      </div>
+                    </div>
+                    <br />
                     <span
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                      v-if="permit.status == 1"
+                      class="
+                        px-2
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-emerald-100
+                        text-emerald-800
+                      "
+                    >
+                      Activo
+                    </span>
+                    <span
+                      v-if="permit.status == 0"
+                      class="
+                        px-2
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-red-100
+                        text-red-800
+                      "
+                    >
+                      Cerrado
+                    </span>
+                  </td>
+                  <td class="px-1 py-4 whitespace-nowrap">
+                    <span
+                      class="
+                        px-2
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-cyan-100
+                        text-cyan-800
+                      "
                     >
                       {{ this.formatShowDate(permit.date_province) }} -
                       {{ this.formatShowDate(permit.date_general) }}
@@ -324,20 +504,30 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                      class="
+                        px-2
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-blue-100
+                        text-blue-800
+                      "
                     >
                       {{ this.formatShowDate(permit.date_out) }} -
                       {{ this.formatShowDate(permit.date_in) }}
                     </span>
                   </td>
-                  <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <td class="whitespace-nowrap text-right text-sm font-medium">
                     <!-- Components -->
 
-                    <div class="mx-auto flex gap-10">
+                    <div class="mx-2 flex gap-10">
                       <jet-button @click="confirmationPermitUpdate(permit)"
                         >Detalles</jet-button
                       >
-                      <jet-danger-button @click="confirmationPermitDelete(permit)"
+                      <jet-danger-button
+                        @click="confirmationPermitDelete(permit)"
                         >Eliminar</jet-danger-button
                       >
                     </div>
@@ -347,7 +537,9 @@
             </table>
           </div>
           <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
-            <p class="text-center text-lg">Por el momento no existen registros.</p>
+            <p class="text-center text-lg">
+              Por el momento no existen registros.
+            </p>
           </div>
         </div>
       </div>
@@ -376,7 +568,22 @@
                   minLength="10"
                   maxlength="100"
                   placeholder="Ingresar Motivo del Permiso"
-                  class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    border-0
+                    px-3
+                    my-2
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
                   v-model="deletePermitForm.reason"
                   readonly
                 />
@@ -406,6 +613,66 @@
         <template #content>
           <div class="flex flex-wrap">
             <div class="w-full lg:w-12/12 px-4">
+              <!-- label -->
+              <div class="flex items-center justify-center">
+                <small class="ml-3 text-gray-700 font-medium"
+                  >¿El permiso se encuentra activo? ¿No / Si?</small
+                >
+              </div>
+              <br />
+              <!-- Toggle A -->
+              <div class="flex items-center justify-center w-full my-4">
+                <label for="toogleA" class="flex items-center cursor-pointer">
+                  <!-- toggle -->
+                  <div class="relative">
+                    <!-- input -->
+                    <input
+                      id="toogleA"
+                      type="checkbox"
+                      class="sr-only"
+                      :value="this.statuspermit"
+                      @click="changeStatusPermit()"
+                    />
+                    <!-- line -->
+                    <div
+                      class="w-10 h-4 bg-gray-200 rounded-full shadow-inner"
+                    />
+                    <!-- dot -->
+                    <div
+                      v-if="this.statuspermit == 1"
+                      class="
+                        absolute
+                        w-6
+                        h-6
+                        rounded-full
+                        shadow
+                        -left-1
+                        -top-1
+                        transition
+                      "
+                      style="
+                        transform: translateX(100%);
+                        background-color: #204de0;
+                      "
+                    />
+                    <div
+                      v-if="this.statuspermit == 0"
+                      class="
+                        absolute
+                        w-6
+                        h-6
+                        bg-red-400
+                        rounded-full
+                        shadow
+                        -left-1
+                        -top-1
+                        transition
+                      "
+                    />
+                  </div>
+                </label>
+              </div>
+
               <div class="">
                 <label
                   class="block text-sm font-medium text-gray-700"
@@ -413,7 +680,10 @@
                 >
                   Motivo del Permiso:
                 </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.reason">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.reason"
+                >
                   {{ $page.props.errors.reason }}
                 </p>
                 <small>Formato: Motivo del permiso.</small>
@@ -424,7 +694,22 @@
                     minLength="10"
                     maxlength="100"
                     placeholder="Ingresar Motivo del Permiso"
-                    class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    class="
+                      border-0
+                      px-3
+                      my-2
+                      placeholder-blueGray-300
+                      text-blueGray-600
+                      bg-white
+                      rounded
+                      text-sm
+                      shadow
+                      focus:outline-none focus:ring
+                      w-full
+                      ease-linear
+                      transition-all
+                      duration-150
+                    "
                     v-model="updatePermitForm.reason"
                     required
                   />
@@ -436,10 +721,16 @@
 
             <div class="w-full lg:w-full px-4">
               <div>
-                <label for="address" class="block text-sm font-medium text-gray-700">
+                <label
+                  for="address"
+                  class="block text-sm font-medium text-gray-700"
+                >
                   Dirección:
                 </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.address">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.address"
+                >
                   {{ $page.props.errors.address }}
                 </p>
                 <small>Formato: Agregar la dirección de destino.</small>
@@ -448,7 +739,17 @@
                     id="address"
                     name="address"
                     rows="1"
-                    class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
+                    class="
+                      shadow-sm
+                      focus:ring-blue-500 focus:border-blue-500
+                      mt-1
+                      mb-2
+                      block
+                      w-full
+                      sm:text-sm
+                      border border-gray-300
+                      rounded-md
+                    "
                     v-model="updatePermitForm.address"
                     placeholder="Agregar la dirección de destino.."
                     :maxlength="100"
@@ -480,7 +781,9 @@
                     placeholder="Buscar provincia"
                   >
                   </multiselect>
-                  <p class="text-red-400 text-sm" v-show="isInvalid">Obligatorio</p>
+                  <p class="text-red-400 text-sm" v-show="isInvalid">
+                    Obligatorio
+                  </p>
                 </div>
               </div>
             </div>
@@ -507,7 +810,9 @@
                     placeholder="Buscar cantón"
                   >
                   </multiselect>
-                  <p class="text-sm text-red-400" v-show="isInvalidCanton">Obligatorio</p>
+                  <p class="text-sm text-red-400" v-show="isInvalidCanton">
+                    Obligatorio
+                  </p>
                 </div>
               </div>
             </div>
@@ -533,7 +838,9 @@
                     placeholder="Buscar parroquia"
                   >
                   </multiselect>
-                  <p class="text-sm text-red-400" v-show="isInvalidParish">Obligatorio</p>
+                  <p class="text-sm text-red-400" v-show="isInvalidParish">
+                    Obligatorio
+                  </p>
                 </div>
               </div>
             </div>
@@ -548,18 +855,21 @@
                 >
                   Fecha de Consejo Provincial:
                 </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.date_province">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.date_province"
+                >
                   {{ $page.props.errors.date_province }}
                 </p>
                 <small
-                  >Formato: Fecha de Consejo Provincial que concede el Permiso.</small
+                  >Formato: Fecha de Consejo Provincial que concede el
+                  Permiso.</small
                 >
 
                 <Datepicker
                   v-model="updatePermitForm.date_province"
                   :format="format"
-                  :transitions="false"
-                  menuClassName="dp-custom-menu"
+                  autoApply
                   required
                 />
               </div>
@@ -573,16 +883,21 @@
                 >
                   Fecha de Consejo General:
                 </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.date_general">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.date_general"
+                >
                   {{ $page.props.errors.date_general }}
                 </p>
-                <small>Formato: Fecha de Consejo General que concede el Permiso.</small>
+                <small
+                  >Formato: Fecha de Consejo General que concede el
+                  Permiso.</small
+                >
 
                 <Datepicker
                   v-model="updatePermitForm.date_general"
                   :format="format"
-                  :transitions="false"
-                  menuClassName="dp-custom-menu"
+                  autoApply
                   required
                 />
               </div>
@@ -596,15 +911,17 @@
                 >
                   Fecha de Salida:
                 </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.date_out">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.date_out"
+                >
                   {{ $page.props.errors.date_out }}
                 </p>
                 <small>Formato: Fecha en la que sale la hermana.</small>
                 <Datepicker
                   v-model="updatePermitForm.date_out"
                   :format="format"
-                  :transitions="false"
-                  menuClassName="dp-custom-menu"
+                  autoApply
                   required
                 />
               </div>
@@ -618,7 +935,10 @@
                 >
                   Fecha de Regreso (Eventual):
                 </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.date_in">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.date_in"
+                >
                   {{ $page.props.errors.date_in }}
                 </p>
                 <small>Formato: Fecha en la que regresa la hermana.</small>
@@ -626,8 +946,7 @@
                 <Datepicker
                   v-model="updatePermitForm.date_in"
                   :format="format"
-                  :transitions="false"
-                  menuClassName="dp-custom-menu"
+                  autoApply
                 />
               </div>
             </div>
@@ -639,7 +958,10 @@
                 >
                   Descripción del Permiso
                 </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.description"
+                >
                   {{ $page.props.errors.description }}
                 </p>
                 <small>Formato: Agregar la descripción del permiso.</small>
@@ -680,6 +1002,7 @@ import JetButton from "@/Jetstream/Button.vue";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import Alert from "@/Components/Alert";
 
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
@@ -706,6 +1029,7 @@ export default {
     JetDialogModal,
     JetFormSection,
     JetInput,
+    Alert,
     JetInputError,
     moment,
   },
@@ -738,6 +1062,7 @@ export default {
 
   data() {
     return {
+      statuspermit: 0,
       toolbarOptions: [
         ["bold", "italic", "underline", "strike"], // toggled buttons
         ["blockquote", "code-block"],
@@ -769,6 +1094,7 @@ export default {
       permitBeingUpdated: null,
       updatePermitForm: this.$inertia.form({
         reason: null,
+        status: null,
         description: null,
         date_province: null,
         date_general: null,
@@ -1068,6 +1394,9 @@ export default {
 
     confirmationPermitUpdate(permit) {
       this.updatePermitForm.reason = permit.reason;
+      this.updatePermitForm.status = permit.status;
+      this.statuspermit = permit.status;
+
       this.updatePermitForm.description = permit.description;
       this.updatePermitForm.date_province = permit.date_province;
       this.updatePermitForm.date_general = permit.date_general;
@@ -1081,7 +1410,8 @@ export default {
       //   political_division_id: null,
 
       this.updatePermitForm.address = permit.address.address;
-      this.updatePermitForm.political_division_id = permit.address.political_division_id;
+      this.updatePermitForm.political_division_id =
+        permit.address.political_division_id;
 
       this.status().then((data) => {
         //   console.log(data);
@@ -1103,11 +1433,15 @@ export default {
       this.updatePermitForm.date_general = this.formatDate(
         this.updatePermitForm.date_general
       );
-      this.updatePermitForm.date_out = this.formatDate(this.updatePermitForm.date_out);
+      this.updatePermitForm.date_out = this.formatDate(
+        this.updatePermitForm.date_out
+      );
       if (this.updatePermitForm.date_in != null) {
-        this.updatePermitForm.date_in = this.formatDate(this.updatePermitForm.date_in);
+        this.updatePermitForm.date_in = this.formatDate(
+          this.updatePermitForm.date_in
+        );
       }
-
+      this.updatePermitForm.status = this.statuspermit;
       if (
         this.isInvalid == false &&
         this.isInvalidCanton == false &&
@@ -1124,6 +1458,13 @@ export default {
             onSuccess: () => {
               this.permitBeingUpdated = null;
               this.updatePermitForm.political_division_id = null;
+
+              this.selectOne.selectedProvince = null;
+              this.selectTwo.selectedCanton = null;
+              this.selectThree.selectedParish = null;
+              this.selectOne.options = [];
+              this.selectTwo.options = [];
+              this.selectThree.options = [];
               setTimeout(() => {
                 this.updateTable();
               }, 100);
@@ -1176,7 +1517,13 @@ export default {
         }
       );
     },
-
+    changeStatusPermit() {
+      if (this.statuspermit == 1) {
+        this.statuspermit = 0;
+      } else {
+        this.statuspermit = 1;
+      }
+    },
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },

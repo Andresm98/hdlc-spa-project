@@ -15,7 +15,8 @@ class CreateTransfersTable extends Migration
     {
         Schema::create('transfers', function (Blueprint $table) {
             $table->id();
-
+            // 1 = Active, 0 : Historial
+            $table->tinyInteger('status');
             $table->dateTime('transfer_date_adission');
             $table->dateTime('transfer_date_relocated')->nullable();
             $table->string('transfer_reason', 100);

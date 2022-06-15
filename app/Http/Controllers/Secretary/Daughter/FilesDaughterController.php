@@ -82,7 +82,7 @@ class FilesDaughterController extends Controller
             $file = $request->file('filedata');
             $name = $file->getClientOriginalName();
             $fileSize = filesize($file);
-            $filePath = 'documents/daugther-profiles/files/' . $user->slug . '/' . $name;
+            $filePath = 'documents/daugther-profiles/files/' . $user->id . '/' . $name;
 
             if ($user->profile) {
                 $filesCount =  count($user->profile->files);
@@ -204,7 +204,7 @@ class FilesDaughterController extends Controller
 
                 if ($fileOld->filename == $name) {
                     $fileSize = filesize($file);
-                    $filePath = 'documents/daugther-profiles/files/' . $user->slug . '/' . $name;
+                    $filePath = 'documents/daugther-profiles/files/' . $user->id . '/' . $name;
                     Storage::disk('s3')->delete($fileOld->filename);
 
                     Storage::disk('s3')->put($filePath, file_get_contents($file));

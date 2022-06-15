@@ -2,7 +2,16 @@
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
       <h6
-        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
+        class="
+          mt-2
+          mb-2
+          text-lg
+          font-medium
+          text-center
+          leading-6
+          text-gray-900
+          uppercase
+        "
       >
         Plantilla de Récord Académico
       </h6>
@@ -16,7 +25,10 @@
               >
                 Nombre de Título:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.name_title">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.name_title"
+              >
                 {{ $page.props.errors.name_title }}
               </p>
               <small>Formato: Pedagogía.</small>
@@ -26,7 +38,22 @@
                   minLength="10"
                   maxlength="40"
                   placeholder="Ingresar Nombre de Título"
-                  class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    border-0
+                    px-3
+                    my-2
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
                   v-model="form.name_title"
                   required
                 />
@@ -41,7 +68,10 @@
               >
                 Insitución:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.institution">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.institution"
+              >
                 {{ $page.props.errors.institution }}
               </p>
               <small>Formato: Universidad LXS.</small>
@@ -50,7 +80,22 @@
                 minLength="10"
                 maxlength="40"
                 placeholder="Ingresar Insitución Académica"
-                class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  py-2
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="form.institution"
                 required
               />
@@ -65,15 +110,17 @@
               >
                 Fecha de Entrega Título:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.date_title">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.date_title"
+              >
                 {{ $page.props.errors.date_title }}
               </p>
               <small>Formato: Fecha de emisión del título.</small>
               <Datepicker
                 v-model="form.date_title"
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 required
               />
             </div>
@@ -87,13 +134,16 @@
               >
                 Observaciones:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.observation">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.observation"
+              >
                 {{ $page.props.errors.observation }}
               </p>
               <small
-                >Formato: Por favor ingresar las observaciones que usted crea pertinente
-                relacionadas al historial académico, deberán ser máximo 2000
-                caracteres.</small
+                >Formato: Por favor ingresar las observaciones que usted crea
+                pertinente relacionadas al historial académico, deberán ser
+                máximo 2000 caracteres.</small
               >
               <div class="bg-white">
                 <quill-editor
@@ -115,7 +165,15 @@
         >
       </form>
       <hr
-        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
+        class="
+          w-full
+          mt-1
+          mb-3
+          ml-4
+          mr-4
+          border-b-1 border-gray-400
+          hover:border-gray-400
+        "
       />
 
       <!-- Table -->
@@ -131,25 +189,54 @@
                 <tr>
                   <th
                     scope="col"
-                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      pl-4
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Nombre Título
                   </th>
                   <th
                     scope="col"
-                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Fecha Título
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Insitución
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Acciones
                   </th>
@@ -180,19 +267,37 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                      class="
+                        px-2
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-green-100
+                        text-green-800
+                      "
                     >
                       {{ academic.institution.substring(0, 15) }}...
                     </span>
                   </td>
-                  <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <td
+                    class="
+                      px-3
+                      py-4
+                      whitespace-nowrap
+                      text-right text-sm
+                      font-medium
+                    "
+                  >
                     <!-- Components -->
 
                     <div class="mx-auto flex gap-10">
                       <jet-button @click="confirmationAcademicUpdate(academic)"
                         >Detalles</jet-button
                       >
-                      <jet-danger-button @click="confirmationAcademicDelete(academic)"
+                      <jet-danger-button
+                        @click="confirmationAcademicDelete(academic)"
                         >Eliminar</jet-danger-button
                       >
                     </div>
@@ -202,7 +307,9 @@
             </table>
           </div>
           <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
-            <p class="text-center text-lg">Por el momento no existen registros.</p>
+            <p class="text-center text-lg">
+              Por el momento no existen registros.
+            </p>
           </div>
         </div>
       </div>
@@ -230,7 +337,22 @@
                     minLength="10"
                     maxlength="40"
                     placeholder="Ingresar Nombre de Título"
-                    class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    class="
+                      border-0
+                      px-3
+                      my-2
+                      placeholder-blueGray-300
+                      text-blueGray-600
+                      bg-white
+                      rounded
+                      text-sm
+                      shadow
+                      focus:outline-none focus:ring
+                      w-full
+                      ease-linear
+                      transition-all
+                      duration-150
+                    "
                     v-model="deleteAcademicForm.name_title"
                     readonly
                   />
@@ -268,7 +390,10 @@
                 >
                   Nombre de Título:
                 </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.name_title">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.name_title"
+                >
                   {{ $page.props.errors.name_title }}
                 </p>
                 <small>Formato: Pedagogía.</small>
@@ -278,7 +403,22 @@
                     minLength="10"
                     maxlength="40"
                     placeholder="Ingresar Nombre de Título"
-                    class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    class="
+                      border-0
+                      px-3
+                      my-2
+                      placeholder-blueGray-300
+                      text-blueGray-600
+                      bg-white
+                      rounded
+                      text-sm
+                      shadow
+                      focus:outline-none focus:ring
+                      w-full
+                      ease-linear
+                      transition-all
+                      duration-150
+                    "
                     v-model="updateAcademicForm.name_title"
                     required
                   />
@@ -293,7 +433,10 @@
                 >
                   Insitución:
                 </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.institution">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.institution"
+                >
                   {{ $page.props.errors.institution }}
                 </p>
                 <small>Formato: Universidad LXS.</small>
@@ -303,7 +446,22 @@
                   minLength="10"
                   maxlength="40"
                   placeholder="Ingresar Insitución Académica"
-                  class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    border-0
+                    px-3
+                    py-2
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
                   v-model="updateAcademicForm.institution"
                   required
                 />
@@ -318,7 +476,10 @@
                 >
                   Fecha de Entrega Título:
                 </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.date_title">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.date_title"
+                >
                   {{ $page.props.errors.date_title }}
                 </p>
                 <small>Formato: Fecha de emisión del título.</small>
@@ -326,8 +487,7 @@
                 <Datepicker
                   v-model="updateAcademicForm.date_title"
                   :format="format"
-                  :transitions="false"
-                  menuClassName="dp-custom-menu"
+                  autoApply
                   required
                 />
               </div>
@@ -341,13 +501,16 @@
                 >
                   Observaciones:
                 </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.observation">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.observation"
+                >
                   {{ $page.props.errors.observation }}
                 </p>
                 <small
-                  >Formato: Por favor ingresar las observaciones que usted crea pertinente
-                  relacionadas al historial académico, deberán ser máximo 2000
-                  caracteres.</small
+                  >Formato: Por favor ingresar las observaciones que usted crea
+                  pertinente relacionadas al historial académico, deberán ser
+                  máximo 2000 caracteres.</small
                 >
                 <div class="bg-white">
                   <quill-editor

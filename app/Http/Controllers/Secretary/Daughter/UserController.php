@@ -9,19 +9,21 @@ use Inertia\Inertia;
 use App\Models\Address;
 use App\Models\Profile;
 use App\Models\Pastoral;
+use App\Models\Transfer;
 use Illuminate\Support\Str;
 use App\Exports\UsersExport;
-use Illuminate\Http\Request;
 
 // Inject
 
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
 
 // Reports
 
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
@@ -29,7 +31,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Secretary\Daughter\ProfileController;
-use App\Models\Transfer;
 
 class UserController extends Controller
 {
@@ -66,13 +67,12 @@ class UserController extends Controller
 
         $query = User::query();
 
-        $query->whereHas("roles", function ($q) {
-            $q->where("name", "daughter");
-        });
-
         if (request('search')) {
-            $query->where('name', 'LIKE', '%' . request('search') . '%')
-                ->orWhere('lastname', 'LIKE', '%' . request('search') . '%');
+            $search = request('search');
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'LIKE', '%' . $search . '%');
+                $query->orWhere('lastname', 'LIKE', '%' . $search . '%');
+            });
         }
 
         if (request()->has(['field', 'direction'])) {
@@ -114,11 +114,18 @@ class UserController extends Controller
                 $q->whereIn('id', $index);
             });
         }
+
+        $query->whereHas("roles", function ($q) {
+            $q->where("name", "daughter");
+        })->get();
+
+
         $pastorals = Pastoral::all();
         return Inertia::render('Secretary/Users/Daughter/Index', [
             'provinces' => $provinces,
             'daughters_list' => $query
                 ->with('profile')
+                ->with('profile.appointments.appointment_level')
                 ->paginate(request('perPage'))
                 ->appends(request()->query()),
             'pastorals' => $pastorals,
@@ -166,14 +173,14 @@ class UserController extends Controller
             'fullnamecomm' => $request->get('fullnamecomm'),
             'lastname' => $request->get('lastname'),
             'email' => $request->get('email'),
-            'password' => Str::random(233),
+            'password' => Hash::make("secret"),
         ]), function (User $user) {
             $this->createTeam($user);
         });
 
         $user->assignRole('daughter');
         // Input File
-        $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
+        $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->id, 's3');
         Storage::disk('s3')->setVisibility($path, 'private');
         $user->image()->create([
             'filename' => $path,
@@ -221,6 +228,14 @@ class UserController extends Controller
             ->get()
             ->first();
 
+        foreach ($daughter_custom->roles as $role) {
+            if ($role->name == "daughter") {
+                continue;
+            } else {
+                return abort(404);
+            }
+        }
+
         $user = User::find($daughter_custom->id);
         $profile_daughter =   $profile_daughter->specificProfile($daughter_custom->id);
 
@@ -245,15 +260,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatorData = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'fullnamecomm' => 'required|string|max:60',
-            'lastname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($id)],
-            'roles*' => 'required|exists:roles,id',
-            'file' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
-        ]);
-
         $validator = Validator::make([
             'id' => $id,
         ], [
@@ -264,16 +270,35 @@ class UserController extends Controller
             return abort(404);
         }
 
+        $validatorData = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'fullnamecomm' => 'required|string|max:60',
+            'lastname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($id)],
+            'roles*' => 'required|exists:roles,id',
+            'file' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+        ]);
+
         if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 
         $user =  User::find($id);
+
+        foreach ($user->roles as $role) {
+            if ($role->name == "daughter") {
+                continue;
+            } else {
+                return abort(404);
+            }
+        }
+
+
         if ($request->file('file')) {
             if (!$user->image) {
-                $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
+                $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->id, 's3');
                 Storage::disk('s3')->setVisibility($path, 'private');
                 $user->image()->create([
                     'filename' => $path,
@@ -281,7 +306,7 @@ class UserController extends Controller
                 ]);
             } else {
                 Storage::disk('s3')->delete($user->image->filename);
-                $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->slug, 's3');
+                $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->id, 's3');
                 Storage::disk('s3')->setVisibility($path, 'private');
                 $user->image()->update([
                     'filename' => $path,

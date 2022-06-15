@@ -140,7 +140,7 @@ class ProfileController extends Controller
             'date_vocation' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'date_admission' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'date_send' => ['nullable', 'date_format:Y-m-d H:i:s'],
-            'date_vote' => ['nullable', 'required', 'date_format:Y-m-d H:i:s'],
+            'date_vote' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'cellphone' => ['required', 'string', 'max:15'],
             'phone' => ['nullable', 'string', 'max:15'],
             'observation' => ['required', 'string', 'max:4000'],

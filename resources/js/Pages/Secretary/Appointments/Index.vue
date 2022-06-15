@@ -341,8 +341,7 @@
           <Datepicker
             v-model="params.dateStart"
             :format="format"
-            :transitions="false"
-            menuClassName="dp-custom-menu"
+            autoApply
             required
           />
           <small class="justify-content-center ml-6">Deste - Hasta</small>
@@ -352,8 +351,7 @@
           <Datepicker
             v-model="params.dateEnd"
             :format="format"
-            :transitions="false"
-            menuClassName="dp-custom-menu"
+            autoApply
             required
           />
         </div>
@@ -556,6 +554,34 @@
                       <div class="text-sm text-gray-500">
                         {{ appointment.profile.user.lastname }}
                       </div>
+                      <span
+                        v-if="appointment.status == 1"
+                        class="
+                          px-2
+                          inline-flex
+                          text-xs
+                          leading-5
+                          font-semibold
+                          rounded-sm
+                          bg-green-100
+                          text-green-800
+                        "
+                        >Activo</span
+                      >
+                      <span
+                        v-if="appointment.status == 0"
+                        class="
+                          px-2
+                          inline-flex
+                          text-xs
+                          leading-5
+                          font-semibold
+                          rounded-sm
+                          bg-red-100
+                          text-red-800
+                        "
+                        >Antiguo</span
+                      >
                     </div>
                   </div>
                 </td>
@@ -588,8 +614,8 @@
                       leading-5
                       font-semibold
                       rounded-full
-                      bg-red-100
-                      text-red-800
+                      bg-pink-100
+                      text-pink-800
                     "
                   >
                     {{ appointment.appointment_level.name }}
@@ -683,7 +709,6 @@
                         v-if="appointment.community.comm_level == 2"
                       >
                         <div v-if="appointment.community.comm_id != null">
-                            ffff
                           <a
                             :href="
                               route('secretary.works.edit', {
@@ -699,7 +724,6 @@
                         </div>
 
                         <div v-else>
-                            ggg
                           <a
                             :href="
                               route('secretary.worksindividual.edit', {
@@ -870,10 +894,86 @@
       :show="appointmentBeingUpdated"
       @close="appointmentBeingUpdated == null"
     >
-      <template #title> Datos de Registro del Nombramiento</template>
+      <template #title>
+        Datos de Registro del Nombramiento
+        <span
+          class="
+            px-2
+            inline-flex
+            text-base
+            leading-5
+            font-semibold
+            rounded-sm
+            bg-blue-100
+            text-blue-800
+          "
+        >
+          {{ appointmentBeingUpdated.profile.user.name }}
+          {{ appointmentBeingUpdated.profile.user.lastname }} </span
+        >.
+      </template>
 
       <template #content>
         <div class="flex flex-wrap">
+          <div class="w-full">
+            <!-- label -->
+            <div class="flex items-center justify-center">
+              <small class="ml-3 text-gray-700 font-medium">
+                ¿El nombramiento se encuentra activo? ¿No / Si?</small
+              >
+            </div>
+            <br />
+            <!-- Toggle A -->
+            <div class="flex items-center justify-center w-full my-4">
+              <label for="toogleA" class="flex items-center cursor-pointer">
+                <!-- toggle -->
+                <div class="relative">
+                  <!-- input -->
+                  <input
+                    id="toogleA"
+                    type="checkbox"
+                    class="sr-only"
+                    :value="this.statusappointment"
+                    @click="changeStatusAppointment()"
+                  />
+                  <!-- line -->
+                  <div class="w-10 h-4 bg-gray-200 rounded-full shadow-inner" />
+                  <!-- dot -->
+                  <div
+                    v-if="this.statusappointment == 1"
+                    class="
+                      absolute
+                      w-6
+                      h-6
+                      rounded-full
+                      shadow
+                      -left-1
+                      -top-1
+                      transition
+                    "
+                    style="
+                      transform: translateX(100%);
+                      background-color: #204de0;
+                    "
+                  />
+                  <div
+                    v-if="this.statusappointment == 0"
+                    class="
+                      absolute
+                      w-6
+                      h-6
+                      bg-red-400
+                      rounded-full
+                      shadow
+                      -left-1
+                      -top-1
+                      transition
+                    "
+                  />
+                </div>
+              </label>
+            </div>
+          </div>
           <div class="w-full lg:w-6/12 px-4">
             <label
               class="block text-sm font-medium text-gray-700"
@@ -994,15 +1094,14 @@
               >
               <Datepicker
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
                 v-model="updateAppointmentForm.date_appointment"
                 required
+                autoApply
               />
             </div>
           </div>
 
-          <div class="w-full lg:w-12/12 px-4">
+          <div class="w-full lg:w-6/12 px-4" v-if="this.statusappointment == 0">
             <div class="relative w-full mb-3">
               <label
                 class="block text-sm font-medium text-gray-700 pt-4"
@@ -1021,9 +1120,8 @@
               >
               <Datepicker
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
                 v-model="updateAppointmentForm.date_end_appointment"
+                autoApply
               />
             </div>
           </div>
@@ -1160,6 +1258,7 @@ export default {
         ["clean"], // remove formatting button
       ],
       modal_open: false,
+      statusappointment: 0,
       params: {
         search: this.filters.search,
         date: this.filters.date,
@@ -1176,6 +1275,7 @@ export default {
         date_end_appointment: null,
         appointment_level_id: null,
         community_id: null,
+        status: null,
       }),
       selectOneUpdate: {
         selectedLevel: undefined,
@@ -1353,6 +1453,7 @@ export default {
       this.updateAppointmentForm.date_end_appointment =
         appointment.date_end_appointment;
 
+      this.statusappointment = appointment.status;
       this.status(appointment).then((data) => {
         this.selectOneUpdate.selectedLevel = data.level;
         axios
@@ -1402,11 +1503,14 @@ export default {
       this.selectThree.selectedCommunity = null;
       this.selectThree.options = [];
       this.appointmentBeingUpdated = null;
+      this.statusappointment = 0;
     },
     updateAppointment() {
-      this.updateAppointmentForm.date_appointment = this.formatDate(
-        this.updateAppointmentForm.date_appointment
-      );
+      if (this.updateAppointmentForm.date_appointment != null) {
+        this.updateAppointmentForm.date_appointment = this.formatDate(
+          this.updateAppointmentForm.date_appointment
+        );
+      }
       if (this.updateAppointmentForm.date_end_appointment != null) {
         this.updateAppointmentForm.date_end_appointment = this.formatDate(
           this.updateAppointmentForm.date_end_appointment
@@ -1418,6 +1522,7 @@ export default {
       this.updateAppointmentForm.community_id =
         this.selectThree.selectedCommunity;
 
+      this.updateAppointmentForm.status = this.statusappointment;
       if (
         this.isInvalidLevelUpdate == false &&
         this.isInvalidLevelCategoryUpdate == false
@@ -1439,9 +1544,17 @@ export default {
               this.selectThree.selectedCommunity = null;
               this.selectThree.options = [];
               this.appointmentBeingUpdated = null;
+              this.statusappointment = 0;
             },
           }
         );
+      }
+    },
+    changeStatusAppointment() {
+      if (this.statusappointment == 1) {
+        this.statusappointment = 0;
+      } else {
+        this.statusappointment = 1;
       }
     },
   },

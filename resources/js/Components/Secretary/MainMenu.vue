@@ -47,7 +47,11 @@
           Hermanas
         </div>
       </Link>
-      <hr :class="isUrl('secretary/daughters-charity/all') ? 'text-white' : 'hidden'" />
+      <hr
+        :class="
+          isUrl('secretary/daughters-charity/all') ? 'text-white' : 'hidden'
+        "
+      />
     </div>
 
     <div class="mb-4">
@@ -77,7 +81,10 @@
       <hr :class="isUrl('system/admin/roles') ? 'text-white' : 'hidden'" />
     </div>
     <div class="mb-4">
-      <Link class="group flex items-center py-3" :href="route('secretary.events.index')">
+      <Link
+        class="group flex items-center py-3"
+        :href="route('secretary.events.index')"
+      >
         <icon
           name="settings"
           class="mr-2 w-4 h-4"
@@ -101,60 +108,21 @@
     </div>
 
     <div class="mb-4">
-      <Link class="group flex items-center py-3" :href="route('admin.settings.index')">
+      <Link class="group flex items-center py-3" href="/reports">
         <icon
-          name="settings"
+          name="printer"
           class="mr-2 w-4 h-4"
           :class="
-            isUrl('sytem/admin/settings')
+            isUrl('reports')
               ? 'fill-white'
               : 'fill-gray-400 group-hover:fill-white'
           "
         />
         <div
           :class="
-            isUrl('system/admin/settings')
+            isUrl('reports')
               ? 'text-white'
               : 'text-gray-400 group-hover:text-white'
-          "
-        >
-          Configuración
-        </div>
-      </Link>
-      <hr :class="isUrl('system/admin/settings') ? 'text-white' : 'hidden'" />
-    </div>
-    <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/cominities">
-        <icon
-          name="users"
-          class="mr-2 w-4 h-4"
-          :class="
-            isUrl('cominities') ? 'fill-white' : 'fill-gray-400 group-hover:fill-white'
-          "
-        />
-        <div
-          :class="
-            isUrl('cominities') ? 'text-white' : 'text-gray-400 group-hover:text-white'
-          "
-        >
-          División
-        </div>
-      </Link>
-      <hr :class="isUrl('cominities') ? 'text-white' : 'hidden'" />
-    </div>
-
-    <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/reports">
-        <icon
-          name="printer"
-          class="mr-2 w-4 h-4"
-          :class="
-            isUrl('reports') ? 'fill-white' : 'fill-gray-400 group-hover:fill-white'
-          "
-        />
-        <div
-          :class="
-            isUrl('reports') ? 'text-white' : 'text-gray-400 group-hover:text-white'
           "
         >
           Reportes

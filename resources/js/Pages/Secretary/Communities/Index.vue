@@ -11,9 +11,27 @@
     <section class="py-1 bg-gray">
       <div class="w-full lg:w-full">
         <div
-          class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
+          class="
+            relative
+            flex flex-col
+            min-w-0
+            break-words
+            w-full
+            mb-6
+            shadow-lg
+            rounded-lg
+            bg-blueGray-100
+            border-0
+          "
         >
-          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+          <div
+            class="
+              shadow
+              overflow-hidden
+              border-b border-gray-200
+              sm:rounded-lg
+            "
+          >
             <div v-if="$page.props.flash != null">
               <alert
                 v-if="$page.props.flash.success"
@@ -39,7 +57,13 @@
             <div class="container mx-auto">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div
-                  class="justify-center text-sm border-1 border-gray-300 rounded-sm bg-gray-100"
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    bg-gray-100
+                  "
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Filtros de Búsqueda</small
@@ -47,13 +71,34 @@
 
                   <search-filter
                     v-model="params.search"
-                    class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    class="
+                      border border-blue-300
+                      rounded-md
+                      shadow-sm
+                      focus:outline-none
+                      focus:ring-indigo-500
+                      focus:border-indigo-500
+                      sm:text-sm
+                    "
                     @reset="reset"
                   >
                     <small class="block text-gray-700">Tipo:</small>
                     <select
                       v-model="params.type"
-                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      class="
+                        mt-1
+                        block
+                        w-full
+                        px-3
+                        border border-gray-300
+                        bg-white
+                        rounded-md
+                        shadow-sm
+                        focus:outline-none
+                        focus:ring-blue-500
+                        focus:border-blue-500
+                        sm:text-sm
+                      "
                     >
                       <option :value="null">Todas</option>
                       <option value="1">Comunidades</option>
@@ -62,7 +107,20 @@
                     <small class="block text-gray-700 mt-2">Estado:</small>
                     <select
                       v-model="params.active"
-                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      class="
+                        mt-1
+                        block
+                        w-full
+                        px-3
+                        border border-gray-300
+                        bg-white
+                        rounded-md
+                        shadow-sm
+                        focus:outline-none
+                        focus:ring-blue-500
+                        focus:border-blue-500
+                        sm:text-sm
+                      "
                     >
                       <option :value="null">Todos</option>
                       <option value="1">Abiertas</option>
@@ -73,7 +131,20 @@
 
                     <select
                       v-model="params.pastoral"
-                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      class="
+                        mt-1
+                        block
+                        w-full
+                        px-3
+                        border border-gray-300
+                        bg-white
+                        rounded-md
+                        shadow-sm
+                        focus:outline-none
+                        focus:ring-blue-500
+                        focus:border-blue-500
+                        sm:text-sm
+                      "
                     >
                       <option :value="null">Todas</option>
                       <option
@@ -85,10 +156,25 @@
                       </option>
                     </select>
 
-                    <small class="block text-gray-700 mt-2">Por Provincia:</small>
+                    <small class="block text-gray-700 mt-2"
+                      >Por Provincia:</small
+                    >
                     <select
                       v-model="params.perProvince"
-                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      class="
+                        mt-1
+                        block
+                        w-full
+                        px-3
+                        border border-gray-300
+                        bg-white
+                        rounded-md
+                        shadow-sm
+                        focus:outline-none
+                        focus:ring-blue-500
+                        focus:border-blue-500
+                        sm:text-sm
+                      "
                     >
                       <option :value="null">Todas</option>
                       <option
@@ -103,7 +189,20 @@
                     <small class="block text-gray-700 mt-2">Por página:</small>
                     <select
                       v-model="params.perPage"
-                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      class="
+                        mt-1
+                        block
+                        w-full
+                        px-3
+                        border border-gray-300
+                        bg-white
+                        rounded-md
+                        shadow-sm
+                        focus:outline-none
+                        focus:ring-blue-500
+                        focus:border-blue-500
+                        sm:text-sm
+                      "
                     >
                       <option value="5">5</option>
                       <option value="10">10</option>
@@ -114,74 +213,152 @@
                 </div>
 
                 <div
-                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    p-1
+                    bg-gray-100
+                  "
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Fecha de Fundación</small
                   >
-                  <p class="text-red-400 text-sm" v-show="$page.props.errors.dateStart">
+                  <p
+                    class="text-red-400 text-sm"
+                    v-show="$page.props.errors.dateStart"
+                  >
                     {{ $page.props.errors.dateStart }}
                   </p>
                   <Datepicker
                     v-model="params.dateStart"
                     :format="format"
-                    :transitions="false"
-                    menuClassName="dp-custom-menu"
+                    autoApply
                     required
                   />
-                  <small class="justify-content-center ml-6">Deste - Hasta</small>
-                  <p class="text-red-400 text-sm" v-show="$page.props.errors.dateEnd">
+                  <small class="justify-content-center ml-6"
+                    >Deste - Hasta</small
+                  >
+                  <p
+                    class="text-red-400 text-sm"
+                    v-show="$page.props.errors.dateEnd"
+                  >
                     {{ $page.props.errors.dateEnd }}
                   </p>
                   <Datepicker
                     v-model="params.dateEnd"
                     :format="format"
-                    :transitions="false"
-                    menuClassName="dp-custom-menu"
+                    autoApply
                     required
                   />
                 </div>
 
                 <div
-                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    p-1
+                    bg-gray-100
+                  "
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Exportar Listas</small
                   >
                   <div
-                    class="md:text-md flex items-center justify-between p-4 w-full text-sm md:px-12 md:py-0"
+                    class="
+                      md:text-md
+                      flex
+                      items-center
+                      justify-between
+                      p-4
+                      w-full
+                      text-sm
+                      md:px-12 md:py-0
+                    "
                   >
                     <dropdown class="mt-1" placement="bottom-end">
                       <template #default>
-                        <div class="group flex items-center cursor-pointer select-none">
+                        <div
+                          class="
+                            group
+                            flex
+                            items-center
+                            cursor-pointer
+                            select-none
+                          "
+                        >
                           <div
-                            class="mr-1 text-gray-700 group-hover:text-blue-600 focus:text-blue-600 whitespace-nowrap"
+                            class="
+                              mr-1
+                              text-gray-700
+                              group-hover:text-blue-600
+                              focus:text-blue-600
+                              whitespace-nowrap
+                            "
                           >
                             <span
-                              class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-gray-200 text-gray-800"
+                              class="
+                                px-1
+                                inline-flex
+                                text-xs
+                                leading-5
+                                font-semibold
+                                rounded-sm
+                                bg-gray-200
+                                text-gray-800
+                              "
                               >&nbsp;Filtros</span
                             >
                           </div>
                           <icon
-                            class="w-5 h-5 fill-gray-700 group-hover:fill-blue-600 focus:fill-blue-600"
+                            class="
+                              w-5
+                              h-5
+                              fill-gray-700
+                              group-hover:fill-blue-600
+                              focus:fill-blue-600
+                            "
                             name="cheveron-down"
                           />
                         </div>
                       </template>
                       <template #dropdown>
-                        <div class="mt-2 py-2 text-sm bg-white rounded shadow-xl">
+                        <div
+                          class="mt-2 py-2 text-sm bg-white rounded shadow-xl"
+                        >
                           <a
-                            class="block px-6 py-2 hover:text-white hover:bg-blue-500"
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
                             target="_blank"
                             :href="
-                              route('secretary.communities.export.excel', this.params)
+                              route(
+                                'secretary.communities.export.excel',
+                                this.params
+                              )
                             "
                             >Excel</a
                           >
                           <a
-                            class="block px-6 py-2 hover:text-white hover:bg-blue-500"
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
                             target="_blank"
-                            :href="route('secretary.communities.export.csv', this.params)"
+                            :href="
+                              route(
+                                'secretary.communities.export.csv',
+                                this.params
+                              )
+                            "
                             >CSV</a
                           >
                         </div>
@@ -201,7 +378,16 @@
             <div class="py-2">
               <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                  <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                  <div
+                    class="
+                      py-2
+                      align-middle
+                      inline-block
+                      min-w-full
+                      sm:px-6
+                      lg:px-8
+                    "
+                  >
                     <table
                       v-if="communities_list.data.length > 0"
                       class="min-w-full divide-y divide-gray-200"
@@ -210,10 +396,22 @@
                         <tr>
                           <th
                             scope="col"
-                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             <span
-                              class="inline-flex px-6 py-3 w-full justify-between"
+                              class="
+                                inline-flex
+                                px-6
+                                py-3
+                                w-full
+                                justify-between
+                              "
                               @click="sort('comm_name')"
                               >Nombre
 
@@ -245,10 +443,22 @@
                           </th>
                           <th
                             scope="col"
-                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             <span
-                              class="inline-flex px-6 py-3 w-full justify-between"
+                              class="
+                                inline-flex
+                                px-6
+                                py-3
+                                w-full
+                                justify-between
+                              "
                               @click="sort('comm_email')"
                               >Correo
                               <svg
@@ -279,16 +489,38 @@
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             Estado
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             <span
-                              class="inline-flex px-6 py-3 w-full justify-between"
+                              class="
+                                inline-flex
+                                px-6
+                                py-3
+                                w-full
+                                justify-between
+                              "
                               @click="sort('pastoral_id')"
                               >Pastoral
                               <svg
@@ -319,7 +551,15 @@
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             Acciones
                           </th>
@@ -359,18 +599,40 @@
                                 </svg>
                               </div>
                               <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">
-                                  {{ community_custom.comm_name }}
+                                <div class="w-6/8 ...">
+                                  <div
+                                    class="
+                                      whitespace-normal
+                                      text-sm
+                                      font-semibold
+                                      text-gray-900
+                                    "
+                                  >
+                                    {{ community_custom.comm_name }}
+                                  </div>
                                 </div>
                                 <div class="text-sm text-gray-500">
                                   Teléfono: {{ community_custom.comm_phone }}
                                 </div>
 
                                 <span
-                                  class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
+                                  class="
+                                    px-1
+                                    inline-flex
+                                    text-xs
+                                    leading-5
+                                    font-semibold
+                                    rounded-sm
+                                    bg-blue-100
+                                    text-blue-800
+                                  "
                                 >
                                   Fecha Fundación:
-                                  {{ formatDateShow(community_custom.date_fndt_comm) }}
+                                  {{
+                                    formatDateShow(
+                                      community_custom.date_fndt_comm
+                                    )
+                                  }}
                                 </span>
                               </div>
                             </div>
@@ -384,14 +646,32 @@
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div v-if="community_custom.comm_status == 1">
                               <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                class="
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-full
+                                  bg-green-100
+                                  text-green-800
+                                "
                               >
                                 Abierta
                               </span>
                             </div>
                             <div v-else>
                               <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                                class="
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-full
+                                  bg-red-100
+                                  text-red-800
+                                "
                               >
                                 Cerrada
                               </span>
@@ -408,13 +688,28 @@
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             <span
-                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
+                              class="
+                                px-2
+                                inline-flex
+                                text-xs
+                                leading-5
+                                font-semibold
+                                rounded-full
+                                bg-gray-100
+                                text-gray-800
+                              "
                             >
                               {{ community_custom.pastoral.name }}
                             </span>
                           </td>
                           <td
-                            class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
+                            class="
+                              px-3
+                              py-4
+                              whitespace-nowrap
+                              text-right text-sm
+                              font-medium
+                            "
                           >
                             <!-- Components -->
 
@@ -434,7 +729,19 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="flex items-center justify-center flex-1 h-full p-2 border border-green-500 text-white shadow rounded-lg hover:bg-green-50 hover:text-zinc-300"
+                                      class="
+                                        flex
+                                        items-center
+                                        justify-center
+                                        flex-1
+                                        h-full
+                                        p-2
+                                        border border-green-500
+                                        text-white
+                                        shadow
+                                        rounded-lg
+                                        hover:bg-green-50 hover:text-zinc-300
+                                      "
                                     >
                                       <div class="relative">
                                         <svg
@@ -458,7 +765,19 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="flex items-center justify-center flex-1 h-full p-2 border border-blue-800 text-white shadow rounded-lg hover:bg-blue-50 hover:text-zinc-300"
+                                      class="
+                                        flex
+                                        items-center
+                                        justify-center
+                                        flex-1
+                                        h-full
+                                        p-2
+                                        border border-blue-800
+                                        text-white
+                                        shadow
+                                        rounded-lg
+                                        hover:bg-blue-50 hover:text-zinc-300
+                                      "
                                     >
                                       <div class="relative">
                                         <svg
@@ -488,7 +807,19 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="flex items-center justify-center flex-1 h-full p-2 border border-red-500 text-white shadow rounded-lg hover:bg-red-50 hover:text-zinc-300"
+                                      class="
+                                        flex
+                                        items-center
+                                        justify-center
+                                        flex-1
+                                        h-full
+                                        p-2
+                                        border border-red-500
+                                        text-white
+                                        shadow
+                                        rounded-lg
+                                        hover:bg-red-50 hover:text-zinc-300
+                                      "
                                     >
                                       <div class="relative">
                                         <svg
@@ -530,7 +861,19 @@
                                   <div class="w-auto h-auto">
                                     <div class="flex-1 h-full">
                                       <div
-                                        class="flex items-center justify-center flex-1 h-full p-2 border border-green-500 text-white shadow rounded-lg hover:bg-green-50 hover:text-zinc-300"
+                                        class="
+                                          flex
+                                          items-center
+                                          justify-center
+                                          flex-1
+                                          h-full
+                                          p-2
+                                          border border-green-500
+                                          text-white
+                                          shadow
+                                          rounded-lg
+                                          hover:bg-green-50 hover:text-zinc-300
+                                        "
                                       >
                                         <div class="relative">
                                           <svg
@@ -560,7 +903,19 @@
                                   <div class="w-auto h-auto">
                                     <div class="flex-1 h-full">
                                       <div
-                                        class="flex items-center justify-center flex-1 h-full p-2 border border-green-500 text-white shadow rounded-lg hover:bg-green-50 hover:text-zinc-300"
+                                        class="
+                                          flex
+                                          items-center
+                                          justify-center
+                                          flex-1
+                                          h-full
+                                          p-2
+                                          border border-green-500
+                                          text-white
+                                          shadow
+                                          rounded-lg
+                                          hover:bg-green-50 hover:text-zinc-300
+                                        "
                                       >
                                         <div class="relative">
                                           <svg
@@ -585,7 +940,19 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="flex items-center justify-center flex-1 h-full p-2 border border-blue-800 text-white shadow rounded-lg hover:bg-blue-50 hover:text-zinc-300"
+                                      class="
+                                        flex
+                                        items-center
+                                        justify-center
+                                        flex-1
+                                        h-full
+                                        p-2
+                                        border border-blue-800
+                                        text-white
+                                        shadow
+                                        rounded-lg
+                                        hover:bg-blue-50 hover:text-zinc-300
+                                      "
                                     >
                                       <div class="relative">
                                         <svg
@@ -615,7 +982,19 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="flex items-center justify-center flex-1 h-full p-2 border border-red-500 text-white shadow rounded-lg hover:bg-red-50 hover:text-zinc-300"
+                                      class="
+                                        flex
+                                        items-center
+                                        justify-center
+                                        flex-1
+                                        h-full
+                                        p-2
+                                        border border-red-500
+                                        text-white
+                                        shadow
+                                        rounded-lg
+                                        hover:bg-red-50 hover:text-zinc-300
+                                      "
                                     >
                                       <div class="relative">
                                         <svg
@@ -639,7 +1018,10 @@
                         </tr>
                       </tbody>
                     </table>
-                    <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
+                    <div
+                      v-else
+                      class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg"
+                    >
                       <p class="text-center text-lg">
                         No exisen datos que coincidan con su búsqueda
                       </p>
@@ -659,9 +1041,9 @@
                     {{ selected_community.comm_name }}
                     ?
                   </p>
-                  Una vez la comunidad es eliminada, todos sus recursos y los datos se
-                  eliminarán de forma permanente. Por favor verifique nuevamente su acción
-                  pues es irreversible.
+                  Una vez la comunidad es eliminada, todos sus recursos y los
+                  datos se eliminarán de forma permanente. Por favor verifique
+                  nuevamente su acción pues es irreversible.
                 </template>
                 <template v-slot:footer>
                   <jet-secondary-button @click="closeModal()">

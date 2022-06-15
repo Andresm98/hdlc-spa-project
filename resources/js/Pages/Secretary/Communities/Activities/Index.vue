@@ -2,7 +2,16 @@
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
       <h6
-        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
+        class="
+          mt-2
+          mb-2
+          text-lg
+          font-medium
+          text-center
+          leading-6
+          text-gray-900
+          uppercase
+        "
       >
         Plantilla de Actividades
       </h6>
@@ -11,7 +20,9 @@
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
               <div class="">
-                <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+                <label class="block text-sm font-medium text-gray-700">
+                  Nombre:
+                </label>
                 <p
                   class="text-red-400 text-sm"
                   v-show="$page.props.errors.comm_name_activity"
@@ -24,7 +35,21 @@
                   minLength="5"
                   maxlength="100"
                   placeholder="Ingresar nombre actividad"
-                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    border-0
+                    px-3
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
                   v-model="form.comm_name_activity"
                   required
                 />
@@ -46,8 +71,7 @@
               <small>Formato: Fecha en la que se realiza la actividad.</small>
               <Datepicker
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 v-model="form.comm_date_activity"
                 required
               />
@@ -66,7 +90,8 @@
                 {{ $page.props.errors.comm_description_activity }}
               </p>
               <small
-                >Formato: Ingresar la descripción de la actividad que se realiza.</small
+                >Formato: Ingresar la descripción de la actividad que se
+                realiza.</small
               >
               <div class="bg-white">
                 <quill-editor
@@ -100,7 +125,15 @@
                 type="number"
                 name="nr_daughters"
                 placeholder="Número de Hermanas"
-                class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                class="
+                  focus:ring-blue-500 focus:border-blue-500
+                  flex-1
+                  block
+                  w-full
+                  rounded-none rounded-r-md
+                  sm:text-sm
+                  border-gray-300
+                "
                 min="0"
                 max="1000"
                 v-model="form.comm_nr_daughters"
@@ -126,7 +159,15 @@
               <small>Formato: Número de beneficiarios.</small>
               <input
                 type="number"
-                class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                class="
+                  focus:ring-blue-500 focus:border-blue-500
+                  flex-1
+                  block
+                  w-full
+                  rounded-none rounded-r-md
+                  sm:text-sm
+                  border-gray-300
+                "
                 min="0"
                 max="1000"
                 name="nr_beneficiaries"
@@ -154,7 +195,15 @@
               <small>Formato: Número de colaboradores.</small>
               <input
                 type="number"
-                class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                class="
+                  focus:ring-blue-500 focus:border-blue-500
+                  flex-1
+                  block
+                  w-full
+                  rounded-none rounded-r-md
+                  sm:text-sm
+                  border-gray-300
+                "
                 min="0"
                 max="1000"
                 name="nr_collaborators"
@@ -173,7 +222,15 @@
       </form>
 
       <hr
-        class="w-full mt-2 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
+        class="
+          w-full
+          mt-2
+          mb-3
+          ml-4
+          mr-4
+          border-b-1 border-gray-400
+          hover:border-gray-400
+        "
       />
 
       <!-- Table -->
@@ -189,25 +246,54 @@
                 <tr>
                   <th
                     scope="col"
-                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      pl-4
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Nombre
                   </th>
                   <th
                     scope="col"
-                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Fecha
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Hermanas - Beneficiarios - Colaboradores
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Acciones
                   </th>
@@ -238,29 +324,68 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span
-                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 mr-2"
+                      class="
+                        px-3
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-yellow-100
+                        text-yellow-800
+                        mr-2
+                      "
                     >
                       {{ activity.comm_nr_daughters }}
                     </span>
                     <span
-                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 mr-2"
+                      class="
+                        px-3
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-red-100
+                        text-red-800
+                        mr-2
+                      "
                     >
                       {{ activity.comm_nr_beneficiaries }}
                     </span>
                     <span
-                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 mr-2"
+                      class="
+                        px-3
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-blue-100
+                        text-blue-800
+                        mr-2
+                      "
                     >
                       {{ activity.comm_nr_collaborators }}
                     </span>
                   </td>
-                  <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <td
+                    class="
+                      px-3
+                      py-4
+                      whitespace-nowrap
+                      text-right text-sm
+                      font-medium
+                    "
+                  >
                     <!-- Components -->
 
                     <div class="mx-auto flex gap-10">
                       <jet-button @click="confirmationActivityUpdate(activity)"
                         >Detalles</jet-button
                       >
-                      <jet-danger-button @click="confirmationActivityDelete(activity)"
+                      <jet-danger-button
+                        @click="confirmationActivityDelete(activity)"
                         >Eliminar</jet-danger-button
                       >
                     </div>
@@ -270,7 +395,9 @@
             </table>
           </div>
           <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
-            <p class="text-center text-lg">Por el momento no existen registros.</p>
+            <p class="text-center text-lg">
+              Por el momento no existen registros.
+            </p>
           </div>
         </div>
       </div>
@@ -309,7 +436,9 @@
             <div class="w-full lg:w-6/12 px-4">
               <div class="relative w-full mb-3">
                 <div class="">
-                  <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+                  <label class="block text-sm font-medium text-gray-700">
+                    Nombre:
+                  </label>
                   <p
                     class="text-red-400 text-sm"
                     v-show="$page.props.errors.comm_name_activity"
@@ -322,7 +451,21 @@
                     minLength="5"
                     maxlength="100"
                     placeholder="Ingresar nombre actividad"
-                    class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    class="
+                      border-0
+                      px-3
+                      placeholder-blueGray-300
+                      text-blueGray-600
+                      bg-white
+                      rounded
+                      text-sm
+                      shadow
+                      focus:outline-none focus:ring
+                      w-full
+                      ease-linear
+                      transition-all
+                      duration-150
+                    "
                     v-model="updateActivityForm.comm_name_activity"
                     required
                   />
@@ -344,8 +487,7 @@
                 <small>Formato: Fecha en la que se realiza la actividad.</small>
                 <Datepicker
                   :format="format"
-                  :transitions="false"
-                  menuClassName="dp-custom-menu"
+                  autoApply
                   v-model="updateActivityForm.comm_date_activity"
                   required
                 />
@@ -364,7 +506,8 @@
                   {{ $page.props.errors.comm_description_activity }}
                 </p>
                 <small
-                  >Formato: Ingresar la descripción de la actividad que se realiza.</small
+                  >Formato: Ingresar la descripción de la actividad que se
+                  realiza.</small
                 >
                 <div class="bg-white">
                   <quill-editor
@@ -372,7 +515,9 @@
                     contentType="html"
                     theme="snow"
                     :toolbar="toolbarOptions"
-                    v-model:content="updateActivityForm.comm_description_activity"
+                    v-model:content="
+                      updateActivityForm.comm_description_activity
+                    "
                     placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
                   ></quill-editor>
                 </div>
@@ -398,7 +543,15 @@
                   type="number"
                   name="nr_daughters"
                   placeholder="Número de Hermanas"
-                  class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                  class="
+                    focus:ring-blue-500 focus:border-blue-500
+                    flex-1
+                    block
+                    w-full
+                    rounded-none rounded-r-md
+                    sm:text-sm
+                    border-gray-300
+                  "
                   min="0"
                   max="1000"
                   v-model="updateActivityForm.comm_nr_daughters"
@@ -424,7 +577,15 @@
                 <small>Formato: Número de beneficiarios.</small>
                 <input
                   type="number"
-                  class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                  class="
+                    focus:ring-blue-500 focus:border-blue-500
+                    flex-1
+                    block
+                    w-full
+                    rounded-none rounded-r-md
+                    sm:text-sm
+                    border-gray-300
+                  "
                   min="0"
                   max="1000"
                   name="nr_beneficiaries"
@@ -452,7 +613,15 @@
                 <small>Formato: Número de colaboradores.</small>
                 <input
                   type="number"
-                  class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                  class="
+                    focus:ring-blue-500 focus:border-blue-500
+                    flex-1
+                    block
+                    w-full
+                    rounded-none rounded-r-md
+                    sm:text-sm
+                    border-gray-300
+                  "
                   min="0"
                   max="1000"
                   name="nr_collaborators"
@@ -641,7 +810,9 @@ export default {
     ...mapActions("activity", ["updateAllActivity"]),
     ...mapGetters("activity", ["getAllActivity"]),
     submit() {
-      this.form.comm_date_activity = this.formatDate(this.form.comm_date_activity);
+      this.form.comm_date_activity = this.formatDate(
+        this.form.comm_date_activity
+      );
       //
       Inertia.post(
         route("secretary.communities.activity.store", {
@@ -686,8 +857,10 @@ export default {
         activity.comm_description_activity;
       this.updateActivityForm.comm_date_activity = activity.comm_date_activity;
       this.updateActivityForm.comm_nr_daughters = activity.comm_nr_daughters;
-      this.updateActivityForm.comm_nr_beneficiaries = activity.comm_nr_beneficiaries;
-      this.updateActivityForm.comm_nr_collaborators = activity.comm_nr_collaborators;
+      this.updateActivityForm.comm_nr_beneficiaries =
+        activity.comm_nr_beneficiaries;
+      this.updateActivityForm.comm_nr_collaborators =
+        activity.comm_nr_collaborators;
 
       this.activityBeingUpdated = activity;
     },

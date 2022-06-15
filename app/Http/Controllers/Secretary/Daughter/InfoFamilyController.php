@@ -44,13 +44,7 @@ class InfoFamilyController extends Controller
      */
     public function storeUpdateData(Request $request, $user_id)
     {
-        $validatorData = Validator::make($request->all(), [
-            'names_father' => ['required', 'max:100'],
-            'names_mother' => ['required', 'max:100'],
-            'nr_sisters' => ['required', 'digits_between:1,20'],
-            'nr_brothers' => ['required', 'digits_between:1,20'],
-            'place_of_family' => ['required', 'digits_between:1,20'],
-        ]);
+
         $validator = Validator::make([
             'user_id' => $user_id,
         ], [
@@ -61,21 +55,34 @@ class InfoFamilyController extends Controller
             return abort(404);
         }
 
+        $validatorData = Validator::make($request->all(), [
+            'names_father' => ['required', 'max:100'],
+            'names_mother' => ['required', 'max:100'],
+            'nr_sisters' => ['required', 'digits_between:1,20'],
+            'nr_brothers' => ['required', 'digits_between:1,20'],
+            'place_of_family' => ['required', 'digits_between:1,20'],
+        ]);
         if ($validatorData->fails()) {
             return redirect()->back()
-                ->withErrors($validator->errors())
+                ->withErrors($validatorData->errors())
                 ->withInput();
         }
 
         $user = User::find($user_id);
         // If no exists
         if (!$user->profile->info_family) {
-            $user->profile->info_family()->create([
+            $info_family =     $user->profile->info_family()->create([
                 'names_father' => $request->get('names_father'),
                 'names_mother' => $request->get('names_mother'),
                 'nr_sisters' => $request->get('nr_sisters'),
                 'nr_brothers' => $request->get('nr_brothers'),
                 'place_of_family' => $request->get('place_of_family'),
+            ]);
+            $info_family->info_family_break()->create([
+                'name_family_member' =>  "",
+                'relation' =>  "",
+                'cellphone' =>  "",
+                'phone' =>  "",
             ]);
             return redirect()->back()->with([
                 'success' => 'Información familiar guardada correctamente!'

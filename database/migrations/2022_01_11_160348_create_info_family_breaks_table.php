@@ -16,10 +16,10 @@ class CreateInfoFamilyBreaksTable extends Migration
         Schema::create('info_family_breaks', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name_family_member',100);
-            $table->string('relation',100);
-            $table->char('cellphone', 20);
-            $table->char('phone', 20);
+            $table->string('name_family_member', 100)->nullable();
+            $table->string('relation', 100)->nullable();
+            $table->char('cellphone', 20)->nullable();
+            $table->char('phone', 20)->nullable();
 
             // Asignar la relacion con info_family.
             $table->unsignedBigInteger('info_family_id')->unique();

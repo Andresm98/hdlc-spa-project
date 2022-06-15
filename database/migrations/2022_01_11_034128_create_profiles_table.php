@@ -27,7 +27,7 @@ class CreateProfilesTable extends Migration
             $table->dateTime('date_exit')->nullable();
             $table->char('cellphone', 20)->nullable();
             $table->char('phone', 20)->nullable();
-            $table->longText('observation', 4000);
+            $table->longText('observation', 4000)->nullable();
 
             // Asignar el campo de clave primaria.
             $table->unsignedBigInteger('user_id')->unique();

@@ -30,6 +30,7 @@ use App\Http\Controllers\Secretary\Community\CommunityRealityController;
 use App\Http\Controllers\Secretary\Community\CommunityActivityController;
 use App\Http\Controllers\Secretary\Community\CommunityDaughterController;
 use App\Http\Controllers\Secretary\Community\CommunityPastoralController;
+use App\Http\Controllers\Secretary\Permissions\PermissionGlobalController;
 use App\Http\Controllers\Secretary\Appointments\AppointmentGlobalController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityArticleController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunitySectionController;
@@ -484,6 +485,9 @@ Route::group(
         'middleware' => ['role:secretary'],
     ],
     function () {
+
+        // Events
+
         Route::get('events/all', [EventController::class, 'index'])
             ->name('events.index');
 
@@ -495,15 +499,9 @@ Route::group(
 
         Route::get('events/delete/{event_id}', [EventController::class, 'destroy'])
             ->name('events.delete');
-    }
-);
 
+        // Appointments
 
-Route::group(
-    [
-        'middleware' => ['role:secretary'],
-    ],
-    function () {
         Route::get('appoinments/all', [AppointmentGlobalController::class, 'index'])
             ->name('appoinments.index');
 
@@ -515,15 +513,31 @@ Route::group(
 
         Route::delete('appoinments/delete/{appoinment_id}', [AppointmentGlobalController::class, 'destroy'])
             ->name('appoinments.delete');
-    }
-);
-Route::group(
-    [
-        'middleware' => ['role:secretary'],
-    ],
-    function () {
+
+        // Permissions
+
+        Route::get('permissions/all', [PermissionGlobalController::class, 'index'])
+            ->name('permissions.index');
+
+        Route::get('permissions/daughters/search', [PermissionGlobalController::class, 'search'])
+            ->name('permissions.daughters.index');
+
+        Route::post('permissions/store', [PermissionGlobalController::class, 'store'])
+            ->name('permissions.store');
+
+        Route::put('permissions/update/{appoinment_id}', [PermissionGlobalController::class, 'update'])
+            ->name('permissions.update');
+
+        Route::delete('permissions/delete/{appoinment_id}', [PermissionGlobalController::class, 'destroy'])
+            ->name('permissions.delete');
+
+        // Transfers
+
         Route::get('transfers/all', [TransferGlobalController::class, 'index'])
             ->name('transfers.index');
+
+        Route::get('transfers/daughters/search', [TransferGlobalController::class, 'search'])
+            ->name('transfers.daughters.index');
 
         Route::post('transfers/store', [TransferGlobalController::class, 'store'])
             ->name('transfers.store');

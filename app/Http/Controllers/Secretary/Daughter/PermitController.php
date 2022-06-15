@@ -28,6 +28,7 @@ class PermitController extends Controller
         $user = User::find($user_id);
         return Permit::with('address')
             ->where('profile_id', '=', $user->profile->id)
+            ->orderBy('date_province', 'DESC')
             ->get();
     }
 
@@ -52,6 +53,7 @@ class PermitController extends Controller
 
         $validatorData = Validator::make($request->all(), [
             'reason' => ['required', 'max:100'],
+            'address' => ['required', 'max:100'],
             'description' => ['required', 'max:2000'],
             'date_province' => ['required', 'date_format:Y-m-d H:i:s'],
             'date_general' => ['required', 'date_format:Y-m-d H:i:s'],
@@ -76,6 +78,12 @@ class PermitController extends Controller
         }
 
         $user = User::find($user_id);
+        // Get permissions active
+
+        if (count($user->profile->permits->where('status', 1)) > 0) {
+            return redirect()->back()->with(['error' => 'Error, existe un permiso vigente!']);
+        }
+
         $permit = $user->profile->permits()->create([
             'reason' => $request->get('reason'),
             'description' => $request->get('description'),
@@ -83,17 +91,17 @@ class PermitController extends Controller
             'date_general' => $request->get('date_general'),
             'date_out' => $request->get('date_out'),
             'date_in' => $request->get('date_in'),
+            'status' => 1,
         ]);
-        if (!$permit->address) {
-            $permit->address()->create([
-                'address' => $request->get('address'),
-                'political_division_id' => $request->get('political_division_id'),
-            ]);
 
-            return redirect()->back()->with([
-                'success' => 'Permiso guardado correctamente!'
-            ]);
-        }
+        $permit->address()->create([
+            'address' => $request->get('address'),
+            'political_division_id' => $request->get('political_division_id'),
+        ]);
+
+        return redirect()->back()->with([
+            'success' => 'Permiso guardado correctamente!'
+        ]);
     }
 
     /**
@@ -135,29 +143,38 @@ class PermitController extends Controller
             'permit_id' => ['required', 'exists:permits,id']
         ]);
 
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+
+        $user = User::find($user_id);
+        $permit = Permit::find($permit_id);
+
+        // Get permissions active
+        $countPermissions = count($user->profile->permits->where('status', 1)->where('id', '!=', $permit->id));
+        if ($request->get('status') == 1 &&  $countPermissions > 0) {
+            return redirect()->back()->with(['error' => 'Error, existe un permiso vigente!']);
+        }
+
         $validatorData = Validator::make(
             $request->all(),
             [
                 'reason' => ['required', 'max:100'],
                 'description' => ['required', 'max:2000'],
+                'address' => ['required', 'max:100'],
                 'date_province' => ['required', 'date_format:Y-m-d H:i:s'],
                 'date_general' => ['required', 'date_format:Y-m-d H:i:s'],
                 'date_out' => ['required', 'date_format:Y-m-d H:i:s'],
                 'date_in' => ['required', 'date_format:Y-m-d H:i:s'],
+                'status' => ['required', 'digits_between:0,1'],
             ]
         );
-
-        if ($validator->fails()) {
-            return abort(404);
-        }
-
         if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validatorData->errors())
                 ->withInput();
         }
-
-        $permit = Permit::find($permit_id);
 
         $permit->update([
             'reason' => $request->get('reason'),
@@ -166,6 +183,7 @@ class PermitController extends Controller
             'date_general' => $request->get('date_general'),
             'date_out' => $request->get('date_out'),
             'date_in' => $request->get('date_in'),
+            'status' => $request->get('status'),
         ]);
 
         $permit->address()->update([

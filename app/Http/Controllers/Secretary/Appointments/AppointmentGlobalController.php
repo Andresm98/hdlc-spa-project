@@ -24,6 +24,7 @@ class AppointmentGlobalController extends Controller
             ->with('appointment_level')
             ->with('community')
             ->with('transfer')
+            ->orderBy('date_appointment', 'desc')
             ->get();
 
         if (request('search')) {
@@ -40,9 +41,9 @@ class AppointmentGlobalController extends Controller
 
         if (request('status')) {
             if (request('status') == 1) {
-                $query->where('date_end_appointment',  null);
+                $query->where('status',  1);
             } else if (request('status') == 2) {
-                $query->where('date_end_appointment', '!=', null);
+                $query->where('status', 0);
             }
         }
 
@@ -52,8 +53,8 @@ class AppointmentGlobalController extends Controller
             });
         }
 
-        if (request('dateStart')) {
-            $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
+        if (request('dateStart') || request('dateEnd')) {
+            $validatorData = Validator::make(['dateStart' => request('dateStart'), 'dateEnd' => request('dateEnd')], [
                 'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
                 'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
             ]);

@@ -2,7 +2,16 @@
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
       <h6
-        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
+        class="
+          mt-2
+          mb-2
+          text-lg
+          font-medium
+          text-center
+          leading-6
+          text-gray-900
+          uppercase
+        "
       >
         Plantilla de Cambios
       </h6>
@@ -26,10 +35,11 @@
 
       <div class="p-4 bg-white border-2 rounded-lg my-2">
         <p>
-          En la siguiente ficha usted puede visualizar la plantilla de nombramientos, para
-          ingresar nombramientos tenga en cuenta que todos se reflejan a nivel de
-          Compañía, para ello existen tres principales categorías (Nivel de Provincia,
-          Nivel de Comunidad Local y Nivel de Obras).
+          En la siguiente ficha usted puede visualizar la plantilla de
+          nombramientos, para ingresar nombramientos tenga en cuenta que todos
+          se reflejan a nivel de Compañía, para ello existen tres principales
+          categorías (Nivel de Provincia, Nivel de Comunidad Local y Nivel de
+          Obras).
         </p>
 
         <div class="content-center mt-2">
@@ -42,7 +52,15 @@
       </div>
 
       <hr
-        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
+        class="
+          w-full
+          mt-1
+          mb-3
+          ml-4
+          mr-4
+          border-b-1 border-gray-400
+          hover:border-gray-400
+        "
       />
 
       <!-- Table -->
@@ -58,7 +76,14 @@
                 <tr>
                   <th
                     scope="col"
-                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      pl-4
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Comunidad/Obra
                   </th>
@@ -70,13 +95,29 @@
                   </th> -->
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Fechas (inicio-fin)
                   </th>
                   <th
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-black
+                      uppercase
+                      tracking-wider
+                    "
                   >
                     Acciones
                   </th>
@@ -93,8 +134,16 @@
                           ></path>
                         </svg>
                       </div>
-                      <div class="ml-4">
-                        <div class="text-sm font-medium text-black hover:text-blue-500">
+                      <div class="ml-4 sm:w-8/8 md:w-8/8 lg:w-6/8 ...">
+                        <div
+                          class="
+                            whitespace-normal
+                            text-sm
+                            font-semibold
+                            text-gray-900
+                            hover:text-blue-500
+                          "
+                        >
                           <div
                             v-if="
                               transfer.community.comm_level == 1 &&
@@ -109,7 +158,7 @@
                               "
                               target="_blank"
                             >
-                              {{ transfer.community.comm_name.substring(0, 15) }}...
+                              {{ transfer.community.comm_name }}.
                             </a>
                           </div>
                           <div
@@ -126,48 +175,105 @@
                               "
                               target="_blank"
                             >
-                              {{ transfer.community.comm_name.substring(0, 15) }}...
+                              {{ transfer.community.comm_name }}.
                             </a>
                           </div>
                         </div>
+                        <span
+                          v-if="transfer.status == 1"
+                          class="
+                            px-2
+                            inline-flex
+                            text-xs
+                            leading-5
+                            font-semibold
+                            rounded-full
+                            bg-cyan-100
+                            text-cyan-800
+                          "
+                        >
+                          Activo
+                        </span>
+                        <span
+                          v-if="transfer.status == 0"
+                          class="
+                            px-2
+                            inline-flex
+                            text-xs
+                            leading-5
+                            font-semibold
+                            rounded-full
+                            bg-red-100
+                            text-red-800
+                          "
+                        >
+                          Historial
+                        </span>
                       </div>
                     </div>
                   </td>
-                  <!-- <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">
-                      {{ transfer.office.office_name }}
-                    </div>
-                  </td> -->
+
                   <td
                     class="px-6 py-4 whitespace-nowrap"
                     v-if="transfer.transfer_date_relocated == null"
                   >
                     <span
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                      class="
+                        px-2
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-green-100
+                        text-green-800
+                      "
                     >
                       {{ this.formatDateShow(transfer.transfer_date_adission) }}
                       -
-                      {{ this.formatDateShow(transfer.transfer_date_relocated) }}
+                      {{
+                        this.formatDateShow(transfer.transfer_date_relocated)
+                      }}
                     </span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap" v-else>
                     <span
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                      class="
+                        px-2
+                        inline-flex
+                        text-xs
+                        leading-5
+                        font-semibold
+                        rounded-full
+                        bg-blue-100
+                        text-blue-800
+                      "
                     >
                       {{ this.formatDateShow(transfer.transfer_date_adission) }}
                       -
-                      {{ this.formatDateShow(transfer.transfer_date_relocated) }}
+                      {{
+                        this.formatDateShow(transfer.transfer_date_relocated)
+                      }}
                     </span>
                   </td>
 
-                  <td class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <td
+                    class="
+                      px-3
+                      py-4
+                      whitespace-nowrap
+                      text-right text-sm
+                      font-medium
+                    "
+                  >
                     <!-- Components -->
 
                     <div class="mx-auto flex gap-10">
                       <jet-button @click="confirmationTransferUpdate(transfer)"
                         >Detalles</jet-button
                       >
-                      <jet-danger-button @click="confirmationTransferDelete(transfer)"
+                      <jet-danger-button
+                        @click="confirmationTransferDelete(transfer)"
                         >Eliminar</jet-danger-button
                       >
                     </div>
@@ -177,7 +283,9 @@
             </table>
           </div>
           <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
-            <p class="text-center text-lg">Por el momento no existen registros.</p>
+            <p class="text-center text-lg">
+              Por el momento no existen registros.
+            </p>
           </div>
         </div>
       </div>
@@ -200,12 +308,73 @@
               <p class="text-red-500 text-sm">{{ error }}</p>
             </div>
           </div>
-
+          <!-- label -->
+          <div class="flex items-center justify-center">
+            <small class="ml-3 text-gray-700 font-medium"
+              >¿El cambio se encuentra activo? ¿No / Si?</small
+            >
+          </div>
+          <br />
+          <!-- Toggle A -->
+          <div class="flex items-center justify-center w-full my-4">
+            <label for="toogleA" class="flex items-center cursor-pointer">
+              <!-- toggle -->
+              <div class="relative">
+                <!-- input -->
+                <input
+                  id="toogleA"
+                  type="checkbox"
+                  class="sr-only"
+                  :value="this.statustransfer"
+                  @click="changeStatusTransfer()"
+                />
+                <!-- line -->
+                <div class="w-10 h-4 bg-gray-200 rounded-full shadow-inner" />
+                <!-- dot -->
+                <div
+                  v-if="this.statustransfer == 1"
+                  class="
+                    absolute
+                    w-6
+                    h-6
+                    rounded-full
+                    shadow
+                    -left-1
+                    -top-1
+                    transition
+                  "
+                  style="transform: translateX(100%); background-color: #204de0"
+                />
+                <div
+                  v-if="this.statustransfer == 0"
+                  class="
+                    absolute
+                    w-6
+                    h-6
+                    bg-red-400
+                    rounded-full
+                    shadow
+                    -left-1
+                    -top-1
+                    transition
+                  "
+                />
+              </div>
+            </label>
+          </div>
           <form @submit.prevent="submit">
             <div class="flex flex-wrap" v-if="navigationOp == 1">
               <div class="w-full md:w-5/5 mx-auto">
                 <h4
-                  class="text-lg font-medium text-center leading-6 text-gray-900 uppercase my-2"
+                  class="
+                    text-lg
+                    font-medium
+                    text-center
+                    leading-6
+                    text-gray-900
+                    uppercase
+                    my-2
+                  "
                 >
                   <strong>Datos del Cambio</strong>
                 </h4>
@@ -226,7 +395,22 @@
                       minLength="10"
                       maxlength="100"
                       placeholder="Ingresar motivo del cambio"
-                      class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      class="
+                        border-0
+                        px-3
+                        my-2
+                        placeholder-blueGray-300
+                        text-blueGray-600
+                        bg-white
+                        rounded
+                        text-sm
+                        shadow
+                        focus:outline-none focus:ring
+                        w-full
+                        ease-linear
+                        transition-all
+                        duration-150
+                      "
                       v-model="form.transfer.transfer_reason"
                       required
                     />
@@ -244,8 +428,8 @@
                   </label>
 
                   <small
-                    >Formato: Ingresar las observaciones pertinentes, 3000 caracteres
-                    max.</small
+                    >Formato: Ingresar las observaciones pertinentes, 3000
+                    caracteres max.</small
                   >
                   <div class="bg-white">
                     <quill-editor
@@ -270,8 +454,8 @@
                       Comunidad u Obra:
                     </label>
                     <small
-                      >Formato: Seleccionar la comunidad u obra a la que se cambia la
-                      hermana.</small
+                      >Formato: Seleccionar la comunidad u obra a la que se
+                      cambia la hermana.</small
                     >
                     <div :class="{ invalid: isInvalidCommunity }">
                       <div v-if="this.allWork != null">
@@ -289,7 +473,10 @@
                           mode="tags"
                           label="comm_name"
                         ></multiselect>
-                        <p class="text-sm text-red-400" v-show="isInvalidCommunity">
+                        <p
+                          class="text-sm text-red-400"
+                          v-show="isInvalidCommunity"
+                        >
                           Obligatorio
                         </p>
                       </div>
@@ -297,38 +484,6 @@
                   </div>
                 </div>
               </div>
-
-              <!-- <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <div class="">
-                <label
-                  class="block text-sm font-medium text-gray-700"
-                  htmlfor="grid-password"
-                >
-                  Cargo:
-                </label>
-                <small>Formato: Seleccionar el cargo que desempeñará la hermana.</small>
-                <div :class="{ invalid: isInvalidOffice }">
-                  <div v-if="this.allOffice != null">
-                    <multiselect
-                      placeholder="Por favor seleccionar el oficio a ocupar"
-                      select-label="Seleccionar!"
-                      v-model="this.form.office_id"
-                      :options="this.allOffice"
-                      :max-height="200"
-                      :disabled="isDisabled"
-                      mode="tags"
-                      label="office_name"
-                      track-by="office_name"
-                    ></multiselect>
-                    <p class="text-sm text-red-400" v-show="isInvalidOffice">
-                      Obligatorio
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
 
               <div class="w-full lg:w-6/12 px-4">
                 <div class="relative w-full mb-3">
@@ -343,14 +498,16 @@
                   <Datepicker
                     v-model="form.transfer.transfer_date_adission"
                     :format="format"
-                    :transitions="false"
-                    menuClassName="dp-custom-menu"
+                    autoApply
                     required
                   />
                 </div>
               </div>
 
-              <div class="w-full lg:w-6/12 px-4">
+              <div
+                class="w-full lg:w-6/12 px-4"
+                v-if="this.statustransfer == 0"
+              >
                 <div class="relative w-full mb-3">
                   <label
                     class="block text-sm font-medium text-gray-700"
@@ -359,12 +516,13 @@
                     Fecha Culminación:
                   </label>
 
-                  <small>Formato: Fecha de cierre de actividades (opcional).</small>
+                  <small
+                    >Formato: Fecha de cierre de actividades (opcional).</small
+                  >
                   <Datepicker
                     v-model="form.transfer.transfer_date_relocated"
                     :format="format"
-                    :transitions="false"
-                    menuClassName="dp-custom-menu"
+                    autoApply
                   />
                 </div>
               </div>
@@ -372,7 +530,15 @@
             <div class="flex flex-wrap" v-if="navigationOp == 2">
               <div class="w-full md:w-5/5 mx-auto">
                 <h4
-                  class="text-lg font-medium text-center leading-6 text-gray-900 uppercase my-2"
+                  class="
+                    text-lg
+                    font-medium
+                    text-center
+                    leading-6
+                    text-gray-900
+                    uppercase
+                    my-2
+                  "
                 >
                   <strong>Nombramientos asignados al Cambio</strong>
                 </h4>
@@ -414,7 +580,9 @@
                     >
                       Título:
                     </label>
-                    <small>Formato: Seleccionar el nombramiento específico.</small>
+                    <small
+                      >Formato: Seleccionar el nombramiento específico.</small
+                    >
                     <div :class="{ invalid: isInvalidLevelCategory }">
                       <multiselect
                         :searchable="true"
@@ -427,7 +595,10 @@
                         :taggable="true"
                       >
                       </multiselect>
-                      <p class="text-sm text-red-400" v-show="isInvalidLevelCategory">
+                      <p
+                        class="text-sm text-red-400"
+                        v-show="isInvalidLevelCategory"
+                      >
                         Obligatorio
                       </p>
                     </div>
@@ -443,30 +614,33 @@
                       Comunidad:
                     </label>
                     <small
-                      >Formato: Seleccionar la comunidad u obra en la que cumplirá sus
-                      funciones.</small
+                      >Formato: Seleccionar la comunidad u obra en la que
+                      cumplirá sus funciones.</small
                     >
-                    <div :class="{ invalid: isInvalidCommunityTwo }">
-                      <div v-if="this.allWork != null">
-                        <multiselect
-                          :searchable="true"
-                          placeholder="Por favor seleccionar la comunidad a la que va"
-                          select-label="Seleccionar!"
-                          v-model="form.appointment.community_id"
-                          :options="this.allWork"
-                          :close-on-select="true"
-                          :clear-on-select="false"
-                          :max-height="200"
-                          :disabled="isDisabled"
-                          @select="onSelect"
-                          mode="tags"
-                          label="comm_name"
-                        ></multiselect>
-                        <p class="text-sm text-red-400" v-show="isInvalidCommunityTwo">
-                          Obligatorio
-                        </p>
-                      </div>
+                    <!-- <div :class="{ invalid: isInvalidCommunityTwo }"> -->
+                    <div v-if="this.allWork != null">
+                      <multiselect
+                        :searchable="true"
+                        placeholder="Por favor seleccionar la comunidad a la que va"
+                        select-label="Seleccionar!"
+                        v-model="this.form.transfer.community_id"
+                        :options="this.allWork"
+                        :close-on-select="true"
+                        :clear-on-select="false"
+                        :max-height="200"
+                        :disabled="true"
+                        @select="onSelect"
+                        mode="tags"
+                        label="comm_name"
+                      ></multiselect>
+                      <p
+                        class="text-sm text-red-400"
+                        v-show="isInvalidCommunity"
+                      >
+                        Obligatorio
+                      </p>
                     </div>
+                    <!-- </div> -->
                   </div>
                 </div>
 
@@ -479,18 +653,23 @@
                       Fecha Inicio:
                     </label>
 
-                    <small>Formato: Fecha que en la que se asigna el nombramiento.</small>
+                    <small
+                      >Formato: Fecha que en la que se asigna el
+                      nombramiento.</small
+                    >
                     <Datepicker
                       :format="format"
-                      :transitions="false"
-                      menuClassName="dp-custom-menu"
+                      autoApply
                       v-model="form.appointment.date_appointment"
                       required
                     />
                   </div>
                 </div>
 
-                <div class="w-full lg:w-6/12 px-4">
+                <div
+                  class="w-full lg:w-6/12 px-4"
+                  v-if="this.statustransfer == 0"
+                >
                   <div class="relative w-full mb-3">
                     <label
                       class="block text-sm font-medium text-gray-700 pt-4"
@@ -505,8 +684,7 @@
                     >
                     <Datepicker
                       :format="format"
-                      :transitions="false"
-                      menuClassName="dp-custom-menu"
+                      autoApply
                       v-model="form.appointment.date_end_appointment"
                     />
                   </div>
@@ -544,15 +722,27 @@
             Cancelar
           </jet-secondary-button>
 
-          <jet-button class="ml-3" @click="navigation(1)" v-if="navigationOp == 1">
+          <jet-button
+            class="ml-3"
+            @click="navigation(1)"
+            v-if="navigationOp == 1"
+          >
             Siguiente
           </jet-button>
 
-          <jet-button class="ml-3" @click="navigation(2)" v-if="navigationOp == 2">
+          <jet-button
+            class="ml-3"
+            @click="navigation(2)"
+            v-if="navigationOp == 2"
+          >
             Anterior
           </jet-button>
 
-          <jet-button-success class="ml-3" @click="submit" v-if="navigationOp == 2">
+          <jet-button-success
+            class="ml-3"
+            @click="submit"
+            v-if="navigationOp == 2"
+          >
             Guardar
           </jet-button-success>
         </template>
@@ -574,7 +764,10 @@
               >
                 Motivo:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.transfer_reason">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.transfer_reason"
+              >
                 {{ $page.props.errors.transfer_reason }}
               </p>
               <small>Motivo del cambio.</small>
@@ -584,7 +777,22 @@
                   minLength="10"
                   maxlength="100"
                   placeholder="Ingresar motivo del cambio"
-                  class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    border-0
+                    px-3
+                    my-2
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
                   v-model="deleteTransferForm.transfer_reason"
                   readonly
                   required
@@ -622,10 +830,72 @@
               <p class="text-red-500 text-sm">{{ error }}</p>
             </div>
           </div>
+          <!-- label -->
+          <div class="flex items-center justify-center">
+            <small class="ml-3 text-gray-700 font-medium"
+              >¿El cambio se encuentra activo? ¿No / Si?</small
+            >
+          </div>
+          <br />
+          <!-- Toggle A -->
+          <div class="flex items-center justify-center w-full my-4">
+            <label for="toogleA" class="flex items-center cursor-pointer">
+              <!-- toggle -->
+              <div class="relative">
+                <!-- input -->
+                <input
+                  id="toogleA"
+                  type="checkbox"
+                  class="sr-only"
+                  :value="this.statustransfer"
+                  @click="changeStatusTransfer()"
+                />
+                <!-- line -->
+                <div class="w-10 h-4 bg-gray-200 rounded-full shadow-inner" />
+                <!-- dot -->
+                <div
+                  v-if="this.statustransfer == 1"
+                  class="
+                    absolute
+                    w-6
+                    h-6
+                    rounded-full
+                    shadow
+                    -left-1
+                    -top-1
+                    transition
+                  "
+                  style="transform: translateX(100%); background-color: #204de0"
+                />
+                <div
+                  v-if="this.statustransfer == 0"
+                  class="
+                    absolute
+                    w-6
+                    h-6
+                    bg-red-400
+                    rounded-full
+                    shadow
+                    -left-1
+                    -top-1
+                    transition
+                  "
+                />
+              </div>
+            </label>
+          </div>
           <div class="flex flex-wrap" v-if="navigationOp == 1">
             <div class="w-full md:w-5/5 mx-auto">
               <h4
-                class="text-lg font-medium text-center leading-6 text-gray-900 uppercase my-2"
+                class="
+                  text-lg
+                  font-medium
+                  text-center
+                  leading-6
+                  text-gray-900
+                  uppercase
+                  my-2
+                "
               >
                 <strong>Datos del Cambio</strong>
               </h4>
@@ -651,7 +921,22 @@
                     minLength="10"
                     maxlength="100"
                     placeholder="Ingresar motivo del cambio"
-                    class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    class="
+                      border-0
+                      px-3
+                      my-2
+                      placeholder-blueGray-300
+                      text-blueGray-600
+                      bg-white
+                      rounded
+                      text-sm
+                      shadow
+                      focus:outline-none focus:ring
+                      w-full
+                      ease-linear
+                      transition-all
+                      duration-150
+                    "
                     v-model="updateTransferForm.transfer_reason"
                     required
                   />
@@ -669,8 +954,8 @@
                     Comunidad u Obra:
                   </label>
                   <small
-                    >Formato: Seleccionar la comunidad u obra a la que se cambia la
-                    hermana.</small
+                    >Formato: Seleccionar la comunidad u obra a la que se cambia
+                    la hermana.</small
                   >
                   <div :class="{ invalid: isInvalidUpdateCommunity }">
                     <div v-if="this.allWork != null">
@@ -688,7 +973,10 @@
                         mode="tags"
                         label="comm_name"
                       ></multiselect>
-                      <p class="text-sm text-red-400" v-show="isInvalidUpdateCommunity">
+                      <p
+                        class="text-sm text-red-400"
+                        v-show="isInvalidUpdateCommunity"
+                      >
                         Obligatorio
                       </p>
                     </div>
@@ -696,40 +984,6 @@
                 </div>
               </div>
             </div>
-
-            <!-- <div class="w-full lg:w-6/12 px-4">
-              <div class="relative w-full mb-3">
-                <div class="">
-                  <label
-                    class="block text-sm font-medium text-gray-700"
-                    htmlfor="grid-password"
-                  >
-                    Cargo:
-                  </label>
-                  <small>Formato: Seleccionar el cargo que desempeñará la hermana.</small>
-
-                  <div :class="{ invalid: isInvalidUpdateOffice }">
-                    <div v-if="this.allOffice != null">
-                      <multiselect
-                        placeholder="Por favor seleccionar el oficio a ocupar"
-                        select-label="Seleccionar!"
-                        v-model="selectTwo.selectedOffice"
-                        :options="this.allOffice"
-                        :max-height="200"
-                        :disabled="isDisabled"
-                        mode="tags"
-                        label="office_name"
-                        track-by="office_name"
-                      ></multiselect>
-                      <p class="text-sm text-red-400" v-show="isInvalidUpdateOffice">
-                        Obligatorio
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-
             <div class="w-full lg:w-full px-4">
               <div class="relative w-full mb-3">
                 <label
@@ -776,14 +1030,13 @@
                 <Datepicker
                   v-model="updateTransferForm.transfer_date_adission"
                   :format="format"
-                  :transitions="false"
-                  menuClassName="dp-custom-menu"
+                  autoApply
                   required
                 />
               </div>
             </div>
 
-            <div class="w-full lg:w-6/12 px-4">
+            <div class="w-full lg:w-6/12 px-4" v-if="this.statustransfer == 0">
               <div class="relative w-full mb-3">
                 <label
                   class="block text-sm font-medium text-gray-700"
@@ -795,8 +1048,7 @@
                 <Datepicker
                   v-model="updateTransferForm.transfer_date_relocated"
                   :format="format"
-                  :transitions="false"
-                  menuClassName="dp-custom-menu"
+                  autoApply
                 />
               </div>
             </div>
@@ -811,7 +1063,16 @@
               >
                 <div v-for="data in this.allAppointmentsTransfer" :key="data">
                   <li
-                    class="flex justify-between p-3 hover:rounded-lg hover:text-white tab w-full overflow-hidden border-t"
+                    class="
+                      flex
+                      justify-between
+                      p-3
+                      hover:rounded-lg hover:text-white
+                      tab
+                      w-full
+                      overflow-hidden
+                      border-t
+                    "
                     :class="
                       data.date_end_appointment != null
                         ? 'hover:bg-red-500'
@@ -836,7 +1097,14 @@
                   </li>
                   <div class="tab w-full overflow-hidden border-t">
                     <div
-                      class="w-full tab-content overflow-hidden border-l-2 bg-gray-100 leading-normal"
+                      class="
+                        w-full
+                        tab-content
+                        overflow-hidden
+                        border-l-2
+                        bg-gray-100
+                        leading-normal
+                      "
                       :class="
                         data.date_end_appointment != null
                           ? 'border-red-500'
@@ -873,13 +1141,23 @@
         </template>
 
         <template #footer>
-          <jet-secondary-button @click="cancelUpdate()"> Cancelar </jet-secondary-button>
+          <jet-secondary-button @click="cancelUpdate()">
+            Cancelar
+          </jet-secondary-button>
 
-          <jet-button class="ml-3" @click="navigation(1)" v-if="navigationOp == 1">
+          <jet-button
+            class="ml-3"
+            @click="navigation(1)"
+            v-if="navigationOp == 1"
+          >
             Siguiente
           </jet-button>
 
-          <jet-button class="ml-3" @click="navigation(2)" v-if="navigationOp == 2">
+          <jet-button
+            class="ml-3"
+            @click="navigation(2)"
+            v-if="navigationOp == 2"
+          >
             Anterior
           </jet-button>
 
@@ -1009,13 +1287,6 @@ export default {
         this.form.transfer.community_id == null
       );
     },
-    isInvalidCommunityTwo() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
-      return (
-        this.form.appointment.community_id == undefined ||
-        this.form.appointment.community_id == null
-      );
-    },
 
     isInvalidLevel() {
       return (
@@ -1143,6 +1414,7 @@ export default {
         "Matrimonio",
         "Unión de Enfermos",
       ],
+      statustransfer: 0,
       form: null,
       transferBeingCreated: null,
       transferBeingDeleted: null,
@@ -1164,6 +1436,7 @@ export default {
         profile_id: null,
         community_id: null,
         office_id: null,
+        status: null,
       }),
 
       appointmentBeingDeleted: null,
@@ -1182,6 +1455,7 @@ export default {
         date_end_appointment: null,
         appointment_level_id: null,
         community_id: null,
+        status: null,
       }),
 
       //   Selects
@@ -1341,10 +1615,14 @@ export default {
     cancelCreation() {
       this.transferBeingCreated = null;
       this.navigationOp = 1;
+      this.statustransfer = 0;
+      this.selectLevel.selectedLevel = null;
+      this.selectCategory.selectedLevelCategory = null;
     },
     cancelUpdate() {
       this.transferBeingUpdated = null;
       this.navigationOp = 1;
+      this.statustransfer = 0;
     },
     confirmationTransferCreate() {
       this.form = this.$inertia.form({
@@ -1356,6 +1634,7 @@ export default {
           profile_id: null,
           community_id: null,
           office_id: null,
+          status: null,
         },
         appointment: {
           description: null,
@@ -1363,6 +1642,7 @@ export default {
           date_end_appointment: null,
           appointment_level_id: null,
           community_id: null,
+          status: null,
         },
       });
       this.transferBeingCreated = this.form;
@@ -1397,7 +1677,7 @@ export default {
     submit() {
       //   console.log("data send", this.form);
       this.form.transfer.community_id = this.form.transfer.community_id.id;
-      this.form.appointment.community_id = this.form.appointment.community_id.id;
+
       if (this.form.transfer.transfer_date_adission) {
         this.form.transfer.transfer_date_adission = this.formatDate(
           this.form.transfer.transfer_date_adission
@@ -1420,11 +1700,13 @@ export default {
           this.form.appointment.date_end_appointment
         );
       }
-      this.form.appointment.appointment_level_id = this.selectCategory.selectedLevelCategory;
-
+      this.form.appointment.appointment_level_id =
+        this.selectCategory.selectedLevelCategory;
+      this.form.transfer.status = this.statustransfer;
+      this.form.appointment.status = this.statustransfer;
       //   if (this.isInvalidCommunity == false && this.isInvalidOffice == false) {
       if (
-        // this.isInvalidCommunity == false &&
+        this.isInvalidCommunity == false &&
         this.isInvalidLevel == false &&
         this.isInvalidLevelCategory == false
       ) {
@@ -1448,7 +1730,6 @@ export default {
                 this.form.transfer.profile_id = null;
                 //
                 this.form.appointment.appointment_level_id = null;
-                this.form.appointment.community_id = null;
                 this.form.appointment.description = null;
                 this.form.appointment.date_appointment = null;
 
@@ -1459,8 +1740,9 @@ export default {
                 this.selectThree.options = [];
                 this.transferBeingCreated = null;
                 this.navigationOp = 1;
+                this.statustransfer = 0;
                 this.$refs.qleditor1.setHTML("");
-              }, 10);
+              }, 1);
             },
           }
         );
@@ -1477,15 +1759,25 @@ export default {
       }
       return "Vigente";
     },
-
+    changeStatusTransfer() {
+      if (this.statustransfer == 1) {
+        this.statustransfer = 0;
+      } else {
+        this.statustransfer = 1;
+      }
+    },
     confirmationTransferUpdate(transfer) {
-      this.updateTransferForm.transfer_date_adission = transfer.transfer_date_adission;
-      this.updateTransferForm.transfer_date_relocated = transfer.transfer_date_relocated;
+      this.updateTransferForm.transfer_date_adission =
+        transfer.transfer_date_adission;
+      this.updateTransferForm.transfer_date_relocated =
+        transfer.transfer_date_relocated;
       this.updateTransferForm.transfer_reason = transfer.transfer_reason;
-      this.updateTransferForm.transfer_observation = transfer.transfer_observation;
+      this.updateTransferForm.transfer_observation =
+        transfer.transfer_observation;
       this.updateTransferForm.profile_id = transfer.profile_id;
       this.updateTransferForm.community_id = transfer.community_id;
       this.updateTransferForm.office_id = transfer.office_id;
+      this.statustransfer = transfer.status;
 
       this.status(transfer).then((data) => {
         this.selectOne.selectedCommunity = data.community;
@@ -1526,8 +1818,7 @@ export default {
 
       this.updateTransferForm.community_id = this.selectOne.selectedCommunity;
       this.updateTransferForm.office_id = this.selectTwo.selectedOffice;
-
-      //   if (this.isInvalidUpdateCommunity == false && this.isInvalidUpdateOffice == false) {
+      this.updateTransferForm.status = this.statustransfer;
       if (this.isInvalidUpdateCommunity == false) {
         this.updateTransferForm.put(
           this.route("secretary.daughter-profile.transfer.update", {
@@ -1542,7 +1833,8 @@ export default {
               setTimeout(() => {
                 this.updateTable();
                 this.navigationOp = 1;
-              }, 100);
+                this.statustransfer = 0;
+              }, 1);
             },
           }
         );

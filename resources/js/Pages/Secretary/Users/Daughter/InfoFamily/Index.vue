@@ -4,9 +4,18 @@
       <form @submit.prevent="submit">
         <div class="">
           <h6
-            class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
+            class="
+              mt-2
+              mb-2
+              text-lg
+              font-medium
+              text-center
+              leading-6
+              text-gray-900
+              uppercase
+            "
           >
-            Plantilla de Estado de Salud de la Hermana
+            Plantilla de INFORMACIÓN DEL FAMILIAR
           </h6>
 
           <div class="flex flex-wrap">
@@ -14,7 +23,10 @@
               <label class="block text-sm font-medium text-gray-700 mr-2">
                 Nombres Completos del Padre:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.names_father">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.names_father"
+              >
                 {{ $page.props.errors.names_father }}
               </p>
               <small>Formato: José Fernando García García</small>
@@ -22,7 +34,22 @@
                 <input
                   type="text"
                   placeholder="Ejm: Fuentes Ramos"
-                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    border-0
+                    px-3
+                    py-3
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
                   onkeydown="return /[a-z, ]/i.test(event.key)"
                   onblur="if (this.value == '') {this.value = '';}"
                   onfocus="if (this.value == '') {this.value = '';}"
@@ -36,7 +63,10 @@
               <label class="block text-sm font-medium text-gray-700">
                 Nombres Completos de la Madre:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.names_mother">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.names_mother"
+              >
                 {{ $page.props.errors.names_mother }}
               </p>
               <small>Formato: Andrea Fransheska González González </small>
@@ -44,7 +74,22 @@
                 <input
                   type="text"
                   placeholder="Ejm: Fuentes Ramos"
-                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    border-0
+                    px-3
+                    py-3
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
                   onkeydown="return /[a-z, ]/i.test(event.key)"
                   onblur="if (this.value == '') {this.value = '';}"
                   onfocus="if (this.value == '') {this.value = '';}"
@@ -59,14 +104,25 @@
               <label class="block text-sm font-medium text-gray-700">
                 Número de Hermanas:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.nr_sisters">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.nr_sisters"
+              >
                 {{ $page.props.errors.nr_sisters }}
               </p>
               <small>Formato: 0 - 20</small>
               <div class="mt-1 rounded-md mx-2">
                 <input
                   type="number"
-                  class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                  class="
+                    focus:ring-blue-500 focus:border-blue-500
+                    flex-1
+                    block
+                    w-full
+                    rounded-none rounded-r-md
+                    sm:text-sm
+                    border-gray-300
+                  "
                   placeholder="Ingrese el número"
                   min="0"
                   max="20"
@@ -79,14 +135,25 @@
               <label class="block text-sm font-medium text-gray-700">
                 Número de Hermanos:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.nr_brothers">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.nr_brothers"
+              >
                 {{ $page.props.errors.nr_brothers }}
               </p>
               <small>Formato: 0 - 20</small>
               <div class="mt-1 rounded-md mx-2">
                 <input
                   type="number"
-                  class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                  class="
+                    focus:ring-blue-500 focus:border-blue-500
+                    flex-1
+                    block
+                    w-full
+                    rounded-none rounded-r-md
+                    sm:text-sm
+                    border-gray-300
+                  "
                   placeholder="Ingrese el número"
                   min="0"
                   max="20"
@@ -100,14 +167,25 @@
               <label class="block text-sm font-medium text-gray-700">
                 Lugar en la Familia:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.place_of_family">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.place_of_family"
+              >
                 {{ $page.props.errors.place_of_family }}
               </p>
               <small>Formato: Orden Cronológico</small>
               <div class="mt-1 rounded-md mx-2">
                 <input
                   type="number"
-                  class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                  class="
+                    focus:ring-blue-500 focus:border-blue-500
+                    flex-1
+                    block
+                    w-full
+                    rounded-none rounded-r-md
+                    sm:text-sm
+                    border-gray-300
+                  "
                   placeholder="Ingrese el número"
                   min="0"
                   max="20"
@@ -133,12 +211,29 @@
       <form @submit.prevent="submitTwo" v-if="isExistData">
         <!-- Info Break Family -->
         <hr
-          class="mt-4 mb-3 ml-4 mr-4 border-b-1 border-gray-300 hover:border-gray-300"
+          class="
+            mt-4
+            mb-3
+            ml-4
+            mr-4
+            border-b-1 border-gray-300
+            hover:border-gray-300
+          "
         />
         <h6
-          class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
+          class="
+            mt-2
+            mb-2
+            text-lg
+            font-medium
+            text-center
+            leading-6
+            text-gray-900
+            uppercase
+          "
         >
-          Información del familiar en donde la hermana se hospeda en los días de descanso
+          Información del familiar en donde la hermana se hospeda en los días de
+          descanso
         </h6>
         <div class="flex flex-wrap">
           <div class="w-full lg:w-6/12">
@@ -156,7 +251,22 @@
               <input
                 type="text"
                 placeholder="Ejm: Fuentes Ramos"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  py-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 onkeydown="return /[a-z, ]/i.test(event.key)"
                 onblur="if (this.value == '') {this.value = '';}"
                 onfocus="if (this.value == '') {this.value = '';}"
@@ -170,7 +280,10 @@
             <label class="block text-sm font-medium text-gray-700">
               Relación del Familiar con la Hermana:
             </label>
-            <p class="text-red-400 text-sm" v-show="$page.props.errors.relation">
+            <p
+              class="text-red-400 text-sm"
+              v-show="$page.props.errors.relation"
+            >
               {{ $page.props.errors.relation }}
             </p>
             <small>Formato: Hermano, Primo, etc. </small>
@@ -178,7 +291,22 @@
               <input
                 type="text"
                 placeholder="Ejm: Primo, Hermano, etc"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  py-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 onkeydown="return /[a-z, ]/i.test(event.key)"
                 onblur="if (this.value == '') {this.value = '';}"
                 onfocus="if (this.value == '') {this.value = '';}"
@@ -190,11 +318,17 @@
           </div>
 
           <div class="w-full lg:w-6/12 mt-2">
-            <label class="block text-sm font-medium text-black" htmlfor="grid-password">
+            <label
+              class="block text-sm font-medium text-black"
+              htmlfor="grid-password"
+            >
               Celular:
             </label>
-            <p class="text-red-400 text-sm" v-show="$page.props.errors.cellphone">
-              {{ $page.props.errors.phone }}
+            <p
+              class="text-red-400 text-sm"
+              v-show="$page.props.errors.cellphone"
+            >
+              {{ $page.props.errors.cellphone }}
             </p>
             <small>Formato: 0997643146</small>
             <div class="mx-2 mt-1">
@@ -205,14 +339,32 @@
                 pattern="^\d{10}$"
                 title="Ingrese un número de celular con un formato válido, máximo 10digitos."
                 placeholder="0997643146"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  py-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="this.infofamilybreak.cellphone"
                 required
               />
             </div>
           </div>
           <div class="w-full lg:w-6/12 mt-2">
-            <label class="block text-sm font-medium text-black" htmlfor="grid-password">
+            <label
+              class="block text-sm font-medium text-black"
+              htmlfor="grid-password"
+            >
               Teléfono:
             </label>
             <p class="text-red-400 text-sm" v-show="$page.props.errors.phone">
@@ -227,21 +379,31 @@
                 pattern="^\d{9}$"
                 title="Ingrese un número de celular con un formato válido, máximo 9 digitos."
                 placeholder="022400111"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  py-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="this.infofamilybreak.phone"
-                required
+
               />
             </div>
           </div>
         </div>
-        <div v-if="isExistDataInfBreak">
+        <div>
           <jet-button type="submit" class="ml-4 mt-4"
             >Actualizar Información de Contacto</jet-button
-          >
-        </div>
-        <div v-else>
-          <jet-button-success type="submit" class="ml-4 mt-4"
-            >Crear Información de Contacto</jet-button-success
           >
         </div>
       </form>
