@@ -128,6 +128,33 @@ class AddressController extends Controller
             'data_province' => $data_province->name,
         ]);
     }
+    public function showActualAddress($actual_parish)
+    {
+
+        // Parishes
+        $data_parish = DB::table('political_divisions')
+            ->where('id', "=", $actual_parish)
+            ->where('level', '=', '3')
+            ->get()
+            ->first();
+
+        // Cantons
+        $data_canton = DB::table('political_divisions')
+            ->where('id', '=', $data_parish->political_divisionc_id)
+            ->where('level', '=', '2')
+            ->get()
+            ->first();
+
+        // Provinces
+
+        $data_province = DB::table('political_divisions')
+            ->where('id', '=', $data_canton->political_divisionc_id)
+            ->where('level', '=', '1')
+            ->get()
+            ->first();
+
+        return   $data_canton->name . ', PROVINCIA - ' . $data_province->name;
+    }
 
     public  function getMyAddress($profile_id)
     {

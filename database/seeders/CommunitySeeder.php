@@ -450,9 +450,12 @@ class CommunitySeeder extends Seeder
             $data_province = $arrayAddress["data_province"];
             $data_canton = $arrayAddress["data_canton"];
             // $name_parish =  strtolower($name_parish);
+            // Convert to timetamps
+            $min = strtotime('2021-11-01 00:00:00');
+            $max = strtotime('2022-04-01 00:00:00');
 
             $commmunity =   Community::create([
-                'comm_status' => $status,
+                'comm_status' => 1,
                 'comm_id' => $comm_id,
                 'comm_identity_card' => $id_card,
                 'comm_name' => $comm_name . ' de ' .  $data_province . ', ' . $data_canton,
@@ -465,6 +468,14 @@ class CommunitySeeder extends Seeder
                 'pastoral_id' => $pastoral_id
             ]);
 
+            $val = rand($min, $max);
+
+            if ($commmunity->comm_status == 0) {
+                $commmunity->update([
+                    'date_close' => date('Y-m-d H:i:s', $val),
+                ]);
+            }
+
             $commmunity->address()->create([
                 'address' => $address,
                 'political_division_id' => '' . $political_division_id,
@@ -472,8 +483,40 @@ class CommunitySeeder extends Seeder
 
             $commmunity->inventory()->create([
                 'name' => $name_inventory,
-                'description' => $description_inventory,
+                'description' => $description_inventory . " de la comunidad" . $commmunity->comm_name,
             ]);
+
+            for ($j = 0; $j <= 2; $j++) {
+                $name_section = 'Secion ' . $j . ' name for ' . $commmunity->comm_name;
+                $section = $commmunity->inventory->sections()->create([
+                    'name' => $name_section,
+                    'slug' => Str::slug($name_section),
+                    'description' => 'Description section for ' .  $commmunity->comm_name . "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."
+                ]);
+
+                for ($u = 0; $u <= 45; $u++) {
+                    //     // Convert to timetamps
+                    $min = strtotime('2020-02-01 00:00:00');
+                    $max = strtotime('2022-02-01 00:00:00');
+
+                    //     // Generate random number using above bounds
+                    $val = rand($min, $max);
+
+                    $section->articles()->create([
+                        "name" => Str::random(30),
+                        "color" => Str::random(15),
+                        "price" => 10,
+                        "material" => rand(1, 5),
+                        "status" =>  rand(1, 5),
+                        "size" => "0.5",
+                        "brand" => "buena",
+                        "description" => "description product of" . $name_section,
+                        "section_id" => $section->id,
+                        'created_at' =>  date('Y-m-d H:i:s', $val),
+                    ]);
+                }
+                $name_section = "";
+            }
         }
 
 

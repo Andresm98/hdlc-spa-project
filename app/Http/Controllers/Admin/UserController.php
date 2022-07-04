@@ -5,14 +5,17 @@ namespace App\Http\Controllers\Admin;
 use PDF;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Zone;
 use Inertia\Inertia;
+use App\Models\Pastoral;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Models\AppointmentLevel;
+
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
@@ -40,7 +43,18 @@ class UserController extends Controller
         $users = count(User::all());
         $roles        = count(Role::all());
         $permissions = count(Permission::all());
-        return Inertia::render('Admin/Welcome', compact('users', 'roles', 'permissions'));
+        $pastorals = count(Pastoral::all());
+        $appointments = count(AppointmentLevel::all());
+        $zones = count(Zone::all());
+
+        return Inertia::render('Admin/Welcome', compact(
+            'users',
+            'roles',
+            'permissions',
+            'pastorals',
+            'appointments',
+            'zones',
+        ));
     }
 
     // return Inertia::render('Users/Index', [
@@ -166,7 +180,7 @@ class UserController extends Controller
     {
 
         $validator = Validator::make(['slug' => $slug], [
-            'slug' => ['required', 'string', 'max:50', 'alpha_dash', 'exists:users,slug']
+            'slug' => ['required', 'string', 'alpha_dash', 'exists:users,slug']
         ]);
 
         if ($validator->fails()) {
@@ -198,7 +212,7 @@ class UserController extends Controller
     {
 
         $validator = Validator::make(['slug' => $slug], [
-            'slug' => ['required', 'string', 'max:50', 'alpha_dash', 'exists:users,slug']
+            'slug' => ['required', 'string', 'alpha_dash', 'exists:users,slug']
         ]);
 
         if ($validator->fails()) {
@@ -289,7 +303,7 @@ class UserController extends Controller
     public function destroy($slug)
     {
         $validator = Validator::make(['slug' => $slug], [
-            'slug' => ['required', 'string', 'max:50', 'alpha_dash', 'exists:users,slug']
+            'slug' => ['required', 'string', 'alpha_dash', 'exists:users,slug']
         ]);
 
         if ($validator->fails()) {

@@ -10,49 +10,133 @@
     </template>
 
     <section
-      class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg m-1"
+      class="
+        bg-gray-200
+        dark:bg-slate-800
+        y-1
+        px-4
+        sm:p-6
+        md:py-10 md:px-8
+        pt-2
+        pb-4
+        rounded-lg
+        m-1
+      "
     >
       <div
-        class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
+        class="
+          max-w-4xl
+          mx-auto
+          grid grid-cols-1
+          lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2
+        "
       >
         <div
-          class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 lg:row-start-1"
+          class="
+            relative
+            p-3
+            col-start-1
+            row-start-1
+            flex flex-col-reverse
+            rounded-lg
+            bg-gradient-to-t
+            from-black/75
+            via-black/0
+            sm:bg-none sm:row-start-2 sm:p-0
+            lg:row-start-1
+          "
         >
           <h1
-            class="mt-1 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
+            class="
+              mt-1
+              text-lg
+              font-semibold
+              text-black
+              sm:text-black
+              md:text-2xl
+              dark:sm:text-white
+            "
           >
             Provincia Ecuador
           </h1>
           <p
-            class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
+            class="
+              text-sm
+              leading-4
+              font-medium
+              text-black
+              sm:text-black
+              dark:sm:text-slate-400
+            "
           >
             Información General de la Comunidad
           </p>
         </div>
         <div
-          class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
+          class="
+            grid
+            gap-4
+            col-start-1 col-end-3
+            row-start-1
+            sm:mb-6 sm:grid-cols-4
+            lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0
+          "
         >
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_2.png"
             alt=""
-            class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 lg:col-span-full"
+            class="
+              w-full
+              h-60
+              object-cover
+              rounded-lg
+              sm:h-52 sm:col-span-2
+              lg:col-span-full
+            "
             loading="lazy"
           />
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_3.png"
             alt=""
-            class="hidden w-full h-52 object-cover rounded-lg sm:block sm:col-span-2 md:col-span-1 lg:row-start-2 lg:col-span-2 lg:h-32"
+            class="
+              hidden
+              w-full
+              h-52
+              object-cover
+              rounded-lg
+              sm:block sm:col-span-2
+              md:col-span-1
+              lg:row-start-2 lg:col-span-2 lg:h-32
+            "
             loading="lazy"
           />
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_1.png"
             alt=""
-            class="hidden w-full h-52 object-cover rounded-lg md:block lg:row-start-2 lg:col-span-2 lg:h-32"
+            class="
+              hidden
+              w-full
+              h-52
+              object-cover
+              rounded-lg
+              md:block
+              lg:row-start-2 lg:col-span-2 lg:h-32
+            "
             loading="lazy"
           />
         </div>
         <dl
-          class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2"
+          class="
+            mt-4
+            text-xs
+            font-medium
+            flex
+            items-center
+            row-start-2
+            sm:mt-1 sm:row-start-3
+            md:mt-2.5
+            lg:row-start-2
+          "
         >
           <dt class="sr-only">Visto</dt>
           <dd class="text-indigo-600 flex items-center dark:text-indigo-400">
@@ -70,7 +154,9 @@
                 stroke-linejoin="round"
               />
             </svg>
-            <span>0.00 <span class="text-slate-400 font-normal">(0)</span></span>
+            <span
+              >0.00 <span class="text-slate-400 font-normal">(0)</span></span
+            >
           </dd>
           <dt class="sr-only">Ubicación por defecto - Ecuador</dt>
           <dd class="flex items-center">
@@ -103,23 +189,47 @@
           </dd>
         </dl>
         <div
-          class="mt-4 col-start-1 row-start-3 self-center sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2 lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4"
+          class="
+            mt-4
+            col-start-1
+            row-start-3
+            self-center
+            sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2
+            lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4
+          "
         >
           <button
             type="button"
-            class="bg-blue-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg"
+            class="
+              bg-blue-600
+              text-white text-sm
+              leading-6
+              font-medium
+              py-2
+              px-3
+              rounded-lg
+            "
           >
             <!--
                         FIXME: Import Controllers For PDF-->
             Plantilla PDF
           </button>
           <div
-            class="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 text-black dark:text-white"
+            class="
+              mt-4
+              text-sm
+              leading-6
+              col-start-1
+              sm:col-span-2
+              lg:mt-6 lg:row-start-4 lg:col-span-1
+              text-black
+              dark:text-white
+            "
           >
             <p>
-              La presente plantiflla de información se relaciona con los datos principales
-              de la comunidad a la que desea modificar al sistema, por lo que deberá
-              verificar los datos a ingresar.
+              La presente plantiflla de información se relaciona con los datos
+              principales de la comunidad a la que desea modificar al sistema,
+              por lo que deberá verificar los datos a ingresar.
             </p>
             <ul class="list-disc pl-5">
               <li class="dark:text-white">
@@ -133,7 +243,9 @@
                 </p>
               </li>
               <li class="dark:text-white">
-                <p class="text-sm uppercase dark:text-white">Números de contacto.</p>
+                <p class="text-sm uppercase dark:text-white">
+                  Números de contacto.
+                </p>
               </li>
               <li class="dark:text-white">
                 <p class="text-sm uppercase dark:text-white">
@@ -141,7 +253,9 @@
                 </p>
               </li>
               <li class="dark:text-white">
-                <p class="text-sm uppercase dark:text-white">Número de colaboradores.</p>
+                <p class="text-sm uppercase dark:text-white">
+                  Número de colaboradores.
+                </p>
               </li>
             </ul>
           </div>
@@ -149,12 +263,30 @@
       </div>
     </section>
 
-    <section class="py-1 bg-slate-300 rounded-lg">
+    <section class="py-1 bg-gray-100 rounded-lg">
       <div class="w-full lg:w-full">
         <div
-          class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
+          class="
+            relative
+            flex flex-col
+            min-w-0
+            break-words
+            w-full
+            mb-6
+            shadow-lg
+            rounded-lg
+            bg-blueGray-100
+            border-0
+          "
         >
-          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+          <div
+            class="
+              shadow
+              overflow-hidden
+              border-b border-gray-200
+              sm:rounded-lg
+            "
+          >
             <div v-if="$page.props.flash != null">
               <alert
                 v-if="$page.props.flash.success"
@@ -176,25 +308,257 @@
 
             <button
               @click="confirmCreateArticle()"
-              class="pt-1 pb-1 pl-4 pr-4 m-4 bg-blue-500 border-2 border-blue-500 text-white text-sm rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
+              class="
+                pt-1
+                pb-1
+                pl-4
+                pr-4
+                m-4
+                bg-blue-500
+                border-2 border-blue-500
+                text-white text-sm
+                rounded-lg
+                hover:bg-blue-500 hover:text-gray-100
+                focus:border-4 focus:border-blue-300
+              "
             >
               Crear Artículos
             </button>
             <!-- Container Filters -->
-            <div class="container mx-auto">
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="container mx-auto pl-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div
-                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    bg-gray-100
+                  "
                 >
-                  <input
-                    type="text"
-                    name="email-address"
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Filtros de Búsqueda</small
+                  >
+
+                  <search-filter
                     v-model="params.search"
-                    id="email"
-                    autocomplete="Search"
-                    placeholder="Nombre"
-                    class="focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    class="
+                      border border-blue-300
+                      rounded-md
+                      shadow-sm
+                      focus:outline-none
+                      focus:ring-indigo-500
+                      focus:border-indigo-500
+                      sm:text-sm
+                    "
+                    @reset="reset"
+                  >
+                    <small class="block text-gray-700">Estado:</small>
+                    <select
+                      v-model="params.status"
+                      class="
+                        mt-1
+                        block
+                        w-full
+                        px-3
+                        border border-gray-300
+                        bg-white
+                        rounded-md
+                        shadow-sm
+                        focus:outline-none
+                        focus:ring-blue-500
+                        focus:border-blue-500
+                        sm:text-sm
+                      "
+                    >
+                      <option :value="null">Todos</option>
+                      <option value="1">Malo</option>
+                      <option value="2">Regular</option>
+                      <option value="3">Bueno</option>
+                      <option value="4">Muy bueno</option>
+                      <option value="5">Excelente</option>
+                    </select>
+
+                    <small class="block text-gray-700 mt-2">Material:</small>
+                    <select
+                      v-model="params.material"
+                      class="
+                        mt-1
+                        block
+                        w-full
+                        px-3
+                        border border-gray-300
+                        bg-white
+                        rounded-md
+                        shadow-sm
+                        focus:outline-none
+                        focus:ring-blue-500
+                        focus:border-blue-500
+                        sm:text-sm
+                      "
+                    >
+                      <option :value="null">Todos</option>
+                      <option value="1">Madera</option>
+                      <option value="2">Tela</option>
+                      <option value="3">Plastico</option>
+                      <option value="4">Metal</option>
+                      <option value="5">Yeso</option>
+                    </select>
+                  </search-filter>
+                </div>
+                <div
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    p-1
+                    bg-gray-100
+                  "
+                >
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Fecha de Fundación</small
+                  >
+                  <p
+                    class="text-red-400 text-sm"
+                    v-show="$page.props.errors.dateStart"
+                  >
+                    {{ $page.props.errors.dateStart }}
+                  </p>
+                  <Datepicker
+                    v-model="params.dateStart"
+                    :format="format"
+                    autoApply
+                    required
                   />
+                  <small class="justify-content-center ml-6"
+                    >Deste - Hasta</small
+                  >
+                  <p
+                    class="text-red-400 text-sm"
+                    v-show="$page.props.errors.dateEnd"
+                  >
+                    {{ $page.props.errors.dateEnd }}
+                  </p>
+                  <Datepicker
+                    v-model="params.dateEnd"
+                    :format="format"
+                    autoApply
+                    required
+                  />
+                </div>
+
+                <div
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    p-1
+                    bg-gray-100
+                  "
+                >
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Exportar Listas</small
+                  >
+                  <div
+                    class="
+                      md:text-md
+                      flex
+                      items-center
+                      justify-between
+                      p-4
+                      w-full
+                      text-sm
+                      md:px-12 md:py-0
+                    "
+                  >
+                    <dropdown class="mt-1" placement="bottom-end">
+                      <template #default>
+                        <div
+                          class="
+                            group
+                            flex
+                            items-center
+                            cursor-pointer
+                            select-none
+                          "
+                        >
+                          <div
+                            class="
+                              mr-1
+                              text-gray-700
+                              group-hover:text-blue-600
+                              focus:text-blue-600
+                              whitespace-nowrap
+                            "
+                          >
+                            <span
+                              class="
+                                px-1
+                                inline-flex
+                                text-xs
+                                leading-5
+                                font-semibold
+                                rounded-sm
+                                bg-gray-200
+                                text-gray-800
+                              "
+                              >&nbsp;Filtros</span
+                            >
+                          </div>
+                          <icon
+                            class="
+                              w-5
+                              h-5
+                              fill-gray-700
+                              group-hover:fill-blue-600
+                              focus:fill-blue-600
+                            "
+                            name="cheveron-down"
+                          />
+                        </div>
+                      </template>
+                      <template #dropdown>
+                        <div
+                          class="mt-2 py-2 text-sm bg-white rounded shadow-xl"
+                        >
+                          <a
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            target="_blank"
+                            :href="
+                              route(
+                                'secretary.communities.export.excel',
+                                this.params
+                              )
+                            "
+                            >Excel</a
+                          >
+                          <a
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            target="_blank"
+                            :href="
+                              route(
+                                'secretary.communities.export.csv',
+                                this.params
+                              )
+                            "
+                            >CSV</a
+                          >
+                        </div>
+                      </template>
+                    </dropdown>
+                  </div>
                 </div>
               </div>
             </div>
@@ -206,7 +570,16 @@
             <div class="py-2">
               <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                  <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                  <div
+                    class="
+                      py-2
+                      align-middle
+                      inline-block
+                      min-w-full
+                      sm:px-6
+                      lg:px-8
+                    "
+                  >
                     <table
                       v-if="listArticles.data.length > 0"
                       class="min-w-full divide-y divide-gray-200 rounded-lg"
@@ -215,16 +588,29 @@
                         <tr>
                           <th
                             scope="col"
-                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             <span
-                              class="inline-flex px-6 py-3 w-full justify-between"
+                              class="
+                                inline-flex
+                                px-6
+                                py-3
+                                w-full
+                                justify-between
+                              "
                               @click="sort('name')"
                               >Nombre
 
                               <svg
                                 v-if="
-                                  params.field === 'name' && params.direction === 'asc'
+                                  params.field === 'name' &&
+                                  params.direction === 'asc'
                                 "
                                 class="h-6 w-6"
                                 viewBox="0 0 20 20"
@@ -235,7 +621,8 @@
                               </svg>
                               <svg
                                 v-if="
-                                  params.field === 'name' && params.direction === 'desc'
+                                  params.field === 'name' &&
+                                  params.direction === 'desc'
                                 "
                                 class="h-6 w-6"
                                 viewBox="0 0 20 20"
@@ -248,57 +635,78 @@
                           </th>
                           <th
                             scope="col"
-                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             <span
-                              class="inline-flex px-6 py-3 w-full justify-between"
-                              @click="sort('email')"
+                              class="
+                                inline-flex
+                                px-6
+                                py-3
+                                w-full
+                                justify-between
+                              "
                               >Color
-                              <svg
-                                v-if="
-                                  params.field === 'email' && params.direction === 'asc'
-                                "
-                                class="h-6 w-6"
-                                viewBox="0 0 20 20"
-                              >
-                                <path
-                                  d="M13.889,11.611c-0.17,0.17-0.443,0.17-0.612,0l-3.189-3.187l-3.363,3.36c-0.171,0.171-0.441,0.171-0.612,0c-0.172-0.169-0.172-0.443,0-0.611l3.667-3.669c0.17-0.17,0.445-0.172,0.614,0l3.496,3.493C14.058,11.167,14.061,11.443,13.889,11.611 M18.25,10c0,4.558-3.693,8.25-8.25,8.25c-4.557,0-8.25-3.692-8.25-8.25c0-4.557,3.693-8.25,8.25-8.25C14.557,1.75,18.25,5.443,18.25,10 M17.383,10c0-4.07-3.312-7.382-7.383-7.382S2.618,5.93,2.618,10S5.93,17.381,10,17.381S17.383,14.07,17.383,10"
-                                ></path>
-                              </svg>
-                              <svg
-                                v-if="
-                                  params.field === 'email' && params.direction === 'desc'
-                                "
-                                class="h-6 w-6"
-                                viewBox="0 0 20 20"
-                              >
-                                <path
-                                  d="M13.962,8.885l-3.736,3.739c-0.086,0.086-0.201,0.13-0.314,0.13S9.686,12.71,9.6,12.624l-3.562-3.56C5.863,8.892,5.863,8.611,6.036,8.438c0.175-0.173,0.454-0.173,0.626,0l3.25,3.247l3.426-3.424c0.173-0.172,0.451-0.172,0.624,0C14.137,8.434,14.137,8.712,13.962,8.885 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.148,17.521,17.521,14.147,17.521,10"
-                                ></path>
-                              </svg>
                             </span>
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             Precio
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             Estado
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             Material
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                            class="
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-black
+                              uppercase
+                              tracking-wider
+                            "
                           >
                             Acciones
                           </th>
@@ -322,6 +730,24 @@
                                 <div class="text-sm font-medium text-gray-900">
                                   {{ article_custom.name }}
                                 </div>
+                                <span
+                                  class="
+                                    px-2
+                                    inline-flex
+                                    text-xs
+                                    leading-5
+                                    font-semibold
+                                    rounded-sm
+                                    bg-cyan-100
+                                    text-cyan-800
+                                  "
+                                >
+                                  {{
+                                    this.formatDateShow(
+                                      article_custom.created_at
+                                    )
+                                  }}
+                                </span>
                               </div>
                             </div>
                           </td>
@@ -340,35 +766,80 @@
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div v-if="article_custom.status == 1">
                               <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                                class="
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-full
+                                  bg-red-100
+                                  text-red-800
+                                "
                               >
                                 Malo
                               </span>
                             </div>
                             <div v-if="article_custom.status == 2">
                               <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800"
+                                class="
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-full
+                                  bg-orange-100
+                                  text-orange-800
+                                "
                               >
                                 Regular
                               </span>
                             </div>
                             <div v-if="article_custom.status == 3">
                               <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                                class="
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-full
+                                  bg-blue-100
+                                  text-blue-800
+                                "
                               >
                                 Bueno
                               </span>
                             </div>
                             <div v-if="article_custom.status == 4">
                               <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                class="
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-full
+                                  bg-green-100
+                                  text-green-800
+                                "
                               >
                                 Muy Bueno
                               </span>
                             </div>
                             <div v-if="article_custom.status == 5">
                               <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"
+                                class="
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-full
+                                  bg-yellow-100
+                                  text-yellow-800
+                                "
                               >
                                 Excelente
                               </span>
@@ -377,53 +848,118 @@
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div v-if="article_custom.material == 1">
                               <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                                class="
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-full
+                                  bg-red-100
+                                  text-red-800
+                                "
                               >
                                 Madera
                               </span>
                             </div>
                             <div v-if="article_custom.material == 2">
                               <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800"
+                                class="
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-full
+                                  bg-orange-100
+                                  text-orange-800
+                                "
                               >
                                 Tela
                               </span>
                             </div>
                             <div v-if="article_custom.material == 3">
                               <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                                class="
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-full
+                                  bg-blue-100
+                                  text-blue-800
+                                "
                               >
                                 Plástico
                               </span>
                             </div>
                             <div v-if="article_custom.material == 4">
                               <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                class="
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-full
+                                  bg-green-100
+                                  text-green-800
+                                "
                               >
                                 Metal
                               </span>
                             </div>
                             <div v-if="article_custom.material == 5">
                               <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"
+                                class="
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-full
+                                  bg-yellow-100
+                                  text-yellow-800
+                                "
                               >
                                 Yeso
                               </span>
                             </div>
                           </td>
                           <td
-                            class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
+                            class="
+                              px-3
+                              py-4
+                              whitespace-nowrap
+                              text-right text-sm
+                              font-medium
+                            "
                           >
                             <!-- Components -->
 
                             <div class="mx-auto flex gap-10">
                               <!-- Update  Article -->
 
-                              <button @click="confirmUpdateArticle(article_custom)">
+                              <button
+                                @click="confirmUpdateArticle(article_custom)"
+                              >
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="flex items-center justify-center flex-1 h-full p-2 border border-green-500 text-white shadow rounded-lg hover:bg-green-50 hover:text-zinc-300"
+                                      class="
+                                        flex
+                                        items-center
+                                        justify-center
+                                        flex-1
+                                        h-full
+                                        p-2
+                                        border border-green-500
+                                        text-white
+                                        shadow
+                                        rounded-lg
+                                        hover:bg-green-50 hover:text-zinc-300
+                                      "
                                     >
                                       <div class="relative">
                                         <svg
@@ -452,7 +988,19 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="flex items-center justify-center flex-1 h-full p-2 border border-red-500 text-white shadow rounded-lg hover:bg-red-50 hover:text-zinc-300"
+                                      class="
+                                        flex
+                                        items-center
+                                        justify-center
+                                        flex-1
+                                        h-full
+                                        p-2
+                                        border border-red-500
+                                        text-white
+                                        shadow
+                                        rounded-lg
+                                        hover:bg-red-50 hover:text-zinc-300
+                                      "
                                     >
                                       <div class="relative">
                                         <svg
@@ -477,7 +1025,10 @@
                         </tr>
                       </tbody>
                     </table>
-                    <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
+                    <div
+                      v-else
+                      class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg"
+                    >
                       <p class="text-center text-lg">
                         No existen datos que coincidan con su búsqueda
                       </p>
@@ -509,8 +1060,13 @@
           <div class="w-full lg:w-6/12 px-2">
             <div class="relative w-full mb-3">
               <div class="">
-                <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
+                <label class="block text-sm font-medium text-gray-700">
+                  Nombre:
+                </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.name"
+                >
                   {{ $page.props.errors.name }}
                 </p>
                 <input
@@ -518,7 +1074,21 @@
                   minLength="10"
                   maxlength="100"
                   placeholder="Ingresar nombre"
-                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    border-0
+                    px-3
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
                   v-model="createArticleForm.name"
                   required
                 />
@@ -527,8 +1097,13 @@
           </div>
           <div class="w-full lg:w-3/12 px-2">
             <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700"> Material: </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.material">
+              <label class="block text-sm font-medium text-gray-700">
+                Material:
+              </label>
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.material"
+              >
                 {{ $page.props.errors.material }}
               </p>
               <select
@@ -536,7 +1111,18 @@
                 id="material"
                 name="material"
                 autocomplete="article-material"
-                class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                class="
+                  mt-1
+                  block
+                  w-full
+                  px-3
+                  border border-gray-300
+                  bg-white
+                  rounded-md
+                  shadow-sm
+                  focus:outline-none focus:ring-blue-500 focus:border-blue-500
+                  sm:text-sm
+                "
               >
                 <option value="1">Madera</option>
                 <option value="2">Tela</option>
@@ -548,8 +1134,13 @@
           </div>
           <div class="w-full lg:w-3/12 px-2">
             <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700"> Estado: </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.status">
+              <label class="block text-sm font-medium text-gray-700">
+                Estado:
+              </label>
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.status"
+              >
                 {{ $page.props.errors.status }}
               </p>
               <select
@@ -557,7 +1148,18 @@
                 id="material"
                 name="material"
                 autocomplete="article-material"
-                class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                class="
+                  mt-1
+                  block
+                  w-full
+                  px-3
+                  border border-gray-300
+                  bg-white
+                  rounded-md
+                  shadow-sm
+                  focus:outline-none focus:ring-blue-500 focus:border-blue-500
+                  sm:text-sm
+                "
               >
                 <option value="1">Malo</option>
                 <option value="2">Regular</option>
@@ -569,7 +1171,9 @@
           </div>
           <div class="w-full lg:w-3/12 px-2">
             <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700"> Marca: </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Marca:
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.brand">
                 {{ $page.props.errors.brand }}
               </p>
@@ -578,7 +1182,21 @@
                 minLength="10"
                 maxlength="100"
                 placeholder="Ingresar marca"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="createArticleForm.brand"
                 required
               />
@@ -586,7 +1204,9 @@
           </div>
           <div class="w-full lg:w-3/12 px-2">
             <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700"> Color </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Color
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.color">
                 {{ $page.props.errors.color }}
               </p>
@@ -595,7 +1215,21 @@
                 minLength="10"
                 maxlength="50"
                 placeholder="Ingresar color"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="createArticleForm.color"
                 required
               />
@@ -604,7 +1238,9 @@
 
           <div class="w-full lg:w-3/12 px-2">
             <div class="relative w-full px-2">
-              <label class="block text-sm font-medium text-gray-700"> Precio </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Precio
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.price">
                 {{ $page.props.errors.price }}
               </p>
@@ -613,7 +1249,21 @@
                 minLength="10"
                 maxlength="100"
                 placeholder="Ingresar precio"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="createArticleForm.price"
                 required
               />
@@ -622,7 +1272,9 @@
 
           <div class="w-full lg:w-3/12">
             <div class="relative w-full px-2">
-              <label class="block text-sm font-medium text-gray-700"> Medidas </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Medidas
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.size">
                 {{ $page.props.errors.size }}
               </p>
@@ -631,7 +1283,21 @@
                 minLength="10"
                 maxlength="100"
                 placeholder="Ingresar medidas"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="createArticleForm.size"
                 required
               />
@@ -640,16 +1306,32 @@
 
           <div class="w-full">
             <div class="relative w-full px-2">
-              <label class="block text-sm font-medium text-gray-700"> Descripción </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+              <label class="block text-sm font-medium text-gray-700">
+                Descripción
+              </label>
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.description"
+              >
                 {{ $page.props.errors.description }}
               </p>
               <textarea
                 v-model="this.createArticleForm.description"
                 id="about"
                 name="about"
-                rows="3"
-                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                rows="14"
+                minLength="1"
+                maxlength="2000"
+                class="
+                  shadow-sm
+                  focus:ring-blue-500 focus:border-blue-500
+                  mt-1
+                  block
+                  w-full
+                  sm:text-sm
+                  border border-gray-300
+                  rounded-md
+                "
                 placeholder="Ingresar descripción"
               />
             </div>
@@ -682,8 +1364,13 @@
           <div class="w-full lg:w-6/12 px-2">
             <div class="relative w-full mb-3">
               <div class="">
-                <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
+                <label class="block text-sm font-medium text-gray-700">
+                  Nombre:
+                </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.name"
+                >
                   {{ $page.props.errors.name }}
                 </p>
                 <input
@@ -691,7 +1378,21 @@
                   minLength="10"
                   maxlength="100"
                   placeholder="Ingresar nombre"
-                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    border-0
+                    px-3
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
                   v-model="updateArticleForm.name"
                   required
                 />
@@ -700,8 +1401,13 @@
           </div>
           <div class="w-full lg:w-3/12 px-2">
             <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700"> Material: </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.material">
+              <label class="block text-sm font-medium text-gray-700">
+                Material:
+              </label>
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.material"
+              >
                 {{ $page.props.errors.material }}
               </p>
               <select
@@ -709,7 +1415,18 @@
                 id="material"
                 name="material"
                 autocomplete="article-material"
-                class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                class="
+                  mt-1
+                  block
+                  w-full
+                  px-3
+                  border border-gray-300
+                  bg-white
+                  rounded-md
+                  shadow-sm
+                  focus:outline-none focus:ring-blue-500 focus:border-blue-500
+                  sm:text-sm
+                "
               >
                 <option value="1">Madera</option>
                 <option value="2">Tela</option>
@@ -721,8 +1438,13 @@
           </div>
           <div class="w-full lg:w-3/12 px-2">
             <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700"> Estado: </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.status">
+              <label class="block text-sm font-medium text-gray-700">
+                Estado:
+              </label>
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.status"
+              >
                 {{ $page.props.errors.status }}
               </p>
               <select
@@ -730,7 +1452,18 @@
                 id="material"
                 name="material"
                 autocomplete="article-material"
-                class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                class="
+                  mt-1
+                  block
+                  w-full
+                  px-3
+                  border border-gray-300
+                  bg-white
+                  rounded-md
+                  shadow-sm
+                  focus:outline-none focus:ring-blue-500 focus:border-blue-500
+                  sm:text-sm
+                "
               >
                 <option value="1">Malo</option>
                 <option value="2">Regular</option>
@@ -742,7 +1475,9 @@
           </div>
           <div class="w-full lg:w-3/12 px-2">
             <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700"> Marca: </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Marca:
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.brand">
                 {{ $page.props.errors.brand }}
               </p>
@@ -751,7 +1486,21 @@
                 minLength="10"
                 maxlength="100"
                 placeholder="Ingresar marca"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="updateArticleForm.brand"
                 required
               />
@@ -759,16 +1508,32 @@
           </div>
           <div class="w-full lg:w-3/12 px-2">
             <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700"> Color </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Color
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.color">
                 {{ $page.props.errors.color }}
               </p>
               <input
                 type="text"
-                minLength="10"
+                minLength="1"
                 maxlength="50"
                 placeholder="Ingresar color"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="updateArticleForm.color"
                 required
               />
@@ -777,7 +1542,9 @@
 
           <div class="w-full lg:w-3/12 px-2">
             <div class="relative w-full px-2">
-              <label class="block text-sm font-medium text-gray-700"> Precio </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Precio
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.price">
                 {{ $page.props.errors.price }}
               </p>
@@ -786,7 +1553,21 @@
                 minLength="10"
                 maxlength="100"
                 placeholder="Ingresar precio"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="updateArticleForm.price"
                 required
               />
@@ -795,7 +1576,9 @@
 
           <div class="w-full lg:w-3/12">
             <div class="relative w-full px-2">
-              <label class="block text-sm font-medium text-gray-700"> Medidas </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Medidas
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.size">
                 {{ $page.props.errors.size }}
               </p>
@@ -804,7 +1587,21 @@
                 minLength="10"
                 maxlength="100"
                 placeholder="Ingresar medidas"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="updateArticleForm.size"
                 required
               />
@@ -813,16 +1610,32 @@
 
           <div class="w-full">
             <div class="relative w-full px-2">
-              <label class="block text-sm font-medium text-gray-700"> Descripción </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+              <label class="block text-sm font-medium text-gray-700">
+                Descripción
+              </label>
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.description"
+              >
                 {{ $page.props.errors.description }}
               </p>
               <textarea
                 v-model="updateArticleForm.description"
                 id="about"
                 name="about"
-                rows="3"
-                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                rows="14"
+                minLength="1"
+                maxlength="2000"
+                class="
+                  shadow-sm
+                  focus:ring-blue-500 focus:border-blue-500
+                  mt-1
+                  block
+                  w-full
+                  sm:text-sm
+                  border border-gray-300
+                  rounded-md
+                "
                 placeholder="Ingresar descripción"
               />
             </div>
@@ -851,7 +1664,9 @@
         </p>
       </template>
       <template v-slot:footer>
-        <jet-secondary-button @click="closeModal()"> Cancelar </jet-secondary-button>
+        <jet-secondary-button @click="closeModal()">
+          Cancelar
+        </jet-secondary-button>
         <jet-danger-button class="ml-3" @click="deleteArticle()">
           Eliminar
         </jet-danger-button>
@@ -870,7 +1685,6 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/Pagination";
 import { Inertia } from "@inertiajs/inertia";
 import "sweetalert2/dist/sweetalert2.min.css";
-import { pickBy, throttle } from "lodash";
 
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
@@ -878,13 +1692,32 @@ import JetInput from "@/Jetstream/Input.vue";
 import JetInputError from "@/Jetstream/InputError.vue";
 import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import SearchFilter from "@/Components/SearchFilter";
+import Icon from "@/Components/Icon";
 
 import TextInput from "@/Components/TextInput";
 import Alert from "@/Components/Alert";
 import { mapActions } from "vuex";
+import { ref } from "vue";
+import Dropdown from "@/Components/Dropdown";
+import moment from "moment";
+import Datepicker from "vue3-date-time-picker";
+import { pickBy, throttle, mapValues } from "lodash";
+
 import $ from "jquery";
 export default defineComponent({
   layout: PrincipalLayout,
+  setup() {
+    const date = ref(new Date());
+    var format = (date) => {
+      const format = "YYYY-MM-DD";
+      return moment(date).format(format);
+    };
+    return {
+      date,
+      format,
+    };
+  },
   props: {
     listArticles: Object,
     section_slug: String,
@@ -900,9 +1733,14 @@ export default defineComponent({
     JetInput,
     JetInputError,
     JetSecondaryButton,
+    SearchFilter,
     TextInput,
     Alert,
     JetButtonSuccess,
+    Datepicker,
+    Icon,
+    Dropdown,
+    moment,
   },
   data() {
     return {
@@ -911,8 +1749,13 @@ export default defineComponent({
       type_alert: null,
       params: {
         search: this.filters.search,
+        status: this.filters.status,
+        material: this.filters.material,
         field: this.filters.field,
         direction: this.filters.direction,
+        dateStart: this.filters.dateStart,
+        dateEnd: this.filters.dateEnd,
+        perPage: this.filters.perPage,
       },
 
       //  Create
@@ -936,6 +1779,18 @@ export default defineComponent({
     };
   },
   methods: {
+    formatDate(value) {
+      if (value != null) {
+        return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
+      }
+      return null;
+    },
+    formatDateShow(value) {
+      if (value != null) {
+        return moment(new Date(value)).format("YYYY-MM-DD");
+      }
+      return null;
+    },
     // jquery
 
     printJquery() {
@@ -1076,10 +1931,22 @@ export default defineComponent({
     closeModal() {
       this.modal_open = false;
     },
+    reset() {
+      this.params = mapValues(this.params, () => null);
+    },
+    dataParams() {
+      return this.params;
+    },
   },
   watch: {
     params: {
       handler: throttle(function () {
+        if (this.params.dateStart != null) {
+          this.params.dateStart = this.formatDate(this.params.dateStart);
+        }
+        if (this.params.dateEnd != null) {
+          this.params.dateEnd = this.formatDate(this.params.dateEnd);
+        }
         let params = pickBy(this.params);
         this.$inertia.get(
           this.route("secretary.communities.articles.index", {

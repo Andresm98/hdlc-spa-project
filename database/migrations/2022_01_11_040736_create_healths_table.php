@@ -16,10 +16,10 @@ class CreateHealthsTable extends Migration
         Schema::create('healths', function (Blueprint $table) {
             $table->id();
 
-            $table->dateTime('consult_date');
             $table->text('actual_health');
             $table->text('chronic_diseases');
             $table->text('other_health_problems');
+            $table->dateTime('consult_date');
 
             //  Crear relación con profile
 

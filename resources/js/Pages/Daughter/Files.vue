@@ -186,7 +186,7 @@
       </div>
       <div class="mt-2">
         <p class="text-black dark:text-white">
-          La presente plantiflla de información se relaciona a todos los
+          La presente plantilla de información se relaciona a todos los
           documentos de la hermana, lea las istrucciones al ingresar un
           documento. Tamaño, formatos y otros requisitos para almacenar de
           manera correcta un archivo específico.
@@ -296,7 +296,7 @@
           />
         </div>
 
-        <div
+        <!-- <div
           class="
             justify-center
             text-sm
@@ -381,7 +381,7 @@
               </template>
             </dropdown>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- Table -->
       <section class="pl-4">

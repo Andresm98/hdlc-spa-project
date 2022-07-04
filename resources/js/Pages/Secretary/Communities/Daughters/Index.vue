@@ -81,14 +81,15 @@
                   </div>
                   <div class="ml-4">
                     <div class="text-sm font-medium text-gray-900">
-                      {{ user_custom.name }}
+                      {{ user_custom.profile.user.name }}
                     </div>
                     <div class="text-sm text-gray-500">
-                      {{ user_custom.lastname }}
+                      {{ user_custom.profile.user.lastname }}
                     </div>
                     <span
                       v-if="
-                        user_custom.comm_name && user_custom.comm_level == 1
+                        user_custom.community.comm_name &&
+                        user_custom.community.comm_level == 1
                       "
                       class="
                         px-2
@@ -101,19 +102,20 @@
                         text-cyan-800
                       "
                     >
-                      {{ user_custom.comm_name }}
+                      {{ user_custom.community.comm_name }}
                     </span>
-                    <div v-if="user_custom.comm_slug">
+                    <div v-if="user_custom.community.comm_slug">
                       <a
                         :href="
                           route('secretary.works.edit', {
-                            slug: user_custom.comm_slug,
+                            slug: user_custom.community.comm_slug,
                           })
                         "
                       >
                         <span
                           v-if="
-                            user_custom.comm_name && user_custom.comm_level == 2
+                            user_custom.community.comm_name &&
+                            user_custom.community.comm_level == 2
                           "
                           class="
                             px-2
@@ -126,7 +128,7 @@
                             text-lime-800
                           "
                         >
-                          {{ user_custom.comm_name }}
+                          {{ user_custom.community.comm_name }}
                         </span>
                       </a>
                     </div>
@@ -146,7 +148,16 @@
                     text-blue-700
                   "
                 >
-                  {{ user_custom.name_appoinment }}
+                  <div v-if="user_custom.appointments != null">
+                    <div
+                      v-for="appointment in user_custom.appointments"
+                      :key="appointment"
+                    >
+                      <div v-if="appointment.status == 1">
+                        {{ appointment.appointment_level.name }}
+                      </div>
+                    </div>
+                  </div>
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
@@ -178,7 +189,7 @@
                   <Link
                     :href="
                       route('secretary.daughters.edit', {
-                        slug: user_custom.slug,
+                        slug: user_custom.profile.user.slug,
                       })
                     "
                   >
@@ -257,7 +268,7 @@ export default {
         )
         .then((res) => {
           if (res.data.length > 0) {
-            // console.log("console ", res.data);
+            console.log(res);
             this.daughters_list = res;
           }
         });

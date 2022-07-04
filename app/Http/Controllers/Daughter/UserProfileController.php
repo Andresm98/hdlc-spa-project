@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Daughter;
 
+use PDF;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Secretary\Daughter\ProfileController;
+use App\Http\Controllers\Secretary\Daughter\TransferController;
 
 class UserProfileController extends Controller
 {
@@ -22,6 +26,9 @@ class UserProfileController extends Controller
         $authUser = auth()->user();
 
         $daughter = User::find($authUser->id);
+        if (!$daughter) {
+            return abort(404);
+        }
         $daughter->profile;
 
         if ($daughter->profile) {
@@ -281,5 +288,114 @@ class UserProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    function search($value, $array)
+    {
+        return array_search($value, $array);
+    }
+
+    public function reportInfoProfilePDF(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "options"    => ['nullable', 'array', 'min:0', 'max:6'],
+            "options.*"    => ['nullable', 'integer', 'distinct', 'between:1,6'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', "Error al validar datos");
+        }
+
+        $authUser = auth()->user();
+
+        $user = User::find($authUser->id);
+        if (!$user) {
+            return abort(404);
+        }
+
+        // Import Methods
+        $profile_daughter = new ProfileController();
+        $addressClass = new AddressController();
+        $data =   collect(['status' => true]);
+
+        if ($user->profile) {
+
+            $profile = $user->profile;
+            $data->put('profile',  $profile);
+
+
+            if ($user->image) {
+                $image = Storage::disk('s3')->temporaryUrl(
+                    $user->image->filename,
+                    now()->addMinutes(5)
+                );
+                $data->put('image', $image);
+            }
+
+            if ($user->profile->info_family) {
+                if ($user->profile->info_family->info_family_break) {
+                    $data->put('info_family',  $user->profile->info_family);
+                }
+                $data->put('info_family',   $user->profile->info_family);
+            }
+
+            $data->put('address',  $addressClass->getActualAddress($data->get('profile')->address->political_division_id));
+
+            //  Aditional Information
+            $from = date('Y-01-01 00:00:00');
+            $to = date('Y-12-31 00:00:00');
+            if ($request->get('options') != null) {
+                if (is_numeric($this->search("1", $request->get('options')))) {
+                    $from = date('Y-01-01 00:00:00');
+                    $to = date('Y-12-31 00:00:00');
+                    $data->put('healths', $user->profile->healths
+                        ->whereBetween('consult_date', [$from, $to]));
+                }
+                if (is_numeric($this->search("2", $request->get('options')))) {
+                    $data->put('academic_trainings', $user->profile->academic_trainings);
+                }
+                if (is_numeric($this->search("3", $request->get('options')))) {
+                    $data->put('sacraments', $user->profile->sacraments()
+                        ->orderBy('sacrament_date', 'asc')
+                        ->get());
+                }
+                if (is_numeric($this->search("4", $request->get('options')))) {
+                    $data->put('permits', $user->profile->permits()
+                        ->with('address')
+                        ->whereBetween('date_out', [$from, $to])
+                        ->get());
+                }
+                if (is_numeric($this->search("5", $request->get('options')))) {
+                    $transfers = $user->profile->transfers()->with('community')->get();
+                    $data->put(
+                        'transfer',
+                        $transfers->where('status', 1)->first()
+                    );
+                }
+                if (is_numeric($this->search("6", $request->get('options')))) {
+                    $transfer = $user->profile->transfers->where('status', 1)->first();
+                    $controllerTransfers = new TransferController();
+                    $data->put(
+                        'appointments',
+                        $controllerTransfers->allAppointments($transfer->id)
+                    );
+                    $data->put(
+                        'individualappointments',
+                        $user->profile->appointments()
+                            ->where('transfer_id', null)
+                            ->with('appointment_level')
+                            ->with('community')
+                            ->get()
+                    );
+                }
+            }
+            //
+            // return $data;
+            $pdf = PDF::loadView('reports.daughters.profile', compact('data'));
+            // return $pdf -> download('Usuarios-OpenScience.pdf');
+            return $pdf->setPaper('a4', 'portrait')->stream('Perfil Hermana ' . $user->name . '.pdf');
+        } else {
+            return  collect(['message' => true]);
+        }
     }
 }

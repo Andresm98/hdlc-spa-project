@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Secretary\Daughter;
 
+use PDF;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -219,5 +220,31 @@ class PermitController extends Controller
         $permit->address()->delete();
         $permit->delete();
         return redirect()->back()->with(['success' => 'Permiso eliminado correctamente']);
+    }
+
+    /*
+     *
+     *
+     */
+
+    public function printPermit($user_id, $permit_id)
+    {
+        $validator = Validator::make([
+            'user_id' => $user_id,
+            'permit_id' => $permit_id
+        ], [
+            'user_id' => ['required', 'exists:users,id'],
+            'permit_id' => ['required', 'exists:permits,id']
+        ]);
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        $permit = Permit::find($permit_id);
+        $user = User::find($user_id);
+        $user->profile;
+        $pdf = PDF::loadView('reports.daughters.permit', compact('permit', 'user'));
+        // return $pdf -> download('Usuarios-OpenScience.pdf');
+        return $pdf->setPaper('a4', 'portrait')->stream('Permiso de la hermana ' . $user->name . '.pdf');
     }
 }

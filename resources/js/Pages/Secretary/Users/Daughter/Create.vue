@@ -200,22 +200,7 @@
             lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4
           "
         >
-          <button
-            type="button"
-            class="
-              bg-blue-600
-              text-white text-sm
-              leading-6
-              font-medium
-              py-2
-              px-3
-              rounded-lg
-            "
-          >
-            <!--
-                        FIXME: Import Controllers For PDF-->
-            Plantilla PDF
-          </button>
+
         </div>    <p
                     class="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 text-black dark:text-white"
                 >

@@ -15,6 +15,8 @@
       :message="$page.props.flash.success"
     >
     </alert>
+    <operation></operation>
+
     <section
       class="
         bg-gray-200
@@ -206,20 +208,22 @@
           "
         >
           <button
-            type="button"
             class="
-              bg-blue-600
-              text-white text-sm
-              leading-6
-              font-medium
-              py-2
-              px-3
-              rounded-lg
+              bg-blue-500
+              pt-2
+              pb-2
+              px-4
+              ml-4
+              mr-4
+              rounded-md
+              cursor-pointer
+              text-md
+              hover:bg-blue-600
+              text-white
             "
+            @click="openDialogReport()"
           >
-            <!--
-                        FIXME: Import Controllers For PDF-->
-            Plantilla PDF
+            Imprimir Reporte
           </button>
           <div
             class="
@@ -1046,6 +1050,140 @@
         </jet-button>
       </template>
     </jet-dialog-modal>
+
+    <jet-dialog-modal
+      :show="managingReportsFor"
+      @close="managingReportsFor = null"
+    >
+      <template #title>Opciones del Reporte de la Comunidad </template>
+
+      <template #content>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="1"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Hermanas</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="2"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Actividades</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="3"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Resumen Anual</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="4"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Visitas</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="6"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Inventario</span>
+          </label>
+        </div>
+      </template>
+
+      <template #footer>
+        <jet-secondary-button
+          @click="
+            managingReportsFor = null;
+            options = [];
+          "
+        >
+          Cerrar
+        </jet-secondary-button>
+
+        <a
+          class="
+            mx-2
+            bg-blue-600
+            text-white text-sm
+            leading-6
+            font-medium
+            py-2
+            px-3
+            rounded-lg
+          "
+          target="_blank"
+          :href="
+            this.route(`secretary.worksindividual.report.pdf`, {
+              community_id: this.community_custom.id,
+              options: this.options,
+            })
+          "
+          >GUARDAR</a
+        >
+      </template>
+    </jet-dialog-modal>
   </app-layout>
 </template>
 <script>
@@ -1066,6 +1204,7 @@ import { ref } from "vue";
 import Datepicker from "vue3-date-time-picker";
 import moment from "moment";
 import { mapState, mapActions, mapGetters } from "vuex";
+import Operation from "@/Components/Secretary/Community/Operation";
 
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -1281,6 +1420,7 @@ export default defineComponent({
     moment,
     Alert,
     AppLayout,
+    Operation,
   },
 
   data() {
@@ -1377,6 +1517,8 @@ export default defineComponent({
       updatedStatusPastoralForm: this.$inertia.form({
         dateCloseCommunity: null,
       }),
+      managingReportsFor: null,
+      options: [],
     };
   },
   watch: {
@@ -1608,6 +1750,9 @@ export default defineComponent({
     onTouch() {
       console.log("is touched");
       this.isTouched = true;
+    },
+    openDialogReport() {
+      this.managingReportsFor = this.$inertia.form({});
     },
   },
 });

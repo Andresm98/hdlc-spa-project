@@ -58,6 +58,9 @@ Route::get('address/profile/address/{actual_parish}', [AddressController::class,
 Route::get('address/profile/address_format/{actual_parish}', [AddressController::class, 'getActualAddress'])
     ->name('address.address-format');
 
+Route::get('address/profile/address_format/{actual_parish}', [AddressController::class, 'showActualAddress'])
+    ->name('address.address-format');
+
 // Offices Controllers
 
 Route::get('offices/all', [OfficeController::class, 'index'])
@@ -120,6 +123,15 @@ Route::group(
         Route::get('daughters-charity/show/{slug}', [UserController::class, 'show'])
             ->name('daughters.show');
 
+        Route::get('daughters-charity/all/report', [UserController::class, 'reportDaughtersPDF'])
+            ->name('daughters.report.all');
+
+        Route::get('exportExcel', [UserController::class, 'exportExcel'])
+            ->name('daughters.export.excel');
+
+        Route::get('exportCSV', [UserController::class, 'exportCSV'])
+            ->name('daughters.export.csv');
+
         // Reality Controllers
 
         Route::get('daughters-charity/reality', [RealityController::class, 'index'])
@@ -139,7 +151,7 @@ Route::group(
         Route::put('update/status/{profile_id}', [ProfileController::class, 'updateStatus'])
             ->name('daughters-profile.status.update');
 
-        Route::get('daughters-charity/report/{user_id}', [UserController::class, 'reportInfoProfile'])
+        Route::get('daughters-charity/report', [UserController::class, 'reportInfoProfilePDF'])
             ->name('daughters.report.profile');
 
         //  Health Controllers
@@ -214,6 +226,9 @@ Route::group(
         Route::put('profile/permit/update/{user_id}/{permit_id}', [PermitController::class, 'update'])
             ->name('daughter-profile.permit.update');
 
+        Route::get('profile/permit/print/{user_id}/{permit_id}', [PermitController::class, 'printPermit'])
+            ->name('daughter-profile.permit.pdf');
+
         //  Appointments Controllers
 
         Route::get('profile/appointment/{user_id}', [AppointmentController::class, 'index'])
@@ -253,6 +268,9 @@ Route::group(
 
         Route::get('profile/transfer/transfer/appointents/{transfer_id}', [TransferController::class, 'allAppointments'])
             ->name('daughter-profile.transfer.appointments.index');
+
+        Route::get('profile/transfer/print/{user_id}/{transfer_id}', [TransferController::class, 'printTransfer'])
+            ->name('daughter-profile.transfer.pdf');
 
         // Files
 
@@ -309,11 +327,17 @@ Route::group([
     Route::delete('delete/{community_id}', [CommunityController::class, 'destroy'])
         ->name('communities.delete');
 
-    Route::get('exportExcel', [CommunityController::class, 'exportExcel'])
+    Route::get('export-excel', [CommunityController::class, 'exportExcel'])
         ->name('communities.export.excel');
 
-    Route::get('exportCSV', [CommunityController::class, 'exportCSV'])
+    Route::get('export-csv', [CommunityController::class, 'exportCSV'])
         ->name('communities.export.csv');
+
+    Route::get('report-pdf', [CommunityController::class, 'reportCommPDF'])
+        ->name('communities.report.pdf');
+
+    Route::get('report-communities-pdf', [CommunityController::class, 'reportAllCommPDF'])
+        ->name('communities.pdf.all');
 
     // Works Controllers
 
@@ -338,6 +362,9 @@ Route::group([
     Route::delete('works/delete/{work_id}', [WorkController::class, 'destroy'])
         ->name('works.delete');
 
+    Route::get('works/report-pdf', [WorkController::class, 'reportCommPDF'])
+        ->name('works.report.pdf');
+
     // Works Individual
 
     Route::get('worksindividual/create', [WorkIndividualController::class, 'create'])
@@ -357,6 +384,9 @@ Route::group([
 
     Route::delete('worksindividual/delete/{work_id}', [WorkIndividualController::class, 'destroy'])
         ->name('worksindividual.delete');
+
+    Route::get('worksindividual/report-pdf', [WorkIndividualController::class, 'reportCommPDF'])
+        ->name('worksindividual.report.pdf');
 
     // Communities Activities
 
@@ -404,6 +434,9 @@ Route::group([
 
     Route::get('daughters/{community_id}', [CommunityDaughterController::class, 'index'])
         ->name('communities.daughters.index');
+
+    Route::get('daughters-custom/{community_id}', [CommunityDaughterController::class, 'report'])
+        ->name('communities.daughters.report');
 
     // Communities Inventories
 
@@ -500,6 +533,15 @@ Route::group(
         Route::get('events/delete/{event_id}', [EventController::class, 'destroy'])
             ->name('events.delete');
 
+        Route::get('events/report-pdf', [EventController::class, 'reportPDF'])
+            ->name('events.report.pdf');
+
+        Route::get('exportExcel', [EventController::class, 'exportExcel'])
+            ->name('events.export.excel');
+
+        Route::get('exportCSV', [EventController::class, 'exportCSV'])
+            ->name('events.export.csv');
+
         // Appointments
 
         Route::get('appoinments/all', [AppointmentGlobalController::class, 'index'])
@@ -513,6 +555,15 @@ Route::group(
 
         Route::delete('appoinments/delete/{appoinment_id}', [AppointmentGlobalController::class, 'destroy'])
             ->name('appoinments.delete');
+
+        Route::get('appoinments/report/all', [AppointmentGlobalController::class, 'exportPDF'])
+            ->name('appoinments.pdf');
+
+        Route::get('appoinments/exportExcel', [AppointmentGlobalController::class, 'exportExcel'])
+            ->name('appoinments.export.excel');
+
+        Route::get('appoinments/exportCSV', [AppointmentGlobalController::class, 'exportCSV'])
+            ->name('appoinments.export.csv');
 
         // Permissions
 
@@ -531,10 +582,22 @@ Route::group(
         Route::delete('permissions/delete/{appoinment_id}', [PermissionGlobalController::class, 'destroy'])
             ->name('permissions.delete');
 
+        Route::get('permissions/report/all', [PermissionGlobalController::class, 'printAllPermissions'])
+            ->name('permissions.pdf');
+
+        Route::get('permissions/exportExcel', [PermissionGlobalController::class, 'exportExcel'])
+            ->name('permissions.export.excel');
+
+        Route::get('permissions/exportCSV', [PermissionGlobalController::class, 'exportCSV'])
+            ->name('permissions.export.csv');
+
         // Transfers
 
         Route::get('transfers/all', [TransferGlobalController::class, 'index'])
             ->name('transfers.index');
+
+        Route::get('transfers/profile/show/{user_id}', [TransferGlobalController::class, 'show'])
+            ->name('transfers.daughters.show');
 
         Route::get('transfers/daughters/search', [TransferGlobalController::class, 'search'])
             ->name('transfers.daughters.index');
@@ -547,5 +610,14 @@ Route::group(
 
         Route::delete('transfers/delete/{transfer_id}', [TransferGlobalController::class, 'destroy'])
             ->name('transfers.delete');
+
+        Route::get('transfers/report/all', [TransferGlobalController::class, 'printAllTransfers'])
+            ->name('transfers.pdf');
+
+        Route::get('transfers/exportExcel', [TransferGlobalController::class, 'exportExcel'])
+            ->name('transfers.export.excel');
+
+        Route::get('transfers/exportCSV', [TransferGlobalController::class, 'exportCSV'])
+            ->name('transfers.export.csv');
     }
 );

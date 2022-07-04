@@ -74,4 +74,19 @@ class Community extends Model
     {
         return $this->morphMany('App\Models\File', 'fileable');
     }
+
+    //  Custom Relationship
+
+    public function works()
+    {
+        return $this->getQuery()
+            ->select('communities.*', 'pastorals.name as name_pastoral')
+
+            // // join the pivot table for users and roles
+            ->join('pastorals', 'pastorals.id', '=', 'communities.pastoral_id')
+            // ->join('zones', 'zones.id', '=', 'communities.zone_id')
+            // for this user
+            ->where('comm_level', 2)
+            ->where('comm_id', $this->id);
+    }
 }

@@ -212,7 +212,7 @@
     <br />
 
     <!-- Container Filters -->
-    <div class="container mx-auto">
+    <div class="container mx-auto ml-7">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <div
           class="
@@ -274,29 +274,30 @@
                 {{ category.name }}
               </option>
             </select>
+            <div v-if="params.type != null">
+              <small class="block text-gray-700 mt-2">Niveles:</small>
 
-            <small class="block text-gray-700 mt-2">Niveles:</small>
-
-            <select
-              v-model="params.level"
-              class="
-                mt-1
-                block
-                w-full
-                px-3
-                border border-gray-300
-                bg-white
-                rounded-md
-                shadow-sm
-                focus:outline-none focus:ring-blue-500 focus:border-blue-500
-                sm:text-sm
-              "
-            >
-              <option :value="null">Todos</option>
-              <option v-for="level in levels" :key="level" :value="level.id">
-                {{ level.name }}
-              </option>
-            </select>
+              <select
+                v-model="params.level"
+                class="
+                  mt-1
+                  block
+                  w-full
+                  px-3
+                  border border-gray-300
+                  bg-white
+                  rounded-md
+                  shadow-sm
+                  focus:outline-none focus:ring-blue-500 focus:border-blue-500
+                  sm:text-sm
+                "
+              >
+                <option :value="null">Todos</option>
+                <option v-for="level in levels" :key="level" :value="level.id">
+                  {{ level.name }}
+                </option>
+              </select>
+            </div>
 
             <small class="block text-gray-700 mt-2">Estado:</small>
 
@@ -424,8 +425,14 @@
                   <a
                     class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                     target="_blank"
+                    :href="route('secretary.appoinments.pdf', this.params)"
+                    >PDF</a
+                  >
+                  <a
+                    class="block px-6 py-2 hover:text-white hover:bg-blue-500"
+                    target="_blank"
                     :href="
-                      route('secretary.communities.export.excel', this.params)
+                      route('secretary.appoinments.export.excel', this.params)
                     "
                     >Excel</a
                   >
@@ -433,7 +440,7 @@
                     class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                     target="_blank"
                     :href="
-                      route('secretary.communities.export.csv', this.params)
+                      route('secretary.appoinments.export.csv', this.params)
                     "
                     >CSV</a
                   >
@@ -1263,8 +1270,8 @@ export default {
         search: this.filters.search,
         date: this.filters.date,
         type: this.filters.type,
-        status: this.filters.status,
         level: this.filters.level,
+        status: this.filters.status,
         dateStart: this.filters.dateStart,
         dateEnd: this.filters.dateEnd,
       },
@@ -1337,6 +1344,9 @@ export default {
           quill.setHTML(this.data_intput_one);
         }
       }
+    },
+    "params.type": function () {
+      this.params.level = null;
     },
     params: {
       handler: throttle(function () {

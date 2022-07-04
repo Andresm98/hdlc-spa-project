@@ -10,7 +10,7 @@ import Datepicker from "vue3-date-time-picker";
 import { QuillEditor } from "@vueup/vue-quill";
 import { Bar } from 'vue-chartjs'
 import { SetupCalendar, Calendar, DatePicker } from 'v-calendar';
-
+import { jsPDF } from "jspdf";
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
@@ -24,6 +24,7 @@ createInertiaApp({
             .use(store)
             .use(VueSweetalert2)
             .use(SetupCalendar)
+            .use(jsPDF)
             .component("multiselect", VueMultiselect)
             .component("datepicker", Datepicker)
             .component("QuillEditor", QuillEditor)

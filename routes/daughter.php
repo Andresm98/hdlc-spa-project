@@ -141,5 +141,14 @@ Route::group(
 
         Route::put('permit/update/{user_id}/{permit_id}', [PermitProfileController::class, 'update'])
             ->name('permit.update');
+
+        Route::get('permit/print/{permit_id}', [PermitProfileController::class, 'printPermit'])
+            ->name('permit.pdf');
+
+
+        //  Report
+
+        Route::get('report/pdf', [UserProfileController::class, 'reportInfoProfilePDF'])
+            ->name('report.profile');
     }
 );

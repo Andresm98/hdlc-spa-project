@@ -184,8 +184,8 @@
       </div>
       <div class="mt-2">
         <p>
-          La presente plantiflla de información se relaciona a todos los
-          permisos que usted a solicitado.
+          La presente plantilla de información se relaciona a todos los permisos
+          que usted a solicitado.
         </p>
       </div>
     </section>
@@ -285,7 +285,7 @@
           />
         </div>
 
-        <div
+        <!-- <div
           class="
             justify-center
             text-sm
@@ -370,7 +370,7 @@
               </template>
             </dropdown>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- Table -->
       <section class="pl-4">
@@ -1392,8 +1392,18 @@
       </template>
 
       <template #footer>
+        <a
+          target="_blank"
+          :href="
+            route('daughter.permit.pdf', {
+              permit_id: this.permitBeingUpdated.id,
+            })
+          "
+        >
+          <jet-button class="mr-3">Imprimir</jet-button></a
+        >
         <jet-secondary-button @click="updatePermitCancel">
-          Cancelar
+          Cerrar
         </jet-secondary-button>
         <!-- <jet-button-success class="ml-3" @click="updatePermit">
           Actualizar
@@ -1418,6 +1428,7 @@ import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import Pagination from "@/Components/Pagination";
 import Icon from "@/Components/Icon";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
+import JetButton from "@/Jetstream/Button.vue";
 
 import TextInput from "@/Components/TextInput";
 import { ref } from "vue";
@@ -1466,6 +1477,7 @@ export default {
     Operation,
     Pagination,
     JetConfirmationModal,
+    JetButton,
   },
   mounted() {
     this.allAppointmentLevel;

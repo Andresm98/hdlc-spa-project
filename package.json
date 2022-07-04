@@ -30,6 +30,7 @@
         "@vueup/vue-quill": "^1.0.0-beta.8",
         "chart.js": "^3.7.1",
         "jquery": "^3.6.0",
+        "jspdf": "^2.5.1",
         "moment": "^2.29.1",
         "moment-range": "^4.0.2",
         "swiper": "^7.4.1",

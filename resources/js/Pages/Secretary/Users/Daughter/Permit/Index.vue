@@ -984,6 +984,17 @@ input:checked ~ .dot {
           <jet-secondary-button @click="updatePermitCancel">
             Cancelar
           </jet-secondary-button>
+          <a
+            target="_blank"
+            :href="
+              route('secretary.daughter-profile.permit.pdf', {
+                user_id: this.profile.user_id,
+                permit_id: this.permitBeingUpdated.id,
+              })
+            "
+          >
+            <jet-button class="ml-3">Imprimir</jet-button></a
+          >
 
           <jet-button-success class="ml-3" @click="updatePermit">
             Actualizar

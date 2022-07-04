@@ -183,7 +183,7 @@
               </div>
               <div class="mt-2">
                 <p class="text-black dark:text-white">
-                  La presente plantiflla de información se relaciona a la
+                  La presente plantilla de información se relaciona a la
                   información el historial de sacramentos, por favor tenga en cuenta que
                   si desea ingresar un nuevo registro debe dar clic en el botón
                   de color verde. Una vez ingresada la información requerida

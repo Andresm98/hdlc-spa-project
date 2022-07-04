@@ -185,7 +185,7 @@
       </div>
       <div class="mt-2">
         <p>
-          La presente plantiflla de información se relaciona a todos los
+          La presente plantilla de información se relaciona a todos los
           permisos que se realizan en la compañía.
         </p>
       </div>
@@ -199,7 +199,7 @@
     </section>
 
     <!-- Container Filters -->
-    <div class="container mx-auto">
+    <div class="container mx-auto ml-7">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <div
           class="
@@ -361,17 +361,21 @@
                   <a
                     class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                     target="_blank"
+                    :href="route('secretary.permissions.pdf', this.params)"
+                    >PDF</a
+                  >
+                  <a
+                    class="block px-6 py-2 hover:text-white hover:bg-blue-500"
+                    target="_blank"
                     :href="
-                      route('secretary.communities.export.excel', this.params)
+                      route('secretary.permissions.export.excel', this.params)
                     "
                     >Excel</a
                   >
                   <a
                     class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                     target="_blank"
-                    :href="
-                      route('secretary.communities.export.csv', this.params)
-                    "
+                    :href="route('secretary.permissions.export.csv', this.params)"
                     >CSV</a
                   >
                 </div>
@@ -384,9 +388,7 @@
       <section class="pl-4">
         <pagination class="mt-6 mb-5" :links="permits.links" />
       </section>
-      <small class="ml-6">
-        Se encontraron {{ permits.total }} permisos.</small
-      >
+      <small class="ml-6"> Se encontraron {{ permits.total }} permisos.</small>
       <div class="py-2">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
           <div
@@ -1431,7 +1433,17 @@
         <jet-secondary-button @click="updatePermitCancel">
           Cancelar
         </jet-secondary-button>
-
+        <a
+          target="_blank"
+          :href="
+            route('secretary.daughter-profile.permit.pdf', {
+              user_id: this.permitBeingUpdated.profile.user_id,
+              permit_id: this.permitBeingUpdated.id,
+            })
+          "
+        >
+          <jet-button class="ml-3">Imprimir</jet-button></a
+        >
         <jet-button-success class="ml-3" @click="updatePermit">
           Actualizar
         </jet-button-success>
@@ -1508,6 +1520,7 @@ import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetInput from "@/Jetstream/Input.vue";
 import JetInputError from "@/Jetstream/InputError.vue";
+import JetButton from "@/Jetstream/Button.vue";
 import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import Datepicker from "vue3-date-time-picker";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
@@ -1544,6 +1557,7 @@ export default {
     };
   },
   components: {
+    JetButton,
     AppLayout,
     moment,
     range,

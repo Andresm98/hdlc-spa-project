@@ -28,7 +28,7 @@ class EventSeeder extends Seeder
                 'name' => 'Name for ' . Str::random(59),
                 'description' => 'Description for ' . Str::random(59),
                 // Comunidad, Extracomunitaria, Ordinaria, Extraordinaria
-                'type' => rand(1, 4),
+                'type' => rand(1, 3),
                 'dates' =>   date('Y-m-d H:i:s', $val),
                 'datesEnd' =>   date('Y-m-d H:i:s', $val),
 

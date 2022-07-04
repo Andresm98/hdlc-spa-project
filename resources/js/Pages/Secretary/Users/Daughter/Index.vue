@@ -58,7 +58,7 @@
               >Crear usuarios</Link
             > -->
             <!-- Container Filters -->
-            <div class="container mx-auto">
+            <div class="container mx-auto ml-7">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div
                   class="
@@ -110,6 +110,32 @@
                       <option value="3">Retiradas</option>
                     </select>
 
+                    <div v-if="params.status == 1">
+                      <small class="block text-gray-700 mt-2">Tipo:</small>
+                      <select
+                        v-model="params.typeActive"
+                        class="
+                          mt-1
+                          block
+                          w-full
+                          px-3
+                          border border-gray-300
+                          bg-white
+                          rounded-md
+                          shadow-sm
+                          focus:outline-none
+                          focus:ring-blue-500
+                          focus:border-blue-500
+                          sm:text-sm
+                        "
+                      >
+                        <option :value="null">Todos</option>
+                        <option value="1">Hermanas Seminario</option>
+                        <option value="2">Hermanas Jóvenes</option>
+                        <option value="3">Hermanas con Votos</option>
+                      </select>
+                    </div>
+                    <hr />
                     <!-- <small class="block text-gray-700 mt-2">Pastoral:</small>
 
                     <select
@@ -180,7 +206,7 @@
                       <option value="20">20</option>
                     </select>
 
-                    <div v-if="params.status == 1">
+                    <div>
                       <small class="block text-gray-700 mt-2">Pastoral:</small>
 
                       <select
@@ -211,6 +237,178 @@
                       </select>
                     </div>
                   </search-filter>
+                </div>
+
+                <div
+                  v-if="params.status != null"
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    p-1
+                    bg-gray-100
+                  "
+                >
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Rangos de Fechas</small
+                  >
+                  <p
+                    class="text-red-400 text-sm"
+                    v-show="$page.props.errors.dateStart"
+                  >
+                    {{ $page.props.errors.dateStart }}
+                  </p>
+                  <Datepicker
+                    v-model="params.dateStart"
+                    :format="format"
+                    autoApply
+                    required
+                  />
+                  <small class="justify-content-center ml-6"
+                    >Deste - Hasta</small
+                  >
+                  <p
+                    class="text-red-400 text-sm"
+                    v-show="$page.props.errors.dateEnd"
+                  >
+                    {{ $page.props.errors.dateEnd }}
+                  </p>
+                  <Datepicker
+                    v-model="params.dateEnd"
+                    :format="format"
+                    autoApply
+                    required
+                  />
+                </div>
+
+                <div
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    p-1
+                    bg-gray-100
+                  "
+                >
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Exportar Listas</small
+                  >
+                  <div
+                    class="
+                      md:text-md
+                      flex
+                      items-center
+                      justify-between
+                      p-4
+                      w-full
+                      text-sm
+                      md:px-12 md:py-0
+                    "
+                  >
+                    <dropdown class="mt-1" placement="bottom-end">
+                      <template #default>
+                        <div
+                          class="
+                            group
+                            flex
+                            items-center
+                            cursor-pointer
+                            select-none
+                          "
+                        >
+                          <div
+                            class="
+                              mr-1
+                              text-gray-700
+                              group-hover:text-blue-600
+                              focus:text-blue-600
+                              whitespace-nowrap
+                            "
+                          >
+                            <span
+                              class="
+                                px-1
+                                inline-flex
+                                text-xs
+                                leading-5
+                                font-semibold
+                                rounded-sm
+                                bg-gray-200
+                                text-gray-800
+                              "
+                              >&nbsp;Filtros</span
+                            >
+                          </div>
+                          <icon
+                            class="
+                              w-5
+                              h-5
+                              fill-gray-700
+                              group-hover:fill-blue-600
+                              focus:fill-blue-600
+                            "
+                            name="cheveron-down"
+                          />
+                        </div>
+                      </template>
+                      <template #dropdown>
+                        <div
+                          class="mt-2 py-2 text-sm bg-white rounded shadow-xl"
+                        >
+                          <a
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            target="_blank"
+                            :href="
+                              route(
+                                'secretary.daughters.report.all',
+                                this.params
+                              )
+                            "
+                            >PDF</a
+                          >
+                          <a
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            target="_blank"
+                            :href="
+                              route(
+                                'secretary.daughters.export.excel',
+                                this.params
+                              )
+                            "
+                            >Excel</a
+                          >
+                          <a
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            target="_blank"
+                            :href="
+                              route(
+                                'secretary.daughters.export.csv',
+                                this.params
+                              )
+                            "
+                            >CSV</a
+                          >
+                        </div>
+                      </template>
+                    </dropdown>
+                  </div>
                 </div>
               </div>
             </div>
@@ -434,7 +632,12 @@
                                     text-green-800
                                   "
                                 >
-                                  Vigente
+                                  Vigente desde
+                                  {{
+                                    formatDateShow(
+                                      user_custom.profile.date_admission
+                                    )
+                                  }}
                                 </span>
                               </div>
                               <div v-if="user_custom.profile.status == 2">
@@ -450,7 +653,12 @@
                                     text-red-800
                                   "
                                 >
-                                  Fallecida
+                                  Fallecida en
+                                  {{
+                                    formatDateShow(
+                                      user_custom.profile.date_death
+                                    )
+                                  }}
                                 </span>
                               </div>
                               <div v-if="user_custom.profile.status == 3">
@@ -466,7 +674,12 @@
                                     text-blue-800
                                   "
                                 >
-                                  Retirada
+                                  Retirada en
+                                  {{
+                                    formatDateShow(
+                                      user_custom.profile.date_exit
+                                    )
+                                  }}
                                 </span>
                               </div>
                             </div>
@@ -499,36 +712,6 @@
                             <!-- Components -->
 
                             <div class="mx-auto flex gap-10">
-                              <!-- Read User -->
-                              <!-- <Link
-                                :href="
-                                  route('admin.user.show', {
-                                    slug: user_custom.slug,
-                                  })
-                                "
-                              >
-                                <div class="w-auto h-auto">
-                                  <div class="flex-1 h-full">
-                                    <div
-                                      class="flex items-center justify-center flex-1 h-full p-2 border border-blue-800 text-white shadow rounded-lg hover:bg-blue-50 hover:text-zinc-300"
-                                    >
-                                      <div class="relative">
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          class="h-5 w-5 text-blue-800"
-                                          viewBox="0 0 20 20"
-                                          fill="currentColor"
-                                        >
-                                          <path
-                                            d="M18.125,15.804l-4.038-4.037c0.675-1.079,1.012-2.308,1.01-3.534C15.089,4.62,12.199,1.75,8.584,1.75C4.815,1.75,1.982,4.726,2,8.286c0.021,3.577,2.908,6.549,6.578,6.549c1.241,0,2.417-0.347,3.44-0.985l4.032,4.026c0.167,0.166,0.43,0.166,0.596,0l1.479-1.478C18.292,16.234,18.292,15.968,18.125,15.804 M8.578,13.99c-3.198,0-5.716-2.593-5.733-5.71c-0.017-3.084,2.438-5.686,5.74-5.686c3.197,0,5.625,2.493,5.64,5.624C14.242,11.548,11.621,13.99,8.578,13.99 M16.349,16.981l-3.637-3.635c0.131-0.11,0.721-0.695,0.876-0.884l3.642,3.639L16.349,16.981z"
-                                          ></path>
-                                        </svg>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </Link> -->
-
                               <!-- Update User -->
                               <Link
                                 :href="
@@ -571,6 +754,41 @@
                                 </div>
                               </Link>
 
+                              <!-- Print User -->
+                              <button @click="openDialogReport(user_custom)">
+                                <div class="w-auto h-auto">
+                                  <div class="flex-1 h-full">
+                                    <div
+                                      class="
+                                        flex
+                                        items-center
+                                        justify-center
+                                        flex-1
+                                        h-full
+                                        p-2
+                                        border border-blue-800
+                                        text-white
+                                        shadow
+                                        rounded-lg
+                                        hover:bg-blue-50 hover:text-zinc-300
+                                      "
+                                    >
+                                      <div class="relative">
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          class="h-5 w-5 text-blue-800"
+                                          viewBox="0 0 20 20"
+                                          fill="currentColor"
+                                        >
+                                          <path
+                                            d="M17.453,12.691V7.723 M17.453,12.691V7.723 M1.719,12.691V7.723 M18.281,12.691V7.723 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M7.309,13.312h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,13.312,7.309,13.312 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M16.625,6.066h-1.449V3.168c0-0.228-0.186-0.414-0.414-0.414H5.238c-0.228,0-0.414,0.187-0.414,0.414v2.898H3.375c-0.913,0-1.656,0.743-1.656,1.656v4.969c0,0.913,0.743,1.656,1.656,1.656h1.449v2.484c0,0.228,0.187,0.414,0.414,0.414h9.523c0.229,0,0.414-0.187,0.414-0.414v-2.484h1.449c0.912,0,1.656-0.743,1.656-1.656V7.723C18.281,6.81,17.537,6.066,16.625,6.066 M5.652,3.582h8.695v2.484H5.652V3.582zM14.348,16.418H5.652v-4.969h8.695V16.418z M17.453,12.691c0,0.458-0.371,0.828-0.828,0.828h-1.449v-2.484c0-0.228-0.186-0.414-0.414-0.414H5.238c-0.228,0-0.414,0.186-0.414,0.414v2.484H3.375c-0.458,0-0.828-0.37-0.828-0.828V7.723c0-0.458,0.371-0.828,0.828-0.828h13.25c0.457,0,0.828,0.371,0.828,0.828V12.691z M7.309,13.312h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,13.312,7.309,13.312M7.309,15.383h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,15.383,7.309,15.383 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555"
+                                          ></path>
+                                        </svg>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </button>
                               <!-- Delete User -->
                               <button
                                 @click="
@@ -662,6 +880,161 @@
         </jet-danger-button>
       </template>
     </jet-dialog-modal>
+
+    <jet-dialog-modal
+      :show="managingReportsFor"
+      @close="managingReportsFor = null"
+    >
+      <template #title
+        >Opciones del Reporte de la Hermana: {{ managingReportsFor.user.name }}
+        {{ managingReportsFor.user.lastname }}.
+      </template>
+
+      <template #content>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="1"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Salud Actual</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="2"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Récord Académico</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="3"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Sacramentos</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="4"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Permisos</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="5"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Cambios</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="6"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Nombramientos</span>
+          </label>
+        </div>
+      </template>
+
+      <template #footer>
+        <jet-secondary-button
+          @click="
+            managingReportsFor = null;
+            options = [];
+          "
+        >
+          Cerrar
+        </jet-secondary-button>
+
+        <a
+          class="
+            mx-2
+            bg-blue-600
+            text-white text-sm
+            leading-6
+            font-medium
+            py-2
+            px-3
+            rounded-lg
+          "
+          target="_blank"
+          :href="
+            this.route(`secretary.daughters.report.profile`, {
+              user_id: managingReportsFor.user.id,
+              options: this.options,
+            })
+          "
+          >GUARDAR</a
+        >
+      </template>
+    </jet-dialog-modal>
   </app-layout>
 </template>
 
@@ -670,6 +1043,7 @@ import { defineComponent } from "vue";
 
 import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
+import Icon from "@/Components/Icon";
 
 import { Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/Pagination";
@@ -690,6 +1064,8 @@ import Alert from "@/Components/Alert";
 import { mapActions } from "vuex";
 import Operation from "@/Components/Secretary/Daughter/Operation";
 import Datepicker from "vue3-date-time-picker";
+import Dropdown from "@/Components/Dropdown";
+import { ref } from "vue";
 
 export default defineComponent({
   layout: PrincipalLayout,
@@ -701,6 +1077,24 @@ export default defineComponent({
     provinces: {
       type: Array,
     },
+  },
+  setup() {
+    const date = ref(new Date());
+    var format = (date) => {
+      const format = "YYYY-MM-DD";
+      return moment(date).format(format);
+    };
+    return {
+      date,
+      format,
+      pagination: {
+        clickable: true,
+        renderBullet: function (index, className) {
+          return '<span class="' + className + '">' + (index + 1) + "</span>";
+        },
+      },
+      modules: [Pagination],
+    };
   },
   components: {
     Link,
@@ -717,6 +1111,8 @@ export default defineComponent({
     moment,
     SearchFilter,
     Operation,
+    Icon,
+    Dropdown,
   },
   data() {
     return {
@@ -733,7 +1129,10 @@ export default defineComponent({
         dateEnd: this.filters.dateEnd,
         perPage: this.filters.perPage,
         perProvince: this.filters.perProvince,
+        typeActive: this.filters.typeActive,
       },
+      managingReportsFor: null,
+      options: [],
     };
   },
   methods: {
@@ -768,10 +1167,24 @@ export default defineComponent({
     dataParams() {
       return this.params;
     },
+    openDialogReport(user) {
+      this.managingReportsFor = this.$inertia.form({
+        user: user,
+      });
+    },
   },
   watch: {
     params: {
       handler: throttle(function () {
+        if (this.params.status === null || this.params.status != 1) {
+          this.params.typeActive = null;
+        }
+        if (this.params.dateStart != null) {
+          this.params.dateStart = this.formatDate(this.params.dateStart);
+        }
+        if (this.params.dateEnd != null) {
+          this.params.dateEnd = this.formatDate(this.params.dateEnd);
+        }
         let params = pickBy(this.params);
         this.$inertia.get(this.route("secretary.daughters.index"), params, {
           replace: true,

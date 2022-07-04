@@ -31,9 +31,39 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Secretary\Daughter\ProfileController;
+use App\Http\Controllers\Secretary\Daughter\TransferController;
 
 class UserController extends Controller
 {
+    protected $from; // public, protected <-> private
+    protected $to;
+
+    public function __construct()
+    {
+        $this->from;
+        $this->to;
+    }
+
+    public function getFrom()
+    {
+        return $this->from;
+    }
+
+    public function getTo()
+    {
+        return $this->to;
+    }
+
+    public function setFrom($from)
+    {
+        $this->from = $from;
+    }
+
+    public function setTo($to)
+    {
+        $this->to = $to;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -45,7 +75,13 @@ class UserController extends Controller
         $users = count(User::all());
         $roles  = count(Role::all());
         $permissions = count(Permission::all());
-        return Inertia::render('Secretary/Welcome', compact('users', 'roles', 'permissions'));
+        $pastorals = count(Pastoral::all());
+        return Inertia::render('Secretary/Welcome', compact(
+            'users',
+            'roles',
+            'permissions',
+            'pastorals'
+        ));
     }
 
     public function index()
@@ -59,7 +95,8 @@ class UserController extends Controller
 
         request()->validate([
             'direction' => ['in:asc,desc'],
-            'field' => ['in:name,email']
+            'field' => ['in:name,email'],
+            'dateStart' => ['date_format:Y-m-d H:i:s'],
         ]);
 
         $addressClass = new AddressController();
@@ -79,12 +116,6 @@ class UserController extends Controller
             $query->orderBy(request('field'), request('direction'));
         }
 
-        if (request('status')) {
-            $query->whereHas("profile", function ($q) {
-                $q->where("status", request('status'));
-            });
-        }
-
         if (request('pastoral')) {
             $query->whereHas("profile", function ($q) {
                 $q->whereHas("transfers", function ($qtransfer) {
@@ -95,6 +126,7 @@ class UserController extends Controller
                 });
             });
         }
+
 
         if (request('perProvince')) {
             $query->whereHas("profile", function ($q) {
@@ -119,6 +151,89 @@ class UserController extends Controller
             $q->where("name", "daughter");
         })->get();
 
+        if (request('status')) {
+            $query->whereHas("profile", function ($q) {
+                if (request('dateStart')) {
+                    $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
+                        'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
+                        'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
+                    ]);
+                    if ($validatorData->fails()) {
+                        $q->where("status", request('status'));
+                        return redirect()->back()
+                            ->withErrors($validatorData->errors());
+                    } else {
+                        if (request('status') == 1) {
+                            if (request('typeActive')) {
+                                if (request('typeActive') == 1) {
+                                    $q->where("date_birth", '!=', null)
+                                        ->where("date_vocation", '!=', null)
+                                        ->where("date_admission", '!=', null)
+                                        ->where("date_send", null)
+                                        ->where("date_vote", null);
+                                }
+                                if (request('typeActive') == 2) {
+                                    $q->where("date_birth", '!=', null)
+                                        ->where("date_vocation", '!=', null)
+                                        ->where("date_admission", '!=', null)
+                                        ->where("date_send", '!=', null)
+                                        ->where("date_vote", null);
+                                }
+                                if (request('typeActive') == 3) {
+                                    $q->where("date_birth", '!=', null)
+                                        ->where("date_vocation", '!=', null)
+                                        ->where("date_admission", '!=', null)
+                                        ->where("date_send", '!=', null)
+                                        ->where("date_vote",  '!=', null);
+                                }
+                            }
+                            $q->whereBetween('date_admission', [request('dateStart'), request('dateEnd')]);
+                            $q->orderBy('date_admission', 'desc');
+                        }
+                        if (request('status') == 2) {
+                            $q->whereBetween('date_death', [request('dateStart'), request('dateEnd')]);
+                            $q->orderBy('date_death', 'desc');
+                        }
+                        if (request('status') == 3) {
+                            $q->whereBetween('date_exit', [request('dateStart'), request('dateEnd')]);
+                            $q->orderBy('date_exit', 'desc');
+                        }
+                    }
+                }
+                if (request('status') == 1) {
+                    if (request('typeActive')) {
+                        if (request('typeActive') == 1) {
+                            $q->where("date_birth", '!=', null)
+                                ->where("date_vocation", '!=', null)
+                                ->where("date_admission", '!=', null)
+                                ->where("date_send", null)
+                                ->where("date_vote", null);
+                        }
+                        if (request('typeActive') == 2) {
+                            $q->where("date_birth", '!=', null)
+                                ->where("date_vocation", '!=', null)
+                                ->where("date_admission", '!=', null)
+                                ->where("date_send", '!=', null)
+                                ->where("date_vote", null);
+                        }
+                        if (request('typeActive') == 3) {
+                            $q->where("date_birth", '!=', null)
+                                ->where("date_vocation", '!=', null)
+                                ->where("date_admission", '!=', null)
+                                ->where("date_send", '!=', null)
+                                ->where("date_vote",  '!=', null);
+                        }
+                    }
+                    $q->where("status", request('status'))->orderBy('date_admission', 'desc');
+                }
+                if (request('status') == 2) {
+                    $q->where("status", request('status'))->orderBy('date_death', 'desc');
+                }
+                if (request('status') == 3) {
+                    $q->where("status", request('status'))->orderBy('date_exit', 'desc');
+                }
+            });
+        }
 
         $pastorals = Pastoral::all();
         return Inertia::render('Secretary/Users/Daughter/Index', [
@@ -129,7 +244,9 @@ class UserController extends Controller
                 ->paginate(request('perPage'))
                 ->appends(request()->query()),
             'pastorals' => $pastorals,
-            'filters' => request()->all(['search', 'field', 'direction', 'page', 'status', 'pastoral', 'dateStart', 'dateEnd', 'perProvince', 'perPage'])
+            'filters' => request()->all([
+                'search', 'field', 'direction', 'page', 'status', 'pastoral', 'dateStart', 'dateEnd', 'perProvince', 'perPage', 'typeActive'
+            ])
         ]);
     }
 
@@ -367,12 +484,17 @@ class UserController extends Controller
 
     //  TODO: Export Excel
 
-    public function export()
+    public function exportExcel()
     {
-        return Excel::download(new UsersExport, 'users.xlsx');
+        return Excel::download(new UsersExport(request()), 'HermanasHDLC.xlsx');
     }
 
+    //  TODO: Export CSV
 
+    public function exportCSV()
+    {
+        return Excel::download(new UsersExport(request()), 'HermanasHDLC.csv');
+    }
 
 
     /**
@@ -380,13 +502,25 @@ class UserController extends Controller
      * Report Info family
      */
 
-    public function reportInfoProfile($user_id)
+    function search($value, $array)
+    {
+        return array_search($value, $array);
+    }
+
+    public function reportInfoProfilePDF(Request $request)
     {
 
+        $validator = Validator::make($request->all(), [
+            'user_id' => ['required', 'exists:users,id'],
+            "options"    => ['nullable', 'array', 'min:0', 'max:6'],
+            "options.*"    => ['nullable', 'integer', 'distinct', 'between:1,6'],
+        ]);
 
-        $user = User::find($user_id);
-        return Inertia::render('Secretary/Users/Daughter/Reports/Profile', compact('user'));
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', "Error al validar datos");
+        }
 
+        $user = User::find($request->get('user_id'));
 
         // Import Methods
         $profile_daughter = new ProfileController();
@@ -395,10 +529,8 @@ class UserController extends Controller
 
         if ($user->profile) {
 
-            $profile = Profile::with('user')
-                ->where('user_id', '=', $user->id)
-                ->get();
-            $data->put('profile', $profile->first());
+            $profile = $user->profile;
+            $data->put('profile',  $profile);
 
 
             if ($user->image) {
@@ -418,11 +550,251 @@ class UserController extends Controller
 
             $data->put('address',  $addressClass->getActualAddress($data->get('profile')->address->political_division_id));
 
+            //  Aditional Information
+            $from = date('Y-01-01 00:00:00');
+            $to = date('Y-12-31 00:00:00');
+            if ($request->get('options') != null) {
+                if (is_numeric($this->search("1", $request->get('options')))) {
+                    $from = date('Y-01-01 00:00:00');
+                    $to = date('Y-12-31 00:00:00');
+                    $data->put('healths', $user->profile->healths
+                        ->whereBetween('consult_date', [$from, $to]));
+                }
+                if (is_numeric($this->search("2", $request->get('options')))) {
+                    $data->put('academic_trainings', $user->profile->academic_trainings);
+                }
+                if (is_numeric($this->search("3", $request->get('options')))) {
+                    $data->put('sacraments', $user->profile->sacraments()
+                        ->orderBy('sacrament_date', 'asc')
+                        ->get());
+                }
+                if (is_numeric($this->search("4", $request->get('options')))) {
+                    $data->put('permits', $user->profile->permits()
+                        ->with('address')
+                        ->whereBetween('date_out', [$from, $to])
+                        ->get());
+                }
+                if (is_numeric($this->search("5", $request->get('options')))) {
+                    $transfers = $user->profile->transfers()->with('community')->get();
+                    $data->put(
+                        'transfer',
+                        $transfers->where('status', 1)->first()
+                    );
+                }
+                if (is_numeric($this->search("6", $request->get('options')))) {
+                    $transfer = $user->profile->transfers->where('status', 1)->first();
+                    $controllerTransfers = new TransferController();
+                    $data->put(
+                        'appointments',
+                        $controllerTransfers->allAppointments($transfer->id)
+                    );
+                    $data->put(
+                        'individualappointments',
+                        $user->profile->appointments()
+                            ->where('transfer_id', null)
+                            ->with('appointment_level')
+                            ->with('community')
+                            ->get()
+                    );
+                }
+            }
+            //
+            // return $data;
             $pdf = PDF::loadView('reports.daughters.profile', compact('data'));
             // return $pdf -> download('Usuarios-OpenScience.pdf');
             return $pdf->setPaper('a4', 'portrait')->stream('Perfil Hermana ' . $user->name . '.pdf');
         } else {
             return  collect(['message' => true]);
         }
+    }
+
+
+    public function reportDaughtersPDF()
+    {
+        request()->validate([
+            'direction' => ['in:asc,desc'],
+            'field' => ['in:name,email'],
+            'dateStart' => ['date_format:Y-m-d H:i:s'],
+        ]);
+
+        $addressClass = new AddressController();
+        $provinces =  $addressClass->getProvinces();
+
+        $query = User::query();
+
+        if (request('search')) {
+            $search = request('search');
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'LIKE', '%' . $search . '%');
+                $query->orWhere('lastname', 'LIKE', '%' . $search . '%');
+            });
+        }
+
+        if (request()->has(['field', 'direction'])) {
+            $query->orderBy(request('field'), request('direction'));
+        }
+
+        if (request('pastoral')) {
+            $query->whereHas("profile", function ($q) {
+                $q->whereHas("transfers", function ($qtransfer) {
+                    $qtransfer->where("transfer_date_relocated", null)
+                        ->whereHas("community", function ($qtransfer) {
+                            $qtransfer->where("pastoral_id", request('pastoral'));
+                        });
+                });
+            });
+        }
+
+
+        if (request('perProvince')) {
+            $query->whereHas("profile", function ($q) {
+                $address = Address::whereHasMorph(
+                    'addressable',
+                    [Profile::class],
+                    function (Builder $query) {
+                        return   $query->where('political_division_id', 'LIKE', request('perProvince') . '%');
+                    }
+                )->get();
+
+                $index = array();
+                foreach ($address as $ob) {
+                    $ob->addressable_id;
+                    $index[] = $ob->addressable_id;
+                }
+                $q->whereIn('id', $index);
+            });
+        }
+
+        $query->whereHas("roles", function ($q) {
+            $q->where("name", "daughter");
+        })->get();
+
+        $dateFromTo = new UserController();
+        if (request('status')) {
+            $query->whereHas("profile", function ($q) use ($dateFromTo) {
+                if (request('dateStart')) {
+                    $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
+                        'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
+                        'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
+                    ]);
+                    if ($validatorData->fails()) {
+                        $q->where("status", request('status'));
+                        return redirect()->back()
+                            ->withErrors($validatorData->errors());
+                    } else {
+                        if (request('status') == 1) {
+                            if (request('typeActive')) {
+                                if (request('typeActive') == 1) {
+                                    $q->where("date_birth", '!=', null)
+                                        ->where("date_vocation", '!=', null)
+                                        ->where("date_admission", '!=', null)
+                                        ->where("date_send", null)
+                                        ->where("date_vote", null);
+                                }
+                                if (request('typeActive') == 2) {
+                                    $q->where("date_birth", '!=', null)
+                                        ->where("date_vocation", '!=', null)
+                                        ->where("date_admission", '!=', null)
+                                        ->where("date_send", '!=', null)
+                                        ->where("date_vote", null);
+                                }
+                                if (request('typeActive') == 3) {
+                                    $q->where("date_birth", '!=', null)
+                                        ->where("date_vocation", '!=', null)
+                                        ->where("date_admission", '!=', null)
+                                        ->where("date_send", '!=', null)
+                                        ->where("date_vote",  '!=', null);
+                                }
+                            }
+                            $q->whereBetween('date_admission', [request('dateStart'), request('dateEnd')]);
+                            $q->orderBy('date_admission', 'desc');
+                        }
+                        if (request('status') == 2) {
+                            $q->whereBetween('date_death', [request('dateStart'), request('dateEnd')]);
+                            $q->orderBy('date_death', 'desc');
+                        }
+                        if (request('status') == 3) {
+                            $q->whereBetween('date_exit', [request('dateStart'), request('dateEnd')]);
+                            $q->orderBy('date_exit', 'desc');
+                        }
+                        $dateFromTo->setFrom(request('dateStart'));
+                        $dateFromTo->setTo(request('dateEnd'));
+                    }
+                }
+                if (request('status') == 1) {
+                    if (request('typeActive')) {
+                        if (request('typeActive') == 1) {
+                            $q->where("date_birth", '!=', null)
+                                ->where("date_vocation", '!=', null)
+                                ->where("date_admission", '!=', null)
+                                ->where("date_send", null)
+                                ->where("date_vote", null);
+                        }
+                        if (request('typeActive') == 2) {
+                            $q->where("date_birth", '!=', null)
+                                ->where("date_vocation", '!=', null)
+                                ->where("date_admission", '!=', null)
+                                ->where("date_send", '!=', null)
+                                ->where("date_vote", null);
+                        }
+                        if (request('typeActive') == 3) {
+                            $q->where("date_birth", '!=', null)
+                                ->where("date_vocation", '!=', null)
+                                ->where("date_admission", '!=', null)
+                                ->where("date_send", '!=', null)
+                                ->where("date_vote",  '!=', null);
+                        }
+                    }
+                    $q->where("status", request('status'))->orderBy('date_admission', 'desc');
+                }
+                if (request('status') == 2) {
+                    $q->where("status", request('status'))->orderBy('date_death', 'desc');
+                }
+                if (request('status') == 3) {
+                    $q->where("status", request('status'))->orderBy('date_exit', 'desc');
+                }
+            });
+
+            $from =   $dateFromTo->getFrom();
+            $to =  $dateFromTo->getTo();
+            if (request('status') == 1) {
+                $data = $query
+                    ->with('profile')
+                    ->with('profile.transfers.community')
+                    ->get();
+                $type = request('typeActive');
+
+                $pdf = PDF::loadView('reports.daughters.list-active', compact('data', 'from', 'to', 'type'));
+                return $pdf->setPaper('a4', 'landscape')->stream('ReportesHermanasHDLCActivas.pdf');
+            }
+            if (request('status') == 2) {
+                $data = $query
+                    ->with('profile')
+                    ->with('profile.transfers.community')
+                    ->get();
+
+                $pdf = PDF::loadView('reports.daughters.list-dead', compact('data', 'from', 'to'));
+                return $pdf->setPaper('a4', 'landscape')->stream('ReportesHermanasHDLCFallecidas.pdf');
+            }
+            if (request('status') == 3) {
+                $data = $query
+                    ->with('profile')
+                    ->with('profile.transfers.community')
+                    ->get();
+
+                $pdf = PDF::loadView('reports.daughters.list-retired', compact('data', 'from', 'to'));
+                return $pdf->setPaper('a4', 'landscape')->stream('ReportesHermanasHDLCRetiradas.pdf');
+            }
+        }
+
+        $from =   $dateFromTo->getFrom();
+        $to =  $dateFromTo->getTo();
+        $data = $query
+            ->with('profile')
+            ->get();
+
+        $pdf = PDF::loadView('reports.daughters.list-general', compact('data', 'from', 'to'));
+        // return $pdf -> download('Usuarios.pdf');
+        return $pdf->setPaper('a4', 'landscape')->stream('ReportesHermanasHDLC.pdf');
     }
 }

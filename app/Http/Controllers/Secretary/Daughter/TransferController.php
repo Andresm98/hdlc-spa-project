@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Secretary\Daughter;
 
+use PDF;
 use App\Models\User;
 use App\Models\Transfer;
 use App\Models\Community;
@@ -354,5 +355,56 @@ class TransferController extends Controller
 
         $transfer->delete();
         return redirect()->back()->with(['success' => 'Transferencia eliminada correctamente']);
+    }
+
+
+    public function printTransfer($user_id, $transfer_id)
+    {
+        $validator = Validator::make([
+            'user_id' => $user_id,
+            'transfer_id' => $transfer_id
+        ], [
+            'user_id' => ['required', 'exists:users,id'],
+            'transfer_id' => ['required', 'exists:transfers,id']
+        ]);
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        $transfer = Transfer::find($transfer_id);
+        $user = User::find($user_id);
+        $user->profile;
+
+        $appointments = $this->allAppointments($transfer->id);
+        $lastTransfer =  $this->theLastTransfer($user_id, $transfer_id);
+        $pdf = PDF::loadView('reports.daughters.transfer', compact('transfer', 'user', 'appointments', 'lastTransfer'));
+        // return $pdf -> download('Usuarios-OpenScience.pdf');
+        return $pdf->setPaper('a4', 'portrait')->stream('Permiso de la hermana ' . $user->name . '.pdf');
+    }
+
+    public function theLastTransfer($user_id, $transfer_id)
+    {
+        $validator = Validator::make([
+            'user_id' => $user_id,
+            'transfer_id' => $transfer_id
+        ], [
+            'user_id' => ['required', 'exists:users,id'],
+            'transfer_id' => ['required', 'exists:transfers,id']
+        ]);
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        $user = User::find($user_id);
+        $transfer = Transfer::find($transfer_id);
+
+        $transfers = $user->profile->transfers()
+            ->where('transfer_date_adission', '<', $transfer->transfer_date_adission)
+            ->with('office')
+            ->with('community')
+            ->orderBy('transfer_date_adission', 'DESC')
+            ->get();
+
+        return $transfers->get(0);
     }
 }

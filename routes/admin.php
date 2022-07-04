@@ -98,6 +98,9 @@ Route::group(
         Route::resource('admin/settings', SettingsController::class)
             ->names('settings');
 
+        Route::post('admin/settings/changenv', [SettingsController::class, 'store'])
+            ->name('settings.store');
+
 
         // FIXME:: Rest METHODS
         Route::get('pdf', [UserController::class, 'PDF'])

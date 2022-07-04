@@ -54,7 +54,7 @@
             <br />
 
             <!-- Container Filters -->
-            <div class="container mx-auto">
+            <div class="container mx-auto ml-5">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div
                   class="
@@ -211,47 +211,92 @@
                     </select>
                   </search-filter>
                 </div>
+                <div v-show="this.params.active == 1">
+                  <div
+                    class="
+                      justify-center
+                      text-sm
+                      border-1 border-gray-300
+                      rounded-sm
+                      p-1
+                      bg-gray-100
+                    "
+                  >
+                    <small class="justify-content-center ml-20 uppercase"
+                      >Fecha de Fundación</small
+                    >
+                    <p
+                      class="text-red-400 text-sm"
+                      v-show="$page.props.errors.dateStart"
+                    >
+                      {{ $page.props.errors.dateStart }}
+                    </p>
+                    <Datepicker
+                      v-model="params.dateStart"
+                      :format="format"
+                      autoApply
+                      required
+                    />
+                    <small class="justify-content-center ml-6"
+                      >Deste - Hasta</small
+                    >
+                    <p
+                      class="text-red-400 text-sm"
+                      v-show="$page.props.errors.dateEnd"
+                    >
+                      {{ $page.props.errors.dateEnd }}
+                    </p>
+                    <Datepicker
+                      v-model="params.dateEnd"
+                      :format="format"
+                      autoApply
+                      required
+                    />
+                  </div>
+                </div>
 
-                <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    p-1
-                    bg-gray-100
-                  "
-                >
-                  <small class="justify-content-center ml-20 uppercase"
-                    >Fecha de Fundación</small
+                <div v-show="this.params.active == 2">
+                  <div
+                    class="
+                      justify-center
+                      text-sm
+                      border-1 border-gray-300
+                      rounded-sm
+                      p-1
+                      bg-gray-100
+                    "
                   >
-                  <p
-                    class="text-red-400 text-sm"
-                    v-show="$page.props.errors.dateStart"
-                  >
-                    {{ $page.props.errors.dateStart }}
-                  </p>
-                  <Datepicker
-                    v-model="params.dateStart"
-                    :format="format"
-                    autoApply
-                    required
-                  />
-                  <small class="justify-content-center ml-6"
-                    >Deste - Hasta</small
-                  >
-                  <p
-                    class="text-red-400 text-sm"
-                    v-show="$page.props.errors.dateEnd"
-                  >
-                    {{ $page.props.errors.dateEnd }}
-                  </p>
-                  <Datepicker
-                    v-model="params.dateEnd"
-                    :format="format"
-                    autoApply
-                    required
-                  />
+                    <small class="justify-content-center ml-20 uppercase"
+                      >Fecha de Cierre</small
+                    >
+                    <p
+                      class="text-red-400 text-sm"
+                      v-show="$page.props.errors.dateStart"
+                    >
+                      {{ $page.props.errors.dateStart }}
+                    </p>
+                    <Datepicker
+                      v-model="params.dateStart"
+                      :format="format"
+                      autoApply
+                      required
+                    />
+                    <small class="justify-content-center ml-6"
+                      >Deste - Hasta</small
+                    >
+                    <p
+                      class="text-red-400 text-sm"
+                      v-show="$page.props.errors.dateEnd"
+                    >
+                      {{ $page.props.errors.dateEnd }}
+                    </p>
+                    <Datepicker
+                      v-model="params.dateEnd"
+                      :format="format"
+                      autoApply
+                      required
+                    />
+                  </div>
                 </div>
 
                 <div
@@ -329,7 +374,41 @@
                         <div
                           class="mt-2 py-2 text-sm bg-white rounded shadow-xl"
                         >
-                          <a
+                          <button
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            @click="openReportDialog(1)"
+                          >
+                            PDF
+                          </button>
+                          <button
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            @click="openReportDialog(2)"
+                          >
+                            Excel
+                          </button>
+                          <button
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            @click="openReportDialog(3)"
+                          >
+                            CSV
+                          </button>
+
+                          <!-- <a
                             class="
                               block
                               px-6
@@ -360,7 +439,7 @@
                               )
                             "
                             >CSV</a
-                          >
+                          > -->
                         </div>
                       </template>
                     </dropdown>
@@ -675,6 +754,26 @@
                               >
                                 Cerrada
                               </span>
+                              <br />
+                              <span
+                                class="
+                                  mt-2
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-full
+                                  bg-red-100
+                                  text-red-800
+                                "
+                              >
+                                {{
+                                  this.formatDateShow(
+                                    community_custom.date_close
+                                  )
+                                }}
+                              </span>
                             </div>
                             <!-- <span
                               class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
@@ -761,7 +860,7 @@
                               </Link>
 
                               <!-- Print Community -->
-                              <Link href="#">
+                              <!-- <Link href="#">
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
@@ -794,7 +893,7 @@
                                     </div>
                                   </div>
                                 </div>
-                              </Link>
+                              </Link> -->
 
                               <!-- Delete Community -->
 
@@ -936,7 +1035,7 @@
                               </div>
 
                               <!-- Print Community -->
-                              <Link href="#">
+                              <!-- <Link href="#">
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
@@ -969,7 +1068,7 @@
                                     </div>
                                   </div>
                                 </div>
-                              </Link>
+                              </Link> -->
 
                               <!-- Delete Community -->
 
@@ -1068,6 +1167,98 @@
         </div>
       </div>
     </section>
+
+    <jet-dialog-modal :show="report_modal_open">
+      <template v-slot:title>
+        Opciones del Reporte de las Comunidades
+      </template>
+
+      <template v-slot:content>
+        <p class="text-md text-black">
+          ¿Desea imprimir el reporte con un listado de las hermanas que se
+          encuentran en cada Comunidad u Obra?
+        </p>
+      </template>
+      <template v-slot:footer>
+        <div v-show="type_operation_report == 1">
+          <small class="mr-2">PDF</small>
+          <jet-secondary-button @click="closeReportModal()">
+            Cancelar
+          </jet-secondary-button>
+          <a
+            target="_blank"
+            :href="route('secretary.communities.pdf.all', this.params)"
+          >
+            <jet-danger-button
+              class="ml-3"
+              @click="this.params.printOperation = 0"
+            >
+              NO
+            </jet-danger-button></a
+          >
+          <a
+            target="_blank"
+            :href="route('secretary.communities.pdf.all', this.params)"
+          >
+            <jet-button class="ml-3" @click="this.params.printOperation = 1"
+              >Si</jet-button
+            ></a
+          >
+        </div>
+        <div v-show="type_operation_report == 2">
+          <small class="mr-2">Excel</small>
+
+          <jet-secondary-button @click="closeReportModal()">
+            Cancelar
+          </jet-secondary-button>
+          <a
+            target="_blank"
+            :href="route('secretary.communities.export.excel', this.params)"
+          >
+            <jet-danger-button
+              class="ml-3"
+              @click="this.params.printOperation = 0"
+            >
+              NO
+            </jet-danger-button></a
+          >
+          <a
+            target="_blank"
+            :href="route('secretary.communities.export.excel', this.params)"
+          >
+            <jet-button class="ml-3" @click="this.params.printOperation = 1"
+              >Si</jet-button
+            ></a
+          >
+        </div>
+        <div v-show="type_operation_report == 3">
+          <small class="mr-2">CSV</small>
+
+          <jet-secondary-button @click="closeReportModal()">
+            Cancelar
+          </jet-secondary-button>
+          <a
+            target="_blank"
+            :href="route('secretary.communities.export.csv', this.params)"
+          >
+            <jet-danger-button
+              class="ml-3"
+              @click="this.params.printOperation = 0"
+            >
+              NO
+            </jet-danger-button></a
+          >
+          <a
+            target="_blank"
+            :href="route('secretary.communities.export.csv', this.params)"
+          >
+            <jet-button class="ml-3" @click="this.params.printOperation = 1"
+              >Si</jet-button
+            ></a
+          >
+        </div>
+      </template>
+    </jet-dialog-modal>
   </app-layout>
 </template>
 
@@ -1092,6 +1283,7 @@ import moment from "moment";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import Dropdown from "@/Components/Dropdown";
 import Icon from "@/Components/Icon";
+import JetButton from "@/Jetstream/Button.vue";
 
 import TextInput from "@/Components/TextInput";
 import Alert from "@/Components/Alert";
@@ -1134,6 +1326,7 @@ export default defineComponent({
     AppLayout,
     Pagination,
     JetDangerButton,
+    JetButton,
     JetDialogModal,
     JetInput,
     JetInputError,
@@ -1150,7 +1343,8 @@ export default defineComponent({
   data() {
     return {
       modal_open: false,
-      docenteSeleccionado: {},
+      report_modal_open: false,
+      type_operation_report: null,
       selected_community: Object,
       type_alert: null,
       allAddress: [],
@@ -1165,6 +1359,8 @@ export default defineComponent({
         dateEnd: this.filters.dateEnd,
         perPage: this.filters.perPage,
         perProvince: this.filters.perProvince,
+        //
+        printOperation: null,
       },
       arrayAddress: [],
     };
@@ -1235,8 +1431,22 @@ export default defineComponent({
     dataParams() {
       return this.params;
     },
+    //
+    openReportDialog(type) {
+      this.report_modal_open = true;
+      this.type_operation_report = type;
+    },
+    closeReportModal() {
+      this.report_modal_open = false;
+      this.type_operation_report = null;
+      this.params.printOperation = null;
+    },
   },
   watch: {
+    "params.active": function () {
+      this.params.dateEnd = null;
+      this.params.dateStart = null;
+    },
     params: {
       handler: throttle(function () {
         if (this.params.dateStart != null) {
@@ -1245,6 +1455,7 @@ export default defineComponent({
         if (this.params.dateEnd != null) {
           this.params.dateEnd = this.formatDate(this.params.dateEnd);
         }
+
         let params = pickBy(this.params);
         this.$inertia.get(this.route("secretary.communities.index"), params, {
           replace: true,

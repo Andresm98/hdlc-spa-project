@@ -5,19 +5,27 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 
 class SettingsController extends Controller
 {
+    public function __construct()
+    {
+        DotenvEditor::load(base_path('.env'));
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        return Inertia::render('Admin/Settings/Index');
-    }
+        DotenvEditor::getContent();
+        $keys =  DotenvEditor::getKeys();
 
+        return Inertia::render('Admin/Settings/Index', compact('keys'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -36,7 +44,12 @@ class SettingsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $envs = $request->all();
+        foreach ($envs as $key => $value) {
+            DotenvEditor::setKey($key, $value['value']);
+        }
+        DotenvEditor::save();
+        return redirect()->back()->with('success', 'Datos actualizados correctamente.');
     }
 
     /**

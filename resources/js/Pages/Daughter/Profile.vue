@@ -32,8 +32,58 @@
           <div class="md:col-span-1">
             <div class="px-4 sm:px-0">
               <h3 class="text-lg font-medium leading-6 text-gray-900">
-                Usuario
+                Hermana
               </h3>
+              <div
+                class="
+                  ml-14
+                  mt-4
+                  mb-4
+                  col-start-1
+                  row-start-3
+                  self-center
+                  sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2
+                  lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4
+                "
+              >
+                <button @click="openDialogReport()">
+                  <div class="w-auto h-auto">
+                    <div class="flex-1 h-full">
+                      <div
+                        class="
+                          w-28
+                          flex
+                          items-center
+                          justify-center
+                          flex-1
+                          h-full
+                          p-2
+                          border border-blue-800
+                          text-white
+                          shadow
+                          rounded-lg
+                          hover:bg-blue-50 hover:text-zinc-300
+                        "
+                      >
+                        <div class="relative">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 text-blue-800"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              d="M17.453,12.691V7.723 M17.453,12.691V7.723 M1.719,12.691V7.723 M18.281,12.691V7.723 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M7.309,13.312h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,13.312,7.309,13.312 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M16.625,6.066h-1.449V3.168c0-0.228-0.186-0.414-0.414-0.414H5.238c-0.228,0-0.414,0.187-0.414,0.414v2.898H3.375c-0.913,0-1.656,0.743-1.656,1.656v4.969c0,0.913,0.743,1.656,1.656,1.656h1.449v2.484c0,0.228,0.187,0.414,0.414,0.414h9.523c0.229,0,0.414-0.187,0.414-0.414v-2.484h1.449c0.912,0,1.656-0.743,1.656-1.656V7.723C18.281,6.81,17.537,6.066,16.625,6.066 M5.652,3.582h8.695v2.484H5.652V3.582zM14.348,16.418H5.652v-4.969h8.695V16.418z M17.453,12.691c0,0.458-0.371,0.828-0.828,0.828h-1.449v-2.484c0-0.228-0.186-0.414-0.414-0.414H5.238c-0.228,0-0.414,0.186-0.414,0.414v2.484H3.375c-0.458,0-0.828-0.37-0.828-0.828V7.723c0-0.458,0.371-0.828,0.828-0.828h13.25c0.457,0,0.828,0.371,0.828,0.828V12.691z M7.309,13.312h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,13.312,7.309,13.312M7.309,15.383h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,15.383,7.309,15.383 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555"
+                            ></path>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </button>
+                <small class="ml-2">Imprimir Reporte</small>
+              </div>
+
               <p class="mt-1 text-sm text-gray-600 text-justify">
                 La información que puede visualizar se relacionan a la
                 información de su usuario en el sistema general, tenga en cuenta
@@ -188,7 +238,7 @@
                 </div>
                 <div class="mt-2">
                   <p class="text-black dark:text-white">
-                    La presente plantiflla de información se relaciona a la
+                    La presente plantilla de información se relaciona a la
                     información de su usuario y perfil. Por favor, mantenga la
                     estructura de los datos solicitados y sus respectivos
                     formatos, de no ser así la información no podrá ser
@@ -1865,6 +1915,161 @@
         </jet-button-success>
       </template>
     </jet-dialog-modal>
+
+    <jet-dialog-modal
+      :show="managingReportsFor"
+      @close="managingReportsFor = null"
+    >
+      <template #title>
+        <div class="text-md">
+            Opciones del Reporte del Perfil de la Hermana
+        </div>
+      </template>
+
+      <template #content>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="1"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Salud Actual</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="2"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Récord Académico</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="3"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Sacramentos</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="4"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Permisos</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="5"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Cambios</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              class="
+                rounded
+                border-gray-300
+                text-emerald-600
+                shadow-sm
+                focus:border-emerald-300
+                focus:ring
+                focus:ring-emerald-200
+                focus:ring-opacity-50
+              "
+              type="checkbox"
+              :value="6"
+              v-model="options"
+            />
+            <span class="ml-2 text-sm text-gray-600">Nombramientos</span>
+          </label>
+        </div>
+      </template>
+
+      <template #footer>
+        <jet-secondary-button
+          @click="
+            managingReportsFor = null;
+            options = [];
+          "
+        >
+          Cerrar
+        </jet-secondary-button>
+
+        <a
+          class="
+            mx-2
+            bg-blue-600
+            text-white text-sm
+            leading-6
+            font-medium
+            py-2
+            px-3
+            rounded-lg
+          "
+          target="_blank"
+          :href="
+            this.route(`daughter.report.profile`, {
+              options: this.options,
+            })
+          "
+          >GUARDAR</a
+        >
+      </template>
+    </jet-dialog-modal>
   </app-layout>
 </template>
 
@@ -1966,6 +2171,8 @@ export default {
         multiSelectParish: null,
         vSelectParish: null,
       },
+      managingReportsFor: null,
+      options: [],
     };
   },
   watch: {
@@ -2224,6 +2431,10 @@ export default {
 
       //   console.log("input parish data selecter " + this.form.parish_id);
     },
+    //
+    openDialogReport() {
+      this.managingReportsFor = "setup";
+    },
   },
   computed: {
     // Validate ID Card`
@@ -2422,7 +2633,6 @@ export default {
         });
       }
     },
-    //
   },
 };
 </script>

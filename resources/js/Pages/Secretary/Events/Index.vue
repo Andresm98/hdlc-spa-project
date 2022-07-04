@@ -111,7 +111,7 @@
           "
         >
           <dt class="sr-only">Visto</dt>
-          <dd class="text-indigo-600 flex items-center dark:text-indigo-400">
+          <dd class="text-blue-600 flex items-center dark:text-blue-400">
             <svg
               width="24"
               height="24"
@@ -194,7 +194,7 @@
     </div>
 
     <!-- Container Filters -->
-    <div class="container mx-auto">
+    <div class="container mx-auto ml-5">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <div
           class="
@@ -215,7 +215,7 @@
               border border-blue-300
               rounded-md
               shadow-sm
-              focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
+              focus:outline-none focus:ring-blue-500 focus:border-blue-500
               sm:text-sm
             "
             @reset="reset"
@@ -248,10 +248,10 @@
               "
             >
               <option :value="null">Todas</option>
-              <option value="1">Comunidad</option>
+              <option value="1">Comunitario</option>
               <option value="2">Extracomunitaria</option>
-              <option value="3">Ordinaria</option>
-              <option value="4">Extraordinaria</option>
+              <option value="3">Internacional</option>
+              <!-- <option value="4">Extraordinaria</option> -->
             </select>
           </search-filter>
         </div>
@@ -343,17 +343,19 @@
                   <a
                     class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                     target="_blank"
-                    :href="
-                      route('secretary.communities.export.excel', this.params)
-                    "
+                    :href="route('secretary.events.report.pdf', this.params)"
+                    >PDF</a
+                  >
+                  <a
+                    class="block px-6 py-2 hover:text-white hover:bg-blue-500"
+                    target="_blank"
+                    :href="route('secretary.events.export.excel', this.params)"
                     >Excel</a
                   >
                   <a
                     class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                     target="_blank"
-                    :href="
-                      route('secretary.communities.export.csv', this.params)
-                    "
+                    :href="route('secretary.events.export.csv', this.params)"
                     >CSV</a
                   >
                 </div>
@@ -498,16 +500,13 @@
                   bg-white
                   rounded-md
                   shadow-sm
-                  focus:outline-none
-                  focus:ring-indigo-500
-                  focus:border-indigo-500
+                  focus:outline-none focus:ring-blue-500 focus:border-blue-500
                   sm:text-sm
                 "
               >
-                <option value="1">Comunidad</option>
+                <option value="1">Comunitario</option>
                 <option value="2">Extracomunitaria</option>
-                <option value="3">Ordinaria</option>
-                <option value="4">Extraordinaria</option>
+                <option value="3">Internacional</option>
               </select>
             </div>
           </div>
@@ -556,8 +555,7 @@
               </p>
               <Datepicker
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 v-model="this.createEventForm.dates"
                 required
               />
@@ -578,8 +576,7 @@
               </p>
               <Datepicker
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 v-model="createEventForm.datesEnd"
               />
             </div>
@@ -668,16 +665,13 @@
                   bg-white
                   rounded-md
                   shadow-sm
-                  focus:outline-none
-                  focus:ring-indigo-500
-                  focus:border-indigo-500
+                  focus:outline-none focus:ring-blue-500 focus:border-blue-500
                   sm:text-sm
                 "
               >
-                <option value="1">Comunidad</option>
+                <option value="1">Comunitario</option>
                 <option value="2">Extracomunitaria</option>
-                <option value="3">Ordinaria</option>
-                <option value="4">Extraordinaria</option>
+                <option value="3">Internacional</option>
               </select>
             </div>
           </div>
@@ -726,8 +720,7 @@
               </p>
               <Datepicker
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 v-model="updateEventForm.dates"
                 required
               />
@@ -748,8 +741,7 @@
               </p>
               <Datepicker
                 :format="format"
-                :transitions="false"
-                menuClassName="dp-custom-menu"
+                autoApply
                 v-model="updateEventForm.datesEnd"
               />
             </div>

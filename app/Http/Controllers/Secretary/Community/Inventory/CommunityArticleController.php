@@ -50,6 +50,29 @@ class CommunityArticleController extends Controller
             $query->where('name', 'LIKE', '%' . request('search') . '%');
         }
 
+        if (request('status')) {
+            $query->where('status', request('status'));
+        }
+
+        if (request('material')) {
+            $query->where('material', request('material'));
+        }
+
+        if (request('dateStart')) {
+            $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
+                'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
+                'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
+            ]);
+            if ($validatorData->fails()) {
+                $query->orderBy('created_at', 'desc');
+                return redirect()->back()
+                    ->withErrors($validatorData->errors());
+            } else {
+                $query->whereBetween('created_at', [request('dateStart'), request('dateEnd')]);
+                $query->orderBy('created_at', 'desc');
+            }
+        }
+
         if (request()->has(['field', 'direction'])) {
             $query->orderBy(request('field'), request('direction'));
         }
@@ -57,7 +80,7 @@ class CommunityArticleController extends Controller
             'listArticles' => $query
                 ->paginate(10)
                 ->appends(request()->query()),
-            'filters' => request()->all(['search', 'field', 'direction', 'page']),
+            'filters' => request()->all(['search', 'field', 'direction', 'page', 'status', 'material', 'dateStart', 'dateEnd', 'perPage']),
             'section_slug' => $section->slug
         ]);
     }
@@ -87,9 +110,23 @@ class CommunityArticleController extends Controller
             ]
         );
 
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        $section  = Section::where('slug', '=', $section_slug)
+            ->get()
+            ->first();
+
+        $articles = Article::where('section_id', $section->id)->get();
+        $countArt = count($articles->where('name', $request->get('name')));
+        if ($countArt > 0) {
+            return redirect()->back()->with(['error' => 'El articulo ya existe en el inventario.']);
+        }
+
         $validatorData = Validator::make($request->all(), [
             "name" => ['required', 'string', 'max:100'],
-            "description" => ['string', 'max:1000'],
+            "description" => ['string', 'max:2000'],
             "color" => ['string', 'max:50'],
             "price" => ['required', 'numeric'],
             "material" => ['required', 'integer', 'between:1,5'],
@@ -97,18 +134,12 @@ class CommunityArticleController extends Controller
             "size" => ['numeric'],
             "brand" => ['string', 'max:50'],
         ]);
-        if ($validator->fails()) {
-            return abort(404);
-        }
+
         if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validatorData->errors())
                 ->withInput();
         }
-
-        $section  = Section::where('slug', '=', $section_slug)
-            ->get()
-            ->first();
 
         $section->articles()->create([
             "name" =>  $request->get('name'),
@@ -156,28 +187,15 @@ class CommunityArticleController extends Controller
     {
         $validator = Validator::make(
             ['slug' => $section_slug],
+            ['article_id' => $article_id],
             [
-                'slug' => ['required', 'exists:sections,slug']
+                'slug' => ['required', 'exists:sections,slug'],
+                'article_id' => ['required', 'exists:articles,id']
             ]
         );
 
-        $validatorData = Validator::make($request->all(), [
-            "name" => ['required', 'string', 'max:100'],
-            "description" => ['string', 'max:1000'],
-            "color" => ['string', 'max:50'],
-            "price" => ['required', 'numeric'],
-            "material" => ['required', 'integer', 'between:1,5'],
-            "status" => ['required', 'integer', 'between:1,5'],
-            "size" => ['numeric'],
-            "brand" => ['string', 'max:50'],
-        ]);
         if ($validator->fails()) {
             return abort(404);
-        }
-        if ($validatorData->fails()) {
-            return redirect()->back()
-                ->withErrors($validatorData->errors())
-                ->withInput();
         }
 
         $section = Section::where('slug', '=', $section_slug)
@@ -188,6 +206,29 @@ class CommunityArticleController extends Controller
             ->where('section_id', '=', $section->id)
             ->get()
             ->first();
+
+        $articles = Article::where('section_id', $section->id)->get();
+        $countArt = count($articles->where('name', $request->get('name'))
+            ->where('id', '!=', $article->id));
+        if ($countArt > 0) {
+            return redirect()->back()->with(['error' => 'El articulo ya existe en el inventario.']);
+        }
+        $validatorData = Validator::make($request->all(), [
+            "name" => ['required', 'string', 'max:100'],
+            "description" => ['string', 'max:2000'],
+            "color" => ['string', 'max:50'],
+            "price" => ['required', 'numeric'],
+            "material" => ['required', 'integer', 'between:1,5'],
+            "status" => ['required', 'integer', 'between:1,5'],
+            "size" => ['numeric'],
+            "brand" => ['string', 'max:50'],
+        ]);
+
+        if ($validatorData->fails()) {
+            return redirect()->back()
+                ->withErrors($validatorData->errors())
+                ->withInput();
+        }
 
         $article->update([
             "name" =>  $request->get('name'),

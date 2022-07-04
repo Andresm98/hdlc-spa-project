@@ -40,7 +40,6 @@
               </jet-nav-link>
             </div>
 
-            <jet-nav-link> Origin SPA </jet-nav-link>
           </div>
         </div>
 

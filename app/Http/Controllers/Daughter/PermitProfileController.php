@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Daughter;
 
+use PDF;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Permit;
@@ -146,5 +147,27 @@ class PermitProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function printPermit($permit_id)
+    {
+        $validator = Validator::make([
+            'permit_id' => $permit_id
+        ], [
+            'permit_id' => ['required', 'exists:permits,id']
+        ]);
+
+        $authUser = auth()->user();
+
+        $user = User::find($authUser->id);
+        if (!$user) {
+            return abort(404);
+        }
+
+        $permit = Permit::find($permit_id);
+        $user->profile;
+        $pdf = PDF::loadView('reports.daughters.permit', compact('permit', 'user'));
+        // return $pdf -> download('Usuarios-OpenScience.pdf');
+        return $pdf->setPaper('a4', 'portrait')->stream('Permiso de la hermana ' . $user->name . '.pdf');
     }
 }

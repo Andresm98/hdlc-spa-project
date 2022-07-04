@@ -72,7 +72,7 @@
       <hr :class="isUrl('system/admin/pastoral') ? 'text-white' : 'hidden'" />
     </div>
 
-    <div class="mb-4">
+    <!-- <div class="mb-4">
       <Link class="group flex items-center py-3" :href="route('admin.office.index')">
         <icon
           name="roles"
@@ -94,7 +94,7 @@
         </div>
       </Link>
       <hr :class="isUrl('system/admin/office') ? 'text-white' : 'hidden'" />
-    </div>
+    </div> -->
 
     <div class="mb-4">
       <Link
@@ -201,7 +201,7 @@
         <hr :class="isUrl('cominities') ? 'text-white' : 'hidden'"/>
     </div> -->
 
-    <div class="mb-4">
+    <!-- <div class="mb-4">
       <Link class="group flex items-center py-3" href="/reports">
         <icon
           name="printer"
@@ -219,7 +219,7 @@
         </div>
       </Link>
       <hr :class="isUrl('reports') ? 'text-white' : 'hidden'" />
-    </div>
+    </div> -->
   </div>
 </template>
 

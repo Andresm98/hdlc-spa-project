@@ -1144,7 +1144,17 @@
           <jet-secondary-button @click="cancelUpdate()">
             Cancelar
           </jet-secondary-button>
-
+          <a
+            target="_blank"
+            :href="
+              route('secretary.daughter-profile.transfer.pdf', {
+                user_id: this.profile.user_id,
+                transfer_id: this.transferBeingUpdated.id,
+              })
+            "
+          >
+            <jet-button class="ml-3">Imprimir</jet-button></a
+          >
           <jet-button
             class="ml-3"
             @click="navigation(1)"

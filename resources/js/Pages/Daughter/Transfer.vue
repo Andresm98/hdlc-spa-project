@@ -192,7 +192,7 @@
       </div>
       <div class="mt-2">
         <p class="text-black dark:text-white">
-          La presente plantiflla de información se relaciona a todos los cambios
+          La presente plantilla de información se relaciona a todos los cambios
           que le fueron asignados en la compañía.
         </p>
       </div>
@@ -293,7 +293,7 @@
           />
         </div>
 
-        <div
+        <!-- <div
           class="
             justify-center
             text-sm
@@ -378,7 +378,7 @@
               </template>
             </dropdown>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- Table -->
       <section class="pl-4">
@@ -887,7 +887,7 @@
 
     <template #footer>
       <jet-secondary-button @click="cancelUpdate()">
-        Cancelar
+        Cerrar
       </jet-secondary-button>
 
       <jet-button class="ml-3" @click="navigation(1)" v-if="navigationOp == 1">

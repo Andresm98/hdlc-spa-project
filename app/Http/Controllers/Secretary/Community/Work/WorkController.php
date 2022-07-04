@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Secretary\Community\Work;
 
+use PDF;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Community;
@@ -369,6 +370,80 @@ class WorkController extends Controller
             return redirect()->back()->with(['success' => 'La obra fue eliminada correctamente']);
         } catch (\Illuminate\Database\QueryException $ex) {
             return redirect()->back()->with(['error' => 'Durante la acción ocurrió el siguiente error: ' . $ex->getMessage()]);
+        }
+    }
+
+    function search($value, $array)
+    {
+        return array_search($value, $array);
+    }
+
+    public function reportCommPDF(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'community_id' => ['required', 'exists:communities,id'],
+            "options"    => ['nullable', 'array', 'min:0', 'max:6'],
+            "options.*"    => ['nullable', 'integer', 'distinct', 'between:1,6'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', "Error al validar datos");
+        }
+
+        $community = Community::find($request->get('community_id'));
+
+        // Import Methods
+        $addressClass = new AddressController();
+        $data =   collect(['status' => true]);
+
+        if ($community) {
+
+            $community->zone;
+            $community->pastoral;
+            $data->put('community',  $community);
+
+            $data->put('address',  $addressClass->getActualAddress($community->address->political_division_id));
+
+            //  Aditional Information
+            $from = date('Y-01-01 00:00:00');
+            $to = date('Y-12-31 00:00:00');
+
+            if ($request->get('options') != null) {
+                if (is_numeric($this->search("1", $request->get('options')))) {
+                    $data->put('daughters', $community->transfers->where('status', 1));
+                }
+                if (is_numeric($this->search("2", $request->get('options')))) {
+                    $data->put('activities', $community->activities()
+                        ->whereBetween('comm_date_activity', [$from, $to])
+                        ->get());
+                }
+                if (is_numeric($this->search("3", $request->get('options')))) {
+                    $data->put('resumes', $community->resumes()
+                        ->whereBetween('comm_date_resume', [$from, $to])
+                        ->get());
+                }
+                if (is_numeric($this->search("4", $request->get('options')))) {
+                    $data->put('visits', $community->visits()
+                        ->whereBetween('comm_date_init_visit', [$from, $to])
+                        ->get());
+                }
+                if (is_numeric($this->search("6", $request->get('options')))) {
+                    $data->put('inventory', $community->inventory()
+                        ->get()
+                        ->first());
+                    $data->put('sections', $community->inventory
+                        ->sections()
+                        ->get());
+                }
+            }
+            // return $data;
+            //
+            $pdf = PDF::loadView('reports.works.report', compact('data'));
+            // return $pdf -> download('Usuarios-OpenScience.pdf');
+            return $pdf->setPaper('a4', 'portrait')->stream('Reporte Obra ' . $community->comm_name . '.pdf');
+        } else {
+            return  collect(['message' => true]);
         }
     }
 }

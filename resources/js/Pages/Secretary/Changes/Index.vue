@@ -185,7 +185,7 @@
       </div>
       <div class="mt-2">
         <p>
-          La presente plantiflla de información se relaciona a todos los cambios
+          La presente plantilla de información se relaciona a todos los cambios
           que se realizan en la compañía.
         </p>
       </div>
@@ -199,7 +199,7 @@
     </section>
 
     <!-- Container Filters -->
-    <div class="container mx-auto">
+    <div class="container mx-auto ml-7">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <div
           class="
@@ -361,8 +361,14 @@
                   <a
                     class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                     target="_blank"
+                    :href="route('secretary.transfers.pdf', this.params)"
+                    >PDF</a
+                  >
+                  <a
+                    class="block px-6 py-2 hover:text-white hover:bg-blue-500"
+                    target="_blank"
                     :href="
-                      route('secretary.communities.export.excel', this.params)
+                      route('secretary.transfers.export.excel', this.params)
                     "
                     >Excel</a
                   >
@@ -370,7 +376,7 @@
                     class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                     target="_blank"
                     :href="
-                      route('secretary.communities.export.csv', this.params)
+                      route('secretary.transfers.export.csv', this.params)
                     "
                     >CSV</a
                   >
@@ -537,7 +543,11 @@
                           text-green-800
                         "
                       >
-                        <p v-html="transfer.transfer_observation"></p>
+                        <p
+                          v-html="
+                            transfer.transfer_observation.substring(0, 50)
+                          "
+                        ></p>
                       </span>
                     </div>
                   </td>
@@ -1461,7 +1471,17 @@
       <jet-secondary-button @click="cancelUpdate()">
         Cancelar
       </jet-secondary-button>
-
+      <a
+        target="_blank"
+        :href="
+          route('secretary.daughter-profile.transfer.pdf', {
+            user_id: this.transferBeingUpdated.profile.user_id,
+            transfer_id: this.transferBeingUpdated.id,
+          })
+        "
+      >
+        <jet-button class="ml-3">Imprimir</jet-button></a
+      >
       <jet-button class="ml-3" @click="navigation(1)" v-if="navigationOp == 1">
         Siguiente
       </jet-button>

@@ -107,7 +107,7 @@
       <hr :class="isUrl('secretary/events/all') ? 'text-white' : 'hidden'" />
     </div>
 
-    <div class="mb-4">
+    <!-- <div class="mb-4">
       <Link class="group flex items-center py-3" href="/reports">
         <icon
           name="printer"
@@ -129,7 +129,7 @@
         </div>
       </Link>
       <hr :class="isUrl('reports') ? 'text-white' : 'hidden'" />
-    </div>
+    </div> -->
   </div>
 </template>
 

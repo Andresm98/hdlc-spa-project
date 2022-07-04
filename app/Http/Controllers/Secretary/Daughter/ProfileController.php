@@ -217,6 +217,21 @@ class ProfileController extends Controller
                 'date_death' => $request->get('dateDeathProfile'),
                 'date_exit' => null
             ]);
+
+            $transfer = $profile->transfers->where('status', 1)->first();
+            if ($transfer) {
+                $transfer->update([
+                    'transfer_date_relocated' => $request->get('dateDeathProfile'),
+                    'status' => 0
+                ]);
+                $appointments = $transfer->appointments;
+                foreach ($appointments as $appointment) {
+                    $appointment->update([
+                        'date_end_appointment' => $request->get('dateDeathProfile'),
+                        'status' => 0
+                    ]);
+                }
+            }
         }
         if ($request->get('operation') == 3) {
             $validatorData = Validator::make($request->all(), [
@@ -234,6 +249,21 @@ class ProfileController extends Controller
                 'date_death' => null,
                 'date_exit' => $request->get('dateExitProfile')
             ]);
+
+            $transfer = $profile->transfers->where('status', 1)->first();
+            if ($transfer) {
+                $transfer->update([
+                    'transfer_date_relocated' => $request->get('dateExitProfile'),
+                    'status' => 0
+                ]);
+                $appointments = $transfer->appointments;
+                foreach ($appointments as $appointment) {
+                    $appointment->update([
+                        'date_end_appointment' => $request->get('dateExitProfile'),
+                        'status' => 0
+                    ]);
+                }
+            }
         }
 
         return  redirect()->route('secretary.daughters.edit', $profile->user->slug)->with([

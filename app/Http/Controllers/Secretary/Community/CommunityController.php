@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Secretary\Community;
 
+use PDF;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Address;
@@ -20,6 +21,48 @@ use App\Http\Controllers\AddressController;
 
 class CommunityController extends Controller
 {
+    protected $from; // public, protected <-> private
+    protected $to;
+    protected $pastoral;
+
+    public function __construct()
+    {
+        $this->from;
+        $this->to;
+        $this->pastoral;
+    }
+
+    public function getFrom()
+    {
+        return $this->from;
+    }
+
+    public function getTo()
+    {
+        return $this->to;
+    }
+
+    public function getPastoral()
+    {
+        return $this->pastoral;
+    }
+
+    public function setFrom($from)
+    {
+        $this->from = $from;
+    }
+
+    public function setTo($to)
+    {
+        $this->to = $to;
+    }
+
+    public function setPastoral($pastoral)
+    {
+        $this->pastoral = $pastoral;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -58,25 +101,38 @@ class CommunityController extends Controller
             $query->where('pastoral_id', '=', request('pastoral'));
         }
 
-        if (request('dateStart')) {
-            $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
-                'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
-                'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
-            ]);
-            if ($validatorData->fails()) {
-                $query->orderBy('date_fndt_comm', 'desc');
-                return redirect()->back()
-                    ->withErrors($validatorData->errors());
-            } else {
-                $query->whereBetween('date_fndt_comm', [request('dateStart'), request('dateEnd')]);
-                $query->orderBy('date_fndt_comm', 'desc');
-            }
-        }
-
         if (request('active')) {
             if (request('active') == 2) {
+                if (request('dateStart') || request('dateEnd')) {
+                    $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
+                        'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
+                        'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
+                    ]);
+                    if ($validatorData->fails()) {
+                        $query->orderBy('date_close', 'desc');
+                        return redirect()->back()
+                            ->withErrors($validatorData->errors());
+                    } else {
+                        $query->whereBetween('date_close', [request('dateStart'), request('dateEnd')]);
+                        $query->orderBy('date_close', 'desc');
+                    }
+                }
                 $query->where('comm_status', '=', 0);
             } else {
+                if (request('dateStart') || request('dateEnd')) {
+                    $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
+                        'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
+                        'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
+                    ]);
+                    if ($validatorData->fails()) {
+                        $query->orderBy('date_fndt_comm', 'desc');
+                        return redirect()->back()
+                            ->withErrors($validatorData->errors());
+                    } else {
+                        $query->whereBetween('date_fndt_comm', [request('dateStart'), request('dateEnd')]);
+                        $query->orderBy('date_fndt_comm', 'desc');
+                    }
+                }
                 $query->where('comm_status', '=', request('active'));
             }
         }
@@ -438,17 +494,214 @@ class CommunityController extends Controller
         }
     }
 
+
     //  TODO: Export Excel
 
     public function exportExcel()
     {
-        return (new CommunityExport(request()))->download('communidades.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        return Excel::download(new CommunityExport(request()), 'ComunidadesHDLC.xlsx');
     }
 
     //  TODO: Export CSV
 
     public function exportCSV()
     {
-        return (new CommunityExport(request()))->download('communidades.csv', \Maatwebsite\Excel\Excel::CSV);
+        return Excel::download(new CommunityExport(request()), 'ComunidadesHDLC.csv');
+    }
+
+    function search($value, $array)
+    {
+        return array_search($value, $array);
+    }
+
+    public function reportCommPDF(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'community_id' => ['required', 'exists:communities,id'],
+            "options"    => ['nullable', 'array', 'min:0', 'max:6'],
+            "options.*"    => ['nullable', 'integer', 'distinct', 'between:1,6'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', "Error al validar datos");
+        }
+
+        $community = Community::find($request->get('community_id'));
+
+        // Import Methods
+        $addressClass = new AddressController();
+        $data =   collect(['status' => true]);
+
+        if ($community) {
+
+            $community->zone;
+            $community->pastoral;
+            $data->put('community',  $community);
+
+            $data->put('address',  $addressClass->getActualAddress($community->address->political_division_id));
+
+            //  Aditional Information
+            $from = date('Y-01-01 00:00:00');
+            $to = date('Y-12-31 00:00:00');
+
+            if ($request->get('options') != null) {
+                if (is_numeric($this->search("1", $request->get('options')))) {
+                    $data->put('daughters', $community->transfers->where('status', 1));
+                }
+                if (is_numeric($this->search("2", $request->get('options')))) {
+                    $data->put('activities', $community->activities()
+                        ->whereBetween('comm_date_activity', [$from, $to])
+                        ->get());
+                }
+                if (is_numeric($this->search("3", $request->get('options')))) {
+                    $data->put('resumes', $community->resumes()
+                        ->whereBetween('comm_date_resume', [$from, $to])
+                        ->get());
+                }
+                if (is_numeric($this->search("4", $request->get('options')))) {
+                    $data->put('visits', $community->visits()
+                        ->whereBetween('comm_date_init_visit', [$from, $to])
+                        ->get());
+                }
+                if (is_numeric($this->search("5", $request->get('options')))) {
+                    $data->put('works', $community->works()
+                        ->where('comm_status', 1)
+                        ->get());
+                }
+                if (is_numeric($this->search("6", $request->get('options')))) {
+                    $data->put('inventory', $community->inventory()
+                        ->get()
+                        ->first());
+                    $data->put('sections', $community->inventory
+                        ->sections()
+                        ->get());
+                }
+            }
+            // return $data;
+            //
+            $pdf = PDF::loadView('reports.communities.report', compact('data'));
+            // return $pdf -> download('Usuarios-OpenScience.pdf');
+            return $pdf->setPaper('a4', 'portrait')->stream('Reporte Comunidad ' . $community->comm_name . '.pdf');
+        } else {
+            return  collect(['message' => true]);
+        }
+    }
+
+    public function reportAllCommPDF()
+    {
+        $validator = Validator::make(request()->all(), [
+            'direction' => ['in:asc,desc'],
+            'field' => ['in:comm_name,comm_email,pastoral_id'],
+            'active' =>  ['integer', 'between:1,2'],
+            'type' =>  ['integer', 'between:1,2'],
+            'pastoral' =>  ['integer', 'exists:pastorals,id'],
+            'dateStart' => ['date_format:Y-m-d H:i:s'],
+            'perPage' =>  ['integer'],
+        ]);
+        $dateFromTo = new CommunityController();
+        $addressClass = new AddressController();
+        $provinces =  $addressClass->getProvinces();
+
+        if ($validator->fails()) {
+            return redirect()->back()->with(['error' => 'No se encuentran resultados.']);
+        }
+
+        $query = Community::query();
+
+        if (request('search')) {
+            $query->where('comm_name', 'LIKE', '%' . request('search') . '%');
+        }
+
+        if (request()->has(['field', 'direction'])) {
+            $query->orderBy(request('field'), request('direction'));
+        }
+
+        if (request('pastoral')) {
+            $dateFromTo->setPastoral(Pastoral::find(request('pastoral')));
+            $query->where('pastoral_id', '=', request('pastoral'));
+        }
+
+        if (request('active')) {
+            if (request('active') == 2) {
+                if (request('dateStart') || request('dateEnd')) {
+                    $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
+                        'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
+                        'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
+                    ]);
+                    if ($validatorData->fails()) {
+                        $query->orderBy('date_close', 'desc');
+                        return redirect()->back()
+                            ->withErrors($validatorData->errors());
+                    } else {
+                        $dateFromTo->setFrom(request('dateStart'));
+                        $dateFromTo->setTo(request('dateEnd'));
+                        $query->whereBetween('date_close', [request('dateStart'), request('dateEnd')]);
+                        $query->orderBy('date_close', 'desc');
+                    }
+                }
+                $query->where('comm_status', '=', 0);
+            } else {
+                if (request('dateStart') || request('dateEnd')) {
+                    $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
+                        'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
+                        'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
+                    ]);
+                    if ($validatorData->fails()) {
+                        $query->orderBy('date_fndt_comm', 'desc');
+                        return redirect()->back()
+                            ->withErrors($validatorData->errors());
+                    } else {
+                        $dateFromTo->setFrom(request('dateStart'));
+                        $dateFromTo->setTo(request('dateEnd'));
+                        $query->whereBetween('date_fndt_comm', [request('dateStart'), request('dateEnd')]);
+                        $query->orderBy('date_fndt_comm', 'desc');
+                    }
+                }
+                $query->where('comm_status', '=', request('active'));
+            }
+        }
+
+        if (request('type')) {
+            $query->where('comm_level', request('type'));
+        }
+
+        if (request('perProvince')) {
+            $address = Address::whereHasMorph(
+                'addressable',
+                [Community::class],
+                function (Builder $query) {
+                    return   $query->where('political_division_id', 'LIKE', request('perProvince') . '%');
+                }
+            )->get();
+
+            $index = array();
+            foreach ($address as $ob) {
+                $ob->addressable_id;
+                $index[] = $ob->addressable_id;
+            }
+            $query->whereIn('id', $index);
+        }
+
+        $data = $query
+            ->with('pastoral')
+            ->with('zone')
+            ->with('address')
+            ->get();
+
+        $from =   $dateFromTo->getFrom();
+        $to =  $dateFromTo->getTo();
+        $pastoral =  $dateFromTo->getPastoral();
+
+        $status =  $type = request('active');
+        if (request('printOperation') == 1) {
+            $pdf = PDF::loadView('reports.communities.list-custom', compact('data', 'status', 'from', 'to', 'pastoral'));
+            // return $pdf -> download('Usuarios.pdf');
+            return $pdf->setPaper('a4', 'landscape')->stream('ReportesComunidadesyHermanasHDLC.pdf');
+        } elseif (request('printOperation') == 0) {
+            $pdf = PDF::loadView('reports.communities.list-general', compact('data', 'status', 'from', 'to', 'pastoral'));
+            // return $pdf -> download('Usuarios.pdf');
+            return $pdf->setPaper('a4', 'landscape')->stream('ReportesComunidadesHDLC.pdf');
+        }
     }
 }
