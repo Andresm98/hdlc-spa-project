@@ -16,21 +16,41 @@ class OfficeSeeder extends Seeder
     public function run()
     {
 
-        $office = Office::create([
-            'name'  => 'Superiora',
-            'observation' => 'Es la encargada de dirigir la inst.',
+        // $office = Office::create([
+        //     'office_name'  => 'Superiora',
+        //     'office_observation' => 'Es la encargada de dirigir la inst.',
+        // ]);
+        Office::create([
+            'office_name'  => 'Hermana Sirviente',
+            'office_observation' => 'Hermana de rango superior.',
         ]);
-        $office = Office::create([
-            'name'  => 'Hermana Sirviente',
-            'observation' => 'Hermana de rango s.',
+        Office::create([
+            'office_name'  => 'Hermana Compañera',
+            'office_observation' => 'Hermana de rango medio',
         ]);
-        $office = Office::create([
-            'name'  => 'Hermana General',
-            'observation' => 'Hermana de rango g',
+        Office::create([
+            'office_name'  => 'Hermana Seminario',
+            'office_observation' => 'Hermana de rango inicial.',
         ]);
-        $office = Office::create([
-            'name'  => 'Hermanas Novicias',
-            'observation' => 'Hermana de rango novicia.',
+        Office::create([
+            'office_name'  => 'Visitadora Provincial',
+            'office_observation' => 'Hermana de rango inicial.',
+        ]);
+        Office::create([
+            'office_name'  => 'Asistente Provincial',
+            'office_observation' => 'Hermana de rango inicial.',
+        ]);
+        Office::create([
+            'office_name'  => 'Consejera Provincial',
+            'office_observation' => 'Hermana de rango inicial.',
+        ]);
+        Office::create([
+            'office_name'  => 'Secretaria Provincial',
+            'office_observation' => 'Hermana de rango inicial.',
+        ]);
+        Office::create([
+            'office_name'  => 'Ecónoma Provincial',
+            'office_observation' => 'Hermana de rango inicial.',
         ]);
     }
 }

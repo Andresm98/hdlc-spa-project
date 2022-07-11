@@ -16,10 +16,10 @@ class CreateHealthsTable extends Migration
         Schema::create('healths', function (Blueprint $table) {
             $table->id();
 
-            $table->date('consult_date');
             $table->text('actual_health');
             $table->text('chronic_diseases');
             $table->text('other_health_problems');
+            $table->dateTime('consult_date');
 
             //  Crear relación con profile
 
@@ -27,7 +27,6 @@ class CreateHealthsTable extends Migration
             $table->foreign('profile_id')
                 ->references('id')
                 ->on('profiles')
-                // Permite realizar los cambios desde profile y que la tabla health se vea inmediatamente actualizada o eliminada.
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 

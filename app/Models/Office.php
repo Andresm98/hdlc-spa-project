@@ -9,6 +9,7 @@ class Office extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
     /**
      *
      * Relacion a nivel de Modelo

@@ -10,7 +10,6 @@
                 </template>
 
                 <template #description>
-                    Add a new team member to your team, allowing them to collaborate with you.
                     Agregar un nuevo miembro a tu equipo permitiéndole que colabore contigo.
                 </template>
 
@@ -61,11 +60,11 @@
 
                 <template #actions>
                     <jet-action-message :on="addTeamMemberForm.recentlySuccessful" class="mr-3">
-                        Added.
+                        Agregado.
                     </jet-action-message>
 
                     <jet-button :class="{ 'opacity-25': addTeamMemberForm.processing }" :disabled="addTeamMemberForm.processing">
-                        Add
+                        Agregar
                     </jet-button>
                 </template>
             </jet-form-section>
@@ -142,14 +141,14 @@
                                 <button class="cursor-pointer ml-6 text-sm text-red-500"
                                                     @click="confirmLeavingTeam"
                                                     v-if="$page.props.user.id === user.id">
-                                    Leave
+                                    Dejar
                                 </button>
 
                                 <!-- Remove Team Member -->
                                 <button class="cursor-pointer ml-6 text-sm text-red-500"
                                                     @click="confirmTeamMemberRemoval(user)"
                                                     v-if="userPermissions.canRemoveTeamMembers">
-                                    Remove
+                                    Eliminar
                                 </button>
                             </div>
                         </div>

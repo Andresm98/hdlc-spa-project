@@ -9,6 +9,13 @@ class InfoFamilyBreak extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name_family_member',
+        'relation',
+        'cellphone',
+        'phone',
+    ];
+
     /**
      *
      * Relaciones a nivel de  Modelo.

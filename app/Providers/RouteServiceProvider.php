@@ -64,6 +64,12 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('secretary')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/secretary.php'));
+
+            Route::middleware('web', 'auth')
+                ->name('daughter.')
+                ->prefix('daughter')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/daughter.php'));
         });
     }
 

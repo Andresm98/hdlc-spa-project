@@ -17,9 +17,9 @@ class CreateAcademicTrainingsTable extends Migration
             $table->id();
 
             // Crear los campos necesarios a ser migrados a la base de datos
-            $table->string('name_title', 50);
+            $table->string('name_title', 100);
             $table->string('institution', 50);
-            $table->date('date_title');
+            $table->dateTime('date_title');
             $table->text('observation');
 
             // Asignar el campo la clave foranea
@@ -28,7 +28,9 @@ class CreateAcademicTrainingsTable extends Migration
             // Generar la clave foranea para la relacion uno a muchos (profile->academic_training)
             $table->foreign('profile_id')
                 ->references('id')->on('profiles')
-                ->onDelete('set null');
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
 
             $table->timestamps();
         });

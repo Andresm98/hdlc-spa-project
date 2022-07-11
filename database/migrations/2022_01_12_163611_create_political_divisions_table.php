@@ -20,7 +20,7 @@ class CreatePoliticalDivisionsTable extends Migration
             $table->string('political_divisionc_id')->nullable();
 
             $table->string('name');
-            $table->tinyInteger('level');
+            $table->smallInteger('level');
             $table->tinyText('last_level');
 
 
@@ -31,9 +31,8 @@ class CreatePoliticalDivisionsTable extends Migration
             $table->foreign('political_divisionc_id')
                 ->references('id')
                 ->on('political_divisions')
-                ->onDelete('cascade');
-
-
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->timestamps();
         });

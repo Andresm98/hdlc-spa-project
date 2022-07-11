@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Sacrament extends Model
@@ -11,15 +12,8 @@ class Sacrament extends Model
     protected $guarded = [];
 
     use HasFactory;
+    use SoftDeletes;
 
-
-    const BAUTISMO = 1;
-    const PENITENCIA = 2;
-    const EUCARISTIA = 3;
-    const CONFIRMACION = 4;
-    const ORDENSACERDOTAL = 5;
-    const MATRIMONIO = 6;
-    const UNIONENFERMOS = 7;
     /**
      *
      * Crear las relaciones a nivel de modelo

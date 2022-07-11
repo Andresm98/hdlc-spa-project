@@ -91,6 +91,8 @@ export default defineComponent({
                     'lg': 'sm:max-w-lg',
                     'xl': 'sm:max-w-xl',
                     '2xl': 'sm:max-w-2xl',
+                    'input-md' : 'md:w-3/4',
+                    'input-lg' : 'lg:w-3/4',
                 }[this.maxWidth]
             }
         }

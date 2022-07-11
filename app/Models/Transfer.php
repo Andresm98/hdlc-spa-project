@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Transfer extends Model
 {
     use HasFactory;
+    //  Variable para asignacion masiva
+    protected $guarded = [];
 
     /**
      *
@@ -15,12 +17,13 @@ class Transfer extends Model
      *
      */
 
+    public function appointments()
+    {
+        return $this->hasMany('App\Models\Appointment');
+    }
+
 
     //  Relacion uno a uno
-
-
-
-    // Relacion de uno a muchos inversa
 
     public function office()
     {

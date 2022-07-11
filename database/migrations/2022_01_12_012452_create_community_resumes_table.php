@@ -16,21 +16,23 @@ class CreateCommunityResumesTable extends Migration
         Schema::create('community_resumes', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name', 100);
-            $table->text('description');
-            $table->tinyInteger('nr_daughters');
-            $table->tinyInteger('nr_collaborators');
-
-            // Generar el campo
+            // Fields
+            $table->string('comm_name_resume');
+            $table->string('comm_annexed_resume', 400);
+            $table->mediumText('comm_observation_resume', 4000);
+            $table->dateTime('comm_date_resume');
+            // FK field
 
             $table->unsignedBigInteger('community_id');
 
-            // Asignar el valor a la variable
+            // Asign relashionship
 
             $table->foreign('community_id')
                 ->references('id')
                 ->on('communities')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
+
 
             $table->timestamps();
         });

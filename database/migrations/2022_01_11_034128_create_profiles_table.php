@@ -15,14 +15,19 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-
+            //  1 = Activa, 2 = Fallecida, 3 = Retirada
+            $table->tinyInteger('status');
             $table->tinyText('identity_card');
-            $table->date('date_birth');
-            $table->date('date_vocation');
-            $table->date('date_admission');
-            $table->char('cellphone', 20);
-            $table->char('phone', 20);
-            $table->text('observation');
+            $table->dateTime('date_birth');
+            $table->dateTime('date_vocation')->nullable();
+            $table->dateTime('date_admission')->nullable();
+            $table->dateTime('date_send')->nullable();
+            $table->dateTime('date_vote')->nullable();
+            $table->dateTime('date_death')->nullable();
+            $table->dateTime('date_exit')->nullable();
+            $table->char('cellphone', 20)->nullable();
+            $table->char('phone', 20)->nullable();
+            $table->longText('observation', 4000)->nullable();
 
             // Asignar el campo de clave primaria.
             $table->unsignedBigInteger('user_id')->unique();

@@ -13,19 +13,19 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
+
     <!-- Scripts -->
     @routes
     <script src="{{ mix('js/app.js') }}" defer></script>
-    {{-- Sweet Alert --}}
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body class="font-sans antialiased">
     @inertia
 
-    @env('local')
+    {{-- @env('local')
     <script src="http://localhost:3000/browser-sync/browser-sync-client.js"></script>
-    @endenv
+    @endenv --}}
 </body>
 
 </html>

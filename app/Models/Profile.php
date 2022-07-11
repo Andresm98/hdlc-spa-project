@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Profile extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'identity_card', 'date_birth', 'date_vocation',
-         'date_admission', 'cellphone', 'phone','observation'
+        'identity_card', 'status', 'date_birth', 'date_vocation',
+        'date_admission', 'date_send', 'date_vote', 'date_death', 'date_exit', 'cellphone', 'phone', 'observation'
     ];
 
     /**
@@ -22,11 +24,11 @@ class Profile extends Model
 
     //  Relación uno a uno inversa
 
-    public function user()
+    public function user(): BelongsTo
     {
         // BELONG METODO PARA SETEAR LA CLAVE FORANEA
         // Campo especifico en Profile (user_id)
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     // Relacion uno a uno
@@ -55,12 +57,20 @@ class Profile extends Model
         return $this->hasMany('App\Models\Transfer');
     }
 
-    public function health()
+    public function healths()
     {
         return $this->hasMany('App\Models\Health');
     }
 
-    // Relacion uno a varios
+    public function permits()
+    {
+        return $this->hasMany('App\Models\Permit');
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany('App\Models\Appointment');
+    }
 
     public function sacraments()
     {
@@ -73,5 +83,12 @@ class Profile extends Model
     public function address()
     {
         return $this->morphOne('App\Models\Address', 'addressable');
+    }
+
+    // Relacion uno a varios polimorfica
+
+    public function files()
+    {
+        return $this->morphMany('App\Models\File', 'fileable');
     }
 }

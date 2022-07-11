@@ -14,15 +14,45 @@ class CreateCommunitiesTable extends Migration
     public function up()
     {
         Schema::create('communities', function (Blueprint $table) {
-            $table->id();
 
-            $table->string('name');
-            $table->tinyText('cellphone');
-            $table->tinyText('phone');
-            $table->string('email')->unique();
-            $table->date('foundation_comm');
-            $table->date('foundation_work');
-            $table->integer('rn_collaborators');
+            $table->id();
+            $table->tinyInteger('comm_status');
+            $table->unsignedBigInteger('comm_id')->nullable();
+            $table->tinyText('comm_identity_card')->nullable();
+            $table->string('comm_name');
+            $table->string('comm_slug')->unique();
+            $table->smallInteger('comm_level');
+            $table->tinyText('comm_cellphone')->nullable();
+            $table->tinyText('comm_phone');
+            $table->string('comm_email')->unique();
+            $table->dateTime('date_fndt_comm');
+            $table->dateTime('date_fndt_work')->nullable();
+            $table->dateTime('date_close')->nullable();
+            $table->integer('rn_collaborators')->nullable();
+
+            // Generar campo para clave foranea
+
+            $table->unsignedBigInteger('pastoral_id');
+            $table->unsignedBigInteger('zone_id')->nullable();
+
+            // Generar la clave foranea recursiva
+
+            $table->foreign('comm_id')
+                ->references('id')
+                ->on('communities')
+                ->onUpdate('set null')
+                ->onDelete('cascade');
+
+            $table->foreign('pastoral_id')
+                ->references('id')
+                ->on('pastorals')
+                ->onUpdate('cascade');
+
+                $table->foreign('zone_id')
+                ->references('id')
+                ->on('zones')
+                ->onUpdate('cascade');
+
 
             $table->timestamps();
         });
