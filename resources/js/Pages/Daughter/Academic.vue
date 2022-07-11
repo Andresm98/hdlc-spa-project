@@ -531,7 +531,7 @@
                   <input
                     type="text"
                     minLength="10"
-                    maxlength="40"
+                    maxlength="100"
                     placeholder="Ingresar Nombre de Título"
                     class="
                       border-0
@@ -695,7 +695,7 @@
                   <input
                     type="text"
                     minLength="10"
-                    maxlength="40"
+                    maxlength="100"
                     placeholder="Ingresar Nombre de Título"
                     class="
                       border-0

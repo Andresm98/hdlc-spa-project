@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Validator;
 
 class ZoneController extends Controller
 {
+
+    public function  __construct()
+    {
+        $this->middleware('can:create zone')->only('create', 'store');
+        $this->middleware('can:read zone')->only('index', 'show');
+        $this->middleware('can:update zone')->only('edit', 'update');
+        $this->middleware('can:delete zone')->only('delete', 'destroy');
+    }
     /**
      * Display a listing of the resource.
      *

@@ -254,7 +254,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($id)],
-            'roles*' => 'required|exists:roles,id',
+            'roles*' => 'nullable|exists:roles,id',
             'file' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ]);
         if ($validator->fails()) {

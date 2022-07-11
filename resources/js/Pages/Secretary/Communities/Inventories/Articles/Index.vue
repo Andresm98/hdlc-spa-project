@@ -8,7 +8,7 @@
         Bienvenido Usuario: {{ $page.props.user.name }}
       </div>
     </template>
-
+    <operation></operation>
     <section
       class="
         bg-gray-200
@@ -57,7 +57,7 @@
               dark:sm:text-white
             "
           >
-            Provincia Ecuador
+            {{ dataInventoryCommunity.community.comm_name }}
           </h1>
           <p
             class="
@@ -69,7 +69,8 @@
               dark:sm:text-slate-400
             "
           >
-            Información General de la Comunidad
+            {{ dataInventoryCommunity.inventory.name }} <br /><br />
+            {{ section.name }}
           </p>
         </div>
         <div
@@ -92,35 +93,6 @@
               rounded-lg
               sm:h-52 sm:col-span-2
               lg:col-span-full
-            "
-            loading="lazy"
-          />
-          <img
-            src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_3.png"
-            alt=""
-            class="
-              hidden
-              w-full
-              h-52
-              object-cover
-              rounded-lg
-              sm:block sm:col-span-2
-              md:col-span-1
-              lg:row-start-2 lg:col-span-2 lg:h-32
-            "
-            loading="lazy"
-          />
-          <img
-            src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_1.png"
-            alt=""
-            class="
-              hidden
-              w-full
-              h-52
-              object-cover
-              rounded-lg
-              md:block
-              lg:row-start-2 lg:col-span-2 lg:h-32
             "
             loading="lazy"
           />
@@ -198,22 +170,6 @@
             lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4
           "
         >
-          <button
-            type="button"
-            class="
-              bg-blue-600
-              text-white text-sm
-              leading-6
-              font-medium
-              py-2
-              px-3
-              rounded-lg
-            "
-          >
-            <!--
-                        FIXME: Import Controllers For PDF-->
-            Plantilla PDF
-          </button>
           <div
             class="
               mt-4
@@ -225,40 +181,7 @@
               text-black
               dark:text-white
             "
-          >
-            <p>
-              La presente plantiflla de información se relaciona con los datos
-              principales de la comunidad a la que desea modificar al sistema,
-              por lo que deberá verificar los datos a ingresar.
-            </p>
-            <ul class="list-disc pl-5">
-              <li class="dark:text-white">
-                <p class="mt-2 pt-6 text-sm uppercase">
-                  Nombre de comunidad único en el sistema.
-                </p>
-              </li>
-              <li class="dark:text-white">
-                <p class="text-sm uppercase dark:text-white">
-                  Correo electrónico único en el sistema.
-                </p>
-              </li>
-              <li class="dark:text-white">
-                <p class="text-sm uppercase dark:text-white">
-                  Números de contacto.
-                </p>
-              </li>
-              <li class="dark:text-white">
-                <p class="text-sm uppercase dark:text-white">
-                  Fechas de fundación de la obra y comunidad.
-                </p>
-              </li>
-              <li class="dark:text-white">
-                <p class="text-sm uppercase dark:text-white">
-                  Número de colaboradores.
-                </p>
-              </li>
-            </ul>
-          </div>
+          ></div>
         </div>
       </div>
     </section>
@@ -533,7 +456,23 @@
                             target="_blank"
                             :href="
                               route(
-                                'secretary.communities.export.excel',
+                                'secretary.communities.articles.report.pdf',
+                                this.params
+                              )
+                            "
+                            >PDF</a
+                          >
+                          <a
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            target="_blank"
+                            :href="
+                              route(
+                                'secretary.communities.articles.export.excel',
                                 this.params
                               )
                             "
@@ -549,7 +488,7 @@
                             target="_blank"
                             :href="
                               route(
-                                'secretary.communities.export.csv',
+                                'secretary.communities.articles.export.csv',
                                 this.params
                               )
                             "
@@ -566,7 +505,9 @@
             <section class="pl-4">
               <pagination class="mt-6 mb-5" :links="listArticles.links" />
             </section>
-
+            <small class="ml-6">
+              Se encontraron {{ listArticles.total }} artículos.</small
+            >
             <div class="py-2">
               <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -1693,6 +1634,7 @@ import JetInputError from "@/Jetstream/InputError.vue";
 import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import SearchFilter from "@/Components/SearchFilter";
+import Operation from "@/Components/Secretary/Community/Operation";
 import Icon from "@/Components/Icon";
 
 import TextInput from "@/Components/TextInput";
@@ -1723,6 +1665,8 @@ export default defineComponent({
     section_slug: String,
     article_custom: Object,
     filters: Object,
+    dataInventoryCommunity: Object,
+    section: Object,
   },
   components: {
     Link,
@@ -1741,6 +1685,7 @@ export default defineComponent({
     Icon,
     Dropdown,
     moment,
+    Operation,
   },
   data() {
     return {
@@ -1756,6 +1701,7 @@ export default defineComponent({
         dateStart: this.filters.dateStart,
         dateEnd: this.filters.dateEnd,
         perPage: this.filters.perPage,
+        sectionSlug: this.section_slug,
       },
 
       //  Create
@@ -1922,7 +1868,7 @@ export default defineComponent({
           preserveState: true,
           preserveScroll: true,
           onSuccess: () => {
-            console.log("deleted");
+            // console.log("deleted");
           },
         }
       );

@@ -644,7 +644,7 @@
               <div v-if="profile_daughter == null" class="m-4">
                 <profile-daughter></profile-daughter>
               </div>
-              <div v-else class="m-4">
+              <div v-if="profile_daughter != null" class="m-4">
                 <profile-daughter-edit
                   :slug="daughter_custom.slug"
                 ></profile-daughter-edit>
@@ -746,7 +746,6 @@
         </div>
       </div>
     </section>
-
 
     <jet-dialog-modal
       :show="managingReportsFor"
@@ -899,7 +898,6 @@
         >
       </template>
     </jet-dialog-modal>
-
   </app-layout>
 </template>
 <script>
@@ -1149,8 +1147,10 @@ export default defineComponent({
       return null;
     },
     ageProfile() {
-      let age = this.formatShowDate(this.profile_daughter.date_birth);
-      return moment().diff(moment(age, "YYYY-MM-DD"), "years");
+      if (this.profile_daughter != null) {
+        let age = this.formatShowDate(this.profile_daughter.date_birth);
+        return moment().diff(moment(age, "YYYY-MM-DD"), "years");
+      }
     },
   },
 

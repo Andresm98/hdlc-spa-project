@@ -39,7 +39,7 @@
                 bottom: 0cm;
                 left: 0cm;
                 right: 0cm;
-                height: 1.5cm;
+                height: 2.0cm;
                 background-color: #e5e7ee;
                 color: white;
                 text-align: center;
@@ -73,21 +73,27 @@
 
 <body>
     <header>
-
-        <div style="margin-top:0.2cm; margin-block-start: 0.2cm; color: #000000">
-            <p style="font-size:medium; margin-top:0.5cm;">
-                Compañía Hijas de la Caridad de San Vicente de Paúl ©
-            <p>Información Hermanas de la Compañía
-                @if ($from != null || $to != null)
-                    ({{ date('Y-m-d', strtotime($from)) }} -
-                    {{ date('Y-m-d', strtotime($to)) }})
-                @endif.
-            </p>
-            </p>
-
+        <div style=" margin-block-start: 0.2cm; color: #000000">
+            <div>
+                <div style="float: left;width: 90%; height: 30px;">
+                    <p style="font-size:medium; margin-top:0.5cm;">
+                        Compañía Hijas de la Caridad de San Vicente de Paúl ©
+                    <p>Información Hermanas de la Compañía
+                        @if ($from != null || $to != null)
+                            ({{ date('Y-m-d', strtotime($from)) }} -
+                            {{ date('Y-m-d', strtotime($to)) }})
+                        @endif
+                    </p>
+                    </p>
+                </div>
+                <div style="float: left;width: 10%; height: 30px;">
+                    <p style="font-size:medium; margin-right:2.5cm; margin-bottom:2.0cm;">
+                        <img height="60px" width="100px"
+                            src="https://files-hdlc-frontend.s3.amazonaws.com/icon_hdlc.png" />
+                    </p>
+                </div>
+            </div>
         </div>
-        {{-- <p>Impreso por: {{ auth()->user()->name }}, {{ auth()->user()->title }}.</p> --}}
-
     </header>
 
     <main>

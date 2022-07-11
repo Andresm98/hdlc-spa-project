@@ -17,7 +17,7 @@ class CreateAcademicTrainingsTable extends Migration
             $table->id();
 
             // Crear los campos necesarios a ser migrados a la base de datos
-            $table->string('name_title', 50);
+            $table->string('name_title', 100);
             $table->string('institution', 50);
             $table->dateTime('date_title');
             $table->text('observation');

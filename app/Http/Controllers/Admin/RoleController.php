@@ -111,6 +111,9 @@ class RoleController extends Controller
                 'permissions' => 'required'
             ]
         );
+        if ($role->id == 1) {
+            return redirect()->back()->with('error', 'No se puede editar el rol.');
+        }
 
         $role->permissions()->sync($request->permissions);
         $role->update(['name' => $request->name]);
@@ -126,9 +129,12 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        if ($role->id == 1 || $role->id == 2 || $role->id == 3 || $role->id == 4) {
+            return redirect()->back()->with('error', 'No se puede eliminar el rol.');
+        }
         $role->delete();
         $roles_list = Role::orderBy('id', 'asc')
             ->paginate(2);
-        return redirect()->route('admin.roles.index');
+        return redirect()->route('admin.roles.index')->with('success', 'Rol eliminado correctamente');
     }
 }

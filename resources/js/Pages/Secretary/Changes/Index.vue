@@ -375,9 +375,7 @@
                   <a
                     class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                     target="_blank"
-                    :href="
-                      route('secretary.transfers.export.csv', this.params)
-                    "
+                    :href="route('secretary.transfers.export.csv', this.params)"
                     >CSV</a
                   >
                 </div>
@@ -866,7 +864,7 @@
                       :searchable="true"
                       placeholder="Por favor seleccionar la comunidad a la que va"
                       select-label="Seleccionar!"
-                      v-model="this.form.transfer.community_id"
+                      v-model="this.selectOne.selectedCommunity"
                       :options="this.allWork"
                       :close-on-select="true"
                       :clear-on-select="false"
@@ -1016,7 +1014,7 @@
                     :searchable="true"
                     placeholder="Por favor seleccionar la comunidad a la que va"
                     select-label="Seleccionar!"
-                    v-model="this.form.transfer.community_id"
+                    v-model="this.selectOne.selectedCommunity"
                     :options="this.allWork"
                     :close-on-select="true"
                     :clear-on-select="false"
@@ -1963,8 +1961,8 @@ export default {
     isInvalidCommunity() {
       //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
-        this.form.transfer.community_id == undefined ||
-        this.form.transfer.community_id == null
+        this.selectOne.selectedCommunity == undefined ||
+        this.selectOne.selectedCommunity == null
       );
     },
 
@@ -2029,12 +2027,14 @@ export default {
       this.navigationOp = 1;
       this.statustransfer = 0;
       this.selectLevel.selectedLevel = null;
+      this.selectFour.selectedPerfil = null;
       this.selectCategory.selectedLevelCategory = null;
     },
     cancelUpdate() {
       this.transferBeingUpdated = null;
       this.navigationOp = 1;
       this.statustransfer = 0;
+      this.selectOne.selectedCommunity = null;
     },
     confirmationTransferCreate() {
       this.form = this.$inertia.form({
@@ -2087,42 +2087,44 @@ export default {
       }
     },
     submit() {
-      //   console.log("data send", this.form);
-      this.form.transfer.community_id = this.form.transfer.community_id.id;
-
-      if (this.form.transfer.transfer_date_adission) {
-        this.form.transfer.transfer_date_adission = this.formatDate(
-          this.form.transfer.transfer_date_adission
-        );
-      }
-      if (this.form.transfer.transfer_date_relocated) {
-        this.form.transfer.transfer_date_relocated = this.formatDate(
-          this.form.transfer.transfer_date_relocated
-        );
-      }
-      //
-
-      if (this.form.appointment.date_appointment != null) {
-        this.form.appointment.date_appointment = this.formatDate(
-          this.form.appointment.date_appointment
-        );
-      }
-      if (this.form.appointment.date_end_appointment != null) {
-        this.form.appointment.date_end_appointment = this.formatDate(
-          this.form.appointment.date_end_appointment
-        );
-      }
-      this.form.appointment.appointment_level_id =
-        this.selectCategory.selectedLevelCategory;
-      this.form.transfer.status = this.statustransfer;
-      this.form.appointment.status = this.statustransfer;
-      //   if (this.isInvalidCommunity == false && this.isInvalidOffice == false) {
       if (
         this.isInvalidCommunity == false &&
         this.isInvalidLevel == false &&
         this.isInvalidLevelCategory == false &&
         this.isInvalidPerfil == false
       ) {
+        //   console.log("data send", this.form);
+        if (this.selectOne.selectedCommunity != null) {
+          this.form.transfer.community_id = this.selectOne.selectedCommunity.id;
+        }
+
+        if (this.form.transfer.transfer_date_adission) {
+          this.form.transfer.transfer_date_adission = this.formatDate(
+            this.form.transfer.transfer_date_adission
+          );
+        }
+        if (this.form.transfer.transfer_date_relocated) {
+          this.form.transfer.transfer_date_relocated = this.formatDate(
+            this.form.transfer.transfer_date_relocated
+          );
+        }
+        //
+
+        if (this.form.appointment.date_appointment != null) {
+          this.form.appointment.date_appointment = this.formatDate(
+            this.form.appointment.date_appointment
+          );
+        }
+        if (this.form.appointment.date_end_appointment != null) {
+          this.form.appointment.date_end_appointment = this.formatDate(
+            this.form.appointment.date_end_appointment
+          );
+        }
+        this.form.appointment.appointment_level_id =
+          this.selectCategory.selectedLevelCategory;
+        this.form.transfer.status = this.statustransfer;
+        this.form.appointment.status = this.statustransfer;
+
         Inertia.post(
           route("secretary.daughter-profile.transfer.store", {
             user_id: this.form.transfer.profile_id,
@@ -2145,6 +2147,7 @@ export default {
                 this.form.appointment.description = null;
                 this.form.appointment.date_appointment = null;
 
+                this.selectOne.selectedCommunity = null;
                 this.selectLevel.selectedLevel = null;
                 this.selectCategory.selectedLevelCategory = null;
                 this.selectCategory.options = [];

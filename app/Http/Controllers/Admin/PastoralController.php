@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Validator;
 
 class PastoralController extends Controller
 {
+    public function  __construct()
+    {
+        $this->middleware('can:create pastoral')->only('create', 'store');
+        $this->middleware('can:read pastoral')->only('index', 'show');
+        $this->middleware('can:update pastoral')->only('edit', 'update');
+        $this->middleware('can:delete pastoral')->only('delete', 'destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *

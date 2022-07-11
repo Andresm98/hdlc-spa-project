@@ -382,7 +382,7 @@
                             "
                             target="_blank"
                             :href="
-                              route(
+                              this.route(
                                 'secretary.daughters.export.excel',
                                 this.params
                               )

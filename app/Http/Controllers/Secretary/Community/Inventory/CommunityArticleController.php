@@ -2,32 +2,32 @@
 
 namespace App\Http\Controllers\Secretary\Community\Inventory;
 
+use PDF;
 use Inertia\Inertia;
 use App\Models\Article;
 use App\Models\Section;
+use App\Models\Community;
+use App\Models\Inventory;
 use Illuminate\Http\Request;
+use App\Exports\ArticlesExport;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
 class CommunityArticleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $from; // public, protected <-> private
+    protected $to;
+    protected static $section;
 
-
-
-    public function index($section_slug)
+    public function __construct()
     {
+        $this->from;
+        $this->to;
+    }
 
-
-        request()->validate([
-            'direction' => ['in:asc,desc'],
-            'field' => ['in:name,email']
-        ]);
-
+    protected static function loadSection($section_slug)
+    {
         $validator = Validator::make([
             'slug' => $section_slug
         ], [
@@ -42,9 +42,47 @@ class CommunityArticleController extends Controller
             ->get()
             ->first();
 
+        return Section::find($section->id);
+    }
+
+    public function getFrom()
+    {
+        return $this->from;
+    }
+
+    public function getTo()
+    {
+        return $this->to;
+    }
+
+    public function setFrom($from)
+    {
+        $this->from = $from;
+    }
+
+    public function setTo($to)
+    {
+        $this->to = $to;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index($section_slug)
+    {
+        request()->validate([
+            'direction' => ['in:asc,desc'],
+            'field' => ['in:name,email']
+        ]);
+
+        $section = CommunityArticleController::loadSection($section_slug);
+        $dataInventoryCommunity = $this->DataSection($section->inventory_id);
+
+
         $query = Article::query()
             ->where('section_id', '=', $section->id);
-
 
         if (request('search')) {
             $query->where('name', 'LIKE', '%' . request('search') . '%');
@@ -81,7 +119,9 @@ class CommunityArticleController extends Controller
                 ->paginate(10)
                 ->appends(request()->query()),
             'filters' => request()->all(['search', 'field', 'direction', 'page', 'status', 'material', 'dateStart', 'dateEnd', 'perPage']),
-            'section_slug' => $section->slug
+            'section_slug' => $section->slug,
+            'section' => $section,
+            'dataInventoryCommunity' => $dataInventoryCommunity
         ]);
     }
 
@@ -265,5 +305,93 @@ class CommunityArticleController extends Controller
         $article->delete();
 
         return redirect()->back()->with(['success' => 'Artículo eliminado correctamente']);
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new ArticlesExport(request()), 'ArticulosHDLC.xlsx');
+    }
+
+    //  TODO: Export CSV
+
+    public function exportCSV()
+    {
+        return Excel::download(new ArticlesExport(request()), 'ArticulosHDLC.csv');
+    }
+
+    public function reportAllArticles()
+    {
+        request()->validate([
+            'direction' => ['in:asc,desc'],
+            'field' => ['in:name,email']
+        ]);
+
+        $section = CommunityArticleController::loadSection(request('sectionSlug'));
+
+        $dateFromTo = new CommunityArticleController();
+
+        $query = Article::query()
+            ->where('section_id', '=', $section->id);
+
+        if (request('search')) {
+            $query->where('name', 'LIKE', '%' . request('search') . '%');
+        }
+
+        if (request('status')) {
+            $query->where('status', request('status'));
+        }
+
+        if (request('material')) {
+            $query->where('material', request('material'));
+        }
+
+        if (request('dateStart')) {
+            $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
+                'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
+                'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
+            ]);
+            if ($validatorData->fails()) {
+                $query->orderBy('created_at', 'desc');
+                return redirect()->back()
+                    ->withErrors($validatorData->errors());
+            } else {
+                $dateFromTo->setFrom(request('dateStart'));
+                $dateFromTo->setTo(request('dateEnd'));
+                $query->whereBetween('created_at', [request('dateStart'), request('dateEnd')]);
+                $query->orderBy('created_at', 'desc');
+            }
+        }
+
+        if (request()->has(['field', 'direction'])) {
+            $query->orderBy(request('field'), request('direction'));
+        }
+
+        $from =   $dateFromTo->getFrom();
+        $to =  $dateFromTo->getTo();
+        $status =  $type = request('status');
+        $data = $query
+            ->get();
+        $dataInventoryCommunity = $this->DataSection($section->inventory_id);
+
+        $pdf = PDF::loadView('reports.communities.articles.list-general', compact(
+            'data',
+            'status',
+            'section',
+            'dataInventoryCommunity',
+            'from',
+            'to'
+        ));
+        // return $pdf -> download('Usuarios.pdf');
+        return $pdf->setPaper('a4', 'landscape')->stream('Reportes Articulos' . $section->name . '.pdf');
+    }
+
+
+    public function DataSection($inventory_id)
+    {
+        $inventory = Inventory::find($inventory_id);
+        return  collect([
+            'inventory' => $inventory,
+            'community' => Community::find($inventory->community_id),
+        ]);
     }
 }

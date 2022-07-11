@@ -12,6 +12,8 @@ class SettingsController extends Controller
     public function __construct()
     {
         DotenvEditor::load(base_path('.env'));
+        $this->middleware('can:read adminsettings')->only('index', 'show');
+        $this->middleware('can:create adminsettings')->only('create', 'store');
     }
     /**
      * Display a listing of the resource.

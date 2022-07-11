@@ -1,103 +1,207 @@
 <template>
-    <div>
-        <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-            <div>
-                <jet-application-logo class="block h-12 w-auto" />
-            </div>
+  <div>
+    <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+      <div>
+        <jet-application-logo class="block h-12 w-auto" />
+      </div>
 
-            <div class="mt-8 text-2xl">
-                Bienvenido al Sistema de Administración Secretaría HDLC
-            </div>
+      <div class="mt-8 text-2xl">
+        Bienvenido al Sistema de Administración Secretaría HDLC
+      </div>
 
-            <div class="mt-6 text-gray-500">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni officia voluptate sed sequi, impedit est aperiam fuga illo alias quod blanditiis delectus temporibus nihil quo neque, facilis, unde eaque magnam.
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad quas doloribus vero natus, quos assumenda qui iure nam rem vitae ea, repellat laborum error expedita sed aperiam veniam, repudiandae labore?
-            </div>
-        </div>
-
-        <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2">
-            <div class="p-6">
-                <div class="flex items-center">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="https://laravel.com/docs">Documentation</a></div>
-                </div>
-
-                <div class="ml-12">
-                    <div class="mt-2 text-sm text-gray-500">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis, obcaecati quasi, fugit consectetur, asperiores sint minus tempore alias amet doloribus dolores officiis voluptate mollitia dolor. Eum voluptatem enim officiis repudiandae!
-                    </div>
-
-                    <a href="https://laravel.com/docs">
-                        <div class="mt-3 flex items-center text-sm font-semibold text-indigo-700">
-                                <div>Explore the documentation</div>
-
-                                <div class="ml-1 text-indigo-500">
-                                    <svg viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="p-6 border-t border-gray-200 md:border-t-0 md:border-l">
-                <div class="flex items-center">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="https://laracasts.com">Vue Redux</a></div>
-                </div>
-
-                <div class="ml-12">
-                    <div class="mt-2 text-sm text-gray-500">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. At dolores magnam sapiente, ab consequuntur recusandae esse cupiditate reprehenderit nemo enim dolorum laboriosam id a tempore vel eveniet consequatur quos quisquam.
-                    </div>
-
-                    <a href="https://laracasts.com">
-                        <div class="mt-3 flex items-center text-sm font-semibold text-indigo-700">
-                                <div>Start watching Laracasts</div>
-
-                                <div class="ml-1 text-indigo-500">
-                                    <svg viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="p-6 border-t border-gray-200">
-                <div class="flex items-center">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="https://tailwindcss.com/">TW - UI</a></div>
-                </div>
-
-                <div class="ml-12">
-                    <div class="mt-2 text-sm text-gray-500">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. In facilis non accusamus vel voluptatem aliquid nostrum qui consequatur deserunt alias excepturi, dolore veritatis id, odit illum, commodi minima distinctio aut.
-                    </div>
-                </div>
-            </div>
-
-            <div class="p-6 border-t border-gray-200 md:border-l">
-                <div class="flex items-center">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                    <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold">Authentication</div>
-                </div>
-
-                <div class="ml-12">
-                    <div class="mt-2 text-sm text-gray-500">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia at totam rem pariatur soluta hic velit quam adipisci nihil. Ipsam voluptatem reprehenderit nesciunt? Libero ipsum quam vero, modi deleniti magni?
-                    </div>
-                </div>
-            </div>
-        </div>
+      <div class="mt-6 text-gray-500">
+        El sistema de gestión documental de secretaría de la Compañía de las
+        Hijas de la Caridad pone a disposición la información relacionada a las
+        hermanas, comunidades, pastolares, zonas y otro tipo de información
+        sensible. Por favor, manipule con cuidado las credenciales que le sean
+        asignadas ya que dependiendo del rol que se le asigne.
+      </div>
     </div>
+
+    <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2">
+      <div class="p-6">
+        <div class="flex items-center">
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            class="w-8 h-8 text-gray-400"
+          >
+            <path
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+            ></path>
+          </svg>
+          <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold">
+            <a href="#">Documentación</a>
+          </div>
+        </div>
+
+        <div class="ml-12">
+          <div class="mt-2 text-sm text-gray-500 text-justify">
+            La Compañía pone a su disposición la documentación necesaria para
+            dar uso al sistema, por favor solicite la información a secretaría.
+            La documentación será puntual y dependiendo de las requerimientos
+            deberá solicitar ayuda a los encargados del sistema.
+          </div>
+
+          <a href="#">
+            <div
+              class="
+                mt-3
+                flex
+                items-center
+                text-sm
+                font-semibold
+                text-indigo-700
+              "
+            >
+              <div>Revise la documentación</div>
+
+              <div class="ml-1 text-indigo-500">
+                <svg viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="p-6 border-t border-gray-200 md:border-t-0 md:border-l">
+        <div class="flex items-center">
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            class="w-8 h-8 text-gray-400"
+          >
+            <path
+              d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+            ></path>
+            <path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+          <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold">
+            <a  :href="route('profile.show')">Perfiles Personalizados</a>
+          </div>
+        </div>
+
+        <div class="ml-12">
+          <div class="mt-2 text-sm text-gray-500 text-justify">
+            El sistema registra automáticamente un perfil único para cada
+            usuario por lo que si es necesario puede cambiar su fotografía,
+            contraseña, correo y otros datos que son necesarios para que el
+            sistema registre correctamente su información.
+          </div>
+
+          <a :href="route('profile.show')">
+            <div
+              class="
+                mt-3
+                flex
+                items-center
+                text-sm
+                font-semibold
+                text-indigo-700
+              "
+            >
+              <div>Revise su perfil inicial</div>
+
+              <div class="ml-1 text-indigo-500">
+                <svg viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="p-6 border-t border-gray-200">
+        <div class="flex items-center">
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            class="w-8 h-8 text-gray-400"
+          >
+            <path
+              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+            ></path>
+          </svg>
+          <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold">
+            <a href="#">Archivos Personales</a>
+          </div>
+        </div>
+
+        <div class="ml-12">
+          <div class="mt-2 text-sm text-gray-500 text-justify">
+            Tenga en cuenta que una vez le sea asignado un rol como hermana de
+            la Compañía podrá almacenar archivos de diverso formato en su
+            contenedor privado. Documentos tales como: cédula, certificados de
+            votación, cerficados médicos y otros datos serán almacenados en un
+            contenedor privado con una clave única, por lo que su información
+            está segura.
+          </div>
+        </div>
+      </div>
+
+      <div class="p-6 border-t border-gray-200 md:border-l">
+        <div class="flex items-center">
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            class="w-8 h-8 text-gray-400"
+          >
+            <path
+              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+            ></path>
+          </svg>
+          <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold">
+            Seguridad
+          </div>
+        </div>
+
+        <div class="ml-12">
+          <div class="mt-2 text-sm text-gray-500 text-justify">
+            La información provista en el sistema es completamente segura. Sin
+            embargo, para evitar problemas de seguridad deberá ser cuidadoso/a
+            con sus credenciales de acceso. Si teme que su cuenta fue vulnerada
+            de alguna manera comuníquelo de inmediato a secretaría.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-    import { defineComponent } from 'vue'
-    import JetApplicationLogo from '@/Jetstream/ApplicationLogo.vue'
+import { defineComponent } from "vue";
+import JetApplicationLogo from "@/Jetstream/ApplicationLogo.vue";
 
-    export default defineComponent({
-        components: {
-            JetApplicationLogo,
-        },
-    })
+export default defineComponent({
+  components: {
+    JetApplicationLogo,
+  },
+});
 </script>

@@ -38,7 +38,7 @@
                 bottom: 0cm;
                 left: 0cm;
                 right: 0cm;
-                height: 1.5cm;
+                height: 2.0cm;
                 background-color: #e5e7ee;
                 color: white;
                 text-align: center;
@@ -95,24 +95,33 @@
 
 <body>
     <header>
-
-        <div style="margin-top:0.2cm; margin-block-start: 0.2cm; color: #000000">
-            <p style="font-size:medium; margin-top:0.5cm;">
-                Compañía Hijas de la Caridad de San Vicente de Paúl ©
-            <p>Transferencia de la Hermana - Estado: @if ($transfer->status == 1)
-                    Activo
-                @elseif ($transfer->status == 0)
-                    Cerrado
-                @endif
-            </p>
-            </p>
+        <div style=" margin-block-start: 0.2cm; color: #000000">
+            <div>
+                <div style="float: left;width: 90%; height: 30px;">
+                    <p style="font-size:medium; margin-top:0.5cm;">
+                        Compañía Hijas de la Caridad de San Vicente de Paúl ©
+                    <p>Cambio de la Hermana - Estado: @if ($transfer->status == 1)
+                            Activo
+                        @elseif ($transfer->status == 0)
+                            Cerrado
+                        @endif
+                    </p>
+                    </p>
+                </div>
+                <div style="float: left;width: 10%; height: 30px;">
+                    <p style="font-size:medium; margin-right:2.5cm; margin-bottom:2.0cm;">
+                        <img height="60px" width="100px"
+                            src="https://files-hdlc-frontend.s3.amazonaws.com/icon_hdlc.png" />
+                    </p>
+                </div>
+            </div>
         </div>
     </header>
 
     <main>
         <div style="font-size: small; margin-top: 30px">
 
-            <strong>Datos de la Hermana que solicita el Permiso: </strong>
+            <strong>Datos de la Hermana a la que se le asigna el cambio: </strong>
             <ul>
                 <li><strong>Nombres: </strong> {{ $user->name }}</li>
                 <li><strong>Apellidos: </strong> {{ $user->lastname }}</li>

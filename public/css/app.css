@@ -1111,6 +1111,10 @@ select {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
 .mx-5 {
   margin-left: 1.25rem;
   margin-right: 1.25rem;
@@ -1229,6 +1233,9 @@ select {
 }
 .ml-14 {
   margin-left: 3.5rem;
+}
+.mb-10 {
+  margin-bottom: 2.5rem;
 }
 .mb-0 {
   margin-bottom: 0px;

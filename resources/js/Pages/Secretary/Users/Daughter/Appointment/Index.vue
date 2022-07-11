@@ -1277,9 +1277,7 @@
         </template>
 
         <template #footer>
-          <jet-secondary-button
-            @click="individualAppointmentActualBeingCreated = null"
-          >
+          <jet-secondary-button @click="cancelCreateIndividualAppointment()">
             Cancelar
           </jet-secondary-button>
 
@@ -1774,7 +1772,7 @@
         </template>
 
         <template #footer>
-          <jet-secondary-button @click="appointmentActualBeingCreated = null">
+          <jet-secondary-button @click="cancelCreateAppointment()">
             Cancelar
           </jet-secondary-button>
 
@@ -2050,6 +2048,7 @@
         </template>
       </jet-dialog-modal>
 
+      <!--  -->
       <jet-confirmation-modal
         :show="appointmentBeingDeleted"
         @close="appointmentBeingDeleted == null"
@@ -2482,10 +2481,12 @@ export default {
     confirmationCreateAppointmentActual() {
       this.appointmentActualBeingCreated = this.form;
       this.form.community_id = this.lastTransfer.community;
+      //   console.log("gusto \n", this.form);
     },
     // Appoinment Individual Actual
     confirmationCreateIndividualAppointmentActual() {
       this.individualAppointmentActualBeingCreated = this.form;
+      //   console.log("gusto \n", this.form);
     },
     // Save Appoinment
     createAppointmentActual() {
@@ -2790,6 +2791,24 @@ export default {
       this.appointmentIndividualBeingUpdated = null;
       this.statusappointment = 0;
     },
+
+    cancelCreateAppointment() {
+      this.selectLevel.selectedLevel = null;
+      this.selectCategory.selectedLevelCategory = null;
+      this.selectCategory.options = [];
+      this.form.reset();
+      this.appointmentActualBeingCreated = null;
+      this.statusappointment = 0;
+    },
+    cancelCreateIndividualAppointment() {
+      this.selectLevel.selectedLevel = null;
+      this.selectCategory.selectedLevelCategory = null;
+      this.selectCategory.options = [];
+      this.form.reset();
+      this.individualAppointmentActualBeingCreated = null;
+      this.statusappointment = 0;
+    },
+
     updateAppointment() {
       if (this.updateAppointmentForm.date_appointment != null) {
         this.updateAppointmentForm.date_appointment = this.formatDate(

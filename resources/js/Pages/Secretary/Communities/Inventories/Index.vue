@@ -2,7 +2,16 @@
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:px-6">
       <h6
-        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
+        class="
+          mt-2
+          mb-2
+          text-lg
+          font-medium
+          text-center
+          leading-6
+          text-gray-900
+          uppercase
+        "
       >
         Plantilla del Inventario de la Comunidad
       </h6>
@@ -30,7 +39,10 @@
                 <label class="block text-sm font-medium text-gray-700">
                   Inventario:
                 </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.name"
+                >
                   {{ $page.props.errors.name }}
                 </p>
                 <small>Formato: Ingresar el nombre del inventario.</small>
@@ -39,7 +51,21 @@
                   minLength="5"
                   maxlength="50"
                   placeholder="Ingresar nombre del inventario"
-                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    border-0
+                    px-3
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
                   v-model="formInventory.name"
                   required
                 />
@@ -52,7 +78,10 @@
               <label class="block text-sm font-medium text-gray-700">
                 Descripción:
               </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.description"
+              >
                 {{ $page.props.errors.description }}
               </p>
               <small>Formato: Ingresar la descripción del inventario.</small>
@@ -80,26 +109,38 @@
 
       <div class="my-4">
         <div class="w-full md:w-5/5 mx-auto">
-          <h4 class="text-lg font-medium text-center leading-6 text-gray-900 uppercase">
+          <h4
+            class="
+              text-lg
+              font-medium
+              text-center
+              leading-6
+              text-gray-900
+              uppercase
+            "
+          >
             <strong>Secciones</strong>
           </h4>
 
           <div class="p-4 bg-white border-2 rounded-lg">
             <p>
-              En la siguiente ficha usted puede visualizar cada una de las secciones
-              asignadas al inventario general de :
-              <strong> {{ this.formInventory.name }}</strong> . Tenga en cuenta que en
-              cada una de las secciones puede agregar los artículos que usted crea
-              conveniente, para ello y otras funcionalidades debe tener en cuenta las
-              siguientes consideraciones:
+              En la siguiente ficha usted puede visualizar cada una de las
+              secciones asignadas al inventario general de :
+              <strong> {{ this.formInventory.name }}</strong> . Tenga en cuenta
+              que en cada una de las secciones puede agregar los artículos que
+              usted crea conveniente, para ello y otras funcionalidades debe
+              tener en cuenta las siguientes consideraciones:
             </p>
             <ul class="list-disc pl-5 pt-2">
               <li>No puede eliminar las secciones que contengan artículos.</li>
-              <li>Si desea eliminar la sección, asegúrese que no contenga artículos.</li>
+              <li>
+                Si desea eliminar la sección, asegúrese que no contenga
+                artículos.
+              </li>
               <li>Recuerde que cada una de las acciones es irreversible.</li>
               <li>
-                Puede obtener reportes generales y específicos de cada una de las
-                secciones.
+                Puede obtener reportes generales y específicos de cada una de
+                las secciones.
               </li>
             </ul>
             <div class="content-center mt-2">
@@ -127,7 +168,15 @@
                     >{{ section.name }}</label
                   >
                   <div
-                    class="w-full tab-content overflow-hidden border-l-2 bg-gray-100 border-blue-500 leading-normal"
+                    class="
+                      w-full
+                      tab-content
+                      overflow-hidden
+                      border-l-2
+                      bg-gray-100
+                      border-blue-500
+                      leading-normal
+                    "
                   >
                     <div class="p-5 overflow-y-auto h-60">
                       <section>
@@ -180,8 +229,13 @@
             <div class="w-full lg:w-12/12 px-4">
               <div class="relative w-full mb-3">
                 <div class="">
-                  <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
-                  <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
+                  <label class="block text-sm font-medium text-gray-700">
+                    Nombre:
+                  </label>
+                  <p
+                    class="text-red-400 text-sm"
+                    v-show="$page.props.errors.name"
+                  >
                     {{ $page.props.errors.name }}
                   </p>
                   <small>Formato: Ingresar el nombre de la sección.</small>
@@ -190,7 +244,21 @@
                     minLength="5"
                     maxlength="50"
                     placeholder="Ingresar nombre de la sección"
-                    class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    class="
+                      border-0
+                      px-3
+                      placeholder-blueGray-300
+                      text-blueGray-600
+                      bg-white
+                      rounded
+                      text-sm
+                      shadow
+                      focus:outline-none focus:ring
+                      w-full
+                      ease-linear
+                      transition-all
+                      duration-150
+                    "
                     v-model="createSectionForm.name"
                     required
                   />
@@ -202,7 +270,10 @@
                 <label class="block text-sm font-medium text-gray-700">
                   Descripción:
                 </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.description"
+                >
                   {{ $page.props.errors.description }}
                 </p>
                 <small
@@ -271,8 +342,13 @@
             <div class="w-full lg:w-12/12 px-4">
               <div class="relative w-full mb-3">
                 <div class="">
-                  <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
-                  <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
+                  <label class="block text-sm font-medium text-gray-700">
+                    Nombre:
+                  </label>
+                  <p
+                    class="text-red-400 text-sm"
+                    v-show="$page.props.errors.name"
+                  >
                     {{ $page.props.errors.name }}
                   </p>
                   <small>Formato: Ingresar el nombre de la sección.</small>
@@ -281,7 +357,21 @@
                     minLength="10"
                     maxlength="100"
                     placeholder="Ingresar nombre de la sección"
-                    class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    class="
+                      border-0
+                      px-3
+                      placeholder-blueGray-300
+                      text-blueGray-600
+                      bg-white
+                      rounded
+                      text-sm
+                      shadow
+                      focus:outline-none focus:ring
+                      w-full
+                      ease-linear
+                      transition-all
+                      duration-150
+                    "
                     v-model="updateSectionForm.name"
                     required
                   />
@@ -293,7 +383,10 @@
                 <label class="block text-sm font-medium text-gray-700">
                   Descripción:
                 </label>
-                <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.description"
+                >
                   {{ $page.props.errors.description }}
                 </p>
                 <small
@@ -482,8 +575,8 @@ export default {
       fetch("https://api.npms.io/v2/search?q=vue", { headers })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Send data: ");
-          console.log("Print: ", data.results);
+          //   console.log("Send data: ");
+          //   console.log("Print: ", data.results);
         });
 
       //
@@ -505,12 +598,12 @@ export default {
             return Promise.reject(error);
           }
 
-          console.log("Send data 2: ");
-          console.log("Print 2: ", data);
+          //   console.log("Send data 2: ");
+          //   console.log("Print 2: ", data);
         })
         .catch((error) => {
           this.errorMessage = error;
-          console.error("There was an error!", error);
+          //   console.error("There was an error!", error);
         });
 
       //

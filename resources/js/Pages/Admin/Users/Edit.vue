@@ -210,22 +210,7 @@
             lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4
           "
         >
-          <button
-            type="button"
-            class="
-              bg-blue-600
-              text-white text-sm
-              leading-6
-              font-medium
-              py-2
-              px-3
-              rounded-lg
-            "
-          >
-            <!--
-                        FIXME: Import Controllers For PDF-->
-            Plantilla PDF
-          </button>
+
         </div>    <p
                     class="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 text-black dark:text-white"
                 >
@@ -257,10 +242,10 @@
                     Tarjeta de Información General Hermana
                   </h6>
                   <button
-                    class="bg-blue-500 hover:bg-blue-700 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                    class="bg-green-500 hover:bg-green-700 text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                     type="submit"
                   >
-                    Guardar Tarjeta
+                    Actualizar Tarjeta
                   </button>
                 </div>
               </div>

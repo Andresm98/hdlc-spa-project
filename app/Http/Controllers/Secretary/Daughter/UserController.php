@@ -6,20 +6,22 @@ use PDF;
 use App\Models\Team;
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Permit;
 use App\Models\Address;
 use App\Models\Profile;
 use App\Models\Pastoral;
 use App\Models\Transfer;
-use Illuminate\Support\Str;
-use App\Exports\UsersExport;
+use App\Models\Community;
 
 // Inject
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
+use App\Exports\UsersExport;
 
 // Reports
 
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
@@ -72,15 +74,58 @@ class UserController extends Controller
 
     public function welcome()
     {
-        $users = count(User::all());
-        $roles  = count(Role::all());
-        $permissions = count(Permission::all());
+        // Communities
+        $communities = count(Community::where('comm_level', 1)->get());
+
+        // Works
+        $works = count(Community::where('comm_level', 2)->get());
+
+        // Pastorals
         $pastorals = count(Pastoral::all());
+
+        // Daughters
+        $users = User::query();
+
+        $daughters = $users->whereHas("roles", function ($q) {
+            $q->where("name", "daughter");
+        })->get();
+        $daughters = count($daughters);
+
+        $acdaughters = $users->whereHas("profile", function ($q) {
+            $q->where("status",  1);
+        })->get();
+        $acdaughters = count($acdaughters);
+
+        $users2 = User::query();
+        $dthdaughters = $users2->whereHas("profile", function ($q) {
+            $q->where("status",  2);
+        })->get();
+        $dthdaughters = count($dthdaughters);
+
+        $users3 = User::query();
+        $rtrdaughters = $users3->whereHas("profile", function ($q) {
+            $q->where("status",  3);
+        })->get();
+        $rtrdaughters = count($rtrdaughters);
+
+        $activepermits = Permit::query();
+        $activepermits = count($activepermits->where('status', 1)->get());
+
+        $activechanges = Transfer::query();
+        $activechanges = count($activechanges->where('status', 1)->get());
+
         return Inertia::render('Secretary/Welcome', compact(
-            'users',
-            'roles',
-            'permissions',
-            'pastorals'
+            'communities',
+            'works',
+            'pastorals',
+            //
+            'daughters',
+            'acdaughters',
+            'dthdaughters',
+            'rtrdaughters',
+            'activepermits',
+            'activechanges',
+
         ));
     }
 
@@ -393,7 +438,7 @@ class UserController extends Controller
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($id)],
             'roles*' => 'required|exists:roles,id',
-            'file' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'file' => ['nullable', 'mimes:jpg,jpeg,png', 'max:2048'],
         ]);
 
         if ($validatorData->fails()) {

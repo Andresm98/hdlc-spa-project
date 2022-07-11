@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Validator;
 
 class AppointmentLevelCategoryController extends Controller
 {
+
+    public function  __construct()
+    {
+        $this->middleware('can:create appointment level')->only('create', 'store');
+        $this->middleware('can:read appointment level')->only('index', 'show');
+        $this->middleware('can:update appointment level')->only('edit', 'update');
+        $this->middleware('can:delete appointment level')->only('delete', 'destroy');
+    }
     /**
      * Display a listing of the resource.
      *

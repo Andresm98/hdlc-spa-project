@@ -9,14 +9,107 @@
           Bienvenido Usuario: {{ $page.props.user.name }}
         </div>
       </template>
+      <alert
+        v-if="$page.props.flash.success"
+        class="alert"
+        :type_alert_r="(type_alert = 'success')"
+        :message="$page.props.flash.success"
+      >
+      </alert>
+      <alert
+        v-if="$page.props.flash.error"
+        class="alert"
+        :type_alert_r="(type_alert = 'error')"
+        :message="$page.props.flash.error"
+      >
+      </alert>
+      <div>
+        <!-- Manage API Tokens -->
+        <div class="mb-10 sm:mt-0">
+          <jet-action-section>
+            <template #title> Administrar Pastorales del Sistema </template>
+
+            <template #description>
+              Puede eliminar o gestionar las pastorales aquí descritas, tenga en
+              cuenta si las pastorales estan asociadas a una comunidad u obra no
+              podrán ser eliminadas pero si actualizadas.
+            </template>
+            <!-- API Token List -->
+            <template #content>
+              <div class="space-y-6">
+                <div
+                  class="flex items-center justify-between"
+                  v-for="pastor in pastoral"
+                  :key="pastor"
+                >
+                  <div>
+                    {{ pastor.name }}
+                  </div>
+
+                  <div class="flex items-center">
+                    <div
+                      class="
+                        hidden
+                        md:block md:text-sm md:text-gray-700
+                        lg:block lg:text-sm lg:text-gray-400
+                      "
+                      v-if="pastor.created_at"
+                    >
+                      Creado en {{ showFormatDate(pastor.created_at) }}
+                    </div>
+                    <button
+                      class="
+                        bg-blue-500
+                        pt-2
+                        pb-2
+                        pr-2
+                        pl-2
+                        ml-4
+                        mr-4
+                        rounded-md
+                        cursor-pointer
+                        text-sm
+                        hover:bg-blue-600
+                        text-white
+                      "
+                      @click="updateConfirmPastoral(pastor)"
+                    >
+                      Actualizar
+                    </button>
+
+                    <button
+                      class="
+                        bg-red-500
+                        pt-2
+                        pb-2
+                        pr-2
+                        pl-2
+                        rounded-md
+                        cursor-pointer
+                        text-sm
+                        hover:bg-red-600
+                        text-white
+                      "
+                      @click="confirmPastoralDeletion(pastor)"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </jet-action-section>
+        </div>
+      </div>
+      <jet-section-border />
       <!-- Generate Permission Token -->
 
       <jet-form-section @submitted="createPastoral">
         <template #title> Crear Pastorales en el Sistema </template>
 
         <template #description>
-          Las pastorales permiten que asigne categorías a cada una de las comunidades que
-          son ingresadas por el rol de secretaria.
+          Las pastorales permiten que asigne categorías a cada una de las
+          comunidades que son ingresadas por el rol de secretaria.
         </template>
 
         <template #form>
@@ -37,14 +130,26 @@
             />
 
             <jet-label for="description" value="Descripción" class="mt-2" />
-            <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+            <p
+              class="text-red-400 text-sm"
+              v-show="$page.props.errors.description"
+            >
               {{ $page.props.errors.description }}
             </p>
             <textarea
               id="description"
               name="description"
               rows="6"
-              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+              class="
+                shadow-sm
+                focus:ring-blue-500 focus:border-blue-500
+                mt-1
+                block
+                w-full
+                sm:text-sm
+                border border-gray-300
+                rounded-md
+              "
               v-model="createPastoralForm.description"
               placeholder="Agregar la description..."
               required
@@ -54,7 +159,10 @@
         </template>
 
         <template #actions>
-          <jet-action-message :on="createPastoralForm.recentlySuccessful" class="mr-3">
+          <jet-action-message
+            :on="createPastoralForm.recentlySuccessful"
+            class="mr-3"
+          >
             Creado.
           </jet-action-message>
 
@@ -67,69 +175,21 @@
         </template>
       </jet-form-section>
 
-      <div>
-        <jet-section-border />
-
-        <!-- Manage API Tokens -->
-        <div class="mt-10 sm:mt-0">
-          <jet-action-section>
-            <template #title> Administrar Pastorales del Sistema </template>
-
-            <template #description>
-              Puede eliminar o gestionar las pastorales aquí descritas, tenga en cuenta si
-              las pastorales estan asociadas a una comunidad u obra no podrán ser
-              eliminadas pero si actualizadas.
-            </template>
-            <!-- API Token List -->
-            <template #content>
-              <div class="space-y-6">
-                <div
-                  class="flex items-center justify-between"
-                  v-for="pastor in pastoral"
-                  :key="pastor"
-                >
-                  <div>
-                    {{ pastor.name }}
-                  </div>
-
-                  <div class="flex items-center">
-                    <div
-                      class="hidden md:block md:text-sm md:text-gray-700 lg:block lg:text-sm lg:text-gray-400"
-                      v-if="pastor.created_at"
-                    >
-                      Creado en {{ showFormatDate(pastor.created_at) }}
-                    </div>
-                    <button
-                      class="bg-blue-500 pt-2 pb-2 pr-2 pl-2 ml-4 mr-4 rounded-md cursor-pointer text-sm hover:bg-blue-600 text-white"
-                      @click="updateConfirmPastoral(pastor)"
-                    >
-                      Actualizar
-                    </button>
-
-                    <button
-                      class="bg-red-500 pt-2 pb-2 pr-2 pl-2 rounded-md cursor-pointer text-sm hover:bg-red-600 text-white"
-                      @click="confirmPastoralDeletion(pastor)"
-                    >
-                      Eliminar
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </template>
-          </jet-action-section>
-        </div>
-      </div>
-
       <!-- Token Value Modal -->
-      <jet-dialog-modal :show="displayingToken" @close="displayingToken = false">
+      <jet-dialog-modal
+        :show="displayingToken"
+        @close="displayingToken = false"
+      >
         <template #title
-          ><h2 class="text-slate-600">Pastoral Creada Correctamente</h2></template
+          ><h2 class="text-slate-600">
+            Pastoral Creada Correctamente
+          </h2></template
         >
 
         <template #content>
           <div>
-            Recuerde que la pastoral que acaba de crear se encuentra disponible en la zona
-            de Comunidades en el rol de secretaria.
+            Recuerde que la pastoral que acaba de crear se encuentra disponible
+            en la zona de Comunidades en el rol de secretaria.
           </div>
         </template>
 
@@ -141,7 +201,10 @@
       </jet-dialog-modal>
 
       <!-- API Token Permissions Modal -->
-      <jet-dialog-modal :show="pastoralBeingUpdated" @close="pastoralBeingUpdated = null">
+      <jet-dialog-modal
+        :show="pastoralBeingUpdated"
+        @close="pastoralBeingUpdated = null"
+      >
         <template #title> Datos de la Pastoral</template>
 
         <template #content>
@@ -161,14 +224,26 @@
             />
 
             <jet-label for="description" value="Descripción" class="mt-2" />
-            <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+            <p
+              class="text-red-400 text-sm"
+              v-show="$page.props.errors.description"
+            >
               {{ $page.props.errors.description }}
             </p>
             <textarea
               id="description"
               name="description"
               rows="6"
-              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+              class="
+                shadow-sm
+                focus:ring-blue-500 focus:border-blue-500
+                mt-1
+                block
+                w-full
+                sm:text-sm
+                border border-gray-300
+                rounded-md
+              "
               v-model="updatePastoralForm.description"
               placeholder="Agregar la description..."
               required
@@ -188,7 +263,7 @@
             :class="{ 'opacity-25': updatePastoralForm.processing }"
             :disabled="updatePastoralForm.processing"
           >
-            Guardar
+            Actualizar
           </jet-button>
         </template>
       </jet-dialog-modal>
@@ -245,6 +320,7 @@ import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import JetSectionBorder from "@/Jetstream/SectionBorder.vue";
 import PrincipalLayout from "@/Components/Admin/PrincipalLayout";
 import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
+import Alert from "@/Components/Alert";
 import moment from "moment";
 
 export default {
@@ -265,6 +341,7 @@ export default {
     JetSectionBorder,
     AppLayout,
     moment,
+    Alert,
   },
   layout: PrincipalLayout,
   props: ["pastoral"],

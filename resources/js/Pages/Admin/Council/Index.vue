@@ -9,13 +9,26 @@
       </div>
     </template>
     <!-- Generate Permission Token -->
-
+    <alert
+      v-if="$page.props.flash.success"
+      class="alert"
+      :type_alert_r="(type_alert = 'success')"
+      :message="$page.props.flash.success"
+    >
+    </alert>
+    <alert
+      v-if="$page.props.flash.error"
+      class="alert"
+      :type_alert_r="(type_alert = 'error')"
+      :message="$page.props.flash.error"
+    >
+    </alert>
     <jet-action-section>
       <template #title> Crear Niveles de Nombramientos en el Sistema </template>
 
       <template #description>
-        Los niveles de nombramiento permiten que se asigne categorías para realizar
-        nombramientos a nivel de hermana.
+        Los niveles de nombramiento permiten que se asigne categorías para
+        realizar nombramientos a nivel de hermana.
       </template>
 
       <template #content>
@@ -34,7 +47,18 @@
               :key="appointmentlevel"
             >
               <span
-                class="hover:cursor-pointer px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                class="
+                  hover:cursor-pointer
+                  px-3
+                  py-1
+                  inline-flex
+                  text-sm
+                  leading-5
+                  font-semibold
+                  rounded-full
+                  bg-blue-100
+                  text-blue-800
+                "
                 @click="loadLevelCategories(appointmentlevel)"
               >
                 {{ appointmentlevel.name }}
@@ -42,19 +66,47 @@
 
               <div class="flex items-center">
                 <div
-                  class="hidden md:block md:text-sm md:text-gray-700 lg:block lg:text-sm lg:text-gray-400"
+                  class="
+                    hidden
+                    md:block md:text-sm md:text-gray-700
+                    lg:block lg:text-sm lg:text-gray-400
+                  "
                   v-if="appointmentlevel.created_at"
                 ></div>
 
                 <button
-                  class="bg-blue-500 pt-2 pb-2 pr-2 pl-2 ml-4 mr-4 rounded-md cursor-pointer text-sm hover:bg-blue-600 text-white"
+                  class="
+                    bg-blue-500
+                    pt-2
+                    pb-2
+                    pr-2
+                    pl-2
+                    ml-4
+                    mr-4
+                    rounded-md
+                    cursor-pointer
+                    text-sm
+                    hover:bg-blue-600
+                    text-white
+                  "
                   @click="updateConfirmLevel(appointmentlevel)"
                 >
                   Actualizar
                 </button>
 
                 <button
-                  class="bg-red-500 pt-2 pb-2 pr-2 pl-2 rounded-md cursor-pointer text-sm hover:bg-red-600 text-white"
+                  class="
+                    bg-red-500
+                    pt-2
+                    pb-2
+                    pr-2
+                    pl-2
+                    rounded-md
+                    cursor-pointer
+                    text-sm
+                    hover:bg-red-600
+                    text-white
+                  "
                   @click="confirmLevelDeletion(appointmentlevel)"
                 >
                   Eliminar
@@ -79,8 +131,8 @@
           <template #title> Administrar las Categorías </template>
 
           <template #description>
-            Puede eliminar o gestionar las categorías del nombramiento que decida
-            modificar
+            Puede eliminar o gestionar las categorías del nombramiento que
+            decida modificar
           </template>
           <!-- API Token List -->
           <template #content>
@@ -90,10 +142,9 @@
               >
             </div>
             <small v-if="this.levelCategoryGlobal != null"
-              >Nota: En el bloque que se muestra se encuentran todas las categorías que
-              pertenecen al nivel de nombramiento que seleccionó, ({{
-                this.levelCategoryGlobal.name
-              }}).</small
+              >Nota: En el bloque que se muestra se encuentran todas las
+              categorías que pertenecen al nivel de nombramiento que seleccionó,
+              ({{ this.levelCategoryGlobal.name }}).</small
             >
             <hr />
             <div class="space-y-6 mt-2">
@@ -104,25 +155,62 @@
                   :key="category"
                 >
                   <span
-                    class="px-2 inline-flex text-sm leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800"
+                    class="
+                      px-2
+                      inline-flex
+                      text-sm
+                      leading-5
+                      font-semibold
+                      rounded-full
+                      bg-emerald-100
+                      text-emerald-800
+                    "
                   >
                     {{ category.name }}
                   </span>
 
                   <div class="flex items-center">
                     <div
-                      class="hidden md:block md:text-sm md:text-gray-700 lg:block lg:text-sm lg:text-gray-400"
+                      class="
+                        hidden
+                        md:block md:text-sm md:text-gray-700
+                        lg:block lg:text-sm lg:text-gray-400
+                      "
                       v-if="category.created_at"
                     ></div>
                     <button
-                      class="bg-blue-500 pt-2 pb-2 pr-2 pl-2 ml-4 mr-4 rounded-md cursor-pointer text-sm hover:bg-blue-600 text-white"
+                      class="
+                        bg-blue-500
+                        pt-2
+                        pb-2
+                        pr-2
+                        pl-2
+                        ml-4
+                        mr-4
+                        rounded-md
+                        cursor-pointer
+                        text-sm
+                        hover:bg-blue-600
+                        text-white
+                      "
                       @click="updateConfirmCategory(category)"
                     >
                       Actualizar
                     </button>
 
                     <button
-                      class="bg-red-500 pt-2 pb-2 pr-2 pl-2 rounded-md cursor-pointer text-sm hover:bg-red-600 text-white"
+                      class="
+                        bg-red-500
+                        pt-2
+                        pb-2
+                        pr-2
+                        pl-2
+                        rounded-md
+                        cursor-pointer
+                        text-sm
+                        hover:bg-red-600
+                        text-white
+                      "
                       @click="confirmCategoryDeletion(category)"
                     >
                       Eliminar
@@ -154,7 +242,9 @@
         <div class="w-full lg:w-12/12 px-4">
           <div class="relative w-full mb-3">
             <div class="">
-              <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Nombre:
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
                 {{ $page.props.errors.name }}
               </p>
@@ -164,7 +254,21 @@
                 minLength="5"
                 maxlength="50"
                 placeholder="Ingresar nombre del nivel"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="createLevelForm.name"
                 required
               />
@@ -173,12 +277,18 @@
         </div>
         <div class="w-full lg:w-12/12 px-4">
           <div class="relative w-full mb-3">
-            <label class="block text-sm font-medium text-gray-700"> Descripción: </label>
-            <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+            <label class="block text-sm font-medium text-gray-700">
+              Descripción:
+            </label>
+            <p
+              class="text-red-400 text-sm"
+              v-show="$page.props.errors.description"
+            >
               {{ $page.props.errors.description }}
             </p>
             <small
-              >Formato: Ingresar la descripción del nivel, max 3000 caracteres.</small
+              >Formato: Ingresar la descripción del nivel, max 3000
+              caracteres.</small
             >
             <div class="bg-white">
               <quill-editor
@@ -200,7 +310,9 @@
         Cancelar
       </jet-secondary-button>
 
-      <jet-button-success class="ml-3" @click="createLevel"> Crear </jet-button-success>
+      <jet-button-success class="ml-3" @click="createLevel">
+        Crear
+      </jet-button-success>
     </template>
   </jet-dialog-modal>
 
@@ -217,7 +329,9 @@
         <div class="w-full lg:w-12/12 px-4">
           <div class="relative w-full mb-3">
             <div class="">
-              <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Nombre:
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
                 {{ $page.props.errors.name }}
               </p>
@@ -227,7 +341,21 @@
                 minLength="5"
                 maxlength="50"
                 placeholder="Ingresar nombre de la categoría"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="updateLevelForm.name"
                 required
               />
@@ -236,12 +364,18 @@
         </div>
         <div class="w-full lg:w-12/12 px-4">
           <div class="relative w-full mb-3">
-            <label class="block text-sm font-medium text-gray-700"> Descripción: </label>
-            <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+            <label class="block text-sm font-medium text-gray-700">
+              Descripción:
+            </label>
+            <p
+              class="text-red-400 text-sm"
+              v-show="$page.props.errors.description"
+            >
               {{ $page.props.errors.description }}
             </p>
             <small
-              >Formato: Ingresar la descripción de la sección, max 3000 caracteres.</small
+              >Formato: Ingresar la descripción de la sección, max 3000
+              caracteres.</small
             >
             <div class="bg-white">
               <quill-editor
@@ -275,7 +409,10 @@
   </jet-dialog-modal>
 
   <!-- Delete Level Confirmation Modal -->
-  <jet-confirmation-modal :show="levelBeingDeleted" @close="levelBeingDeleted = null">
+  <jet-confirmation-modal
+    :show="levelBeingDeleted"
+    @close="levelBeingDeleted = null"
+  >
     <template #title> Eliminar el Nivel </template>
 
     <template #content>
@@ -323,7 +460,9 @@
         <div class="w-full lg:w-12/12 px-4">
           <div class="relative w-full mb-3">
             <div class="">
-              <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Nombre:
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
                 {{ $page.props.errors.name }}
               </p>
@@ -333,7 +472,21 @@
                 minLength="5"
                 maxlength="50"
                 placeholder="Ingresar nombre de la categoría"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="createCategoryForm.name"
                 required
               />
@@ -342,8 +495,13 @@
         </div>
         <div class="w-full lg:w-12/12 px-4">
           <div class="relative w-full mb-3">
-            <label class="block text-sm font-medium text-gray-700"> Descripción: </label>
-            <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+            <label class="block text-sm font-medium text-gray-700">
+              Descripción:
+            </label>
+            <p
+              class="text-red-400 text-sm"
+              v-show="$page.props.errors.description"
+            >
               {{ $page.props.errors.description }}
             </p>
             <small
@@ -389,7 +547,9 @@
         <div class="w-full lg:w-12/12 px-4">
           <div class="relative w-full mb-3">
             <div class="">
-              <label class="block text-sm font-medium text-gray-700"> Nombre: </label>
+              <label class="block text-sm font-medium text-gray-700">
+                Nombre:
+              </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
                 {{ $page.props.errors.name }}
               </p>
@@ -399,7 +559,21 @@
                 minLength="5"
                 maxlength="50"
                 placeholder="Ingresar nombre de la categoría"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="
+                  border-0
+                  px-3
+                  placeholder-blueGray-300
+                  text-blueGray-600
+                  bg-white
+                  rounded
+                  text-sm
+                  shadow
+                  focus:outline-none focus:ring
+                  w-full
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 v-model="updateCategoryForm.name"
                 required
               />
@@ -408,12 +582,18 @@
         </div>
         <div class="w-full lg:w-12/12 px-4">
           <div class="relative w-full mb-3">
-            <label class="block text-sm font-medium text-gray-700"> Descripción: </label>
-            <p class="text-red-400 text-sm" v-show="$page.props.errors.description">
+            <label class="block text-sm font-medium text-gray-700">
+              Descripción:
+            </label>
+            <p
+              class="text-red-400 text-sm"
+              v-show="$page.props.errors.description"
+            >
               {{ $page.props.errors.description }}
             </p>
             <small
-              >Formato: Ingresar la descripción de la sección, max 3000 caracteres.</small
+              >Formato: Ingresar la descripción de la sección, max 3000
+              caracteres.</small
             >
             <div class="bg-white">
               <quill-editor
@@ -501,6 +681,9 @@ import JetSectionBorder from "@/Jetstream/SectionBorder.vue";
 import PrincipalLayout from "@/Components/Admin/PrincipalLayout";
 import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
 import moment from "moment";
+import Alert from "@/Components/Alert";
+
+
 export default {
   props: ["appointmentlevels"],
   components: {
@@ -519,7 +702,7 @@ export default {
     JetButtonSuccess,
     JetSectionBorder,
     AppLayout,
-    moment,
+    moment,Alert
   },
   layout: PrincipalLayout,
   data() {
@@ -676,9 +859,12 @@ export default {
         "Content-Type": "application/json",
         Accept: "application/json",
       };
-      fetch(route("admin.appointmentlevelcategory.index", { id: levelCategory.id }), {
-        headers,
-      })
+      fetch(
+        route("admin.appointmentlevelcategory.index", { id: levelCategory.id }),
+        {
+          headers,
+        }
+      )
         .then(async (response) => {
           const data = await response.json();
 
@@ -730,7 +916,10 @@ export default {
 
     updateCategory() {
       this.updateCategoryForm.put(
-        route("admin.appointmentlevelcategory.update", this.categoryBeingUpdated),
+        route(
+          "admin.appointmentlevelcategory.update",
+          this.categoryBeingUpdated
+        ),
         {
           preserveScroll: true,
           preserveState: true,
@@ -749,7 +938,10 @@ export default {
 
     deleteCategory() {
       this.deleteCategoryForm.delete(
-        route("admin.appointmentlevelcategory.destroy", this.categoryBeingDeleted),
+        route(
+          "admin.appointmentlevelcategory.destroy",
+          this.categoryBeingDeleted
+        ),
         {
           preserveScroll: true,
           preserveState: true,

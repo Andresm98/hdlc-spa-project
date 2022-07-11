@@ -243,7 +243,7 @@
               duration-150
             "
             v-model="form.phone"
-            required
+
           />
         </div>
       </div>

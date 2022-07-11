@@ -278,25 +278,24 @@ class AppointmentController extends Controller
 
         if ($transfer) {
             if ($transfer->status == 1) {
-                $validatorData = Validator::make(
-                    $request->all(),
-                    [
-                        'appointment_level_id.id' => ['required', 'exists:appointment_levels,id'],
-                        'community_id.id' => ['required', 'exists:communities,id'],
-                        'description' => ['required', 'max:2000'],
-                        'date_appointment' => ['required', 'date', 'before:date_end_appointment', 'date_format:Y-m-d H:i:s'],
-                        'date_end_appointment' => ['nullable', 'date', 'after:date_appointment', 'date_format:Y-m-d H:i:s'],
-                        'status' => ['required', 'digits_between:0,1'],
-                    ]
-                );
-
-                if ($validatorData->fails()) {
-                    return redirect()->back()
-                        ->withErrors($validatorData->errors())
-                        ->withInput();
-                }
-
                 if ($request->get('status') == 1) {
+                    $validatorData = Validator::make(
+                        $request->all(),
+                        [
+                            'appointment_level_id.id' => ['required', 'exists:appointment_levels,id'],
+                            'community_id.id' => ['required', 'exists:communities,id'],
+                            'description' => ['required', 'max:2000'],
+                            'date_appointment' => ['required', 'date_format:Y-m-d H:i:s'],
+                            'status' => ['required', 'digits_between:0,1'],
+                        ]
+                    );
+
+                    if ($validatorData->fails()) {
+                        return redirect()->back()
+                            ->withErrors($validatorData->errors())
+                            ->withInput();
+                    }
+
                     $appointment->update([
                         'community_id' => $request->community_id["id"],
                         'appointment_level_id' => $request->appointment_level_id["id"],
@@ -306,6 +305,24 @@ class AppointmentController extends Controller
                         'status' => $request->get('status')
                     ]);
                 } else {
+                    $validatorData = Validator::make(
+                        $request->all(),
+                        [
+                            'appointment_level_id.id' => ['required', 'exists:appointment_levels,id'],
+                            'community_id.id' => ['required', 'exists:communities,id'],
+                            'description' => ['required', 'max:2000'],
+                            'date_appointment' => ['required', 'date', 'before:date_end_appointment', 'date_format:Y-m-d H:i:s'],
+                            'date_end_appointment' => ['required', 'date', 'after:date_appointment', 'date_format:Y-m-d H:i:s'],
+                            'status' => ['required', 'digits_between:0,1'],
+                        ]
+                    );
+
+                    if ($validatorData->fails()) {
+                        return redirect()->back()
+                            ->withErrors($validatorData->errors())
+                            ->withInput();
+                    }
+
                     $appointment->update([
                         'community_id' => $request->community_id["id"],
                         'appointment_level_id' => $request->appointment_level_id["id"],

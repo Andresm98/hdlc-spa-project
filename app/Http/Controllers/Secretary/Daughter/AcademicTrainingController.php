@@ -60,7 +60,7 @@ class AcademicTrainingController extends Controller
         }
 
         $validatorData = Validator::make($request->all(), [
-            'name_title' => ['required', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
+            'name_title' => ['required', 'max:100'],
             'institution' => ['required', 'max:50'],
             'date_title' => ['required', 'date_format:Y-m-d H:i:s'],
             'observation' => ['required', 'max:4000'],
@@ -130,7 +130,7 @@ class AcademicTrainingController extends Controller
         }
 
         $validatorData = Validator::make($request->all(), [
-            'name_title' => ['required', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
+            'name_title' => ['required', 'max:100'],
             'institution' => ['required', 'max:50'],
             'date_title' => ['required', 'date_format:Y-m-d H:i:s'],
             'observation' => ['required', 'max:4000'],

@@ -6,7 +6,7 @@
         </svg> -->
     <img
       class="w-46 h-16"
-      src="https://quantumdevop.com/wp-content/uploads/2019/04/vue-logo-1-740x414.png"
+      src="https://files-hdlc-frontend.s3.amazonaws.com/logo_hdlc.png"
     />
   </Link>
 </template>

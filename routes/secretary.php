@@ -126,10 +126,10 @@ Route::group(
         Route::get('daughters-charity/all/report', [UserController::class, 'reportDaughtersPDF'])
             ->name('daughters.report.all');
 
-        Route::get('exportExcel', [UserController::class, 'exportExcel'])
+        Route::get('daughters-charity/exportExcel', [UserController::class, 'exportExcel'])
             ->name('daughters.export.excel');
 
-        Route::get('exportCSV', [UserController::class, 'exportCSV'])
+        Route::get('daughters-charity/exportCSV', [UserController::class, 'exportCSV'])
             ->name('daughters.export.csv');
 
         // Reality Controllers
@@ -483,6 +483,15 @@ Route::group([
     Route::put('articles/update/{section_slug}/{article_id}', [CommunityArticleController::class, 'update'])
         ->name('communities.articles.update');
 
+    Route::get('articles/export-excel', [CommunityArticleController::class, 'exportExcel'])
+        ->name('communities.articles.export.excel');
+
+    Route::get('articles/export-csv', [CommunityArticleController::class, 'exportCSV'])
+        ->name('communities.articles.export.csv');
+
+    Route::get('articles/report-pdf', [CommunityArticleController::class, 'reportAllArticles'])
+        ->name('communities.articles.report.pdf');
+
     // Files Controllers
 
     Route::get('files/{community_id}', [FilesCommunityController::class, 'index'])
@@ -505,7 +514,7 @@ Route::group([
 
     // Reality Controllers
 
-    Route::get('reality/', [CommunityRealityController::class, 'index'])
+    Route::get('reality', [CommunityRealityController::class, 'index'])
         ->name('communities.reality.index');
 });
 
@@ -536,10 +545,10 @@ Route::group(
         Route::get('events/report-pdf', [EventController::class, 'reportPDF'])
             ->name('events.report.pdf');
 
-        Route::get('exportExcel', [EventController::class, 'exportExcel'])
+        Route::get('events/exportExcel', [EventController::class, 'exportExcel'])
             ->name('events.export.excel');
 
-        Route::get('exportCSV', [EventController::class, 'exportCSV'])
+        Route::get('events/exportCSV', [EventController::class, 'exportCSV'])
             ->name('events.export.csv');
 
         // Appointments

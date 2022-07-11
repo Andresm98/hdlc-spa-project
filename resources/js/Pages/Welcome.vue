@@ -62,12 +62,15 @@
       >
         <div class="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
           <div>
-            <h2 class="text-4xl font-bold text-white">Brand</h2>
+            <h2 class="text-4xl font-bold text-white">
+              Sistema Gestión Documental
+            </h2>
 
             <p class="max-w-xl mt-3 text-gray-300">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. In autem
-              ipsa, nulla laboriosam dolores, repellendus perferendis libero
-              suscipit nam temporibus molestiae
+              La Compañía de las Hijas de la Caridad Provincia Ecuador a lo
+              largo de los años ha llevando a cabo varios proyectos, entre ellos
+              la implementación de herramientas tecnológicas que permitan una
+              mejor gestión de la información.
             </p>
           </div>
         </div>

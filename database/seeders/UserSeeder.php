@@ -228,7 +228,7 @@ class UserSeeder extends Seeder
                 $appointments = [14]
             ],
             [
-                "Carmen Isabel", "Alban Figueroa", "Carmen", "andresfool17@gmail.com", "1100262649",
+                "Carmen Isabel", "Alban Figueroa", "Carmen", "carmitaisabel@hotmail.com", "1100262649",
                 "1946-05-02", "1969-03-15", "1974-03-15", "1970-02-27", "999027645", 33,
                 $appointments = [10]
             ],
@@ -1518,9 +1518,7 @@ class UserSeeder extends Seeder
             $appointments
         )) {
 
-            // Convert to timetamps
-            // $min = strtotime('2021-11-01 00:00:00');
-            // $max = strtotime('2022-04-01 00:00:00');
+
 
             if (strlen($id_card) == 9) {
                 $id_card = '0' . $id_card;
@@ -1598,7 +1596,11 @@ class UserSeeder extends Seeder
 
             $this->createTeam($user);
 
-            // Generate random number using above bounds
+            // // Convert to timetamps
+            // $min = strtotime('2021-11-01 00:00:00');
+            // $max = strtotime('2022-04-01 00:00:00');
+
+            // // Generate random number using above bounds
             // $val = rand($min, $max);
 
             // if ($profile->status == 1) {
