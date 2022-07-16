@@ -75,6 +75,7 @@ class PermitProfileController extends Controller
                 'allProvinces' => $provinces,
                 'permits' => $query
                     ->with('address')
+                    ->with('community')
                     ->paginate(10)
                     ->appends(request()->query()),
                 'filters' => request()->all(['date', 'search', 'status', 'dateStart', 'dateEnd']),

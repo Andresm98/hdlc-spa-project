@@ -23,7 +23,17 @@
                     {{ date('Y-m-d', strtotime($daughter->profile->date_exit)) }}
                 </td>
                 <td>
-                    {{ $daughter->profile->transfers->first()->community->comm_name }}
+                    @if (count($daughter->profile->transfers) > 0)
+                        <?php
+                        $list;
+                        $list = $daughter->profile
+                            ->transfers()
+                            ->whereDate('transfer_date_adission', '<', now())
+                            ->orderBy('transfer_date_adission', 'desc')
+                            ->get();
+                        ?>
+                        {{ $list->first()->community->comm_name }}
+                    @endif
                 </td>
             @else
                 <td>Pendiente</td>

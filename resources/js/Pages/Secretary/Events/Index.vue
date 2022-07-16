@@ -193,34 +193,60 @@
       </section>
     </div>
 
-    <!-- Container Filters -->
-    <div class="container mx-auto ml-5">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+    <section class="py-1 bg-gray">
+      <div class="w-full lg:w-full">
         <div
           class="
-            justify-center
-            text-sm
-            border-1 border-gray-300
-            rounded-sm
-            bg-gray-100
+            relative
+            flex flex-col
+            min-w-0
+            break-words
+            w-full
+            mb-6
+            shadow-lg
+            rounded-lg
+            bg-blueGray-100
+            border-0
           "
         >
-          <small class="justify-content-center ml-20 uppercase"
-            >Filtros de Búsqueda</small
-          >
-
-          <search-filter
-            v-model="params.search"
+          <div
             class="
-              border border-blue-300
-              rounded-md
-              shadow-sm
-              focus:outline-none focus:ring-blue-500 focus:border-blue-500
-              sm:text-sm
+              shadow
+              overflow-hidden
+              border-b border-gray-200
+              sm:rounded-lg
             "
-            @reset="reset"
           >
-            <!-- <v-date-picker v-model="params.date" is-required :format="format">
+            <!-- Container Filters -->
+            <div class="container mx-auto ml-5">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    bg-gray-100
+                  "
+                >
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Filtros de Búsqueda</small
+                  >
+
+                  <search-filter
+                    v-model="params.search"
+                    class="
+                      border border-blue-300
+                      rounded-md
+                      shadow-sm
+                      focus:outline-none
+                      focus:ring-blue-500
+                      focus:border-blue-500
+                      sm:text-sm
+                    "
+                    @reset="reset"
+                  >
+                    <!-- <v-date-picker v-model="params.date" is-required :format="format">
               <template v-slot="{ inputValue, inputEvents }">
                 <input
                   class="bg-white border px-2 py-1 rounded"
@@ -230,206 +256,255 @@
               </template>
             </v-date-picker> -->
 
-            <small class="block text-gray-700 mt-2">Tipo de evento:</small>
-
-            <select
-              v-model="params.type"
-              class="
-                mt-1
-                block
-                w-full
-                px-3
-                border border-gray-300
-                bg-white
-                rounded-md
-                shadow-sm
-                focus:outline-none focus:ring-blue-500 focus:border-blue-500
-                sm:text-sm
-              "
-            >
-              <option :value="null">Todas</option>
-              <option value="1">Comunitario</option>
-              <option value="2">Extracomunitaria</option>
-              <option value="3">Internacional</option>
-              <!-- <option value="4">Extraordinaria</option> -->
-            </select>
-          </search-filter>
-        </div>
-
-        <div
-          class="
-            justify-center
-            text-sm
-            border-1 border-gray-300
-            rounded-sm
-            p-1
-            bg-gray-100
-          "
-        >
-          <small class="block text-gray-700">Estado:</small>
-          <Datepicker
-            :format="format"
-            v-model="params.date"
-            monthPicker
-            autoApply
-          />
-        </div>
-
-        <div
-          class="
-            justify-center
-            text-sm
-            border-1 border-gray-300
-            rounded-sm
-            p-1
-            bg-gray-100
-          "
-        >
-          <small class="justify-content-center ml-20 uppercase"
-            >Exportar Listas</small
-          >
-          <div
-            class="
-              md:text-md
-              flex
-              items-center
-              justify-between
-              p-4
-              w-full
-              text-sm
-              md:px-12 md:py-0
-            "
-          >
-            <dropdown class="mt-1" placement="bottom-end">
-              <template #default>
-                <div class="group flex items-center cursor-pointer select-none">
-                  <div
-                    class="
-                      mr-1
-                      text-gray-700
-                      group-hover:text-blue-600
-                      focus:text-blue-600
-                      whitespace-nowrap
-                    "
-                  >
-                    <span
-                      class="
-                        px-1
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-sm
-                        bg-gray-200
-                        text-gray-800
-                      "
-                      >&nbsp;Filtros</span
+                    <small class="block text-gray-700 mt-2"
+                      >Tipo de evento:</small
                     >
-                  </div>
-                  <icon
-                    class="
-                      w-5
-                      h-5
-                      fill-gray-700
-                      group-hover:fill-blue-600
-                      focus:fill-blue-600
-                    "
-                    name="cheveron-down"
+
+                    <select
+                      v-model="params.type"
+                      class="
+                        mt-1
+                        block
+                        w-full
+                        px-3
+                        border border-gray-300
+                        bg-white
+                        rounded-md
+                        shadow-sm
+                        focus:outline-none
+                        focus:ring-blue-500
+                        focus:border-blue-500
+                        sm:text-sm
+                      "
+                    >
+                      <option :value="null">Todas</option>
+                      <option value="1">Comunitario</option>
+                      <option value="2">Extracomunitaria</option>
+                      <option value="3">Internacional</option>
+                      <!-- <option value="4">Extraordinaria</option> -->
+                    </select>
+                  </search-filter>
+                </div>
+
+                <div
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    p-1
+                    bg-gray-100
+                  "
+                >
+                  <small class="block text-gray-700">Estado:</small>
+                  <Datepicker
+                    :format="format"
+                    v-model="params.date"
+                    monthPicker
+                    autoApply
                   />
                 </div>
-              </template>
-              <template #dropdown>
-                <div class="mt-2 py-2 text-sm bg-white rounded shadow-xl">
-                  <a
-                    class="block px-6 py-2 hover:text-white hover:bg-blue-500"
-                    target="_blank"
-                    :href="route('secretary.events.report.pdf', this.params)"
-                    >PDF</a
+
+                <div
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    p-1
+                    bg-gray-100
+                  "
+                >
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Exportar Listas</small
                   >
-                  <a
-                    class="block px-6 py-2 hover:text-white hover:bg-blue-500"
-                    target="_blank"
-                    :href="route('secretary.events.export.excel', this.params)"
-                    >Excel</a
+                  <div
+                    class="
+                      md:text-md
+                      flex
+                      items-center
+                      justify-between
+                      p-4
+                      w-full
+                      text-sm
+                      md:px-12 md:py-0
+                    "
                   >
-                  <a
-                    class="block px-6 py-2 hover:text-white hover:bg-blue-500"
-                    target="_blank"
-                    :href="route('secretary.events.export.csv', this.params)"
-                    >CSV</a
-                  >
+                    <dropdown class="mt-1" placement="bottom-end">
+                      <template #default>
+                        <div
+                          class="
+                            group
+                            flex
+                            items-center
+                            cursor-pointer
+                            select-none
+                          "
+                        >
+                          <div
+                            class="
+                              mr-1
+                              text-gray-700
+                              group-hover:text-blue-600
+                              focus:text-blue-600
+                              whitespace-nowrap
+                            "
+                          >
+                            <span
+                              class="
+                                px-1
+                                inline-flex
+                                text-xs
+                                leading-5
+                                font-semibold
+                                rounded-sm
+                                bg-gray-200
+                                text-gray-800
+                              "
+                              >&nbsp;Filtros</span
+                            >
+                          </div>
+                          <icon
+                            class="
+                              w-5
+                              h-5
+                              fill-gray-700
+                              group-hover:fill-blue-600
+                              focus:fill-blue-600
+                            "
+                            name="cheveron-down"
+                          />
+                        </div>
+                      </template>
+                      <template #dropdown>
+                        <div
+                          class="mt-2 py-2 text-sm bg-white rounded shadow-xl"
+                        >
+                          <a
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            target="_blank"
+                            :href="
+                              route('secretary.events.report.pdf', this.params)
+                            "
+                            >PDF</a
+                          >
+                          <a
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            target="_blank"
+                            :href="
+                              route(
+                                'secretary.events.export.excel',
+                                this.params
+                              )
+                            "
+                            >Excel</a
+                          >
+                          <a
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            target="_blank"
+                            :href="
+                              route('secretary.events.export.csv', this.params)
+                            "
+                            >CSV</a
+                          >
+                        </div>
+                      </template>
+                    </dropdown>
+                  </div>
                 </div>
-              </template>
-            </dropdown>
+              </div>
+            </div>
+
+            <div class="text-center section px-5 my-3">
+              <calendar
+                ref="calendar"
+                class="custom-calendar flex overflow-x-auto w-full"
+                :attributes="eventsCommunity"
+                is-expanded
+                is-range
+                :visible="true"
+                :from-page="{
+                  month: parseInt(this.dateMonth) + 1,
+                  year: parseInt(this.dateYear),
+                }"
+                show-weeknumbers="right"
+                v-model="params.date"
+              >
+                <template v-slot:day-content="{ day, attributes }">
+                  <div class="flex flex-col h-full z-10 overflow-hidden">
+                    <span
+                      @click="listEvent(day.id)"
+                      class="
+                        day-label
+                        text-sm text-black
+                        hover:cursor-pointer
+                        mt-3
+                        mb-1
+                        md:mx-2
+                        lg:mx-4
+                        rounded-sm
+                        bg-gray-200
+                      "
+                      >{{ day.day }}</span
+                    >
+                    <div class="overflow-y-auto">
+                      <div v-for="attr in attributes" :key="attr">
+                        <p
+                          v-if="attr.customData.status == 2"
+                          class="
+                            text-xs
+                            p-1
+                            mt-0
+                            mb-1
+                            hover:cursor-pointer
+                            rounded-full
+                            mx-5
+                          "
+                          :class="attr.customData.class"
+                          @click="confirmUpdateEvent(attr)"
+                        >
+                          {{ attr.customData.title.substring(0, 15) }}
+                        </p>
+                        <p
+                          v-if="attr.customData.status == 1"
+                          class="
+                            text-xs
+                            p-1
+                            mt-0
+                            mb-1
+                            hover:cursor-pointer
+                            rounded-md
+                          "
+                          :class="attr.customData.class"
+                          @click="confirmUpdateEvent(attr)"
+                        >
+                          {{ attr.customData.title.substring(0, 15) }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </calendar>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="text-center section px-5 my-3">
-      <calendar
-        ref="calendar"
-        class="custom-calendar flex overflow-x-auto w-full"
-        :attributes="eventsCommunity"
-        is-expanded
-        is-range
-        :visible="true"
-        :from-page="{
-          month: parseInt(this.dateMonth) + 1,
-          year: parseInt(this.dateYear),
-        }"
-        show-weeknumbers="right"
-        v-model="params.date"
-      >
-        <template v-slot:day-content="{ day, attributes }">
-          <div class="flex flex-col h-full z-10 overflow-hidden">
-            <span
-              @click="listEvent(day.id)"
-              class="
-                day-label
-                text-sm text-black
-                hover:cursor-pointer
-                mt-3
-                mb-1
-                md:mx-2
-                lg:mx-4
-                rounded-sm
-                bg-gray-200
-              "
-              >{{ day.day }}</span
-            >
-            <div class="overflow-y-auto">
-              <div v-for="attr in attributes" :key="attr">
-                <p
-                  v-if="attr.customData.status == 2"
-                  class="
-                    text-xs
-                    p-1
-                    mt-0
-                    mb-1
-                    hover:cursor-pointer
-                    rounded-full
-                    mx-5
-                  "
-                  :class="attr.customData.class"
-                  @click="confirmUpdateEvent(attr)"
-                >
-                  {{ attr.customData.title.substring(0, 15) }}
-                </p>
-                <p
-                  v-if="attr.customData.status == 1"
-                  class="text-xs p-1 mt-0 mb-1 hover:cursor-pointer rounded-md"
-                  :class="attr.customData.class"
-                  @click="confirmUpdateEvent(attr)"
-                >
-                  {{ attr.customData.title.substring(0, 15) }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </template>
-      </calendar>
-    </div>
+    </section>
   </app-layout>
 
   <!-- Create Form -->

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CommunityResume extends Model
+class Resume extends Model
 {
     use HasFactory;
     //  Variable para asignacion masiva
@@ -21,6 +21,6 @@ class CommunityResume extends Model
 
     public function community()
     {
-        return $this->belongsToMany('App\Models\Community');
+        return $this->belongsTo('App\Models\Community');
     }
 }

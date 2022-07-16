@@ -23,4 +23,9 @@ class Permit extends Model
     {
         return $this->morphOne('App\Models\Address', 'addressable');
     }
+
+    public function community()
+    {
+        return $this->belongsTo('App\Models\Community');
+    }
 }

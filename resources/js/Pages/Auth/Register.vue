@@ -3,27 +3,28 @@
 
   <!-- component -->
   <div class="bg-white dark:bg-gray-900">
-    <div class="flex justify-center h-screen">
+    <div
+      class="flex justify-center sm:h-full md:h-full lg:h-screen xl:h-screen"
+    >
       <div
-        class="hidden bg-cover lg:block lg:w-2/3"
+        class="hidden bg-cover lg:block lg:w-3/6"
         style="
           background-image: url(https://files-hdlc-frontend.s3.us-east-1.amazonaws.com/banner_spa.jpg);
         "
       >
         <div class="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
           <div>
-            <h2 class="text-4xl font-bold text-white">Brand</h2>
+            <h2 class="text-4xl font-bold text-white">Provincia Ecuador</h2>
 
             <p class="max-w-xl mt-3 text-gray-300">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. In autem
-              ipsa, nulla laboriosam dolores, repellendus perferendis libero
-              suscipit nam temporibus molestiae
+              Por favor ingrese sus credeciales de acceso, si desea recuperar su
+              contraseña por favor siga las instrucciones
             </p>
           </div>
         </div>
       </div>
 
-      <div class="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
+      <div class="flex items-center w-full max-w-md px-6 mx-auto lg:w-6/6">
         <div class="flex-1">
           <div class="text-center sm:justify-center items-center flex flex-col">
             <jet-authentication-card-logo />
@@ -54,67 +55,81 @@
                   autocomplete="username"
                 />
               </div>
-              <div class="mt-4">
-                <jet-label
-                  class="text-black dark:text-white"
-                  for="name"
-                  value="Nombres"
-                />
-                <jet-input
-                  id="name"
-                  type="text"
-                  class="mt-1 block w-full"
-                  v-model="form.name"
-                  required
-                  autofocus
-                  autocomplete="name"
-                />
-              </div>
-              <div class="mt-4">
-                <jet-label
-                  class="text-black dark:text-white"
-                  for="lastname"
-                  value="Apellidos"
-                />
-                <jet-input
-                  id="lastname"
-                  type="text"
-                  class="mt-1 block w-full"
-                  v-model="form.lastname"
-                  required
-                  autofocus
-                  autocomplete="lastname"
-                />
-              </div>
-              <div class="mt-4">
-                <jet-label
-                  class="text-black dark:text-white"
-                  for="fullnamecomm"
-                  value="Nombre en Comunidad"
-                />
-                <jet-input
-                  id="fullnamecomm"
-                  type="text"
-                  class="mt-1 block w-full"
-                  v-model="form.fullnamecomm"
-                  required
-                  autofocus
-                  autocomplete="fullnamecomm"
-                />
-              </div>
-              <div class="mt-4">
-                <jet-label
-                  class="text-black dark:text-white"
-                  for="email"
-                  value="Correo"
-                />
-                <jet-input
-                  id="email"
-                  type="email"
-                  class="mt-1 block w-full"
-                  v-model="form.email"
-                  required
-                />
+
+              <div class="flex flex-wrap">
+                <div class="w-full lg:w-2/4 pr-2 mb-2">
+                  <div class="mt-4 w-full">
+                    <jet-label
+                      class="text-black dark:text-white"
+                      for="name"
+                      value="Nombres"
+                    />
+                    <jet-input
+                      id="name"
+                      type="text"
+                      class="mt-1 block w-full"
+                      v-model="form.name"
+                      required
+                      autofocus
+                      autocomplete="name"
+                    />
+                  </div>
+                </div>
+
+                <div class="w-full lg:w-2/4 mb-2">
+                  <div class="mt-4 w-full">
+                    <jet-label
+                      class="text-black dark:text-white"
+                      for="lastname"
+                      value="Apellidos"
+                    />
+                    <jet-input
+                      id="lastname"
+                      type="text"
+                      class="mt-1 block w-full"
+                      v-model="form.lastname"
+                      required
+                      autofocus
+                      autocomplete="lastname"
+                    />
+                  </div>
+                </div>
+
+                <div class="w-full lg:w-2/4 mb-2">
+                  <div class="mt-4 pr-2">
+                    <jet-label
+                      class="text-black dark:text-white"
+                      for="fullnamecomm"
+                      value="Nombre en Comunidad"
+                    />
+                    <jet-input
+                      id="fullnamecomm"
+                      type="text"
+                      class="mt-1 block w-full"
+                      v-model="form.fullnamecomm"
+                      required
+                      autofocus
+                      autocomplete="fullnamecomm"
+                    />
+                  </div>
+                </div>
+
+                <div class="w-full lg:w-2/4 mb-2">
+                  <div class="mt-4">
+                    <jet-label
+                      class="text-black dark:text-white"
+                      for="email"
+                      value="Correo"
+                    />
+                    <jet-input
+                      id="email"
+                      type="email"
+                      class="mt-1 block w-full"
+                      v-model="form.email"
+                      required
+                    />
+                  </div>
+                </div>
               </div>
 
               <div class="mt-4">
@@ -198,7 +213,7 @@
                   :class="{ 'opacity-25': form.processing }"
                   :disabled="form.processing"
                 >
-                  Registrado
+                  Registrarse
                 </jet-button>
               </div>
             </form>

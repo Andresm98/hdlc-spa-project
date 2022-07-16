@@ -39,7 +39,9 @@ use App\Http\Controllers\Secretary\Transfer\TransferGlobalController;
                 <br>
             </td>
             <td>
-                {{ TransferGlobalController::show($permit->profile->user->id) }}.
+                @if ($permit->community)
+                    {{ $permit->community->comm_name }}
+                @endif
             </td>
 
             <td>{{ date('Y-m-d', strtotime($permit->date_in)) }}</td>

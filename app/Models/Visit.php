@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CommunityVisit extends Model
+class Visit extends Model
 {
     use HasFactory;
     //  Variable para asignacion masiva
@@ -13,6 +13,6 @@ class CommunityVisit extends Model
 
     public function community()
     {
-        return $this->belongsToMany('App\Models\Community');
+        return $this->belongsTo('App\Models\Community');
     }
 }

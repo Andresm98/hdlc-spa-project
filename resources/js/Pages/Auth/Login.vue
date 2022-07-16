@@ -12,12 +12,11 @@
       >
         <div class="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
           <div>
-            <h2 class="text-4xl font-bold text-white">Brand</h2>
+            <h2 class="text-4xl font-bold text-white">Provincia Ecuador</h2>
 
             <p class="max-w-xl mt-3 text-gray-300">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. In autem
-              ipsa, nulla laboriosam dolores, repellendus perferendis libero
-              suscipit nam temporibus molestiae
+              Por favor ingrese sus credeciales de acceso, si desea recuperar su
+              contraseña por favor siga las instrucciones
             </p>
           </div>
         </div>

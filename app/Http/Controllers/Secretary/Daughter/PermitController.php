@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Secretary\Daughter;
 
 use PDF;
 use App\Models\User;
+use App\Models\Permit;
+use App\Models\Community;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Permit;
 use Illuminate\Support\Facades\Validator;
 
 class PermitController extends Controller
@@ -85,15 +86,36 @@ class PermitController extends Controller
             return redirect()->back()->with(['error' => 'Error, existe un permiso vigente!']);
         }
 
-        $permit = $user->profile->permits()->create([
-            'reason' => $request->get('reason'),
-            'description' => $request->get('description'),
-            'date_province' => $request->get('date_province'),
-            'date_general' => $request->get('date_general'),
-            'date_out' => $request->get('date_out'),
-            'date_in' => $request->get('date_in'),
-            'status' => 1,
-        ]);
+        $transfer = $user->profile->transfers()->where('status', 1)->get()->first();
+
+        $community = null;
+        if ($transfer) {
+            $community = Community::find($transfer->community_id);
+        }
+
+        if ($community) {
+            $permit = $user->profile->permits()->create([
+                'reason' => $request->get('reason'),
+                'description' => $request->get('description'),
+                'date_province' => $request->get('date_province'),
+                'date_general' => $request->get('date_general'),
+                'date_out' => $request->get('date_out'),
+                'date_in' => $request->get('date_in'),
+                'status' => 1,
+                'community_id' => $community->id,
+            ]);
+        } else {
+            $permit = $user->profile->permits()->create([
+                'reason' => $request->get('reason'),
+                'description' => $request->get('description'),
+                'date_province' => $request->get('date_province'),
+                'date_general' => $request->get('date_general'),
+                'date_out' => $request->get('date_out'),
+                'date_in' => $request->get('date_in'),
+                'status' => 1,
+            ]);
+        }
+
 
         $permit->address()->create([
             'address' => $request->get('address'),

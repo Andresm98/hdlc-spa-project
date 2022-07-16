@@ -340,7 +340,7 @@
                   "
                 >
                   <small class="justify-content-center ml-20 uppercase"
-                    >Fecha de Fundación</small
+                    >Fecha de Ingreso</small
                   >
                   <p
                     class="text-red-400 text-sm"

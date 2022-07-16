@@ -30,8 +30,11 @@ use App\Http\Controllers\Secretary\Community\CommunityRealityController;
 use App\Http\Controllers\Secretary\Community\CommunityActivityController;
 use App\Http\Controllers\Secretary\Community\CommunityDaughterController;
 use App\Http\Controllers\Secretary\Community\CommunityPastoralController;
+use App\Http\Controllers\Secretary\Community\Visits\VisitGlobalController;
 use App\Http\Controllers\Secretary\Permissions\PermissionGlobalController;
 use App\Http\Controllers\Secretary\Appointments\AppointmentGlobalController;
+use App\Http\Controllers\Secretary\Community\Resumes\ResumeGlobalController;
+use App\Http\Controllers\Secretary\Community\Activities\ActivityGlobalController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityArticleController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunitySectionController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityInventoryController;
@@ -628,5 +631,56 @@ Route::group(
 
         Route::get('transfers/exportCSV', [TransferGlobalController::class, 'exportCSV'])
             ->name('transfers.export.csv');
+
+        //
+
+        Route::get('community/activities/all', [ActivityGlobalController::class, 'index'])
+            ->name('activities.index');
+
+        Route::get('community/activities/search', [ActivityGlobalController::class, 'search'])
+            ->name('activities.communities.index');
+
+        Route::get('community/activities/report/all', [ActivityGlobalController::class, 'printAllActivities'])
+            ->name('activities.communities.pdf');
+
+        Route::get('community/activities/exportExcel', [ActivityGlobalController::class, 'exportExcel'])
+            ->name('activities.communities.export.excel');
+
+        Route::get('community/activities/exportCSV', [ActivityGlobalController::class, 'exportCSV'])
+            ->name('activities.communities.export.csv');
+
+        //
+
+        Route::get('community/resumes/all', [ResumeGlobalController::class, 'index'])
+            ->name('resumes.index');
+
+        Route::get('community/resumes/search', [ResumeGlobalController::class, 'search'])
+            ->name('resumes.communities.index');
+
+        Route::get('community/resumes/report/all', [ResumeGlobalController::class, 'printAllResumes'])
+            ->name('resumes.communities.pdf');
+
+        Route::get('community/resumes/exportExcel', [ResumeGlobalController::class, 'exportExcel'])
+            ->name('resumes.communities.export.excel');
+
+        Route::get('community/resumes/exportCSV', [ResumeGlobalController::class, 'exportCSV'])
+            ->name('resumes.communities.export.csv');
+
+        //
+
+        Route::get('community/visits/all', [VisitGlobalController::class, 'index'])
+            ->name('visits.index');
+
+        Route::get('community/visits/search', [VisitGlobalController::class, 'search'])
+            ->name('visits.communities.index');
+
+        Route::get('community/visits/report/all', [VisitGlobalController::class, 'printAllVisits'])
+            ->name('visits.communities.pdf');
+
+        Route::get('community/visits/exportExcel', [VisitGlobalController::class, 'exportExcel'])
+            ->name('visits.communities.export.excel');
+
+        Route::get('community/visits/exportCSV', [VisitGlobalController::class, 'exportCSV'])
+            ->name('visits.communities.export.csv');
     }
 );

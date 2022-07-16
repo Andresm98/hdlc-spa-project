@@ -247,7 +247,10 @@
         route().current('secretary.communities.index') ||
         route().current('secretary.communities.create') ||
         route().current('secretary.worksindividual.create') ||
-        route().current('secretary.communities.reality.index')
+        route().current('secretary.communities.reality.index') ||
+        route().current('secretary.activities.index') ||
+        route().current('secretary.resumes.index') ||
+        route().current('secretary.visits.index')
       "
     >
       <div class="mr-4 mb-4">
@@ -312,6 +315,100 @@
           "
         />
       </div>
+
+      <div class="mr-4 mb-4">
+        <Link
+          class="group flex items-center py-3"
+          :href="route('secretary.activities.index')"
+        >
+          <icon
+            name="point"
+            class="mr-2 w-4 h-4"
+            :class="
+              isUrl('secretary/community/activities/all')
+                ? 'fill-white'
+                : 'fill-gray-400 group-hover:fill-white'
+            "
+          />
+          <div
+            :class="
+              isUrl('secretary/community/activities/all')
+                ? 'text-white text-sm'
+                : 'text-gray-400 group-hover:text-white text-sm'
+            "
+          >
+            Actividades
+          </div>
+        </Link>
+        <hr
+          :class="
+            isUrl('secretary/community/activities/all')
+              ? 'text-white '
+              : 'hidden'
+          "
+        />
+      </div>
+      <div class="mr-4 mb-4">
+        <Link
+          class="group flex items-center py-3"
+          :href="route('secretary.resumes.index')"
+        >
+          <icon
+            name="point"
+            class="mr-2 w-4 h-4"
+            :class="
+              isUrl('secretary/community/resumes/all')
+                ? 'fill-white'
+                : 'fill-gray-400 group-hover:fill-white'
+            "
+          />
+          <div
+            :class="
+              isUrl('secretary/community/resumes/all')
+                ? 'text-white text-sm'
+                : 'text-gray-400 group-hover:text-white text-sm'
+            "
+          >
+            Resumenes
+          </div>
+        </Link>
+        <hr
+          :class="
+            isUrl('secretary/community/resumes/all') ? 'text-white ' : 'hidden'
+          "
+        />
+      </div>
+      <div class="mr-4 mb-4">
+        <Link
+          class="group flex items-center py-3"
+          :href="route('secretary.visits.index')"
+        >
+          <icon
+            name="point"
+            class="mr-2 w-4 h-4"
+            :class="
+              isUrl('secretary/community/visits/all')
+                ? 'fill-white'
+                : 'fill-gray-400 group-hover:fill-white'
+            "
+          />
+          <div
+            :class="
+              isUrl('secretary/community/visits/all')
+                ? 'text-white text-sm'
+                : 'text-gray-400 group-hover:text-white text-sm'
+            "
+          >
+            Visitas
+          </div>
+        </Link>
+        <hr
+          :class="
+            isUrl('secretary/community/visits/all') ? 'text-white ' : 'hidden'
+          "
+        />
+      </div>
+
       <div class="mr-4 mb-4">
         <Link
           class="group flex items-center py-3"

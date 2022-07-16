@@ -390,13 +390,22 @@ class UserController extends Controller
             ->get()
             ->first();
 
+        //
+
+        $flag = false;
         foreach ($daughter_custom->roles as $role) {
             if ($role->name == "daughter") {
-                continue;
+                $flag = true;
             } else {
-                return abort(404);
+                $flag = false;
             }
         }
+
+        if (!$flag) {
+            return abort(404);
+        }
+
+        //
 
         $user = User::find($daughter_custom->id);
         $profile_daughter =   $profile_daughter->specificProfile($daughter_custom->id);
@@ -449,14 +458,20 @@ class UserController extends Controller
 
         $user =  User::find($id);
 
+        //
+
+        $flag = false;
         foreach ($user->roles as $role) {
             if ($role->name == "daughter") {
-                continue;
+                $flag = true;
             } else {
-                return abort(404);
+                $flag = false;
             }
         }
 
+        if (!$flag) {
+            return abort(404);
+        }
 
         if ($request->file('file')) {
             if (!$user->image) {
@@ -629,10 +644,12 @@ class UserController extends Controller
                 if (is_numeric($this->search("6", $request->get('options')))) {
                     $transfer = $user->profile->transfers->where('status', 1)->first();
                     $controllerTransfers = new TransferController();
-                    $data->put(
-                        'appointments',
-                        $controllerTransfers->allAppointments($transfer->id)
-                    );
+                    if ($transfer) {
+                        $data->put(
+                            'appointments',
+                            $controllerTransfers->allAppointments($transfer->id)
+                        );
+                    }
                     $data->put(
                         'individualappointments',
                         $user->profile->appointments()

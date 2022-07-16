@@ -25,12 +25,45 @@
     <section class="flex-shrink-0">
       <Link
         :href="route('secretary.worksindividual.create')"
-             :class="
+        :class="
           isUrl('secretary/communities/worksindividual/create')
             ? ' uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-700 border-2 border-blue-700 text-white text-xs rounded-lg hover:bg-blue-700 hover:text-gray-100 focus:border-4 focus:border-blue-500'
             : 'uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-xs rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300'
         "
         >Crear Obras Individuales</Link
+      >
+    </section>
+    <section class="flex-shrink-0">
+      <Link
+        :href="route('secretary.activities.index')"
+        :class="
+          isUrl('secretary/community/activities/all')
+            ? ' uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-700 border-2 border-blue-700 text-white text-xs rounded-lg hover:bg-blue-700 hover:text-gray-100 focus:border-4 focus:border-blue-500'
+            : 'uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-xs rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300'
+        "
+        >Actividades</Link
+      >
+    </section>
+    <section class="flex-shrink-0">
+      <Link
+        :href="route('secretary.resumes.index')"
+        :class="
+          isUrl('secretary/community/resumes/all')
+            ? ' uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-700 border-2 border-blue-700 text-white text-xs rounded-lg hover:bg-blue-700 hover:text-gray-100 focus:border-4 focus:border-blue-500'
+            : 'uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-xs rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300'
+        "
+        >Resumenes</Link
+      >
+    </section>
+    <section class="flex-shrink-0">
+      <Link
+        :href="route('secretary.visits.index')"
+        :class="
+          isUrl('secretary/community/visits/all')
+            ? ' uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-700 border-2 border-blue-700 text-white text-xs rounded-lg hover:bg-blue-700 hover:text-gray-100 focus:border-4 focus:border-blue-500'
+            : 'uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-xs rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300'
+        "
+        >Visitas</Link
       >
     </section>
     <section class="flex-shrink-0">

@@ -232,6 +232,11 @@ class ProfileController extends Controller
                     ]);
                 }
             }
+
+            $permission = $profile->permits->where('status', 1)->first();
+            $permission->update([
+                'status' => 0,
+            ]);
         }
         if ($request->get('operation') == 3) {
             $validatorData = Validator::make($request->all(), [
@@ -264,6 +269,11 @@ class ProfileController extends Controller
                     ]);
                 }
             }
+
+            $permission = $profile->permits->where('status', 1)->first();
+            $permission->update([
+                'status' => 0,
+            ]);
         }
 
         return  redirect()->route('secretary.daughters.edit', $profile->user->slug)->with([

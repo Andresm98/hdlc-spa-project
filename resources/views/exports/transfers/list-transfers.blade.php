@@ -5,7 +5,7 @@ use App\Http\Controllers\Secretary\Daughter\TransferController;
     <tr>
         <th>Nro</th>
         <th>Hermana</th>
-        <th>Motivo del permiso</th>
+        <th>Motivo del Cambio</th>
         <th>Fecha de Inicio</th>
         <th>Fecha de Salida y Estado</th>
         <th>Comunidad Anterior</th>

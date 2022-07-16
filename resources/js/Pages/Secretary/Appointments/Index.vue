@@ -211,34 +211,60 @@
     </section>
     <br />
 
-    <!-- Container Filters -->
-    <div class="container mx-auto ml-7">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+    <section class="py-1 bg-gray">
+      <div class="w-full lg:w-full">
         <div
           class="
-            justify-center
-            text-sm
-            border-1 border-gray-300
-            rounded-sm
-            bg-gray-100
+            relative
+            flex flex-col
+            min-w-0
+            break-words
+            w-full
+            mb-6
+            shadow-lg
+            rounded-lg
+            bg-blueGray-100
+            border-0
           "
         >
-          <small class="justify-content-center ml-20 uppercase"
-            >Filtros de Búsqueda</small
-          >
-
-          <search-filter
-            v-model="params.search"
+          <div
             class="
-              border border-blue-300
-              rounded-md
-              shadow-sm
-              focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
-              sm:text-sm
+              shadow
+              overflow-hidden
+              border-b border-gray-200
+              sm:rounded-lg
             "
-            @reset="reset"
           >
-            <!-- <v-date-picker v-model="params.date" is-required :format="format">
+            <!-- Container Filters -->
+            <div class="container mx-auto ml-7">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    bg-gray-100
+                  "
+                >
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Filtros de Búsqueda</small
+                  >
+
+                  <search-filter
+                    v-model="params.search"
+                    class="
+                      border border-blue-300
+                      rounded-md
+                      shadow-sm
+                      focus:outline-none
+                      focus:ring-indigo-500
+                      focus:border-indigo-500
+                      sm:text-sm
+                    "
+                    @reset="reset"
+                  >
+                    <!-- <v-date-picker v-model="params.date" is-required :format="format">
               <template v-slot="{ inputValue, inputEvents }">
                 <input
                   class="bg-white border px-2 py-1 rounded"
@@ -248,634 +274,741 @@
               </template>
             </v-date-picker> -->
 
-            <small class="block text-gray-700 mt-2">Tipo :</small>
+                    <small class="block text-gray-700 mt-2">Tipo :</small>
 
-            <select
-              v-model="params.type"
-              class="
-                mt-1
-                block
-                w-full
-                px-3
-                border border-gray-300
-                bg-white
-                rounded-md
-                shadow-sm
-                focus:outline-none focus:ring-blue-500 focus:border-blue-500
-                sm:text-sm
-              "
-            >
-              <option :value="null">Todos</option>
-              <option
-                v-for="category in categories"
-                :key="category"
-                :value="category.id"
-              >
-                {{ category.name }}
-              </option>
-            </select>
-            <div v-if="params.type != null">
-              <small class="block text-gray-700 mt-2">Niveles:</small>
-
-              <select
-                v-model="params.level"
-                class="
-                  mt-1
-                  block
-                  w-full
-                  px-3
-                  border border-gray-300
-                  bg-white
-                  rounded-md
-                  shadow-sm
-                  focus:outline-none focus:ring-blue-500 focus:border-blue-500
-                  sm:text-sm
-                "
-              >
-                <option :value="null">Todos</option>
-                <option v-for="level in levels" :key="level" :value="level.id">
-                  {{ level.name }}
-                </option>
-              </select>
-            </div>
-
-            <small class="block text-gray-700 mt-2">Estado:</small>
-
-            <select
-              v-model="params.status"
-              class="
-                mt-1
-                block
-                w-full
-                px-3
-                border border-gray-300
-                bg-white
-                rounded-md
-                shadow-sm
-                focus:outline-none focus:ring-blue-500 focus:border-blue-500
-                sm:text-sm
-              "
-            >
-              <option :value="null">Todos</option>
-              <option value="1">Vigentes</option>
-              <option value="2">Pasados</option>
-            </select>
-          </search-filter>
-        </div>
-
-        <div
-          class="
-            justify-center
-            text-sm
-            border-1 border-gray-300
-            rounded-sm
-            p-1
-            bg-gray-100
-          "
-        >
-          <small class="justify-content-center ml-20 uppercase"
-            >Rangos de Fechas</small
-          >
-          <p class="text-red-400 text-sm" v-show="$page.props.errors.dateStart">
-            {{ $page.props.errors.dateStart }}
-          </p>
-          <Datepicker
-            v-model="params.dateStart"
-            :format="format"
-            autoApply
-            required
-          />
-          <small class="justify-content-center ml-6">Deste - Hasta</small>
-          <p class="text-red-400 text-sm" v-show="$page.props.errors.dateEnd">
-            {{ $page.props.errors.dateEnd }}
-          </p>
-          <Datepicker
-            v-model="params.dateEnd"
-            :format="format"
-            autoApply
-            required
-          />
-        </div>
-
-        <div
-          class="
-            justify-center
-            text-sm
-            border-1 border-gray-300
-            rounded-sm
-            p-1
-            bg-gray-100
-          "
-        >
-          <small class="justify-content-center ml-20 uppercase"
-            >Exportar Listas</small
-          >
-          <div
-            class="
-              md:text-md
-              flex
-              items-center
-              justify-between
-              p-4
-              w-full
-              text-sm
-              md:px-12 md:py-0
-            "
-          >
-            <dropdown class="mt-1" placement="bottom-end">
-              <template #default>
-                <div class="group flex items-center cursor-pointer select-none">
-                  <div
-                    class="
-                      mr-1
-                      text-gray-700
-                      group-hover:text-blue-600
-                      focus:text-blue-600
-                      whitespace-nowrap
-                    "
-                  >
-                    <span
+                    <select
+                      v-model="params.type"
                       class="
-                        px-1
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-sm
-                        bg-gray-200
-                        text-gray-800
+                        mt-1
+                        block
+                        w-full
+                        px-3
+                        border border-gray-300
+                        bg-white
+                        rounded-md
+                        shadow-sm
+                        focus:outline-none
+                        focus:ring-blue-500
+                        focus:border-blue-500
+                        sm:text-sm
                       "
-                      >&nbsp;Filtros</span
                     >
-                  </div>
-                  <icon
-                    class="
-                      w-5
-                      h-5
-                      fill-gray-700
-                      group-hover:fill-blue-600
-                      focus:fill-blue-600
-                    "
-                    name="cheveron-down"
+                      <option :value="null">Todos</option>
+                      <option
+                        v-for="category in categories"
+                        :key="category"
+                        :value="category.id"
+                      >
+                        {{ category.name }}
+                      </option>
+                    </select>
+                    <div v-if="params.type != null">
+                      <small class="block text-gray-700 mt-2">Niveles:</small>
+
+                      <select
+                        v-model="params.level"
+                        class="
+                          mt-1
+                          block
+                          w-full
+                          px-3
+                          border border-gray-300
+                          bg-white
+                          rounded-md
+                          shadow-sm
+                          focus:outline-none
+                          focus:ring-blue-500
+                          focus:border-blue-500
+                          sm:text-sm
+                        "
+                      >
+                        <option :value="null">Todos</option>
+                        <option
+                          v-for="level in levels"
+                          :key="level"
+                          :value="level.id"
+                        >
+                          {{ level.name }}
+                        </option>
+                      </select>
+                    </div>
+
+                    <small class="block text-gray-700 mt-2">Estado:</small>
+
+                    <select
+                      v-model="params.status"
+                      class="
+                        mt-1
+                        block
+                        w-full
+                        px-3
+                        border border-gray-300
+                        bg-white
+                        rounded-md
+                        shadow-sm
+                        focus:outline-none
+                        focus:ring-blue-500
+                        focus:border-blue-500
+                        sm:text-sm
+                      "
+                    >
+                      <option :value="null">Todos</option>
+                      <option value="1">Vigentes</option>
+                      <option value="2">Pasados</option>
+                    </select>
+                  </search-filter>
+                </div>
+
+                <div
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    p-1
+                    bg-gray-100
+                  "
+                >
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Rangos de Fechas</small
+                  >
+                  <p
+                    class="text-red-400 text-sm"
+                    v-show="$page.props.errors.dateStart"
+                  >
+                    {{ $page.props.errors.dateStart }}
+                  </p>
+                  <Datepicker
+                    v-model="params.dateStart"
+                    :format="format"
+                    autoApply
+                    required
+                  />
+                  <small class="justify-content-center ml-6"
+                    >Deste - Hasta</small
+                  >
+                  <p
+                    class="text-red-400 text-sm"
+                    v-show="$page.props.errors.dateEnd"
+                  >
+                    {{ $page.props.errors.dateEnd }}
+                  </p>
+                  <Datepicker
+                    v-model="params.dateEnd"
+                    :format="format"
+                    autoApply
+                    required
                   />
                 </div>
-              </template>
-              <template #dropdown>
-                <div class="mt-2 py-2 text-sm bg-white rounded shadow-xl">
-                  <a
-                    class="block px-6 py-2 hover:text-white hover:bg-blue-500"
-                    target="_blank"
-                    :href="route('secretary.appoinments.pdf', this.params)"
-                    >PDF</a
+
+                <div
+                  class="
+                    justify-center
+                    text-sm
+                    border-1 border-gray-300
+                    rounded-sm
+                    p-1
+                    bg-gray-100
+                  "
+                >
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Exportar Listas</small
                   >
-                  <a
-                    class="block px-6 py-2 hover:text-white hover:bg-blue-500"
-                    target="_blank"
-                    :href="
-                      route('secretary.appoinments.export.excel', this.params)
+                  <div
+                    class="
+                      md:text-md
+                      flex
+                      items-center
+                      justify-between
+                      p-4
+                      w-full
+                      text-sm
+                      md:px-12 md:py-0
                     "
-                    >Excel</a
                   >
-                  <a
-                    class="block px-6 py-2 hover:text-white hover:bg-blue-500"
-                    target="_blank"
-                    :href="
-                      route('secretary.appoinments.export.csv', this.params)
-                    "
-                    >CSV</a
-                  >
+                    <dropdown class="mt-1" placement="bottom-end">
+                      <template #default>
+                        <div
+                          class="
+                            group
+                            flex
+                            items-center
+                            cursor-pointer
+                            select-none
+                          "
+                        >
+                          <div
+                            class="
+                              mr-1
+                              text-gray-700
+                              group-hover:text-blue-600
+                              focus:text-blue-600
+                              whitespace-nowrap
+                            "
+                          >
+                            <span
+                              class="
+                                px-1
+                                inline-flex
+                                text-xs
+                                leading-5
+                                font-semibold
+                                rounded-sm
+                                bg-gray-200
+                                text-gray-800
+                              "
+                              >&nbsp;Filtros</span
+                            >
+                          </div>
+                          <icon
+                            class="
+                              w-5
+                              h-5
+                              fill-gray-700
+                              group-hover:fill-blue-600
+                              focus:fill-blue-600
+                            "
+                            name="cheveron-down"
+                          />
+                        </div>
+                      </template>
+                      <template #dropdown>
+                        <div
+                          class="mt-2 py-2 text-sm bg-white rounded shadow-xl"
+                        >
+                          <a
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            target="_blank"
+                            :href="
+                              route('secretary.appoinments.pdf', this.params)
+                            "
+                            >PDF</a
+                          >
+                          <a
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            target="_blank"
+                            :href="
+                              route(
+                                'secretary.appoinments.export.excel',
+                                this.params
+                              )
+                            "
+                            >Excel</a
+                          >
+                          <a
+                            class="
+                              block
+                              px-6
+                              py-2
+                              hover:text-white hover:bg-blue-500
+                            "
+                            target="_blank"
+                            :href="
+                              route(
+                                'secretary.appoinments.export.csv',
+                                this.params
+                              )
+                            "
+                            >CSV</a
+                          >
+                        </div>
+                      </template>
+                    </dropdown>
+                  </div>
                 </div>
-              </template>
-            </dropdown>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <section class="pl-4">
+              <pagination class="mt-6 mb-5" :links="appointments.links" />
+            </section>
+            <small class="ml-6">
+              Se encontraron {{ appointments.total }} nombramientos.</small
+            >
+            <div class="py-2">
+              <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
+                <div
+                  class="
+                    py-2
+                    align-middle
+                    inline-block
+                    min-w-full
+                    sm:px-6
+                    lg:px-8
+                  "
+                >
+                  <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-blue-100">
+                      <tr>
+                        <th
+                          scope="col"
+                          class="
+                            pl-4
+                            text-left text-xs
+                            font-medium
+                            text-black
+                            uppercase
+                            tracking-wider
+                          "
+                        >
+                          Nombre Hermana
+                        </th>
+                        <th
+                          scope="col"
+                          class="
+                            text-left text-xs
+                            font-medium
+                            text-black
+                            uppercase
+                            tracking-wider
+                          "
+                        >
+                          Nombramiento
+                        </th>
+                        <th
+                          scope="col"
+                          class="
+                            text-left text-xs
+                            font-medium
+                            text-black
+                            uppercase
+                            tracking-wider
+                          "
+                        >
+                          Fechas (Inicio-Culminación)
+                        </th>
+                        <th
+                          scope="col"
+                          class="
+                            px-6
+                            py-3
+                            text-left text-xs
+                            font-medium
+                            text-black
+                            uppercase
+                            tracking-wider
+                          "
+                        >
+                          Comunidad y Tranferencia
+                        </th>
+                        <th
+                          scope="col"
+                          class="
+                            px-6
+                            py-3
+                            text-left text-xs
+                            font-medium
+                            text-black
+                            uppercase
+                            tracking-wider
+                          "
+                        >
+                          Acciones
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                      <tr
+                        v-for="appointment in this.appointments.data"
+                        :key="appointment"
+                      >
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <div class="flex items-center">
+                            <div
+                              class="
+                                flex-shrink-0
+                                h-10
+                                w-10
+                                hover:cursor-pointer
+                              "
+                            >
+                              <a
+                                :href="
+                                  route('secretary.daughters.edit', {
+                                    slug: appointment.profile.user.slug,
+                                  })
+                                "
+                              >
+                                <img
+                                  class="h-10 w-10 rounded-full"
+                                  :src="
+                                    appointment.profile.user.profile_photo_url
+                                  "
+                                  alt=""
+                                />
+                              </a>
+                            </div>
+                            <div class="ml-4">
+                              <div class="text-sm font-medium text-gray-900">
+                                {{ appointment.profile.user.name }}
+                              </div>
+                              <div class="text-sm text-gray-500">
+                                {{ appointment.profile.user.lastname }}
+                              </div>
+                              <span
+                                v-if="appointment.status == 1"
+                                class="
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-sm
+                                  bg-green-100
+                                  text-green-800
+                                "
+                                >Activo</span
+                              >
+                              <span
+                                v-if="appointment.status == 0"
+                                class="
+                                  px-2
+                                  inline-flex
+                                  text-xs
+                                  leading-5
+                                  font-semibold
+                                  rounded-sm
+                                  bg-red-100
+                                  text-red-800
+                                "
+                                >Antiguo</span
+                              >
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <span
+                            v-if="
+                              appointment.appointment_level
+                                .appointment_levelc_id == 1
+                            "
+                            class="
+                              px-2
+                              inline-flex
+                              text-xs
+                              leading-5
+                              font-semibold
+                              rounded-full
+                              bg-green-100
+                              text-green-800
+                            "
+                          >
+                            {{ appointment.appointment_level.name }}
+                          </span>
+                          <span
+                            v-if="
+                              appointment.appointment_level
+                                .appointment_levelc_id == 2
+                            "
+                            class="
+                              px-2
+                              inline-flex
+                              text-xs
+                              leading-5
+                              font-semibold
+                              rounded-full
+                              bg-pink-100
+                              text-pink-800
+                            "
+                          >
+                            {{ appointment.appointment_level.name }}
+                          </span>
+                          <span
+                            v-if="
+                              appointment.appointment_level
+                                .appointment_levelc_id == 3
+                            "
+                            class="
+                              px-2
+                              inline-flex
+                              text-xs
+                              leading-5
+                              font-semibold
+                              rounded-full
+                              bg-yellow-100
+                              text-yellow-800
+                            "
+                          >
+                            {{ appointment.appointment_level.name }}
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <span
+                            v-if="appointment.date_end_appointment != null"
+                            class="
+                              px-2
+                              inline-flex
+                              text-xs
+                              leading-5
+                              font-semibold
+                              rounded-full
+                              bg-blue-100
+                              text-blue-800
+                            "
+                          >
+                            {{
+                              this.formatDateShow(appointment.date_appointment)
+                            }}
+                            -
+                            {{
+                              this.formatDateShow(
+                                appointment.date_end_appointment
+                              )
+                            }}
+                          </span>
+                          <span
+                            v-else
+                            class="
+                              px-2
+                              inline-flex
+                              text-xs
+                              leading-5
+                              font-semibold
+                              rounded-full
+                              bg-teal-100
+                              text-teal-800
+                            "
+                          >
+                            {{
+                              this.formatDateShow(appointment.date_appointment)
+                            }}
+                            -
+                            {{
+                              this.formatDateShow(
+                                appointment.date_end_appointment
+                              )
+                            }}
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <span
+                            class="
+                              px-2
+                              inline-flex
+                              text-xs
+                              leading-5
+                              font-semibold
+                              rounded-full
+                              bg-blue-100
+                              text-blue-800
+                            "
+                          >
+                            <div v-if="appointment.community != null">
+                              <div
+                                class="mx-auto flex gap-10"
+                                v-if="appointment.community.comm_level == 1"
+                              >
+                                <a
+                                  :href="
+                                    route('secretary.communities.edit', {
+                                      slug: appointment.community.comm_slug,
+                                    })
+                                  "
+                                  target="_blank"
+                                >
+                                  {{
+                                    appointment.community.comm_name.substring(
+                                      0,
+                                      25
+                                    )
+                                  }}...
+                                </a>
+                              </div>
+
+                              <div
+                                class="mx-auto flex gap-10"
+                                v-if="appointment.community.comm_level == 2"
+                              >
+                                <div
+                                  v-if="appointment.community.comm_id != null"
+                                >
+                                  <a
+                                    :href="
+                                      route('secretary.works.edit', {
+                                        slug: appointment.community.comm_slug,
+                                      })
+                                    "
+                                    target="_blank"
+                                  >
+                                    {{
+                                      appointment.community.comm_name.substring(
+                                        0,
+                                        25
+                                      )
+                                    }}...
+                                  </a>
+                                </div>
+
+                                <div v-else>
+                                  <a
+                                    :href="
+                                      route('secretary.worksindividual.edit', {
+                                        slug: appointment.community.comm_slug,
+                                      })
+                                    "
+                                    target="_blank"
+                                  >
+                                    {{
+                                      appointment.community.comm_name.substring(
+                                        0,
+                                        25
+                                      )
+                                    }}...
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </span>
+                          <br />
+                          <span
+                            class="
+                              px-2
+                              inline-flex
+                              text-xs
+                              leading-5
+                              font-semibold
+                              rounded-sm
+                              bg-cyan-100
+                              text-cyan-800
+                              hover:cursor-pointer
+                            "
+                          >
+                            <div v-if="appointment.transfer != null">
+                              {{
+                                appointment.transfer.transfer_reason.substring(
+                                  0,
+                                  15
+                                )
+                              }}
+                              <br />
+                              {{
+                                this.formatDateShow(
+                                  appointment.transfer.transfer_date_adission
+                                )
+                              }}<br />
+                              {{
+                                this.formatDateShow(
+                                  appointment.transfer.transfer_date_relocated
+                                )
+                              }}
+                            </div>
+                          </span>
+                        </td>
+                        <td
+                          class="
+                            px-3
+                            py-4
+                            whitespace-nowrap
+                            text-right text-sm
+                            font-medium
+                          "
+                        >
+                          <!-- Components -->
+
+                          <div class="mx-auto flex gap-10">
+                            <button
+                              @click="
+                                confirmationAppointmentUpdate(appointment)
+                              "
+                            >
+                              <div class="w-auto h-auto">
+                                <div class="flex-1 h-full">
+                                  <div
+                                    class="
+                                      flex
+                                      items-center
+                                      justify-center
+                                      flex-1
+                                      h-full
+                                      p-2
+                                      border border-green-500
+                                      text-white
+                                      shadow
+                                      rounded-lg
+                                      hover:bg-green-50 hover:text-zinc-300
+                                    "
+                                  >
+                                    <div class="relative">
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 text-green-500"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                      >
+                                        <path
+                                          d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                                        />
+                                      </svg>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </button>
+                            <button
+                              @click="
+                                modal_open = true;
+                                selected_appointment = appointment;
+                              "
+                            >
+                              <div class="w-auto h-auto">
+                                <div class="flex-1 h-full">
+                                  <div
+                                    class="
+                                      flex
+                                      items-center
+                                      justify-center
+                                      flex-1
+                                      h-full
+                                      p-2
+                                      border border-red-500
+                                      text-white
+                                      shadow
+                                      rounded-lg
+                                      hover:bg-red-50 hover:text-zinc-300
+                                    "
+                                  >
+                                    <div class="relative">
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 text-red-500"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                      >
+                                        <path
+                                          d="M17.114,3.923h-4.589V2.427c0-0.252-0.207-0.459-0.46-0.459H7.935c-0.252,0-0.459,0.207-0.459,0.459v1.496h-4.59c-0.252,0-0.459,0.205-0.459,0.459c0,0.252,0.207,0.459,0.459,0.459h1.51v12.732c0,0.252,0.207,0.459,0.459,0.459h10.29c0.254,0,0.459-0.207,0.459-0.459V4.841h1.511c0.252,0,0.459-0.207,0.459-0.459C17.573,4.127,17.366,3.923,17.114,3.923M8.394,2.886h3.214v0.918H8.394V2.886z M14.686,17.114H5.314V4.841h9.372V17.114z M12.525,7.306v7.344c0,0.252-0.207,0.459-0.46,0.459s-0.458-0.207-0.458-0.459V7.306c0-0.254,0.205-0.459,0.458-0.459S12.525,7.051,12.525,7.306M8.394,7.306v7.344c0,0.252-0.207,0.459-0.459,0.459s-0.459-0.207-0.459-0.459V7.306c0-0.254,0.207-0.459,0.459-0.459S8.394,7.051,8.394,7.306"
+                                        ></path>
+                                      </svg>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <section class="pl-4">
+              <pagination class="mt-6 mb-5" :links="appointments.links" />
+            </section>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Table -->
-    <section class="pl-4">
-      <pagination class="mt-6 mb-5" :links="appointments.links" />
     </section>
-    <small class="ml-6">
-      Se encontraron {{ appointments.total }} nombramientos.</small
-    >
-    <div class="py-2">
-      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
-        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-blue-100">
-              <tr>
-                <th
-                  scope="col"
-                  class="
-                    pl-4
-                    text-left text-xs
-                    font-medium
-                    text-black
-                    uppercase
-                    tracking-wider
-                  "
-                >
-                  Nombre Hermana
-                </th>
-                <th
-                  scope="col"
-                  class="
-                    text-left text-xs
-                    font-medium
-                    text-black
-                    uppercase
-                    tracking-wider
-                  "
-                >
-                  Nombramiento
-                </th>
-                <th
-                  scope="col"
-                  class="
-                    text-left text-xs
-                    font-medium
-                    text-black
-                    uppercase
-                    tracking-wider
-                  "
-                >
-                  Fechas (Inicio-Culminación)
-                </th>
-                <th
-                  scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-black
-                    uppercase
-                    tracking-wider
-                  "
-                >
-                  Comunidad y Tranferencia
-                </th>
-                <th
-                  scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-black
-                    uppercase
-                    tracking-wider
-                  "
-                >
-                  Acciones
-                </th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-              <tr
-                v-for="appointment in this.appointments.data"
-                :key="appointment"
-              >
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="flex items-center">
-                    <div class="flex-shrink-0 h-10 w-10 hover:cursor-pointer">
-                      <a
-                        :href="
-                          route('secretary.daughters.edit', {
-                            slug: appointment.profile.user.slug,
-                          })
-                        "
-                      >
-                        <img
-                          class="h-10 w-10 rounded-full"
-                          :src="appointment.profile.user.profile_photo_url"
-                          alt=""
-                        />
-                      </a>
-                    </div>
-                    <div class="ml-4">
-                      <div class="text-sm font-medium text-gray-900">
-                        {{ appointment.profile.user.name }}
-                      </div>
-                      <div class="text-sm text-gray-500">
-                        {{ appointment.profile.user.lastname }}
-                      </div>
-                      <span
-                        v-if="appointment.status == 1"
-                        class="
-                          px-2
-                          inline-flex
-                          text-xs
-                          leading-5
-                          font-semibold
-                          rounded-sm
-                          bg-green-100
-                          text-green-800
-                        "
-                        >Activo</span
-                      >
-                      <span
-                        v-if="appointment.status == 0"
-                        class="
-                          px-2
-                          inline-flex
-                          text-xs
-                          leading-5
-                          font-semibold
-                          rounded-sm
-                          bg-red-100
-                          text-red-800
-                        "
-                        >Antiguo</span
-                      >
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span
-                    v-if="
-                      appointment.appointment_level.appointment_levelc_id == 1
-                    "
-                    class="
-                      px-2
-                      inline-flex
-                      text-xs
-                      leading-5
-                      font-semibold
-                      rounded-full
-                      bg-green-100
-                      text-green-800
-                    "
-                  >
-                    {{ appointment.appointment_level.name }}
-                  </span>
-                  <span
-                    v-if="
-                      appointment.appointment_level.appointment_levelc_id == 2
-                    "
-                    class="
-                      px-2
-                      inline-flex
-                      text-xs
-                      leading-5
-                      font-semibold
-                      rounded-full
-                      bg-pink-100
-                      text-pink-800
-                    "
-                  >
-                    {{ appointment.appointment_level.name }}
-                  </span>
-                  <span
-                    v-if="
-                      appointment.appointment_level.appointment_levelc_id == 3
-                    "
-                    class="
-                      px-2
-                      inline-flex
-                      text-xs
-                      leading-5
-                      font-semibold
-                      rounded-full
-                      bg-yellow-100
-                      text-yellow-800
-                    "
-                  >
-                    {{ appointment.appointment_level.name }}
-                  </span>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span
-                    v-if="appointment.date_end_appointment != null"
-                    class="
-                      px-2
-                      inline-flex
-                      text-xs
-                      leading-5
-                      font-semibold
-                      rounded-full
-                      bg-blue-100
-                      text-blue-800
-                    "
-                  >
-                    {{ this.formatDateShow(appointment.date_appointment) }} -
-                    {{ this.formatDateShow(appointment.date_end_appointment) }}
-                  </span>
-                  <span
-                    v-else
-                    class="
-                      px-2
-                      inline-flex
-                      text-xs
-                      leading-5
-                      font-semibold
-                      rounded-full
-                      bg-teal-100
-                      text-teal-800
-                    "
-                  >
-                    {{ this.formatDateShow(appointment.date_appointment) }} -
-                    {{ this.formatDateShow(appointment.date_end_appointment) }}
-                  </span>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span
-                    class="
-                      px-2
-                      inline-flex
-                      text-xs
-                      leading-5
-                      font-semibold
-                      rounded-full
-                      bg-blue-100
-                      text-blue-800
-                    "
-                  >
-                    <div v-if="appointment.community != null">
-                      <div
-                        class="mx-auto flex gap-10"
-                        v-if="appointment.community.comm_level == 1"
-                      >
-                        <a
-                          :href="
-                            route('secretary.communities.edit', {
-                              slug: appointment.community.comm_slug,
-                            })
-                          "
-                          target="_blank"
-                        >
-                          {{
-                            appointment.community.comm_name.substring(0, 25)
-                          }}...
-                        </a>
-                      </div>
-
-                      <div
-                        class="mx-auto flex gap-10"
-                        v-if="appointment.community.comm_level == 2"
-                      >
-                        <div v-if="appointment.community.comm_id != null">
-                          <a
-                            :href="
-                              route('secretary.works.edit', {
-                                slug: appointment.community.comm_slug,
-                              })
-                            "
-                            target="_blank"
-                          >
-                            {{
-                              appointment.community.comm_name.substring(0, 25)
-                            }}...
-                          </a>
-                        </div>
-
-                        <div v-else>
-                          <a
-                            :href="
-                              route('secretary.worksindividual.edit', {
-                                slug: appointment.community.comm_slug,
-                              })
-                            "
-                            target="_blank"
-                          >
-                            {{
-                              appointment.community.comm_name.substring(0, 25)
-                            }}...
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </span>
-                  <br />
-                  <span
-                    class="
-                      px-2
-                      inline-flex
-                      text-xs
-                      leading-5
-                      font-semibold
-                      rounded-sm
-                      bg-cyan-100
-                      text-cyan-800
-                      hover:cursor-pointer
-                    "
-                  >
-                    <div v-if="appointment.transfer != null">
-                      {{
-                        appointment.transfer.transfer_reason.substring(0, 15)
-                      }}
-                      <br />
-                      {{
-                        this.formatDateShow(
-                          appointment.transfer.transfer_date_adission
-                        )
-                      }}<br />
-                      {{
-                        this.formatDateShow(
-                          appointment.transfer.transfer_date_relocated
-                        )
-                      }}
-                    </div>
-                  </span>
-                </td>
-                <td
-                  class="
-                    px-3
-                    py-4
-                    whitespace-nowrap
-                    text-right text-sm
-                    font-medium
-                  "
-                >
-                  <!-- Components -->
-
-                  <div class="mx-auto flex gap-10">
-                    <button @click="confirmationAppointmentUpdate(appointment)">
-                      <div class="w-auto h-auto">
-                        <div class="flex-1 h-full">
-                          <div
-                            class="
-                              flex
-                              items-center
-                              justify-center
-                              flex-1
-                              h-full
-                              p-2
-                              border border-green-500
-                              text-white
-                              shadow
-                              rounded-lg
-                              hover:bg-green-50 hover:text-zinc-300
-                            "
-                          >
-                            <div class="relative">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 text-green-500"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                              >
-                                <path
-                                  d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
-                                />
-                              </svg>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <button
-                      @click="
-                        modal_open = true;
-                        selected_appointment = appointment;
-                      "
-                    >
-                      <div class="w-auto h-auto">
-                        <div class="flex-1 h-full">
-                          <div
-                            class="
-                              flex
-                              items-center
-                              justify-center
-                              flex-1
-                              h-full
-                              p-2
-                              border border-red-500
-                              text-white
-                              shadow
-                              rounded-lg
-                              hover:bg-red-50 hover:text-zinc-300
-                            "
-                          >
-                            <div class="relative">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 text-red-500"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                              >
-                                <path
-                                  d="M17.114,3.923h-4.589V2.427c0-0.252-0.207-0.459-0.46-0.459H7.935c-0.252,0-0.459,0.207-0.459,0.459v1.496h-4.59c-0.252,0-0.459,0.205-0.459,0.459c0,0.252,0.207,0.459,0.459,0.459h1.51v12.732c0,0.252,0.207,0.459,0.459,0.459h10.29c0.254,0,0.459-0.207,0.459-0.459V4.841h1.511c0.252,0,0.459-0.207,0.459-0.459C17.573,4.127,17.366,3.923,17.114,3.923M8.394,2.886h3.214v0.918H8.394V2.886z M14.686,17.114H5.314V4.841h9.372V17.114z M12.525,7.306v7.344c0,0.252-0.207,0.459-0.46,0.459s-0.458-0.207-0.458-0.459V7.306c0-0.254,0.205-0.459,0.458-0.459S12.525,7.051,12.525,7.306M8.394,7.306v7.344c0,0.252-0.207,0.459-0.459,0.459s-0.459-0.207-0.459-0.459V7.306c0-0.254,0.207-0.459,0.459-0.459S8.394,7.051,8.394,7.306"
-                                ></path>
-                              </svg>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <section class="pl-4">
-      <pagination class="mt-6 mb-5" :links="appointments.links" />
-    </section>
-
     <jet-dialog-modal :show="modal_open">
       <template v-slot:title> Eliminar </template>
       <template v-slot:content>
