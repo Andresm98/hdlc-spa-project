@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Secretary\Community;
 
 use App\Models\Community;
 use Illuminate\Http\Request;
-use App\Models\CommunityVisit;
+use App\Models\Visit;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -129,7 +129,7 @@ class CommunityVisitController extends Controller
             'visit_id' => $visit_id
         ], [
             'community_id' => ['required', 'exists:communities,id'],
-            'visit_id' => ['required', 'exists:community_visits,id']
+            'visit_id' => ['required', 'exists:visits,id']
         ]);
 
         if ($validator->fails()) {
@@ -141,7 +141,7 @@ class CommunityVisitController extends Controller
                 ->withInput();
         }
 
-        $visit = CommunityVisit::find($visit_id);
+        $visit = Visit::find($visit_id);
         $visit->update([
             'comm_reason_visit' => $request->get('comm_reason_visit'),
             'comm_type_visit' => $request->get('comm_type_visit'),
@@ -169,7 +169,7 @@ class CommunityVisitController extends Controller
             'visit_id' => $visit_id
         ], [
             'community_id' => ['required', 'exists:communities,id'],
-            'visit_id' => ['required', 'exists:community_visits,id']
+            'visit_id' => ['required', 'exists:visits,id']
         ]);
 
         if ($validator->fails()) {
@@ -177,7 +177,7 @@ class CommunityVisitController extends Controller
         }
 
 
-        $visit = CommunityVisit::find($visit_id);
+        $visit = Visit::find($visit_id);
         $visit->delete();
         return redirect()->back()->with(['success' => 'Visita eliminada correctamente']);
     }

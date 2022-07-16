@@ -32,23 +32,31 @@ class Community extends Model
 
     public function activities()
     {
-        return $this->hasMany('App\Models\CommunityActivity');
+        return $this->hasMany('App\Models\Activity');
     }
 
     public function resumes()
     {
-        return $this->hasMany('App\Models\CommunityResume');
+        return $this->hasMany('App\Models\Resume');
     }
 
     public function visits()
     {
-        return $this->hasMany('App\Models\CommunityVisit');
+        return $this->hasMany('App\Models\Visit');
     }
+
+    // One to one
 
     public function inventory()
     {
         return $this->hasOne('App\Models\Inventory');
     }
+
+    public function permit()
+    {
+        return $this->hasOne('App\Models\Permit');
+    }
+
     // Relation pne to one inverse polimorph
 
     public function address()

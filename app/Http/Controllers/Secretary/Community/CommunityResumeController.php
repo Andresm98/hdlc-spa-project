@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Secretary\Community;
 use App\Models\Community;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\CommunityResume;
+use App\Models\Resume;
 use Illuminate\Support\Facades\Validator;
 
 class CommunityResumeController extends Controller
@@ -123,7 +123,7 @@ class CommunityResumeController extends Controller
             'resume_id' => $resume_id
         ], [
             'community_id' => ['required', 'exists:communities,id'],
-            'resume_id' => ['required', 'exists:community_resumes,id']
+            'resume_id' => ['required', 'exists:resumes,id']
         ]);
 
         if ($validator->fails()) {
@@ -135,7 +135,7 @@ class CommunityResumeController extends Controller
                 ->withInput();
         }
 
-        $resume = CommunityResume::find($resume_id);
+        $resume = Resume::find($resume_id);
         $resume->update([
             'comm_name_resume' => $request->get('comm_name_resume'),
             'comm_annexed_resume' => $request->get('comm_annexed_resume'),
@@ -161,14 +161,14 @@ class CommunityResumeController extends Controller
             'resume_id' => $resume_id
         ], [
             'community_id' => ['required', 'exists:communities,id'],
-            'resume_id' => ['required', 'exists:community_resumes,id']
+            'resume_id' => ['required', 'exists:resumes,id']
         ]);
 
         if ($validator->fails()) {
             return abort(404);
         }
 
-        $resume = CommunityResume::find($resume_id);
+        $resume = Resume::find($resume_id);
         $resume->delete();
         return redirect()->back()->with(['success' => 'Resumen eliminado correctamente!']);
     }

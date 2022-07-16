@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Secretary\Community;
 
 use App\Models\Community;
 use Illuminate\Http\Request;
-use App\Models\CommunityActivity;
+use App\Models\Activity;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -130,7 +130,7 @@ class CommunityActivityController extends Controller
             'activity_id' => $activity_id
         ], [
             'community_id' => ['required', 'exists:communities,id'],
-            'activity_id' => ['required', 'exists:community_activities,id']
+            'activity_id' => ['required', 'exists:activities,id']
         ]);
 
         if ($validator->fails()) {
@@ -143,7 +143,7 @@ class CommunityActivityController extends Controller
         }
 
 
-        $activity = CommunityActivity::find($activity_id);
+        $activity = Activity::find($activity_id);
         $activity->update([
             'comm_name_activity' => $request->get('comm_name_activity'),
             'comm_description_activity' => $request->get('comm_description_activity'),
@@ -171,14 +171,14 @@ class CommunityActivityController extends Controller
             'activity_id' => $activity_id
         ], [
             'community_id' => ['required', 'exists:communities,id'],
-            'activity_id' => ['required', 'exists:community_activities,id']
+            'activity_id' => ['required', 'exists:activities,id']
         ]);
 
         if ($validator->fails()) {
             return abort(404);
         }
 
-        $activity = CommunityActivity::find($activity_id);
+        $activity = Activity::find($activity_id);
         $activity->delete();
         return redirect()->back()->with(['success' => 'Permiso eliminado correctamente']);
     }

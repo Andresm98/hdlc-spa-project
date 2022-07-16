@@ -161,22 +161,8 @@
                               {{ transfer.community.comm_name }}.
                             </a>
                           </div>
-                          <div
-                            v-if="
-                              transfer.community.comm_level == 2 &&
-                              transfer.community.comm_id != null
-                            "
-                          >
-                            <a
-                              :href="
-                                route('secretary.works.edit', {
-                                  slug: transfer.community.comm_slug,
-                                })
-                              "
-                              target="_blank"
-                            >
-                              {{ transfer.community.comm_name }}.
-                            </a>
+                          <div v-if="transfer.community.comm_level == 2">
+                            {{ transfer.community.comm_name }}.
                           </div>
                         </div>
                         <span

@@ -486,7 +486,7 @@ class CommunitySeeder extends Seeder
                 'description' => $description_inventory . " de la comunidad" . $commmunity->comm_name,
             ]);
 
-            for ($j = 0; $j <= 2; $j++) {
+            for ($j = 0; $j = 0; $j++) {
                 $name_section = 'Secion ' . $j . ' name for ' . $commmunity->comm_name;
                 $section = $commmunity->inventory->sections()->create([
                     'name' => $name_section,
@@ -516,6 +516,39 @@ class CommunitySeeder extends Seeder
                     ]);
                 }
                 $name_section = "";
+            }
+
+            for ($i = 0; $i < 15; $i++) {
+                //     // Convert to timetamps
+                $min = strtotime('2020-02-01 00:00:00');
+                $max = strtotime('2022-02-01 00:00:00');
+
+                //     // Generate random number using above bounds
+                $val = rand($min, $max);
+
+                $commmunity->activities()->create([
+                    'comm_name_activity' => 'Name act ' . $i . ' for ' . $commmunity->comm_name,
+                    'comm_description_activity' => 'Description act ' . $i . ' for ' . $commmunity->comm_name,
+                    'comm_date_activity' =>  date('Y-m-d H:i:s', $val),
+                    'comm_nr_daughters' => rand(1, 100),
+                    'comm_nr_beneficiaries' => rand(1, 100),
+                    'comm_nr_collaborators' => rand(1, 100),
+                ]);
+
+                $commmunity->resumes()->create([
+                    'comm_name_resume' => 'Name res ' . $i . ' for ' . $commmunity->comm_name,
+                    'comm_annexed_resume' => 'Anexes res ' . $i . ' for ' . $commmunity->comm_name,
+                    'comm_observation_resume' => 'Observation resume for ' . $commmunity->comm_name,
+                    'comm_date_resume' =>  date('Y-m-d H:i:s', $val),
+                ]);
+
+                $commmunity->visits()->create([
+                    'comm_reason_visit' => 'Reason vis' . $i . ' ' . $commmunity->comm_name,
+                    'comm_type_visit' => rand(1, 3),
+                    'comm_description_visit' => 'Description vis for ' . $commmunity->comm_name,
+                    'comm_date_init_visit' =>  date('Y-m-d H:i:s', $val),
+                    'comm_date_end_visit' =>  date('Y-m-d H:i:s', $val),
+                ]);
             }
         }
 

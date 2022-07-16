@@ -174,7 +174,10 @@ class TransferGlobalController extends Controller
         $user = User::find($user_id);
         $transfer = $user->profile->transfers->where('status', 1)->first();
 
-        return   $transfer->community->comm_name;
+        if ($transfer) {
+            return   $transfer->community->comm_name;
+        }
+        return null;
     }
 
     /**

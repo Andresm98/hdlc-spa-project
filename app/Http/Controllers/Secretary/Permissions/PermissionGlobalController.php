@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Secretary\Permissions;
 
-use App\Exports\PermissionsExport;
+
 use App\Models\User;
 
 use PDF;
+use App\Exports\PermissionsExport;
 use Inertia\Inertia;
 use App\Models\Permit;
 use Illuminate\Http\Request;
@@ -97,6 +98,7 @@ class PermissionGlobalController extends Controller
             'allProvinces' => $provinces,
             'permits' => $query
                 ->with('address')
+                ->with('community')
                 ->paginate(10)
                 ->appends(request()->query()),
             'filters' => request()->all(['date', 'search', 'status', 'dateStart', 'dateEnd']),

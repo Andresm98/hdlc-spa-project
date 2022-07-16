@@ -28,7 +28,7 @@
                 left: 0cm;
                 right: 0cm;
                 height: 2.2cm;
-                background-color: #e5e7ee;
+                background-color: #ffffff;
                 color: white;
                 text-align: center;
                 /* line-height: 15px; */
@@ -40,7 +40,7 @@
                 left: 0cm;
                 right: 0cm;
                 height: 2.0cm;
-                background-color: #e5e7ee;
+                background-color: #ffffff;
                 color: white;
                 text-align: center;
                 /* line-height: 35px; */
@@ -75,21 +75,23 @@
     <header>
         <div style=" margin-block-start: 0.2cm; color: #000000">
             <div>
-                <div style="float: left;width: 90%; height: 30px;">
-                    <p style="font-size:medium; margin-top:0.5cm;">
-                        Compañía Hijas de la Caridad de San Vicente de Paúl ©
-                    <p>Información Transferencias en la Compañía @if ($from != null || $to != null)
-                            , Fechas de Transferencia: ({{ date('Y-m-d', strtotime($from)) }} -
-                            {{ date('Y-m-d', strtotime($to)) }})
-                        @endif</p>
-                    </p>
-                </div>
                 <div style="float: left;width: 10%; height: 30px;">
-                    <p style="font-size:medium; margin-right:2.5cm; margin-bottom:2.0cm;">
+                    <p style="font-size:medium; margin-left:2.5cm; margin-bottom:2.0cm;">
                         <img height="60px" width="100px"
                             src="https://files-hdlc-frontend.s3.amazonaws.com/icon_hdlc.png" />
                     </p>
                 </div>
+                <div style="float: left;width: 90%; height: 30px;">
+                    <p style="font-size:medium; margin-top:0.5cm;">
+                        Compañía Hijas de la Caridad de San Vicente de Paúl ©
+                    </p>
+                    <small>Información Transferencias en la Compañía @if ($from != null || $to != null)
+                            , Fechas de Transferencia: ({{ date('Y-m-d', strtotime($from)) }} -
+                            {{ date('Y-m-d', strtotime($to)) }})
+                        @endif ; Provincia Ecuador
+                    </small>
+                </div>
+
             </div>
         </div>
     </header>
@@ -115,7 +117,7 @@
                 <tr>
                     <th>Nro</th>
                     <th>Hermana</th>
-                    <th>Motivo del permiso</th>
+                    <th>Motivo del Cambio</th>
                     <th>Fecha de Inicio</th>
                     <th>Fecha de Salida y Estado</th>
                     <th>Comunidad Anterior</th>
@@ -124,8 +126,8 @@
                 {{ $count = 1 }}
                 @foreach ($data as $transfer)
                     <tr>
-                        <td>{{ $count++ }}</td>
-                        <td>
+                        <td width="7%">{{ $count++ }}</td>
+                        <td idth="23%">
                             {{ $transfer->profile->user->name }}<br>
                             {{ $transfer->profile->user->lastname }}<br>
                             F.Nacimiento: {{ date('Y-m-d', strtotime($transfer->profile->date_birth)) }}<br>
@@ -136,10 +138,10 @@
                                 F.Votos: {{ date('Y-m-d', strtotime($transfer->profile->date_vote)) }}<br>
                             @endif
                         </td>
-                        <td>{{ $transfer->transfer_reason }}</td>
-                        <td>{{ date('m-Y-m-d', strtotime($transfer->transfer_date_adission)) }}</td>
-                        <td>
-                            @if ($transfer->transfer_date_relocated)
+                        <td idth="20%">{{ $transfer->transfer_reason }}</td>
+                        <td width="10%">{{ date('Y-m-d', strtotime($transfer->transfer_date_adission)) }}</td>
+                        <td width="10%">
+                            @if ($transfer->transfer_date_relocated != null)
                                 {{ date('Y-m-d', strtotime($transfer->transfer_date_relocated)) }}
                             @endif
                             <br>
@@ -150,7 +152,7 @@
                             @endif
                             <br>
                         </td>
-                        <td>
+                        <td width="15%">
                             <?php
                             $lastTransfer = TransferController::theLastTransfer($transfer->profile->user->id, $transfer->id);
                             ?>
@@ -159,7 +161,7 @@
                             @endif
 
                         </td>
-                        <td>{{ $transfer->community->comm_name }}</td>
+                        <td width="15%">{{ $transfer->community->comm_name }}</td>
 
                     </tr>
                 @endforeach

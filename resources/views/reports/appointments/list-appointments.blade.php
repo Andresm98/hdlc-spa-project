@@ -28,7 +28,7 @@
                 left: 0cm;
                 right: 0cm;
                 height: 2.2cm;
-                background-color: #e5e7ee;
+                background-color: #ffffff;
                 color: white;
                 text-align: center;
                 /* line-height: 15px; */
@@ -40,7 +40,7 @@
                 left: 0cm;
                 right: 0cm;
                 height: 2.0cm;
-                background-color: #e5e7ee;
+                background-color: #ffffff;
                 color: white;
                 text-align: center;
                 /* line-height: 35px; */
@@ -75,26 +75,27 @@
     <header>
         <div style=" margin-block-start: 0.2cm; color: #000000">
             <div>
+                <div style="float: left;width: 10%; height: 30px;">
+                    <p style="font-size:medium; margin-left:2.5cm; margin-bottom:2.0cm;">
+                        <img height="60px" width="100px"
+                            src="https://files-hdlc-frontend.s3.amazonaws.com/icon_hdlc.png" />
+                    </p>
+                </div>
                 <div style="float: left;width: 90%; height: 30px;">
                     <p style="font-size:medium; margin-top:0.5cm;">
                         Compañía Hijas de la Caridad de San Vicente de Paúl ©
-                    <p>Información Nombramientos
+                    </p>
+                    <small>Información Nombramientos
                         @if ($level)
                             a nivel de <strong>{{ $level->name }}</strong>
                         @endif en la Compañía
                         @if ($from != null || $to != null)
                             , Fechas de Inicio: ({{ date('Y-m-d', strtotime($from)) }} -
                             {{ date('Y-m-d', strtotime($to)) }})
-                        @endif
-                    </p>
-                    </p>
+                        @endif; Provincia Ecuador
+                    </small>
                 </div>
-                <div style="float: left;width: 10%; height: 30px;">
-                    <p style="font-size:medium; margin-right:2.5cm; margin-bottom:2.0cm;">
-                        <img height="60px" width="100px"
-                            src="https://files-hdlc-frontend.s3.amazonaws.com/icon_hdlc.png" />
-                    </p>
-                </div>
+
             </div>
         </div>
     </header>
@@ -130,7 +131,7 @@
                 {{ $count = 1 }}
                 @foreach ($data as $appointment)
                     <tr>
-                        <td>{{ $count++ }}</td>
+                        <td width="7%">{{ $count++ }}</td>
                         <td>
                             {{ $appointment->profile->user->name }}<br>
                             {{ $appointment->profile->user->lastname }}<br>
@@ -143,7 +144,7 @@
                             @endif
                         </td>
                         <td>{{ $appointment->appointment_level->name }}</td>
-                        <td>{{ date('Y-m-d', strtotime($appointment->date_appointment)) }}
+                        <td width="20%">{{ date('Y-m-d', strtotime($appointment->date_appointment)) }}
                             @if ($appointment->date_end_appointment != null)
                                 -
                                 {{ date('Y-m-d', strtotime($appointment->date_end_appointment)) }}
@@ -156,7 +157,7 @@
                             @endif
                             <br>
                         </td>
-                        <td>
+                        <td width="25%">
                             @if ($appointment->community != null)
                                 {{ $appointment->community->comm_name }}
                             @endif

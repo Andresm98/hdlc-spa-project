@@ -67,7 +67,7 @@ class FilesCommunityController extends Controller
         $validatorData = Validator::make([
             'filedata' => $request->file('filedata'),
         ], [
-            'filedata' => ['required', 'max:100000'],
+            'filedata' => ['required', 'max:10000'],
         ]);
 
         if ($validatorData->fails()) {

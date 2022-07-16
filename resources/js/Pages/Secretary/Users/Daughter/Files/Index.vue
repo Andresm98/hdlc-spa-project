@@ -36,7 +36,7 @@
             siguientes indicaciones:
             <br />
             <ul>
-              <li>1. Los archivos no pueden exceder 10MB.</li>
+              <li>1. Los archivos no pueden exceder 5MB.</li>
               <li>
                 2. Los archivos que usted puede adjuntar serán del formato que usted
                 requiera (.mp3, mp4, PDF, DOC y otros).
@@ -94,7 +94,7 @@
                 <br />
                 <p class="">Clic en el botón verde para agregar archivos.</p>
               </div>
-              <p class="text-xs text-gray-500">PDF, DOCX, PNG, JPG, GIF max 10MB.</p>
+              <p class="text-xs text-gray-500">PDF, DOCX, PNG, JPG, GIF max 5MB.</p>
 
               <div
                 class="w-full bg-gray-200 h-1"

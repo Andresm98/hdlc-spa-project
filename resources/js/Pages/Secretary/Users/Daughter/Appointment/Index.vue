@@ -235,27 +235,13 @@
                                 }}...
                               </a>
                             </div>
-                            <div
-                              v-if="
-                                appointment.community.comm_level == 2 &&
-                                appointment.community.comm_id != null
-                              "
-                            >
-                              <a
-                                :href="
-                                  route('secretary.works.edit', {
-                                    slug: appointment.community.comm_slug,
-                                  })
-                                "
-                                target="_blank"
-                              >
-                                {{
-                                  appointment.community.comm_name.substring(
-                                    0,
-                                    15
-                                  )
-                                }}...
-                              </a>
+                            <div v-if="appointment.community.comm_level == 2">
+                              {{
+                                appointment.community.comm_name.substring(
+                                  0,
+                                  15
+                                )
+                              }}.
                             </div>
                           </div>
                         </div>
@@ -532,27 +518,13 @@
                                 }}...
                               </a>
                             </div>
-                            <div
-                              v-if="
-                                appointment.community.comm_level == 2 &&
-                                appointment.community.comm_id != null
-                              "
-                            >
-                              <a
-                                :href="
-                                  route('secretary.works.edit', {
-                                    slug: appointment.community.comm_slug,
-                                  })
-                                "
-                                target="_blank"
-                              >
-                                {{
-                                  appointment.community.comm_name.substring(
-                                    0,
-                                    15
-                                  )
-                                }}...
-                              </a>
+                            <div v-if="appointment.community.comm_level == 2">
+                              {{
+                                appointment.community.comm_name.substring(
+                                  0,
+                                  15
+                                )
+                              }}.
                             </div>
                           </div>
                         </div>

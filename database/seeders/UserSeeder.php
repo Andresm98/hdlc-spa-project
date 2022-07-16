@@ -1596,88 +1596,89 @@ class UserSeeder extends Seeder
 
             $this->createTeam($user);
 
-            // // Convert to timetamps
-            // $min = strtotime('2021-11-01 00:00:00');
-            // $max = strtotime('2022-04-01 00:00:00');
+            // Convert to timetamps
+            $min = strtotime('2021-11-01 00:00:00');
+            $max = strtotime('2022-04-01 00:00:00');
 
-            // // Generate random number using above bounds
-            // $val = rand($min, $max);
+            // Generate random number using above bounds
+            $val = rand($min, $max);
 
-            // if ($profile->status == 1) {
-            //     $profile->update([
-            //         'date_vocation' => date('Y-m-d H:i:s', $val),
-            //         'date_admission' => date('Y-m-d H:i:s', $val),
-            //     ]);
-            // }
-            // if ($profile->status == 2) {
-            //     $profile->update([
-            //         'date_death' => date('Y-m-d H:i:s', $val),
-            //     ]);
-            // }
-            // if ($profile->status == 3) {
-            //     $profile->update([
-            //         'date_exit' => date('Y-m-d H:i:s', $val),
-            //     ]);
-            // }
+            if ($profile->status == 1) {
+                $profile->update([
+                    'date_vocation' => date('Y-m-d H:i:s', $val),
+                    'date_admission' => date('Y-m-d H:i:s', $val),
+                ]);
+            }
+            if ($profile->status == 2) {
+                $profile->update([
+                    'date_death' => date('Y-m-d H:i:s', $val),
+                ]);
+            }
+            if ($profile->status == 3) {
+                $profile->update([
+                    'date_exit' => date('Y-m-d H:i:s', $val),
+                ]);
+            }
 
-            // $permit =  $profile->permits()->create([
-            //     'reason' => 'Razón del permiso de ' . $user->name,
-            //     'description' => 'Descripción del permiso',
-            //     'date_province' => date('Y-m-d H:i:s', rand($min, $max)),
-            //     'date_general' => date('Y-m-d H:i:s', rand($min, $max)),
-            //     'date_out' => date('Y-m-d H:i:s', rand($min, $max)),
-            //     'date_in' => date('Y-m-d H:i:s', rand($min, $max)),
-            //     'status' => 1,
-            // ]);
+            $permit =  $profile->permits()->create([
+                'reason' => 'Razón del permiso de ' . $user->name,
+                'description' => 'Descripción del permiso',
+                'date_province' => date('Y-m-d H:i:s', rand($min, $max)),
+                'date_general' => date('Y-m-d H:i:s', rand($min, $max)),
+                'date_out' => date('Y-m-d H:i:s', rand($min, $max)),
+                'date_in' => date('Y-m-d H:i:s', rand($min, $max)),
+                'status' => 1,
+                'community_id' => $transfer->community_id,
+            ]);
 
-            // $political_division_id =  PoliticalDivision::where('level', '=', 3)
-            //     ->where('last_level', '=', 'Y')
-            //     ->inRandomOrder()
-            //     ->first();
+            $political_division_id =  PoliticalDivision::where('level', '=', 3)
+                ->where('last_level', '=', 'Y')
+                ->inRandomOrder()
+                ->first();
 
-            // if (strlen($political_division_id->id) == 6) {
-            //     $permit->address()->create([
-            //         'address' => 'Dirección del permiso de la hermana ' . $user->name,
-            //         'political_division_id' => '' .  $political_division_id->id,
-            //     ]);
-            // } else {
-            //     $permit->address()->create([
-            //         'address' => 'Dirección del permiso de la hermana ' . $user->name,
-            //         'political_division_id' => '0' .  $political_division_id->id,
-            //     ]);
-            // }
+            if (strlen($political_division_id->id) == 6) {
+                $permit->address()->create([
+                    'address' => 'Dirección del permiso de la hermana ' . $user->name,
+                    'political_division_id' => '' .  $political_division_id->id,
+                ]);
+            } else {
+                $permit->address()->create([
+                    'address' => 'Dirección del permiso de la hermana ' . $user->name,
+                    'political_division_id' => '0' .  $political_division_id->id,
+                ]);
+            }
 
-            // for ($i = 0; $i < 15; $i++) {
-            //     $profile->healths()->create([
-            //         'actual_health' => $i . ' Salud actual ' . $user->name,
-            //         'chronic_diseases' => $i . ' Enfermedades cronicas ' . $user->name,
-            //         'other_health_problems' => $i . ' Otros problemas de salud ' . $user->name,
-            //         'consult_date' => date('Y-m-d H:i:s', rand($min, $max)),
-            //     ]);
+            for ($i = 0; $i < 15; $i++) {
+                $profile->healths()->create([
+                    'actual_health' => $i . ' Salud actual ' . $user->name,
+                    'chronic_diseases' => $i . ' Enfermedades cronicas ' . $user->name,
+                    'other_health_problems' => $i . ' Otros problemas de salud ' . $user->name,
+                    'consult_date' => date('Y-m-d H:i:s', rand($min, $max)),
+                ]);
 
-            //     $profile->academic_trainings()->create([
-            //         'name_title' => $i . 'Nombre del título ' . $user->name,
-            //         'institution' => $i . ' Inst. ' . $user->name,
-            //         'observation' => $i . ' Observaciones de titulo ' . $user->name,
-            //         'date_title' => date('Y-m-d H:i:s', rand($min, $max)),
-            //     ]);
-            // }
+                $profile->academic_trainings()->create([
+                    'name_title' => $i . 'Nombre del título ' . $user->name,
+                    'institution' => $i . ' Inst. ' . $user->name,
+                    'observation' => $i . ' Observaciones de titulo ' . $user->name,
+                    'date_title' => date('Y-m-d H:i:s', rand($min, $max)),
+                ]);
+            }
 
-            // $profile->sacraments()->create([
-            //     'sacrament_name' => 'Primera Comunión',
-            //     'observation' => ' Observation sac. ' . $user->name,
-            //     'sacrament_date' => date('Y-m-d H:i:s', rand($min, $max)),
-            // ]);
-            // $profile->sacraments()->create([
-            //     'sacrament_name' => 'Confirmación',
-            //     'observation' => ' Observation sac. ' . $user->name,
-            //     'sacrament_date' => date('Y-m-d H:i:s', rand($min, $max)),
-            // ]);
-            // $profile->sacraments()->create([
-            //     'sacrament_name' => 'Bautismo',
-            //     'observation' => ' Observation sac. ' . $user->name,
-            //     'sacrament_date' => date('Y-m-d H:i:s', rand($min, $max)),
-            // ]);
+            $profile->sacraments()->create([
+                'sacrament_name' => 'Primera Comunión',
+                'observation' => ' Observation sac. ' . $user->name,
+                'sacrament_date' => date('Y-m-d H:i:s', rand($min, $max)),
+            ]);
+            $profile->sacraments()->create([
+                'sacrament_name' => 'Confirmación',
+                'observation' => ' Observation sac. ' . $user->name,
+                'sacrament_date' => date('Y-m-d H:i:s', rand($min, $max)),
+            ]);
+            $profile->sacraments()->create([
+                'sacrament_name' => 'Bautismo',
+                'observation' => ' Observation sac. ' . $user->name,
+                'sacrament_date' => date('Y-m-d H:i:s', rand($min, $max)),
+            ]);
         }
     }
     /**

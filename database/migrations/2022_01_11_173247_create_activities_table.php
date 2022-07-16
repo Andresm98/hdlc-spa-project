@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCommunityResumesTable extends Migration
+class CreateActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,17 @@ class CreateCommunityResumesTable extends Migration
      */
     public function up()
     {
-        Schema::create('community_resumes', function (Blueprint $table) {
+        Schema::create('activities', function (Blueprint $table) {
             $table->id();
 
             // Fields
-            $table->string('comm_name_resume');
-            $table->string('comm_annexed_resume', 400);
-            $table->mediumText('comm_observation_resume', 4000);
-            $table->dateTime('comm_date_resume');
+            $table->string('comm_name_activity');
+            $table->mediumText('comm_description_activity', 4000);
+            $table->dateTime('comm_date_activity');
+            $table->smallInteger('comm_nr_daughters');
+            $table->smallInteger('comm_nr_beneficiaries');
+            $table->smallInteger('comm_nr_collaborators');
+
             // FK field
 
             $table->unsignedBigInteger('community_id');
@@ -33,7 +36,6 @@ class CreateCommunityResumesTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-
             $table->timestamps();
         });
     }
@@ -45,6 +47,6 @@ class CreateCommunityResumesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('community_resumes');
+        Schema::dropIfExists('activities');
     }
 }

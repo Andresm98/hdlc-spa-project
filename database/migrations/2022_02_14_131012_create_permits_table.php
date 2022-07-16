@@ -30,6 +30,7 @@ class CreatePermitsTable extends Migration
             //  Create fields
 
             $table->unsignedBigInteger('profile_id')->nullable();
+            $table->unsignedBigInteger('community_id')->nullable();
 
             //  Generate foreing key
 
@@ -39,6 +40,11 @@ class CreatePermitsTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
+            $table->foreign('community_id')
+                ->references('id')
+                ->on('communities')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->timestamps();
         });
