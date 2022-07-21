@@ -181,7 +181,7 @@ class UserProfileController extends Controller
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($id)],
             'roles*' => 'required|exists:roles,id',
-            'file' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'file' => ['nullable', 'mimes:jpg,jpeg,png', 'max:2024'],
         ]);
 
         if ($validatorData->fails()) {
@@ -375,10 +375,13 @@ class UserProfileController extends Controller
                 if (is_numeric($this->search("6", $request->get('options')))) {
                     $transfer = $user->profile->transfers->where('status', 1)->first();
                     $controllerTransfers = new TransferController();
-                    $data->put(
-                        'appointments',
-                        $controllerTransfers->allAppointments($transfer->id)
-                    );
+                    if ($transfer) {
+                        $data->put(
+                            'appointments',
+                            $controllerTransfers->allAppointments($transfer->id)
+                        );
+                    }
+
                     $data->put(
                         'individualappointments',
                         $user->profile->appointments()
@@ -395,7 +398,7 @@ class UserProfileController extends Controller
             // return $pdf -> download('Usuarios-OpenScience.pdf');
             return $pdf->setPaper('a4', 'portrait')->stream('Perfil Hermana ' . $user->name . '.pdf');
         } else {
-            return  collect(['message' => true]);
+            return redirect()->back()->with('error', 'Por favor ingrese la información de su perfil.');
         }
     }
 }

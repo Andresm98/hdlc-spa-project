@@ -55,6 +55,8 @@ class SacramentProfileController extends Controller
 
                 ]
             );
+        } else {
+            return abort(404);
         }
     }
 

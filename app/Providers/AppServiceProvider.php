@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         if (App::environment('production')) {
             $this->app['request']->server->set('HTTPS', 'on'); // pagination set
-            URL::forceSchema('https');
+            URL::forceScheme('https');
         }
     }
 }

@@ -25,7 +25,9 @@
         {{ $page.props.user.lastname }}
       </div>
     </template>
-    <operation></operation>
+    <div class="mt-5 md:mt-0 md:col-span-2" v-if="this.profileForm != null">
+      <operation></operation>
+    </div>
     <div class="my-2 md:m-2 lg:m-4 xl:m-5 md:p-2 lg:p-4 rounded-md bg-gray-50">
       <div>
         <div class="md:grid md:grid-cols-3 md:gap-6">
@@ -35,55 +37,59 @@
                 Hermana
               </h3>
               <div
-                class="
-                  ml-14
-                  mt-4
-                  mb-4
-                  col-start-1
-                  row-start-3
-                  self-center
-                  sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2
-                  lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4
-                "
+                class="mt-5 md:mt-0 md:col-span-2"
+                v-if="this.profileForm != null"
               >
-                <button @click="openDialogReport()">
-                  <div class="w-auto h-auto">
-                    <div class="flex-1 h-full">
-                      <div
-                        class="
-                          w-28
-                          flex
-                          items-center
-                          justify-center
-                          flex-1
-                          h-full
-                          p-2
-                          border border-blue-800
-                          text-white
-                          shadow
-                          rounded-lg
-                          hover:bg-blue-50 hover:text-zinc-300
-                        "
-                      >
-                        <div class="relative">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 text-blue-800"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              d="M17.453,12.691V7.723 M17.453,12.691V7.723 M1.719,12.691V7.723 M18.281,12.691V7.723 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M7.309,13.312h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,13.312,7.309,13.312 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M16.625,6.066h-1.449V3.168c0-0.228-0.186-0.414-0.414-0.414H5.238c-0.228,0-0.414,0.187-0.414,0.414v2.898H3.375c-0.913,0-1.656,0.743-1.656,1.656v4.969c0,0.913,0.743,1.656,1.656,1.656h1.449v2.484c0,0.228,0.187,0.414,0.414,0.414h9.523c0.229,0,0.414-0.187,0.414-0.414v-2.484h1.449c0.912,0,1.656-0.743,1.656-1.656V7.723C18.281,6.81,17.537,6.066,16.625,6.066 M5.652,3.582h8.695v2.484H5.652V3.582zM14.348,16.418H5.652v-4.969h8.695V16.418z M17.453,12.691c0,0.458-0.371,0.828-0.828,0.828h-1.449v-2.484c0-0.228-0.186-0.414-0.414-0.414H5.238c-0.228,0-0.414,0.186-0.414,0.414v2.484H3.375c-0.458,0-0.828-0.37-0.828-0.828V7.723c0-0.458,0.371-0.828,0.828-0.828h13.25c0.457,0,0.828,0.371,0.828,0.828V12.691z M7.309,13.312h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,13.312,7.309,13.312M7.309,15.383h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,15.383,7.309,15.383 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555"
-                            ></path>
-                          </svg>
+                <div
+                  class="
+                    ml-14
+                    mt-4
+                    mb-4
+                    col-start-1
+                    row-start-3
+                    self-center
+                    sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2
+                    lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4
+                  "
+                >
+                  <button @click="openDialogReport()">
+                    <div class="w-auto h-auto">
+                      <div class="flex-1 h-full">
+                        <div
+                          class="
+                            w-28
+                            flex
+                            items-center
+                            justify-center
+                            flex-1
+                            h-full
+                            p-2
+                            border border-blue-800
+                            text-white
+                            shadow
+                            rounded-lg
+                            hover:bg-blue-50 hover:text-zinc-300
+                          "
+                        >
+                          <div class="relative">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-5 w-5 text-blue-800"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path
+                                d="M17.453,12.691V7.723 M17.453,12.691V7.723 M1.719,12.691V7.723 M18.281,12.691V7.723 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M7.309,13.312h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,13.312,7.309,13.312 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M16.625,6.066h-1.449V3.168c0-0.228-0.186-0.414-0.414-0.414H5.238c-0.228,0-0.414,0.187-0.414,0.414v2.898H3.375c-0.913,0-1.656,0.743-1.656,1.656v4.969c0,0.913,0.743,1.656,1.656,1.656h1.449v2.484c0,0.228,0.187,0.414,0.414,0.414h9.523c0.229,0,0.414-0.187,0.414-0.414v-2.484h1.449c0.912,0,1.656-0.743,1.656-1.656V7.723C18.281,6.81,17.537,6.066,16.625,6.066 M5.652,3.582h8.695v2.484H5.652V3.582zM14.348,16.418H5.652v-4.969h8.695V16.418z M17.453,12.691c0,0.458-0.371,0.828-0.828,0.828h-1.449v-2.484c0-0.228-0.186-0.414-0.414-0.414H5.238c-0.228,0-0.414,0.186-0.414,0.414v2.484H3.375c-0.458,0-0.828-0.37-0.828-0.828V7.723c0-0.458,0.371-0.828,0.828-0.828h13.25c0.457,0,0.828,0.371,0.828,0.828V12.691z M7.309,13.312h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,13.312,7.309,13.312M7.309,15.383h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,15.383,7.309,15.383 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555"
+                              ></path>
+                            </svg>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </button>
-                <small class="ml-2">Imprimir Reporte</small>
+                  </button>
+                  <small class="ml-2">Imprimir Reporte</small>
+                </div>
               </div>
-
               <p class="mt-1 text-sm text-gray-600 text-justify">
                 La información que puede visualizar se relacionan a la
                 información de su usuario en el sistema general, tenga en cuenta
@@ -449,7 +455,7 @@
                         />
                         <img
                           v-if="!image && !url"
-                          src="https://www.daughtersofcharity.com/wp-content/uploads/2021/05/DOC-SEAS-Logo-footer-236x300.png"
+                          src="https://files-hdlc-frontend.s3.amazonaws.com/logo_daughter.png"
                           class="rounded-lg h-60 w-40 object-cover"
                         />
 
@@ -755,6 +761,30 @@
                           duration-150
                         "
                         v-model="profileForm.phone"
+                      />
+                    </div>
+                    <div
+                      class="col-span-6 sm:col-span-2"
+                      v-if="profileForm.date_retirement != null"
+                    >
+                      <label
+                        class="block text-sm font-medium text-black"
+                        htmlfor="grid-password"
+                      >
+                        Fecha de Jubilación
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.date_retirement"
+                      >
+                        {{ $page.props.errors.date_retirement }}
+                      </p>
+                      <small>Formato: Necesario</small>
+                      <Datepicker
+                        autoApply
+                        v-model="profileForm.date_retirement"
+                        :format="format"
+                        readonly
                       />
                     </div>
 
@@ -1312,214 +1342,6 @@
           <div class="border-t border-gray-200" />
         </div>
       </div>
-
-      <!-- <div class="mt-10 sm:mt-0">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-          <div class="md:col-span-1">
-            <div class="px-4 sm:px-0">
-              <h3 class="text-lg font-medium leading-6 text-gray-900">
-                Notifications
-              </h3>
-              <p class="mt-1 text-sm text-gray-600">
-                Decide which communications you'd like to receive and how.
-              </p>
-            </div>
-          </div>
-          <div class="mt-5 md:mt-0 md:col-span-2">
-            <form action="#" method="POST">
-              <div class="shadow overflow-hidden sm:rounded-md">
-                <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-                  <fieldset>
-                    <legend class="text-base font-medium text-gray-900">
-                      By Email
-                    </legend>
-                    <div class="mt-4 space-y-4">
-                      <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                          <input
-                            id="comments"
-                            name="comments"
-                            type="checkbox"
-                            class="
-                              focus:ring-indigo-500
-                              h-4
-                              w-4
-                              text-indigo-600
-                              border-gray-300
-                              rounded
-                            "
-                          />
-                        </div>
-                        <div class="ml-3 text-sm">
-                          <label
-                            for="comments"
-                            class="font-medium text-gray-700"
-                            >Comments</label
-                          >
-                          <p class="text-gray-500">
-                            Get notified when someones posts a comment on a
-                            posting.
-                          </p>
-                        </div>
-                      </div>
-                      <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                          <input
-                            id="candidates"
-                            name="candidates"
-                            type="checkbox"
-                            class="
-                              focus:ring-indigo-500
-                              h-4
-                              w-4
-                              text-indigo-600
-                              border-gray-300
-                              rounded
-                            "
-                          />
-                        </div>
-                        <div class="ml-3 text-sm">
-                          <label
-                            for="candidates"
-                            class="font-medium text-gray-700"
-                            >Candidates</label
-                          >
-                          <p class="text-gray-500">
-                            Get notified when a candidate applies for a job.
-                          </p>
-                        </div>
-                      </div>
-                      <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                          <input
-                            id="offers"
-                            name="offers"
-                            type="checkbox"
-                            class="
-                              focus:ring-indigo-500
-                              h-4
-                              w-4
-                              text-indigo-600
-                              border-gray-300
-                              rounded
-                            "
-                          />
-                        </div>
-                        <div class="ml-3 text-sm">
-                          <label for="offers" class="font-medium text-gray-700"
-                            >Offers</label
-                          >
-                          <p class="text-gray-500">
-                            Get notified when a candidate accepts or rejects an
-                            offer.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </fieldset>
-                  <fieldset>
-                    <div>
-                      <legend class="text-base font-medium text-gray-900">
-                        Push Notifications
-                      </legend>
-                      <p class="text-sm text-gray-500">
-                        These are delivered via SMS to your mobile phone.
-                      </p>
-                    </div>
-                    <div class="mt-4 space-y-4">
-                      <div class="flex items-center">
-                        <input
-                          id="push-everything"
-                          name="push-notifications"
-                          type="radio"
-                          class="
-                            focus:ring-indigo-500
-                            h-4
-                            w-4
-                            text-indigo-600
-                            border-gray-300
-                          "
-                        />
-                        <label
-                          for="push-everything"
-                          class="ml-3 block text-sm font-medium text-gray-700"
-                        >
-                          Everything
-                        </label>
-                      </div>
-                      <div class="flex items-center">
-                        <input
-                          id="push-email"
-                          name="push-notifications"
-                          type="radio"
-                          class="
-                            focus:ring-indigo-500
-                            h-4
-                            w-4
-                            text-indigo-600
-                            border-gray-300
-                          "
-                        />
-                        <label
-                          for="push-email"
-                          class="ml-3 block text-sm font-medium text-gray-700"
-                        >
-                          Same as email
-                        </label>
-                      </div>
-                      <div class="flex items-center">
-                        <input
-                          id="push-nothing"
-                          name="push-notifications"
-                          type="radio"
-                          class="
-                            focus:ring-indigo-500
-                            h-4
-                            w-4
-                            text-indigo-600
-                            border-gray-300
-                          "
-                        />
-                        <label
-                          for="push-nothing"
-                          class="ml-3 block text-sm font-medium text-gray-700"
-                        >
-                          No push notifications
-                        </label>
-                      </div>
-                    </div>
-                  </fieldset>
-                </div>
-                <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                  <button
-                    type="submit"
-                    class="
-                      inline-flex
-                      justify-center
-                      py-2
-                      px-4
-                      border border-transparent
-                      shadow-sm
-                      text-sm
-                      font-medium
-                      rounded-md
-                      text-white
-                      bg-indigo-600
-                      hover:bg-indigo-700
-                      focus:outline-none
-                      focus:ring-2
-                      focus:ring-offset-2
-                      focus:ring-indigo-500
-                    "
-                  >
-                    Save
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div> -->
     </div>
     <!-- Put Data Form -->
     <jet-dialog-modal
@@ -1921,9 +1743,7 @@
       @close="managingReportsFor = null"
     >
       <template #title>
-        <div class="text-md">
-            Opciones del Reporte del Perfil de la Hermana
-        </div>
+        <div class="text-md">Opciones del Reporte del Perfil de la Hermana</div>
       </template>
 
       <template #content>
@@ -2563,6 +2383,7 @@ export default {
           date_vocation: this.daughter.profile.date_vocation,
           date_send: this.daughter.profile.date_send,
           date_vote: this.daughter.profile.date_vote,
+          date_retirement: this.daughter.profile.date_retirement,
           cellphone: this.daughter.profile.cellphone,
           phone: this.daughter.profile.phone,
           address: this.daughter.profile.address.address,

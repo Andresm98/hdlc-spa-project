@@ -141,6 +141,7 @@ class ProfileController extends Controller
             'date_admission' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'date_send' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'date_vote' => ['nullable', 'date_format:Y-m-d H:i:s'],
+            'date_retirement' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'cellphone' => ['required', 'string', 'max:15'],
             'phone' => ['nullable', 'string', 'max:15'],
             'observation' => ['required', 'string', 'max:4000'],
@@ -164,6 +165,7 @@ class ProfileController extends Controller
                 'date_admission' => $request->get("date_vocation"),
                 'date_send' => $request->get('date_send'),
                 'date_vote' => $request->get('date_vote'),
+                'date_retirement' => $request->get('date_retirement'),
                 'cellphone' => $request->get("cellphone"),
                 'phone' => $request->get("phone"),
                 'observation' => $request->get("observation"),
@@ -234,9 +236,11 @@ class ProfileController extends Controller
             }
 
             $permission = $profile->permits->where('status', 1)->first();
-            $permission->update([
-                'status' => 0,
-            ]);
+            if ($permission) {
+                $permission->update([
+                    'status' => 0,
+                ]);
+            }
         }
         if ($request->get('operation') == 3) {
             $validatorData = Validator::make($request->all(), [
@@ -271,9 +275,11 @@ class ProfileController extends Controller
             }
 
             $permission = $profile->permits->where('status', 1)->first();
-            $permission->update([
-                'status' => 0,
-            ]);
+            if ($permission) {
+                $permission->update([
+                    'status' => 0,
+                ]);
+            }
         }
 
         return  redirect()->route('secretary.daughters.edit', $profile->user->slug)->with([

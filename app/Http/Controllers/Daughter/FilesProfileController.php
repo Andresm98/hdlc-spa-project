@@ -64,6 +64,8 @@ class FilesProfileController extends Controller
                 'filters' => request()->all(['date', 'search', 'status', 'dateStart', 'dateEnd']),
 
             ]);
+        } else {
+            return abort(404);
         }
     }
 
@@ -99,7 +101,7 @@ class FilesProfileController extends Controller
         $validatorData = Validator::make([
             'filedata' => $request->file('filedata'),
         ], [
-            'filedata' => ['required', 'max:10000'],
+            'filedata' => ['required', 'max:5000'],
         ]);
 
         if ($validatorData->fails()) {

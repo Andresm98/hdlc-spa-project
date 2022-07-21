@@ -38,6 +38,13 @@
                 :active="route().current('daughter.welcome')"
                 >Información Personal
               </jet-nav-link>
+              <jet-nav-link
+                class="pt-2"
+                v-show="role.name == 'collaborator'"
+                :href="route('collaborator.daughters.index')"
+                :active="route().current('collaborator.daughters.index')"
+                >Información Colaborador
+              </jet-nav-link>
             </div>
 
           </div>

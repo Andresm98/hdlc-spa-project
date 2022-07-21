@@ -357,7 +357,7 @@
                       />
                       <img
                         v-if="!image && !url"
-                        src="https://www.daughtersofcharity.com/wp-content/uploads/2021/05/DOC-SEAS-Logo-footer-236x300.png"
+                        src="https://files-hdlc-frontend.s3.amazonaws.com/logo_daughter.png"
                         class="rounded-xl h-60 w-40 object-cover"
                       />
                       <progress

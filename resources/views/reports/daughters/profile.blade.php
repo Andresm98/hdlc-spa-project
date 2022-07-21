@@ -144,6 +144,10 @@
                         <li style="font-size: small;"><strong>Fecha de Salida: </strong>
                             {{ date('Y-m-d', strtotime($data->get('profile')->date_exit)) }}</li>
                     @endif
+                    @if ($data->get('profile')->date_retirement!= null)
+                        <li style="font-size: small;"><strong>Fecha de Jubilación: </strong>
+                            {{ date('Y-m-d', strtotime($data->get('profile')->date_retirement)) }}</li>
+                    @endif
                     <li style="font-size: small;"><strong>Celular: </strong>{{ $data->get('profile')->cellphone }}
                     </li>
                     @if ($data->get('profile')->phone != null)
@@ -160,7 +164,7 @@
                     <img style="  border-radius: 10%; margin-left: 20px; margin-top: 25px;"
                         src="{{ $data->get('image') }}" alt="" width="140" height="220">
                 @else
-                    <img src="https://www.daughtersofcharity.com/wp-content/uploads/2021/05/DOC-SEAS-Logo-footer-236x300.png"
+                    <img src="https://files-hdlc-frontend.s3.amazonaws.com/logo_daughter.png"
                         alt="" width="170" height="270"
                         style=" border-radius:
                         10%; margin-left: 20px; margin-top: 25px; margin-bottom: 5px;">
@@ -303,7 +307,6 @@
                                 <ul style="border: 1px solid black;">
                                     <li style="margin-right: 10px"><strong>Nombre del Sacramento:
                                         </strong>{!! $sacrament->sacrament_name !!} </li>
-                                    <li style="margin-right: 10px"><strong>Institución: </strong>{!! $sacrament->institution !!}
                                     </li>
                                     <li style="margin-right: 10px"><strong>Observaciones:
                                         </strong>{!! $sacrament->observation !!}

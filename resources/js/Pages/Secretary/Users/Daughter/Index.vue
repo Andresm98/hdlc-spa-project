@@ -108,6 +108,7 @@
                       <option value="1">Activas</option>
                       <option value="2">Fallecidas</option>
                       <option value="3">Retiradas</option>
+                      <option value="4">Jubiladas</option>
                     </select>
 
                     <div v-if="params.status == 1">
@@ -678,6 +679,27 @@
                                   {{
                                     formatDateShow(
                                       user_custom.profile.date_exit
+                                    )
+                                  }}
+                                </span>
+                              </div>
+                              <div v-if="user_custom.profile.date_retirement!=null">
+                                  <span
+                                  class="
+                                    px-2
+                                    inline-flex
+                                    text-xs
+                                    leading-5
+                                    font-semibold
+                                    rounded-full
+                                    bg-yellow-100
+                                    text-yellow-800
+                                  "
+                                >
+                                  Jubilada en
+                                  {{
+                                    formatDateShow(
+                                      user_custom.profile.date_retirement
                                     )
                                   }}
                                 </span>

@@ -4,7 +4,9 @@
         <th>Hermana</th>
         <th>Nombres</th>
         <th>Apellidos</th>
+        <th>Cédula</th>
         <th>Fecha de Nacimiento</th>
+        <th>Fecha de Vocación</th>
         <th>Fecha de Retiro</th>
         <th>Comunidad (Última lugar en la Compañía)</th>
     </tr>
@@ -17,7 +19,15 @@
             <td>{{ $daughter->lastname }}</td>
             @if ($daughter->profile)
                 <td>
+                    {{ $daughter->profile->identity_card }}
+                </td>
+                <td>
                     {{ date('Y-m-d', strtotime($daughter->profile->date_birth)) }}
+                </td>
+                <td>
+                    @if ($daughter->profile->date_vocation)
+                        {{ date('Y-m-d', strtotime($daughter->profile->date_vocation)) }}
+                    @endif
                 </td>
                 <td>
                     {{ date('Y-m-d', strtotime($daughter->profile->date_exit)) }}

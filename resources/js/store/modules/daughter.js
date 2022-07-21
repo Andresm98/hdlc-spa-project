@@ -11,6 +11,7 @@ const state = () => ({
         date_send: null,
         date_vote: null,
         date_death: null,
+        date_retirement: null,
         cellphone: null,
         phone: null,
         observation: null,
@@ -68,6 +69,7 @@ const mutations = {
             date_send,
             date_vote,
             date_death,
+            date_retirement,
             cellphone,
             phone,
             observation,
@@ -81,6 +83,7 @@ const mutations = {
         state.profile.date_send = date_send;
         state.profile.date_vote = date_vote;
         state.profile.date_death = date_death;
+        state.profile.date_retirement = date_retirement;
         state.profile.cellphone = cellphone;
         state.profile.phone = phone;
         state.profile.observation = observation;

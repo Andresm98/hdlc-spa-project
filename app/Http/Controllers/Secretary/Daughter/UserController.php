@@ -22,13 +22,10 @@ use App\Exports\UsersExport;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
@@ -131,12 +128,6 @@ class UserController extends Controller
 
     public function index()
     {
-
-        //                              OBJECT
-        // return  User::whereHas("roles", function ($q) {
-        // $q->where("name", "daughter");
-        // })->get();
-        // return User::role('daughter')->get();
 
         request()->validate([
             'direction' => ['in:asc,desc'],
@@ -243,6 +234,10 @@ class UserController extends Controller
                             $q->whereBetween('date_exit', [request('dateStart'), request('dateEnd')]);
                             $q->orderBy('date_exit', 'desc');
                         }
+                        if (request('status') == 4) {
+                            $q->whereBetween('date_retirement', [request('dateStart'), request('dateEnd')]);
+                            $q->orderBy('date_retirement', 'desc');
+                        }
                     }
                 }
                 if (request('status') == 1) {
@@ -276,6 +271,9 @@ class UserController extends Controller
                 }
                 if (request('status') == 3) {
                     $q->where("status", request('status'))->orderBy('date_exit', 'desc');
+                }
+                if (request('status') == 4) {
+                    $q->where('date_retirement', '!=', null)->orderBy('date_retirement', 'desc');
                 }
             });
         }
@@ -319,7 +317,7 @@ class UserController extends Controller
             'fullnamecomm' => 'required|string|max:60',
             'lastname' => 'required|string|max:60',
             'email' => 'required|string|email|max:60|unique:users',
-            'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if ($validator->fails()) {
@@ -779,6 +777,10 @@ class UserController extends Controller
                             $q->whereBetween('date_exit', [request('dateStart'), request('dateEnd')]);
                             $q->orderBy('date_exit', 'desc');
                         }
+                        if (request('status') == 4) {
+                            $q->whereBetween('date_retirement', [request('dateStart'), request('dateEnd')]);
+                            $q->orderBy('date_retirement', 'desc');
+                        }
                         $dateFromTo->setFrom(request('dateStart'));
                         $dateFromTo->setTo(request('dateEnd'));
                     }
@@ -815,6 +817,9 @@ class UserController extends Controller
                 if (request('status') == 3) {
                     $q->where("status", request('status'))->orderBy('date_exit', 'desc');
                 }
+                if (request('status') == 4) {
+                    $q->where('date_retirement', '!=', null)->orderBy('date_retirement', 'desc');
+                }
             });
 
             $from =   $dateFromTo->getFrom();
@@ -846,6 +851,15 @@ class UserController extends Controller
 
                 $pdf = PDF::loadView('reports.daughters.list-retired', compact('data', 'from', 'to'));
                 return $pdf->setPaper('a4', 'landscape')->stream('ReportesHermanasHDLCRetiradas.pdf');
+            }
+            if (request('status') == 4) {
+                $data = $query
+                    ->with('profile')
+                    ->with('profile.transfers.community')
+                    ->get();
+
+                $pdf = PDF::loadView('reports.daughters.list-retirement', compact('data', 'from', 'to'));
+                return $pdf->setPaper('a4', 'landscape')->stream('ReportesHermanasHDLCJubiladas.pdf');
             }
         }
 

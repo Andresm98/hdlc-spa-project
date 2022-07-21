@@ -268,7 +268,7 @@ export default {
         )
         .then((res) => {
           if (res.data.length > 0) {
-            console.log(res);
+            // console.log(res);
             this.daughters_list = res;
           }
         });

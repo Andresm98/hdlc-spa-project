@@ -1214,7 +1214,7 @@
           <div class="w-full lg:w-3/12">
             <div class="relative w-full px-2">
               <label class="block text-sm font-medium text-gray-700">
-                Medidas
+                Medidas (alto x ancho)
               </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.size">
                 {{ $page.props.errors.size }}
@@ -1518,7 +1518,7 @@
           <div class="w-full lg:w-3/12">
             <div class="relative w-full px-2">
               <label class="block text-sm font-medium text-gray-700">
-                Medidas
+                Medidas (alto x ancho)
               </label>
               <p class="text-red-400 text-sm" v-show="$page.props.errors.size">
                 {{ $page.props.errors.size }}

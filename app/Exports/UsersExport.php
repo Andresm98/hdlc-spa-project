@@ -150,6 +150,10 @@ class UsersExport implements FromView
                             $q->whereBetween('date_exit', [request('dateStart'), request('dateEnd')]);
                             $q->orderBy('date_exit', 'desc');
                         }
+                        if (request('status') == 4) {
+                            $q->whereBetween('date_retirement', [request('dateStart'), request('dateEnd')]);
+                            $q->orderBy('date_retirement', 'desc');
+                        }
                         $dateFromTo->setFrom(request('dateStart'));
                         $dateFromTo->setTo(request('dateEnd'));
                     }
@@ -186,6 +190,9 @@ class UsersExport implements FromView
                 if (request('status') == 3) {
                     $q->where("status", request('status'))->orderBy('date_exit', 'desc');
                 }
+                if (request('status') == 4) {
+                    $q->where('date_retirement', '!=', null)->orderBy('date_retirement', 'desc');
+                }
             });
 
 
@@ -215,6 +222,14 @@ class UsersExport implements FromView
                     ->get();
 
                 return view('exports.daughters.list-retired', compact('data', 'from', 'to'));
+            }
+            if (request('status') == 4) {
+                $data = $query
+                    ->with('profile')
+                    ->with('profile.transfers.community')
+                    ->get();
+
+                return view('exports.daughters.list-retirement', compact('data', 'from', 'to'));
             }
         }
 

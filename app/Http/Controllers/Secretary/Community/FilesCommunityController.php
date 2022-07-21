@@ -113,7 +113,7 @@ class FilesCommunityController extends Controller
                 ]);
                 return redirect()->back()->with(['success' => 'Archivo actualizado correctamente.']);
             } else {
-                if ($filesCount < 100) {
+                if ($filesCount < 15) {
                     Storage::disk('s3')->put($filePath, file_get_contents($file));
                     Storage::disk('s3')->setVisibility($filePath, 'private');
 

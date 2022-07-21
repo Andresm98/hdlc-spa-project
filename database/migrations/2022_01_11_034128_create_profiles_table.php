@@ -25,6 +25,12 @@ class CreateProfilesTable extends Migration
             $table->dateTime('date_vote')->nullable();
             $table->dateTime('date_death')->nullable();
             $table->dateTime('date_exit')->nullable();
+            // ALTER TABLE profiles
+            // ADD COLUMN date_retirement DATETIME AFTER date_exit;
+
+            // alter table profiles
+            // modify column date_exit date NULL;
+
             $table->char('cellphone', 20)->nullable();
             $table->char('phone', 20)->nullable();
             $table->longText('observation', 4000)->nullable();
@@ -42,6 +48,8 @@ class CreateProfilesTable extends Migration
             $table->timestamps();
         });
     }
+
+
 
     /**
      * Reverse the migrations.
