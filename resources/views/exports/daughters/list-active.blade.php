@@ -4,8 +4,9 @@
         <th>Hermana</th>
         <th>Nombres</th>
         <th>Apellidos</th>
+        <th>Cédula</th>
         <th>Fecha de Nacimiento</th>
-        <th>Fecha de Admisión</th>
+        <th>Fecha de Vocación</th>
         @if ($type == 2)
             <th>Fecha de Envío</th>
         @elseif ($type == 3)
@@ -22,10 +23,15 @@
             <td>{{ $daughter->lastname }}</td>
             @if ($daughter->profile)
                 <td>
+                    {{ $daughter->profile->identity_card }}
+                </td>
+                <td>
                     {{ date('Y-m-d', strtotime($daughter->profile->date_birth)) }}
                 </td>
                 <td>
-                    {{ date('Y-m-d', strtotime($daughter->profile->date_admission)) }}
+                    @if ($daughter->profile->date_vocation)
+                        {{ date('Y-m-d', strtotime($daughter->profile->date_vocation)) }}
+                    @endif
                 </td>
                 @if ($type == 2)
                     <td>

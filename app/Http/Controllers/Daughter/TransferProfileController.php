@@ -79,6 +79,8 @@ class TransferProfileController extends Controller
                 'filters' => request()->all(['date', 'search', 'status', 'dateStart', 'dateEnd']),
 
             ]);
+        } else {
+            return abort(404);
         }
     }
 

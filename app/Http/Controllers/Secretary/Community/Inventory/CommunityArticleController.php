@@ -74,7 +74,8 @@ class CommunityArticleController extends Controller
     {
         request()->validate([
             'direction' => ['in:asc,desc'],
-            'field' => ['in:name,email']
+            'field' => ['in:name'],
+            'status' =>  ['integer'],
         ]);
 
         $section = CommunityArticleController::loadSection($section_slug);
@@ -171,7 +172,7 @@ class CommunityArticleController extends Controller
             "price" => ['required', 'numeric'],
             "material" => ['required', 'integer', 'between:1,5'],
             "status" => ['required', 'integer', 'between:1,5'],
-            "size" => ['numeric'],
+            "size" => ['nullable', 'string', 'max:50'],
             "brand" => ['string', 'max:50'],
         ]);
 
@@ -260,7 +261,7 @@ class CommunityArticleController extends Controller
             "price" => ['required', 'numeric'],
             "material" => ['required', 'integer', 'between:1,5'],
             "status" => ['required', 'integer', 'between:1,5'],
-            "size" => ['numeric'],
+            "size" => ['nullable', 'string', 'max:50'],
             "brand" => ['string', 'max:50'],
         ]);
 

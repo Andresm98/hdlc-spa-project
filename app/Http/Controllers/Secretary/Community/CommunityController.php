@@ -495,14 +495,14 @@ class CommunityController extends Controller
     }
 
 
-    //  TODO: Export Excel
+    //  Export Excel
 
     public function exportExcel()
     {
         return Excel::download(new CommunityExport(request()), 'ComunidadesHDLC.xlsx');
     }
 
-    //  TODO: Export CSV
+    //  Export CSV
 
     public function exportCSV()
     {

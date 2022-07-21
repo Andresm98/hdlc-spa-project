@@ -1337,25 +1337,27 @@ export default {
     createActivity() {
       this.form.comm_date_resume = this.formatDate(this.form.comm_date_resume);
       //
-      Inertia.post(
-        route("secretary.communities.resume.store", {
-          community_id: this.form.community_id,
-        }),
-        this.form,
-        {
-          preserveScroll: true,
-          preserveState: true,
-          onSuccess: () => {
-            setTimeout(() => {
-              this.resumeBeingCreated = null;
-              this.form.reset();
-              this.$refs.qleditor1.setHTML("");
-              this.selectCommunity.selectedCommunity = null;
-              this.selectCommunity.options = [];
-            }, 0);
-          },
-        }
-      );
+      if (this.isInvalidCommunity == false) {
+        Inertia.post(
+          route("secretary.communities.resume.store", {
+            community_id: this.form.community_id,
+          }),
+          this.form,
+          {
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => {
+              setTimeout(() => {
+                this.resumeBeingCreated = null;
+                this.form.reset();
+                this.$refs.qleditor1.setHTML("");
+                this.selectCommunity.selectedCommunity = null;
+                this.selectCommunity.options = [];
+              }, 0);
+            },
+          }
+        );
+      }
     },
 
     createActivityCancel() {

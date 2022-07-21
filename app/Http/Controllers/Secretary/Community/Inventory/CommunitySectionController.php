@@ -30,7 +30,9 @@ class CommunitySectionController extends Controller
                 ->withInput();
         }
 
-        return  Section::where('inventory_id', '=', $inventory_id)->get();
+        return  Section::where('inventory_id', '=', $inventory_id)
+            ->with('articles')
+            ->get();
     }
 
     /**

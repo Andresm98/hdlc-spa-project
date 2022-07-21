@@ -180,32 +180,31 @@ input:checked ~ .dot {
           </p>
           <small>Formato: Cédula Ecuatoriana</small>
 
-            <input
-              type="text"
-              minLength="10"
-              maxlength="13"
-              placeholder="0102211274 ó 0102211274001"
-              pattern="[+-]?\d+(?:[.,]\d+)?"
-              class="
-                border-0
-                px-3
-                py-3
-                placeholder-blueGray-300
-                text-blueGray-600
-                bg-white
-                rounded
-                text-sm
-                shadow
-                focus:outline-none focus:ring
-                w-full
-                ease-linear
-                transition-all
-                duration-150
-              "
-              v-model="profile.identity_card"
-              required
-            />
-
+          <input
+            type="text"
+            minLength="10"
+            maxlength="13"
+            placeholder="0102211274 ó 0102211274001"
+            pattern="[+-]?\d+(?:[.,]\d+)?"
+            class="
+              border-0
+              px-3
+              py-3
+              placeholder-blueGray-300
+              text-blueGray-600
+              bg-white
+              rounded
+              text-sm
+              shadow
+              focus:outline-none focus:ring
+              w-full
+              ease-linear
+              transition-all
+              duration-150
+            "
+            v-model="profile.identity_card"
+            required
+          />
         </div>
       </div>
       <div class="w-full lg:w-4/12 px-4">
@@ -383,6 +382,25 @@ input:checked ~ .dot {
         </div>
       </div>
 
+      <div class="w-full lg:w-4/12 px-4">
+        <div class="relative w-full mb-3">
+          <label class="block text-sm font-medium text-black">
+            Fecha de Jubilación
+          </label>
+          <p
+            class="text-red-400 text-sm"
+            v-show="$page.props.errors.date_retirement"
+          >
+            {{ $page.props.errors.date_retirement }}
+          </p>
+          <small>Formato: Opcional</small>
+          <Datepicker
+            autoApply
+            v-model="profile.date_retirement"
+            :format="format"
+          />
+        </div>
+      </div>
       <!-- Address Information -->
       <hr
         class="
@@ -1116,6 +1134,10 @@ export default {
       this.profile.date_send = this.formatDate(this.profile.date_send);
       this.profile.date_vote = this.formatDate(this.profile.date_vote);
       this.profile.date_death = this.formatDate(this.profile.date_death);
+
+      this.profile.date_retirement = this.formatDate(
+        this.profile.date_retirement
+      );
 
       //   console.log(this.profile);
 

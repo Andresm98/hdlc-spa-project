@@ -130,7 +130,7 @@
                 {{ $count = 1 }}
                 @foreach ($data as $community)
                     <tr>
-                        <td>{{ $count++ }}</td>
+                        <td width="7%">{{ $count++ }}</td>
                         <td width="25%">{{ $community->comm_name }}</td>
                         <td>{{ $community->pastoral->name }}</td>
                         <td>

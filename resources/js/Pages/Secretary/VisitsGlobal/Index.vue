@@ -1456,26 +1456,27 @@ export default {
       this.form.comm_date_end_visit = this.formatDate(
         this.form.comm_date_end_visit
       );
-
-      Inertia.post(
-        route("secretary.communities.visit.store", {
-          community_id: this.form.community_id,
-        }),
-        this.form,
-        {
-          preserveScroll: true,
-          preserveState: true,
-          onSuccess: () => {
-            setTimeout(() => {
-              this.form.reset();
-              this.visitBeingCreated = null;
-              this.$refs.qleditor1.setHTML("");
-              this.selectCommunity.selectedCommunity = null;
-              this.selectCommunity.options = [];
-            }, 0);
-          },
-        }
-      );
+      if (this.isInvalidCommunity == false) {
+        Inertia.post(
+          route("secretary.communities.visit.store", {
+            community_id: this.form.community_id,
+          }),
+          this.form,
+          {
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => {
+              setTimeout(() => {
+                this.form.reset();
+                this.visitBeingCreated = null;
+                this.$refs.qleditor1.setHTML("");
+                this.selectCommunity.selectedCommunity = null;
+                this.selectCommunity.options = [];
+              }, 0);
+            },
+          }
+        );
+      }
     },
 
     createActivityCancel() {

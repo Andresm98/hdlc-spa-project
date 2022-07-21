@@ -54,6 +54,8 @@ class RecordProfileController extends Controller
 
                 ]
             );
+        } else {
+            return abort(404);
         }
     }
 

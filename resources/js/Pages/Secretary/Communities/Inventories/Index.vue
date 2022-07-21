@@ -165,8 +165,14 @@
                   <label
                     class="block p-5 leading-normal cursor-pointer"
                     :for="section.id"
-                    >{{ section.name }}</label
-                  >
+                    >{{ section.name }}
+                    <br />
+
+                    <small>
+                      Cantidad de artículos: {{ section.articles.length }}.
+                    </small>
+                  </label>
+
                   <div
                     class="
                       w-full

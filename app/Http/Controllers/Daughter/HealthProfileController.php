@@ -56,6 +56,8 @@ class HealthProfileController extends Controller
 
                 ]
             );
+        } else {
+            return abort(404);
         }
     }
 

@@ -105,7 +105,7 @@ class FilesDaughterController extends Controller
                     ]);
                     return redirect()->back()->with(['success' => 'Archivo actualizado correctamente.']);
                 } else {
-                    if ($filesCount < 10) {
+                    if ($filesCount < 5) {
                         Storage::disk('s3')->put($filePath, file_get_contents($file));
                         Storage::disk('s3')->setVisibility($filePath, 'private');
 
@@ -196,7 +196,6 @@ class FilesDaughterController extends Controller
         if ($user->profile) {
 
             if ($request->hasFile('filedata')) {
-                return "si";
                 $file = $request->file('filedata');
                 $name = $file->getClientOriginalName();
 
