@@ -296,7 +296,7 @@
                 </tr>
                 <tr>
                     <td width="35%" height="50px">
-                        @if ($data->get('info_family')->info_family_break)
+                        @if ($data->get('info_family'))
                             {{ $data->get('info_family')->info_family_break->name_family_member }}
                         @endif
                     </td>
@@ -304,17 +304,17 @@
 
                     </td>
                     <td width="10%" height="50px">
-                        @if ($data->get('info_family')->info_family_break)
+                        @if ($data->get('info_family'))
                             {{ $data->get('info_family')->info_family_break->relation }}
                         @endif
                     </td>
                     <td width="10%" height="50px">
-                        @if ($data->get('info_family')->info_family_break)
+                        @if ($data->get('info_family'))
                             {{ $data->get('info_family')->info_family_break->phone }}
                         @endif
                     </td>
                     <td width="10%" height="50px">
-                        @if ($data->get('info_family')->info_family_break)
+                        @if ($data->get('info_family'))
                             {{ $data->get('info_family')->info_family_break->cellphone }}
                         @endif
                     </td>

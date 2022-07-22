@@ -259,7 +259,7 @@
         >
           <p>
             La presente plantiflla de información se relaciona con los datos
-            principales de la hermana a la que desea agregar al sistema, por lo
+            principales de la Hermana a la que desea agregar al sistema, por lo
             que deberá verificar los datos a ingresar.
           </p>
 
@@ -634,7 +634,7 @@
                 ></multiselect>
                 <small
                   >Por favor tenga en cuenta que las opciones de acuerdo a todas
-                  las hermanas se habilitarán siempre y cuando que la
+                  las Hermanas se habilitarán siempre y cuando que la
                   información del perfil sean editadas y creadas
                   correctamente.</small
                 >

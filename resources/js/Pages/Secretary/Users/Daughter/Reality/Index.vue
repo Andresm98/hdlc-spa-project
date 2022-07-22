@@ -204,8 +204,8 @@
             >
               <p>
                 La presente plantiflla de información se relaciona con las
-                hermanas registradas en la compañía, tenga en cuenta que los
-                gráficos estadísticos corresponden a las hermanas activas,
+                Hermanas registradas en la compañía, tenga en cuenta que los
+                gráficos estadísticos corresponden a las Hermanas activas,
                 fallecidas y retiradas.
               </p>
             </div>

@@ -92,7 +92,7 @@
               text-justify
             "
           >
-            Información General de los cambios efectuados por la hermana,
+            Información General de los cambios efectuados por la Hermana,
             comunidad a la que se le asigna, nombramientos y otros datos. Los
             datos que puede visualizar son parciales ya que la comunidad se
             encarga de manejar dicha información, si un registro requiere un
@@ -735,7 +735,7 @@
               </label>
               <small
                 >Formato: Seleccionar la comunidad u obra a la que se cambia la
-                hermana.</small
+                Hermana.</small
               >
               <div :class="{ invalid: isInvalidUpdateCommunity }">
                 <div>

@@ -384,7 +384,7 @@
           </p>
           <small
             >Formato: Por favor ingresar las observaciones que usted crea
-            pertinente relacionadas al perfil de la hermana, deberán ser máximo
+            pertinente relacionadas al perfil de la Hermana, deberán ser máximo
             2000 caracteres.</small
           >
           <div class="mt-1 bg-white">

@@ -666,7 +666,7 @@
                   @select="onSelectedPerfil"
                   @search-change="onSearchPerfilChange"
                   track-by="name"
-                  placeholder="Buscar hermana"
+                  placeholder="Buscar Hermana"
                 >
                 </multiselect>
                 <p class="text-sm text-red-400" v-show="isInvalidPerfil">
@@ -787,7 +787,7 @@
               >
                 {{ $page.props.errors.date_out }}
               </p>
-              <small>Formato: Fecha en la que sale la hermana.</small>
+              <small>Formato: Fecha en la que sale la Hermana.</small>
               <Datepicker
                 v-model="form.date_out"
                 :format="format"
@@ -811,7 +811,7 @@
               >
                 {{ $page.props.errors.date_in }}
               </p>
-              <small>Formato: Fecha en la que regresa la hermana.</small>
+              <small>Formato: Fecha en la que regresa la Hermana.</small>
               <Datepicker
                 v-model="form.date_in"
                 :format="format"
@@ -1326,7 +1326,7 @@
               >
                 {{ $page.props.errors.date_out }}
               </p>
-              <small>Formato: Fecha en la que sale la hermana.</small>
+              <small>Formato: Fecha en la que sale la Hermana.</small>
               <Datepicker
                 v-model="updatePermitForm.date_out"
                 :format="format"
@@ -1351,7 +1351,7 @@
               >
                 {{ $page.props.errors.date_in }}
               </p>
-              <small>Formato: Fecha en la que regresa la hermana.</small>
+              <small>Formato: Fecha en la que regresa la Hermana.</small>
 
               <Datepicker
                 v-model="updatePermitForm.date_in"

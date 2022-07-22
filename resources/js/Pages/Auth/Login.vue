@@ -108,20 +108,22 @@
               </div>
             </form>
 
-            <p class="mt-6 text-sm text-center text-gray-400">
-              Aún no tiene una cuenta?
+            <div v-if="canRegister">
+              <p class="mt-6 text-sm text-center text-gray-400">
+                Aún no tiene una cuenta?
 
-              <Link
-                :href="route('register')"
-                class="
-                  text-blue-500
-                  focus:outline-none focus:underline
-                  hover:underline
-                "
-              >
-                ¡Registrarse aquí! </Link
-              >.
-            </p>
+                <Link
+                  :href="route('register')"
+                  class="
+                    text-blue-500
+                    focus:outline-none focus:underline
+                    hover:underline
+                  "
+                >
+                  ¡Registrarse aquí! </Link
+                >.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -156,6 +158,7 @@ export default defineComponent({
   props: {
     canResetPassword: Boolean,
     status: String,
+    canRegister: Boolean,
   },
 
   data() {

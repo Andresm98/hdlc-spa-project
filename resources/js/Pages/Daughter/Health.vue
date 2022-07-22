@@ -518,7 +518,7 @@
             {{ $page.props.errors.actual_health }}
           </p>
           <small
-            >Formato: Estado de salud actual de la hermana, deberá ingresar
+            >Formato: Estado de salud actual de la Hermana, deberá ingresar
             máximo 4000 caracteres.</small
           >
           <div class="bg-white">
@@ -546,7 +546,7 @@
           </p>
           <small
             >Formato: Detallar las enfermedades crónicas que presenta la
-            hermana, deberá ingresar máximo 4000 caracteres.</small
+            Hermana, deberá ingresar máximo 4000 caracteres.</small
           >
           <div class="bg-white">
             <quill-editor
@@ -645,7 +645,7 @@
             {{ $page.props.errors.actual_health }}
           </p>
           <small
-            >Formato: Estado de salud actual de la hermana, deberá ingresar
+            >Formato: Estado de salud actual de la Hermana, deberá ingresar
             máximo 4000 caracteres.</small
           >
           <div class="bg-white">
@@ -672,7 +672,7 @@
           </p>
           <small
             >Formato: Detallar las enfermedades crónicas que presenta la
-            hermana, deberá ingresar máximo 4000 caracteres.</small
+            Hermana, deberá ingresar máximo 4000 caracteres.</small
           >
           <div class="bg-white">
             <quill-editor
@@ -699,7 +699,7 @@
           </p>
           <small
             >Formato: Detallar los otros problemas de salud que presenta la
-            hermana, deberá ingresar máximo 4000 caracteres.</small
+            Hermana, deberá ingresar máximo 4000 caracteres.</small
           >
           <div class="bg-white">
             <quill-editor
