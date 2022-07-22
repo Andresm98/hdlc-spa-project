@@ -207,6 +207,80 @@ input:checked ~ .dot {
           />
         </div>
       </div>
+
+      <div class="w-full lg:w-4/12 px-4">
+        <div class="relative w-full mb-3">
+          <label class="block text-sm font-medium text-black">
+            Carnet IESS
+          </label>
+          <p class="text-red-400 text-sm" v-show="$page.props.errors.iess_card">
+            {{ $page.props.errors.iess_card }}
+          </p>
+          <small>Formato: Carnet IESS</small>
+
+          <input
+            type="text"
+            minLength="1"
+            maxlength="30"
+            class="
+              border-0
+              px-3
+              py-3
+              placeholder-blueGray-300
+              text-blueGray-600
+              bg-white
+              rounded
+              text-sm
+              shadow
+              focus:outline-none focus:ring
+              w-full
+              ease-linear
+              transition-all
+              duration-150
+            "
+            v-model="profile.iess_card"
+          />
+        </div>
+      </div>
+
+      <div class="w-full lg:w-4/12 px-4">
+        <div class="relative w-full mb-3">
+          <label class="block text-sm font-medium text-black">
+            Licencia de Conducir
+          </label>
+          <p
+            class="text-red-400 text-sm"
+            v-show="$page.props.errors.driver_license"
+          >
+            {{ $page.props.errors.driver_license }}
+          </p>
+          <small>Formato: Licencia de Conducir</small>
+
+          <input
+            type="text"
+            minLength="1"
+            maxlength="50"
+            class="
+              border-0
+              px-3
+              py-3
+              placeholder-blueGray-300
+              text-blueGray-600
+              bg-white
+              rounded
+              text-sm
+              shadow
+              focus:outline-none focus:ring
+              w-full
+              ease-linear
+              transition-all
+              duration-150
+            "
+            v-model="profile.driver_license"
+          />
+        </div>
+      </div>
+
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
           <label

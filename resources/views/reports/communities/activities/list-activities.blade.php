@@ -85,10 +85,10 @@
                     <p style="font-size:medium; margin-top:0.5cm;">
                         Compañía Hijas de la Caridad de San Vicente de Paúl ©
                     </p>
-                    <small>Información Actividades realizadas en la Compañía @if ($from != null || $to != null)
+                    <small>Información Actividades Realizadas en la Compañía @if ($from != null || $to != null)
                             , Rango fechas: ({{ date('Y-m-d', strtotime($from)) }} -
                             {{ date('Y-m-d', strtotime($to)) }})
-                        @endif ; Provincia Ecuador
+                        @endif - Provincia Ecuador
                     </small>
                 </div>
 
@@ -103,47 +103,44 @@
             {{-- Info Family --}}
 
             <div style="margin-bottom:5px;">
-                <strong>Actividades Registradas: </strong> En esta plantilla se encuentran los registros de las
-                actividades
-                que han sido realizadas en la Compañía. Para reportes personalizados por favor seleccione los filtros
-                necesarios.
-                <br>
-                Nro. de actividades registradas: {{ count($data) }}.
-                <br>
             </div>
             <table>
                 <tr>
                     <th>Nro</th>
+                    <th>Comunidad</th>
                     <th>Nombre Actividad</th>
                     <th>Descripción Actividad</th>
+                    <th>Participantes</th>
                     <th>Fecha Actividad</th>
-                    <th>Comunidad</th>
+
                 </tr>
                 {{ $count = 1 }}
                 @foreach ($data as $activity)
                     <tr>
                         <td width="4%">{{ $count++ }}</td>
-                        <td width="13%">
-                            {{ $activity->comm_name_activity }}<br>
-                        </td>
-                        <td width="17%">{!! $activity->comm_description_activity !!}</td>
-                        <td width="10%">{{ date('Y-m-d', strtotime($activity->comm_date_activity)) }}</td>
-
-                        <td width="30%">
+                        <td width="20%">
                             @if ($activity->community)
                                 {{ $activity->community->comm_name }}
                             @endif
-                            <br> <br>
+
+                        </td>
+                        <td width="13%">
+                            {{ $activity->comm_name_activity }}<br>
+                        </td>
+                        <td width="20%">{!! $activity->comm_description_activity !!}</td>
+                        <td width="15%">
                             Nro. Hermanas: {{ $activity->comm_nr_daughters }}<br>
                             Nro. Beneficiarios: {{ $activity->comm_nr_beneficiaries }}<br>
                             Nro. Colaboradores: {{ $activity->comm_nr_collaborators }}<br>
                         </td>
+                        <td width="10%">{{ date('Y-m-d', strtotime($activity->comm_date_activity)) }}</td>
+
                     </tr>
                 @endforeach
 
             </table>
 
-            <hr>
+
 
         </div>
     </main>

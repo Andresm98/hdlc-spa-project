@@ -1603,22 +1603,22 @@ class UserSeeder extends Seeder
             // Generate random number using above bounds
             $val = rand($min, $max);
 
-            if ($profile->status == 1) {
-                $profile->update([
-                    'date_vocation' => date('Y-m-d H:i:s', $val),
-                    'date_admission' => date('Y-m-d H:i:s', $val),
-                ]);
-            }
-            if ($profile->status == 2) {
-                $profile->update([
-                    'date_death' => date('Y-m-d H:i:s', $val),
-                ]);
-            }
-            if ($profile->status == 3) {
-                $profile->update([
-                    'date_exit' => date('Y-m-d H:i:s', $val),
-                ]);
-            }
+            // if ($profile->status == 1) {
+            //     $profile->update([
+            //         'date_vocation' => date('Y-m-d H:i:s', $val),
+            //         'date_admission' => date('Y-m-d H:i:s', $val),
+            //     ]);
+            // }
+            // if ($profile->status == 2) {
+            //     $profile->update([
+            //         'date_death' => date('Y-m-d H:i:s', $val),
+            //     ]);
+            // }
+            // if ($profile->status == 3) {
+            //     $profile->update([
+            //         'date_exit' => date('Y-m-d H:i:s', $val),
+            //     ]);
+            // }
 
             $permit =  $profile->permits()->create([
                 'reason' => 'Razón del permiso de ' . $user->name,

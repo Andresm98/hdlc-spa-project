@@ -613,10 +613,9 @@ class UserController extends Controller
             $to = date('Y-12-31 00:00:00');
             if ($request->get('options') != null) {
                 if (is_numeric($this->search("1", $request->get('options')))) {
-                    $from = date('Y-01-01 00:00:00');
-                    $to = date('Y-12-31 00:00:00');
-                    $data->put('healths', $user->profile->healths
-                        ->whereBetween('consult_date', [$from, $to]));
+
+                    $data->put('healths', $user->profile->healths()
+                        ->orderBy('consult_date', 'desc')->first());
                 }
                 if (is_numeric($this->search("2", $request->get('options')))) {
                     $data->put('academic_trainings', $user->profile->academic_trainings);

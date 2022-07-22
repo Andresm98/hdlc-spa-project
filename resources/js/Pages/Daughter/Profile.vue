@@ -580,6 +580,76 @@
                         required
                       />
                     </div>
+                    <div class="col-span-6 sm:col-span-2">
+                      <label class="block text-sm font-medium text-black">
+                        Carnet IESS
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.iess_card"
+                      >
+                        {{ $page.props.errors.iess_card }}
+                      </p>
+                      <small>Formato: Carnet IESS</small>
+                      <input
+                        type="text"
+                        minLength="1"
+                        maxlength="30"
+                        class="
+                          border-0
+                          px-3
+                          py-3
+                          placeholder-blueGray-300
+                          text-blueGray-600
+                          bg-white
+                          rounded
+                          text-sm
+                          shadow
+                          focus:outline-none focus:ring
+                          w-full
+                          ease-linear
+                          transition-all
+                          duration-150
+                        "
+                        v-model="profileForm.iess_card"
+                      />
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-2">
+                      <label class="block text-sm font-medium text-black">
+                        Licencia de Conducir
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.driver_license"
+                      >
+                        {{ $page.props.errors.driver_license }}
+                      </p>
+                      <small>Formato: Licencia de Conducir</small>
+
+                      <input
+                        type="text"
+                        minLength="1"
+                        maxlength="50"
+                        class="
+                          border-0
+                          px-3
+                          py-3
+                          placeholder-blueGray-300
+                          text-blueGray-600
+                          bg-white
+                          rounded
+                          text-sm
+                          shadow
+                          focus:outline-none focus:ring
+                          w-full
+                          ease-linear
+                          transition-all
+                          duration-150
+                        "
+                        v-model="profileForm.driver_license"
+                      />
+                    </div>
 
                     <div class="col-span-6 sm:col-span-2">
                       <label
@@ -1241,10 +1311,7 @@
                     </div>
 
                     <div class="col-span-6 sm:col-span-2">
-                      <label
-                        class="block text-sm font-medium text-black"
-                        htmlfor="grid-password"
-                      >
+                      <label class="block text-sm font-medium text-black">
                         Celular:
                       </label>
                       <p
@@ -2075,6 +2142,8 @@ export default {
     confirmationProfileCreate() {
       this.createProfileForm = this.$inertia.form({
         identity_card: null,
+        iess_card: null,
+        driver_license: null,
         date_birth: null,
         date_vocation: null,
         date_send: null,
@@ -2379,6 +2448,8 @@ export default {
           id: this.daughter.profile.id,
           status: this.daughter.profile.status,
           identity_card: this.daughter.profile.identity_card,
+          iess_card: this.daughter.profile.iess_card,
+          driver_license: this.daughter.profile.driver_license,
           date_birth: this.daughter.profile.date_birth,
           date_vocation: this.daughter.profile.date_vocation,
           date_send: this.daughter.profile.date_send,

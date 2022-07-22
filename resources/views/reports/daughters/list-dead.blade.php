@@ -88,10 +88,10 @@
                         Compañía Hijas de la Caridad de San Vicente de Paúl ©
                     </p>
 
-                    <small>Información Hermanas Activas en la Compañía @if ($from != null || $to != null)
+                    <small>Información Hermanas Fallecidas en la Compañía @if ($from != null || $to != null)
                             ({{ date('Y-m-d', strtotime($from)) }} -
                             {{ date('Y-m-d', strtotime($to)) }})
-                        @endif ; Provincia Ecuador
+                        @endif - Provincia Ecuador
                     </small>
                 </div>
 
@@ -106,33 +106,34 @@
             {{-- Info Family --}}
 
             <div style="margin-bottom:5px;">
-                <strong>Hermanas registradas: </strong> En esta plantilla se encuentran los registros de las hermanas
-                que han fallecido en la compañía, debe tener en cuenta que los registros son mostrados de
-                acuerdo a los filtros anteriormente seleccionados.
-                <br>
-                Nro. de hermanas registradas: {{ count($data) }}.
-                <br>
+
             </div>
             <table>
                 <tr>
                     <th>Nro</th>
-                    <th>Hermana</th>
+                    <th>Nombre en Comunidad</th>
                     <th>Nombres</th>
                     <th>Apellidos</th>
                     <th>Fecha de Nacimiento</th>
+                    <th>Fecha de Vocación</th>
                     <th>Fecha de Fallecimiento</th>
-                    <th>Comunidad (Lugar de fallecimiento)</th>
+                    <th>Comunidad Fallecimiento</th>
                 </tr>
                 {{ $count = 1 }}
                 @foreach ($data as $daughter)
                     <tr>
-                        <td width="7%">{{ $count++ }}</td>
+                        <td width="4%">{{ $count++ }}</td>
                         <td>{{ $daughter->fullnamecomm }}</td>
                         <td>{{ $daughter->name }}</td>
                         <td>{{ $daughter->lastname }}</td>
                         @if ($daughter->profile)
                             <td>
                                 {{ date('Y-m-d', strtotime($daughter->profile->date_birth)) }}
+                            </td>
+                            <td>
+                                @if ($daughter->profile->date_vocation)
+                                    {{ date('Y-m-d', strtotime($daughter->profile->date_vocation)) }}
+                                @endif
                             </td>
                             <td>
                                 {{ date('Y-m-d', strtotime($daughter->profile->date_death)) }}
@@ -157,11 +158,7 @@
                         @endif
                     </tr>
                 @endforeach
-
             </table>
-
-            <hr>
-
         </div>
     </main>
 

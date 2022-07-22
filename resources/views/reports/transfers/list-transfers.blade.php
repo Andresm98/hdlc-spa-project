@@ -51,22 +51,26 @@
             }
 
             table,
-            td,
-            th {
+            td {
+                height: 40px;
                 border: 1px solid black;
+                font-size: 12px;
                 padding-left: 15px;
-                text-align: left;
-                font-size: x-small;
+            }
+
+            ,
+            th {
+                height: 20px;
+                border: 1px solid black;
+                font-size: 12px;
             }
 
             table {
                 border-collapse: collapse;
                 width: 100%;
+                align-items: center;
             }
 
-            th {
-                height: 20px;
-            }
         </style>
     </head>
 </head>
@@ -85,10 +89,10 @@
                     <p style="font-size:medium; margin-top:0.5cm;">
                         Compañía Hijas de la Caridad de San Vicente de Paúl ©
                     </p>
-                    <small>Información Transferencias en la Compañía @if ($from != null || $to != null)
+                    <small>Información de Cambios en la Compañía @if ($from != null || $to != null)
                             , Fechas de Transferencia: ({{ date('Y-m-d', strtotime($from)) }} -
                             {{ date('Y-m-d', strtotime($to)) }})
-                        @endif ; Provincia Ecuador
+                        @endif - Provincia Ecuador
                     </small>
                 </div>
 
@@ -97,18 +101,8 @@
     </header>
 
     <main>
-        {{-- Address --}}
         <div style="font-size: small;">
-
-            {{-- Info Family --}}
-
             <div style="margin-bottom:5px;">
-                <strong>Permisos Registrados: </strong> En esta plantilla se encuentran los registros de los cambios
-                que han sido realizados en la Compañía. Para reportes personalizados por favor seleccione los filtros
-                necesarios.
-                <br>
-                Nro. de cambios registrados: {{ count($data) }}.
-                <br>
             </div>
             <?php
             use App\Http\Controllers\Secretary\Daughter\TransferController;
@@ -116,41 +110,31 @@
             <table>
                 <tr>
                     <th>Nro</th>
-                    <th>Hermana</th>
-                    <th>Motivo del Cambio</th>
-                    <th>Fecha de Inicio</th>
-                    <th>Fecha de Salida y Estado</th>
-                    <th>Comunidad Anterior</th>
-                    <th>Comunidad de Destino</th>
+                    <th>NOMBRES Y APELLIDOS</th>
+                    <th>AÑO NAC.</th>
+                    <th>FECHA VOCACIÓN</th>
+                    <th>PROCEDE DE:</th>
+                    <th>VA A:</th>
+                    <th>MOTIVO DEL CAMBIO</th>
+                    <th>FECHA DEL CAMBIO</th>
+                    <th>FECHA DE INSTALACIÓN</th>
+
                 </tr>
                 {{ $count = 1 }}
                 @foreach ($data as $transfer)
                     <tr>
-                        <td width="7%">{{ $count++ }}</td>
-                        <td idth="23%">
+                        <td width="5%">{{ $count++ }}</td>
+                        <td width="16%">
                             {{ $transfer->profile->user->name }}<br>
                             {{ $transfer->profile->user->lastname }}<br>
-                            F.Nacimiento: {{ date('Y-m-d', strtotime($transfer->profile->date_birth)) }}<br>
-                            @if ($transfer->profile->date_vocation !== null)
-                                F.Vocación: {{ date('Y-m-d', strtotime($transfer->profile->date_vocation)) }}<br>
-                            @endif
-                            @if ($transfer->profile->date_vote != null)
-                                F.Votos: {{ date('Y-m-d', strtotime($transfer->profile->date_vote)) }}<br>
-                            @endif
                         </td>
-                        <td idth="20%">{{ $transfer->transfer_reason }}</td>
-                        <td width="10%">{{ date('Y-m-d', strtotime($transfer->transfer_date_adission)) }}</td>
-                        <td width="10%">
-                            @if ($transfer->transfer_date_relocated != null)
-                                {{ date('Y-m-d', strtotime($transfer->transfer_date_relocated)) }}
+                        <td width="5%">
+                            {{ date('Y', strtotime($transfer->profile->date_birth)) }}
+                        </td>
+                        <td width="9%">
+                            @if ($transfer->profile->date_vocation !== null)
+                                {{ date('Y-m-d', strtotime($transfer->profile->date_vocation)) }}
                             @endif
-                            <br>
-                            @if ($transfer->status == 1)
-                                Activo
-                            @else
-                                Historial
-                            @endif
-                            <br>
                         </td>
                         <td width="15%">
                             <?php
@@ -163,6 +147,13 @@
                         </td>
                         <td width="15%">{{ $transfer->community->comm_name }}</td>
 
+                        <td idth="15%">
+                            {{ $transfer->transfer_reason }}
+                        </td>
+                        <td width="10%">{{ date('Y-m-d', strtotime($transfer->transfer_date_adission)) }}</td>
+                        <td width="10%">
+
+                        </td>
                     </tr>
                 @endforeach
 

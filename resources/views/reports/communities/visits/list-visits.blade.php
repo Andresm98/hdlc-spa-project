@@ -88,7 +88,7 @@
                     <small>Información Visitas Realizadas a las Comunidades/Obras de la Compañía @if ($from != null || $to != null)
                             , Rango fechas: ({{ date('Y-m-d', strtotime($from)) }} -
                             {{ date('Y-m-d', strtotime($to)) }})
-                        @endif ; Provincia Ecuador
+                        @endif - Provincia Ecuador
                     </small>
                 </div>
 
@@ -103,26 +103,26 @@
             {{-- Info Family --}}
 
             <div style="margin-bottom:5px;">
-                <strong>Visitas Registradas: </strong> En esta plantilla se encuentran los registros de las
-                visitas a Comunidades u Obras que han sido registrados en la Compañía. Para reportes personalizados por
-                favor seleccione los filtros
-                necesarios.
-                <br>
-                Nro. de visitas registradas: {{ count($data) }}.
-                <br>
+
             </div>
             <table>
                 <tr>
                     <th>Nro</th>
+                    <th>Comunidad</th>
+
                     <th>Razón y Descripción Visita</th>
                     <th>Tipo</th>
-                    <th>Fecha Inicio y Fin</th>
-                    <th>Comunidad</th>
+                    <th>Fechas Inicio y Fin</th>
                 </tr>
                 {{ $count = 1 }}
                 @foreach ($data as $visit)
                     <tr>
                         <td width="4%">{{ $count++ }}</td>
+                        <td width="20%">
+                            @if ($visit->community)
+                                {{ $visit->community->comm_name }}
+                            @endif
+                        </td>
                         <td width="30%">
                             Razón: {{ $visit->comm_reason_visit }}<br><br>
                             Descripción: {!! $visit->comm_description_visit !!}
@@ -141,18 +141,9 @@
                             Inicio: {{ date('Y-m-d', strtotime($visit->comm_date_init_visit)) }} <br>
                             Fin: {{ date('Y-m-d', strtotime($visit->comm_date_end_visit)) }}
                         </td>
-                        <td width="25%">
-                            @if ($visit->community)
-                                {{ $visit->community->comm_name }}
-                            @endif
-                        </td>
                     </tr>
                 @endforeach
-
             </table>
-
-            <hr>
-
         </div>
     </main>
 

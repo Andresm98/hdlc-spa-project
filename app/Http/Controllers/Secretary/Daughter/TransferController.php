@@ -150,17 +150,14 @@ class TransferController extends Controller
             ]);
         } else {
 
-
-
-
             $validatorData = Validator::make($request->all(), [
                 'transfer.transfer_reason' => ['required', 'max:100'],
-                'transfer.transfer_date_adission' => ['required', 'date', 'before:transfer.transfer_date_relocated', 'date_format:Y-m-d H:i:s'],
+                'transfer.transfer_date_adission' => ['required', 'date', 'date_format:Y-m-d H:i:s'],
                 'transfer.transfer_observation' => ['required', 'max:4000'],
                 'transfer.community_id' => ['required', 'exists:communities,id'],
                 //
                 'appointment.description' => ['required', 'max:2000'],
-                'appointment.date_appointment' => ['required', 'date', 'before:appointment.date_end_appointment', 'date_format:Y-m-d H:i:s'],
+                'appointment.date_appointment' => ['required', 'date', 'date_format:Y-m-d H:i:s'],
             ]);
 
             if ($validatorData->fails()) {

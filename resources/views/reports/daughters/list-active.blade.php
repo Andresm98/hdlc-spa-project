@@ -104,7 +104,7 @@
                             ({{ date('Y-m-d', strtotime($from)) }} -
                             {{ date('Y-m-d', strtotime($to)) }})
                         @endif
-                        ; Provincia Ecuador
+                        - Provincia Ecuador
                     </small>
                 </div>
 
@@ -119,12 +119,7 @@
             {{-- Info Family --}}
 
             <div style="margin-bottom:5px;">
-                <strong>Hermanas registradas: </strong> En esta plantilla se encuentran los registros de las hermanas
-                que se encuentran activas en la compañía, debe tener en cuenta que los registros son mostrados de
-                acuerdo a los filtros anteriormente seleccionados.
-                <br>
-                Nro. de hermanas registradas: {{ count($data) }}.
-                <br>
+
             </div>
             <table>
                 <tr>

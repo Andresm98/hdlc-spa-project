@@ -119,12 +119,7 @@
             {{-- Info Family --}}
 
             <div style="margin-bottom:5px;">
-                <strong>Eventos registrados: </strong> En esta plantilla se encuentran los registros de los eventos que
-                se llevarán a cabo en la compañía, debe tener en cuenta que los registros son mostrados de
-                acuerdo a los filtros anteriormente seleccionados.
-                <br>
-                Nro. de eventos registrados: {{ count($data) }}.
-                <br>
+
             </div>
             <table>
                 <tr>

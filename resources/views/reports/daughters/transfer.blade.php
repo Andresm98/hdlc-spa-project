@@ -111,7 +111,7 @@
                             Activo
                         @elseif ($transfer->status == 0)
                             Cerrado
-                        @endif ; Provincia Ecuador
+                        @endif - Provincia Ecuador
                     </small>
                 </div>
 

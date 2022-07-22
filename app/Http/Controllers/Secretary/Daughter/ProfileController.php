@@ -48,6 +48,8 @@ class ProfileController extends Controller
             // // 'date_birth' => ['required', 'date_format:Y-m-d H:i:s'],
             'user_id' => ['required', 'exists:users,id'],
             'identity_card' => ['required', 'string', 'max:13'],
+            'iess_card' => ['nullable', 'string', 'max:30'],
+            'driver_license' => ['nullable', 'string', 'max:50'],
             'date_birth' => ['required', 'date_format:Y-m-d'],
             'date_vocation' => ['nullable', 'date_format:Y-m-d'],
             'date_admission' => ['nullable', 'date_format:Y-m-d'],
@@ -72,6 +74,8 @@ class ProfileController extends Controller
             $profile = $user->profile()->create([
                 'status' => 1,
                 'identity_card' => $request->get("identity_card"),
+                'iess_card' => $request->get("iess_card"),
+                'driver_license' => $request->get("driver_license"),
                 'date_birth' => $request->get("date_birth"),
                 'date_vocation' => $request->get("date_vocation"),
                 'date_admission' => $request->get("date_vocation"),
@@ -136,6 +140,8 @@ class ProfileController extends Controller
         $validatorData = Validator::make($request->all(), [
             'user_id' => ['required', 'exists:users,id'],
             'identity_card' => ['required', 'string', 'max:13'],
+            'iess_card' => ['nullable', 'string', 'max:30'],
+            'driver_license' => ['nullable', 'string', 'max:50'],
             'date_birth' => ['required', 'date_format:Y-m-d H:i:s'],
             'date_vocation' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'date_admission' => ['nullable', 'date_format:Y-m-d H:i:s'],
@@ -160,6 +166,8 @@ class ProfileController extends Controller
         if ($user->profile) {
             $user->profile()->update([
                 'identity_card' => $request->get("identity_card"),
+                'iess_card' => $request->get("iess_card"),
+                'driver_license' => $request->get("driver_license"),
                 'date_birth' => $request->get("date_birth"),
                 'date_vocation' => $request->get("date_vocation"),
                 'date_admission' => $request->get("date_vocation"),

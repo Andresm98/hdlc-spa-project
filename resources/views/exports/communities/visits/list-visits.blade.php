@@ -1,18 +1,28 @@
 <table>
     <tr>
         <th>Nro</th>
-        <th>Razón y Descripción Visita</th>
-        <th>Tipo</th>
-        <th>Fecha Inicio y Fin</th>
         <th>Comunidad</th>
+
+        <th>Razón</th>
+        <th> Descripción </th>
+        <th>Tipo</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
     </tr>
     {{ $count = 1 }}
     @foreach ($data as $visit)
         <tr>
             <td>{{ $count++ }}</td>
             <td>
-                Razón: {{ $visit->comm_reason_visit }}<br><br>
-                Descripción: {!! $visit->comm_description_visit !!}
+                @if ($visit->community)
+                    {{ $visit->community->comm_name }}
+                @endif
+            </td>
+            <td>
+                {{ $visit->comm_reason_visit }}
+            </td>
+            <td>
+                {!! $visit->comm_description_visit !!}
             </td>
             <td>
                 @if ($visit->comm_type_visit == 1)
@@ -22,17 +32,14 @@
                 @elseif($visit->comm_type_visit == 3)
                     Pastoral
                 @endif
+            </td>
+            <td>
+                {{ date('Y-m-d', strtotime($visit->comm_date_init_visit)) }}
+            </td>
+            <td>
+                {{ date('Y-m-d', strtotime($visit->comm_date_end_visit)) }}
+            </td>
 
-            </td>
-            <td>
-                Inicio: {{ date('Y-m-d', strtotime($visit->comm_date_init_visit)) }} <br>
-                Fin: {{ date('Y-m-d', strtotime($visit->comm_date_end_visit)) }}
-            </td>
-            <td>
-                @if ($visit->community)
-                    {{ $visit->community->comm_name }}
-                @endif
-            </td>
         </tr>
     @endforeach
 

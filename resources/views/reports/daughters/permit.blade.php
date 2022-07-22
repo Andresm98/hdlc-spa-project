@@ -111,7 +111,7 @@
                             Activo
                         @elseif ($permit->status == 0)
                             Cerrado
-                        @endif ; Provincia Ecuador
+                        @endif - Provincia Ecuador
                     </small>
                 </div>
 

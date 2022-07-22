@@ -8,7 +8,9 @@ use App\Http\Controllers\AddressController;
         <th>Pastoral</th>
         <th>Dirección</th>
         <th>Teléfono</th>
-        <th>Fechas Actividad</th>
+        <th>Correo</th>
+        <th>Fechas Fundación</th>
+        <th>Fechas Cierre</th>
         {{-- <th>Fecha de Nacimiento</th> --}}
     </tr>
     <?php
@@ -35,18 +37,21 @@ use App\Http\Controllers\AddressController;
                     {{ $community->comm_phone }}
                 @endif
             </td>
+            <td>{{ $community->comm_email }}</td>
             <td>
                 @if ($community->comm_status == 1)
-                    Abierta <br>
-                    ({{ date('Y-m-d', strtotime($community->date_fndt_comm)) }})
-                    - Presente
+                    {{ date('Y-m-d', strtotime($community->date_fndt_comm)) }}
                 @else
-                    Cerrada <br>
-                    ({{ date('Y-m-d', strtotime($community->date_fndt_comm)) }}) hasta
-                    ({{ date('Y-m-d', strtotime($community->date_close)) }})
+                    {{ date('Y-m-d', strtotime($community->date_fndt_comm)) }}
                 @endif
             </td>
-            {{-- <td>Pendiente</td> --}}
+            <td>
+                @if ($community->comm_status == 1)
+                    Presente
+                @else
+                    {{ date('Y-m-d', strtotime($community->date_close)) }}
+                @endif
+            </td>
         </tr>
 
         {{-- Hermanas --}}

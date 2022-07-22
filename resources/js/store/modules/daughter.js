@@ -5,6 +5,8 @@ const state = () => ({
     profile: {
         id: null,
         identity_card: null,
+        iess_card: null,
+        driver_license: null,
         date_birth: null,
         date_vocation: null,
         date_admission: null,
@@ -63,6 +65,8 @@ const mutations = {
         state,
         {
             identity_card,
+            iess_card,
+            driver_license,
             date_birth,
             date_vocation,
             date_admission,
@@ -77,6 +81,8 @@ const mutations = {
         }
     ) {
         state.profile.identity_card = identity_card;
+        state.profile.iess_card = iess_card;
+        state.profile.driver_license = driver_license;
         state.profile.date_birth = date_birth;
         state.profile.date_vocation = date_vocation;
         state.profile.date_admission = date_admission;

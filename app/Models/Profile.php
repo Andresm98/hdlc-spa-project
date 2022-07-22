@@ -13,7 +13,8 @@ class Profile extends Model
 
     protected $fillable = [
         'identity_card', 'status', 'date_birth', 'date_vocation',
-        'date_admission', 'date_send', 'date_vote', 'date_death', 'date_exit', 'cellphone', 'phone', 'observation'
+        'date_admission', 'date_send', 'date_vote', 'date_death', 'date_exit', 'date_retirement',
+        'iess_card', 'driver_license', 'cellphone', 'phone', 'observation'
     ];
 
     /**
