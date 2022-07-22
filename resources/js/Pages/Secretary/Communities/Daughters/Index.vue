@@ -233,7 +233,7 @@
         </table>
         <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
           <p class="text-center text-lg">
-            Por el momento la comunidad u obra seleccionada no tiene hermanas.
+            Por el momento la comunidad u obra seleccionada no tiene Hermanas.
           </p>
         </div>
       </div>

@@ -1026,7 +1026,7 @@
               </h3>
               <p class="mt-1 text-sm text-gray-600 text-justify">
                 La información adjunta se relaciona con los datos de contacto en
-                donde se hospeda la hermana en los días que solicita permisos.
+                donde se hospeda la Hermana en los días que solicita permisos.
                 Deberá ingresar la información con los formatos solicitados.
               </p>
             </div>

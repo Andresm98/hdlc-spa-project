@@ -91,7 +91,7 @@
               dark:sm:text-slate-400
             "
           >
-            Información General de los archivos pertenecientes a la hermana.
+            Información General de los archivos pertenecientes a la Hermana.
           </p>
         </div>
         <div
@@ -187,7 +187,7 @@
       <div class="mt-2">
         <p class="text-black dark:text-white">
           La presente plantilla de información se relaciona a todos los
-          documentos de la hermana, lea las istrucciones al ingresar un
+          documentos de la Hermana, lea las istrucciones al ingresar un
           documento. Tamaño, formatos y otros requisitos para almacenar de
           manera correcta un archivo específico.
         </p>
@@ -597,7 +597,7 @@
           <div>
             <small
               >En el presente apartado usted puede almacenar archivos privados
-              de cada perfil de hermana, por ejemplo puede guardar PDFs que
+              de cada perfil de Hermana, por ejemplo puede guardar PDFs que
               contengan copias de cédulas de identidad, pasaportes y otros
               documentos que son necesarios para los trámites que requiere
               realizar la comunidad.

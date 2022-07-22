@@ -117,7 +117,7 @@ input:checked ~ .dot {
               <div class="w-full lg:w-12/12">
                 <div class="relative w-full mb-3">
                   <small class="justify-center text-red-500"
-                    >Fecha de muerte de la hermana.</small
+                    >Fecha de muerte de la Hermana.</small
                   >
                   <Datepicker
                     v-model="profile.date_death"
@@ -140,7 +140,7 @@ input:checked ~ .dot {
               <div class="w-full lg:w-12/12">
                 <div class="relative w-full mb-3">
                   <small class="justify-center text-red-500"
-                    >Fecha de retiro de la hermana.</small
+                    >Fecha de retiro de la Hermana.</small
                   >
                   <Datepicker
                     v-model="profile.date_exit"
@@ -632,7 +632,7 @@ input:checked ~ .dot {
           </p>
           <small
             >Formato: Por favor ingresar las observaciones que usted crea
-            pertinente relacionadas al perfil de la hermana, deberán ser máximo
+            pertinente relacionadas al perfil de la Hermana, deberán ser máximo
             4000 caracteres.</small
           >
           <div class="mt-1 bg-white">
@@ -758,7 +758,7 @@ input:checked ~ .dot {
 
     <template #content>
       <div v-if="liveOperationChange == 1">
-        Guarde los cambios para habilitar otra vez el perfil de la hermana en la
+        Guarde los cambios para habilitar otra vez el perfil de la Hermana en la
         compañía.
 
         <div class="flex flex-wrap">
@@ -768,7 +768,7 @@ input:checked ~ .dot {
                 >Observaciones: Tenga en cuenta que una vez que haya guardado
                 los presentes cambios la fecha de fallecimiento y la fecha de
                 salida de la compañía quedarán eliminadas. Por lo tanto la
-                hermana queda habilitada por completo en la compañía.</small
+                Hermana queda habilitada por completo en la compañía.</small
               >
             </div>
           </div>
@@ -776,7 +776,7 @@ input:checked ~ .dot {
       </div>
 
       <div v-if="liveOperationChange == 2">
-        Ingrese la fecha en la que la hermana falleció.
+        Ingrese la fecha en la que la Hermana falleció.
 
         <div class="flex flex-wrap">
           <div class="w-full lg:w-8/12 px-4">
@@ -787,7 +787,7 @@ input:checked ~ .dot {
               >
                 {{ $page.props.errors.dateDeathProfile }}
               </p>
-              <small>Formato: Ingresar la fecha de muerte de la hermana.</small>
+              <small>Formato: Ingresar la fecha de muerte de la Hermana.</small>
               <Datepicker
                 v-model="updatedStatusProfileForm.dateDeathProfile"
                 :format="format"
@@ -800,7 +800,7 @@ input:checked ~ .dot {
       </div>
 
       <div v-if="liveOperationChange == 3">
-        Ingrese la fecha en la que la hermana salió de la compañía.
+        Ingrese la fecha en la que la Hermana salió de la compañía.
 
         <div class="flex flex-wrap">
           <div class="w-full lg:w-8/12 px-4">
@@ -813,7 +813,7 @@ input:checked ~ .dot {
               </p>
               <small
                 >Formato: Ingresar la fecha de finalización de actividades de la
-                hermana.</small
+                Hermana.</small
               >
               <Datepicker
                 v-model="updatedStatusProfileForm.dateExitProfile"
