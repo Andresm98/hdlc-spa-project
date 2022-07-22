@@ -88,7 +88,7 @@
                     <small>Información Hermanas Retiradas en la Compañía @if ($from != null || $to != null)
                             ({{ date('Y-m-d', strtotime($from)) }} -
                             {{ date('Y-m-d', strtotime($to)) }})
-                        @endif ; Provincia Ecuador
+                        @endif - Provincia Ecuador
                     </small>
                 </div>
             </div>
@@ -104,12 +104,7 @@
             {{-- Info Family --}}
 
             <div style="margin-bottom:5px;">
-                <strong>Hermanas registradas: </strong> En esta plantilla se encuentran los registros de las hermanas
-                que se han retirado de la compañía, debe tener en cuenta que los registros son mostrados de
-                acuerdo a los filtros anteriormente seleccionados.
-                <br>
-                Nro. de hermanas registradas: {{ count($data) }}.
-                <br>
+
             </div>
             <table>
                 <tr>

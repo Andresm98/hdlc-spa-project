@@ -92,6 +92,8 @@ class UserProfileController extends Controller
         }
         $validatorData = Validator::make($request->all(), [
             'identity_card' => ['required', 'string', 'max:13'],
+            'iess_card' => ['nullable', 'string', 'max:30'],
+            'driver_license' => ['nullable', 'string', 'max:50'],
             'date_birth' => ['required', 'date_format:Y-m-d H:i:s'],
             'date_vocation' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'date_admission' => ['nullable', 'date_format:Y-m-d H:i:s'],
@@ -114,6 +116,8 @@ class UserProfileController extends Controller
             $profile = $user->profile()->create([
                 'status' => 1,
                 'identity_card' => $request->get("identity_card"),
+                'iess_card' => $request->get("iess_card"),
+                'driver_license' => $request->get("driver_license"),
                 'date_birth' => $request->get("date_birth"),
                 'date_vocation' => $request->get("date_vocation"),
                 'date_admission' => $request->get("date_vocation"),
@@ -242,6 +246,8 @@ class UserProfileController extends Controller
 
         $validatorData = Validator::make($request->all(), [
             'identity_card' => ['required', 'string', 'max:13'],
+            'iess_card' => ['nullable', 'string', 'max:30'],
+            'driver_license' => ['nullable', 'string', 'max:50'],
             'date_birth' => ['required', 'date_format:Y-m-d H:i:s'],
             'date_vocation' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'date_admission' => ['nullable', 'date_format:Y-m-d H:i:s'],
@@ -262,6 +268,8 @@ class UserProfileController extends Controller
         if ($user->profile) {
             $user->profile()->update([
                 'identity_card' => $request->get("identity_card"),
+                'iess_card' => $request->get("iess_card"),
+                'driver_license' => $request->get("driver_license"),
                 'date_birth' => $request->get("date_birth"),
                 'date_vocation' => $request->get("date_vocation"),
                 'date_admission' => $request->get("date_vocation"),
@@ -346,10 +354,8 @@ class UserProfileController extends Controller
             $to = date('Y-12-31 00:00:00');
             if ($request->get('options') != null) {
                 if (is_numeric($this->search("1", $request->get('options')))) {
-                    $from = date('Y-01-01 00:00:00');
-                    $to = date('Y-12-31 00:00:00');
-                    $data->put('healths', $user->profile->healths
-                        ->whereBetween('consult_date', [$from, $to]));
+                    $data->put('healths', $user->profile->healths()
+                        ->orderBy('consult_date', 'desc')->first());
                 }
                 if (is_numeric($this->search("2", $request->get('options')))) {
                     $data->put('academic_trainings', $user->profile->academic_trainings);
@@ -362,7 +368,6 @@ class UserProfileController extends Controller
                 if (is_numeric($this->search("4", $request->get('options')))) {
                     $data->put('permits', $user->profile->permits()
                         ->with('address')
-                        ->whereBetween('date_out', [$from, $to])
                         ->get());
                 }
                 if (is_numeric($this->search("5", $request->get('options')))) {

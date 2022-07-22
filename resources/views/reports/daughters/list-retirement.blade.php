@@ -88,7 +88,7 @@
                     <small>Información Hermanas Jubiladas en la Compañía @if ($from != null || $to != null)
                             ({{ date('Y-m-d', strtotime($from)) }} -
                             {{ date('Y-m-d', strtotime($to)) }})
-                        @endif ; Provincia Ecuador
+                        @endif - Provincia Ecuador
                     </small>
                 </div>
             </div>
@@ -104,12 +104,7 @@
             {{-- Info Family --}}
 
             <div style="margin-bottom:5px;">
-                <strong>Hermanas jubiladas: </strong> En esta plantilla se encuentran los registros de las hermanas
-                que se han jubiladas en la compañía, debe tener en cuenta que los registros son mostrados de
-                acuerdo a los filtros anteriormente seleccionados.
-                <br>
-                Nro. de hermanas registradas: {{ count($data) }}.
-                <br>
+
             </div>
             <table>
                 <tr>
@@ -118,6 +113,7 @@
                     <th>Nombres</th>
                     <th>Apellidos</th>
                     <th>Fecha de Nacimiento</th>
+                    <th>Fecha de Vocación</th>
                     <th>Fecha de Jubilación</th>
                     <th>Comunidad (Última lugar en la Compañía)</th>
                 </tr>
@@ -131,6 +127,11 @@
                         @if ($daughter->profile)
                             <td>
                                 {{ date('Y-m-d', strtotime($daughter->profile->date_birth)) }}
+                            </td>
+                            <td>
+                                @if ($daughter->profile->date_vocation)
+                                    {{ date('Y-m-d', strtotime($daughter->profile->date_vocation)) }}
+                                @endif
                             </td>
                             <td>
                                 @if ($daughter->profile->date_retirement)

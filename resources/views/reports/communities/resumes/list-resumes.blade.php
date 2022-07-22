@@ -88,7 +88,7 @@
                     <small>Información Resumenes Anuales de la Compañía @if ($from != null || $to != null)
                             , Rango fechas: ({{ date('Y-m-d', strtotime($from)) }} -
                             {{ date('Y-m-d', strtotime($to)) }})
-                        @endif ; Provincia Ecuador
+                        @endif - Provincia Ecuador
                     </small>
                 </div>
 
@@ -103,26 +103,25 @@
             {{-- Info Family --}}
 
             <div style="margin-bottom:5px;">
-                <strong>Resumenes Registrados: </strong> En esta plantilla se encuentran los registros de los
-                resumenes anuales
-                que han sido registrados en la Compañía. Para reportes personalizados por favor seleccione los filtros
-                necesarios.
-                <br>
-                Nro. de resumenes registrados: {{ count($data) }}.
-                <br>
+
             </div>
             <table>
                 <tr>
                     <th>Nro</th>
+                    <th>Comunidad</th>
                     <th>Nombre Resumen</th>
                     <th>Anexos y Observaciones</th>
                     <th>Fecha Resumen</th>
-                    <th>Comunidad</th>
                 </tr>
                 {{ $count = 1 }}
                 @foreach ($data as $resume)
                     <tr>
                         <td width="4%">{{ $count++ }}</td>
+                        <td width="20%">
+                            @if ($resume->community)
+                                {{ $resume->community->comm_name }}
+                            @endif
+                        </td>
                         <td width="13%">
                             {{ $resume->comm_name_resume }}<br>
                         </td>
@@ -132,19 +131,9 @@
 
                         </td>
                         <td width="8%">{{ date('Y-m-d', strtotime($resume->comm_date_resume)) }}</td>
-
-                        <td width="25%">
-                            @if ($resume->community)
-                                {{ $resume->community->comm_name }}
-                            @endif
-                        </td>
                     </tr>
                 @endforeach
-
             </table>
-
-            <hr>
-
         </div>
     </main>
 

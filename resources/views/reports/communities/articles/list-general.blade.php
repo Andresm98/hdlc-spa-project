@@ -98,10 +98,6 @@
             {{-- Info Family --}}
 
             <div style="margin-bottom:5px;">
-                <strong>Artículos registrados: </strong> En esta plantilla se encuentran los registros de los artículos
-                que se encuentran en la comunidad seleccionada, debe tener en cuenta que los registros son mostrados de
-                manera secuencial. Para reportes personalizados por favor seleccione los filtros necesarios.
-                <br>
                 Nro. de artículos
                 @if ($status)
                     en estado
@@ -192,8 +188,6 @@
                 @endforeach
 
             </table>
-
-            <hr>
 
         </div>
     </main>

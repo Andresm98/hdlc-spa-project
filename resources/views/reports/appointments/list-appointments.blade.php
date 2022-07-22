@@ -90,9 +90,9 @@
                             a nivel de <strong>{{ $level->name }}</strong>
                         @endif en la Compañía
                         @if ($from != null || $to != null)
-                            , Fechas de Inicio: ({{ date('Y-m-d', strtotime($from)) }} -
+                            Fechas de Inicio: ({{ date('Y-m-d', strtotime($from)) }} -
                             {{ date('Y-m-d', strtotime($to)) }})
-                        @endif; Provincia Ecuador
+                        @endif- Provincia Ecuador
                     </small>
                 </div>
 
@@ -107,15 +107,6 @@
             {{-- Info Family --}}
 
             <div style="margin-bottom:5px;">
-                <strong>Nombramientos Registrados: </strong> En esta plantilla se encuentran los registros de los
-                nombramientos @if ($level)
-                    a nivel de {{ $level->name }}
-                @endif
-                que han sido registrados en la Compañía. Para reportes personalizados por favor seleccione los filtros
-                necesarios.
-                <br>
-                Nro. de nombramientos registrados: {{ count($data) }}.
-                <br>
             </div>
             <?php
             use App\Http\Controllers\Secretary\Transfer\TransferGlobalController;
@@ -123,51 +114,54 @@
             <table>
                 <tr>
                     <th>Nro</th>
-                    <th>Hermana</th>
+                    <th>Comunidad</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Fecha Vocación</th>
+                    {{-- <th>Fecha Votos</th> --}}
                     <th>Nombramiento</th>
-                    <th>Fecha de Inicio y Fin del Nombramiento</th>
-                    <th>Comunidad en donde cumple funciones</th>
+                    <th>Fechas Nombramiento</th>
                 </tr>
                 {{ $count = 1 }}
                 @foreach ($data as $appointment)
                     <tr>
-                        <td width="7%">{{ $count++ }}</td>
-                        <td>
-                            {{ $appointment->profile->user->name }}<br>
-                            {{ $appointment->profile->user->lastname }}<br>
-                            F.Nacimiento: {{ date('Y-m-d', strtotime($appointment->profile->date_birth)) }}<br>
-                            @if ($appointment->profile->date_vocation != null)
-                                F.Vocación: {{ date('Y-m-d', strtotime($appointment->profile->date_vocation)) }}<br>
-                            @endif
-                            @if ($appointment->profile->date_vote != null)
-                                F.Votos: {{ date('Y-m-d', strtotime($appointment->profile->date_vote)) }}<br>
-                            @endif
-                        </td>
-                        <td>{{ $appointment->appointment_level->name }}</td>
-                        <td width="20%">{{ date('Y-m-d', strtotime($appointment->date_appointment)) }}
-                            @if ($appointment->date_end_appointment != null)
-                                -
-                                {{ date('Y-m-d', strtotime($appointment->date_end_appointment)) }}
-                            @endif
-                            <br>
-                            @if ($appointment->status == 1)
-                                Activo
-                            @else
-                                Historial
-                            @endif
-                            <br>
-                        </td>
+                        <td width="5%">{{ $count++ }}</td>
                         <td width="25%">
                             @if ($appointment->community != null)
                                 {{ $appointment->community->comm_name }}
                             @endif
                         </td>
+                        <td width="12%"> {{ $appointment->profile->user->name }}</td>
+                        <td width="12%"> {{ $appointment->profile->user->lastname }}</td>
+                        <td width="10%">
+                            {{ date('Y-m-d', strtotime($appointment->profile->date_birth)) }}<br>
+
+                        </td>
+                        <td width="10%">
+                            @if ($appointment->profile->date_vocation != null)
+                                {{ date('Y-m-d', strtotime($appointment->profile->date_vocation)) }}<br>
+                            @endif
+                        </td>
+                        {{-- <td width="10%">
+                            @if ($appointment->profile->date_vote != null)
+                                {{ date('Y-m-d', strtotime($appointment->profile->date_vote)) }}<br>
+                            @endif
+                        </td> --}}
+                        <td>{{ $appointment->appointment_level->name }}</td>
+                        <td width="10%">{{ date('Y-m-d', strtotime($appointment->date_appointment)) }}
+                            @if ($appointment->date_end_appointment != null)
+                                -
+                                {{ date('Y-m-d', strtotime($appointment->date_end_appointment)) }}
+                            @endif
+                        </td>
+
                     </tr>
                 @endforeach
 
             </table>
 
-            <hr>
+
 
         </div>
     </main>

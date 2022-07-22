@@ -103,12 +103,7 @@
             {{-- Info Family --}}
 
             <div style="margin-bottom:5px;">
-                <strong>Permisos Registrados: </strong> En esta plantilla se encuentran los registros de los permisos
-                que han sido realizados en la Compañía. Para reportes personalizados por favor seleccione los filtros
-                necesarios.
-                <br>
-                Nro. de permisos registrados: {{ count($data) }}.
-                <br>
+
             </div>
             <?php
             use App\Http\Controllers\Secretary\Transfer\TransferGlobalController;

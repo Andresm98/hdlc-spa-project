@@ -28,7 +28,7 @@
                 left: 0cm;
                 right: 0cm;
                 height: 2.2cm;
-                background-color: #e5e7ee;
+                background-color: #ffffff;
                 color: white;
                 text-align: center;
                 /* line-height: 15px; */
@@ -40,7 +40,7 @@
                 left: 0cm;
                 right: 0cm;
                 height: 2.0cm;
-                background-color: #e5e7ee;
+                background-color: #ffffff;
                 color: white;
                 text-align: center;
                 /* line-height: 35px; */
@@ -75,6 +75,12 @@
     <header>
         <div style=" margin-block-start: 0.2cm; color: #000000">
             <div>
+                <div style="float: left;width: 10%; height: 30px;">
+                    <p style="font-size:medium; margin-left:2.5cm; margin-bottom:2.0cm;">
+                        <img height="60px" width="100px"
+                            src="https://files-hdlc-frontend.s3.amazonaws.com/icon_hdlc.png" />
+                    </p>
+                </div>
                 <div style="float: left;width: 90%; height: 30px;">
                     <p style="font-size:medium; margin-top:0.5cm;">
                         Compañía Hijas de la Caridad de San Vicente de Paúl ©
@@ -89,13 +95,6 @@
                             ({{ date('Y-m-d', strtotime($from)) }} -
                             {{ date('Y-m-d', strtotime($to)) }})
                         @endif
-
-                    </p>
-                </div>
-                <div style="float: left;width: 10%; height: 30px;">
-                    <p style="font-size:medium; margin-right:2.5cm; margin-bottom:2.0cm;">
-                        <img height="60px" width="100px"
-                            src="https://files-hdlc-frontend.s3.amazonaws.com/icon_hdlc.png" />
                     </p>
                 </div>
             </div>
@@ -109,42 +108,39 @@
             {{-- Info Family --}}
 
             <div style="margin-bottom:5px;">
-                <strong>Comunidades registradas: </strong> En esta plantilla se encuentran los registros de las
-                comunidades
-                que se encuentran en la provincia Ecuador, debe tener en cuenta que los registros son mostrados de
-                manera secuencial. Para reportes personalizados por favor seleccione los filtros necesarios.
-                <br>
-                Nro. de comunidades @if ($pastoral)
-                    pastoral <strong>{{ $pastoral->name }}</strong>
-                @endif encontradas: {{ count($data) }}.
-                <br>
+
             </div>
             <table>
                 <tr>
                     <th>Nro</th>
                     <th>Nombre</th>
                     <th>Pastoral</th>
-                    <th>Fechas Actividad</th>
-                    {{-- <th>Fecha de Nacimiento</th> --}}
+                    <th>Correo</th>
+                    <th>Fechas Fundación</th>
+                    <th>Fechas Cierre</th>
                 </tr>
                 {{ $count = 1 }}
                 @foreach ($data as $community)
                     <tr>
                         <td width="7%">{{ $count++ }}</td>
                         <td width="25%">{{ $community->comm_name }}</td>
-                        <td>{{ $community->pastoral->name }}</td>
+                        <td width="20%">{{ $community->pastoral->name }}</td>
+                        <td width="18%">{{ $community->comm_email }}</td>
                         <td>
                             @if ($community->comm_status == 1)
-                                Abierta <br>
-                                ({{ date('Y-m-d', strtotime($community->date_fndt_comm)) }})
-                                - Presente
+                                {{ date('Y-m-d', strtotime($community->date_fndt_comm)) }}
                             @else
-                                Cerrada <br>
-                                ({{ date('Y-m-d', strtotime($community->date_fndt_comm)) }}) hasta
-                                ({{ date('Y-m-d', strtotime($community->date_close)) }})
+                                {{ date('Y-m-d', strtotime($community->date_fndt_comm)) }}
                             @endif
                         </td>
-                        {{-- <td>Pendiente</td> --}}
+                        <td>
+                            @if ($community->comm_status == 1)
+                                Presente
+                            @else
+                                {{ date('Y-m-d', strtotime($community->date_close)) }}
+                            @endif
+                        </td>
+
                     </tr>
 
                     {{-- Hermanas --}}
