@@ -110,7 +110,7 @@ class CommunityInventoryController extends Controller
             'description' => $request->get('description'),
             'id' => $inventory_id
         ], [
-            'name' => ['required', 'max:50'],
+            'name' => ['required', 'max:100'],
             'description' => ['required', 'max:4000'],
             'id' => ['required', 'exists:inventories,id']
         ]);

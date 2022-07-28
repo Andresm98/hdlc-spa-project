@@ -125,7 +125,7 @@ class FilesCommunityController extends Controller
                     ]);
                     return redirect()->back()->with(['success' => 'Archivo guardado correctamente.']);
                 } else {
-                    return redirect()->back()->with(['error' => 'Excede la cantidad de archivos permitidos.']);
+                    return redirect()->back()->with(['error' => 'Excede la cantidad de archivos permitidos, max 15 archivos.']);
                 }
             }
 
@@ -139,9 +139,19 @@ class FilesCommunityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($file_id)
     {
-        //
+        $validator = Validator::make(['file_id' => $file_id], [
+            'file_id' => ['required', 'exists:files,id']
+        ]);
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        $file = File::find($file_id);
+
+        return  Storage::disk('s3')->download($file->filename);
     }
 
     /**

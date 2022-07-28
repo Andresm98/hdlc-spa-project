@@ -185,7 +185,7 @@
         </dl>
       </div>
       <div class="mt-2">
-        <p>
+        <p class="text-black dark:text-white">
           La presente plantilla de información se relaciona a todas las visitas
           realizadas a todas las comunidades u obras de la compañía.
         </p>
@@ -467,7 +467,7 @@
                             target="_blank"
                             :href="
                               route(
-                                'secretary.communities.export.csv',
+                                'secretary.visits.communities.export.csv',
                                 this.params
                               )
                             "

@@ -313,8 +313,6 @@ class CommunityArticleController extends Controller
         return Excel::download(new ArticlesExport(request()), 'ArticulosHDLC.xlsx');
     }
 
-    //  TODO: Export CSV
-
     public function exportCSV()
     {
         return Excel::download(new ArticlesExport(request()), 'ArticulosHDLC.csv');
@@ -370,6 +368,7 @@ class CommunityArticleController extends Controller
         $from =   $dateFromTo->getFrom();
         $to =  $dateFromTo->getTo();
         $status =  $type = request('status');
+
         $data = $query
             ->get();
         $dataInventoryCommunity = $this->DataSection($section->inventory_id);

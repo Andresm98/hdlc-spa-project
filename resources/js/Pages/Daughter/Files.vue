@@ -590,7 +590,7 @@
       :show="fileBeingCreated"
       @close="fileBeingCreated == null"
     >
-      <template #title> Datos del Nuevo Registro de Salud</template>
+      <template #title> Datos del Nuevo Fichero</template>
 
       <template #content>
         <div class="px-4 py-5 bg-white sm:p-6">
@@ -857,12 +857,10 @@
   </app-layout>
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
 import { pickBy, throttle, mapValues } from "lodash";
 import { useForm, Link } from "@inertiajs/inertia-vue3";
-
 import moment from "moment";
-import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import { range } from "moment-range";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
@@ -886,7 +884,6 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import Dropdown from "@/Components/Dropdown";
 
 export default {
-  layout: PrincipalLayout,
   props: {
     files_list: Object,
     allProvinces: Object,

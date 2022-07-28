@@ -60,7 +60,7 @@ class CommunitySectionController extends Controller
         ]);
 
         $validatorData = Validator::make($request->all(), [
-            'name' => ['required', 'max:50'],
+            'name' => ['required', 'max:100'],
             'description' => ['required', 'max:4000'],
         ]);
 
@@ -128,7 +128,7 @@ class CommunitySectionController extends Controller
         }
 
         $validatorData = Validator::make($request->all(), [
-            'name' => ['required', 'max:50'],
+            'name' => ['required', 'max:100'],
             'description' => ['required', 'max:4000'],
         ]);
 

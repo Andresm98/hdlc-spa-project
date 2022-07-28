@@ -633,7 +633,7 @@
                                     text-green-800
                                   "
                                 >
-                                  Vigente desde
+                                  Activa desde
                                   {{
                                     formatDateShow(
                                       user_custom.profile.date_admission

@@ -526,6 +526,38 @@ class UserController extends Controller
             if ($user->id == 1) {
                 return redirect()->route('secretary.daughters.index')->with('error', 'No se puede eliminar.');
             }
+
+            if ($user->profile) {
+                if ($user->profile->info_family) {
+                    $user->profile->info_family()->delete();
+                }
+                if ($user->profile->academic_trainings) {
+                    $user->profile->academic_trainings()->delete();
+                }
+                if ($user->profile->transfers) {
+                    $user->profile->transfers()->delete();
+                }
+                if ($user->profile->healths) {
+                    $user->profile->healths()->delete();
+                }
+                if ($user->profile->permits) {
+                    $user->profile->permits()->delete();
+                }
+                if ($user->profile->appointments) {
+                    $user->profile->appointments()->delete();
+                }
+                if ($user->profile->sacraments) {
+                    $user->profile->sacraments()->delete();
+                }
+                if ($user->profile->address) {
+                    $user->profile->address()->delete();
+                }
+                if ($user->profile->files) {
+                    $user->profile->files()->delete();
+                }
+                $user->profile->delete();
+            }
+
             $user->delete();
             return redirect()->route('secretary.daughters.index')->with('success', 'Eliminado correctamente.');
         }
@@ -540,14 +572,10 @@ class UserController extends Controller
         ]));
     }
 
-    //  TODO: Export Excel
-
     public function exportExcel()
     {
         return Excel::download(new UsersExport(request()), 'HermanasHDLC.xlsx');
     }
-
-    //  TODO: Export CSV
 
     public function exportCSV()
     {
@@ -631,31 +659,30 @@ class UserController extends Controller
                         ->whereBetween('date_out', [$from, $to])
                         ->get());
                 }
-                if (is_numeric($this->search("5", $request->get('options')))) {
-                    $transfers = $user->profile->transfers()->with('community')->get();
+
+                $transfers = $user->profile->transfers()->with('community')->get();
+                $data->put(
+                    'transfer',
+                    $transfers->where('status', 1)->first()
+                );
+
+
+                $transfer = $user->profile->transfers->where('status', 1)->first();
+                $controllerTransfers = new TransferController();
+                if ($transfer) {
                     $data->put(
-                        'transfer',
-                        $transfers->where('status', 1)->first()
+                        'appointments',
+                        $controllerTransfers->allAppointments($transfer->id)
                     );
                 }
-                if (is_numeric($this->search("6", $request->get('options')))) {
-                    $transfer = $user->profile->transfers->where('status', 1)->first();
-                    $controllerTransfers = new TransferController();
-                    if ($transfer) {
-                        $data->put(
-                            'appointments',
-                            $controllerTransfers->allAppointments($transfer->id)
-                        );
-                    }
-                    $data->put(
-                        'individualappointments',
-                        $user->profile->appointments()
-                            ->where('transfer_id', null)
-                            ->with('appointment_level')
-                            ->with('community')
-                            ->get()
-                    );
-                }
+                $data->put(
+                    'individualappointments',
+                    $user->profile->appointments()
+                        ->where('transfer_id', null)
+                        ->with('appointment_level')
+                        ->with('community')
+                        ->get()
+                );
             }
             //
             // return $data;

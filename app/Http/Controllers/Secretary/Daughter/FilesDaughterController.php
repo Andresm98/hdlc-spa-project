@@ -117,7 +117,7 @@ class FilesDaughterController extends Controller
                         ]);
                         return redirect()->back()->with(['success' => 'Archivo guardado correctamente.']);
                     } else {
-                        return redirect()->back()->with(['error' => 'Excede la cantidad de archivos permitidos.']);
+                        return redirect()->back()->with(['error' => 'Excede la cantidad de archivos permitidos, max 5 archivoss.']);
                     }
                 }
             }

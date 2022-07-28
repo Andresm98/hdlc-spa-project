@@ -451,7 +451,7 @@
                             target="_blank"
                             :href="
                               route(
-                                'secretary.communities.export.csv',
+                                'secretary.resumes.communities.export.csv',
                                 this.params
                               )
                             "

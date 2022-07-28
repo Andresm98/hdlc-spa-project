@@ -167,14 +167,14 @@
         </dl>
       </div>
       <div class="mt-2">
-        <p>
+        <p class="text-black dark:text-white">
           La presente plantiflla de información se relaciona a todos los
           nombramientos que se realizan en la compañía a nivel de provincia y
           comunidades, por lo tanto deberá tener una noción clara de todos los
           rangos y estructura organizacional a nivel de nombramientos.
         </p>
       </div>
-      <div class="grid lg:gap-3 lg:grid-cols-3 mg:gap-2 md:grid-cols-2">
+      <div class="grid lg:gap-3 lg:grid-cols-3 mg:gap-2 md:grid-cols-2 text-black dark:text-white">
         <div>
           <!-- Province -->
           <ul class="list-disc pl-5 pt-2">

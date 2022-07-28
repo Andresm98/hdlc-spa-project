@@ -7,12 +7,13 @@ use App\Models\Team;
 use App\Models\User;
 use App\Models\Zone;
 use Inertia\Inertia;
+use App\Models\Profile;
 use App\Models\Pastoral;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Models\AppointmentLevel;
 
+use App\Models\AppointmentLevel;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -289,6 +290,10 @@ class UserController extends Controller
                     'email' => $request->get('email'),
                 ]
             );
+
+            if ($user->id == 1) {
+                return redirect()->back()->with('success', 'Usuario Administrador actualizado correctamente a excepción de sus roles.');
+            }
             $user->roles()->sync($request->roles);
             return redirect()->back()->with('success', 'Usuario actualizado correctamente.');
         }
@@ -313,11 +318,44 @@ class UserController extends Controller
                 ->where('slug', '=', [$slug])
                 ->get()
                 ->first();
+
             $user =  User::find($user_custom->id);
 
             if ($user->id == 1) {
                 return redirect()->route('admin.users.index')->with('error', 'No se puede eliminar.');
             }
+
+            if ($user->profile) {
+                if ($user->profile->info_family) {
+                    $user->profile->info_family()->delete();
+                }
+                if ($user->profile->academic_trainings) {
+                    $user->profile->academic_trainings()->delete();
+                }
+                if ($user->profile->transfers) {
+                    $user->profile->transfers()->delete();
+                }
+                if ($user->profile->healths) {
+                    $user->profile->healths()->delete();
+                }
+                if ($user->profile->permits) {
+                    $user->profile->permits()->delete();
+                }
+                if ($user->profile->appointments) {
+                    $user->profile->appointments()->delete();
+                }
+                if ($user->profile->sacraments) {
+                    $user->profile->sacraments()->delete();
+                }
+                if ($user->profile->address) {
+                    $user->profile->address()->delete();
+                }
+                if ($user->profile->files) {
+                    $user->profile->files()->delete();
+                }
+                $user->profile->delete();
+            }
+
             $user->delete();
             return redirect()->route('admin.users.index')->with('success', 'Eliminado correctamente.');
         }
@@ -338,7 +376,6 @@ class UserController extends Controller
         ]));
     }
 
-    // FIXME: Add methods PDS
     public function PDF()
     {
         $users = User::all();

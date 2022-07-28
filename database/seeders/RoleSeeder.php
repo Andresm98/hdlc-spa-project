@@ -30,5 +30,8 @@ class RoleSeeder extends Seeder
 
         $role = Role::create(['name' => 'daughter']);
         $role->permissions()->attach([10]);
+
+        $role = Role::create(['name' => 'collaborator']);
+        $role->permissions()->attach([10]);
     }
 }

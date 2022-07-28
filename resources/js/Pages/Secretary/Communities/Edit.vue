@@ -1356,12 +1356,6 @@ export default defineComponent({
         this.selectFour.selectedPastoral == null
       );
     },
-    // isInvalidZone() {
-    //   return (
-    //     this.selectFive.selectedZone == undefined || this.selectFive.selectedZone == null
-    //   );
-    // },
-
     // Validate ID Card`
     validateIdentityCard() {
       this.form.comm_identity_card = this.form.comm_identity_card + "";
@@ -1694,12 +1688,6 @@ export default defineComponent({
       this.form.political_division_id = parish.id;
       //   console.log("input parish data selecter " + this.form.parish_id);
     },
-
-    // ...mapActions("daughter", ["increment"]),
-
-    // ...mapActions("daughter", ["changeUser"]),
-
-    // ...mapActions("daughter", ["changeUserId"]),
 
     ...mapActions("address", ["uploadProvinces"]),
 

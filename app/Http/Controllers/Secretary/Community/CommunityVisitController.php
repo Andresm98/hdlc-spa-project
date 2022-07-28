@@ -26,8 +26,8 @@ class CommunityVisitController extends Controller
 
         $community = Community::find($community_id);
         return $community->visits()
-        ->orderBy('comm_date_init_visit','desc')
-        ->get();
+            ->orderBy('comm_date_init_visit', 'desc')
+            ->get();
     }
 
     /**
@@ -50,10 +50,10 @@ class CommunityVisitController extends Controller
     {
         $validatorData = Validator::make($request->all(), [
             'comm_reason_visit' => ['required', 'max:100'],
-            'comm_type_visit' => ['required','digits_between:1,3'],
+            'comm_type_visit' => ['required', 'digits_between:1,3'],
             'comm_description_visit' => ['required', 'max:4000'],
-            'comm_date_init_visit' => ['required', 'date_format:Y-m-d H:i:s'],
-            'comm_date_end_visit' => ['required', 'date_format:Y-m-d H:i:s'],
+            'comm_date_init_visit' => ['required', 'date', 'before:comm_date_end_visit',  'date_format:Y-m-d H:i:s'],
+            'comm_date_end_visit' => ['required', 'date', 'after:comm_date_init_visit', 'date_format:Y-m-d H:i:s'],
         ]);
 
         $validator = Validator::make([
@@ -118,10 +118,10 @@ class CommunityVisitController extends Controller
     {
         $validatorData = Validator::make($request->all(), [
             'comm_reason_visit' => ['required', 'max:100'],
-            'comm_type_visit' => ['required','digits_between:1,3'],
+            'comm_type_visit' => ['required', 'digits_between:1,3'],
             'comm_description_visit' => ['required', 'max:4000'],
-            'comm_date_init_visit' => ['required', 'date_format:Y-m-d H:i:s'],
-            'comm_date_end_visit' => ['required', 'date_format:Y-m-d H:i:s'],
+            'comm_date_init_visit' => ['required', 'date', 'before:comm_date_end_visit',  'date_format:Y-m-d H:i:s'],
+            'comm_date_end_visit' => ['required', 'date', 'after:comm_date_init_visit', 'date_format:Y-m-d H:i:s'],
         ]);
 
         $validator = Validator::make([

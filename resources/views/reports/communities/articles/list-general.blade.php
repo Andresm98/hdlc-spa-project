@@ -24,7 +24,7 @@
                 left: 0cm;
                 right: 0cm;
                 height: 2.2cm;
-                background-color: #e5e7ee;
+                background-color: #ffffff;
                 color: white;
                 text-align: center;
                 /* line-height: 15px; */
@@ -36,7 +36,7 @@
                 left: 0cm;
                 right: 0cm;
                 height: 2.0cm;
-                background-color: #e5e7ee;
+                background-color: #ffffff;
                 color: white;
                 text-align: center;
                 /* line-height: 35px; */
@@ -97,50 +97,57 @@
 
             {{-- Info Family --}}
 
-            <div style="margin-bottom:5px;">
-                Nro. de artículos
-                @if ($status)
-                    en estado
-                    <strong>
-                        @if ($status == 1)
-                            Malo
-                        @elseif ($status == 2)
-                            Regular
-                        @elseif ($status == 3)
-                            Bueno
-                        @elseif ($status == 4)
-                            Muy bueno
-                        @elseif ($status == 5)
-                            Excelente
-                        @endif
-                    </strong>
-                @endif
-                @if ($from && $to)
-                    ({{ date('Y-m-d', strtotime($from)) }} -
-                    {{ date('Y-m-d', strtotime($to)) }})
-                @endif
-
-                encontrados: {{ count($data) }}.
-                <br>
-            </div>
+            <small>
+                <div style="margin-bottom:5px;">
+                    Nro. de artículos
+                    @if ($status)
+                        en estado
+                        <strong>
+                            @if ($status == 1)
+                                Malo
+                            @elseif ($status == 2)
+                                Regular
+                            @elseif ($status == 3)
+                                Bueno
+                            @elseif ($status == 4)
+                                Muy bueno
+                            @elseif ($status == 5)
+                                Excelente
+                            @endif
+                        </strong>
+                    @endif
+                    @if ($from && $to)
+                        ({{ date('Y-m-d', strtotime($from)) }} -
+                        {{ date('Y-m-d', strtotime($to)) }})
+                    @endif
+                    encontrados: {{ count($data) }}.
+                    <br>
+                </div>
+            </small>
             <table>
                 <tr>
                     <th>Nro</th>
                     <th>Nombre</th>
+                    <th>Descripción</th>
                     <th>Estado</th>
                     <th>Material</th>
-                    <th>Detalles</th>
-                    <th>Fechas Actividad</th>
+                    <th>Marca</th>
+                    <th>Color</th>
+                    <th>Precio</th>
+                    <th>Medidas</th>
+                    <th>Creado en</th>
                     {{-- <th>Fecha de Nacimiento</th> --}}
                 </tr>
                 {{ $count = 1 }}
                 @foreach ($data as $article)
                     <tr>
-                        <td>{{ $count++ }}</td>
-                        <td style="text-align: justify;" width="30%">
-                            Nombre: {{ $article->name }}
-                            <br>
-                            Descripción: {!! $article->description !!}
+                        <td width="4%">{{ $count++ }}</td>
+                        <td style="text-align: justify;" width="10%">
+                            {{ $article->name }}
+
+                        </td>
+                        <td style="text-align: justify;" width="15%">
+                            {!! $article->description !!}
                         </td>
                         <td>
                             @if ($article->status == 1)
@@ -169,18 +176,19 @@
                             @endif
                         </td>
                         <td>
-                            Marca: {{ $article->brand }} <br>
-                            Color: {{ $article->color }} <br>
-                            Precio: {{ $article->price }} <br>
-                            Medidas: {{ $article->size }} <br>
+                            {{ $article->brand }}
                         </td>
                         <td>
-
-                            Creado: ({{ date('Y-m-d', strtotime($article->created_at)) }})
-                            <br>
-                            Actualizado:({{ date('Y-m-d', strtotime($article->updated_at)) }}) <br>
-
+                            {{ $article->color }}
                         </td>
+                        <td>
+                            {{ $article->price }}
+                        </td>
+                        <td>
+                            {{ $article->size }}
+                        </td>
+                        <td width="10%">
+                            {{ date('Y-m-d', strtotime($article->created_at)) }} </td>
                         {{-- <td>Pendiente</td> --}}
                     </tr>
 

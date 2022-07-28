@@ -901,10 +901,9 @@
   </jet-dialog-modal>
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
 import { pickBy, throttle, mapValues } from "lodash";
 import moment from "moment";
-import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import { range } from "moment-range";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
@@ -928,7 +927,6 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import Dropdown from "@/Components/Dropdown";
 
 export default {
-  layout: PrincipalLayout,
   props: {
     transfers: Object,
     allProvinces: Object,
