@@ -18,6 +18,8 @@ class CreateProfilesTable extends Migration
             //  1 = Activa, 2 = Fallecida, 3 = Retirada
             $table->tinyInteger('status');
             $table->tinyText('identity_card');
+            $table->tinyText('iess_card')->nullable();
+            $table->tinyText('driver_license')->nullable();
 
             // ALTER TABLE profiles
             // ADD COLUMN iess_card tinytext AFTER identity_card;
@@ -39,14 +41,13 @@ class CreateProfilesTable extends Migration
             $table->dateTime('date_vote')->nullable();
             $table->dateTime('date_death')->nullable();
             $table->dateTime('date_exit')->nullable();
+            $table->dateTime('date_retirement')->nullable();
+
             // ALTER TABLE profiles
             // ADD COLUMN date_retirement DATETIME AFTER date_exit;
 
             // alter table profiles
             // modify column date_retirement date NULL;
-
-
-
 
             $table->char('cellphone', 20)->nullable();
             $table->char('phone', 20)->nullable();

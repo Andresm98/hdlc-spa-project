@@ -275,6 +275,7 @@ class TransferController extends Controller
                 'transfer_reason' => $request->get('transfer_reason'),
                 'transfer_date_adission' => $request->get('transfer_date_adission'),
                 'transfer_observation' => $request->get('transfer_observation'),
+                'transfer_date_relocated' => null,
                 'status' => $request->get('status'),
                 'community_id' => $request->community_id["id"],
             ]);
@@ -283,8 +284,8 @@ class TransferController extends Controller
                 ->where('transfer_id', $transfer->id)
                 ->update([
                     'community_id' => $request->community_id["id"],
-                    // 'date_appointment' => $request->get('transfer_date_adission'),
-                    // 'status' => $request->get('status'),
+                    'date_end_appointment' => null,
+                    'status' => $request->get('status'),
                 ]);
 
             return redirect()->back()->with(['success' => 'Registro del cambio actualizada correctamente']);

@@ -27,7 +27,7 @@
                 left: 0cm;
                 right: 0cm;
                 height: 2.4cm;
-                background-color: #e5e7ee;
+                background-color: #ffffff;
                 color: white;
                 text-align: center;
                 /* line-height: 15px; */
@@ -39,7 +39,7 @@
                 left: 0cm;
                 right: 0cm;
                 height: 2.0cm;
-                background-color: #e5e7ee;
+                background-color: #ffffff;
                 color: white;
                 text-align: center;
                 /* line-height: 35px; */

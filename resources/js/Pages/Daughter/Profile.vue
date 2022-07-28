@@ -1869,7 +1869,7 @@
             />
             <span class="ml-2 text-sm text-gray-600">Sacramentos</span>
           </label>
-          <label class="flex items-center">
+          <!-- <label class="flex items-center">
             <input
               class="
                 rounded
@@ -1886,8 +1886,8 @@
               v-model="options"
             />
             <span class="ml-2 text-sm text-gray-600">Permisos</span>
-          </label>
-          <label class="flex items-center">
+          </label> -->
+          <!-- <label class="flex items-center">
             <input
               class="
                 rounded
@@ -1922,7 +1922,7 @@
               v-model="options"
             />
             <span class="ml-2 text-sm text-gray-600">Nombramientos</span>
-          </label>
+          </label> -->
         </div>
       </template>
 

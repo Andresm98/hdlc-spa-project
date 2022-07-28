@@ -183,7 +183,7 @@
         </dl>
       </div>
       <div class="mt-2">
-        <p>
+        <p class="text-black dark:text-white">
           La presente plantilla de información se relaciona a todos los permisos
           que usted a solicitado.
         </p>
@@ -1413,10 +1413,9 @@
   </app-layout>
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
 import { pickBy, throttle, mapValues } from "lodash";
 import moment from "moment";
-import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import { range } from "moment-range";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
@@ -1440,7 +1439,6 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import Dropdown from "@/Components/Dropdown";
 
 export default {
-  layout: PrincipalLayout,
   props: {
     permits: Object,
     allProvinces: Object,

@@ -44,8 +44,16 @@ class UserSeeder extends Seeder
                     'email' => $email,
                     'password' => Hash::make('secret'),
                 ]), function (User $user) {
-                    $this->createTeam($user);
-                    $user->assignRole('super admin');
+                    if ($user->email == 'admin@gmail.com') {
+                        $this->createTeam($user);
+                        $user->assignRole('super admin');
+                    } elseif ($user->email == 'collaborator@gmail.com') {
+                        $this->createTeam($user);
+                        $user->assignRole('collaborator');
+                    } else {
+                        $this->createTeam($user);
+                        $user->assignRole('invited');
+                    }
                 });
             });
         }
@@ -107,119 +115,6 @@ class UserSeeder extends Seeder
         ]);
         $user->assignRole('secretary');
         $this->createTeam($user);
-
-        // for ($i = 0; $i <= 60; $i++) {
-        //     $username = 'secretary  ' . Str::random(15);
-        //     $slug =  Str::slug($username);
-        //     $user =  User::create([
-        //         'username' => $username,
-        //         'slug' => $slug,
-        //         'name' => Str::random(15),
-        //         'fullnamecomm' => Str::random(15),
-        //         'lastname' =>  Str::random(15),
-        //         'email' =>  $slug .  '@gmail.com',
-        //         'password' => Hash::make('secret'),
-        //     ]);
-        //     $user->assignRole('secretary');
-        //     $this->createTeam($user);
-        // }
-
-        //  daughter
-        // for ($i = 0; $i <= 1; $i++) {
-        // Convert to timetamps
-        // $min = strtotime('1900-02-01 00:00:00');
-        // $max = strtotime('2022-02-01 00:00:00');
-
-        // Generate random number using above bounds
-        // $val = rand($min, $max);
-
-        // Convert back to desired date format
-
-        // $username = 'daughter  ' . Str::random(15);
-        // $slug =  Str::slug($username);
-        // $user =  User::create([
-        //     'username' => $username,
-        //     'slug' => $slug,
-        //     'name' => Str::random(15),
-        //     'fullnamecomm' => Str::random(15),
-        //     'lastname' =>  Str::random(15),
-        //     'email' =>  $slug . '@gmail.com',
-        //     'password' => Hash::make('secret'),
-        // ]);
-        // $user->assignRole('daughter');
-
-        // $political_division_id =   PoliticalDivision::where('level', '=', 3)
-        //     ->where('last_level', '=', 'Y')
-        //     ->inRandomOrder()
-        //     ->first();
-
-        // $profile = $user->profile()->create([
-        //     'identity_card' => '1004280135',
-        //     'status' => rand(1, 3),
-        //     'date_birth' => date('Y-m-d H:i:s', rand($min, $max)),
-        //     'date_vocation' => date('Y-m-d H:i:s', $val),
-        //     'date_admission' => date('Y-m-d H:i:s', $val),
-        //     'date_send' => date('Y-m-d H:i:s', rand($min, $max)),
-        //     'date_vote' => date('Y-m-d H:i:s', rand($min, $max)),
-        //     'cellphone' => '09967316479',
-        //     'phone' => '022405124',
-        //     'observation' => 'Observation of ' . $user->name,
-        // ]);
-
-        // if ($profile->status == 2) {
-        //     $profile->update([
-        //         'date_death' => date('Y-m-d H:i:s', $val),
-        //     ]);
-        // }
-        // if ($profile->status == 3) {
-        //     $profile->update([
-        //         'date_exit' => date('Y-m-d H:i:s', $val),
-        //     ]);
-        // }
-
-        // if (strlen($political_division_id->id) == 6) {
-        //     $profile->address()->create([
-        //         'address' => 'Dirr de ' . $user->name,
-        //         'political_division_id' =>  $political_division_id->id . '',
-        //     ]);
-        // } else {
-        //     $profile->address()->create([
-        //         'address' => 'Dirr de ' . $user->name,
-        //         'political_division_id' => '0' . $political_division_id->id . '',
-        //     ]);
-        // }
-
-        // $comm =  Community::where('comm_status', '=', 1)
-        //     ->inRandomOrder()
-        //     ->first();
-
-
-        // $transferData = $profile->transfers()->create([
-        //     'transfer_reason' => 'Reason of ' . $user->name,
-        //     'transfer_date_adission' => date('Y-m-d H:i:s', rand($min, $max)),
-        // 'transfer_date_relocated' => $request->get('transfer_date_relocated'),
-        //     'transfer_observation' => 'Observation transfer of ' . $user->name,
-        //     'community_id' => $comm->id,
-        // ]);
-
-
-        // $appointment =  AppointmentLevel::select('*')
-        //     ->where('level', '=', 2)
-        //     ->where('last_level', '=', 'Y')
-        //     ->inRandomOrder()
-        //     ->first();
-
-        // $profile->appointments()->create([
-        //     'community_id' =>  $comm->id,
-        //     'appointment_level_id' => $appointment->id,
-        //     'description' => 'Description transfer of ' . $user->name,
-        //     'date_appointment' => date('Y-m-d H:i:s', rand($min, $max)),
-        //     'transfer_id' => $transferData->id,
-        // ]);
-        //     $this->createTeam($user);
-        // }
-
-
 
         $array =  [
             [
@@ -1619,6 +1514,15 @@ class UserSeeder extends Seeder
             //         'date_exit' => date('Y-m-d H:i:s', $val),
             //     ]);
             // }
+
+            for ($i = 0; $i < 15; $i++) {
+                $user->profile->files()->create([
+                    'filename' => 'ss ' . $user->name,
+                    'external_filename' => 'ddd ' . $user->name,
+                    'filesize' => '2024',
+                    'url' => 'www.file.com ' . $i
+                ]);
+            }
 
             $permit =  $profile->permits()->create([
                 'reason' => 'Razón del permiso de ' . $user->name,

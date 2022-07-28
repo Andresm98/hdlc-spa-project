@@ -28,12 +28,9 @@ class FilesProfileController extends Controller
 
         if ($daughter->profile) {
             $query = File::query();
-            $files = $daughter->profile->files;
-            $index = array();
-            foreach ($files as $file) {
-                $index[] = $file->id;
-            }
-            $query->whereIn('id', $index);
+
+            $query->where('fileable_id', $daughter->profile->id)
+                ->where('fileable_type', 'App\Models\Profile');
 
             if (request('search')) {
                 $query->where('external_filename', 'LIKE', '%' . request('search') . '%');

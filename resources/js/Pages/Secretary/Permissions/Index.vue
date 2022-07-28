@@ -184,7 +184,7 @@
         </dl>
       </div>
       <div class="mt-2">
-        <p>
+        <p class="text-black dark:text-white">
           La presente plantilla de información se relaciona a todos los permisos
           que se realizan en la compañía.
         </p>

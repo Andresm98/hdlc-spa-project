@@ -11,6 +11,7 @@ use App\Http\Controllers\Secretary\Daughter\OfficeController;
 use App\Http\Controllers\Secretary\Daughter\PermitController;
 use App\Http\Controllers\Secretary\Daughter\ProfileController;
 use App\Http\Controllers\Secretary\Daughter\RealityController;
+use App\Http\Controllers\Secretary\Files\FileGlobalController;
 use App\Http\Controllers\Secretary\Daughter\TransferController;
 use App\Http\Controllers\Secretary\Daughter\SacramentController;
 use App\Http\Controllers\Secretary\Community\CommunityController;
@@ -30,9 +31,11 @@ use App\Http\Controllers\Secretary\Community\CommunityRealityController;
 use App\Http\Controllers\Secretary\Community\CommunityActivityController;
 use App\Http\Controllers\Secretary\Community\CommunityDaughterController;
 use App\Http\Controllers\Secretary\Community\CommunityPastoralController;
+use App\Http\Controllers\Secretary\Inventories\InventoryGlobalController;
 use App\Http\Controllers\Secretary\Community\Visits\VisitGlobalController;
 use App\Http\Controllers\Secretary\Permissions\PermissionGlobalController;
 use App\Http\Controllers\Secretary\Appointments\AppointmentGlobalController;
+use App\Http\Controllers\Secretary\Community\Files\FileCommGlobalController;
 use App\Http\Controllers\Secretary\Community\Resumes\ResumeGlobalController;
 use App\Http\Controllers\Secretary\Community\Activities\ActivityGlobalController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityArticleController;
@@ -515,6 +518,22 @@ Route::group([
     Route::delete('files/delete/{file_id}', [FilesCommunityController::class, 'destroy'])
         ->name('communities.files.delete');
 
+    // Files Communities Controllers
+
+    Route::get('filesglobal/all', [FileCommGlobalController::class, 'index'])
+        ->name('filesglobal.communities.index');
+
+    Route::get('filesglobal/all/search', [FileCommGlobalController::class, 'search'])
+        ->name('filesglobal.communities.search');
+
+    // Inventories Global Controller
+
+    Route::get('inventoryglobal/all', [InventoryGlobalController::class, 'index'])
+        ->name('communitiesglobal.inventories.index');
+
+    Route::get('inventoryglobal/all/inventory/{community_id}', [InventoryGlobalController::class, 'getInventory'])
+        ->name('communitiesglobal.inventorie.index');
+
     // Reality Controllers
 
     Route::get('reality', [CommunityRealityController::class, 'index'])
@@ -631,6 +650,14 @@ Route::group(
 
         Route::get('transfers/exportCSV', [TransferGlobalController::class, 'exportCSV'])
             ->name('transfers.export.csv');
+
+        //
+
+        Route::get('files/all', [FileGlobalController::class, 'index'])
+            ->name('filesglobal.daughter.index');
+
+        Route::get('files/all/search', [FileGlobalController::class, 'search'])
+            ->name('filesglobal.daughters.search');
 
         //
 

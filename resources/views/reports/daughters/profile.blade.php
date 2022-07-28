@@ -176,20 +176,22 @@
                 </tr>
                 <tr>
                     <td width="33.33%" height="50px">
-                        <?php
-                        // Declare and define two dates
-                        $date1 = strtotime($data->get('profile')->date_vocation);
-                        $date2 = strtotime('now');
+                        @if ($data->get('profile')->date_vocation)
+                            <?php
+                            // Declare and define two dates
+                            $date1 = strtotime($data->get('profile')->date_vocation);
+                            $date2 = strtotime('now');
 
-                        // Formulate the Difference between two dates
-                        $diff = abs($date2 - $date1);
+                            // Formulate the Difference between two dates
+                            $diff = abs($date2 - $date1);
 
-                        // To get the year divide the resultant date into
-                        // total seconds in a year (365*60*60*24)
-                        $years = floor($diff / (365 * 60 * 60 * 24));
+                            // To get the year divide the resultant date into
+                            // total seconds in a year (365*60*60*24)
+                            $years = floor($diff / (365 * 60 * 60 * 24));
 
-                        ?>
-                        {{ $years }}
+                            ?>
+                            {{ $years }}
+                        @endif
                     </td>
                     <td width="33.33%" height="50px">
                         @if (null !== $data->get('appointments'))

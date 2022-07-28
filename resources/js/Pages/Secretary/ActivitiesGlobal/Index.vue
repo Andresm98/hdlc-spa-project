@@ -185,8 +185,8 @@
         </dl>
       </div>
       <div class="mt-2">
-        <p>
-          La presente plantilla de información se relaciona a todos las
+        <p class="text-black dark:text-white">
+          La presente plantilla de información se relaciona a todas las
           actividades que se realizan en la compañía.
         </p>
       </div>
@@ -452,7 +452,7 @@
                             target="_blank"
                             :href="
                               route(
-                                'secretary.communities.export.csv',
+                                'secretary.activities.communities.export.csv',
                                 this.params
                               )
                             "

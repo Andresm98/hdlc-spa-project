@@ -517,9 +517,9 @@
           {{ selected_user.name }}
           ?
         </p>
-        Una vez la cuenta es eliminada, todos sus recursos y los datos se
-        eliminarán de forma permanente. Por favor verifique nuevamente su acción
-        pues es irreversible.
+        Una vez la cuenta es eliminada, todos los recursos y los datos asociados
+        al usuario se eliminarán de forma permanente. Por favor verifique
+        nuevamente su acción pues es irreversible.
       </template>
       <template v-slot:footer>
         <jet-secondary-button @click="closeModal()">

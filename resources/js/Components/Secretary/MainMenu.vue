@@ -62,7 +62,8 @@
         route().current('secretary.permissions.index') ||
         route().current('secretary.transfers.index') ||
         route().current('secretary.appoinments.index') ||
-        route().current('secretary.daughters.reality.index')
+        route().current('secretary.daughters.reality.index') ||
+        route().current('secretary.filesglobal.daughter.index')
       "
     >
       <div class="mr-4 mb-4">
@@ -184,6 +185,32 @@
       <div class="mr-4 mb-4">
         <Link
           class="group flex items-center py-3"
+          :href="route('secretary.filesglobal.daughter.index')"
+        >
+          <icon
+            name="point"
+            class="mr-2 w-4 h-4"
+            :class="
+              isUrl('secretary/files/all')
+                ? 'fill-white'
+                : 'fill-gray-400 group-hover:fill-white'
+            "
+          />
+          <div
+            :class="
+              isUrl('secretary/files/all')
+                ? 'text-white text-sm'
+                : 'text-gray-400 group-hover:text-white text-sm'
+            "
+          >
+            Ficheros
+          </div>
+        </Link>
+        <hr :class="isUrl('secretary/files/all') ? 'text-white ' : 'hidden'" />
+      </div>
+      <div class="mr-4 mb-4">
+        <Link
+          class="group flex items-center py-3"
           :href="route('secretary.daughters.reality.index')"
         >
           <icon
@@ -250,7 +277,9 @@
         route().current('secretary.communities.reality.index') ||
         route().current('secretary.activities.index') ||
         route().current('secretary.resumes.index') ||
-        route().current('secretary.visits.index')
+        route().current('secretary.visits.index') ||
+        route().current('secretary.filesglobal.communities.index') ||
+        route().current('secretary.communitiesglobal.inventories.index')
       "
     >
       <div class="mr-4 mb-4">
@@ -405,6 +434,66 @@
         <hr
           :class="
             isUrl('secretary/community/visits/all') ? 'text-white ' : 'hidden'
+          "
+        />
+      </div>
+      <div class="mr-4 mb-4">
+        <Link
+          class="group flex items-center py-3"
+          :href="route('secretary.filesglobal.communities.index')"
+        >
+          <icon
+            name="point"
+            class="mr-2 w-4 h-4"
+            :class="
+              isUrl('secretary/communities/filesglobal/all')
+                ? 'fill-white'
+                : 'fill-gray-400 group-hover:fill-white'
+            "
+          />
+          <div
+            :class="
+              isUrl('secretary/communities/filesglobal/all')
+                ? 'text-white text-sm'
+                : 'text-gray-400 group-hover:text-white text-sm'
+            "
+          >
+            Archivos
+          </div>
+        </Link>
+        <hr
+          :class="
+            isUrl('secretary/communities/filesglobal/all') ? 'text-white ' : 'hidden'
+          "
+        />
+      </div>
+      <div class="mr-4 mb-4">
+        <Link
+          class="group flex items-center py-3"
+          :href="route('secretary.communitiesglobal.inventories.index')"
+        >
+          <icon
+            name="point"
+            class="mr-2 w-4 h-4"
+            :class="
+              isUrl('secretary/communities/inventoryglobal/alll')
+                ? 'fill-white'
+                : 'fill-gray-400 group-hover:fill-white'
+            "
+          />
+          <div
+            :class="
+              isUrl('secretary/communities/inventoryglobal/all')
+                ? 'text-white text-sm'
+                : 'text-gray-400 group-hover:text-white text-sm'
+            "
+          >
+            Inventarios
+          </div>
+        </Link>
+        <hr
+          :class="
+            isUrl('secretary/communities/inventoryglobal/all') ? 'text-white ' : 'hidden'
           "
         />
       </div>

@@ -370,32 +370,31 @@ class UserProfileController extends Controller
                         ->with('address')
                         ->get());
                 }
-                if (is_numeric($this->search("5", $request->get('options')))) {
-                    $transfers = $user->profile->transfers()->with('community')->get();
-                    $data->put(
-                        'transfer',
-                        $transfers->where('status', 1)->first()
-                    );
-                }
-                if (is_numeric($this->search("6", $request->get('options')))) {
-                    $transfer = $user->profile->transfers->where('status', 1)->first();
-                    $controllerTransfers = new TransferController();
-                    if ($transfer) {
-                        $data->put(
-                            'appointments',
-                            $controllerTransfers->allAppointments($transfer->id)
-                        );
-                    }
 
+                $transfers = $user->profile->transfers()->with('community')->get();
+                $data->put(
+                    'transfer',
+                    $transfers->where('status', 1)->first()
+                );
+
+
+                $transfer = $user->profile->transfers->where('status', 1)->first();
+                $controllerTransfers = new TransferController();
+                if ($transfer) {
                     $data->put(
-                        'individualappointments',
-                        $user->profile->appointments()
-                            ->where('transfer_id', null)
-                            ->with('appointment_level')
-                            ->with('community')
-                            ->get()
+                        'appointments',
+                        $controllerTransfers->allAppointments($transfer->id)
                     );
                 }
+
+                $data->put(
+                    'individualappointments',
+                    $user->profile->appointments()
+                        ->where('transfer_id', null)
+                        ->with('appointment_level')
+                        ->with('community')
+                        ->get()
+                );
             }
             //
             // return $data;
