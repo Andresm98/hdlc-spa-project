@@ -50,49 +50,49 @@ class FileGlobalController extends Controller
 
                     $communityId = $transferActive->community_id;
 
-                    request()->validate([
-                        'dateStart' => ['nullable', 'date_format:Y-m-d H:i:s'],
-                        'community' => ['nullable', 'integer', 'exists:communities,id'],
-                    ]);
-                    $request->merge([
-                        'community' =>  Community::find($communityId),
-                    ]);
-
-                    $query = File::query();
-
-                    $query->where('fileable_id', request('community')['id'])
-                        ->where('fileable_type', 'App\Models\Community');
-
-                    if (request('search')) {
-                        $query->where('external_filename', 'LIKE', '%' . request('search') . '%');
-                    }
-
-                    if (request('dateStart') || request('dateEnd')) {
-                        $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
-                            'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
-                            'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
+                    if ($communityId) {
+                        request()->validate([
+                            'dateStart' => ['nullable', 'date_format:Y-m-d H:i:s'],
+                            'community' => ['nullable', 'integer', 'exists:communities,id'],
                         ]);
-                        if ($validatorData->fails()) {
-                            return redirect()->back()
-                                ->withErrors($validatorData->errors());
-                        } else {
-                            $query->whereBetween('created_at', [request('dateStart'), request('dateEnd')]);
-                            $query->orderBy('created_at', 'desc');
+
+
+                        $query = File::query();
+
+                        $query->where('fileable_id', $communityId)
+                            ->where('fileable_type', 'App\Models\Community');
+
+
+                        if (request('search')) {
+                            $query->where('external_filename', 'LIKE', '%' . request('search') . '%');
                         }
+
+                        if (request('dateStart') || request('dateEnd')) {
+                            $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
+                                'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
+                                'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
+                            ]);
+                            if ($validatorData->fails()) {
+                                return redirect()->back()
+                                    ->withErrors($validatorData->errors());
+                            } else {
+                                $query->whereBetween('created_at', [request('dateStart'), request('dateEnd')]);
+                                $query->orderBy('created_at', 'desc');
+                            }
+                        }
+                        $addressClass = new AddressController();
+                        $provinces =  $addressClass->getProvinces();
+
+                        return Inertia::render('Daughter/FilesCommGlobal/Index', [
+                            'allProvinces' => $provinces,
+                            'community' => Community::find($communityId),
+                            'files_list' => $query
+                                ->with('fileable')
+                                ->paginate(10)
+                                ->appends(request()->query()),
+                            'filters' => request()->all(['date', 'search', 'status', 'dateStart', 'dateEnd', 'community']),
+                        ]);
                     }
-                    $addressClass = new AddressController();
-                    $provinces =  $addressClass->getProvinces();
-
-                    return Inertia::render('Daughter/FilesCommGlobal/Index', [
-                        'allProvinces' => $provinces,
-                        'community' => Community::find($communityId),
-                        'files_list' => $query
-                            ->with('fileable')
-                            ->paginate(10)
-                            ->appends(request()->query()),
-                        'filters' => request()->all(['date', 'search', 'status', 'dateStart', 'dateEnd', 'community']),
-
-                    ]);
                 }
             } else {
                 return abort(404);

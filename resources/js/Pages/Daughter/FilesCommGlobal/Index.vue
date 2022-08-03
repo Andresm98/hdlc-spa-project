@@ -2,7 +2,7 @@
   <app-layout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-700 leading-tight">
-        Listado de Archivos de Comunidades
+        Listado de Archivos
       </h2>
       <div class="text-sm text-blue-700 mt-3 mb-6">
         Bienvenido Usuario: {{ $page.props.user.name }}
@@ -79,7 +79,7 @@
               dark:sm:text-white
             "
           >
-            Provincia Ecuador
+            {{ community.comm_name }}
           </h1>
           <p
             class="
@@ -784,8 +784,8 @@
   </app-layout>
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayout.vue";
-
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 
 import { pickBy, throttle, mapValues } from "lodash";
 import { useForm, Link } from "@inertiajs/inertia-vue3";
@@ -812,6 +812,7 @@ import Operation from "@/Components/Daughter/Operation";
 import Dropdown from "@/Components/Dropdown";
 
 export default {
+  layout: PrincipalLayout,
   props: {
     files_list: Object,
     allProvinces: Object,

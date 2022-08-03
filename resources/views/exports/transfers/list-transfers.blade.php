@@ -4,12 +4,15 @@ use App\Http\Controllers\Secretary\Daughter\TransferController;
 <table>
     <tr>
         <th>Nro</th>
-        <th>Hermana</th>
-        <th>Motivo del Cambio</th>
-        <th>Fecha de Inicio</th>
-        <th>Fecha de Salida y Estado</th>
-        <th>Comunidad Anterior</th>
-        <th>Comunidad de Destino</th>
+        <th>NOMBRES Y APELLIDOS</th>
+        <th>AÑO NAC.</th>
+        <th>FECHA VOCACIÓN</th>
+        <th>PROCEDE DE:</th>
+        <th>VA A:</th>
+        <th>MOTIVO DEL CAMBIO</th>
+        <th>FECHA DEL CAMBIO</th>
+        <th>FECHA DE INSTALACIÓN</th>
+
     </tr>
     {{ $count = 1 }}
     @foreach ($data as $transfer)
@@ -18,27 +21,14 @@ use App\Http\Controllers\Secretary\Daughter\TransferController;
             <td>
                 {{ $transfer->profile->user->name }}<br>
                 {{ $transfer->profile->user->lastname }}<br>
-                {{ date('Y-m-d', strtotime($transfer->profile->date_birth)) }}<br>
-                @if ($transfer->profile->date_vocation !== null)
-                    {{ date('Y-m-d', strtotime($transfer->profile->date_vocation)) }}<br>
-                @endif
-                @if ($transfer->profile->date_vote != null)
-                    {{ date('Y-m-d', strtotime($transfer->profile->date_vote)) }}<br>
-                @endif
             </td>
-            <td>{{ $transfer->transfer_reason }}</td>
-            <td>{{ date('Y-m-d', strtotime($transfer->transfer_date_adission)) }}</td>
             <td>
-                @if ($transfer->transfer_date_relocated)
-                    {{ date('Y-m-d', strtotime($transfer->transfer_date_relocated)) }}
+                {{ date('Y', strtotime($transfer->profile->date_birth)) }}
+            </td>
+            <td>
+                @if ($transfer->profile->date_vocation !== null)
+                    {{ date('Y-m-d', strtotime($transfer->profile->date_vocation)) }}
                 @endif
-                <br>
-                @if ($transfer->status == 1)
-                    Activo
-                @else
-                    Historial
-                @endif
-                <br>
             </td>
             <td>
                 <?php
@@ -51,6 +41,13 @@ use App\Http\Controllers\Secretary\Daughter\TransferController;
             </td>
             <td>{{ $transfer->community->comm_name }}</td>
 
+            <td>
+                {{ $transfer->transfer_reason }}
+            </td>
+            <td>{{ date('Y-m-d', strtotime($transfer->transfer_date_adission)) }}</td>
+            <td>
+
+            </td>
         </tr>
     @endforeach
 

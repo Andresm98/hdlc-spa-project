@@ -2,7 +2,7 @@
   <app-layout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-700 leading-tight">
-        Listado de las Visitas a las Comunidades u Obras
+        Listado de las Visitas
       </h2>
       <div class="text-sm text-blue-700 mt-3 mb-6">
         Bienvenido Usuario: {{ $page.props.user.name }}
@@ -78,7 +78,7 @@
               dark:sm:text-white
             "
           >
-            Provincia Ecuador
+            {{ communities.comm_name }}
           </h1>
           <p
             class="
@@ -90,8 +90,7 @@
               dark:sm:text-slate-400
             "
           >
-            Información General de las visitas realizadas a las comunidades u
-            obras.
+            Información General de las visitas.
           </p>
         </div>
         <div
@@ -252,35 +251,6 @@
                     "
                     @reset="reset"
                   >
-                    <small class="block text-gray-700 mt-2">Comunidades:</small>
-
-                    <select
-                      v-model="params.community"
-                      class="
-                        mt-1
-                        block
-                        w-full
-                        px-3
-                        border border-gray-300
-                        bg-white
-                        rounded-md
-                        shadow-sm
-                        focus:outline-none
-                        focus:ring-blue-500
-                        focus:border-blue-500
-                        sm:text-sm
-                      "
-                    >
-                      <option :value="null">Todos</option>
-                      <option
-                        v-for="community in communities"
-                        :key="community"
-                        :value="community.id"
-                      >
-                        {{ community.comm_name }}
-                      </option>
-                    </select>
-
                     <small class="block text-gray-700 mt-2">Estado:</small>
 
                     <select
@@ -1181,9 +1151,11 @@
 </template>
 <script>
 import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
+
 import { pickBy, throttle, mapValues } from "lodash";
 import moment from "moment";
-import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
+
 import { range } from "moment-range";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";

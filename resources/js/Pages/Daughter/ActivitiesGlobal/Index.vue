@@ -78,7 +78,7 @@
               dark:sm:text-white
             "
           >
-            Provincia Ecuador
+            {{ communities.comm_name }}
           </h1>
           <p
             class="

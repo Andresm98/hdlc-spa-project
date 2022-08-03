@@ -57,7 +57,7 @@ class ActivityGlobalController extends Controller
         $daughter->profile;
 
         if ($daughter->profile) {
-
+            // Visitadora, Secretaria Provincial, Hermana Sirvientel, Secretaria Local, Rectora  o Vicerrectora
             $transferActive = $daughter->profile->transfers()->where('status', 1)->first();
 
             if ($transferActive) {
