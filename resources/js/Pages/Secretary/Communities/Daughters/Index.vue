@@ -74,7 +74,7 @@
                     <div v-if="daughters_list.data.length > 0">
                       <img
                         class="h-10 w-10 rounded-full"
-                        src="https://cdn-icons-png.flaticon.com/512/1912/1912354.png"
+                        src="https://files-hdlc-frontend.s3.amazonaws.com/daughter.png"
                         alt=""
                       />
                     </div>

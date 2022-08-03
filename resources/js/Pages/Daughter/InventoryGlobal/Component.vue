@@ -2,7 +2,7 @@
   <app-layout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Inventario de la comunidad {{ this.datac.comm_name }}
+        Inventario
       </h2>
       <div class="text-sm text-blue-700 mt-3 mb-6">
         Bienvenida Hermana: {{ $page.props.user.name }}
@@ -61,7 +61,7 @@
               dark:sm:text-white
             "
           >
-            Provincia Ecuador
+            {{ this.datac.comm_name }}
           </h1>
           <p
             class="
@@ -73,7 +73,7 @@
               dark:sm:text-slate-400
             "
           >
-            Información General del inventario de la comunidades u obra.
+            Información General del inventario de la comunidad u obra.
           </p>
         </div>
         <div

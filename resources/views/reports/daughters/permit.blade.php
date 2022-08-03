@@ -154,7 +154,7 @@
                     <li><strong>Fecha del consejo general que aprueba el Permiso: </strong>
                         {{ date('Y-m-d', strtotime($permit->date_general)) }}</li>
                     <li><strong>Fecha de Salida: </strong>
-                        {{ date('Y-m-d', strtotime($permit->date_exit)) }}</li>
+                        {{ date('Y-m-d', strtotime($permit->date_out)) }}</li>
                     <li><strong>Fecha de integración a la Comunidad: </strong>
                         {{ date('Y-m-d', strtotime($permit->date_in)) }}</li>
                     <li><strong>Observaciones : </strong>

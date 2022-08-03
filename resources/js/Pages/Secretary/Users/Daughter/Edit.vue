@@ -589,21 +589,28 @@
                   </div>
                 </div>
               </div>
-              <span
-                class="
-                  ml-4
-                  px-2
-                  inline-flex
-                  text-xs
-                  leading-5
-                  font-semibold
-                  rounded-full
-                  bg-emerald-100
-                  text-emerald-800
+              <div
+                v-if="
+                  profile_daughter.date_death == null &&
+                  profile_daughter.date_exit == null
                 "
               >
-                {{ ageProfile() }} Años
-              </span>
+                <span
+                  class="
+                    ml-4
+                    px-2
+                    inline-flex
+                    text-xs
+                    leading-5
+                    font-semibold
+                    rounded-full
+                    bg-emerald-100
+                    text-emerald-800
+                  "
+                >
+                  {{ ageProfile() }} Años
+                </span>
+              </div>
 
               <hr
                 class="
@@ -809,7 +816,6 @@
             />
             <span class="ml-2 text-sm text-gray-600">Sacramentos</span>
           </label>
-
         </div>
       </template>
 

@@ -228,37 +228,7 @@
             "
             @reset="reset"
           >
-            <!-- <v-date-picker v-model="params.date" is-required :format="format">
-              <template v-slot="{ inputValue, inputEvents }">
-                <input
-                  class="bg-white border px-2 py-1 rounded"
-                  :value="inputValue"
-                  v-on="inputEvents"
-                />
-              </template>
-            </v-date-picker> -->
 
-            <small class="block text-gray-700 mt-2">Estado:</small>
-
-            <select
-              v-model="params.status"
-              class="
-                mt-1
-                block
-                w-full
-                px-3
-                border border-gray-300
-                bg-white
-                rounded-md
-                shadow-sm
-                focus:outline-none focus:ring-blue-500 focus:border-blue-500
-                sm:text-sm
-              "
-            >
-              <option :value="null">Todos</option>
-              <option value="1">Vigentes</option>
-              <option value="2">Pasados</option>
-            </select>
           </search-filter>
         </div>
 
@@ -857,7 +827,8 @@
   </app-layout>
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import PrincipalLayout from "@/Components/Daughter/PrincipalLayout";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import { pickBy, throttle, mapValues } from "lodash";
 import { useForm, Link } from "@inertiajs/inertia-vue3";
 import moment from "moment";
@@ -884,6 +855,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import Dropdown from "@/Components/Dropdown";
 
 export default {
+  layout: PrincipalLayout,
   props: {
     files_list: Object,
     allProvinces: Object,
