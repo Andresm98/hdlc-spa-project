@@ -1,11 +1,8 @@
 <?php
 
-use App\Http\Controllers\API\Daughter\ProductController;
 use App\Http\Controllers\Api\Daughter\ProfileController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\BookController;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
