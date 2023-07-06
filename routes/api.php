@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\Daughter\ProfileController;
-use App\Http\Controllers\API\RegisterController;
+use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\BookController;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [RegisterController::class, 'login']);
