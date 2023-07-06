@@ -5,10 +5,42 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\API\BaseController as BaseController;
 
-class BookController extends BaseController
+class BookController
 {
+    public function sendResponse($result, $message)
+    {
+        $response = [
+            'success' => true,
+            'data'    => $result,
+            'message' => $message,
+        ];
+
+
+        return response()->json($response, 200);
+    }
+
+    /**
+     * return error response.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sendError($error, $errorMessages = [], $code = 404)
+    {
+        $response = [
+            'success' => false,
+            'message' => $error,
+        ];
+
+
+        if (!empty($errorMessages)) {
+            $response['data'] = $errorMessages;
+        }
+
+
+        return response()->json($response, $code);
+    }
+
     /**
      * Display a listing of the resource.
      *
