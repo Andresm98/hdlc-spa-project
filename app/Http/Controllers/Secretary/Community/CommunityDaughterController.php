@@ -39,7 +39,6 @@ class CommunityDaughterController extends Controller
                 ->join('profiles', 'profiles.user_id', '=', 'users.id')
                 ->join('transfers', 'transfers.profile_id', '=', 'profiles.id')
                 ->join('communities', 'communities.id', '=', 'transfers.community_id')
-
                 ->whereIn('transfers.community_id',  $array)
                 ->where('transfers.status', '=', 1)
                 ->get();

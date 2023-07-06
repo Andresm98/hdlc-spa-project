@@ -685,7 +685,8 @@ input:checked ~ .dot {
   <!-- Community Status Modal -->
   <jet-dialog-modal :show="displayingStatus" @close="displayingStatus = false">
     <template #title
-      ><h2 class="text-slate-600">Cambiar el estado del Perfil</h2>
+      >
+      <h2 class="text-slate-600">Cambiar el estado del Perfil</h2>
       <div class="mt-2 flex items-center justify-center">
         <span
           class="
@@ -825,6 +826,8 @@ input:checked ~ .dot {
           </div>
         </div>
       </div>
+
+
     </template>
 
     <template #footer>

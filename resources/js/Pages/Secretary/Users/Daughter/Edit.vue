@@ -37,133 +37,49 @@
     <br />
 
     <section
-      class="
-        bg-gray-200
-        dark:bg-slate-800
-        y-1
-        px-4
-        sm:p-6
-        md:py-10 md:px-8
-        pt-2
-        pb-4
-        rounded-lg
-        m-1
-      "
+      class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg m-1"
     >
       <div
-        class="
-          max-w-4xl
-          mx-auto
-          grid grid-cols-1
-          lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2
-        "
+        class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
       >
         <div
-          class="
-            relative
-            p-3
-            col-start-1
-            row-start-1
-            flex flex-col-reverse
-            rounded-lg
-            bg-gradient-to-t
-            from-black/75
-            via-black/0
-            sm:bg-none sm:row-start-2 sm:p-0
-            lg:row-start-1
-          "
+          class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 lg:row-start-1"
         >
           <h1
-            class="
-              mt-1
-              text-lg
-              font-semibold
-              text-black
-              sm:text-black
-              md:text-2xl
-              dark:sm:text-white
-            "
+            class="mt-1 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
           >
             Provincia Ecuador
           </h1>
           <p
-            class="
-              text-sm
-              leading-4
-              font-medium
-              text-black
-              sm:text-black
-              dark:sm:text-slate-400
-            "
+            class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
           >
             Información General de Hermana
           </p>
         </div>
         <div
-          class="
-            grid
-            gap-4
-            col-start-1 col-end-3
-            row-start-1
-            sm:mb-6 sm:grid-cols-4
-            lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0
-          "
+          class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
         >
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_2.png"
             alt=""
-            class="
-              w-full
-              h-60
-              object-cover
-              rounded-lg
-              sm:h-52 sm:col-span-2
-              lg:col-span-full
-            "
+            class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 lg:col-span-full"
             loading="lazy"
           />
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_3.png"
             alt=""
-            class="
-              hidden
-              w-full
-              h-52
-              object-cover
-              rounded-lg
-              sm:block sm:col-span-2
-              md:col-span-1
-              lg:row-start-2 lg:col-span-2 lg:h-32
-            "
+            class="hidden w-full h-52 object-cover rounded-lg sm:block sm:col-span-2 md:col-span-1 lg:row-start-2 lg:col-span-2 lg:h-32"
             loading="lazy"
           />
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_1.png"
             alt=""
-            class="
-              hidden
-              w-full
-              h-52
-              object-cover
-              rounded-lg
-              md:block
-              lg:row-start-2 lg:col-span-2 lg:h-32
-            "
+            class="hidden w-full h-52 object-cover rounded-lg md:block lg:row-start-2 lg:col-span-2 lg:h-32"
             loading="lazy"
           />
         </div>
         <dl
-          class="
-            mt-4
-            text-xs
-            font-medium
-            flex
-            items-center
-            row-start-2
-            sm:mt-1 sm:row-start-3
-            md:mt-2.5
-            lg:row-start-2
-          "
+          class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2"
         >
           <dt class="sr-only">Visto</dt>
           <dd class="text-indigo-600 flex items-center dark:text-indigo-400">
@@ -216,29 +132,10 @@
           </dd>
         </dl>
         <div
-          class="
-            mt-4
-            col-start-1
-            row-start-3
-            self-center
-            sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2
-            lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4
-          "
+          class="mt-4 col-start-1 row-start-3 self-center sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2 lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4"
         >
           <button
-            class="
-              bg-blue-500
-              pt-2
-              pb-2
-              px-4
-              ml-4
-              mr-4
-              rounded-md
-              cursor-pointer
-              text-md
-              hover:bg-blue-600
-              text-white
-            "
+            class="bg-blue-500 pt-2 pb-2 px-4 ml-4 mr-4 rounded-md cursor-pointer text-md hover:bg-blue-600 text-white"
             @click="openDialogReport()"
           >
             Imprimir Reporte
@@ -246,16 +143,7 @@
         </div>
 
         <div
-          class="
-            mt-4
-            text-sm
-            leading-6
-            col-start-1
-            sm:col-span-2
-            lg:mt-6 lg:row-start-4 lg:col-span-1
-            text-black
-            dark:text-white
-          "
+          class="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 text-black dark:text-white"
         >
           <p>
             La presente plantiflla de información se relaciona con los datos
@@ -292,18 +180,7 @@
     <section class="py-1 bg-slate-800 rounded-lg m-1">
       <div class="w-full lg:w-5/6 px-4 mx-auto mt-6">
         <div
-          class="
-            relative
-            flex flex-col
-            min-w-0
-            break-words
-            w-full
-            mb-6
-            shadow-lg
-            rounded-lg
-            bg-blueGray-100
-            border-0
-          "
+          class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
         >
           <div class="bg-neutral-100 hover:bg-gray-100 rounded-lg">
             <form @submit.prevent="submit" class="">
@@ -313,26 +190,7 @@
                     Tarjeta de Información General Hermana
                   </h6>
                   <button
-                    class="
-                      bg-blue-500
-                      hover:bg-blue-700
-                      text-white
-                      active:bg-blue-600
-                      font-bold
-                      uppercase
-                      text-xs
-                      px-4
-                      py-2
-                      rounded
-                      shadow
-                      hover:shadow-md
-                      outline-none
-                      focus:outline-none
-                      mr-1
-                      ease-linear
-                      transition-all
-                      duration-150
-                    "
+                    class="bg-blue-500 hover:bg-blue-700 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                     type="submit"
                   >
                     Guardar Tarjeta
@@ -341,14 +199,7 @@
               </div>
               <hr />
               <h6
-                class="
-                  mt-2
-                  text-lg
-                  font-medium
-                  text-center
-                  leading-6
-                  text-gray-900
-                "
+                class="mt-2 text-lg font-medium text-center leading-6 text-gray-900"
               >
                 Información General
               </h6>
@@ -366,22 +217,7 @@
                     <input
                       type="text"
                       placeholder="Nombre del usuario en el Sistema"
-                      class="
-                        border-0
-                        px-3
-                        py-3
-                        placeholder-blueGray-300
-                        text-black
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       @keydown.space.prevent
                       v-model="form.username"
                       readonly
@@ -400,22 +236,7 @@
                     <input
                       type="email"
                       placeholder="micorreo@correo.com"
-                      class="
-                        border-0
-                        px-3
-                        py-3
-                        placeholder-blueGray-300
-                        text-blueGray-600
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="form.email"
                       title="Ingrese el un correo electrónico válido."
                       required
@@ -433,22 +254,7 @@
                     <input
                       type="text"
                       placeholder="Ejm: Lucas Andres"
-                      class="
-                        border-0
-                        px-3
-                        py-3
-                        placeholder-blueGray-300
-                        text-black
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       onkeydown="return /[a-z, ]/i.test(event.key)"
                       onblur="if (this.value == '') {this.value = '';}"
                       onfocus="if (this.value == '') {this.value = '';}"
@@ -469,22 +275,7 @@
                     <input
                       type="text"
                       placeholder="Ejm: Lucas Andres"
-                      class="
-                        border-0
-                        px-3
-                        py-3
-                        placeholder-blueGray-300
-                        text-black
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       onkeydown="return /[a-z, ]/i.test(event.key)"
                       onblur="if (this.value == '') {this.value = '';}"
                       onfocus="if (this.value == '') {this.value = '';}"
@@ -506,22 +297,7 @@
                     <input
                       type="text"
                       placeholder="Ejm: Fuentes Ramos"
-                      class="
-                        border-0
-                        px-3
-                        py-3
-                        placeholder-blueGray-300
-                        text-blueGray-600
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       onkeydown="return /[a-z, ]/i.test(event.key)"
                       onblur="if (this.value == '') {this.value = '';}"
                       onfocus="if (this.value == '') {this.value = '';}"
@@ -536,22 +312,7 @@
                     <div class="section">
                       <jet-input-error :message="errors.file" />
                       <input
-                        class="
-                          block
-                          w-full
-                          text-sm text-blue-500
-                          file:mr-4
-                          file:py-2
-                          file:px-4
-                          file:rounded-full
-                          file:border-0
-                          file:text-sm
-                          file:font-semibold
-                          file:bg-blue-500
-                          file:text-white
-                          hover:file:bg-blue-600
-                          mb-4
-                        "
+                        class="block w-full text-sm text-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600 mb-4"
                         type="file"
                         accept="image/png, image/gif, image/jpeg"
                         @input="form.file = $event.target.files[0]"
@@ -589,38 +350,23 @@
                   </div>
                 </div>
               </div>
-              <div
-                v-if="
-                  profile_daughter.date_death == null &&
-                  profile_daughter.date_exit == null
-                "
-              >
-                <span
-                  class="
-                    ml-4
-                    px-2
-                    inline-flex
-                    text-xs
-                    leading-5
-                    font-semibold
-                    rounded-full
-                    bg-emerald-100
-                    text-emerald-800
+              <div v-if="profile_daughter != null">
+                <div
+                  v-if="
+                    profile_daughter.date_death == null &&
+                    profile_daughter.date_exit == null
                   "
                 >
-                  {{ ageProfile() }} Años
-                </span>
+                  <span
+                    class="ml-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800"
+                  >
+                    {{ ageProfile() }} Años
+                  </span>
+                </div>
               </div>
 
               <hr
-                class="
-                  mt-1
-                  mb-3
-                  ml-4
-                  mr-4
-                  border-b-1 border-blueGray-300
-                  hover:border-blueGray-100
-                "
+                class="mt-1 mb-3 ml-4 mr-4 border-b-1 border-blueGray-300 hover:border-blueGray-100"
               />
 
               <div
@@ -764,16 +510,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <label class="flex items-center">
             <input
-              class="
-                rounded
-                border-gray-300
-                text-emerald-600
-                shadow-sm
-                focus:border-emerald-300
-                focus:ring
-                focus:ring-emerald-200
-                focus:ring-opacity-50
-              "
+              class="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
               type="checkbox"
               :value="1"
               v-model="options"
@@ -782,16 +519,7 @@
           </label>
           <label class="flex items-center">
             <input
-              class="
-                rounded
-                border-gray-300
-                text-emerald-600
-                shadow-sm
-                focus:border-emerald-300
-                focus:ring
-                focus:ring-emerald-200
-                focus:ring-opacity-50
-              "
+              class="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
               type="checkbox"
               :value="2"
               v-model="options"
@@ -800,16 +528,7 @@
           </label>
           <label class="flex items-center">
             <input
-              class="
-                rounded
-                border-gray-300
-                text-emerald-600
-                shadow-sm
-                focus:border-emerald-300
-                focus:ring
-                focus:ring-emerald-200
-                focus:ring-opacity-50
-              "
+              class="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
               type="checkbox"
               :value="3"
               v-model="options"
@@ -830,16 +549,7 @@
         </jet-secondary-button>
 
         <a
-          class="
-            mx-2
-            bg-blue-600
-            text-white text-sm
-            leading-6
-            font-medium
-            py-2
-            px-3
-            rounded-lg
-          "
+          class="mx-2 bg-blue-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg"
           target="_blank"
           :href="
             this.route(`secretary.daughters.report.profile`, {

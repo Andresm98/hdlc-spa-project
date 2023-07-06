@@ -137,22 +137,6 @@
                       </select>
                     </div>
                     <hr />
-                    <!-- <small class="block text-gray-700 mt-2">Pastoral:</small>
-
-                    <select
-                      v-model="params.pastoral"
-                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    >
-                      <option :value="null">Todas</option>
-                      <option
-                        v-for="pastoral in pastorals"
-                        :key="pastoral"
-                        :value="pastoral.id"
-                      >
-                        {{ pastoral.name }}
-                      </option>
-                    </select> -->
-
                     <small class="block text-gray-700 mt-2"
                       >Por Provincia:</small
                     >

@@ -29,109 +29,37 @@
     <operation></operation>
 
     <section
-      class="
-        bg-gray-200
-        dark:bg-slate-800
-        y-1
-        px-4
-        sm:p-6
-        md:py-10 md:px-8
-        pt-2
-        pb-4
-        rounded-lg
-        sm:m-2
-        lg:m-3
-        md:m-4
-      "
+      class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg sm:m-2 lg:m-3 md:m-4"
     >
       <div
-        class="
-          max-w-4xl
-          mx-auto
-          grid grid-cols-1
-          lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2
-        "
+        class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
       >
         <div
-          class="
-            relative
-            p-3
-            col-start-1
-            row-start-1
-            flex flex-col-reverse
-            rounded-lg
-            bg-gradient-to-t
-            from-black/75
-            via-black/0
-            sm:bg-none sm:row-start-2 sm:p-0
-            md:bg-none md:row-start-2 md:p-0
-            lg:row-start-1
-          "
+          class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 md:bg-none md:row-start-2 md:p-0 lg:row-start-1"
         >
           <h1
-            class="
-              mt-1
-              text-lg
-              font-semibold
-              text-black
-              sm:text-black
-              md:text-2xl
-              dark:sm:text-white
-            "
+            class="mt-1 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
           >
             {{ community.comm_name }}
           </h1>
           <p
-            class="
-              text-sm
-              leading-4
-              font-medium
-              text-black
-              sm:text-black
-              dark:sm:text-slate-400
-            "
+            class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
           >
             Información General de los archivos pertenecientes a la Comunidad.
           </p>
         </div>
         <div
-          class="
-            grid
-            gap-4
-            col-start-1 col-end-3
-            row-start-1
-            sm:mb-6 sm:grid-cols-4
-            md:mb-6 md:grid-cols-4
-            lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0
-          "
+          class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 md:mb-6 md:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
         >
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_2.png"
             alt=""
-            class="
-              w-full
-              h-60
-              object-cover
-              rounded-lg
-              sm:h-52 sm:col-span-2
-              md:h-52 md:col-span-2
-              lg:col-span-full
-            "
+            class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 md:h-52 md:col-span-2 lg:col-span-full"
             loading="lazy"
           />
         </div>
         <dl
-          class="
-            mt-4
-            text-xs
-            font-medium
-            flex
-            items-center
-            row-start-2
-            sm:mt-1 sm:row-start-3
-            md:mt-1 md:row-start-3
-            lg:row-start-2
-          "
+          class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-1 md:row-start-3 lg:row-start-2"
         >
           <dt class="sr-only">Visto</dt>
           <dd class="text-indigo-600 flex items-center dark:text-indigo-400">
@@ -205,13 +133,7 @@
     <div class="container mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <div
-          class="
-            justify-center
-            text-sm
-            border-1 border-gray-300
-            rounded-sm
-            bg-gray-100
-          "
+          class="justify-center text-sm border-1 border-gray-300 rounded-sm bg-gray-100"
         >
           <small class="justify-content-center ml-20 uppercase"
             >Comunidad</small
@@ -231,13 +153,7 @@
         </div>
 
         <div
-          class="
-            justify-center
-            text-sm
-            border-1 border-gray-300
-            rounded-sm
-            bg-gray-100
-          "
+          class="justify-center text-sm border-1 border-gray-300 rounded-sm bg-gray-100"
         >
           <small class="justify-content-center ml-20 uppercase"
             >Filtros de Búsqueda</small
@@ -245,27 +161,14 @@
 
           <search-filter
             v-model="params.search"
-            class="
-              border border-blue-300
-              rounded-md
-              shadow-sm
-              focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
-              sm:text-sm
-            "
+            class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             @reset="reset"
           >
           </search-filter>
         </div>
 
         <div
-          class="
-            justify-center
-            text-sm
-            border-1 border-gray-300
-            rounded-sm
-            p-1
-            bg-gray-100
-          "
+          class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
         >
           <small class="justify-content-center ml-20 uppercase"
             >Rangos de Fechas</small
@@ -308,54 +211,25 @@
                 <tr>
                   <th
                     scope="col"
-                    class="
-                      pl-4
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Comunidad y Nombre Archivo
                   </th>
                   <th
                     scope="col"
-                    class="
-                      pl-4
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Tamaño - Extensión
                   </th>
                   <th
                     scope="col"
-                    class="
-                      pl-4
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Fecha Creación - Fecha Actualización
                   </th>
                   <th
                     scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Acciones
                   </th>
@@ -365,17 +239,7 @@
                 <tr v-for="file in this.files_list.data" :key="file">
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span
-                      class="
-                        my-2
-                        px-2
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-pink-100
-                        text-pink-800
-                      "
+                      class="my-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-pink-100 text-pink-800"
                     >
                       {{ file.fileable.comm_name }}
                     </span>
@@ -384,16 +248,7 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span
-                      class="
-                        px-2
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-green-100
-                        text-green-800
-                      "
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                     >
                       {{ this.bytesToSize(file.filesize) }} -
                       {{ this.extensionFile(file.external_filename) }}
@@ -401,43 +256,19 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span
-                      class="
-                        px-2
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-red-100
-                        text-red-800
-                      "
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
                     >
                       {{ this.formatShowDate(file.created_at) }}
                     </span>
                     -
                     <span
-                      class="
-                        px-2
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-yellow-100
-                        text-yellow-800
-                      "
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"
                     >
                       {{ this.formatShowDate(file.updated_at) }}
                     </span>
                   </td>
                   <td
-                    class="
-                      px-3
-                      py-4
-                      whitespace-nowrap
-                      text-right text-sm
-                      font-medium
-                    "
+                    class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                   >
                     <!-- Components -->
 
@@ -559,17 +390,7 @@
               {{ $page.props.errors.filedata }}
             </p>
             <div
-              class="
-                mt-1
-                flex
-                justify-center
-                px-6
-                pt-5
-                pb-6
-                border-2 border-gray-300 border-dashed
-                rounded-md
-                hover:border-blue-600
-              "
+              class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-blue-600"
             >
               <div class="space-y-1 text-center">
                 <svg
@@ -589,39 +410,13 @@
                 <div class="flex text-sm text-gray-600">
                   <label
                     for="file-upload"
-                    class="
-                      relative
-                      cursor-pointer
-                      bg-white
-                      rounded-md
-                      font-medium
-                      text-blue-600
-                      hover:text-blue-500
-                      focus-within:outline-none
-                      focus-within:ring-2
-                      focus-within:ring-offset-2
-                      focus-within:ring-blue-500
-                    "
+                    class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
                   >
                     <input
                       id="file-upload"
                       name="file-upload"
                       type="file"
-                      class="
-                        block
-                        w-full
-                        text-sm text-blue-500
-                        file:mr-4
-                        file:px-4
-                        file:rounded-full
-                        file:border-0
-                        file:text-sm
-                        file:font-semibold
-                        file:bg-emerald-500
-                        file:text-white
-                        hover:file:bg-emerald-600
-                        mb-4
-                      "
+                      class="block w-full text-sm text-blue-500 file:mr-4 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-500 file:text-white hover:file:bg-emerald-600 mb-4"
                       @input="form.filedata = $event.target.files[0]"
                       @change="onFileChange"
                     />
@@ -686,22 +481,7 @@
           minLength="10"
           maxlength="40"
           placeholder="Ingresar "
-          class="
-            border-0
-            px-3
-            my-2
-            placeholder-blueGray-300
-            text-blueGray-600
-            bg-white
-            rounded
-            text-sm
-            shadow
-            focus:outline-none focus:ring
-            w-full
-            ease-linear
-            transition-all
-            duration-150
-          "
+          class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
           v-model="this.updateFileForm.external_filename"
           required
           readonly
@@ -746,22 +526,7 @@
                 minLength="10"
                 maxlength="40"
                 placeholder="Ingresar "
-                class="
-                  border-0
-                  px-3
-                  my-2
-                  placeholder-blueGray-300
-                  text-blueGray-600
-                  bg-white
-                  rounded
-                  text-sm
-                  shadow
-                  focus:outline-none focus:ring
-                  w-full
-                  ease-linear
-                  transition-all
-                  duration-150
-                "
+                class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 v-model="deleteFileForm.external_filename"
                 required
                 readonly
@@ -816,7 +581,7 @@ export default {
   props: {
     files_list: Object,
     allProvinces: Object,
-    community: Object,
+
     filters: Object,
   },
   setup() {
@@ -855,6 +620,7 @@ export default {
 
   data() {
     return {
+      community: Object,
       params: {
         search: this.filters.search,
         date: this.filters.date,

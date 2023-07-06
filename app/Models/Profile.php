@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Book;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +15,8 @@ class Profile extends Model
     protected $fillable = [
         'identity_card', 'status', 'date_birth', 'date_vocation',
         'date_admission', 'date_send', 'date_vote', 'date_death', 'date_exit', 'date_retirement',
-        'iess_card', 'driver_license', 'cellphone', 'phone', 'observation'
+        'iess_card', 'driver_license', 'cellphone', 'phone', 'observation',
+        'date_other_country', 'book_id', 'place_other_country', 'ph_docs', 'dg_docs'
     ];
 
     /**
@@ -34,10 +36,14 @@ class Profile extends Model
 
     // Relacion uno a uno
 
-
-    public function  info_family()
+    public function info_family()
     {
         return $this->hasOne('App\Models\InfoFamily');
+    }
+
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
     }
 
     /**

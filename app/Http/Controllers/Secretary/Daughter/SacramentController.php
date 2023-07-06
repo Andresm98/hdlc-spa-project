@@ -20,14 +20,16 @@ class SacramentController extends Controller
         $validator = Validator::make(['id' => $user_id], [
             'id' => ['required', 'exists:users,id']
         ]);
+
         if ($validator->fails()) {
             return abort(404);
         }
-        $user = User::find($user_id);
-        return $user->profile->sacraments()
-        ->orderBy('sacrament_date','DESC')
-        ->get();
 
+        $user = User::find($user_id);
+
+        return $user->profile->sacraments()
+            ->orderBy('sacrament_date', 'DESC')
+            ->get();
     }
 
     /**

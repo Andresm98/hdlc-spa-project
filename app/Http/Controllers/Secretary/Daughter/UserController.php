@@ -163,7 +163,6 @@ class UserController extends Controller
             });
         }
 
-
         if (request('perProvince')) {
             $query->whereHas("profile", function ($q) {
                 $address = Address::whereHasMorph(
@@ -340,12 +339,15 @@ class UserController extends Controller
 
         $user->assignRole('daughter');
         // Input File
-        $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->id, 's3');
-        Storage::disk('s3')->setVisibility($path, 'private');
-        $user->image()->create([
-            'filename' => $path,
-            'url' => Storage::disk('s3')->url($path)
-        ]);
+        if ($request->file('file')) {
+            $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->id, 's3');
+            Storage::disk('s3')->setVisibility($path, 'private');
+            $user->image()->create([
+                'filename' => $path,
+                'url' => Storage::disk('s3')->url($path)
+            ]);
+        }
+
         return redirect()->route('secretary.daughters.edit', $user->slug)->with([
             'success' => 'Hermana creada correctamente.',
         ]);
