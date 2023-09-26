@@ -20,7 +20,6 @@
               :message="$page.props.flash.error"
             >
             </alert>
-
     <section
       class="
         bg-gray-200
@@ -320,18 +319,6 @@
                     />
                   </div>
                   <div class="relative w-full mb-3">
-                    <!-- <select-input
-                                            v-model="form.country"
-                                            :error="form.errors.country"
-                                            class=""
-                                        >
-                                            <option value="CA">Canada</option>
-                                            <option value="CA1">
-                                                United States
-                                            </option>
-                                            <option value="CA2">Canada</option>
-                                            <option value="CA3">Mexico</option>
-                                        </select-input> -->
                   </div>
                 </div>
                 <div class="w-full lg:w-1/3 px-4">

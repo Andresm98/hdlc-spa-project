@@ -48,11 +48,9 @@ class ProfileController
             'message' => $error,
         ];
 
-
         if (!empty($errorMessages)) {
             $response['data'] = $errorMessages;
         }
-
 
         return response()->json($response, $code);
     }
@@ -67,7 +65,7 @@ class ProfileController
     {
         request()->validate([
             'direction' => ['in:asc,desc'],
-            'field' => ['in:name,email'],
+            'field' => ['in:lastname,email'],
             'dateStart' => ['date_format:Y-m-d'],
         ]);
 
@@ -99,7 +97,6 @@ class ProfileController
                 });
             });
         }
-
 
         if (request('perProvince')) {
             $query->whereHas("profile", function ($q) {
@@ -218,6 +215,9 @@ class ProfileController
                 if (request('status') == 5) {
                     $q->where('date_other_country', '!=', null)->orderBy('date_other_country', 'desc');
                 }
+                if (request('status') == 6) {
+                    $q->where('status', 5);
+                }
             });
         }
 
@@ -229,8 +229,10 @@ class ProfileController
             'provinces' => $provinces,
             'daughtersListResponse' => $query
                 ->with('profile')
+                ->with('profile.address')
+                ->with('profile.origin')
                 ->with('profile.appointments.appointment_level')
-                ->with('profile.book')
+                ->with('profile.profileBooks.book')
                 ->paginate(request('perPage'))
                 ->appends(request()->query()),
             'pastorals' => $pastorals,
@@ -258,9 +260,8 @@ class ProfileController
      */
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:60|unique:users',
+            // 'username' => 'required|string|max:60|unique:users',
             'name' => 'required|string|max:60',
             'fullnamecomm' => 'required|string|max:60',
             'lastname' => 'required|string|max:60',
@@ -271,9 +272,11 @@ class ProfileController
             return $this->sendError('Los errores son los siguientes.', $validator->errors());
         }
 
+        $username = Str::slug($request->get('name') . '-' . $request->get('lastname') . '-' . random_int(100, 10000));
+
         $user = tap(User::create([
-            'username' => $request->get('username'),
-            'slug' => Str::slug($request->get('username') . '-' . random_int(100, 10000)),
+            'username' => $username,
+            'slug' => Str::slug($username . '-' . date("Y")),
             'name' => $request->get('name'),
             'fullnamecomm' => $request->get('fullnamecomm'),
             'lastname' => $request->get('lastname'),
@@ -298,7 +301,9 @@ class ProfileController
             }
 
             $path = $request->file('file')->store('documents/daugther-profiles/image/' . $user->id, 's3');
+
             Storage::disk('s3')->setVisibility($path, 'private');
+
             $user->image()->create([
                 'filename' => $path,
                 'url' => Storage::disk('s3')->url($path)
@@ -393,12 +398,11 @@ class ProfileController
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($daughterId)],
             // 'file' => ['nullable', 'mimes:jpg,jpeg,png', 'max:2048'],
-
             'identity_card' => ['required', 'string', 'max:13'],
             'iess_card' => ['nullable', 'string', 'max:30'],
             'driver_license' => ['nullable', 'string', 'max:50'],
-            'date_birth' => ['required', 'date_format:Y-m-d'],
-            'date_vocation' => ['nullable', 'date_format:Y-m-d'],
+            'date_birth' => ['nullable', 'date_format:Y-m-d'],
+            'date_vocation' => ['required', 'date_format:Y-m-d'],
             'date_admission' => ['nullable', 'date_format:Y-m-d'],
             'date_send' => ['nullable', 'date_format:Y-m-d'],
             'date_vote' => ['nullable', 'date_format:Y-m-d'],
@@ -409,14 +413,13 @@ class ProfileController
             'observation' => ['nullable', 'string', 'max:4000'],
             'box' => ['nullable', 'string', 'max:15'],
             'page' => ['nullable', 'integer', 'min:1'],
-            'book_id' => ['numeric', 'nullable', 'exists:books,id'],
             'ph_docs' => ['nullable', 'numeric'],
             'dg_docs' => ['nullable', 'numeric'],
+            'address' => ['required', 'string', 'max:100'],
+            'address_pd' => ['required', 'string', 'exists:political_divisions,id'],
+            'origin' => ['required', 'string', 'max:100'],
+            'origin_pd' => ['nullable', 'string', 'exists:political_divisions,id']
         ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Los errores son los siguientes.', $validator->errors());
-        }
 
         $user = User::find($daughterId);
 
@@ -455,6 +458,10 @@ class ProfileController
             }
         }
 
+        if ($validator->fails()) {
+            return $this->sendError('Los errores son los siguientes.', $validator->errors());
+        }
+
         $user->update(
             [
                 'name' => $request->get('name'),
@@ -481,21 +488,31 @@ class ProfileController
                 'cellphone' => $request->get("cellphone"),
                 'phone' => $request->get("phone"),
                 'observation' => $request->get("observation"),
-
-
                 'box' => $request->get('box'),
                 'page' => $request->get('page'),
-                'book_id' => $request->get('book_id'),
                 'ph_docs' => $request->get('ph_docs'),
                 'dg_docs' => $request->get('dg_docs'),
             ]);
 
             $profile->address()->create([
-                'address' => 'Dir Default',
-                'political_division_id' => 999999
+                'address' => $request->get('address'),
+                'political_division_id' => $request->get('address_pd')
             ]);
 
-            return $this->sendResponse($user, 'El perfil de la hermana se ha creado correctamente.');
+            $profile->origin()->create([
+                'address' => $request->get('origin'),
+                'political_division_id' => $request->get('origin_pd')
+            ]);
+
+            $profileBooks = (array) json_decode($request->get('book_id'));
+
+            foreach ($profileBooks as $proBook) {
+                $profile->profileBooks()->create([
+                    'book_id' => $proBook->id,
+                ]);
+            }
+
+            return $this->sendResponse([], 'El perfil de la hermana se ha creado correctamente.');
         } else {
             $user->profile()->update([
                 'identity_card' => $request->get("identity_card"),
@@ -510,17 +527,33 @@ class ProfileController
                 'cellphone' => $request->get("cellphone"),
                 'phone' => $request->get("phone"),
                 'observation' => $request->get("observation"),
-
                 'box' => $request->get('box'),
                 'page' => $request->get('page'),
-                'book_id' => $request->get('book_id'),
                 'ph_docs' => $request->get('ph_docs'),
                 'dg_docs' => $request->get('dg_docs'),
             ]);
 
-            $this->updateStatus($request, $user->profile->id, $operation);
+            $user->profile->address()->update([
+                'address' => $request->get('address'),
+                'political_division_id' => $request->get('address_pd')
+            ]);
 
-            return $this->sendResponse($user, 'El perfil de la hermana se ha actualizado correctamente.');
+            $user->profile->origin()->update([
+                'address' => $request->get('origin'),
+                'political_division_id' => $request->get('origin_pd')
+            ]);
+
+            $user->profile->profileBooks()->delete();
+
+            $profileBooks = (array) json_decode($request->get('book_id'));
+
+            foreach ($profileBooks as $proBook) {
+                $user->profile->profileBooks()->create([
+                    'book_id' => $proBook->id,
+                ]);
+            }
+
+            return $this->updateStatus($request, (int)$user->profile->id, (int) $operation);
         }
     }
 
@@ -539,7 +572,15 @@ class ProfileController
 
         $profile = Profile::find($profile_id);
 
-        if ($operation == 1) {
+        if ($operation === 1) {
+            $validatorData = Validator::make($request->all(), [
+                'date_vocation' => ['required', 'date_format:Y-m-d'],
+            ]);
+
+            if ($validatorData->fails()) {
+                return $this->sendError('Los errores son los siguientes.', $validatorData->errors());
+            }
+
             $profile->update([
                 'status' =>  1,
                 'date_death' => null,
@@ -548,13 +589,13 @@ class ProfileController
                 'place_other_country' => null,
             ]);
         }
-        if ($operation == 2) {
+        if ($operation === 2) {
             $validatorData = Validator::make($request->all(), [
                 'date_death' => ['required', 'date_format:Y-m-d'],
             ]);
 
             if ($validatorData->fails()) {
-                return $this->sendError('Los errores son los siguientes.', $validator->errors());
+                return $this->sendError('Los errores son los siguientes.', $validatorData->errors());
             }
 
             $profile->update([
@@ -564,36 +605,14 @@ class ProfileController
                 'date_other_country' => null,
                 'place_other_country' => null,
             ]);
-
-            $transfer = $profile->transfers->where('status', 1)->first();
-            if ($transfer) {
-                $transfer->update([
-                    'transfer_date_relocated' => $request->get('date_death'),
-                    'status' => 0
-                ]);
-                $appointments = $transfer->appointments;
-                foreach ($appointments as $appointment) {
-                    $appointment->update([
-                        'date_end_appointment' => $request->get('date_death'),
-                        'status' => 0
-                    ]);
-                }
-            }
-
-            $permission = $profile->permits->where('status', 1)->first();
-            if ($permission) {
-                $permission->update([
-                    'status' => 0,
-                ]);
-            }
         }
-        if ($operation == 3) {
+        if ($operation === 3) {
             $validatorData = Validator::make($request->all(), [
                 'date_exit' => ['required', 'date_format:Y-m-d'],
             ]);
 
             if ($validatorData->fails()) {
-                return $this->sendError('Los errores son los siguientes.', $validator->errors());
+                return $this->sendError('Los errores son los siguientes.', $validatorData->errors());
             }
 
             $profile->update([
@@ -603,37 +622,15 @@ class ProfileController
                 'date_other_country' => null,
                 'place_other_country' => null,
             ]);
-
-            $transfer = $profile->transfers->where('status', 1)->first();
-            if ($transfer) {
-                $transfer->update([
-                    'transfer_date_relocated' => $request->get('date_exit'),
-                    'status' => 0
-                ]);
-                $appointments = $transfer->appointments;
-                foreach ($appointments as $appointment) {
-                    $appointment->update([
-                        'date_end_appointment' => $request->get('date_exit'),
-                        'status' => 0
-                    ]);
-                }
-            }
-
-            $permission = $profile->permits->where('status', 1)->first();
-            if ($permission) {
-                $permission->update([
-                    'status' => 0,
-                ]);
-            }
         }
-        if ($operation == 4) {
+        if ($operation === 4) {
             $validatorData = Validator::make($request->all(), [
                 'date_other_country' => ['required', 'date_format:Y-m-d'],
                 'place_other_country' => ['required', 'string', 'max:100'],
             ]);
 
             if ($validatorData->fails()) {
-                return $this->sendError('Los errores son los siguientes.', $validator->errors());
+                return $this->sendError('Los errores son los siguientes.', $validatorData->errors());
             }
 
             $profile->update([
@@ -643,29 +640,9 @@ class ProfileController
                 'date_other_country' => $request->get('date_other_country'),
                 'place_other_country' => $request->get('place_other_country'),
             ]);
-
-            $transfer = $profile->transfers->where('status', 1)->first();
-            if ($transfer) {
-                $transfer->update([
-                    'transfer_date_relocated' => $request->get('date_other_country'),
-                    'status' => 0
-                ]);
-                $appointments = $transfer->appointments;
-                foreach ($appointments as $appointment) {
-                    $appointment->update([
-                        'date_end_appointment' => $request->get('date_other_country'),
-                        'status' => 0
-                    ]);
-                }
-            }
-
-            $permission = $profile->permits->where('status', 1)->first();
-            if ($permission) {
-                $permission->update([
-                    'status' => 0,
-                ]);
-            }
         }
+
+        return $this->sendResponse([], 'El perfil de la hermana se ha actualizado correctamente.');
     }
 
     /**

@@ -87,9 +87,6 @@
     </section>
   </div>
 
-  <!--
-    Comm
- -->
   <div class="flex overflow-x-auto space-x-4 w-full py-1 my-1">
     <section class="flex-shrink-0">
       <Link
@@ -103,6 +100,7 @@
         Actividades Comunidad
       </Link>
     </section>
+
     <section class="flex-shrink-0">
       <Link
         :href="route('daughter.resumes.index')"
@@ -115,6 +113,7 @@
         Resumenes Anuales Comunidad
       </Link>
     </section>
+
     <section class="flex-shrink-0">
       <Link
         :href="route('daughter.visits.index')"
@@ -127,6 +126,7 @@
         Visitas Comunidad
       </Link>
     </section>
+
     <section class="flex-shrink-0">
       <Link
         :href="route('daughter.filesglobal.communities.index')"
@@ -139,6 +139,7 @@
         Archivos Comunidad
       </Link>
     </section>
+
     <section class="flex-shrink-0">
       <Link
         :href="route('daughter.community.inventory.index')"

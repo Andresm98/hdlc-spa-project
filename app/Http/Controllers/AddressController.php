@@ -80,13 +80,11 @@ class AddressController extends Controller
             ->get();
 
         // Provinces
-
         $data_province = DB::table('political_divisions')
             ->where('id', '=', $data_canton->political_divisionc_id)
             ->where('level', '=', '1')
             ->get()
             ->first();
-
 
         return response()->json([
             'data_parish' => $data_parish,
@@ -95,6 +93,125 @@ class AddressController extends Controller
             'cantons' => $cantons,
             'data_province' => $data_province
         ]);
+    }
+
+    public function getSaveAddressBt($actual_ubication)
+    {
+
+        if (!$actual_ubication) {
+            return response()->json([
+                'data_parish' => null,
+                'parishes' => null,
+                'data_canton' => null,
+                'cantons' => null,
+                'data_province' => null
+            ]);
+        }
+
+        $pivote_ubication = DB::table('political_divisions')
+            ->where('id', "=", $actual_ubication)
+            ->first();
+
+        if ($pivote_ubication->level === 1) {
+            $data_province = DB::table('political_divisions')
+                ->where('id', '=', $actual_ubication)
+                ->where('level', '=', '1')
+                ->get()
+                ->first();
+
+            $cantons = DB::table('political_divisions')
+                ->where('political_divisionc_id', '=', $data_province->id)
+                ->where('level', '=', '2')
+                ->get();
+
+            return response()->json([
+                'data_parish' => null,
+                'parishes' => null,
+                'data_canton' => null,
+                'cantons' => $cantons,
+                'data_province' => $data_province
+            ]);
+        }
+
+        if ($pivote_ubication->level === 2) {
+            // Cantons
+            $data_canton = DB::table('political_divisions')
+                ->where('id', '=', $actual_ubication)
+                ->where('level', '=', '2')
+                ->get()
+                ->first();
+
+            $cantons = DB::table('political_divisions')
+                ->where('political_divisionc_id', '=', $data_canton->political_divisionc_id)
+                ->where('level', '=', '2')
+                ->get();
+
+            // Provinces
+
+            $data_province = DB::table('political_divisions')
+                ->where('id', '=', $data_canton->political_divisionc_id)
+                ->where('level', '=', '1')
+                ->get()
+                ->first();
+
+            // parishes
+
+            $parishes =  DB::table('political_divisions')
+                ->where('political_divisionc_id', "=", $data_canton->id)
+                ->where('level', '=', '3')
+                ->get();
+
+
+            return response()->json([
+                'data_parish' => null,
+                'parishes' => $parishes,
+                'data_canton' => $data_canton,
+                'cantons' => $cantons,
+                'data_province' => $data_province
+            ]);
+        }
+
+        if ($pivote_ubication->level === 3) {
+            // Parishes
+            $data_parish = DB::table('political_divisions')
+                ->where('id', "=", $actual_ubication)
+                ->where('level', '=', '3')
+                ->get()
+                ->first();
+
+            $parishes =  DB::table('political_divisions')
+                ->where('political_divisionc_id', "=", $data_parish->political_divisionc_id)
+                ->where('level', '=', '3')
+                ->get();
+
+            // Cantons
+            $data_canton = DB::table('political_divisions')
+                ->where('id', '=', $data_parish->political_divisionc_id)
+                ->where('level', '=', '2')
+                ->get()
+                ->first();
+
+            $cantons = DB::table('political_divisions')
+                ->where('political_divisionc_id', '=', $data_canton->political_divisionc_id)
+                ->where('level', '=', '2')
+                ->get();
+
+            // Provinces
+
+            $data_province = DB::table('political_divisions')
+                ->where('id', '=', $data_canton->political_divisionc_id)
+                ->where('level', '=', '1')
+                ->get()
+                ->first();
+
+            return response()->json([
+                'data_parish' => $data_parish,
+                'parishes' => $parishes,
+                'data_canton' => $data_canton,
+                'cantons' => $cantons,
+                'data_province' => $data_province
+            ]);
+        }
     }
 
     public function getActualAddress($actual_parish)

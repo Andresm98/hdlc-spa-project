@@ -2,22 +2,13 @@
   <!-- {{$daughter_custom}} -->
   <form @submit.prevent="submit" class="bg-gray-100 p-2 border-2 rounded-lg">
     <h6
-      class="
-        mt-2
-        mb-4
-        text-lg
-        font-medium
-        text-center
-        leading-6
-        text-gray-900
-        uppercase
-      "
+      class="mt-2 mb-4 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
     >
       Crear Perfil Personal
     </h6>
 
     <div class="flex flex-wrap">
-      <div class="w-full lg:w-4/12 px-4">
+      <div class="w-full lg:w-4/12 px-4 my-4">
         <div class="">
           <label
             class="block text-sm font-medium text-gray-700"
@@ -46,29 +37,14 @@
               maxlength="13"
               placeholder="0102211274 ó 0102211274001"
               pattern="[+-]?\d+(?:[.,]\d+)?"
-              class="
-                border-0
-                px-3
-                py-3
-                placeholder-blueGray-300
-                text-blueGray-600
-                bg-white
-                rounded
-                text-sm
-                shadow
-                focus:outline-none focus:ring
-                w-full
-                ease-linear
-                transition-all
-                duration-150
-              "
+              class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               v-model="form.identity_card"
               required
             />
           </div>
         </div>
       </div>
-      <div class="w-full lg:w-4/12 px-4">
+      <div class="w-full lg:w-4/12 px-4 my-4">
         <div class="relative w-full mb-3">
           <label
             class="block text-sm font-medium text-gray-700"
@@ -89,6 +65,110 @@
             autoApply
             required
           />
+        </div>
+      </div>
+
+      <div class="w-full lg:w-2/5 px-4 mb-2">
+        <div class="w-full">
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
+            Provincia Nacimiento:
+          </label>
+          <div>
+            <multiselect
+              :searchable="true"
+              v-model="selectOneBt.selectedProvince"
+              :options="this.allProvinces"
+              :close-on-select="true"
+              :clear-on-select="false"
+              mode="tags"
+              label="name"
+              @search-change="onSearchProvincesChangeBt"
+              @select="onSelectedProvinceBt"
+              track-by="name"
+              placeholder="Buscar provincia"
+            >
+            </multiselect>
+          </div>
+        </div>
+      </div>
+      <div class="w-full lg:w-3/5 px-4 mb-2">
+        <div class="relative w-full">
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
+            Cantón Nacimiento:
+          </label>
+          <div>
+            <multiselect
+              :searchable="true"
+              v-model="selectTwoBt.selectedCanton"
+              :options="selectTwoBt.options"
+              :close-on-select="true"
+              :clear-on-select="false"
+              mode="tags"
+              label="name"
+              @select="onSelectedCantonBt"
+              @search-change="onSearchCantonChangeBt"
+              track-by="name"
+              placeholder="Buscar cantón"
+            >
+            </multiselect>
+          </div>
+        </div>
+      </div>
+      <div class="w-full lg:w-12/12 px-4 mb-2">
+        <div class="relative w-full">
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
+            Parroquia Nacimiento:
+          </label>
+          <div>
+            <multiselect
+              :searchable="true"
+              v-model="selectThreeBt.selectedParish"
+              :options="selectThreeBt.options"
+              :close-on-select="true"
+              :clear-on-select="false"
+              label="name"
+              @select="onSelectedParishBt"
+              @search-change="onSearchParishChangeBt"
+              track-by="name"
+              placeholder="Buscar parroquia"
+            >
+            </multiselect>
+          </div>
+        </div>
+      </div>
+      <div class="w-full lg:w-12/12 px-4">
+        <div class="relative w-full mb-3">
+          <label for="address" class="block text-sm font-medium text-gray-700">
+            Lugar de Nacimiento Observaciones:
+          </label>
+          <p
+            class="text-red-400 text-sm"
+            v-show="$page.props.errors.address_bt"
+          >
+            {{ $page.props.errors.address_bt }}
+          </p>
+          <small>Formato: Ingrese la dirección máximo 100 caracteres.</small>
+          <div class="mb-1">
+            <textarea
+              id="address_bt"
+              name="address_bt"
+              rows="1"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
+              v-model="form.address_bt"
+              placeholder="Agregar la dirección actual.."
+              :maxlength="100"
+              required
+            />
+          </div>
         </div>
       </div>
 
@@ -184,22 +264,7 @@
             pattern="^\d{10}$"
             title="Ingrese un número de celular con un formato válido, máximo 15 digitos."
             placeholder="123-4567-890"
-            class="
-              border-0
-              px-3
-              py-3
-              placeholder-blueGray-300
-              text-blueGray-600
-              bg-white
-              rounded
-              text-sm
-              shadow
-              focus:outline-none focus:ring
-              w-full
-              ease-linear
-              transition-all
-              duration-150
-            "
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             v-model="form.cellphone"
             required
           />
@@ -226,24 +291,8 @@
             pattern="^\d{9}$"
             title="Ingrese un número de celular con un formato válido, máximo 12 digitos."
             placeholder="123-4567-890"
-            class="
-              border-0
-              px-3
-              py-3
-              placeholder-blueGray-300
-              text-blueGray-600
-              bg-white
-              rounded
-              text-sm
-              shadow
-              focus:outline-none focus:ring
-              w-full
-              ease-linear
-              transition-all
-              duration-150
-            "
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             v-model="form.phone"
-
           />
         </div>
       </div>
@@ -253,7 +302,7 @@
       <div class="w-full lg:w-full px-4">
         <div>
           <label for="address" class="block text-sm font-medium text-gray-700">
-            Dirección Actual:
+            Dirección Residencia Actual:
           </label>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.address">
             {{ $page.props.errors.address }}
@@ -264,17 +313,7 @@
               id="address"
               name="address"
               rows="1"
-              class="
-                shadow-sm
-                focus:ring-blue-500 focus:border-blue-500
-                mt-1
-                mb-2
-                block
-                w-full
-                sm:text-sm
-                border border-gray-300
-                rounded-md
-              "
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
               v-model="form.address"
               placeholder="Agregar la dirección actual.."
               :maxlength="100"
@@ -283,14 +322,13 @@
           </div>
         </div>
       </div>
-
       <div class="w-full lg:w-2/5 px-4 mb-2">
         <div class="w-full">
           <label
             class="block text-sm font-medium text-gray-700"
             htmlfor="grid-password"
           >
-            Provincia:
+            Provincia Residencia:
           </label>
           <div :class="{ invalid: isInvalid }">
             <multiselect
@@ -317,7 +355,7 @@
             class="block text-sm font-medium text-gray-700"
             htmlfor="grid-password"
           >
-            Cantón:
+            Cantón Residencia:
           </label>
           <div :class="{ invalid: isInvalidCanton }">
             <multiselect
@@ -340,14 +378,13 @@
           </div>
         </div>
       </div>
-
       <div class="w-full lg:w-12/12 px-4 mb-2">
         <div class="relative w-full">
           <label
             class="block text-sm font-medium text-gray-700"
             htmlfor="grid-password"
           >
-            Parroquia:
+            Parroquia Residencia:
           </label>
           <div :class="{ invalid: isInvalidParish }">
             <multiselect
@@ -392,16 +429,7 @@
               id="observation"
               name="observation"
               rows="6"
-              class="
-                shadow-sm
-                focus:ring-blue-500 focus:border-blue-500
-                mt-1
-                block
-                w-full
-                sm:text-sm
-                border border-gray-300
-                rounded-md
-              "
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
               v-model="form.observation"
               placeholder="Agregar las observaciones generales..."
               required
@@ -460,10 +488,20 @@ export default {
       cellphone: null,
       phone: null,
       observation: null,
+
+      //
+
       address: null,
       province_id: null,
       canton_id: null,
       parish_id: null,
+
+      // Birth place
+
+      address_bt: null,
+      province_id_bt: null,
+      canton_id_bt: null,
+      parish_id_bt: null,
     });
     return {
       date,
@@ -499,6 +537,28 @@ export default {
       return (
         this.selectThree.selectedParish == undefined ||
         this.selectThree.selectedParish == null
+      );
+    },
+
+    // Bt MlOption
+
+    // Validate Multioption
+    isInvalidBt() {
+      return (
+        this.selectOneBt.selectedProvince == undefined ||
+        this.selectOneBt.selectedProvince == null
+      );
+    },
+    isInvalidCantonBt() {
+      return (
+        this.selectTwoBt.selectedCanton == undefined ||
+        this.selectTwoBt.selectedCanton == null
+      );
+    },
+    isInvalidParishBt() {
+      return (
+        this.selectThreeBt.selectedParish == undefined ||
+        this.selectThreeBt.selectedParish == null
       );
     },
 
@@ -600,6 +660,36 @@ export default {
         multiSelectParish: null,
         vSelectParish: null,
       },
+      //
+      selectOneBt: {
+        selectedProvince: undefined,
+        value: 0,
+        isDisabled: false,
+        isTouched: false,
+        options: {
+          type: Array,
+          default: () => [],
+        },
+        loading: false,
+        multiSelectUser: null,
+        vSelectUser: null,
+      },
+      selectTwoBt: {
+        selectedCanton: undefined,
+        value: 0,
+        options: [],
+        loading: false,
+        multiSelectCanton: null,
+        vSelectCanton: null,
+      },
+      selectThreeBt: {
+        selectedParish: undefined,
+        value: 0,
+        options: [],
+        loading: false,
+        multiSelectParish: null,
+        vSelectParish: null,
+      },
     };
   },
   // Watch changes in data
@@ -632,6 +722,37 @@ export default {
         // Clean data Form
         this.form.parish_id = null;
         this.form.political_division_id = null;
+      }
+    },
+    //
+    "selectOneBt.selectedProvince": function () {
+      if (this.selectOneBt.selectedProvince === null) {
+        this.selectTwoBt.selectedCanton = null;
+        this.selectThreeBt.selectedParish = null;
+        this.selectTwoBt.options = [];
+        this.selectThreeBt.options = [];
+        // Clean data Form
+        this.form.province_id_bt = null;
+        this.form.canton_id_bt = null;
+        this.form.parish_id_bt = null;
+        this.form.political_division_id_bt = null;
+      }
+    },
+    "selectTwoBt.selectedCanton": function () {
+      if (this.selectTwoBt.selectedCanton === null) {
+        this.selectThreeBt.selectedParish = null;
+        this.selectThreeBt.options = [];
+        // Clean data Form
+        this.form.canton_id_bt = null;
+        this.form.parish_id_bt = null;
+        this.form.political_division_id_bt = null;
+      }
+    },
+    "selectThreeBt.selectedParish": function () {
+      if (this.selectThreeBt.selectedParish === null) {
+        // Clean data Form
+        this.form.parish_id_bt = null;
+        this.form.political_division_id_bt = null;
       }
     },
   },
@@ -675,12 +796,9 @@ export default {
         });
     },
 
-    onSearchCantonChange(term) {
-      //   console.log(term);
-    },
+    onSearchCantonChange(term) {},
 
     onSelectedCanton(canton) {
-      //   console.log("input data selecter " + canton.id);
       this.form.canton_id = canton.id;
       this.form.parish_id = null;
       this.form.political_division_id = null;
@@ -694,29 +812,101 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.selectThree.options = res.data;
         });
     },
 
-    onSearchParishChange(term) {
-      //   console.log(term);
-    },
+    onSearchParishChange(term) {},
 
     onSelectedParish(parish) {
       this.form.parish_id = parish.id;
       this.form.political_division_id = parish.id;
-      //   console.log("input parish data selecter " + this.form.parish_id);
     },
 
-    //   Mutationss
-    // updateMessage(e) {
-    //   this.$store.commit("updateMessage", e.target.value);
-    // },
+    // Address Bt
+
+    onSearchProvincesChangeBt(term) {},
+
+    onSelectedProvinceBt(province) {
+      this.form.province_id_bt = province.id;
+      this.form.canton_id_bt = null;
+      this.form.parish_id_bt = null;
+      this.form.political_division_id_bt = null;
+      this.selectTwoBt.selectedCanton = undefined;
+      this.selectThreeBt.selectedParish = undefined;
+      this.selectTwoBt.options = [];
+      this.selectThreeBt.options = [];
+      axios
+        .get(
+          this.route("secretary.address.cantons", {
+            province_id: province.id,
+          })
+        )
+        .then((res) => {
+          this.selectTwoBt.options = res.data;
+        });
+    },
+
+    onSearchCantonChangeBt(term) {},
+
+    onSelectedCantonBt(canton) {
+      this.form.canton_id_bt = canton.id;
+      this.form.parish_id_bt = null;
+      this.form.political_division_id_bt = null;
+      this.selectThreeBt.selectedParish = undefined;
+      this.selectThreeBt.options = [];
+
+      axios
+        .get(
+          this.route("secretary.address.parishes", {
+            canton_id: canton.id,
+          })
+        )
+        .then((res) => {
+          this.selectThreeBt.options = res.data;
+        });
+    },
+
+    onSearchParishChangeBt(term) {},
+
+    onSelectedParishBt(parish) {
+      this.form.parish_id_bt = parish.id;
+      this.form.political_division_id_bt = parish.id;
+    },
+
+    //   Mutations
+
     ...mapMutations("daughter", ["updateProfile"]),
+
     ...mapGetters("daughter", ["profileDaughter"]),
 
     updateData() {
+      let dataaddresbt = null;
+
+      if (
+        this.form.province_id_bt !== null &&
+        this.form.canton_id_bt === null &&
+        this.form.parish_id_bt === null
+      ) {
+        dataaddresbt = this.form.province_id_bt;
+      }
+
+      if (
+        this.form.province_id_bt !== null &&
+        this.form.canton_id_bt !== null &&
+        this.form.parish_id_bt === null
+      ) {
+        dataaddresbt = this.form.canton_id_bt;
+      }
+
+      if (
+        this.form.province_id_bt !== null &&
+        this.form.canton_id_bt !== null &&
+        this.form.parish_id_bt !== null
+      ) {
+        dataaddresbt = this.form.parish_id_bt;
+      }
+
       this.updateProfile({
         observation: this.form.observation,
         cellphone: this.form.cellphone,
@@ -736,10 +926,13 @@ export default {
           address: this.form.address,
           political_division_id: this.form.parish_id,
         },
+        //
+        address_bt: {
+          address_bt: this.form.address_bt,
+          political_division_id_bt: dataaddresbt,
+        },
       });
     },
-
-    // Send Data
     submit() {
       this.form.user_id = this.profile.user_id;
       this.updateData();
@@ -749,7 +942,6 @@ export default {
         this.isInvalidParish == false &&
         this.validateIdentityCard == true
       ) {
-        // console.log("listo: ", this.profile);
         Inertia.post(route("secretary.daughters-profile.store"), this.profile, {
           preserveScroll: true,
         });

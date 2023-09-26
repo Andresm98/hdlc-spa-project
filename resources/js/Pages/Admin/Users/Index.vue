@@ -11,26 +11,10 @@
     <section class="py-1 bg-gray">
       <div class="w-full lg:w-full">
         <div
-          class="
-            relative
-            flex flex-col
-            min-w-0
-            break-words
-            w-full
-            mb-6
-            shadow-lg
-            rounded-lg
-            bg-blueGray-100
-            border-0
-          "
+          class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
         >
           <div
-            class="
-              shadow
-              overflow-hidden
-              border-b border-gray-200
-              sm:rounded-lg
-            "
+            class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
           >
             <alert
               v-if="$page.props.flash.success"
@@ -49,63 +33,24 @@
 
             <Link
               :href="route('admin.user.create')"
-              class="
-                pt-12
-                pb-1
-                pl-4
-                pr-4
-                bg-blue-500
-                border-2 border-blue-500
-                text-white text-sm
-                rounded-lg
-                hover:bg-blue-500 hover:text-gray-100
-                focus:border-4 focus:border-blue-300
-              "
+              class="pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-sm rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
               >Crear Usuarios</Link
             >
             <!-- Container Filters -->
             <div class="container mx-auto">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
                 <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    m-4
-                    bg-gray-100
-                  "
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm m-4 bg-gray-100"
                 >
                   <search-filter
                     v-model="params.search"
-                    class="
-                      border border-blue-300
-                      rounded-md
-                      shadow-sm
-                      focus:outline-none
-                      focus:ring-indigo-500
-                      focus:border-indigo-500
-                      sm:text-sm
-                    "
+                    class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     @reset="reset"
                   >
                     <label class="block text-gray-700">Rol:</label>
                     <select
                       v-model="params.role"
-                      class="
-                        mt-1
-                        block
-                        w-full
-                        px-3
-                        border border-gray-300
-                        bg-white
-                        rounded-md
-                        shadow-sm
-                        focus:outline-none
-                        focus:ring-blue-500
-                        focus:border-blue-500
-                        sm:text-sm
-                      "
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
                       <option :value="null">Todas</option>
                       <option
@@ -116,35 +61,10 @@
                         {{ role.name }}
                       </option>
                     </select>
-                    <!--
-                    <label class="block text-gray-700">Filtrar:</label>
-                    <select
-                      v-model="params.trashed"
-                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    >
-                      <option :value="null">-</option>
-                      <option value="daughters">Hermanas</option>
-                      <option value="collaborators">Colaboradores</option>
-                      <option value="invited">Invitados</option>
-                    </select> -->
                   </search-filter>
                 </div>
-                <!-- <div
-                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
-                >
-                  <input
-                    type="text"
-                    name="email-address"
-                    v-model="params.search"
-                    id="email"
-                    autocomplete="Search"
-                    placeholder="Nombre"
-                    class="focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  />
-                </div> -->
               </div>
             </div>
-            <!-- End container Filters -->
 
             <small class="ml-6">
               Se encontraron {{ users_list.total }} resultados.</small
@@ -157,14 +77,7 @@
               <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div
-                    class="
-                      py-2
-                      align-middle
-                      inline-block
-                      min-w-full
-                      sm:px-6
-                      lg:px-8
-                    "
+                    class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
                   >
                     <table
                       v-if="users_list.data.length > 0"
@@ -174,26 +87,12 @@
                         <tr>
                           <th
                             scope="col"
-                            class="
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             <span
-                              class="
-                                inline-flex
-                                px-6
-                                py-3
-                                w-full
-                                justify-between
-                                hover:cursor-pointer
-                              "
+                              class="inline-flex px-6 py-3 w-full justify-between hover:cursor-pointer"
                               @click="sort('name')"
                               >Nombre
-
                               <svg
                                 v-if="
                                   params.field === 'name' &&
@@ -222,23 +121,10 @@
                           </th>
                           <th
                             scope="col"
-                            class="
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             <span
-                              class="
-                                inline-flex
-                                px-6
-                                py-3
-                                w-full
-                                justify-between
-                                hover:cursor-pointer
-                              "
+                              class="inline-flex px-6 py-3 w-full justify-between hover:cursor-pointer"
                               @click="sort('email')"
                               >Correo
                               <svg
@@ -269,29 +155,13 @@
                           </th>
                           <th
                             scope="col"
-                            class="
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             Estado
                           </th>
                           <th
                             scope="col"
-                            class="
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             Acciones
                           </th>
@@ -325,37 +195,18 @@
                             <div class="text-sm text-gray-900">
                               {{ user_custom.email }}
                             </div>
-                            <!-- <div class="text-sm text-gray-500">Ecuador</div> -->
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             <span
-                              class="
-                                px-2
-                                inline-flex
-                                text-xs
-                                leading-5
-                                font-semibold
-                                rounded-full
-                                bg-green-100
-                                text-green-800
-                              "
+                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                             >
                               Activo
                             </span>
                           </td>
                           <td
-                            class="
-                              px-3
-                              py-4
-                              whitespace-nowrap
-                              text-right text-sm
-                              font-medium
-                            "
+                            class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                           >
-                            <!-- Components -->
-
                             <div class="mx-auto flex gap-10">
-                              <!-- Read User -->
                               <Link
                                 :href="
                                   route('admin.user.show', {
@@ -366,19 +217,7 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="
-                                        flex
-                                        items-center
-                                        justify-center
-                                        flex-1
-                                        h-full
-                                        p-2
-                                        border border-blue-800
-                                        text-white
-                                        shadow
-                                        rounded-lg
-                                        hover:bg-blue-50 hover:text-zinc-300
-                                      "
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-blue-800 text-white shadow rounded-lg hover:bg-blue-50 hover:text-zinc-300"
                                     >
                                       <div class="relative">
                                         <svg
@@ -397,7 +236,6 @@
                                 </div>
                               </Link>
 
-                              <!-- Update User -->
                               <Link
                                 :href="
                                   route('admin.user.edit', {
@@ -408,19 +246,7 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="
-                                        flex
-                                        items-center
-                                        justify-center
-                                        flex-1
-                                        h-full
-                                        p-2
-                                        border border-green-500
-                                        text-white
-                                        shadow
-                                        rounded-lg
-                                        hover:bg-green-50 hover:text-zinc-300
-                                      "
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-green-500 text-white shadow rounded-lg hover:bg-green-50 hover:text-zinc-300"
                                     >
                                       <div class="relative">
                                         <svg
@@ -439,7 +265,6 @@
                                 </div>
                               </Link>
 
-                              <!-- Delete User -->
                               <button
                                 @click="
                                   modal_open = true;
@@ -449,19 +274,7 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="
-                                        flex
-                                        items-center
-                                        justify-center
-                                        flex-1
-                                        h-full
-                                        p-2
-                                        border border-red-500
-                                        text-white
-                                        shadow
-                                        rounded-lg
-                                        hover:bg-red-50 hover:text-zinc-300
-                                      "
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-red-500 text-white shadow rounded-lg hover:bg-red-50 hover:text-zinc-300"
                                     >
                                       <div class="relative">
                                         <svg
@@ -479,7 +292,6 @@
                                   </div>
                                 </div>
                               </button>
-                              <!-- Delete Account Confirmation Modal -->
                               <div></div>
                             </div>
                           </td>
@@ -560,9 +372,7 @@ export default defineComponent({
   },
 
   computed: {
-    all() {
-      //   console.log(this.users_list.data);
-    },
+    all() {},
   },
   props: {
     users_list: Object,

@@ -1402,6 +1402,21 @@ class UserSeeder extends Seeder
                 "1981-07-21", "2003-11-27", "2009-12-08", "2005-07-18", "985409031", 47,
                 $appointments = [10]
             ],
+            [
+                "Esthela Marina", "Vargas Benavides", "Gabriela", "sdfdsfsd333@hotmail.com", "1002860110",
+                "1981-07-21", "2003-11-27", "2009-12-08", "2005-07-18", "985409031", 47,
+                $appointments = [10]
+            ],
+            [
+                "Maria Dolores Olimpia", "Villarreal Lucero", "Maria", "sxcccdfdsfsd333@hotmail.com", "1002860110",
+                "1981-07-21", "2003-11-27", "2009-12-08", "2005-07-18", "985409031", 47,
+                $appointments = [10]
+            ],
+            [
+                "Nieves", "Villacres Rodriguez", "Niev", "iiiesniev@hotmail.com", "1002860110",
+                "1981-07-21", "2003-11-27", "2009-12-08", "2005-07-18", "985409031", 47,
+                $appointments = [10]
+            ],
         ];
 
         // $addressClass = new AddressController();
@@ -1412,15 +1427,12 @@ class UserSeeder extends Seeder
             $date_vote, $date_send, $cellphone, $community_id,
             $appointments
         )) {
-
-
-
             if (strlen($id_card) == 9) {
                 $id_card = '0' . $id_card;
             }
             $username = 'daughter ' . $name . ' ' . $lastname . ' ' . $id_card;
 
-            $user =  User::create([
+            $user = User::create([
                 'name' => $name,
                 'lastname' => $lastname,
                 'fullnamecomm' => $fullnamecomm,
@@ -1435,6 +1447,7 @@ class UserSeeder extends Seeder
             } else {
                 $date_vote = null;
             }
+
             if ($date_send != null) {
                 $date_send =  $date_send . " 00:00:00";
             } else {
@@ -1461,7 +1474,7 @@ class UserSeeder extends Seeder
                 'political_division_id' => $community->address->political_division_id,
             ]);
 
-            $transfer =  $profile->transfers()->create([
+            $transfer = $profile->transfers()->create([
                 'transfer_reason' => 'Razón del cambio de la hermana ',
                 'transfer_date_adission' => '2021-01-05 00:00:00',
                 'transfer_observation' => 'Observaciones relacionadas al cambio de la hermana ' . $user->name,

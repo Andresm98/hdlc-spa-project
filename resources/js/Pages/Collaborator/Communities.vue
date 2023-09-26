@@ -2,18 +2,7 @@
   <section class="py-1 bg-gray">
     <div class="w-full lg:w-full">
       <div
-        class="
-          relative
-          flex flex-col
-          min-w-0
-          break-words
-          w-full
-          mb-6
-          shadow-lg
-          rounded-lg
-          bg-blueGray-100
-          border-0
-        "
+        class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
       >
         <div
           class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
@@ -39,110 +28,38 @@
           <operation></operation>
           <br />
           <section
-            class="
-              bg-gray-200
-              dark:bg-slate-800
-              y-1
-              px-4
-              sm:p-6
-              md:py-10 md:px-8
-              pt-2
-              pb-4
-              rounded-lg
-              sm:m-2
-              lg:m-3
-              md:m-4
-            "
+            class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg sm:m-2 lg:m-3 md:m-4"
           >
             <div
-              class="
-                max-w-4xl
-                mx-auto
-                grid grid-cols-1
-                lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2
-              "
+              class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
             >
               <div
-                class="
-                  relative
-                  p-3
-                  col-start-1
-                  row-start-1
-                  flex flex-col-reverse
-                  rounded-lg
-                  bg-gradient-to-t
-                  from-black/75
-                  via-black/0
-                  sm:bg-none sm:row-start-2 sm:p-0
-                  md:bg-none md:row-start-2 md:p-0
-                  lg:row-start-1
-                "
+                class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 md:bg-none md:row-start-2 md:p-0 lg:row-start-1"
               >
                 <h1
-                  class="
-                    mt-1
-                    text-lg
-                    font-semibold
-                    text-black
-                    sm:text-black
-                    md:text-2xl
-                    dark:sm:text-white
-                  "
+                  class="mt-1 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
                 >
                   Provincia Ecuador
                 </h1>
                 <p
-                  class="
-                    text-sm
-                    leading-4
-                    font-medium
-                    text-black
-                    sm:text-black
-                    dark:sm:text-slate-400
-                  "
+                  class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
                 >
-                  Información General de las comunidades u obras en la Compañía Hijas de la
-                  Caridad de San Vicente de Paúl
+                  Información General de las comunidades u obras en la Compañía
+                  Hijas de la Caridad de San Vicente de Paúl
                 </p>
               </div>
               <div
-                class="
-                  grid
-                  gap-4
-                  col-start-1 col-end-3
-                  row-start-1
-                  sm:mb-6 sm:grid-cols-4
-                  md:mb-6 md:grid-cols-4
-                  lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0
-                "
+                class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 md:mb-6 md:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
               >
                 <img
                   src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_2.png"
                   alt=""
-                  class="
-                    w-full
-                    h-60
-                    object-cover
-                    rounded-lg
-                    sm:h-52 sm:col-span-2
-                    md:h-52 md:col-span-2
-                    lg:col-span-full
-                  "
+                  class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 md:h-52 md:col-span-2 lg:col-span-full"
                   loading="lazy"
                 />
               </div>
               <dl
-                class="
-                  mt-4
-                  text-xs
-                  font-medium
-                  flex
-                  items-center
-                  row-start-2
-                  sm:mt-1 sm:row-start-3
-                  md:mt-1 md:row-start-3
-                  lg:row-start-2
-                "
+                class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-1 md:row-start-3 lg:row-start-2"
               >
                 <dt class="sr-only">Visto</dt>
                 <dd
@@ -201,9 +118,9 @@
             <div class="mt-2">
               <p class="text-black dark:text-white">
                 La presente plantilla de información se relaciona a todos los
-                registros de las comunidades u obras de la Compañía, para filtros
-                personalizados deberá seleccionar los parámetros necesarios en
-                la bandeja de filtros.
+                registros de las comunidades u obras de la Compañía, para
+                filtros personalizados deberá seleccionar los parámetros
+                necesarios en la bandeja de filtros.
               </p>
             </div>
           </section>
@@ -211,13 +128,7 @@
           <div class="container mx-auto ml-5">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
               <div
-                class="
-                  justify-center
-                  text-sm
-                  border-1 border-gray-300
-                  rounded-sm
-
-                "
+                class="justify-center text-sm border-1 border-gray-300 rounded-sm"
               >
                 <small class="justify-content-center ml-20 uppercase"
                   >Filtros de Búsqueda</small
@@ -225,34 +136,13 @@
 
                 <search-filter
                   v-model="params.search"
-                  class="
-                    border border-blue-300
-                    rounded-md
-                    shadow-sm
-                    focus:outline-none
-                    focus:ring-indigo-500
-                    focus:border-indigo-500
-                    sm:text-sm
-                  "
+                  class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   @reset="reset"
                 >
                   <small class="block text-gray-700">Tipo:</small>
                   <select
                     v-model="params.type"
-                    class="
-                      mt-1
-                      block
-                      w-full
-                      px-3
-                      border border-gray-300
-                      bg-white
-                      rounded-md
-                      shadow-sm
-                      focus:outline-none
-                      focus:ring-blue-500
-                      focus:border-blue-500
-                      sm:text-sm
-                    "
+                    class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
                     <option :value="null">Todas</option>
                     <option value="1">Comunidades</option>
@@ -261,20 +151,7 @@
                   <small class="block text-gray-700 mt-2">Estado:</small>
                   <select
                     v-model="params.active"
-                    class="
-                      mt-1
-                      block
-                      w-full
-                      px-3
-                      border border-gray-300
-                      bg-white
-                      rounded-md
-                      shadow-sm
-                      focus:outline-none
-                      focus:ring-blue-500
-                      focus:border-blue-500
-                      sm:text-sm
-                    "
+                    class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
                     <option :value="null">Todos</option>
                     <option value="1">Abiertas</option>
@@ -285,20 +162,7 @@
 
                   <select
                     v-model="params.pastoral"
-                    class="
-                      mt-1
-                      block
-                      w-full
-                      px-3
-                      border border-gray-300
-                      bg-white
-                      rounded-md
-                      shadow-sm
-                      focus:outline-none
-                      focus:ring-blue-500
-                      focus:border-blue-500
-                      sm:text-sm
-                    "
+                    class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
                     <option :value="null">Todas</option>
                     <option
@@ -313,20 +177,7 @@
                   <small class="block text-gray-700 mt-2">Por Provincia:</small>
                   <select
                     v-model="params.perProvince"
-                    class="
-                      mt-1
-                      block
-                      w-full
-                      px-3
-                      border border-gray-300
-                      bg-white
-                      rounded-md
-                      shadow-sm
-                      focus:outline-none
-                      focus:ring-blue-500
-                      focus:border-blue-500
-                      sm:text-sm
-                    "
+                    class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
                     <option :value="null">Todas</option>
                     <option
@@ -341,20 +192,7 @@
                   <small class="block text-gray-700 mt-2">Por página:</small>
                   <select
                     v-model="params.perPage"
-                    class="
-                      mt-1
-                      block
-                      w-full
-                      px-3
-                      border border-gray-300
-                      bg-white
-                      rounded-md
-                      shadow-sm
-                      focus:outline-none
-                      focus:ring-blue-500
-                      focus:border-blue-500
-                      sm:text-sm
-                    "
+                    class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
                     <option value="5">5</option>
                     <option value="10">10</option>
@@ -365,13 +203,7 @@
               </div>
               <div v-show="this.params.active == 1">
                 <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    p-1
-                  "
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1"
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Fecha de Fundación</small
@@ -408,14 +240,7 @@
 
               <div v-show="this.params.active == 2">
                 <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    p-1
-                    bg-gray-100
-                  "
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Fecha de Cierre</small
@@ -451,71 +276,29 @@
               </div>
 
               <div
-                class="
-                  justify-center
-                  text-sm
-                  border-1 border-gray-300
-                  rounded-sm
-                  p-1
-                "
+                class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1"
               >
                 <small class="justify-content-center ml-20 uppercase"
                   >Exportar Listas</small
                 >
                 <div
-                  class="
-                    md:text-md
-                    flex
-                    items-center
-                    justify-between
-                    p-4
-                    w-full
-                    text-sm
-                    md:px-12 md:py-0
-                  "
+                  class="md:text-md flex items-center justify-between p-4 w-full text-sm md:px-12 md:py-0"
                 >
                   <dropdown class="mt-1" placement="bottom-end">
                     <template #default>
                       <div
-                        class="
-                          group
-                          flex
-                          items-center
-                          cursor-pointer
-                          select-none
-                        "
+                        class="group flex items-center cursor-pointer select-none"
                       >
                         <div
-                          class="
-                            mr-1
-                            text-gray-700
-                            group-hover:text-blue-600
-                            focus:text-blue-600
-                            whitespace-nowrap
-                          "
+                          class="mr-1 text-gray-700 group-hover:text-blue-600 focus:text-blue-600 whitespace-nowrap"
                         >
                           <span
-                            class="
-                              px-1
-                              inline-flex
-                              text-xs
-                              leading-5
-                              font-semibold
-                              rounded-sm
-                              bg-gray-200
-                              text-gray-800
-                            "
+                            class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-gray-200 text-gray-800"
                             >&nbsp;Filtros</span
                           >
                         </div>
                         <icon
-                          class="
-                            w-5
-                            h-5
-                            fill-gray-700
-                            group-hover:fill-blue-600
-                            focus:fill-blue-600
-                          "
+                          class="w-5 h-5 fill-gray-700 group-hover:fill-blue-600 focus:fill-blue-600"
                           name="cheveron-down"
                         />
                       </div>
@@ -523,23 +306,13 @@
                     <template #dropdown>
                       <div class="mt-2 py-2 text-sm bg-white rounded shadow-xl">
                         <button
-                          class="
-                            block
-                            px-6
-                            py-2
-                            hover:text-white hover:bg-blue-500
-                          "
+                          class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                           @click="openReportDialog(2)"
                         >
                           Excel
                         </button>
                         <button
-                          class="
-                            block
-                            px-6
-                            py-2
-                            hover:text-white hover:bg-blue-500
-                          "
+                          class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                           @click="openReportDialog(3)"
                         >
                           CSV
@@ -562,14 +335,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
               <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div
-                  class="
-                    py-2
-                    align-middle
-                    inline-block
-                    min-w-full
-                    sm:px-6
-                    lg:px-8
-                  "
+                  class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
                 >
                   <table
                     v-if="communities_list.data.length > 0"
@@ -579,13 +345,7 @@
                       <tr>
                         <th
                           scope="col"
-                          class="
-                            text-left text-xs
-                            font-medium
-                            text-black
-                            uppercase
-                            tracking-wider
-                          "
+                          class="text-left text-xs font-medium text-black uppercase tracking-wider"
                         >
                           <span
                             class="inline-flex px-6 py-3 w-full justify-between"
@@ -620,13 +380,7 @@
                         </th>
                         <th
                           scope="col"
-                          class="
-                            text-left text-xs
-                            font-medium
-                            text-black
-                            uppercase
-                            tracking-wider
-                          "
+                          class="text-left text-xs font-medium text-black uppercase tracking-wider"
                         >
                           <span
                             class="inline-flex px-6 py-3 w-full justify-between"
@@ -660,29 +414,13 @@
                         </th>
                         <th
                           scope="col"
-                          class="
-                            px-6
-                            py-3
-                            text-left text-xs
-                            font-medium
-                            text-black
-                            uppercase
-                            tracking-wider
-                          "
+                          class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                         >
                           Estado
                         </th>
                         <th
                           scope="col"
-                          class="
-                            px-6
-                            py-3
-                            text-left text-xs
-                            font-medium
-                            text-black
-                            uppercase
-                            tracking-wider
-                          "
+                          class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                         >
                           <span
                             class="inline-flex px-6 py-3 w-full justify-between"
@@ -714,7 +452,6 @@
                             </svg>
                           </span>
                         </th>
-
                       </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -753,12 +490,7 @@
                             <div class="ml-4">
                               <div class="w-6/8 ...">
                                 <div
-                                  class="
-                                    whitespace-normal
-                                    text-sm
-                                    font-semibold
-                                    text-gray-900
-                                  "
+                                  class="whitespace-normal text-sm font-semibold text-gray-900"
                                 >
                                   {{ community_custom.comm_name }}
                                 </div>
@@ -768,16 +500,7 @@
                               </div>
 
                               <span
-                                class="
-                                  px-1
-                                  inline-flex
-                                  text-xs
-                                  leading-5
-                                  font-semibold
-                                  rounded-sm
-                                  bg-blue-100
-                                  text-blue-800
-                                "
+                                class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
                               >
                                 Fecha Fundación:
                                 {{
@@ -798,48 +521,20 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                           <div v-if="community_custom.comm_status == 1">
                             <span
-                              class="
-                                px-2
-                                inline-flex
-                                text-xs
-                                leading-5
-                                font-semibold
-                                rounded-full
-                                bg-green-100
-                                text-green-800
-                              "
+                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                             >
                               Abierta
                             </span>
                           </div>
                           <div v-else>
                             <span
-                              class="
-                                px-2
-                                inline-flex
-                                text-xs
-                                leading-5
-                                font-semibold
-                                rounded-full
-                                bg-red-100
-                                text-red-800
-                              "
+                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
                             >
                               Cerrada
                             </span>
                             <br />
                             <span
-                              class="
-                                mt-2
-                                px-2
-                                inline-flex
-                                text-xs
-                                leading-5
-                                font-semibold
-                                rounded-full
-                                bg-red-100
-                                text-red-800
-                              "
+                              class="mt-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
                             >
                               {{
                                 this.formatDateShow(community_custom.date_close)
@@ -858,21 +553,11 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                           <span
-                            class="
-                              px-2
-                              inline-flex
-                              text-xs
-                              leading-5
-                              font-semibold
-                              rounded-full
-                              bg-gray-100
-                              text-gray-800
-                            "
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
                           >
                             {{ community_custom.pastoral.name }}
                           </span>
                         </td>
-
                       </tr>
                     </tbody>
                   </table>
@@ -1089,7 +774,6 @@ export default defineComponent({
         dateEnd: this.filters.dateEnd,
         perPage: this.filters.perPage,
         perProvince: this.filters.perProvince,
-        //
         printOperation: null,
       },
       arrayAddress: [],
@@ -1101,16 +785,11 @@ export default defineComponent({
       const address = fetch(
         route("secretary.address.address-format", { actual_parish: value })
       )
-        .then((response) => response.json()) //2
+        .then((response) => response.json())
         .then((data) => {
           this.arrayAddress.push(data.data_province);
-          return data.data_province; //3
+          return data.data_province;
         });
-      //   const printAddress = async () => {
-      //     console.log(address);
-      //     return await address;
-      //   };
-      //   return "ay" + printAddress();
     },
     async resolveAddress(value) {
       const response = await axios.get(
@@ -1130,7 +809,6 @@ export default defineComponent({
       }
       return null;
     },
-
     sort(field) {
       this.params.field = field;
       this.params.direction = this.params.direction === "asc" ? "desc" : "asc";
@@ -1141,7 +819,6 @@ export default defineComponent({
     dataParams() {
       return this.params;
     },
-    //
     openReportDialog(type) {
       this.report_modal_open = true;
       this.type_operation_report = type;

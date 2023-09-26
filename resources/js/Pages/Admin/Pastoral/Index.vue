@@ -102,8 +102,6 @@
         </div>
       </div>
       <jet-section-border />
-      <!-- Generate Permission Token -->
-
       <jet-form-section @submitted="createPastoral">
         <template #title> Crear Pastorales en el Sistema </template>
 
@@ -175,7 +173,6 @@
         </template>
       </jet-form-section>
 
-      <!-- Token Value Modal -->
       <jet-dialog-modal
         :show="displayingToken"
         @close="displayingToken = false"
@@ -200,7 +197,6 @@
         </template>
       </jet-dialog-modal>
 
-      <!-- API Token Permissions Modal -->
       <jet-dialog-modal
         :show="pastoralBeingUpdated"
         @close="pastoralBeingUpdated = null"
@@ -268,7 +264,6 @@
         </template>
       </jet-dialog-modal>
 
-      <!-- Delete Token Confirmation Modal -->
       <jet-confirmation-modal
         :show="pastoralBeingDeleted"
         @close="pastoralBeingDeleted = null"

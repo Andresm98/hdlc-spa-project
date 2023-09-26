@@ -100,31 +100,6 @@
       </Link>
       <hr :class="isUrl('system/admin/pastoral') ? 'text-white' : 'hidden'" />
     </div>
-
-    <!-- <div class="mb-4">
-      <Link class="group flex items-center py-3" :href="route('admin.office.index')">
-        <icon
-          name="roles"
-          class="mr-2 w-4 h-4"
-          :class="
-            isUrl('system/admin/office')
-              ? 'fill-white'
-              : 'fill-gray-400 group-hover:fill-white'
-          "
-        />
-        <div
-          :class="
-            isUrl('system/admin/office')
-              ? 'text-white'
-              : 'text-gray-400 group-hover:text-white'
-          "
-        >
-          Oficios
-        </div>
-      </Link>
-      <hr :class="isUrl('system/admin/office') ? 'text-white' : 'hidden'" />
-    </div> -->
-
     <div class="mb-4">
       <Link
         class="group flex items-center py-3"
@@ -155,7 +130,6 @@
         "
       />
     </div>
-
     <div class="mb-4">
       <Link
         class="group flex items-center py-3"
@@ -182,7 +156,6 @@
       </Link>
       <hr :class="isUrl('system/admin/zone') ? 'text-white' : 'hidden'" />
     </div>
-
     <div class="mb-4">
       <Link
         class="group flex items-center py-3"
@@ -209,33 +182,6 @@
       </Link>
       <hr :class="isUrl('system/admin/settings') ? 'text-white' : 'hidden'" />
     </div>
-    <!-- <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/cominities">
-        <icon name="users" class="mr-2 w-4 h-4" :class="isUrl('cominities') ? 'fill-white' : 'fill-gray-400 group-hover:fill-white'" />
-        <div :class="isUrl('cominities') ? 'text-white' : 'text-gray-400 group-hover:text-white'">División</div>
-      </Link>
-        <hr :class="isUrl('cominities') ? 'text-white' : 'hidden'"/>
-    </div> -->
-
-    <!-- <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/reports">
-        <icon
-          name="printer"
-          class="mr-2 w-4 h-4"
-          :class="
-            isUrl('reports') ? 'fill-white' : 'fill-gray-400 group-hover:fill-white'
-          "
-        />
-        <div
-          :class="
-            isUrl('reports') ? 'text-white' : 'text-gray-400 group-hover:text-white'
-          "
-        >
-          Reportes
-        </div>
-      </Link>
-      <hr :class="isUrl('reports') ? 'text-white' : 'hidden'" />
-    </div> -->
   </div>
 </template>
 

@@ -8,7 +8,6 @@
                 Bienvenido Usuario: {{ $page.props.user.name }}
             </div>
         </template>
-
     <section
       class="
         bg-gray-200
@@ -215,10 +214,8 @@
                 </p>
       </div>
     </section>
-        <!-- <section>
-            <menu-dropdown> </menu-dropdown>
-        </section> -->
-   <div  >
+
+    <div>
         <section class="py-1 bg-slate-800 rounded-lg m-1">
           <div class="w-full lg:w-5/6 px-4 mx-auto mt-6">
                 <div
@@ -340,7 +337,7 @@
                 </div>
             </div>
         </section>
-        </div>
+    </div>
     </app-layout>
 </template>
 

@@ -9,7 +9,6 @@
           Bienvenido Usuario: {{ $page.props.user.name }}
         </div>
       </template>
-      <!-- Generate Permission Token -->
       <alert
         v-if="$page.props.flash.success"
         class="alert"
@@ -26,9 +25,6 @@
       </alert>
 
       <div>
-
-
-        <!-- Manage API Tokens -->
         <div class="mb-10 sm:mt-0">
           <jet-action-section>
             <template #title> Administrar Zonas del Sistema </template>
@@ -38,7 +34,6 @@
               cuenta deberá seleccionar sólo una hermana que será la encargada
               de visitar las comunidades u obras descritas en cada zona.
             </template>
-            <!-- API Token List -->
             <template #content>
               <div class="space-y-6">
                 <div
@@ -52,48 +47,20 @@
 
                   <div class="flex items-center">
                     <div
-                      class="
-                        hidden
-                        md:block md:text-sm md:text-gray-700
-                        lg:block lg:text-sm lg:text-gray-400
-                      "
+                      class="hidden md:block md:text-sm md:text-gray-700 lg:block lg:text-sm lg:text-gray-400"
                       v-if="zon.created_at"
                     >
                       Creada en {{ showFormatDate(zon.created_at) }}
                     </div>
                     <button
-                      class="
-                        bg-blue-500
-                        pt-2
-                        pb-2
-                        pr-2
-                        pl-2
-                        ml-4
-                        mr-4
-                        rounded-md
-                        cursor-pointer
-                        text-sm
-                        hover:bg-blue-600
-                        text-white
-                      "
+                      class="bg-blue-500 pt-2 pb-2 pr-2 pl-2 ml-4 mr-4 rounded-md cursor-pointer text-sm hover:bg-blue-600 text-white"
                       @click="updateConfirmPastoral(zon)"
                     >
                       Actualizar
                     </button>
 
                     <button
-                      class="
-                        bg-red-500
-                        pt-2
-                        pb-2
-                        pr-2
-                        pl-2
-                        rounded-md
-                        cursor-pointer
-                        text-sm
-                        hover:bg-red-600
-                        text-white
-                      "
+                      class="bg-red-500 pt-2 pb-2 pr-2 pl-2 rounded-md cursor-pointer text-sm hover:bg-red-600 text-white"
                       @click="confirmPastoralDeletion(zon)"
                     >
                       Eliminar
@@ -105,7 +72,7 @@
           </jet-action-section>
         </div>
       </div>
-        <jet-section-border />
+      <jet-section-border />
 
       <jet-form-section @submitted="createPastoral">
         <template #title> Crear Zonas en el Sistema </template>
@@ -116,7 +83,6 @@
         </template>
 
         <template #form>
-          <!-- Token Name -->
           <div class="col-span-6 sm:col-span-6">
             <jet-label for="name" value="Nombre Zona" />
             <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
@@ -143,16 +109,7 @@
               id="description"
               name="description"
               rows="6"
-              class="
-                shadow-sm
-                focus:ring-blue-500 focus:border-blue-500
-                mt-1
-                block
-                w-full
-                sm:text-sm
-                border border-gray-300
-                rounded-md
-              "
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
               v-model="createZoneForm.description"
               placeholder="Agregar la description..."
               required
@@ -178,7 +135,6 @@
         </template>
       </jet-form-section>
 
-      <!-- Token Value Modal -->
       <jet-dialog-modal
         :show="displayingToken"
         @close="displayingToken = false"
@@ -201,7 +157,6 @@
         </template>
       </jet-dialog-modal>
 
-      <!-- API Token Permissions Modal -->
       <jet-dialog-modal
         :show="zoneBeingUpdated"
         @close="zoneBeingUpdated = null"
@@ -235,16 +190,7 @@
               id="description"
               name="description"
               rows="6"
-              class="
-                shadow-sm
-                focus:ring-blue-500 focus:border-blue-500
-                mt-1
-                block
-                w-full
-                sm:text-sm
-                border border-gray-300
-                rounded-md
-              "
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
               v-model="updateZoneForm.description"
               placeholder="Agregar la description..."
               required
@@ -269,7 +215,6 @@
         </template>
       </jet-dialog-modal>
 
-      <!-- Delete Token Confirmation Modal -->
       <jet-confirmation-modal
         :show="zoneBeingDeleted"
         @close="zoneBeingDeleted = null"

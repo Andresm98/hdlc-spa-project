@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\Api\Daughter\ProfileController;
 use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\BookController;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,32 @@ Route::middleware('auth:sanctum')->group(function () {
 
             Route::delete('admin/books/delete/{docBookId}', [BookController::class, 'destroy'])
                 ->name('books.destroy');
+
+            // Address
+
+            Route::get('admin/address/province', [AddressController::class, 'getProvinces'])
+                ->name('address.province');
+
+            Route::get('admin/address/cantons/{province_id}', [AddressController::class, 'getCantons'])
+                ->name('address.cantons');
+
+            Route::get('admin/address/parishes/{canton_id}', [AddressController::class, 'getParishes'])
+                ->name('address.parishes');
+
+            Route::get('admin/address/parishes/{parish_id}', [AddressController::class, 'getFinalAddress'])
+                ->name('address.finaladdr');
+
+            Route::get('admin/address/profile/address/{actual_parish}', [AddressController::class, 'getSaveAddress'])
+                ->name('address.actual-address');
+
+            Route::get('admin/address/profile/address_bt/{actual_ubication}', [AddressController::class, 'getSaveAddressBt'])
+                ->name('address.actual-address-bt');
+
+            Route::get('admin/address/profile/address_format/{actual_parish}', [AddressController::class, 'getActualAddress'])
+                ->name('address.address-format');
+
+            Route::get('admin/address/profile/address_format/{actual_parish}', [AddressController::class, 'showActualAddress'])
+                ->name('address.address-format');
         }
     );
 });

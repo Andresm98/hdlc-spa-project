@@ -8,7 +8,6 @@
         Bienvenido Usuario: {{ $page.props.user.name }}
       </div>
     </template>
-    <!-- Generate Permission Token -->
     <alert
       v-if="$page.props.flash.success"
       class="alert"
@@ -47,18 +46,7 @@
               :key="appointmentlevel"
             >
               <span
-                class="
-                  hover:cursor-pointer
-                  px-3
-                  py-1
-                  inline-flex
-                  text-sm
-                  leading-5
-                  font-semibold
-                  rounded-full
-                  bg-blue-100
-                  text-blue-800
-                "
+                class="hover:cursor-pointer px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
                 @click="loadLevelCategories(appointmentlevel)"
               >
                 {{ appointmentlevel.name }}
@@ -66,47 +54,19 @@
 
               <div class="flex items-center">
                 <div
-                  class="
-                    hidden
-                    md:block md:text-sm md:text-gray-700
-                    lg:block lg:text-sm lg:text-gray-400
-                  "
+                  class="hidden md:block md:text-sm md:text-gray-700 lg:block lg:text-sm lg:text-gray-400"
                   v-if="appointmentlevel.created_at"
                 ></div>
 
                 <button
-                  class="
-                    bg-blue-500
-                    pt-2
-                    pb-2
-                    pr-2
-                    pl-2
-                    ml-4
-                    mr-4
-                    rounded-md
-                    cursor-pointer
-                    text-sm
-                    hover:bg-blue-600
-                    text-white
-                  "
+                  class="bg-blue-500 pt-2 pb-2 pr-2 pl-2 ml-4 mr-4 rounded-md cursor-pointer text-sm hover:bg-blue-600 text-white"
                   @click="updateConfirmLevel(appointmentlevel)"
                 >
                   Actualizar
                 </button>
 
                 <button
-                  class="
-                    bg-red-500
-                    pt-2
-                    pb-2
-                    pr-2
-                    pl-2
-                    rounded-md
-                    cursor-pointer
-                    text-sm
-                    hover:bg-red-600
-                    text-white
-                  "
+                  class="bg-red-500 pt-2 pb-2 pr-2 pl-2 rounded-md cursor-pointer text-sm hover:bg-red-600 text-white"
                   @click="confirmLevelDeletion(appointmentlevel)"
                 >
                   Eliminar
@@ -125,7 +85,6 @@
     <div v-show="listLevelCategories != null">
       <jet-section-border />
 
-      <!-- Manage API Tokens -->
       <div class="mt-10 sm:mt-0">
         <jet-action-section>
           <template #title> Administrar las Categorías </template>
@@ -134,7 +93,6 @@
             Puede eliminar o gestionar las categorías del nombramiento que
             decida modificar
           </template>
-          <!-- API Token List -->
           <template #content>
             <div class="mb-2">
               <jet-button-success @click="confirmationCategoryCreate()"
@@ -155,62 +113,25 @@
                   :key="category"
                 >
                   <span
-                    class="
-                      px-2
-                      inline-flex
-                      text-sm
-                      leading-5
-                      font-semibold
-                      rounded-full
-                      bg-emerald-100
-                      text-emerald-800
-                    "
+                    class="px-2 inline-flex text-sm leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800"
                   >
                     {{ category.name }}
                   </span>
 
                   <div class="flex items-center">
                     <div
-                      class="
-                        hidden
-                        md:block md:text-sm md:text-gray-700
-                        lg:block lg:text-sm lg:text-gray-400
-                      "
+                      class="hidden md:block md:text-sm md:text-gray-700 lg:block lg:text-sm lg:text-gray-400"
                       v-if="category.created_at"
                     ></div>
                     <button
-                      class="
-                        bg-blue-500
-                        pt-2
-                        pb-2
-                        pr-2
-                        pl-2
-                        ml-4
-                        mr-4
-                        rounded-md
-                        cursor-pointer
-                        text-sm
-                        hover:bg-blue-600
-                        text-white
-                      "
+                      class="bg-blue-500 pt-2 pb-2 pr-2 pl-2 ml-4 mr-4 rounded-md cursor-pointer text-sm hover:bg-blue-600 text-white"
                       @click="updateConfirmCategory(category)"
                     >
                       Actualizar
                     </button>
 
                     <button
-                      class="
-                        bg-red-500
-                        pt-2
-                        pb-2
-                        pr-2
-                        pl-2
-                        rounded-md
-                        cursor-pointer
-                        text-sm
-                        hover:bg-red-600
-                        text-white
-                      "
+                      class="bg-red-500 pt-2 pb-2 pr-2 pl-2 rounded-md cursor-pointer text-sm hover:bg-red-600 text-white"
                       @click="confirmCategoryDeletion(category)"
                     >
                       Eliminar
@@ -224,10 +145,6 @@
       </div>
     </div>
   </app-layout>
-
-  <!--
-    Head Data
- -->
 
   <!-- Post Data Form -->
   <jet-dialog-modal
@@ -254,21 +171,7 @@
                 minLength="5"
                 maxlength="50"
                 placeholder="Ingresar nombre del nivel"
-                class="
-                  border-0
-                  px-3
-                  placeholder-blueGray-300
-                  text-blueGray-600
-                  bg-white
-                  rounded
-                  text-sm
-                  shadow
-                  focus:outline-none focus:ring
-                  w-full
-                  ease-linear
-                  transition-all
-                  duration-150
-                "
+                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 v-model="createLevelForm.name"
                 required
               />
@@ -317,6 +220,7 @@
   </jet-dialog-modal>
 
   <!-- Put Data Form -->
+
   <jet-dialog-modal
     :max-width="'input-md'"
     :show="levelBeingUpdated"
@@ -341,21 +245,7 @@
                 minLength="5"
                 maxlength="50"
                 placeholder="Ingresar nombre de la categoría"
-                class="
-                  border-0
-                  px-3
-                  placeholder-blueGray-300
-                  text-blueGray-600
-                  bg-white
-                  rounded
-                  text-sm
-                  shadow
-                  focus:outline-none focus:ring
-                  w-full
-                  ease-linear
-                  transition-all
-                  duration-150
-                "
+                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 v-model="updateLevelForm.name"
                 required
               />
@@ -472,21 +362,7 @@
                 minLength="5"
                 maxlength="50"
                 placeholder="Ingresar nombre de la categoría"
-                class="
-                  border-0
-                  px-3
-                  placeholder-blueGray-300
-                  text-blueGray-600
-                  bg-white
-                  rounded
-                  text-sm
-                  shadow
-                  focus:outline-none focus:ring
-                  w-full
-                  ease-linear
-                  transition-all
-                  duration-150
-                "
+                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 v-model="createCategoryForm.name"
                 required
               />
@@ -559,21 +435,7 @@
                 minLength="5"
                 maxlength="50"
                 placeholder="Ingresar nombre de la categoría"
-                class="
-                  border-0
-                  px-3
-                  placeholder-blueGray-300
-                  text-blueGray-600
-                  bg-white
-                  rounded
-                  text-sm
-                  shadow
-                  focus:outline-none focus:ring
-                  w-full
-                  ease-linear
-                  transition-all
-                  duration-150
-                "
+                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 v-model="updateCategoryForm.name"
                 required
               />
@@ -683,7 +545,6 @@ import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
 import moment from "moment";
 import Alert from "@/Components/Alert";
 
-
 export default {
   props: ["appointmentlevels"],
   components: {
@@ -702,7 +563,8 @@ export default {
     JetButtonSuccess,
     JetSectionBorder,
     AppLayout,
-    moment,Alert
+    moment,
+    Alert,
   },
   layout: PrincipalLayout,
   data() {
@@ -854,7 +716,6 @@ export default {
 
     loadLevelCategories(levelCategory) {
       this.levelCategoryGlobal = levelCategory;
-      //   console.log("Variable Global: ", this.levelCategoryGlobal);
       const headers = {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -867,14 +728,10 @@ export default {
       )
         .then(async (response) => {
           const data = await response.json();
-
-          // check for error response
           if (!response.ok) {
-            // get error message from body or default to response statusText
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
           }
-
           this.listLevelCategories = data;
         })
         .catch((error) => {
@@ -910,7 +767,6 @@ export default {
     updateConfirmCategory(category) {
       this.updateCategoryForm.name = category.name;
       this.updateCategoryForm.description = category.description;
-
       this.categoryBeingUpdated = category;
     },
 

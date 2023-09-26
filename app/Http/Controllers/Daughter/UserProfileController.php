@@ -37,8 +37,16 @@ class UserProfileController extends Controller
                 $daughter->profile->info_family->info_family_break;
             }
             $daughter->profile->address;
-        }
 
+            if (!$daughter->profile->origin) {
+                $daughter->profile->origin()->create([
+                    'address' => "",
+                    'political_division_id' => null
+                ]);
+            } else {
+                $daughter->profile->origin;
+            }
+        }
 
         if ($daughter->image) {
             $image = Storage::disk('s3')->temporaryUrl(
@@ -53,7 +61,6 @@ class UserProfileController extends Controller
                 ]
             );
         }
-
 
         return Inertia::render(
             'Daughter/Profile',
@@ -102,7 +109,9 @@ class UserProfileController extends Controller
             'cellphone' => ['required', 'string', 'max:15'],
             'phone' => ['nullable', 'string', 'max:15'],
             'address' => ['required', 'string', 'max:100'],
-            'political_division_id' => ['required', 'string', 'exists:political_divisions,id']
+            'political_division_id' => ['required', 'string', 'exists:political_divisions,id'],
+            'address_bt' => ['required', 'string', 'max:100'],
+            'political_division_id_bt' => ['nullable', 'string', 'exists:political_divisions,id']
         ]);
 
         if ($validatorData->fails()) {
@@ -131,6 +140,11 @@ class UserProfileController extends Controller
             $profile->address()->create([
                 'address' => $request->get("address"),
                 'political_division_id' => $request->get("political_division_id"),
+            ]);
+
+            $profile->origin()->create([
+                'address' => $request->get("address_bt"),
+                'political_division_id' => $request->get("political_division_id_bt"),
             ]);
         }
         return  redirect()->back()->with([
@@ -257,6 +271,8 @@ class UserProfileController extends Controller
             'phone' => ['nullable', 'string', 'max:15'],
             'address' => ['required', 'string', 'max:100'],
             'political_division_id' => ['required', 'string', 'exists:political_divisions,id'],
+            'address_bt' => ['required', 'string', 'max:100'],
+            'political_division_id_bt' => ['nullable', 'string', 'exists:political_divisions,id']
         ]);
 
         if ($validatorData->fails()) {
@@ -282,6 +298,12 @@ class UserProfileController extends Controller
                 'address' =>  $request->get("address"),
                 'political_division_id' =>  $request->get("political_division_id"),
             ]);
+
+            $user->profile->origin()->update([
+                'address' =>  $request->get("address_bt"),
+                'political_division_id' =>  $request->get("political_division_id_bt"),
+            ]);
+
             return redirect()->back()->with('success', 'Perfil de usuario actualizado correctamente.');
         }
     }

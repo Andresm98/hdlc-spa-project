@@ -41,6 +41,9 @@ Route::get('address/parishes/{parish_id}', [AddressController::class, 'getFinalA
 Route::get('address/profile/address/{actual_parish}', [AddressController::class, 'getSaveAddress'])
     ->name('address.actual-address');
 
+Route::get('address/profile/address_bt/{actual_ubication}', [AddressController::class, 'getSaveAddressBt'])
+    ->name('address.actual-address-bt');
+
 Route::get('address/profile/address_format/{actual_parish}', [AddressController::class, 'getActualAddress'])
     ->name('address.address-format');
 

@@ -15,25 +15,11 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            //  1 = Activa, 2 = Fallecida, 3 = Retirada
+            //  1 = Activa, 2 = Fallecida, 3 = Retirada, 4 = Envio otros paises, 5 = Sin DATOS
             $table->tinyInteger('status');
             $table->tinyText('identity_card');
             $table->tinyText('iess_card')->nullable();
             $table->tinyText('driver_license')->nullable();
-
-            // ALTER TABLE profiles
-            // ADD COLUMN iess_card tinytext AFTER identity_card;
-
-            // alter table profiles
-            // modify column iess_card tinytext NULL;
-
-
-            // ALTER TABLE profiles
-            // ADD COLUMN driver_license tinytext AFTER iess_card;
-
-            // alter table profiles
-            // modify column driver_license tinytext NULL;
-
             $table->dateTime('date_birth');
             $table->dateTime('date_vocation')->nullable();
             $table->dateTime('date_admission')->nullable();
@@ -42,13 +28,6 @@ class CreateProfilesTable extends Migration
             $table->dateTime('date_death')->nullable();
             $table->dateTime('date_exit')->nullable();
             $table->dateTime('date_retirement')->nullable();
-
-            // ALTER TABLE profiles
-            // ADD COLUMN date_retirement DATETIME AFTER date_exit;
-
-            // alter table profiles
-            // modify column date_retirement date NULL;
-
             $table->char('cellphone', 20)->nullable();
             $table->char('phone', 20)->nullable();
             $table->longText('observation', 4000)->nullable();

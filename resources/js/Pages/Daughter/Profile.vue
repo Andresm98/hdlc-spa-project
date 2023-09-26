@@ -41,35 +41,13 @@
                 v-if="this.profileForm != null"
               >
                 <div
-                  class="
-                    ml-14
-                    mt-4
-                    mb-4
-                    col-start-1
-                    row-start-3
-                    self-center
-                    sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2
-                    lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4
-                  "
+                  class="ml-14 mt-4 mb-4 col-start-1 row-start-3 self-center sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2 lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4"
                 >
                   <button @click="openDialogReport()">
                     <div class="w-auto h-auto">
                       <div class="flex-1 h-full">
                         <div
-                          class="
-                            w-28
-                            flex
-                            items-center
-                            justify-center
-                            flex-1
-                            h-full
-                            p-2
-                            border border-blue-800
-                            text-white
-                            shadow
-                            rounded-lg
-                            hover:bg-blue-50 hover:text-zinc-300
-                          "
+                          class="w-28 flex items-center justify-center flex-1 h-full p-2 border border-blue-800 text-white shadow rounded-lg hover:bg-blue-50 hover:text-zinc-300"
                         >
                           <div class="relative">
                             <svg
@@ -105,90 +83,32 @@
           <div class="mt-5 md:mt-0 md:col-span-2">
             <form @submit.prevent="saveInfoUser">
               <section
-                class="
-                  bg-gray-200
-                  dark:bg-slate-800
-                  y-1
-                  px-4
-                  sm:p-6
-                  md:py-10 md:px-8
-                  rounded-lg
-                  sm:m-2
-                  lg:m-3
-                  md:m-4
-                "
+                class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 rounded-lg sm:m-2 lg:m-3 md:m-4"
               >
                 <div
-                  class="
-                    max-w-4xl
-                    mx-auto
-                    grid grid-cols-1
-                    lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2
-                  "
+                  class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
                 >
                   <div
-                    class="
-                      relative
-                      p-3
-                      col-start-1
-                      row-start-1
-                      flex flex-col-reverse
-                      rounded-lg
-                      bg-gradient-to-t
-                      from-black/75
-                      via-black/0
-                      sm:bg-none sm:row-start-2 sm:p-0
-                      lg:row-start-1
-                    "
+                    class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 lg:row-start-1"
                   >
                     <h1
-                      class="
-                        mt-1
-                        text-lg
-                        font-semibold
-                        text-black
-                        sm:text-black
-                        md:text-2xl
-                        dark:sm:text-white
-                      "
+                      class="mt-1 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
                     >
                       Provincia Ecuador
                     </h1>
                     <p
-                      class="
-                        text-sm
-                        leading-4
-                        font-medium
-                        text-black
-                        sm:text-black
-                        dark:sm:text-slate-400
-                      "
+                      class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
                     >
                       Información General de la Hermana
                     </p>
                   </div>
                   <div class="grid gap-4"></div>
                   <dl
-                    class="
-                      mt-4
-                      text-xs
-                      font-medium
-                      flex
-                      items-center
-                      row-start-2
-                      sm:mt-1 sm:row-start-3
-                      md:mt-2.5
-                      lg:row-start-2
-                    "
+                    class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2"
                   >
                     <dt class="sr-only">Visto</dt>
                     <dd
-                      class="
-                        text-indigo-600
-                        flex
-                        items-center
-                        dark:text-indigo-400
-                      "
+                      class="text-indigo-600 flex items-center dark:text-indigo-400"
                     >
                       <svg
                         width="24"
@@ -269,22 +189,7 @@
                         <input
                           type="text"
                           placeholder="Nombre del usuario en el Sistema"
-                          class="
-                            border-0
-                            px-3
-                            py-3
-                            placeholder-blueGray-300
-                            text-black
-                            bg-white
-                            rounded
-                            text-sm
-                            shadow
-                            focus:outline-none focus:ring
-                            w-full
-                            ease-linear
-                            transition-all
-                            duration-150
-                          "
+                          class="border-0 px-3 py-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           @keydown.space.prevent
                           v-model="daughterForm.username"
                           readonly
@@ -301,22 +206,7 @@
                         <input
                           type="email"
                           placeholder="micorreo@correo.com"
-                          class="
-                            border-0
-                            px-3
-                            py-3
-                            placeholder-blueGray-300
-                            text-blueGray-600
-                            bg-white
-                            rounded
-                            text-sm
-                            shadow
-                            focus:outline-none focus:ring
-                            w-full
-                            ease-linear
-                            transition-all
-                            duration-150
-                          "
+                          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           v-model="daughterForm.email"
                           title="Ingrese el un correo electrónico válido."
                           required
@@ -335,22 +225,7 @@
                         <input
                           type="text"
                           placeholder="Ejm: Lucas Andres"
-                          class="
-                            border-0
-                            px-3
-                            py-3
-                            placeholder-blueGray-300
-                            text-black
-                            bg-white
-                            rounded
-                            text-sm
-                            shadow
-                            focus:outline-none focus:ring
-                            w-full
-                            ease-linear
-                            transition-all
-                            duration-150
-                          "
+                          class="border-0 px-3 py-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           onkeydown="return /[a-z, ]/i.test(event.key)"
                           onblur="if (this.value == '') {this.value = '';}"
                           onfocus="if (this.value == '') {this.value = '';}"
@@ -372,22 +247,7 @@
                         <input
                           type="text"
                           placeholder="Ejm: Fuentes Ramos"
-                          class="
-                            border-0
-                            px-3
-                            py-3
-                            placeholder-blueGray-300
-                            text-blueGray-600
-                            bg-white
-                            rounded
-                            text-sm
-                            shadow
-                            focus:outline-none focus:ring
-                            w-full
-                            ease-linear
-                            transition-all
-                            duration-150
-                          "
+                          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           onkeydown="return /[a-z, ]/i.test(event.key)"
                           onblur="if (this.value == '') {this.value = '';}"
                           onfocus="if (this.value == '') {this.value = '';}"
@@ -408,22 +268,7 @@
                         <input
                           type="text"
                           placeholder="Ejm: Lucas Andres"
-                          class="
-                            border-0
-                            px-3
-                            py-3
-                            placeholder-blueGray-300
-                            text-black
-                            bg-white
-                            rounded
-                            text-sm
-                            shadow
-                            focus:outline-none focus:ring
-                            w-full
-                            ease-linear
-                            transition-all
-                            duration-150
-                          "
+                          class="border-0 px-3 py-3 placeholder-blueGray-300 text-black bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           onkeydown="return /[a-z, ]/i.test(event.key)"
                           onblur="if (this.value == '') {this.value = '';}"
                           onfocus="if (this.value == '') {this.value = '';}"
@@ -471,19 +316,7 @@
                   </div>
                   <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
                     <input
-                      class="
-                        text-sm text-blue-500
-                        file:mr-4
-                        file:py-2
-                        file:px-4
-                        file:rounded-full
-                        file:border-0
-                        file:text-sm
-                        file:font-semibold
-                        file:bg-cyan-500
-                        file:text-white
-                        hover:file:bg-cyan-600
-                      "
+                      class="text-sm text-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-cyan-500 file:text-white hover:file:bg-cyan-600"
                       type="file"
                       accept="image/png, image/gif, image/jpeg"
                       @input="daughterForm.file = $event.target.files[0]"
@@ -504,12 +337,13 @@
         </div>
       </div>
 
+      <!-- PUT FORM PROFILE -->
       <div class="mt-10 sm:mt-0">
         <div class="md:grid md:grid-cols-3 md:gap-6">
           <div class="md:col-span-1">
             <div class="px-4 sm:px-0">
               <h3 class="text-lg font-medium leading-6 text-gray-900">
-                Información del Perfil de Hermana
+                Información del Perfil de Hermana Actualizada
               </h3>
               <p class="mt-1 text-sm text-gray-600 text-justify">
                 La información del perfil se relaciona a las fechas
@@ -529,6 +363,119 @@
             <form @submit.prevent="saveUserProfile">
               <div class="shadow overflow-hidden sm:rounded-md">
                 <div class="px-4 py-5 bg-white sm:p-6">
+                  <br />
+                  <div
+                    class="col-span-6 sm:col-span-3 my-2"
+                    v-if="this.allProvinces != null"
+                  >
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700"
+                        htmlfor="grid-password"
+                      >
+                        Provincia Nacimiento:
+                      </label>
+                      <div>
+                        <multiselect
+                          :searchable="true"
+                          v-model="selectOneBt.selectedProvince"
+                          :options="this.allProvinces"
+                          :close-on-select="true"
+                          :clear-on-select="false"
+                          mode="tags"
+                          label="name"
+                          @search-change="onSearchProvincesChangeBt"
+                          @select="onSelectedProvinceBt"
+                          track-by="name"
+                          placeholder="Buscar provincia"
+                        >
+                        </multiselect>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-span-6 sm:col-span-2 my-2">
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700"
+                        htmlfor="grid-password"
+                      >
+                        Cantón Nacimiento:
+                      </label>
+                      <div>
+                        <multiselect
+                          :searchable="true"
+                          v-model="selectTwoBt.selectedCanton"
+                          :options="selectTwoBt.options"
+                          :close-on-select="true"
+                          :clear-on-select="false"
+                          mode="tags"
+                          label="name"
+                          @select="onSelectedCantonBt"
+                          @search-change="onSearchCantonChangeBt"
+                          track-by="name"
+                          placeholder="Buscar cantón"
+                        >
+                        </multiselect>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-span-6 sm:col-span-2 my-2">
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700"
+                        htmlfor="grid-password"
+                      >
+                        Parroquia Nacimiento:
+                      </label>
+                      <div>
+                        <multiselect
+                          :searchable="true"
+                          v-model="selectThreeBt.selectedParish"
+                          :options="selectThreeBt.options"
+                          :close-on-select="true"
+                          :clear-on-select="false"
+                          label="name"
+                          @select="onSelectedParishBt"
+                          @search-change="onSearchParishChangeBt"
+                          track-by="name"
+                          placeholder="Buscar parroquia"
+                        >
+                        </multiselect>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-span-6 sm:col-span-2">
+                    <div>
+                      <label
+                        for="address_bt"
+                        class="block text-sm font-medium text-gray-700"
+                      >
+                        Lugar de Nacimiento Observaciones:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.address_bt"
+                      >
+                        {{ $page.props.errors.address_bt }}
+                      </p>
+                      <small
+                        >Formato: Ingrese la dirección máximo 100
+                        caracteres.</small
+                      >
+                      <div class="mb-1">
+                        <textarea
+                          id="address_bt"
+                          name="address_bt"
+                          rows="1"
+                          class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
+                          v-model="profileForm.address_bt"
+                          placeholder="Observaciones lugar de nacimiento.."
+                          :maxlength="100"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
                   <div class="grid grid-cols-6 gap-6">
                     <div class="col-span-6 sm:col-span-2">
                       <label
@@ -560,22 +507,7 @@
                         maxlength="13"
                         placeholder="0102211274 ó 0102211274001"
                         pattern="[+-]?\d+(?:[.,]\d+)?"
-                        class="
-                          border-0
-                          px-3
-                          py-3
-                          placeholder-blueGray-300
-                          text-blueGray-600
-                          bg-white
-                          rounded
-                          text-sm
-                          shadow
-                          focus:outline-none focus:ring
-                          w-full
-                          ease-linear
-                          transition-all
-                          duration-150
-                        "
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         v-model="profileForm.identity_card"
                         required
                       />
@@ -595,22 +527,7 @@
                         type="text"
                         minLength="1"
                         maxlength="30"
-                        class="
-                          border-0
-                          px-3
-                          py-3
-                          placeholder-blueGray-300
-                          text-blueGray-600
-                          bg-white
-                          rounded
-                          text-sm
-                          shadow
-                          focus:outline-none focus:ring
-                          w-full
-                          ease-linear
-                          transition-all
-                          duration-150
-                        "
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         v-model="profileForm.iess_card"
                       />
                     </div>
@@ -631,22 +548,7 @@
                         type="text"
                         minLength="1"
                         maxlength="50"
-                        class="
-                          border-0
-                          px-3
-                          py-3
-                          placeholder-blueGray-300
-                          text-blueGray-600
-                          bg-white
-                          rounded
-                          text-sm
-                          shadow
-                          focus:outline-none focus:ring
-                          w-full
-                          ease-linear
-                          transition-all
-                          duration-150
-                        "
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         v-model="profileForm.driver_license"
                       />
                     </div>
@@ -772,22 +674,7 @@
                         pattern="^\d{10}$"
                         title="Ingrese un número de celular con un formato válido, máximo 10digitos."
                         placeholder="0997643146"
-                        class="
-                          border-0
-                          px-3
-                          py-3
-                          placeholder-blueGray-300
-                          text-blueGray-600
-                          bg-white
-                          rounded
-                          text-sm
-                          shadow
-                          focus:outline-none focus:ring
-                          w-full
-                          ease-linear
-                          transition-all
-                          duration-150
-                        "
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         v-model="profileForm.cellphone"
                         required
                       />
@@ -814,22 +701,7 @@
                         pattern="^\d{9}$"
                         title="Ingrese un número de telf. con un formato válido, máximo 9 digitos."
                         placeholder="022400111"
-                        class="
-                          border-0
-                          px-3
-                          py-3
-                          placeholder-blueGray-300
-                          text-blueGray-600
-                          bg-white
-                          rounded
-                          text-sm
-                          shadow
-                          focus:outline-none focus:ring
-                          w-full
-                          ease-linear
-                          transition-all
-                          duration-150
-                        "
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         v-model="profileForm.phone"
                       />
                     </div>
@@ -881,17 +753,7 @@
                           id="address"
                           name="address"
                           rows="1"
-                          class="
-                            shadow-sm
-                            focus:ring-blue-500 focus:border-blue-500
-                            mt-1
-                            mb-2
-                            block
-                            w-full
-                            sm:text-sm
-                            border border-gray-300
-                            rounded-md
-                          "
+                          class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
                           v-model="profileForm.address"
                           placeholder="Agregar la dirección actual.."
                           :maxlength="100"
@@ -1058,22 +920,7 @@
                         <input
                           type="text"
                           placeholder="Ejm: Fuentes Ramos"
-                          class="
-                            border-0
-                            px-3
-                            py-3
-                            placeholder-blueGray-300
-                            text-blueGray-600
-                            bg-white
-                            rounded
-                            text-sm
-                            shadow
-                            focus:outline-none focus:ring
-                            w-full
-                            ease-linear
-                            transition-all
-                            duration-150
-                          "
+                          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           onkeydown="return /[a-z, ]/i.test(event.key)"
                           onblur="if (this.value == '') {this.value = '';}"
                           onfocus="if (this.value == '') {this.value = '';}"
@@ -1101,22 +948,7 @@
                         <input
                           type="text"
                           placeholder="Ejm: Fuentes Ramos"
-                          class="
-                            border-0
-                            px-3
-                            py-3
-                            placeholder-blueGray-300
-                            text-blueGray-600
-                            bg-white
-                            rounded
-                            text-sm
-                            shadow
-                            focus:outline-none focus:ring
-                            w-full
-                            ease-linear
-                            transition-all
-                            duration-150
-                          "
+                          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           onkeydown="return /[a-z, ]/i.test(event.key)"
                           onblur="if (this.value == '') {this.value = '';}"
                           onfocus="if (this.value == '') {this.value = '';}"
@@ -1141,15 +973,7 @@
                       <div class="mt-1 rounded-md mx-2">
                         <input
                           type="number"
-                          class="
-                            focus:ring-blue-500 focus:border-blue-500
-                            flex-1
-                            block
-                            w-full
-                            rounded-none rounded-r-md
-                            sm:text-sm
-                            border-gray-300
-                          "
+                          class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                           placeholder="Ingrese el número"
                           min="0"
                           max="20"
@@ -1173,15 +997,7 @@
                       <div class="mt-1 rounded-md mx-2">
                         <input
                           type="number"
-                          class="
-                            focus:ring-blue-500 focus:border-blue-500
-                            flex-1
-                            block
-                            w-full
-                            rounded-none rounded-r-md
-                            sm:text-sm
-                            border-gray-300
-                          "
+                          class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                           placeholder="Ingrese el número"
                           min="0"
                           max="20"
@@ -1205,15 +1021,7 @@
                       <div class="mt-1 rounded-md mx-2">
                         <input
                           type="number"
-                          class="
-                            focus:ring-blue-500 focus:border-blue-500
-                            flex-1
-                            block
-                            w-full
-                            rounded-none rounded-r-md
-                            sm:text-sm
-                            border-gray-300
-                          "
+                          class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                           placeholder="Ingrese el número"
                           min="0"
                           max="20"
@@ -1243,22 +1051,7 @@
                         <input
                           type="text"
                           placeholder="Ejm: Fuentes Ramos"
-                          class="
-                            border-0
-                            px-3
-                            py-3
-                            placeholder-blueGray-300
-                            text-blueGray-600
-                            bg-white
-                            rounded
-                            text-sm
-                            shadow
-                            focus:outline-none focus:ring
-                            w-full
-                            ease-linear
-                            transition-all
-                            duration-150
-                          "
+                          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           onkeydown="return /[a-z, ]/i.test(event.key)"
                           onblur="if (this.value == '') {this.value = '';}"
                           onfocus="if (this.value == '') {this.value = '';}"
@@ -1284,22 +1077,7 @@
                         <input
                           type="text"
                           placeholder="Ejm: Primo, Hermano, etc"
-                          class="
-                            border-0
-                            px-3
-                            py-3
-                            placeholder-blueGray-300
-                            text-blueGray-600
-                            bg-white
-                            rounded
-                            text-sm
-                            shadow
-                            focus:outline-none focus:ring
-                            w-full
-                            ease-linear
-                            transition-all
-                            duration-150
-                          "
+                          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           onkeydown="return /[a-z, ]/i.test(event.key)"
                           onblur="if (this.value == '') {this.value = '';}"
                           onfocus="if (this.value == '') {this.value = '';}"
@@ -1329,22 +1107,7 @@
                           pattern="^\d{10}$"
                           title="Ingrese un número de celular con un formato válido, máximo 10digitos."
                           placeholder="0997643146"
-                          class="
-                            border-0
-                            px-3
-                            py-3
-                            placeholder-blueGray-300
-                            text-blueGray-600
-                            bg-white
-                            rounded
-                            text-sm
-                            shadow
-                            focus:outline-none focus:ring
-                            w-full
-                            ease-linear
-                            transition-all
-                            duration-150
-                          "
+                          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           v-model="infoFamilyForm.cellphone"
                           required
                         />
@@ -1373,22 +1136,7 @@
                           pattern="^\d{9}$"
                           title="Ingrese un número de celular con un formato válido, máximo 9 digitos."
                           placeholder="022400111"
-                          class="
-                            border-0
-                            px-3
-                            py-3
-                            placeholder-blueGray-300
-                            text-blueGray-600
-                            bg-white
-                            rounded
-                            text-sm
-                            shadow
-                            focus:outline-none focus:ring
-                            w-full
-                            ease-linear
-                            transition-all
-                            duration-150
-                          "
+                          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           v-model="infoFamilyForm.phone"
                         />
                       </div>
@@ -1410,14 +1158,13 @@
         </div>
       </div>
     </div>
-    <!-- Put Data Form -->
+    <!-- POST Data Form-->
     <jet-dialog-modal
       :max-width="'input-md'"
       :show="profileBeingCreated"
       @close="profileBeingCreated == null"
     >
-      <template #title> Datos del Perfil</template>
-
+      <template #title> Datos para la Creación del Perfil</template>
       <template #content>
         <div>
           <div class="mt-5">
@@ -1455,22 +1202,7 @@
                       maxlength="13"
                       placeholder="0102211274 ó 0102211274001"
                       pattern="[+-]?\d+(?:[.,]\d+)?"
-                      class="
-                        border-0
-                        px-3
-                        py-3
-                        placeholder-blueGray-300
-                        text-blueGray-600
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="createProfileForm.identity_card"
                       required
                     />
@@ -1497,7 +1229,116 @@
                       required
                     />
                   </div>
-
+                  <br />
+                  <div class="col-span-6 sm:col-span-2">
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700"
+                        htmlfor="grid-password"
+                      >
+                        Provincia Nacimiento:
+                      </label>
+                      <div>
+                        <multiselect
+                          :searchable="true"
+                          v-model="selectOneBt.selectedProvince"
+                          :options="this.allProvinces"
+                          :close-on-select="true"
+                          :clear-on-select="false"
+                          mode="tags"
+                          label="name"
+                          @search-change="onSearchProvincesChangeBt"
+                          @select="onSelectedProvinceBt"
+                          track-by="name"
+                          placeholder="Buscar provincia"
+                        >
+                        </multiselect>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-span-6 sm:col-span-2">
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700"
+                        htmlfor="grid-password"
+                      >
+                        Cantón Nacimiento:
+                      </label>
+                      <div>
+                        <multiselect
+                          :searchable="true"
+                          v-model="selectTwoBt.selectedCanton"
+                          :options="selectTwoBt.options"
+                          :close-on-select="true"
+                          :clear-on-select="false"
+                          mode="tags"
+                          label="name"
+                          @select="onSelectedCantonBt"
+                          @search-change="onSearchCantonChangeBt"
+                          track-by="name"
+                          placeholder="Buscar cantón"
+                        >
+                        </multiselect>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-span-6 sm:col-span-2">
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700"
+                        htmlfor="grid-password"
+                      >
+                        Parroquia Nacimiento:
+                      </label>
+                      <div>
+                        <multiselect
+                          :searchable="true"
+                          v-model="selectThreeBt.selectedParish"
+                          :options="selectThreeBt.options"
+                          :close-on-select="true"
+                          :clear-on-select="false"
+                          label="name"
+                          @select="onSelectedParishBt"
+                          @search-change="onSearchParishChangeBt"
+                          track-by="name"
+                          placeholder="Buscar parroquia"
+                        >
+                        </multiselect>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-span-6 sm:col-span-2">
+                    <div>
+                      <label
+                        for="address_bt"
+                        class="block text-sm font-medium text-gray-700"
+                      >
+                        Lugar de Nacimiento Observaciones:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.address_bt"
+                      >
+                        {{ $page.props.errors.address_bt }}
+                      </p>
+                      <small
+                        >Formato: Ingrese la dirección máximo 100
+                        caracteres.</small
+                      >
+                      <div class="mb-1">
+                        <textarea
+                          id="address_bt"
+                          name="address_bt"
+                          rows="1"
+                          class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
+                          v-model="createProfileForm.address_bt"
+                          placeholder="Agregar la dirección actual.."
+                          :maxlength="100"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
                   <div class="col-span-6 sm:col-span-2">
                     <label
                       class="block text-sm font-medium text-black"
@@ -1597,22 +1438,7 @@
                       pattern="^\d{10}$"
                       title="Ingrese un número de celular con un formato válido, máximo 10digitos."
                       placeholder="0997643146"
-                      class="
-                        border-0
-                        px-3
-                        py-3
-                        placeholder-blueGray-300
-                        text-blueGray-600
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="createProfileForm.cellphone"
                       required
                     />
@@ -1639,22 +1465,7 @@
                       pattern="^\d{9}$"
                       title="Ingrese un número de telf. con un formato válido, máximo 9 digitos."
                       placeholder="022400111"
-                      class="
-                        border-0
-                        px-3
-                        py-3
-                        placeholder-blueGray-300
-                        text-blueGray-600
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="createProfileForm.phone"
                     />
                   </div>
@@ -1682,17 +1493,7 @@
                         id="address"
                         name="address"
                         rows="1"
-                        class="
-                          shadow-sm
-                          focus:ring-blue-500 focus:border-blue-500
-                          mt-1
-                          mb-2
-                          block
-                          w-full
-                          sm:text-sm
-                          border border-gray-300
-                          rounded-md
-                        "
+                        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
                         v-model="createProfileForm.address"
                         placeholder="Agregar la dirección actual.."
                         :maxlength="100"
@@ -1817,16 +1618,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <label class="flex items-center">
             <input
-              class="
-                rounded
-                border-gray-300
-                text-emerald-600
-                shadow-sm
-                focus:border-emerald-300
-                focus:ring
-                focus:ring-emerald-200
-                focus:ring-opacity-50
-              "
+              class="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
               type="checkbox"
               :value="1"
               v-model="options"
@@ -1835,16 +1627,7 @@
           </label>
           <label class="flex items-center">
             <input
-              class="
-                rounded
-                border-gray-300
-                text-emerald-600
-                shadow-sm
-                focus:border-emerald-300
-                focus:ring
-                focus:ring-emerald-200
-                focus:ring-opacity-50
-              "
+              class="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
               type="checkbox"
               :value="2"
               v-model="options"
@@ -1853,76 +1636,13 @@
           </label>
           <label class="flex items-center">
             <input
-              class="
-                rounded
-                border-gray-300
-                text-emerald-600
-                shadow-sm
-                focus:border-emerald-300
-                focus:ring
-                focus:ring-emerald-200
-                focus:ring-opacity-50
-              "
+              class="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
               type="checkbox"
               :value="3"
               v-model="options"
             />
             <span class="ml-2 text-sm text-gray-600">Sacramentos</span>
           </label>
-          <!-- <label class="flex items-center">
-            <input
-              class="
-                rounded
-                border-gray-300
-                text-emerald-600
-                shadow-sm
-                focus:border-emerald-300
-                focus:ring
-                focus:ring-emerald-200
-                focus:ring-opacity-50
-              "
-              type="checkbox"
-              :value="4"
-              v-model="options"
-            />
-            <span class="ml-2 text-sm text-gray-600">Permisos</span>
-          </label> -->
-          <!-- <label class="flex items-center">
-            <input
-              class="
-                rounded
-                border-gray-300
-                text-emerald-600
-                shadow-sm
-                focus:border-emerald-300
-                focus:ring
-                focus:ring-emerald-200
-                focus:ring-opacity-50
-              "
-              type="checkbox"
-              :value="5"
-              v-model="options"
-            />
-            <span class="ml-2 text-sm text-gray-600">Cambios</span>
-          </label>
-          <label class="flex items-center">
-            <input
-              class="
-                rounded
-                border-gray-300
-                text-emerald-600
-                shadow-sm
-                focus:border-emerald-300
-                focus:ring
-                focus:ring-emerald-200
-                focus:ring-opacity-50
-              "
-              type="checkbox"
-              :value="6"
-              v-model="options"
-            />
-            <span class="ml-2 text-sm text-gray-600">Nombramientos</span>
-          </label> -->
         </div>
       </template>
 
@@ -1937,16 +1657,7 @@
         </jet-secondary-button>
 
         <a
-          class="
-            mx-2
-            bg-blue-600
-            text-white text-sm
-            leading-6
-            font-medium
-            py-2
-            px-3
-            rounded-lg
-          "
+          class="mx-2 bg-blue-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg"
           target="_blank"
           :href="
             this.route(`daughter.report.profile`, {
@@ -1976,7 +1687,6 @@ import Icon from "@/Components/Icon";
 import JetButton from "@/Jetstream/Button";
 import { useForm } from "@inertiajs/inertia-vue3";
 import Operation from "@/Components/Daughter/Operation";
-
 import TextInput from "@/Components/TextInput";
 import { ref } from "vue";
 import Alert from "@/Components/Alert";
@@ -1998,7 +1708,6 @@ export default {
     const formatSet = "YYYY-MM-DD";
     let date = new Date();
     var format = (date) => {
-      //   console.log("smoke ", date);
       return moment(date).format(formatSet);
     };
     const form = useForm({
@@ -2006,6 +1715,10 @@ export default {
       canton_id: null,
       parish_id: null,
       political_division_id: null,
+      province_id_bt: null,
+      canton_id_bt: null,
+      parish_id_bt: null,
+      political_division_id_bt: null,
     });
     return {
       date,
@@ -2058,6 +1771,35 @@ export default {
         multiSelectParish: null,
         vSelectParish: null,
       },
+      selectOneBt: {
+        selectedProvince: undefined,
+        value: 0,
+        isDisabled: false,
+        isTouched: false,
+        options: {
+          type: Array,
+          default: () => [],
+        },
+        loading: false,
+        multiSelectUser: null,
+        vSelectUser: null,
+      },
+      selectTwoBt: {
+        selectedCanton: undefined,
+        value: 0,
+        options: [],
+        loading: false,
+        multiSelectCanton: null,
+        vSelectCanton: null,
+      },
+      selectThreeBt: {
+        selectedParish: undefined,
+        value: 0,
+        options: [],
+        loading: false,
+        multiSelectParish: null,
+        vSelectParish: null,
+      },
       managingReportsFor: null,
       options: [],
     };
@@ -2069,7 +1811,6 @@ export default {
         this.selectThree.selectedParish = null;
         this.selectTwo.options = [];
         this.selectThree.options = [];
-        // Clean data Form
         this.form.province_id = null;
         this.form.canton_id = null;
         this.form.parish_id = null;
@@ -2080,7 +1821,6 @@ export default {
       if (this.selectTwo.selectedCanton === null) {
         this.selectThree.selectedParish = null;
         this.selectThree.options = [];
-        // Clean data Form
         this.form.canton_id = null;
         this.form.parish_id = null;
         this.form.political_division_id = null;
@@ -2088,15 +1828,43 @@ export default {
     },
     "selectThree.selectedParish": function () {
       if (this.selectThree.selectedParish === null) {
-        // Clean data Form
         this.form.parish_id = null;
         this.form.political_division_id = null;
+      }
+    },
+    "selectOneBt.selectedProvince": function () {
+      if (this.selectOneBt.selectedProvince === null) {
+        this.selectTwoBt.selectedCanton = null;
+        this.selectThreeBt.selectedParish = null;
+        this.selectTwoBt.options = [];
+        this.selectThreeBt.options = [];
+        this.form.province_id_bt = null;
+        this.form.canton_id_bt = null;
+        this.form.parish_id_bt = null;
+        this.form.political_division_id_bt = null;
+        this.profileForm.political_division_id_bt = null;
+      }
+    },
+    "selectTwoBt.selectedCanton": function () {
+      if (this.selectTwoBt.selectedCanton === null) {
+        this.selectThreeBt.selectedParish = null;
+        this.selectThreeBt.options = [];
+        this.form.canton_id_bt = null;
+        this.form.parish_id_bt = null;
+        this.form.political_division_id_bt = null;
+        this.profileForm.political_division_id_bt = null;
+      }
+    },
+    "selectThreeBt.selectedParish": function () {
+      if (this.selectThreeBt.selectedParish === null) {
+        this.form.parish_id_bt = null;
+        this.form.political_division_id_bt = null;
+        this.profileForm.political_division_id_bt = null;
       }
     },
   },
   mounted() {
     this.loadInfoProfile;
-
     axios.get(this.route("daughter.address.province")).then((response) => {
       this.allProvinces = response.data;
     });
@@ -2138,7 +1906,6 @@ export default {
       const file = e.target.files[0];
       this.url = URL.createObjectURL(file);
     },
-    //
     confirmationProfileCreate() {
       this.createProfileForm = this.$inertia.form({
         identity_card: null,
@@ -2151,7 +1918,9 @@ export default {
         cellphone: null,
         phone: null,
         address: null,
+        address_bt: null,
         political_division_id: null,
+        political_division_id_bt: null,
       });
       this.profileBeingCreated = this.createProfileForm;
     },
@@ -2168,7 +1937,31 @@ export default {
       this.createProfileForm.date_vote = this.formatDate(
         this.createProfileForm.date_vote
       );
-
+      let dataaddresbt = null;
+      if (
+        this.form.province_id_bt !== null &&
+        this.form.canton_id_bt === null &&
+        this.form.parish_id_bt === null
+      ) {
+        dataaddresbt = this.form.province_id_bt;
+      }
+      if (
+        this.form.province_id_bt !== null &&
+        this.form.canton_id_bt !== null &&
+        this.form.parish_id_bt === null
+      ) {
+        dataaddresbt = this.form.canton_id_bt;
+      }
+      if (
+        this.form.province_id_bt !== null &&
+        this.form.canton_id_bt !== null &&
+        this.form.parish_id_bt !== null
+      ) {
+        dataaddresbt = this.form.parish_id_bt;
+      }
+      this.createProfileForm.political_division_id_bt = dataaddresbt;
+      this.createProfileForm.political_division_id =
+        this.form.political_division_id;
       if (
         this.isInvalidProvince == false &&
         this.isInvalidCanton == false &&
@@ -2190,7 +1983,6 @@ export default {
         );
       }
     },
-    //
     saveInfoUser() {
       Inertia.post(
         route(`daughter.user.update`, {
@@ -2209,7 +2001,6 @@ export default {
         }
       );
     },
-
     saveUserProfile() {
       this.profileForm.date_birth = this.formatDate(
         this.profileForm.date_birth
@@ -2217,7 +2008,6 @@ export default {
       this.profileForm.date_vocation = this.formatDate(
         this.profileForm.date_vocation
       );
-
       this.profileForm.date_send = this.formatDate(this.profileForm.date_send);
       this.profileForm.date_vote = this.formatDate(this.profileForm.date_vote);
       if (
@@ -2237,7 +2027,6 @@ export default {
         );
       }
     },
-    //
     saveProfileInfoFamily() {
       this.infoFamilyForm.post(
         this.route("daughter.infofamily.store", { id: this.daughterForm.id }),
@@ -2259,11 +2048,19 @@ export default {
       );
       return response.data;
     },
-    onSearchProvincesChange(term) {
-      //   console.log("input data search " + term);
+    async status_bt() {
+      if (this.daughter.profile.origin["political_division_id"]) {
+        let response = await axios.get(
+          this.route("daughter.address.actual-address-bt", {
+            actual_ubication:
+              this.daughter.profile.origin["political_division_id"],
+          })
+        );
+        return response.data;
+      }
     },
+    onSearchProvincesChange(term) {},
     onSelectedProvince(province) {
-      //   console.log("input data selecter " + province.id);
       this.form.province_id = province.id;
       this.form.canton_id = null;
       this.form.parish_id = null;
@@ -2279,22 +2076,17 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.selectTwo.options = res.data;
         });
     },
 
-    onSearchCantonChange(term) {
-      //   console.log(term);
-    },
+    onSearchCantonChange(term) {},
     onSelectedCanton(canton) {
-      //   console.log("input data selecter " + canton.id);
       this.form.canton_id = canton.id;
       this.form.parish_id = null;
       this.form.political_division_id = null;
       this.selectThree.selectedParish = undefined;
       this.selectThree.options = [];
-
       axios
         .get(
           this.route("daughter.address.parishes", {
@@ -2302,51 +2094,83 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.selectThree.options = res.data;
         });
     },
-
-    onSearchParishChange(term) {
-      //   console.log(term);
-    },
+    onSearchParishChange(term) {},
     onSelectedParish(parish) {
       if (this.profileForm != null) {
         this.profileForm.political_division_id = parish.id;
       }
       if (this.createProfileForm != null) {
-        this.createProfileForm.political_division_id = parish.id;
+        this.form.political_division_id = parish.id;
       }
-
-      //   console.log("input parish data selecter " + this.form.parish_id);
     },
-    //
+    onSearchProvincesChangeBt(term) {},
+    onSelectedProvinceBt(province) {
+      this.form.province_id_bt = province.id;
+      this.profileForm.political_division_id_bt = province.id;
+      this.form.canton_id_bt = null;
+      this.form.parish_id_bt = null;
+      this.form.political_division_id_bt = null;
+      this.selectTwoBt.selectedCanton = undefined;
+      this.selectThreeBt.selectedParish = undefined;
+      this.selectTwoBt.options = [];
+      this.selectThreeBt.options = [];
+      axios
+        .get(
+          this.route("secretary.address.cantons", {
+            province_id: province.id,
+          })
+        )
+        .then((res) => {
+          this.selectTwoBt.options = res.data;
+        });
+    },
+    onSearchCantonChangeBt(term) {},
+    onSelectedCantonBt(canton) {
+      this.form.canton_id_bt = canton.id;
+      this.profileForm.political_division_id_bt = canton.id;
+      this.form.parish_id_bt = null;
+      this.form.political_division_id_bt = null;
+      this.selectThreeBt.selectedParish = undefined;
+      this.selectThreeBt.options = [];
+      axios
+        .get(
+          this.route("secretary.address.parishes", {
+            canton_id: canton.id,
+          })
+        )
+        .then((res) => {
+          this.selectThreeBt.options = res.data;
+        });
+    },
+    onSearchParishChangeBt(term) {},
+    onSelectedParishBt(parish) {
+      this.form.parish_id_bt = parish.id;
+      this.form.political_division_id_bt = parish.id;
+      this.profileForm.political_division_id_bt = parish.id;
+    },
     openDialogReport() {
       this.managingReportsFor = "setup";
     },
   },
   computed: {
-    // Validate ID Card`
     validateIdentityCard() {
       if (this.profileForm.identity_card == null) {
         return false;
       }
       this.profileForm.identity_card = this.profileForm.identity_card + "";
-      //   console.log(typeof identity_card + "" + identity_card);
-      //   console.log(this.profile.identity_card);
-
       if (
         this.profileForm.identity_card.length == 10 ||
         this.profileForm.identity_card.length == 13
       ) {
         const digit = this.profileForm.identity_card.split("").map(Number);
-        //   console.log(digit);
         const coefficient = [2, 1];
         var province_code = digit[0] * 10 + digit[1];
         var verification_code = digit.slice(9, 10);
         var dec, final_value, pivote;
         dec = final_value = pivote = 0;
-
         if (
           province_code >= 0 &&
           (province_code <= 24 || province_code == 30)
@@ -2369,19 +2193,14 @@ export default {
         }
         return false;
       }
-
       return false;
     },
-    //  Validate ID Create
     validateIdentityCardCreate() {
       if (this.createProfileForm.identity_card == null) {
         return false;
       }
       this.createProfileForm.identity_card =
         this.createProfileForm.identity_card + "";
-      //   console.log(typeof identity_card + "" + identity_card);
-      //   console.log(this.profile.identity_card);
-
       if (
         this.createProfileForm.identity_card.length == 10 ||
         this.createProfileForm.identity_card.length == 13
@@ -2389,7 +2208,6 @@ export default {
         const digit = this.createProfileForm.identity_card
           .split("")
           .map(Number);
-        //   console.log(digit);
         const coefficient = [2, 1];
         var province_code = digit[0] * 10 + digit[1];
         var verification_code = digit.slice(9, 10);
@@ -2422,24 +2240,39 @@ export default {
       return false;
     },
     isInvalidProvince() {
-      //   console.log("ee", this.selectOne.selectedProvince);
       return (
         this.selectOne.selectedProvince == undefined ||
         this.selectOne.selectedProvince == null
       );
     },
     isInvalidCanton() {
-      //   console.log("ee canton", this.selectTwo.selectedCanton);
       return (
         this.selectTwo.selectedCanton == undefined ||
         this.selectTwo.selectedCanton == null
       );
     },
     isInvalidParish() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectThree.selectedParish == undefined ||
         this.selectThree.selectedParish == null
+      );
+    },
+    isInvalidBt() {
+      return (
+        this.selectOneBt.selectedProvince == undefined ||
+        this.selectOneBt.selectedProvince == null
+      );
+    },
+    isInvalidCantonBt() {
+      return (
+        this.selectTwoBt.selectedCanton == undefined ||
+        this.selectTwoBt.selectedCanton == null
+      );
+    },
+    isInvalidParishBt() {
+      return (
+        this.selectThreeBt.selectedParish == undefined ||
+        this.selectThreeBt.selectedParish == null
       );
     },
     loadInfoProfile() {
@@ -2460,9 +2293,11 @@ export default {
           address: this.daughter.profile.address.address,
           political_division_id:
             this.daughter.profile.address.political_division_id,
+          address_bt: this.daughter.profile.origin.address,
+          political_division_id_bt:
+            this.daughter.profile.origin.political_division_id,
         });
         this.status().then((data) => {
-          //   console.log(data);
           this.selectThree.options = data.parishes;
           this.selectThree.selectedParish = data.data_parish;
 
@@ -2470,6 +2305,15 @@ export default {
           this.selectTwo.selectedCanton = data.data_canton;
 
           this.selectOne.selectedProvince = data.data_province;
+        });
+        this.status_bt().then((data) => {
+          this.selectThreeBt.options = data.parishes;
+          this.selectThreeBt.selectedParish = data.data_parish;
+
+          this.selectTwoBt.options = data.cantons;
+          this.selectTwoBt.selectedCanton = data.data_canton;
+
+          this.selectOneBt.selectedProvince = data.data_province;
         });
         this.loadInfoFamily;
       }
@@ -2484,7 +2328,6 @@ export default {
             nr_sisters: this.daughter.profile.info_family.nr_sisters,
             nr_brothers: this.daughter.profile.info_family.nr_brothers,
             place_of_family: this.daughter.profile.info_family.place_of_family,
-            //
             name_family_member:
               this.daughter.profile.info_family.info_family_break
                 .name_family_member,
@@ -2502,7 +2345,6 @@ export default {
             nr_sisters: this.daughter.profile.info_family.nr_sisters,
             nr_brothers: this.daughter.profile.info_family.nr_brothers,
             place_of_family: this.daughter.profile.info_family.place_of_family,
-            //
             name_family_member: null,
             relation: null,
             cellphone: null,
@@ -2517,7 +2359,6 @@ export default {
           nr_sisters: null,
           nr_brothers: null,
           place_of_family: null,
-          //
           name_family_member: null,
           relation: null,
           cellphone: null,

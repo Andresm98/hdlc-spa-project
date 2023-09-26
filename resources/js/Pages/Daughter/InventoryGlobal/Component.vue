@@ -11,109 +11,37 @@
     <operation></operation>
 
     <section
-      class="
-        bg-gray-200
-        dark:bg-slate-800
-        y-1
-        px-4
-        sm:p-6
-        md:py-10 md:px-8
-        pt-2
-        pb-4
-        rounded-lg
-        sm:m-2
-        lg:m-3
-        md:m-4
-      "
+      class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg sm:m-2 lg:m-3 md:m-4"
     >
       <div
-        class="
-          max-w-4xl
-          mx-auto
-          grid grid-cols-1
-          lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2
-        "
+        class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
       >
         <div
-          class="
-            relative
-            p-3
-            col-start-1
-            row-start-1
-            flex flex-col-reverse
-            rounded-lg
-            bg-gradient-to-t
-            from-black/75
-            via-black/0
-            sm:bg-none sm:row-start-2 sm:p-0
-            md:bg-none md:row-start-2 md:p-0
-            lg:row-start-1
-          "
+          class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 md:bg-none md:row-start-2 md:p-0 lg:row-start-1"
         >
           <h1
-            class="
-              mt-1
-              text-lg
-              font-semibold
-              text-black
-              sm:text-black
-              md:text-2xl
-              dark:sm:text-white
-            "
+            class="mt-1 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
           >
             {{ this.datac.comm_name }}
           </h1>
           <p
-            class="
-              text-sm
-              leading-4
-              font-medium
-              text-black
-              sm:text-black
-              dark:sm:text-slate-400
-            "
+            class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
           >
             Información General del inventario de la comunidad u obra.
           </p>
         </div>
         <div
-          class="
-            grid
-            gap-4
-            col-start-1 col-end-3
-            row-start-1
-            sm:mb-6 sm:grid-cols-4
-            md:mb-6 md:grid-cols-4
-            lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0
-          "
+          class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 md:mb-6 md:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
         >
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_2.png"
             alt=""
-            class="
-              w-full
-              h-60
-              object-cover
-              rounded-lg
-              sm:h-52 sm:col-span-2
-              md:h-52 md:col-span-2
-              lg:col-span-full
-            "
+            class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 md:h-52 md:col-span-2 lg:col-span-full"
             loading="lazy"
           />
         </div>
         <dl
-          class="
-            mt-4
-            text-xs
-            font-medium
-            flex
-            items-center
-            row-start-2
-            sm:mt-1 sm:row-start-3
-            md:mt-1 md:row-start-3
-            lg:row-start-2
-          "
+          class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-1 md:row-start-3 lg:row-start-2"
         >
           <dt class="sr-only">Visto</dt>
           <dd class="text-indigo-600 flex items-center dark:text-indigo-400">
@@ -210,21 +138,7 @@
                     minLength="5"
                     maxlength="50"
                     placeholder="Ingresar nombre del inventario"
-                    class="
-                      border-0
-                      px-3
-                      placeholder-blueGray-300
-                      text-blueGray-600
-                      bg-white
-                      rounded
-                      text-sm
-                      shadow
-                      focus:outline-none focus:ring
-                      w-full
-                      ease-linear
-                      transition-all
-                      duration-150
-                    "
+                    class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="formInventory.name"
                     required
                   />
@@ -269,14 +183,7 @@
         <div class="my-4">
           <div class="w-full md:w-5/5 mx-auto">
             <h4
-              class="
-                text-lg
-                font-medium
-                text-center
-                leading-6
-                text-gray-900
-                uppercase
-              "
+              class="text-lg font-medium text-center leading-6 text-gray-900 uppercase"
             >
               <strong>Secciones</strong>
             </h4>
@@ -336,15 +243,7 @@
                     </label>
 
                     <div
-                      class="
-                        w-full
-                        tab-content
-                        overflow-hidden
-                        border-l-2
-                        bg-gray-100
-                        border-blue-500
-                        leading-normal
-                      "
+                      class="w-full tab-content overflow-hidden border-l-2 bg-gray-100 border-blue-500 leading-normal"
                     >
                       <div class="p-5 overflow-y-auto h-60">
                         <section>
@@ -383,15 +282,12 @@
             </div>
           </div>
         </div>
-
-        <!-- Post Data Form -->
         <jet-dialog-modal
           :max-width="'input-md'"
           :show="sectionBeingCreated"
           @close="sectionBeingCreated == null"
         >
           <template #title> Datos de la nueva sección</template>
-
           <template #content>
             <div class="flex flex-wrap">
               <div class="w-full lg:w-12/12 px-4">
@@ -412,21 +308,7 @@
                       minLength="5"
                       maxlength="50"
                       placeholder="Ingresar nombre de la sección"
-                      class="
-                        border-0
-                        px-3
-                        placeholder-blueGray-300
-                        text-blueGray-600
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="createSectionForm.name"
                       required
                     />
@@ -462,7 +344,6 @@
               </div>
             </div>
           </template>
-
           <template #footer>
             <jet-secondary-button @click="this.sectionBeingCreated = null">
               Cancelar
@@ -473,8 +354,6 @@
             </jet-button-success>
           </template>
         </jet-dialog-modal>
-
-        <!-- Delete  Data Form-->
         <jet-confirmation-modal
           :show="sectionBeingDeleted"
           @close="sectionBeingDeleted == null"
@@ -496,8 +375,6 @@
             </jet-danger-button>
           </template>
         </jet-confirmation-modal>
-
-        <!-- Put Data Form -->
         <jet-dialog-modal
           :max-width="'input-md'"
           :show="sectionBeingUpdated"
@@ -525,21 +402,7 @@
                       minLength="10"
                       maxlength="100"
                       placeholder="Ingresar nombre de la sección"
-                      class="
-                        border-0
-                        px-3
-                        placeholder-blueGray-300
-                        text-blueGray-600
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="updateSectionForm.name"
                       required
                     />
@@ -575,7 +438,6 @@
               </div>
             </div>
           </template>
-
           <template #footer>
             <jet-secondary-button @click="this.sectionBeingUpdated = null">
               Cancelar
@@ -599,20 +461,18 @@ import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import { Link } from "@inertiajs/inertia-vue3";
-
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Operation from "@/Components/Daughter/Operation";
-
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
+import { mapState, mapGetters, mapActions } from "vuex";
 import JetInput from "@/Jetstream/Input.vue";
-import moment from "moment";
 import { Inertia } from "@inertiajs/inertia";
 import "vue3-date-time-picker/dist/main.css";
-import { ref } from "vue";
-import { mapState, mapGetters, mapActions } from "vuex";
 import JetInputError from "@/Jetstream/InputError";
 import Alert from "@/Components/Alert";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   props: {
@@ -739,23 +599,10 @@ export default {
           this.updateInventory(res.data);
           this.formInventory = this.getInventory();
         });
-
-      //
-      //
-      //
-
       const headers = { "Content-Type": "application/json" };
       fetch("https://api.npms.io/v2/search?q=vue", { headers })
         .then((response) => response.json())
-        .then((data) => {
-          //   console.log("Send data: ");
-          //   console.log("Print: ", data.results);
-        });
-
-      //
-      //
-      //
-
+        .then((data) => {});
       fetch(
         this.route("daughter.communities.inventory.index", {
           community_id: this.community.id,
@@ -763,27 +610,16 @@ export default {
       )
         .then(async (response) => {
           const data = await response.json();
-
-          // check for error response
           if (!response.ok) {
-            // get error message from body or default to response statusText
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
           }
-
-          //   console.log("Send data 2: ");
-          //   console.log("Print 2: ", data);
         })
         .catch((error) => {
           this.errorMessage = error;
-          //   console.error("There was an error!", error);
         });
-
-      //
-
       this.section;
     },
-
     section() {
       axios
         .get(
@@ -830,8 +666,6 @@ export default {
         )
       );
     },
-    // Update Data Table
-
     updateTable() {
       axios
         .get(
@@ -844,7 +678,6 @@ export default {
           this.allSection = this.getAllSection();
         });
     },
-    // Create Data
     confirmationSectionCreate() {
       this.createSectionForm = this.$inertia.form({
         name: null,
@@ -853,7 +686,6 @@ export default {
       });
       this.sectionBeingCreated = this.createSectionForm;
     },
-
     createSection() {
       this.createSectionForm.post(
         this.route("daughter.communities.section.store", {
@@ -871,14 +703,11 @@ export default {
         }
       );
     },
-
-    // Put Data
     confirmationSectionUpdate(section) {
       this.updateSectionForm.name = section.name;
       this.updateSectionForm.description = section.description;
       this.sectionBeingUpdated = section;
     },
-
     updateSection() {
       this.updateSectionForm.put(
         this.route("daughter.communities.section.update", {
@@ -898,13 +727,10 @@ export default {
         }
       );
     },
-    // Delete Data
-
     confirmationSectionDelete(section) {
       this.deleteSectionForm.name = section.name;
       this.sectionBeingDeleted = section;
     },
-
     deleteSection() {
       this.deleteSectionForm.delete(
         this.route("daughter.communities.section.delete", {
@@ -925,8 +751,6 @@ export default {
     },
   },
 };
-
-/* Optional Javascript to close the radio button version by clicking it again */
 var myRadios = document.getElementsByName("tabs2");
 var setCheck;
 var x = 0;
@@ -941,22 +765,17 @@ for (x = 0; x < myRadios.length; x++) {
   };
 }
 </script>
-
 <style>
-/* Tab content - closed */
 .tab-content {
   max-height: 0;
   -webkit-transition: max-height 0.35s;
   -o-transition: max-height 0.35s;
   transition: max-height 0.35s;
 }
-/* :checked - resize to full height */
 .tab input:checked ~ .tab-content {
   max-height: 100vh;
 }
-/* Label formatting when open */
 .tab input:checked + label {
-  /*@apply text-xl p-5 border-l-2 border-indigo-500 bg-gray-100 text-indigo*/
   font-size: 1.25rem; /*.text-xl*/
   padding: 1.25rem; /*.p-5*/
   border-left-width: 2px; /*.border-l-2*/
@@ -979,7 +798,6 @@ for (x = 0; x < myRadios.length; x++) {
   -o-transition: all 0.35s;
   transition: all 0.35s;
 }
-/* Icon formatting - closed */
 .tab input[type="checkbox"] + label::after {
   content: "+";
   font-weight: bold; /*.font-bold*/
@@ -994,7 +812,6 @@ for (x = 0; x < myRadios.length; x++) {
   border-radius: 9999px; /*.rounded-full */
   border-color: #b8c2cc; /*.border-grey*/
 }
-/* Icon formatting - open */
 .tab input[type="checkbox"]:checked + label::after {
   transform: rotate(315deg);
   background-color: #5577b6; /*.bg-indigo*/

@@ -36,100 +36,42 @@
               </h3>
               <p class="mt-1 text-sm text-gray-600 text-justify">
                 La información que puede visualizar se relacionan a la
-                información de su historial académico, tenga en cuenta
-                que los datos deben mantener los formatos solicitados. La
-                información recopila toda la información académica de
-                su perfil, en este apartado podrá detallar la información
-                requerida por la compañía HDCL.
+                información de su historial académico, tenga en cuenta que los
+                datos deben mantener los formatos solicitados. La información
+                recopila toda la información académica de su perfil, en este
+                apartado podrá detallar la información requerida por la compañía
+                HDCL.
               </p>
             </div>
           </div>
           <div class="mt-5 md:mt-0 md:col-span-2">
             <section
-              class="
-                bg-gray-200
-                dark:bg-slate-800
-                y-1
-                px-4
-                sm:p-6
-                md:py-10 md:px-8
-                rounded-lg
-                sm:m-2
-                lg:m-3
-                md:m-4
-              "
+              class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 rounded-lg sm:m-2 lg:m-3 md:m-4"
             >
               <div
-                class="
-                  max-w-4xl
-                  mx-auto
-                  grid grid-cols-1
-                  lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2
-                "
+                class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
               >
                 <div
-                  class="
-                    relative
-                    p-3
-                    col-start-1
-                    row-start-1
-                    flex flex-col-reverse
-                    rounded-lg
-                    bg-gradient-to-t
-                    from-black/75
-                    via-black/0
-                    sm:bg-none sm:row-start-2 sm:p-0
-                    lg:row-start-1
-                  "
+                  class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 lg:row-start-1"
                 >
                   <h1
-                    class="
-                      mt-1
-                      text-lg
-                      font-semibold
-                      text-black
-                      sm:text-black
-                      md:text-2xl
-                      dark:sm:text-white
-                    "
+                    class="mt-1 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
                   >
                     Provincia Ecuador
                   </h1>
                   <p
-                    class="
-                      text-sm
-                      leading-4
-                      font-medium
-                      text-black
-                      sm:text-black
-                      dark:sm:text-slate-400
-                    "
+                    class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
                   >
                     Información General de la Hermana
                   </p>
                 </div>
                 <div class="grid gap-4"></div>
                 <dl
-                  class="
-                    mt-4
-                    text-xs
-                    font-medium
-                    flex
-                    items-center
-                    row-start-2
-                    sm:mt-1 sm:row-start-3
-                    md:mt-2.5
-                    lg:row-start-2
-                  "
+                  class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2"
                 >
                   <dt class="sr-only">Visto</dt>
                   <dd
-                    class="
-                      text-indigo-600
-                      flex
-                      items-center
-                      dark:text-indigo-400
-                    "
+                    class="text-indigo-600 flex items-center dark:text-indigo-400"
                   >
                     <svg
                       width="24"
@@ -184,12 +126,13 @@
               <div class="mt-2">
                 <p class="text-black dark:text-white">
                   La presente plantilla de información se relaciona a la
-                  información el historial académico, por favor tenga en cuenta que
-                  si desea ingresar un nuevo registro debe dar clic en el botón
-                  de color verde. Una vez ingresada la información requerida
-                  avance al pie de página y oprima el botón (Guardar). En caso
-                  de que requiera actualizar algún registro, por favor oprima el
-                  ícono de un lápiz en la parte derecha de cada registro.
+                  información el historial académico, por favor tenga en cuenta
+                  que si desea ingresar un nuevo registro debe dar clic en el
+                  botón de color verde. Una vez ingresada la información
+                  requerida avance al pie de página y oprima el botón (Guardar).
+                  En caso de que requiera actualizar algún registro, por favor
+                  oprima el ícono de un lápiz en la parte derecha de cada
+                  registro.
                 </p>
               </div>
             </section>
@@ -204,14 +147,7 @@
             <div class="container mx-auto">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    p-1
-                    bg-gray-100
-                  "
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Fecha de Registro</small
@@ -247,7 +183,6 @@
               </div>
             </div>
             <!-- End container Filters -->
-
             <section class="pl-4">
               <pagination class="mt-6 mb-5" :links="academic_list.links" />
             </section>
@@ -259,14 +194,7 @@
               <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div
-                    class="
-                      py-2
-                      align-middle
-                      inline-block
-                      min-w-full
-                      sm:px-6
-                      lg:px-8
-                    "
+                    class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
                   >
                     <table
                       v-if="academic_list.data.length > 0"
@@ -276,58 +204,26 @@
                         <tr>
                           <th
                             scope="col"
-                            class="
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             <span
-                              class="
-                                inline-flex
-                                px-6
-                                py-3
-                                w-full
-                                justify-between
-                              "
+                              class="inline-flex px-6 py-3 w-full justify-between"
                               >Fecha
                             </span>
                           </th>
                           <th
                             scope="col"
-                            class="
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             <span
-                              class="
-                                inline-flex
-                                px-6
-                                py-3
-                                w-full
-                                justify-between
-                              "
+                              class="inline-flex px-6 py-3 w-full justify-between"
                               >Nombre Título
                             </span>
                           </th>
 
                           <th
                             scope="col"
-                            class="
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             Acciones
                           </th>
@@ -341,16 +237,7 @@
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                               <span
-                                class="
-                                  px-1
-                                  inline-flex
-                                  text-xs
-                                  leading-5
-                                  font-semibold
-                                  rounded-sm
-                                  bg-blue-100
-                                  text-blue-800
-                                "
+                                class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
                               >
                                 {{ this.formatShowDate(academic.date_title) }}
                               </span>
@@ -359,28 +246,14 @@
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div class="w-6/8 ...">
                               <div
-                                class="
-                                  p-2
-                                  whitespace-normal
-                                  text-sm
-                                  font-semibold
-                                  rounded-sm
-                                  bg-cyan-100
-                                  text-cyan-800
-                                "
+                                class="p-2 whitespace-normal text-sm font-semibold rounded-sm bg-cyan-100 text-cyan-800"
                               >
                                 <p v-html="academic.name_title"></p>
                               </div>
                             </div>
                           </td>
                           <td
-                            class="
-                              px-3
-                              py-4
-                              whitespace-nowrap
-                              text-right text-sm
-                              font-medium
-                            "
+                            class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                           >
                             <div class="mx-auto flex gap-10">
                               <button
@@ -389,19 +262,7 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="
-                                        flex
-                                        items-center
-                                        justify-center
-                                        flex-1
-                                        h-full
-                                        p-2
-                                        border border-green-500
-                                        text-white
-                                        shadow
-                                        rounded-lg
-                                        hover:bg-green-50 hover:text-zinc-300
-                                      "
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-green-500 text-white shadow rounded-lg hover:bg-green-50 hover:text-zinc-300"
                                     >
                                       <div class="relative">
                                         <svg
@@ -419,7 +280,6 @@
                                   </div>
                                 </div>
                               </button>
-
                               <button
                                 @click="
                                   modal_open = true;
@@ -429,19 +289,7 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="
-                                        flex
-                                        items-center
-                                        justify-center
-                                        flex-1
-                                        h-full
-                                        p-2
-                                        border border-red-500
-                                        text-white
-                                        shadow
-                                        rounded-lg
-                                        hover:bg-red-50 hover:text-zinc-300
-                                      "
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-red-500 text-white shadow rounded-lg hover:bg-red-50 hover:text-zinc-300"
                                     >
                                       <div class="relative">
                                         <svg
@@ -484,7 +332,6 @@
       </div>
       <jet-dialog-modal :show="modal_open">
         <template v-slot:title> Eliminar </template>
-
         <template v-slot:content>
           <p class="text-lg text-black">
             ¿Está seguro/a de que desea eliminar el registro académico?
@@ -502,14 +349,12 @@
           </jet-danger-button>
         </template>
       </jet-dialog-modal>
-
       <jet-dialog-modal
         :max-width="'input-md'"
         :show="academicBeingUpdated"
         @close="academicBeingUpdated == null"
       >
         <template #title> Datos de Registro Académico</template>
-
         <template #content>
           <div class="flex flex-wrap">
             <div class="w-full lg:w-12/12 px-4">
@@ -533,22 +378,7 @@
                     minLength="10"
                     maxlength="100"
                     placeholder="Ingresar Nombre de Título"
-                    class="
-                      border-0
-                      px-3
-                      my-2
-                      placeholder-blueGray-300
-                      text-blueGray-600
-                      bg-white
-                      rounded
-                      text-sm
-                      shadow
-                      focus:outline-none focus:ring
-                      w-full
-                      ease-linear
-                      transition-all
-                      duration-150
-                    "
+                    class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="updateAcademicForm.name_title"
                     required
                   />
@@ -570,34 +400,17 @@
                   {{ $page.props.errors.institution }}
                 </p>
                 <small>Formato: Universidad LXS.</small>
-
                 <input
                   type="text"
                   minLength="10"
                   maxlength="40"
                   placeholder="Ingresar Insitución Académica"
-                  class="
-                    border-0
-                    px-3
-                    py-2
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="updateAcademicForm.institution"
                   required
                 />
               </div>
             </div>
-
             <div class="w-full lg:w-6/12 px-4">
               <div class="relative w-full mb-3">
                 <label
@@ -622,7 +435,6 @@
                 />
               </div>
             </div>
-
             <div class="w-full lg:w-full px-4">
               <div class="relative w-full mb-3">
                 <label
@@ -656,7 +468,6 @@
             </div>
           </div>
         </template>
-
         <template #footer>
           <jet-secondary-button @click="academicBeingUpdated = null">
             Cancelar
@@ -666,14 +477,12 @@
           </jet-button-success>
         </template>
       </jet-dialog-modal>
-
       <jet-dialog-modal
         :max-width="'input-md'"
         :show="academicBeingCreated"
         @close="academicBeingCreated == null"
       >
         <template #title> Datos del Nuevo Registro de Salud</template>
-
         <template #content>
           <div class="flex flex-wrap">
             <div class="w-full lg:w-12/12 px-4">
@@ -697,22 +506,7 @@
                     minLength="10"
                     maxlength="100"
                     placeholder="Ingresar Nombre de Título"
-                    class="
-                      border-0
-                      px-3
-                      my-2
-                      placeholder-blueGray-300
-                      text-blueGray-600
-                      bg-white
-                      rounded
-                      text-sm
-                      shadow
-                      focus:outline-none focus:ring
-                      w-full
-                      ease-linear
-                      transition-all
-                      duration-150
-                    "
+                    class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="form.name_title"
                     required
                   />
@@ -739,28 +533,12 @@
                   minLength="10"
                   maxlength="40"
                   placeholder="Ingresar Insitución Académica"
-                  class="
-                    border-0
-                    px-3
-                    py-2
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="form.institution"
                   required
                 />
               </div>
             </div>
-
             <div class="w-full lg:w-6/12 px-4">
               <div class="relative w-full mb-3">
                 <label
@@ -784,7 +562,6 @@
                 />
               </div>
             </div>
-
             <div class="w-full lg:w-full px-4">
               <div class="relative w-full mb-3">
                 <label
@@ -818,7 +595,6 @@
             </div>
           </div>
         </template>
-
         <template #footer>
           <jet-secondary-button
             @click="
@@ -842,7 +618,6 @@
     </div>
   </app-layout>
 </template>
-
 <script>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { pickBy, throttle, mapValues } from "lodash";
@@ -861,7 +636,6 @@ import Icon from "@/Components/Icon";
 import JetButton from "@/Jetstream/Button";
 import { useForm } from "@inertiajs/inertia-vue3";
 import Operation from "@/Components/Daughter/Operation";
-
 import TextInput from "@/Components/TextInput";
 import { ref } from "vue";
 import Alert from "@/Components/Alert";
@@ -885,7 +659,6 @@ export default {
     const formatSet = "YYYY-MM-DD";
     let date = new Date();
     var format = (date) => {
-      //   console.log("smoke ", date);
       return moment(date).format(formatSet);
     };
     return {
@@ -898,21 +671,17 @@ export default {
       toolbarOptions: [
         ["bold", "italic", "underline", "strike"], // toggled buttons
         ["blockquote", "code-block"],
-
         [{ header: 1 }, { header: 2 }], // custom button values
         [{ list: "ordered" }, { list: "bullet" }],
         [{ script: "sub" }, { script: "super" }], // superscript/subscript
         [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
         [{ direction: "rtl" }], // text direction
-
         [{ size: ["small", false, "large", "huge"] }], // custom dropdown
         [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
         [{ color: [] }, { background: [] }], // dropdown with defaults from theme
         [{ font: [] }],
         [{ align: [] }],
-
-        ["clean"], // remove formatting button
+        ["clean"],
       ],
       modal_open: false,
       selected_academic: Object,
@@ -1006,7 +775,6 @@ export default {
       }
       return null;
     },
-    // Create Health
     confirmationAcademicCreate() {
       this.form = this.$inertia.form({
         name_title: null,
@@ -1020,7 +788,6 @@ export default {
       if (this.form.date_title != null) {
         this.form.date_title = this.formatDate(this.form.date_title);
       }
-
       this.form.post(
         this.route("daughter.academic.store", {
           user_id: this.daughter.id,
@@ -1036,8 +803,6 @@ export default {
         }
       );
     },
-    // Update Health
-
     confirmationAcademicUpdate(academic) {
       this.updateAcademicForm.name_title = academic.name_title;
       this.updateAcademicForm.institution = academic.institution;
@@ -1065,7 +830,6 @@ export default {
         }
       );
     },
-    //
     closeModal() {
       this.modal_open = false;
     },

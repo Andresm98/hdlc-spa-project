@@ -1,5 +1,6 @@
 <table>
     <tr>
+        <th>Apellidos</th>
         <th>Nombres</th>
         <th>Libro</th>
         <th>Página</th>
@@ -18,7 +19,10 @@
     @foreach ($data as $daughter)
         <tr>
             <td>
-                {{ $daughter->fullnamecomm }} {{ $daughter->name }}
+                {{ $daughter->lastname }}
+            </td>
+            <td>
+                {{ $daughter->name }}
             </td>
             @if ($daughter->profile)
                 <td>

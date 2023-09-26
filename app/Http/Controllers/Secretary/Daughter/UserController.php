@@ -128,7 +128,6 @@ class UserController extends Controller
 
     public function index()
     {
-
         request()->validate([
             'direction' => ['in:asc,desc'],
             'field' => ['in:name,email'],
@@ -237,6 +236,9 @@ class UserController extends Controller
                             $q->whereBetween('date_retirement', [request('dateStart'), request('dateEnd')]);
                             $q->orderBy('date_retirement', 'desc');
                         }
+                        if (request('status') == 5) {
+                            $q->orderBy('date_other_country', 'desc');
+                        }
                     }
                 }
                 if (request('status') == 1) {
@@ -273,6 +275,12 @@ class UserController extends Controller
                 }
                 if (request('status') == 4) {
                     $q->where('date_retirement', '!=', null)->orderBy('date_retirement', 'desc');
+                }
+                if (request('status') == 5) {
+                    $q->where('status', 4);
+                }
+                if (request('status') == 6) {
+                    $q->where('status', 5);
                 }
             });
         }
@@ -378,18 +386,18 @@ class UserController extends Controller
 
         // Import Methods
         $profile_daughter = new ProfileController();
+
         $addressClass = new AddressController();
 
         if ($validator->fails()) {
-            return   abort(404);
+            return abort(404);
         }
 
         $provinces =  $addressClass->getProvinces();
+
         $daughter_custom = User::select()
             ->where('slug', '=', [$slug])
-            ->get()
             ->first();
-
         //
 
         $flag = false;
@@ -408,9 +416,17 @@ class UserController extends Controller
         //
 
         $user = User::find($daughter_custom->id);
-        $profile_daughter =   $profile_daughter->specificProfile($daughter_custom->id);
 
-        // return $addressClass->getSaveAddress($profile_daughter->address->political_division_id);
+        if ($user->profile) {
+            if (!$user->profile->origin) {
+                $user->profile->origin()->create([
+                    'address' => "",
+                    'political_division_id' => null
+                ]);
+            }
+        }
+
+        $profile_daughter = $profile_daughter->specificProfile($daughter_custom->id);
 
         if ($daughter_custom->image) {
             $image = Storage::disk('s3')->temporaryUrl(
@@ -584,7 +600,6 @@ class UserController extends Controller
         return Excel::download(new UsersExport(request()), 'HermanasHDLC.csv');
     }
 
-
     /**
      *
      * Report Info family
@@ -695,7 +710,6 @@ class UserController extends Controller
             return  collect(['message' => true]);
         }
     }
-
 
     public function reportDaughtersPDF()
     {
@@ -809,6 +823,9 @@ class UserController extends Controller
                             $q->whereBetween('date_retirement', [request('dateStart'), request('dateEnd')]);
                             $q->orderBy('date_retirement', 'desc');
                         }
+                        if (request('status') == 5) {
+                            $q->orderBy('date_other_country', 'desc');
+                        }
                         $dateFromTo->setFrom(request('dateStart'));
                         $dateFromTo->setTo(request('dateEnd'));
                     }
@@ -847,6 +864,12 @@ class UserController extends Controller
                 }
                 if (request('status') == 4) {
                     $q->where('date_retirement', '!=', null)->orderBy('date_retirement', 'desc');
+                }
+                if (request('status') == 5) {
+                    $q->where('status', 4);
+                }
+                if (request('status') == 6) {
+                    $q->where('status', 5);
                 }
             });
 
@@ -898,7 +921,7 @@ class UserController extends Controller
             ->get();
 
         $pdf = PDF::loadView('reports.daughters.list-general', compact('data', 'from', 'to'));
-        // return $pdf -> download('Usuarios.pdf');
+
         return $pdf->setPaper('a4', 'landscape')->stream('ReportesHermanasHDLC.pdf');
     }
 }

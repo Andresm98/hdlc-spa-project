@@ -41,9 +41,9 @@ class Profile extends Model
         return $this->hasOne('App\Models\InfoFamily');
     }
 
-    public function book()
+    public function profileBooks()
     {
-        return $this->belongsTo(Book::class);
+        return $this->hasMany(ProfileBook::class);
     }
 
     /**
@@ -84,12 +84,16 @@ class Profile extends Model
         return $this->hasMany('App\Models\Sacrament');
     }
 
-
     // Relacion uno a uno polimorfica inversa
 
     public function address()
     {
         return $this->morphOne('App\Models\Address', 'addressable');
+    }
+
+    public function origin()
+    {
+        return $this->morphOne('App\Models\Origin', 'originable');
     }
 
     // Relacion uno a varios polimorfica

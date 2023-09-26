@@ -5,21 +5,8 @@
     <div class="md:flex md:flex-col md:h-screen">
       <div class="md:flex md:flex-shrink-0">
         <div
-          class="
-            flex
-            items-center
-            justify-between
-            px-6
-            py-4
-            bg-blue-600
-            md:flex-shrink-0 md:justify-center md:w-56
-          "
+          class="flex items-center justify-between px-6 py-4 bg-blue-600 md:flex-shrink-0 md:justify-center md:w-56"
         >
-          <!-- <Link class="mt-1" href="/">
-            <logo class="fill-white" width="60" height="28" />
-          </Link> -->
-
-          <!-- <dropdown class="md:hidden" placement="bottom-end"> -->
           <dropdown placement="bottom-end">
             <template #default>
               <svg
@@ -31,34 +18,17 @@
               </svg>
             </template>
             <template #dropdown>
-              <div class="mt-2 px-8 py-4 bg-slate-800 rounded shadow-lg">
-
-              </div>
+              <div class="mt-2 px-8 py-4 bg-slate-800 rounded shadow-lg"></div>
             </template>
           </dropdown>
         </div>
         <general-nav></general-nav>
       </div>
-
-      <!-- <div class="md:flex md:flex-grow md:overflow-hidden"> -->
       <div class="md:flex md:flex-grow">
-        <!-- Menu Left -->
-        <!-- <main-menu
-          class="
-            hidden
-            flex-shrink-0
-            p-12
-            w-56
-            bg-slate-800
-            overflow-y-auto
-            md:block
-          "
-        /> -->
         <div
           class="px-4 py-8 md:flex-1 md:p-12 md:overflow-y-auto"
           scroll-region
         >
-          <!-- <flash-messages /> -->
           <slot />
         </div>
       </div>
@@ -78,7 +48,6 @@ export default {
     Link,
     Logo,
     Dropdown,
-
     GeneralNav,
   },
   props: {

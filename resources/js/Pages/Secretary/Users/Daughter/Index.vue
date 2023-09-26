@@ -109,6 +109,8 @@
                       <option value="2">Fallecidas</option>
                       <option value="3">Retiradas</option>
                       <option value="4">Jubiladas</option>
+                      <option value="5">Otros Países</option>
+                      <option value="6">Datos Incompletos</option>
                     </select>
 
                     <div v-if="params.status == 1">
@@ -665,6 +667,42 @@
                                       user_custom.profile.date_exit
                                     )
                                   }}
+                                </span>
+                              </div>
+                              <div v-if="user_custom.profile.status == 4">
+                                <span
+                                  class="
+                                    px-2
+                                    inline-flex
+                                    text-xs
+                                    leading-5
+                                    font-semibold
+                                    rounded-full
+                                    bg-cyan-100
+                                    text-cyan-800
+                                  "
+                                >
+                                   Salida a otros países                                  {{
+                                    formatDateShow(
+                                      user_custom.profile.date_other_country
+                                    )
+                                  }}
+                                </span>
+                              </div>
+                              <div v-if="user_custom.profile.status == 5">
+                                <span
+                                  class="
+                                    px-2
+                                    inline-flex
+                                    text-xs
+                                    leading-5
+                                    font-semibold
+                                    rounded-full
+                                    bg-gray-100
+                                    text-gray-800
+                                  "
+                                >
+                                Información Insuficiente.
                                 </span>
                               </div>
                               <div v-if="user_custom.profile.date_retirement!=null">

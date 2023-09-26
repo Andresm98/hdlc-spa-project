@@ -29,7 +29,7 @@ class ProfileController extends Controller
         if ($validator->fails()) {
             abort(404);
         }
-        $profile = Profile::with('address')
+        $profile = Profile::with('address', 'origin')
             ->where('user_id', '=', $id)
             ->get();
 
@@ -45,7 +45,7 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            // // 'date_birth' => ['required', 'date_format:Y-m-d H:i:s'],
+            // 'date_birth' => ['required', 'date_format:Y-m-d H:i:s'],
             'user_id' => ['required', 'exists:users,id'],
             'identity_card' => ['required', 'string', 'max:13'],
             'iess_card' => ['nullable', 'string', 'max:30'],
@@ -60,7 +60,10 @@ class ProfileController extends Controller
             'phone' => ['nullable', 'string', 'max:15'],
             'observation' => ['required', 'string', 'max:4000'],
             'address.address' => ['required', 'string', 'max:100'],
-            'address.political_division_id' => ['required', 'string', 'exists:political_divisions,id']
+            'address.political_division_id' => ['required', 'string', 'exists:political_divisions,id'],
+
+            'address_bt.address_bt' => ['required', 'string', 'max:100'],
+            'address_bt.political_division_id_bt' => ['nullable', 'string', 'exists:political_divisions,id']
         ]);
 
         if ($validator->fails()) {
@@ -91,6 +94,11 @@ class ProfileController extends Controller
                 'political_division_id' => $request->address["political_division_id"]
             ]);
 
+            $profile->origin()->create([
+                'address' => $request->address_bt["address_bt"],
+                'political_division_id' => $request->address_bt["political_division_id_bt"]
+            ]);
+
             return  redirect()->route('secretary.daughters.edit', $user->slug)->with([
                 'success' => 'El perfil del usuario fue actualizado correctamente.',
             ]);
@@ -105,7 +113,6 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -128,7 +135,6 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $profile_custom_id)
     {
-
         $validator = Validator::make(['id' => $profile_custom_id], [
             'id' => ['required', 'exists:users,id']
         ]);
@@ -139,7 +145,7 @@ class ProfileController extends Controller
 
         $validatorData = Validator::make($request->all(), [
             'user_id' => ['required', 'exists:users,id'],
-            'identity_card' => ['required', 'string', 'max:13'],
+            'identity_card' => ['nullable', 'string', 'max:13'],
             'iess_card' => ['nullable', 'string', 'max:30'],
             'driver_license' => ['nullable', 'string', 'max:50'],
             'date_birth' => ['required', 'date_format:Y-m-d H:i:s'],
@@ -148,13 +154,14 @@ class ProfileController extends Controller
             'date_send' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'date_vote' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'date_retirement' => ['nullable', 'date_format:Y-m-d H:i:s'],
-            'cellphone' => ['required', 'string', 'max:15'],
+            'cellphone' => ['nullable', 'string', 'max:15'],
             'phone' => ['nullable', 'string', 'max:15'],
             'observation' => ['required', 'string', 'max:4000'],
             'address.address' => ['required', 'string', 'max:100'],
             'address.political_division_id' => ['required', 'string', 'exists:political_divisions,id'],
+            'origin.address' => ['required', 'string', 'max:100'],
+            'origin.political_division_id' => ['nullable', 'string', 'exists:political_divisions,id']
         ]);
-
 
         if ($validatorData->fails()) {
             return redirect()->back()
@@ -181,6 +188,11 @@ class ProfileController extends Controller
             $user->profile->address()->update([
                 'address' => $request->address["address"],
                 'political_division_id' => $request->address["political_division_id"]
+            ]);
+
+            $user->profile->origin()->update([
+                'address' => $request->origin["address"],
+                'political_division_id' => $request->origin["political_division_id"]
             ]);
 
             return redirect()->route('secretary.daughters.edit', $user->slug)->with([

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\ProfileBook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -167,6 +168,12 @@ class BookController
         }
 
         $book = Book::find($docBookId);
+
+        $activeBooks = ProfileBook::where('book_id', $book->id)->get();
+
+        if (count($activeBooks) > 0) {
+            return $this->sendError('No es posible eliminar el dato, está siendo utilizado por uno o más registros', []);
+        }
 
         $book->delete();
 

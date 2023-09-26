@@ -9,18 +9,15 @@
           Bienvenido Usuario: {{ $page.props.user.name }}
         </div>
       </template>
-      <!-- Generate Permission Token -->
-
       <jet-form-section @submitted="createOffice">
         <template #title> Crear Oficios en el Sistema </template>
 
         <template #description>
-          Los oficios permiten que se asigne a cada cambio que se asigna a una determinada
-          hermana.
+          Los oficios permiten que se asigne a cada cambio que se asigna a una
+          determinada hermana.
         </template>
 
         <template #form>
-          <!-- Token Name -->
           <div class="col-span-6 sm:col-span-6">
             <jet-label for="name" value="Nombre Oficio" />
             <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
@@ -57,7 +54,10 @@
         </template>
 
         <template #actions>
-          <jet-action-message :on="createOfficeForm.recentlySuccessful" class="mr-3">
+          <jet-action-message
+            :on="createOfficeForm.recentlySuccessful"
+            class="mr-3"
+          >
             Creado.
           </jet-action-message>
 
@@ -73,17 +73,16 @@
       <div>
         <jet-section-border />
 
-        <!-- Manage API Tokens -->
         <div class="mt-10 sm:mt-0">
           <jet-action-section>
             <template #title> Administrar Oficios del Sistema </template>
 
             <template #description>
-              Puede eliminar o gestionar los oficios que se gestionan para los cambios de
-              las hermanas de la comunidad, tenga en cuenta que si los oficios se
-              encuentran asociados perfiles de hermanas no pueden ser eliminados.
+              Puede eliminar o gestionar los oficios que se gestionan para los
+              cambios de las hermanas de la comunidad, tenga en cuenta que si
+              los oficios se encuentran asociados perfiles de hermanas no pueden
+              ser eliminados.
             </template>
-            <!-- API Token List -->
             <template #content>
               <div class="space-y-6">
                 <div
@@ -123,16 +122,17 @@
         </div>
       </div>
 
-      <!-- Token Value Modal -->
-      <jet-dialog-modal :show="displayingToken" @close="displayingToken = false">
+      <jet-dialog-modal
+        :show="displayingToken"
+        @close="displayingToken = false"
+      >
         <template #title
           ><h2 class="text-slate-600">Oficio Creado Correctamente</h2></template
         >
-
         <template #content>
           <div>
-            Recuerde que el oficio que acaba de crear se encuentra disponible en la zona
-            de Cambios pertenecientes a Hermanas de la comunidad.
+            Recuerde que el oficio que acaba de crear se encuentra disponible en
+            la zona de Cambios pertenecientes a Hermanas de la comunidad.
           </div>
         </template>
 
@@ -143,14 +143,19 @@
         </template>
       </jet-dialog-modal>
 
-      <!-- Update Office Modal -->
-      <jet-dialog-modal :show="officeBeingUpdated" @close="officeBeingUpdated = null">
+      <jet-dialog-modal
+        :show="officeBeingUpdated"
+        @close="officeBeingUpdated = null"
+      >
         <template #title> Datos del Oficio</template>
 
         <template #content>
           <div class="col-span-6 sm:col-span-6">
             <jet-label for="name" value="Nombre Oficio" />
-            <p class="text-red-400 text-sm" v-show="$page.props.errors.office_name">
+            <p
+              class="text-red-400 text-sm"
+              v-show="$page.props.errors.office_name"
+            >
               {{ $page.props.errors.office_name }}
             </p>
             <jet-input
@@ -199,7 +204,6 @@
         </template>
       </jet-dialog-modal>
 
-      <!-- Delete Office Confirmation Modal -->
       <jet-confirmation-modal
         :show="officeBeingDeleted"
         @close="officeBeingDeleted = null"
@@ -209,7 +213,9 @@
         <template #content>
           <h5>
             ¿Está seguro de que desea eliminar el oficio:
-            <strong class="text-red-500">{{ deleteOfficeForm.office_name }}</strong>
+            <strong class="text-red-500">{{
+              deleteOfficeForm.office_name
+            }}</strong>
             ?
           </h5>
         </template>
@@ -314,16 +320,18 @@ export default {
     updateConfirmOffice(office) {
       this.updateOfficeForm.office_name = office.office_name;
       this.updateOfficeForm.office_observation = office.office_observation;
-
       this.officeBeingUpdated = office;
     },
 
     updateOffice() {
-      this.updateOfficeForm.put(route("admin.office.update", this.officeBeingUpdated), {
-        preserveScroll: true,
-        preserveState: true,
-        onSuccess: () => (this.officeBeingUpdated = null),
-      });
+      this.updateOfficeForm.put(
+        route("admin.office.update", this.officeBeingUpdated),
+        {
+          preserveScroll: true,
+          preserveState: true,
+          onSuccess: () => (this.officeBeingUpdated = null),
+        }
+      );
     },
 
     confirmOfficeDeletion(office) {

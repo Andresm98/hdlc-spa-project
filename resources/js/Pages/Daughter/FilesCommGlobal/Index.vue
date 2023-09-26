@@ -128,8 +128,6 @@
         >
       </div>
     </section>
-
-    <!-- Container Filters -->
     <div class="container mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <div
@@ -151,14 +149,12 @@
           >
           </multiselect>
         </div>
-
         <div
           class="justify-center text-sm border-1 border-gray-300 rounded-sm bg-gray-100"
         >
           <small class="justify-content-center ml-20 uppercase"
             >Filtros de Búsqueda</small
           >
-
           <search-filter
             v-model="params.search"
             class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -166,7 +162,6 @@
           >
           </search-filter>
         </div>
-
         <div
           class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
         >
@@ -194,7 +189,6 @@
           />
         </div>
       </div>
-      <!-- Table -->
       <section class="pl-4">
         <pagination class="mt-6 mb-5" :links="files_list.links" />
       </section>
@@ -270,8 +264,6 @@
                   <td
                     class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                   >
-                    <!-- Components -->
-
                     <div class="mx-auto flex gap-10">
                       <svg
                         class="h-8 w-8 text-blue-500 hover:cursor-pointer"
@@ -763,21 +755,18 @@ export default {
   },
   computed: {
     isInvalidCommunity() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.form.transfer.community_id == undefined ||
         this.form.transfer.community_id == null
       );
     },
     isInvalidUpdateCommunity() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectOne.selectedCommunity == undefined ||
         this.selectOne.selectedCommunity == null
       );
     },
     isInvalidPerfil() {
-      //   console.log("ee Parish", this.selectFour.selectedCommunity);
       return (
         this.selectCyx.selectedCommunity == undefined ||
         this.selectCyx.selectedCommunity == null
@@ -810,18 +799,14 @@ export default {
       return "";
     },
     onFileChange(e) {
-      //   console.log("event", e);
       const filedata = e.target.files[0];
       this.url = URL.createObjectURL(filedata);
     },
 
     onFileChangeUpdate(e) {
-      //   console.log("event", e);
       const filedata = e.target.files[0];
       this.url = URL.createObjectURL(filedata);
     },
-
-    //
     confirmationFileCreate() {
       this.form = useForm({
         filedata: null,
@@ -841,8 +826,6 @@ export default {
         }
       );
     },
-
-    //
     confirmationFileUpdate(file) {
       this.updateFileForm.filename = file.filename;
       this.updateFileForm.external_filename = file.external_filename;
@@ -870,7 +853,6 @@ export default {
       this.updateFileForm.fileshow = null;
     },
     updateFile() {
-      //   console.log("data update", this.updateFileForm);
       this.updateFileForm.post(
         this.route("daughter.communities.files.update", {
           user_id: this.profile.user_id,
@@ -886,7 +868,6 @@ export default {
         }
       );
     },
-    //
     confirmationFileDelete(file) {
       this.deleteFileForm.external_filename = file.external_filename;
       this.deleteFileForm.filename = file.filename;
@@ -895,7 +876,6 @@ export default {
 
       this.fileBeingDeleted = file;
     },
-
     deleteFile() {
       this.deleteFileForm.delete(
         this.route("daughter.communities.files.delete", {
@@ -913,7 +893,6 @@ export default {
     reset() {
       this.params = mapValues(this.params, () => null);
     },
-
     onSearchCommunityChange(search) {
       var string = search;
       var length = 60;
@@ -926,22 +905,16 @@ export default {
             })
           )
           .then((response) => {
-            // console.log("jj ", response.data);
             this.selectFour.options = response.data;
           });
       }
     },
     onSelectedCommunity(perfil) {
       this.selectFour.selectedCommunity = perfil;
-      //   this.selectFour.options = perfil;
     },
-
     customLabel(option) {
       return `${option.name} ${option.lastname} (${option.fullnamecomm})`;
     },
-
-    //
-
     onCyxSearchPerfilChange(search) {
       var string = search;
       var length = 60;
@@ -954,16 +927,13 @@ export default {
             })
           )
           .then((response) => {
-            // console.log("jj ", response.data);
             this.selectCyx.options = response.data;
           });
       }
     },
     onCyxSelectedPerfil(perfil) {
       this.selectCyx.selectedCommunity = perfil;
-      //   this.selectFour.options = perfil;
     },
-
     customCyxLabel(option) {
       return `${option.name} ${option.lastname} (${option.fullnamecomm})`;
     },
