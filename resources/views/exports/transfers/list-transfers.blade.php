@@ -12,7 +12,6 @@ use App\Http\Controllers\Secretary\Daughter\TransferController;
         <th>MOTIVO DEL CAMBIO</th>
         <th>FECHA DEL CAMBIO</th>
         <th>FECHA DE INSTALACIÓN</th>
-
     </tr>
     {{ $count = 1 }}
     @foreach ($data as $transfer)

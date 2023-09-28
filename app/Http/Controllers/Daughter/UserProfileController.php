@@ -26,10 +26,16 @@ class UserProfileController extends Controller
         $authUser = auth()->user();
 
         $daughter = User::find($authUser->id);
+
         if (!$daughter) {
             return abort(404);
         }
+
         $daughter->profile;
+
+        if ($daughter->profile->status !== 1) {
+            return abort(404);
+        }
 
         if ($daughter->profile) {
             $daughter->profile->info_family;

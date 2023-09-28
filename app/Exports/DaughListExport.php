@@ -50,6 +50,7 @@ class DaughListExport implements FromView
         ]);
 
         $addressClass = new AddressController();
+
         $provinces =  $addressClass->getProvinces();
 
         $query = User::query();
@@ -76,7 +77,6 @@ class DaughListExport implements FromView
                 });
             });
         }
-
 
         if (request('perProvince')) {
             $query->whereHas("profile", function ($q) {
@@ -200,6 +200,9 @@ class DaughListExport implements FromView
                 if (request('status') == 5) {
                     $q->where('date_other_country', '!=', null)->orderBy('date_other_country', 'desc');
                 }
+                if (request('status') == 6) {
+                    $q->where('status', 5);
+                }
             });
 
 
@@ -208,8 +211,10 @@ class DaughListExport implements FromView
 
             $data = $query
                 ->with('profile')
+                ->with('profile.address')
+                ->with('profile.origin')
                 ->with('profile.appointments.appointment_level')
-                ->with('profile.book')
+                ->with('profile.profileBooks.book')
                 ->get();
 
             return view('exports.daughters.list-global', compact('data', 'from', 'to'));
@@ -217,8 +222,10 @@ class DaughListExport implements FromView
 
         $data = $query
             ->with('profile')
+            ->with('profile.address')
+            ->with('profile.origin')
             ->with('profile.appointments.appointment_level')
-            ->with('profile.book')
+            ->with('profile.profileBooks.book')
             ->get();
 
         return view('exports.daughters.list-global', compact('data'));

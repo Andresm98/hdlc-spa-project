@@ -12,6 +12,7 @@ use App\Models\Team;
 use App\Models\Address;
 use App\Models\Profile;
 use App\Models\Pastoral;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -104,7 +105,7 @@ class ProfileController
                     'addressable',
                     [Profile::class],
                     function (Builder $query) {
-                        return   $query->where('political_division_id', 'LIKE', request('perProvince') . '%');
+                        return $query->where('political_division_id', 'LIKE', request('perProvince') . '%');
                     }
                 )->get();
 
@@ -371,6 +372,36 @@ class ProfileController
         return Excel::download(new DaughListExport(request()), 'HermanasHDLC.xlsx');
     }
 
+    public function statsIndex()
+    {
+        $groupDaughters = Profile::select("status", DB::raw("count(*) as total"))
+            ->groupBy('status')
+            ->get();
+
+        $queryResponse = array();
+
+        foreach ($groupDaughters as $item) {
+            $iteStatus = "";
+            if ($item->status === 1) {
+                $iteStatus = "Activa";
+            } else if ($item->status === 2) {
+                $iteStatus = "Fallecida";
+            } else if ($item->status === 3) {
+                $iteStatus = "Retirada";
+            } else if ($item->status === 4) {
+                $iteStatus = "Envío a Otras Provincias";
+            } else if ($item->status === 5) {
+                $iteStatus = "Sin Datos";
+            }
+            array_push($queryResponse, [
+                'id' => $item->status,
+                'name' => $iteStatus,
+                'value' => $item->total
+            ]);
+        }
+
+        return $queryResponse;
+    }
 
     /**
      * Show the form for editing the specified resource.

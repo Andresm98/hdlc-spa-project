@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\TestAWSController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthWebAccessController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,18 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+
+    $authUser = auth()->user();
+
+    $daughter = User::find($authUser->id);
+
+    if ($daughter->profile) {
+        if ($daughter->profile->status !== 1) {
+            session()->flush();
+            return redirect('/');
+        }
+    }
+
     return Inertia::render('Dashboard');
 })->name('dashboard');
 

@@ -237,6 +237,7 @@ class UserController extends Controller
                             $q->orderBy('date_retirement', 'desc');
                         }
                         if (request('status') == 5) {
+                            $q->whereBetween('date_other_country', [request('dateStart'), request('dateEnd')]);
                             $q->orderBy('date_other_country', 'desc');
                         }
                     }

@@ -354,7 +354,8 @@
                 <div
                   v-if="
                     profile_daughter.date_death == null &&
-                    profile_daughter.date_exit == null
+                    profile_daughter.date_exit == null &&
+                    profile_daughter.status == 1
                   "
                 >
                   <span

@@ -37,12 +37,12 @@ class DatabaseSeeder extends Seeder
 
         // $this->call(ProfileSeeder::class);
 
-        $this->call(BookSeeder::class);
+        // $this->call(BookSeeder::class);
 
-        $this->call(ExtraCountriesSeeder::class);
+        // $this->call(ExtraCountriesSeeder::class);
 
-        $this->call(UpdateUsersInfoSeeder::class);
+        // $this->call(UpdateUsersInfoSeeder::class);
 
-        $this->call(NewUserSeeder::class);
+        // $this->call(NewUserSeeder::class);
     }
 }

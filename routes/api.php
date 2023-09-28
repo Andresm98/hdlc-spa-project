@@ -46,6 +46,9 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('admin/users/export', [ProfileController::class, 'exportExcel'])
                 ->name('users.export.index');
 
+            Route::get('admin/users/stats', [ProfileController::class, 'statsIndex'])
+                ->name('users.stats.index');
+
             // Profile
 
             Route::post('admin/users/update/{daughterId}/{operation}', [ProfileController::class, 'update'])

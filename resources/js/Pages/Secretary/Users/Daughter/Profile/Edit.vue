@@ -50,6 +50,12 @@ input:checked ~ .dot {
             v-if="this.profile.status == 2"
             class="absolute w-9 h-6 bg-red-500 rounded-full shadow -left-1 -top-1 transition"
           />
+          <!--  -->
+          <div
+            v-if="this.profile.status == 4"
+            class="absolute w-9 h-6 rounded-full shadow -left-1 -top-1 transition"
+            style="transform: translateX(100%); background-color: #e0c320"
+          />
         </div>
       </label>
     </div>
@@ -57,7 +63,7 @@ input:checked ~ .dot {
 
     <div class="flex items-center justify-center">
       <small class="ml-3 text-gray-700 font-medium"
-        >Fallecida / Activo / Retirada
+        >Fallecida / Activo / Retirada / Enviada a Otras Provincias
       </small>
     </div>
     <div class="flex items-center justify-center">
@@ -110,8 +116,52 @@ input:checked ~ .dot {
           </div>
         </div>
       </div>
+      <div v-if="profile.status == 4">
+        (Actual: Enviada a Otras Provincias)
+        <div class="flex items-center justify-center">
+          <div v-if="profile.date_other_country != null">
+            <div class="flex flex-wrap">
+              <div class="w-full lg:w-12/12">
+                <div class="relative w-full mb-3">
+                  <small class="justify-center text-red-500"
+                    >Fecha de envío a otro país.</small
+                  >
+                  <Datepicker
+                    v-model="profile.date_other_country"
+                    :format="format"
+                    autoApply
+                    required
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="w-full lg:w-12/12">
+                <label
+                  class="block text-sm font-medium text-black"
+                  htmlfor="grid-password"
+                >
+                  Observaciones
+                </label>
+                <input
+                  type="text"
+                  minLength="10"
+                  maxlength="10"
+                  pattern="^\d{10}$"
+                  title="Ingrese un número de celular con un formato válido, máximo 10 digitos."
+                  placeholder="0997643146"
+                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  v-model="profile.place_other_country"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
+    <hr
+      class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-300 hover:border-gray-300"
+    />
     <div class="flex flex-wrap">
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
@@ -608,25 +658,6 @@ input:checked ~ .dot {
               theme="snow"
               :toolbar="toolbarOptions"
             ></quill-editor>
-
-            <!-- <textarea
-              id="observation"
-              name="observation"
-              rows="5"
-              class="
-                shadow-sm
-                focus:ring-blue-500 focus:border-blue-500
-                mt-1
-                block
-                w-full
-                sm:text-sm
-                border border-gray-300
-                rounded-md
-              "
-              v-model="profile.observation"
-              placeholder="Agregar las observaciones generales..."
-              :maxlength="4000"
-            /> -->
           </div>
         </div>
         <div class="mr-9 ml-9 mt-2 text-center">
@@ -675,6 +706,12 @@ input:checked ~ .dot {
           class="hover:cursor-pointer mx-2 px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-200 text-blue-800"
           @click="changeOperation(3)"
           >&nbsp;Salida</span
+        >
+        <span
+          v-show="profile.status != 4"
+          class="hover:cursor-pointer mx-2 px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-yellow-200 text-yellow-800"
+          @click="changeOperation(4)"
+          >&nbsp;Envío a otros Países</span
         >
       </div>
     </template>
@@ -745,6 +782,46 @@ input:checked ~ .dot {
                 required
               />
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="liveOperationChange == 4">
+        Ingrese la fecha en la que la Hermana fue a otra Compañía.
+
+        <div class="flex flex-wrap">
+          <div class="w-full lg:w-8/12 px-4">
+            <div class="relative w-full mt-3">
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.dateOtherCountryProfile"
+              >
+                {{ $page.props.errors.dateOtherCountryProfile }}
+              </p>
+              <small
+                >Formato: Ingresar la fecha de envío a otra Provincia.</small
+              >
+              <Datepicker
+                v-model="updatedStatusProfileForm.dateOtherCountryProfile"
+                :format="format"
+                autoApply
+                required
+              />
+            </div>
+          </div>
+          <div class="w-full lg:w-12/12">
+            <label
+              class="block text-sm font-medium text-black"
+              htmlfor="grid-password"
+            >
+              Observaciones
+            </label>
+            <input
+              type="text"
+              title="Ingrese observaciones."
+              class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              v-model="updatedStatusProfileForm.place_other_country"
+            />
           </div>
         </div>
       </div>
@@ -1026,6 +1103,8 @@ export default {
       updatedStatusProfileForm: this.$inertia.form({
         dateDeathProfile: null,
         dateExitProfile: null,
+        dateOtherCountryProfile: null,
+        place_other_country: null,
         operation: null,
       }),
     };
@@ -1050,6 +1129,12 @@ export default {
       if (this.updatedStatusProfileForm.dateExitProfile != null) {
         this.updatedStatusProfileForm.dateExitProfile = this.formatDate(
           this.updatedStatusProfileForm.dateExitProfile
+        );
+      }
+
+      if (this.updatedStatusProfileForm.dateOtherCountryProfile != null) {
+        this.updatedStatusProfileForm.dateOtherCountryProfile = this.formatDate(
+          this.updatedStatusProfileForm.dateOtherCountryProfile
         );
       }
 

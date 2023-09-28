@@ -223,6 +223,7 @@ class ProfileController extends Controller
                 'date_exit' => null
             ]);
         }
+
         if ($request->get('operation') == 2) {
             $validatorData = Validator::make($request->all(), [
                 'dateDeathProfile' => ['required', 'date_format:Y-m-d H:i:s'],
@@ -262,6 +263,7 @@ class ProfileController extends Controller
                 ]);
             }
         }
+
         if ($request->get('operation') == 3) {
             $validatorData = Validator::make($request->all(), [
                 'dateExitProfile' => ['required', 'date_format:Y-m-d H:i:s'],
@@ -289,6 +291,50 @@ class ProfileController extends Controller
                 foreach ($appointments as $appointment) {
                     $appointment->update([
                         'date_end_appointment' => $request->get('dateExitProfile'),
+                        'status' => 0
+                    ]);
+                }
+            }
+
+            $permission = $profile->permits->where('status', 1)->first();
+            if ($permission) {
+                $permission->update([
+                    'status' => 0,
+                ]);
+            }
+        }
+
+        if ($request->get('operation') == 4) {
+            $validatorData = Validator::make($request->all(), [
+                'dateOtherCountryProfile' => ['required', 'date_format:Y-m-d H:i:s'],
+                'place_other_country' => ['nullable', 'string', 'max:30'],
+            ]);
+
+            if ($validatorData->fails()) {
+                return redirect()->back()
+                    ->withErrors($validatorData->errors())
+                    ->withInput();
+            }
+
+            $profile->update([
+                'status' =>  4,
+                'date_death' => null,
+                'date_exit' => null,
+                'date_other_country' => $request->get('dateOtherCountryProfile'),
+                'place_other_country' => $request->get('place_other_country'),
+            ]);
+
+            $transfer = $profile->transfers->where('status', 1)->first();
+
+            if ($transfer) {
+                $transfer->update([
+                    'transfer_date_relocated' => $request->get('dateOtherCountryProfile'),
+                    'status' => 0
+                ]);
+                $appointments = $transfer->appointments;
+                foreach ($appointments as $appointment) {
+                    $appointment->update([
+                        'date_end_appointment' => $request->get('dateOtherCountryProfile'),
                         'status' => 0
                     ]);
                 }
