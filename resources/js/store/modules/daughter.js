@@ -25,6 +25,8 @@ const state = () => ({
             address_bt: null,
             political_division_id_bt: null,
         },
+        profile_books: null,
+        page: null,
     },
 });
 
@@ -81,7 +83,9 @@ const mutations = {
             phone,
             observation,
             address,
-            address_bt
+            address_bt,
+            profile_books,
+            page
         }
     ) {
         state.profile.identity_card = identity_card;
@@ -99,6 +103,8 @@ const mutations = {
         state.profile.observation = observation;
         state.profile.address = address;
         state.profile.address_bt = address_bt;
+        state.profile.profile_books = profile_books;
+        state.profile.page = page;
     },
 };
 const actions = {

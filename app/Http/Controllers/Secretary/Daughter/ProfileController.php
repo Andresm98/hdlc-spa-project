@@ -29,7 +29,7 @@ class ProfileController extends Controller
         if ($validator->fails()) {
             abort(404);
         }
-        $profile = Profile::with('address', 'origin')
+        $profile = Profile::with('address', 'origin', 'profileBooks.book')
             ->where('user_id', '=', $id)
             ->get();
 
@@ -156,6 +156,7 @@ class ProfileController extends Controller
             'date_retirement' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'cellphone' => ['nullable', 'string', 'max:15'],
             'phone' => ['nullable', 'string', 'max:15'],
+            'page' => ['nullable', 'string', 'max:10'],
             'observation' => ['required', 'string', 'max:4000'],
             'address.address' => ['required', 'string', 'max:100'],
             'address.political_division_id' => ['required', 'string', 'exists:political_divisions,id'],
@@ -183,6 +184,7 @@ class ProfileController extends Controller
                 'date_retirement' => $request->get('date_retirement'),
                 'cellphone' => $request->get("cellphone"),
                 'phone' => $request->get("phone"),
+                'page' => $request->get('page'),
                 'observation' => $request->get("observation"),
             ]);
             $user->profile->address()->update([
@@ -194,6 +196,16 @@ class ProfileController extends Controller
                 'address' => $request->origin["address"],
                 'political_division_id' => $request->origin["political_division_id"]
             ]);
+
+            $user->profile->profileBooks()->delete();
+
+            $profileBooks = (array) $request->get('profile_books');
+
+            foreach ($profileBooks as $proBook) {
+                $user->profile->profileBooks()->create([
+                    'book_id' => $proBook['id']
+                ]);
+            }
 
             return redirect()->route('secretary.daughters.edit', $user->slug)->with([
                 'success' => 'El perfil del usuario fue actualizado correctamente.',

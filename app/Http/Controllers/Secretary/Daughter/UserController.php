@@ -292,6 +292,7 @@ class UserController extends Controller
             'daughters_list' => $query
                 ->with('profile')
                 ->with('profile.appointments.appointment_level')
+                ->with('profile.profileBooks.book')
                 ->paginate(request('perPage'))
                 ->appends(request()->query()),
             'pastorals' => $pastorals,

@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Controllers\AddressController;
+use App\Models\Origin;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProfileController
@@ -88,6 +89,22 @@ class ProfileController
             $query->orderBy(request('field'), request('direction'));
         }
 
+        if (request()->has(['book'])) {
+            $query->whereHas("profile", function ($qMain) {
+                $qMain->whereHas("profileBooks", function ($qProfileBooks) {
+                    $qProfileBooks->whereHas("book", function ($qBook) {
+                        $qBook->where("id", request('book'));
+                    });
+                });
+            });
+        }
+
+        if (request()->has(['box'])) {
+            $query->whereHas("profile", function ($q) {
+                $q->where('box', request('box'));
+            });
+        }
+
         if (request('pastoral')) {
             $query->whereHas("profile", function ($q) {
                 $q->whereHas("transfers", function ($qtransfer) {
@@ -101,8 +118,8 @@ class ProfileController
 
         if (request('perProvince')) {
             $query->whereHas("profile", function ($q) {
-                $address = Address::whereHasMorph(
-                    'addressable',
+                $address = Origin::whereHasMorph(
+                    'originable',
                     [Profile::class],
                     function (Builder $query) {
                         return $query->where('political_division_id', 'LIKE', request('perProvince') . '%');
@@ -111,8 +128,8 @@ class ProfileController
 
                 $index = array();
                 foreach ($address as $ob) {
-                    $ob->addressable_id;
-                    $index[] = $ob->addressable_id;
+                    $ob->originable_id;
+                    $index[] = $ob->originable_id;
                 }
                 $q->whereIn('id', $index);
             });
@@ -238,7 +255,7 @@ class ProfileController
                 ->appends(request()->query()),
             'pastorals' => $pastorals,
             'filters' => request()->all([
-                'search', 'field', 'direction', 'page', 'status', 'pastoral', 'dateStart', 'dateEnd', 'perProvince', 'perPage', 'typeActive'
+                'search', 'field', 'direction', 'page', 'status', 'pastoral', 'dateStart', 'dateEnd', 'perProvince', 'perPage', 'typeActive', 'book', 'box'
             ])
         ], 200);
     }
@@ -262,7 +279,6 @@ class ProfileController
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            // 'username' => 'required|string|max:60|unique:users',
             'name' => 'required|string|max:60',
             'fullnamecomm' => 'required|string|max:60',
             'lastname' => 'required|string|max:60',
@@ -333,10 +349,98 @@ class ProfileController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+
+    public function specificProfile($id)
     {
-        //
+        $validator = Validator::make(['id' => $id], [
+            'id' => ['required', 'exists:users,id']
+        ]);
+        if ($validator->fails()) {
+            abort(404);
+        }
+        $profile = Profile::with('address', 'origin')
+            ->where('user_id', '=', $id)
+            ->get();
+
+        return   $profile->first();
     }
+
+    public function show($slug)
+    {
+        $validator = Validator::make(['slug' => $slug], [
+            'slug' => ['required', 'string', 'alpha_dash', 'exists:users,slug']
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('No existe el usuario', "");
+        }
+
+        $addressClass = new AddressController();
+
+        $daughter_custom = User::where('slug', $slug)
+            ->with('profile')
+            ->with('profile.address')
+            ->with('profile.origin')
+            ->with('profile.appointments.appointment_level')
+            ->with('profile.profileBooks.book')
+            ->first();
+
+        $flag = false;
+
+        foreach ($daughter_custom->roles as $role) {
+            if ($role->name == "daughter") {
+                $flag = true;
+            } else {
+                $flag = false;
+            }
+        }
+
+        if (!$flag) {
+            return $this->sendError('Existe un error al retornar el usuario', "");
+        }
+
+        if ($daughter_custom->profile) {
+            if (!$daughter_custom->profile->origin) {
+                $daughter_custom->profile->origin()->create([
+                    'address' => "",
+                    'political_division_id' => null
+                ]);
+            }
+
+            $image = "";
+
+            if ($daughter_custom->image) {
+                $image = Storage::disk('s3')->temporaryUrl(
+                    $daughter_custom->image->filename,
+                    now()->addMinutes(5)
+                );
+            }
+
+            $address = array();
+
+            if ($daughter_custom->profile->address) {
+                $address = $addressClass->getSaveAddress($daughter_custom->profile->address->political_division_id);
+            }
+
+            $origin = array();
+
+            if ($daughter_custom->profile->origin) {
+                $origin = $addressClass->getSaveAddressBt($daughter_custom->profile->origin->political_division_id);
+            }
+
+            return response()->json([
+                'daughter' => $daughter_custom,
+                'image' => $image,
+                'address' => $address->original,
+                'origin' => $origin->original,
+            ]);
+        }
+
+        return response()->json([
+            'daughter' => $daughter_custom,
+        ]);
+    }
+
     public function showImage($daughterId)
     {
         $validator = Validator::make(
@@ -372,7 +476,86 @@ class ProfileController
         return Excel::download(new DaughListExport(request()), 'HermanasHDLC.xlsx');
     }
 
-    public function statsIndex()
+    public function statsIndex($status)
+    {
+        $groupDaughters = Profile::select("status", DB::raw("count(*) as total"))
+            ->groupBy('status')
+            ->get();
+
+        $perDaughterResponse = array();
+
+        foreach ($groupDaughters as $item) {
+            $iteStatus = "";
+            if ($item->status === 1) {
+                $iteStatus = "Activa";
+            } else if ($item->status === 2) {
+                $iteStatus = "Fallecida";
+            } else if ($item->status === 3) {
+                $iteStatus = "Retirada";
+            } else if ($item->status === 4) {
+                $iteStatus = "Envío a Otras Provincias";
+            } else if ($item->status === 5) {
+                $iteStatus = "Sin Datos";
+            }
+            array_push($perDaughterResponse, [
+                'id' => $item->status,
+                'name' => $iteStatus,
+                'value' => $item->total
+            ]);
+        }
+
+        //
+
+        $addressClass = new AddressController();
+
+        $provinces =  $addressClass->getProvinces();
+
+        $perProvinceResponse = array();
+
+        foreach ($provinces as $province) {
+            $query = User::query();
+
+            $query->whereHas("roles", function ($q) {
+                $q->where("name", "daughter");
+            })->get();
+
+            $query->whereHas("profile", function ($q) use ($province, $status) {
+                $address = Origin::whereHasMorph(
+                    'originable',
+                    [Profile::class],
+                    function (Builder $query) use ($province) {
+                        return   $query->where('political_division_id', 'LIKE', $province->id . '%');
+                    }
+                )->get();
+
+                $index = array();
+
+                foreach ($address as $ob) {
+                    $ob->originable_id;
+                    $index[] = $ob->originable_id;
+                }
+
+                if ($status !== '0') {
+                    $q->where('status', $status);
+                }
+
+                $q->whereIn('id', $index);
+            });
+
+            array_push($perProvinceResponse, [
+                'id' => $item->status,
+                'name' => $province->name,
+                'value' => count($query->get())
+            ]);
+        }
+
+        return response()->json([
+            'perDaughterResponse' => $perDaughterResponse,
+            'perProvinceResponse' => $perProvinceResponse,
+        ]);
+    }
+
+    public function statsProvinceIndex()
     {
         $groupDaughters = Profile::select("status", DB::raw("count(*) as total"))
             ->groupBy('status')
@@ -440,10 +623,9 @@ class ProfileController
             'date_retirement' => ['nullable', 'date_format:Y-m-d'],
             'cellphone' => ['nullable', 'string', 'max:15'],
             'phone' => ['nullable', 'string', 'max:15'],
-
             'observation' => ['nullable', 'string', 'max:4000'],
             'box' => ['nullable', 'string', 'max:15'],
-            'page' => ['nullable', 'integer', 'min:1'],
+            'page' => ['nullable', 'string', 'max:10'],
             'ph_docs' => ['nullable', 'numeric'],
             'dg_docs' => ['nullable', 'numeric'],
             'address' => ['required', 'string', 'max:100'],
@@ -568,6 +750,13 @@ class ProfileController
                 'address' => $request->get('address'),
                 'political_division_id' => $request->get('address_pd')
             ]);
+
+            if (!$user->profile->origin) {
+                $user->profile->origin()->create([
+                    'address' => "",
+                    'political_division_id' => null
+                ]);
+            }
 
             $user->profile->origin()->update([
                 'address' => $request->get('origin'),

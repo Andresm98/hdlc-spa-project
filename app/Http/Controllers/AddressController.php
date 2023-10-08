@@ -54,7 +54,6 @@ class AddressController extends Controller
 
     public function getSaveAddress($actual_parish)
     {
-
         // Parishes
         $data_parish = DB::table('political_divisions')
             ->where('id', "=", $actual_parish)
@@ -97,7 +96,6 @@ class AddressController extends Controller
 
     public function getSaveAddressBt($actual_ubication)
     {
-
         if (!$actual_ubication) {
             return response()->json([
                 'data_parish' => null,

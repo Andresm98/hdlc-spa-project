@@ -46,8 +46,11 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('admin/users/export', [ProfileController::class, 'exportExcel'])
                 ->name('users.export.index');
 
-            Route::get('admin/users/stats', [ProfileController::class, 'statsIndex'])
+            Route::get('admin/users/stats/{status}', [ProfileController::class, 'statsIndex'])
                 ->name('users.stats.index');
+
+            Route::get('admin/users/show/{slug}', [ProfileController::class, 'show'])
+                ->name('users.show.index');
 
             // Profile
 

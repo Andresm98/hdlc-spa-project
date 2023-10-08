@@ -468,34 +468,6 @@
             >
               <files></files>
             </div>
-            <!-- <swiper :pagination="pagination" :modules="modules" class="mySwiper">
-              <swiper-slide class="absolute pb-10 pt-10">
-                <div v-if="profile_daughter == null" class="m-4">
-                  <profile-daughter></profile-daughter>
-                </div>
-                <div v-else class="m-4">
-                  <profile-daughter-edit></profile-daughter-edit>
-                </div>
-              </swiper-slide>
-              <swiper-slide class="pb-10 pt-10" v-if="profile_daughter != null">
-                <info-family></info-family>
-              </swiper-slide>
-              <swiper-slide class="pb-10 pt-10" v-if="profile_daughter != null">
-                <health></health>
-              </swiper-slide>
-              <swiper-slide class="pb-10 pt-10" v-if="profile_daughter != null">
-                <academic-training></academic-training>
-              </swiper-slide>
-              <swiper-slide class="pb-10 pt-10" v-if="profile_daughter != null">
-                <permit></permit>
-              </swiper-slide>
-              <swiper-slide class="pb-10 pt-10" v-if="profile_daughter != null">
-                <appointment></appointment>
-              </swiper-slide>
-              <swiper-slide class="pb-10 pt-10" v-if="profile_daughter != null">
-                <sacrament></sacrament>
-              </swiper-slide>
-            </swiper> -->
           </div>
         </div>
       </div>
@@ -669,8 +641,6 @@ export default defineComponent({
   computed: {
     ...mapGetters("daughter", ["actualCount"]),
     isInvalid() {
-      //   console.log("inva ", this.isTouched, "\n\nopp> ");
-
       return this.value == null;
     },
   },
@@ -734,8 +704,6 @@ export default defineComponent({
 
   methods: {
     handleScroll() {
-      //   console.log(window.scrollY);
-      //   console.log("numme");
     },
     onSearchProvincesChange() {},
 
@@ -784,20 +752,17 @@ export default defineComponent({
     },
     onChange(value) {
       this.value = value;
-      //   console.log("aiudaaa> ", value);
       if (value.indexOf("Reset me!") !== -1) {
-        // console.log("is reset");
+
         this.value = [];
       }
     },
     onSelect(option) {
       if (option === "Disable me!") {
-        // console.log("is disable");
         this.isDisabled = true;
       }
     },
     onTouch() {
-      //   console.log("is touched");
       this.isTouched = true;
     },
     //
@@ -817,13 +782,5 @@ export default defineComponent({
       }
     },
   },
-
-  //   computed: {
-  //     // ejexcc() {
-  //     //   this.$store.dispatch("changeUser", {
-  //     //     newId: this.daughter_custom.id,
-  //     //   });
-  //     // },
-  //   },
 });
 </script>

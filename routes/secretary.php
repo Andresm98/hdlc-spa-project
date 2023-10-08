@@ -4,6 +4,7 @@ use App\Models\Appointment;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\Secretary\Events\EventController;
 use App\Http\Controllers\Secretary\Daughter\UserController;
 use App\Http\Controllers\Secretary\Daughter\HealthController;
@@ -98,6 +99,11 @@ Route::get('zones/all', [CommunityZoneController::class, 'index'])
 
 Route::get('users/export', [UserController::class, 'export'])
     ->name('users.report');
+
+// Books
+
+Route::get('books/all', [BookController::class, 'index'])
+    ->name('books.index');
 
 Route::group(
     ['middleware' => ['role:secretary']],

@@ -411,7 +411,7 @@ input:checked ~ .dot {
       <hr
         class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-300 hover:border-gray-300"
       />
-      <div class="w-full" v-if="profile.origin">
+      <template v-if="profile.origin">
         <div class="w-full lg:w-full px-4">
           <div>
             <label for="address" class="block text-sm font-medium text-black">
@@ -438,55 +438,51 @@ input:checked ~ .dot {
           </div>
         </div>
         <div class="w-full lg:w-2/5 px-4 mb-2">
-          <div class="w-full">
-            <label
-              class="block text-sm font-medium text-gray-700"
-              htmlfor="grid-password"
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
+            Provincia Nacimiento:
+          </label>
+          <div>
+            <multiselect
+              :searchable="true"
+              v-model="selectOneBt.selectedProvince"
+              :options="this.allProvinces"
+              :close-on-select="true"
+              :clear-on-select="false"
+              mode="tags"
+              label="name"
+              @search-change="onSearchProvincesChangeBt"
+              @select="onSelectedProvinceBt"
+              track-by="name"
+              placeholder="Buscar provincia"
             >
-              Provincia Nacimiento:
-            </label>
-            <div>
-              <multiselect
-                :searchable="true"
-                v-model="selectOneBt.selectedProvince"
-                :options="this.allProvinces"
-                :close-on-select="true"
-                :clear-on-select="false"
-                mode="tags"
-                label="name"
-                @search-change="onSearchProvincesChangeBt"
-                @select="onSelectedProvinceBt"
-                track-by="name"
-                placeholder="Buscar provincia"
-              >
-              </multiselect>
-            </div>
+            </multiselect>
           </div>
         </div>
         <div class="w-full lg:w-3/5 px-4 mb-2">
-          <div class="relative w-full">
-            <label
-              class="block text-sm font-medium text-gray-700"
-              htmlfor="grid-password"
+          <label
+            class="block text-sm font-medium text-gray-700"
+            htmlfor="grid-password"
+          >
+            Cantón Nacimiento:
+          </label>
+          <div>
+            <multiselect
+              :searchable="true"
+              v-model="selectTwoBt.selectedCanton"
+              :options="selectTwoBt.options"
+              :close-on-select="true"
+              :clear-on-select="false"
+              mode="tags"
+              label="name"
+              @select="onSelectedCantonBt"
+              @search-change="onSearchCantonChangeBt"
+              track-by="name"
+              placeholder="Buscar cantón"
             >
-              Cantón Nacimiento:
-            </label>
-            <div>
-              <multiselect
-                :searchable="true"
-                v-model="selectTwoBt.selectedCanton"
-                :options="selectTwoBt.options"
-                :close-on-select="true"
-                :clear-on-select="false"
-                mode="tags"
-                label="name"
-                @select="onSelectedCantonBt"
-                @search-change="onSearchCantonChangeBt"
-                track-by="name"
-                placeholder="Buscar cantón"
-              >
-              </multiselect>
-            </div>
+            </multiselect>
           </div>
         </div>
         <div class="w-full lg:w-12/12 px-4 mb-2">
@@ -514,7 +510,7 @@ input:checked ~ .dot {
             </div>
           </div>
         </div>
-      </div>
+      </template>
 
       <!-- Address Information -->
       <hr
@@ -546,7 +542,6 @@ input:checked ~ .dot {
           </div>
         </div>
       </div>
-
       <div class="w-full lg:w-2/5 px-4 mb-2">
         <div :class="{ invalid: isInvalidProvince }">
           <label
@@ -603,7 +598,6 @@ input:checked ~ .dot {
           </p>
         </div>
       </div>
-
       <div class="w-full lg:w-12/12 px-4 mb-2">
         <div :class="{ invalid: isInvalidParish }">
           <label
@@ -628,6 +622,53 @@ input:checked ~ .dot {
           <p class="text-red-400 text-sm" v-show="isInvalidParish">
             Obligatorio
           </p>
+        </div>
+      </div>
+      <hr
+        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-300 hover:border-gray-300"
+      />
+      <div class="w-full lg:w-6/12 px-4 mb-2">
+        <label
+          class="block text-sm font-medium text-black"
+          htmlfor="grid-password"
+        >
+          Libros:
+        </label>
+        <small>Formato: Seleccionar un Libro.</small>
+        <multiselect
+          :searchable="true"
+          v-model="selectFourBook.selectedBook"
+          :options="selectFourBook.options"
+          :multiple="true"
+          :taggable="true"
+          label="name"
+          track-by="name"
+          placeholder="Buscar Libro"
+        >
+        </multiselect>
+        <p class="text-red-400 text-sm" v-show="isInvalidParish">Opcional</p>
+      </div>
+
+      <div class="w-full lg:w-6/12 px-4 mb-2">
+        <div>
+          <label for="address" class="block text-sm font-medium text-black">
+            Páginas:
+          </label>
+          <p class="text-red-400 text-sm" v-show="$page.props.errors.page">
+            {{ $page.props.errors.page }}
+          </p>
+          <small>Formato: Ingrese las páginas correctamente.</small>
+          <div class="mb-1">
+            <input
+              id="page"
+              name="page"
+              rows="1"
+              class="shadow-sm py-2 px-2 focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
+              v-model="profile.page"
+              placeholder="Agregar la página"
+              :maxlength="100"
+            />
+          </div>
         </div>
       </div>
       <hr
@@ -862,12 +903,18 @@ export default {
     JetDialogModal,
     JetSecondaryButton,
   },
+
   props: {
     daughter_custom: Object,
     errors: [],
     slug: null,
   },
+
   mounted() {
+    this.getBooks().then((response) => {
+      this.selectFourBook.options = response.BooksResponse;
+    });
+
     this.status().then((data) => {
       this.selectThree.options = data.parishes;
       this.selectThree.selectedParish = data.data_parish;
@@ -887,7 +934,16 @@ export default {
 
       this.selectOneBt.selectedProvince = data.data_province;
     });
+
+    let arrayBooks = [];
+
+    for (let book in this.profile.profile_books) {
+      arrayBooks.push(this.profile.profile_books[book].book);
+    }
+
+    this.selectFourBook.selectedBook = arrayBooks;
   },
+
   computed: {
     ...mapState("daughter", ["profile"]),
     ...mapState("address", ["allProvinces"]),
@@ -953,7 +1009,6 @@ export default {
         this.form.political_division_id = null;
       }
     },
-
     //
     "selectOneBt.selectedProvince": function () {
       if (this.selectOneBt.selectedProvince === null) {
@@ -985,6 +1040,11 @@ export default {
         this.form.political_division_id_bt = null;
       }
     },
+    "selectFourBook.selectedBook": function () {
+      if (this.selectFourBook.selectedBook === null) {
+        this.form.profile_books = null;
+      }
+    },
     "profile.observation": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -996,6 +1056,7 @@ export default {
       }
     },
   },
+
   setup() {
     const formatSet = "YYYY-MM-DD";
     let date = new Date(0);
@@ -1069,8 +1130,6 @@ export default {
         multiSelectParish: null,
         vSelectParish: null,
       },
-      //
-
       selectOneBt: {
         selectedProvince: undefined,
         value: 0,
@@ -1097,6 +1156,14 @@ export default {
         loading: false,
         multiSelectParish: null,
         vSelectParish: null,
+      },
+      selectFourBook: {
+        selectedBook: undefined,
+        value: 0,
+        options: [],
+        loading: false,
+        multiSelectBook: null,
+        vSelectBook: null,
       },
       displayingStatus: false,
       liveOperationChange: null,
@@ -1159,6 +1226,7 @@ export default {
         }
       );
     },
+
     async status() {
       let response = await axios.get(
         this.route("secretary.address.actual-address", {
@@ -1167,6 +1235,7 @@ export default {
       );
       return response.data;
     },
+
     async status_bt() {
       if (this.profile.origin["political_division_id"]) {
         let response = await axios.get(
@@ -1177,7 +1246,25 @@ export default {
         return response.data;
       }
     },
+
+    async status_bt() {
+      if (this.profile.origin["political_division_id"]) {
+        let response = await axios.get(
+          this.route("secretary.address.actual-address-bt", {
+            actual_ubication: this.profile.origin["political_division_id"],
+          })
+        );
+        return response.data;
+      }
+    },
+
+    async getBooks() {
+      let response = await axios.get(this.route("secretary.books.index"));
+      return response.data;
+    },
+
     onSearchProvincesChange(term) {},
+
     onSelectedProvince(province) {
       //   console.log("input data selecter " + province.id);
       this.form.province_id = province.id;
@@ -1200,11 +1287,9 @@ export default {
         });
     },
 
-    onSearchCantonChange(term) {
-      //   console.log(term);
-    },
+    onSearchCantonChange(term) {},
+
     onSelectedCanton(canton) {
-      //   console.log("input data selecter " + canton.id);
       this.form.canton_id = canton.id;
       this.form.parish_id = null;
       this.form.political_division_id = null;
@@ -1218,19 +1303,17 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.selectThree.options = res.data;
         });
     },
 
-    onSearchParishChange(term) {
-      //   console.log(term);
-    },
+    onSearchParishChange(term) {},
+
+    onSearchBookChange(term) {},
+
     onSelectedParish(parish) {
       this.profile.address["political_division_id"] = parish.id;
-      //   console.log("input parish data selecter " + this.form.parish_id);
     },
-    // Address Bt
 
     onSearchProvincesChangeBt(term) {},
 
@@ -1339,6 +1422,10 @@ export default {
       if (dataaddresbt) {
         this.profile.origin["political_division_id"] = dataaddresbt;
       }
+
+      this.profile.profile_books = JSON.parse(
+        JSON.stringify(this.selectFourBook.selectedBook)
+      );
 
       if (
         this.isInvalidProvince == false &&

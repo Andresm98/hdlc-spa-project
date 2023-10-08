@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
+use App\Models\Profile;
 
 class UsersExport implements FromView
 {
@@ -154,6 +155,10 @@ class UsersExport implements FromView
                             $q->whereBetween('date_retirement', [request('dateStart'), request('dateEnd')]);
                             $q->orderBy('date_retirement', 'desc');
                         }
+                        if (request('status') == 5) {
+                            $q->whereBetween('date_other_country', [request('dateStart'), request('dateEnd')]);
+                            $q->orderBy('date_other_country', 'desc');
+                        }
                         $dateFromTo->setFrom(request('dateStart'));
                         $dateFromTo->setTo(request('dateEnd'));
                     }
@@ -192,6 +197,12 @@ class UsersExport implements FromView
                 }
                 if (request('status') == 4) {
                     $q->where('date_retirement', '!=', null)->orderBy('date_retirement', 'desc');
+                }
+                if (request('status') == 5) {
+                    $q->where('date_other_country', '!=', null)->orderBy('date_other_country', 'desc');
+                }
+                if (request('status') == 6) {
+                    $q->where('status', 5);
                 }
             });
 

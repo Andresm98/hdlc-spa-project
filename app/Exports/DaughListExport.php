@@ -9,6 +9,8 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
+use App\Models\Origin;
+use App\Models\Profile;
 
 class DaughListExport implements FromView
 {
@@ -80,8 +82,8 @@ class DaughListExport implements FromView
 
         if (request('perProvince')) {
             $query->whereHas("profile", function ($q) {
-                $address = Address::whereHasMorph(
-                    'addressable',
+                $address = Origin::whereHasMorph(
+                    'originable',
                     [Profile::class],
                     function (Builder $query) {
                         return   $query->where('political_division_id', 'LIKE', request('perProvince') . '%');
@@ -90,8 +92,8 @@ class DaughListExport implements FromView
 
                 $index = array();
                 foreach ($address as $ob) {
-                    $ob->addressable_id;
-                    $index[] = $ob->addressable_id;
+                    $ob->originable_id;
+                    $index[] = $ob->originable_id;
                 }
                 $q->whereIn('id', $index);
             });
