@@ -11,109 +11,37 @@
     <operation></operation>
 
     <section
-      class="
-        bg-gray-200
-        dark:bg-slate-800
-        y-1
-        px-4
-        sm:p-6
-        md:py-10 md:px-8
-        pt-2
-        pb-4
-        rounded-lg
-        sm:m-2
-        lg:m-3
-        md:m-4
-      "
+      class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg sm:m-2 lg:m-3 md:m-4"
     >
       <div
-        class="
-          max-w-4xl
-          mx-auto
-          grid grid-cols-1
-          lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2
-        "
+        class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
       >
         <div
-          class="
-            relative
-            p-3
-            col-start-1
-            row-start-1
-            flex flex-col-reverse
-            rounded-lg
-            bg-gradient-to-t
-            from-black/75
-            via-black/0
-            sm:bg-none sm:row-start-2 sm:p-0
-            md:bg-none md:row-start-2 md:p-0
-            lg:row-start-1
-          "
+          class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 md:bg-none md:row-start-2 md:p-0 lg:row-start-1"
         >
           <h1
-            class="
-              mt-1
-              text-lg
-              font-semibold
-              text-black
-              sm:text-black
-              md:text-2xl
-              dark:sm:text-white
-            "
+            class="mt-1 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
           >
             Provincia Ecuador
           </h1>
           <p
-            class="
-              text-sm
-              leading-4
-              font-medium
-              text-black
-              sm:text-black
-              dark:sm:text-slate-400
-            "
+            class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
           >
             Información General de los nombramientos realizados en la Compañía
           </p>
         </div>
         <div
-          class="
-            grid
-            gap-4
-            col-start-1 col-end-3
-            row-start-1
-            sm:mb-6 sm:grid-cols-4
-            md:mb-6 md:grid-cols-4
-            lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0
-          "
+          class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 md:mb-6 md:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
         >
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_2.png"
             alt=""
-            class="
-              w-full
-              h-60
-              object-cover
-              rounded-lg
-              sm:h-52 sm:col-span-2
-              md:h-52 md:col-span-2
-              lg:col-span-full
-            "
+            class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 md:h-52 md:col-span-2 lg:col-span-full"
             loading="lazy"
           />
         </div>
         <dl
-          class="
-            mt-4
-            text-xs
-            font-medium
-            flex
-            items-center
-            row-start-2
-            sm:mt-1 sm:row-start-3
-            md:mt-1 md:row-start-3
-            lg:row-start-2
-          "
+          class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-1 md:row-start-3 lg:row-start-2"
         >
           <dt class="sr-only">Visto</dt>
           <dd class="text-indigo-600 flex items-center dark:text-indigo-400">
@@ -174,7 +102,9 @@
           rangos y estructura organizacional a nivel de nombramientos.
         </p>
       </div>
-      <div class="grid lg:gap-3 lg:grid-cols-3 mg:gap-2 md:grid-cols-2 text-black dark:text-white">
+      <div
+        class="grid lg:gap-3 lg:grid-cols-3 mg:gap-2 md:grid-cols-2 text-black dark:text-white"
+      >
         <div>
           <!-- Province -->
           <ul class="list-disc pl-5 pt-2">
@@ -207,6 +137,16 @@
             <li>Director/a (1).</li>
           </ul>
         </div>
+
+        <template v-if="this.byTerminateAppointmentCount">
+          <span
+            @click="setDatesFromTerminateAppointment()"
+            v-if="this.byTerminateAppointmentCount.counter > 0"
+            class="cursor-pointer p-6 inline-flex text-xm leading-5 font-semibold rounded-sm bg-red-100 text-red-800"
+            >Existen {{ this.byTerminateAppointmentCount.counter }} hermanas
+            sirvientes con observaciones en sus nombramientos.</span
+          >
+        </template>
       </div>
     </section>
     <br />
@@ -214,38 +154,16 @@
     <section class="py-1 bg-gray">
       <div class="w-full lg:w-full">
         <div
-          class="
-            relative
-            flex flex-col
-            min-w-0
-            break-words
-            w-full
-            mb-6
-            shadow-lg
-            rounded-lg
-            bg-blueGray-100
-            border-0
-          "
+          class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
         >
           <div
-            class="
-              shadow
-              overflow-hidden
-              border-b border-gray-200
-              sm:rounded-lg
-            "
+            class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
           >
             <!-- Container Filters -->
             <div class="container mx-auto ml-7">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    bg-gray-100
-                  "
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm bg-gray-100"
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Filtros de Búsqueda</small
@@ -253,45 +171,14 @@
 
                   <search-filter
                     v-model="params.search"
-                    class="
-                      border border-blue-300
-                      rounded-md
-                      shadow-sm
-                      focus:outline-none
-                      focus:ring-indigo-500
-                      focus:border-indigo-500
-                      sm:text-sm
-                    "
+                    class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     @reset="reset"
                   >
-                    <!-- <v-date-picker v-model="params.date" is-required :format="format">
-              <template v-slot="{ inputValue, inputEvents }">
-                <input
-                  class="bg-white border px-2 py-1 rounded"
-                  :value="inputValue"
-                  v-on="inputEvents"
-                />
-              </template>
-            </v-date-picker> -->
-
                     <small class="block text-gray-700 mt-2">Tipo :</small>
 
                     <select
                       v-model="params.type"
-                      class="
-                        mt-1
-                        block
-                        w-full
-                        px-3
-                        border border-gray-300
-                        bg-white
-                        rounded-md
-                        shadow-sm
-                        focus:outline-none
-                        focus:ring-blue-500
-                        focus:border-blue-500
-                        sm:text-sm
-                      "
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
                       <option :value="null">Todos</option>
                       <option
@@ -307,20 +194,7 @@
 
                       <select
                         v-model="params.level"
-                        class="
-                          mt-1
-                          block
-                          w-full
-                          px-3
-                          border border-gray-300
-                          bg-white
-                          rounded-md
-                          shadow-sm
-                          focus:outline-none
-                          focus:ring-blue-500
-                          focus:border-blue-500
-                          sm:text-sm
-                        "
+                        class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       >
                         <option :value="null">Todos</option>
                         <option
@@ -337,20 +211,7 @@
 
                     <select
                       v-model="params.status"
-                      class="
-                        mt-1
-                        block
-                        w-full
-                        px-3
-                        border border-gray-300
-                        bg-white
-                        rounded-md
-                        shadow-sm
-                        focus:outline-none
-                        focus:ring-blue-500
-                        focus:border-blue-500
-                        sm:text-sm
-                      "
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
                       <option :value="null">Todos</option>
                       <option value="1">Vigentes</option>
@@ -360,14 +221,7 @@
                 </div>
 
                 <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    p-1
-                    bg-gray-100
-                  "
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Rangos de Fechas</small
@@ -383,6 +237,7 @@
                     :format="format"
                     autoApply
                     required
+                    :year-range="[1800, this.year]"
                   />
                   <small class="justify-content-center ml-6"
                     >Deste - Hasta</small
@@ -398,76 +253,34 @@
                     :format="format"
                     autoApply
                     required
+                    :year-range="[1800, this.year]"
                   />
                 </div>
 
                 <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    p-1
-                    bg-gray-100
-                  "
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Exportar Listas</small
                   >
                   <div
-                    class="
-                      md:text-md
-                      flex
-                      items-center
-                      justify-between
-                      p-4
-                      w-full
-                      text-sm
-                      md:px-12 md:py-0
-                    "
+                    class="md:text-md flex items-center justify-between p-4 w-full text-sm md:px-12 md:py-0"
                   >
                     <dropdown class="mt-1" placement="bottom-end">
                       <template #default>
                         <div
-                          class="
-                            group
-                            flex
-                            items-center
-                            cursor-pointer
-                            select-none
-                          "
+                          class="group flex items-center cursor-pointer select-none"
                         >
                           <div
-                            class="
-                              mr-1
-                              text-gray-700
-                              group-hover:text-blue-600
-                              focus:text-blue-600
-                              whitespace-nowrap
-                            "
+                            class="mr-1 text-gray-700 group-hover:text-blue-600 focus:text-blue-600 whitespace-nowrap"
                           >
                             <span
-                              class="
-                                px-1
-                                inline-flex
-                                text-xs
-                                leading-5
-                                font-semibold
-                                rounded-sm
-                                bg-gray-200
-                                text-gray-800
-                              "
+                              class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-gray-200 text-gray-800"
                               >&nbsp;Filtros</span
                             >
                           </div>
                           <icon
-                            class="
-                              w-5
-                              h-5
-                              fill-gray-700
-                              group-hover:fill-blue-600
-                              focus:fill-blue-600
-                            "
+                            class="w-5 h-5 fill-gray-700 group-hover:fill-blue-600 focus:fill-blue-600"
                             name="cheveron-down"
                           />
                         </div>
@@ -477,12 +290,7 @@
                           class="mt-2 py-2 text-sm bg-white rounded shadow-xl"
                         >
                           <a
-                            class="
-                              block
-                              px-6
-                              py-2
-                              hover:text-white hover:bg-blue-500
-                            "
+                            class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                             target="_blank"
                             :href="
                               route('secretary.appoinments.pdf', this.params)
@@ -490,12 +298,7 @@
                             >PDF</a
                           >
                           <a
-                            class="
-                              block
-                              px-6
-                              py-2
-                              hover:text-white hover:bg-blue-500
-                            "
+                            class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                             target="_blank"
                             :href="
                               route(
@@ -506,12 +309,7 @@
                             >Excel</a
                           >
                           <a
-                            class="
-                              block
-                              px-6
-                              py-2
-                              hover:text-white hover:bg-blue-500
-                            "
+                            class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                             target="_blank"
                             :href="
                               route(
@@ -539,80 +337,38 @@
             <div class="py-2">
               <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
                 <div
-                  class="
-                    py-2
-                    align-middle
-                    inline-block
-                    min-w-full
-                    sm:px-6
-                    lg:px-8
-                  "
+                  class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
                 >
                   <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-blue-100">
                       <tr>
                         <th
                           scope="col"
-                          class="
-                            pl-4
-                            text-left text-xs
-                            font-medium
-                            text-black
-                            uppercase
-                            tracking-wider
-                          "
+                          class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
                         >
                           Nombre Hermana
                         </th>
                         <th
                           scope="col"
-                          class="
-                            text-left text-xs
-                            font-medium
-                            text-black
-                            uppercase
-                            tracking-wider
-                          "
+                          class="text-left text-xs font-medium text-black uppercase tracking-wider"
                         >
                           Nombramiento
                         </th>
                         <th
                           scope="col"
-                          class="
-                            text-left text-xs
-                            font-medium
-                            text-black
-                            uppercase
-                            tracking-wider
-                          "
+                          class="text-left text-xs font-medium text-black uppercase tracking-wider"
                         >
                           Fechas (Inicio-Culminación)
                         </th>
                         <th
                           scope="col"
-                          class="
-                            px-6
-                            py-3
-                            text-left text-xs
-                            font-medium
-                            text-black
-                            uppercase
-                            tracking-wider
-                          "
+                          class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                         >
                           Comunidad y Tranferencia
                         </th>
                         <th
                           scope="col"
-                          class="
-                            px-6
-                            py-3
-                            text-left text-xs
-                            font-medium
-                            text-black
-                            uppercase
-                            tracking-wider
-                          "
+                          class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                         >
                           Acciones
                         </th>
@@ -626,12 +382,7 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                           <div class="flex items-center">
                             <div
-                              class="
-                                flex-shrink-0
-                                h-10
-                                w-10
-                                hover:cursor-pointer
-                              "
+                              class="flex-shrink-0 h-10 w-10 hover:cursor-pointer"
                             >
                               <a
                                 :href="
@@ -658,30 +409,12 @@
                               </div>
                               <span
                                 v-if="appointment.status == 1"
-                                class="
-                                  px-2
-                                  inline-flex
-                                  text-xs
-                                  leading-5
-                                  font-semibold
-                                  rounded-sm
-                                  bg-green-100
-                                  text-green-800
-                                "
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-green-100 text-green-800"
                                 >Activo</span
                               >
                               <span
                                 v-if="appointment.status == 0"
-                                class="
-                                  px-2
-                                  inline-flex
-                                  text-xs
-                                  leading-5
-                                  font-semibold
-                                  rounded-sm
-                                  bg-red-100
-                                  text-red-800
-                                "
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-red-100 text-red-800"
                                 >Antiguo</span
                               >
                             </div>
@@ -693,16 +426,7 @@
                               appointment.appointment_level
                                 .appointment_levelc_id == 1
                             "
-                            class="
-                              px-2
-                              inline-flex
-                              text-xs
-                              leading-5
-                              font-semibold
-                              rounded-full
-                              bg-green-100
-                              text-green-800
-                            "
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                           >
                             {{ appointment.appointment_level.name }}
                           </span>
@@ -711,16 +435,7 @@
                               appointment.appointment_level
                                 .appointment_levelc_id == 2
                             "
-                            class="
-                              px-2
-                              inline-flex
-                              text-xs
-                              leading-5
-                              font-semibold
-                              rounded-full
-                              bg-pink-100
-                              text-pink-800
-                            "
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-pink-100 text-pink-800"
                           >
                             {{ appointment.appointment_level.name }}
                           </span>
@@ -729,16 +444,7 @@
                               appointment.appointment_level
                                 .appointment_levelc_id == 3
                             "
-                            class="
-                              px-2
-                              inline-flex
-                              text-xs
-                              leading-5
-                              font-semibold
-                              rounded-full
-                              bg-yellow-100
-                              text-yellow-800
-                            "
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"
                           >
                             {{ appointment.appointment_level.name }}
                           </span>
@@ -746,16 +452,7 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                           <span
                             v-if="appointment.date_end_appointment != null"
-                            class="
-                              px-2
-                              inline-flex
-                              text-xs
-                              leading-5
-                              font-semibold
-                              rounded-full
-                              bg-blue-100
-                              text-blue-800
-                            "
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
                           >
                             {{
                               this.formatDateShow(appointment.date_appointment)
@@ -769,16 +466,7 @@
                           </span>
                           <span
                             v-else
-                            class="
-                              px-2
-                              inline-flex
-                              text-xs
-                              leading-5
-                              font-semibold
-                              rounded-full
-                              bg-teal-100
-                              text-teal-800
-                            "
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-teal-100 text-teal-800"
                           >
                             {{
                               this.formatDateShow(appointment.date_appointment)
@@ -793,16 +481,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                           <span
-                            class="
-                              px-2
-                              inline-flex
-                              text-xs
-                              leading-5
-                              font-semibold
-                              rounded-full
-                              bg-blue-100
-                              text-blue-800
-                            "
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
                           >
                             <div v-if="appointment.community != null">
                               <div
@@ -872,17 +551,7 @@
                           </span>
                           <br />
                           <span
-                            class="
-                              px-2
-                              inline-flex
-                              text-xs
-                              leading-5
-                              font-semibold
-                              rounded-sm
-                              bg-cyan-100
-                              text-cyan-800
-                              hover:cursor-pointer
-                            "
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-cyan-100 text-cyan-800 hover:cursor-pointer"
                           >
                             <div v-if="appointment.transfer != null">
                               {{
@@ -906,13 +575,7 @@
                           </span>
                         </td>
                         <td
-                          class="
-                            px-3
-                            py-4
-                            whitespace-nowrap
-                            text-right text-sm
-                            font-medium
-                          "
+                          class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                         >
                           <!-- Components -->
 
@@ -925,19 +588,7 @@
                               <div class="w-auto h-auto">
                                 <div class="flex-1 h-full">
                                   <div
-                                    class="
-                                      flex
-                                      items-center
-                                      justify-center
-                                      flex-1
-                                      h-full
-                                      p-2
-                                      border border-green-500
-                                      text-white
-                                      shadow
-                                      rounded-lg
-                                      hover:bg-green-50 hover:text-zinc-300
-                                    "
+                                    class="flex items-center justify-center flex-1 h-full p-2 border border-green-500 text-white shadow rounded-lg hover:bg-green-50 hover:text-zinc-300"
                                   >
                                     <div class="relative">
                                       <svg
@@ -964,19 +615,7 @@
                               <div class="w-auto h-auto">
                                 <div class="flex-1 h-full">
                                   <div
-                                    class="
-                                      flex
-                                      items-center
-                                      justify-center
-                                      flex-1
-                                      h-full
-                                      p-2
-                                      border border-red-500
-                                      text-white
-                                      shadow
-                                      rounded-lg
-                                      hover:bg-red-50 hover:text-zinc-300
-                                    "
+                                    class="flex items-center justify-center flex-1 h-full p-2 border border-red-500 text-white shadow rounded-lg hover:bg-red-50 hover:text-zinc-300"
                                   >
                                     <div class="relative">
                                       <svg
@@ -1037,16 +676,7 @@
       <template #title>
         Datos de Registro del Nombramiento
         <span
-          class="
-            px-2
-            inline-flex
-            text-base
-            leading-5
-            font-semibold
-            rounded-sm
-            bg-blue-100
-            text-blue-800
-          "
+          class="px-2 inline-flex text-base leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
         >
           {{ appointmentBeingUpdated.profile.user.name }}
           {{ appointmentBeingUpdated.profile.user.lastname }} </span
@@ -1081,16 +711,7 @@
                   <!-- dot -->
                   <div
                     v-if="this.statusappointment == 1"
-                    class="
-                      absolute
-                      w-6
-                      h-6
-                      rounded-full
-                      shadow
-                      -left-1
-                      -top-1
-                      transition
-                    "
+                    class="absolute w-6 h-6 rounded-full shadow -left-1 -top-1 transition"
                     style="
                       transform: translateX(100%);
                       background-color: #204de0;
@@ -1098,17 +719,7 @@
                   />
                   <div
                     v-if="this.statusappointment == 0"
-                    class="
-                      absolute
-                      w-6
-                      h-6
-                      bg-red-400
-                      rounded-full
-                      shadow
-                      -left-1
-                      -top-1
-                      transition
-                    "
+                    class="absolute w-6 h-6 bg-red-400 rounded-full shadow -left-1 -top-1 transition"
                   />
                 </div>
               </label>
@@ -1237,6 +848,7 @@
                 v-model="updateAppointmentForm.date_appointment"
                 required
                 autoApply
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -1262,6 +874,7 @@
                 :format="format"
                 v-model="updateAppointmentForm.date_end_appointment"
                 autoApply
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -1344,6 +957,7 @@ export default {
   },
   setup() {
     const date = ref(new Date());
+    const year = new Date().getFullYear();
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
@@ -1351,6 +965,7 @@ export default {
 
     return {
       date,
+      year,
       format,
     };
   },
@@ -1375,6 +990,8 @@ export default {
   },
   mounted() {
     this.allAppointmentLevel;
+    this.byTerminateAppointment;
+    this.showYears;
   },
   data() {
     return {
@@ -1447,12 +1064,11 @@ export default {
         multiSelectCommunity: null,
         vSelectCommunity: null,
       },
+      byTerminateAppointmentCount: null,
     };
   },
   watch: {
-    dataTransfer: function () {
-      //   console.log("log ");
-    },
+    dataTransfer: function () {},
     "selectOneUpdate.selectedLevel": function () {
       if (this.selectOneUpdate.selectedLevel === null) {
         this.selectTwoUpdate.selectedLevelCategory = null;
@@ -1462,13 +1078,11 @@ export default {
     },
     "selectTwoUpdate.selectedLevelCategory": function () {
       if (this.selectTwoUpdate.selectedLevelCategory === null) {
-        // Clean data Form
         this.updateAppointmentForm.appointment_level_id = null;
       }
     },
     "updateAppointmentForm.description": function () {
       var limit = 2000;
-      //   console.log("ey");
       const quill = this.$refs.qleditor1;
       if (quill != null) {
         if (quill.getHTML().length <= limit) {
@@ -1479,7 +1093,9 @@ export default {
       }
     },
     "params.type": function () {
-      this.params.level = null;
+      if (this.params.type != 2) {
+        this.params.level = null;
+      }
     },
     params: {
       handler: throttle(function () {
@@ -1494,9 +1110,7 @@ export default {
           replace: true,
           preserveState: true,
           preserveScroll: true,
-          onSuccess: () => {
-            // console.log("Success");
-          },
+          onSuccess: () => {},
         });
       }, 1),
       deep: true,
@@ -1505,23 +1119,19 @@ export default {
   computed: {
     ...mapState("work", ["work"]),
     ...mapState("work", ["allWork"]),
-    // Validate Multioption
     isInvalidLevelUpdate() {
-      //   console.log("ee", this.selectOne.selectedProvince);
       return (
         this.selectOneUpdate.selectedLevel == undefined ||
         this.selectOneUpdate.selectedLevel == null
       );
     },
     isInvalidLevelCategoryUpdate() {
-      //   console.log("ee canton", this.selectTwo.selectedCanton);
       return (
         this.selectTwoUpdate.selectedLevelCategory == undefined ||
         this.selectTwoUpdate.selectedLevelCategory == null
       );
     },
     isInvalidUpdateCommunity() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectThree.selectedCommunity == undefined ||
         this.selectThree.selectedCommunity == null
@@ -1539,8 +1149,25 @@ export default {
           this.selectOneUpdate.options = res.data;
         });
     },
+
+    byTerminateAppointment() {
+      axios
+        .get(this.route("secretary.appoinments.terminated.index"))
+        .then((response) => {
+          this.byTerminateAppointmentCount = response.data;
+        });
+    },
+    showYears() {
+    },
   },
   methods: {
+    setDatesFromTerminateAppointment() {
+      this.params.type = 2;
+      this.params.level = 10;
+      this.params.status = 1;
+      this.params.dateStart = this.byTerminateAppointmentCount.start;
+      this.params.dateEnd = this.byTerminateAppointmentCount.end;
+    },
     onSearchLevelChange() {},
     onSelectedLevel(level) {
       this.selectTwoUpdate.selectedLevelCategory = undefined;
@@ -1576,6 +1203,7 @@ export default {
       }
       return "Vigente";
     },
+
     closeModal() {
       this.modal_open = false;
     },
@@ -1621,7 +1249,6 @@ export default {
               )
             )
             .then((res) => {
-              // console.log("abs ", res.data);
               this.selectThree.selectedCommunity = res.data;
             });
         }

@@ -2,16 +2,7 @@
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
       <h6
-        class="
-          mt-2
-          mb-2
-          text-lg
-          font-medium
-          text-center
-          leading-6
-          text-gray-900
-          uppercase
-        "
+        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
       >
         Plantilla de Actividades
       </h6>
@@ -35,21 +26,7 @@
                   minLength="5"
                   maxlength="100"
                   placeholder="Ingresar nombre actividad"
-                  class="
-                    border-0
-                    px-3
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="form.comm_name_activity"
                   required
                 />
@@ -74,6 +51,7 @@
                 autoApply
                 v-model="form.comm_date_activity"
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -125,15 +103,7 @@
                 type="number"
                 name="nr_daughters"
                 placeholder="Número de Hermanas"
-                class="
-                  focus:ring-blue-500 focus:border-blue-500
-                  flex-1
-                  block
-                  w-full
-                  rounded-none rounded-r-md
-                  sm:text-sm
-                  border-gray-300
-                "
+                class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                 min="0"
                 max="1000"
                 v-model="form.comm_nr_daughters"
@@ -159,15 +129,7 @@
               <small>Formato: Número de beneficiarios.</small>
               <input
                 type="number"
-                class="
-                  focus:ring-blue-500 focus:border-blue-500
-                  flex-1
-                  block
-                  w-full
-                  rounded-none rounded-r-md
-                  sm:text-sm
-                  border-gray-300
-                "
+                class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                 min="0"
                 max="1000"
                 name="nr_beneficiaries"
@@ -195,15 +157,7 @@
               <small>Formato: Número de colaboradores.</small>
               <input
                 type="number"
-                class="
-                  focus:ring-blue-500 focus:border-blue-500
-                  flex-1
-                  block
-                  w-full
-                  rounded-none rounded-r-md
-                  sm:text-sm
-                  border-gray-300
-                "
+                class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                 min="0"
                 max="1000"
                 name="nr_collaborators"
@@ -222,15 +176,7 @@
       </form>
 
       <hr
-        class="
-          w-full
-          mt-2
-          mb-3
-          ml-4
-          mr-4
-          border-b-1 border-gray-400
-          hover:border-gray-400
-        "
+        class="w-full mt-2 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
       />
 
       <!-- Table -->
@@ -246,54 +192,25 @@
                 <tr>
                   <th
                     scope="col"
-                    class="
-                      pl-4
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Nombre
                   </th>
                   <th
                     scope="col"
-                    class="
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Fecha
                   </th>
                   <th
                     scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Hermanas - Beneficiarios - Colaboradores
                   </th>
                   <th
                     scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Acciones
                   </th>
@@ -324,59 +241,23 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span
-                      class="
-                        px-3
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-yellow-100
-                        text-yellow-800
-                        mr-2
-                      "
+                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 mr-2"
                     >
                       {{ activity.comm_nr_daughters }}
                     </span>
                     <span
-                      class="
-                        px-3
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-red-100
-                        text-red-800
-                        mr-2
-                      "
+                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 mr-2"
                     >
                       {{ activity.comm_nr_beneficiaries }}
                     </span>
                     <span
-                      class="
-                        px-3
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-blue-100
-                        text-blue-800
-                        mr-2
-                      "
+                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 mr-2"
                     >
                       {{ activity.comm_nr_collaborators }}
                     </span>
                   </td>
                   <td
-                    class="
-                      px-3
-                      py-4
-                      whitespace-nowrap
-                      text-right text-sm
-                      font-medium
-                    "
+                    class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                   >
                     <!-- Components -->
 
@@ -451,21 +332,7 @@
                     minLength="5"
                     maxlength="100"
                     placeholder="Ingresar nombre actividad"
-                    class="
-                      border-0
-                      px-3
-                      placeholder-blueGray-300
-                      text-blueGray-600
-                      bg-white
-                      rounded
-                      text-sm
-                      shadow
-                      focus:outline-none focus:ring
-                      w-full
-                      ease-linear
-                      transition-all
-                      duration-150
-                    "
+                    class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="updateActivityForm.comm_name_activity"
                     required
                   />
@@ -490,6 +357,7 @@
                   autoApply
                   v-model="updateActivityForm.comm_date_activity"
                   required
+                  :year-range="[1800, this.year]"
                 />
               </div>
             </div>
@@ -543,15 +411,7 @@
                   type="number"
                   name="nr_daughters"
                   placeholder="Número de Hermanas"
-                  class="
-                    focus:ring-blue-500 focus:border-blue-500
-                    flex-1
-                    block
-                    w-full
-                    rounded-none rounded-r-md
-                    sm:text-sm
-                    border-gray-300
-                  "
+                  class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                   min="0"
                   max="1000"
                   v-model="updateActivityForm.comm_nr_daughters"
@@ -577,15 +437,7 @@
                 <small>Formato: Número de beneficiarios.</small>
                 <input
                   type="number"
-                  class="
-                    focus:ring-blue-500 focus:border-blue-500
-                    flex-1
-                    block
-                    w-full
-                    rounded-none rounded-r-md
-                    sm:text-sm
-                    border-gray-300
-                  "
+                  class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                   min="0"
                   max="1000"
                   name="nr_beneficiaries"
@@ -613,15 +465,7 @@
                 <small>Formato: Número de colaboradores.</small>
                 <input
                   type="number"
-                  class="
-                    focus:ring-blue-500 focus:border-blue-500
-                    flex-1
-                    block
-                    w-full
-                    rounded-none rounded-r-md
-                    sm:text-sm
-                    border-gray-300
-                  "
+                  class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                   min="0"
                   max="1000"
                   name="nr_collaborators"
@@ -712,6 +556,7 @@ export default {
   //  Setup all data
   setup() {
     const date = ref(new Date());
+    const year = new Date().getFullYear();
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
@@ -726,6 +571,7 @@ export default {
     });
     return {
       date,
+      year,
       format,
       form,
     };

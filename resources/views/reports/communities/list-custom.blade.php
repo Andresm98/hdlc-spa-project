@@ -119,7 +119,7 @@
                 <p style="text-align: center;"><strong>{{ $count++ }}. {{ $community->comm_name }}</strong></p>
 
                 <?php
-                $listDaughters = CommunityDaughterController::report($community->id);
+                $listDaughters = CommunityDaughterController::reportStatic($community->id);
                 ?>
                 @if ($listDaughters)
                     <table>

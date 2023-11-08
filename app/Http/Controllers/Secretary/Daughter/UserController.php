@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Secretary\Daughter\ProfileController;
 use App\Http\Controllers\Secretary\Daughter\TransferController;
+use App\Models\Book;
 
 class UserController extends Controller
 {
@@ -71,11 +72,27 @@ class UserController extends Controller
 
     public function welcome()
     {
-        // Communities
-        $communities = count(Community::where('comm_level', 1)->get());
+        // Communities Active
+        $communities = count(Community::where('comm_level', 1)
+            ->where('comm_status', 1)
+            ->get());
+
+        // Communities Closure
+
+        $communitiesClosure = count(Community::where('comm_level', 1)
+            ->where('comm_status', 0)
+            ->get());
 
         // Works
-        $works = count(Community::where('comm_level', 2)->get());
+        $works = count(Community::where('comm_level', 2)
+            ->where('comm_status', 1)
+            ->get());
+
+        // Works Closure
+
+        $worksClosure = count(Community::where('comm_level', 2)
+            ->where('comm_status', 0)
+            ->get());
 
         // Pastorals
         $pastorals = count(Pastoral::all());
@@ -113,7 +130,9 @@ class UserController extends Controller
 
         return Inertia::render('Secretary/Welcome', compact(
             'communities',
+            'communitiesClosure',
             'works',
+            'worksClosure',
             'pastorals',
             //
             'daughters',
@@ -130,7 +149,7 @@ class UserController extends Controller
     {
         request()->validate([
             'direction' => ['in:asc,desc'],
-            'field' => ['in:name,email'],
+            'field' => ['in:name,email,lastname'],
             'dateStart' => ['date_format:Y-m-d H:i:s'],
         ]);
 
@@ -149,6 +168,16 @@ class UserController extends Controller
 
         if (request()->has(['field', 'direction'])) {
             $query->orderBy(request('field'), request('direction'));
+        }
+
+        if (request()->has(['book'])) {
+            $query->whereHas("profile", function ($qMain) {
+                $qMain->whereHas("profileBooks", function ($qProfileBooks) {
+                    $qProfileBooks->whereHas("book", function ($qBook) {
+                        $qBook->where("id", request('book'));
+                    });
+                });
+            });
         }
 
         if (request('pastoral')) {
@@ -287,6 +316,7 @@ class UserController extends Controller
         }
 
         $pastorals = Pastoral::all();
+        $books = Book::all();
         return Inertia::render('Secretary/Users/Daughter/Index', [
             'provinces' => $provinces,
             'daughters_list' => $query
@@ -296,8 +326,9 @@ class UserController extends Controller
                 ->paginate(request('perPage'))
                 ->appends(request()->query()),
             'pastorals' => $pastorals,
+            'books' => $books,
             'filters' => request()->all([
-                'search', 'field', 'direction', 'page', 'status', 'pastoral', 'dateStart', 'dateEnd', 'perProvince', 'perPage', 'typeActive'
+                'search', 'field', 'direction', 'page', 'status', 'pastoral', 'dateStart', 'dateEnd', 'perProvince', 'perPage', 'typeActive', 'book'
             ])
         ]);
     }
@@ -520,8 +551,6 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Usuario actualizado correctamente.');
     }
 
-
-
     /**
      * Remove the specified resource from storage.
      *
@@ -635,8 +664,8 @@ class UserController extends Controller
         if ($user->profile) {
 
             $profile = $user->profile;
-            $data->put('profile',  $profile);
 
+            $data->put('profile',  $profile);
 
             if ($user->image) {
                 $image = Storage::disk('s3')->temporaryUrl(
@@ -657,10 +686,11 @@ class UserController extends Controller
 
             //  Aditional Information
             $from = date('Y-01-01 00:00:00');
+
             $to = date('Y-12-31 00:00:00');
+
             if ($request->get('options') != null) {
                 if (is_numeric($this->search("1", $request->get('options')))) {
-
                     $data->put('healths', $user->profile->healths()
                         ->orderBy('consult_date', 'desc')->first());
                 }
@@ -713,11 +743,62 @@ class UserController extends Controller
         }
     }
 
+    function getAge($then)
+    {
+        $then_ts = strtotime($then);
+        $then_year = date('Y', $then_ts);
+        $age = date('Y') - $then_year;
+        if (strtotime('+' . $age . ' years', $then_ts) > time()) $age--;
+        return $age;
+    }
+
+    public function reportByVocation()
+    {
+        // Call All Active Daughters
+
+        $query = User::query();
+
+        $query->whereHas('roles', function ($q) {
+            $q->where('name', 'daughter');
+        })->get();
+
+        $query->whereHas('profile', function ($q) {
+            $q->where('status', 1);
+        })->get();
+
+        $query->orderBy('lastname', 'asc');
+
+        $originalData = $query
+            ->with('profile')
+            ->get();
+
+        $years = array();
+
+        foreach ($originalData as $d) {
+            array_push($years, [
+                'year' => $this->getAge($d->profile->date_vocation),
+                'daughter' => $d
+            ]);
+        }
+
+        $data = array();
+
+        foreach ($years as $element) {
+            $data[$element['year']][] = $element;
+        }
+
+        ksort($data, SORT_NUMERIC);
+
+        $pdf = PDF::loadView('reports.daughters.list-by-vocation', compact('data'));
+
+        return $pdf->setPaper('a4', 'portrait')->stream('ReportePorAniosDeVocacion.pdf');
+    }
+
     public function reportDaughtersPDF()
     {
         request()->validate([
             'direction' => ['in:asc,desc'],
-            'field' => ['in:name,email'],
+            'field' => ['in:name,email,lastname'],
             'dateStart' => ['date_format:Y-m-d H:i:s'],
         ]);
 
@@ -737,6 +818,17 @@ class UserController extends Controller
         if (request()->has(['field', 'direction'])) {
             $query->orderBy(request('field'), request('direction'));
         }
+
+        if (request()->has(['book'])) {
+            $query->whereHas("profile", function ($qMain) {
+                $qMain->whereHas("profileBooks", function ($qProfileBooks) {
+                    $qProfileBooks->whereHas("book", function ($qBook) {
+                        $qBook->where("id", request('book'));
+                    });
+                });
+            });
+        }
+
 
         if (request('pastoral')) {
             $query->whereHas("profile", function ($q) {
@@ -885,6 +977,11 @@ class UserController extends Controller
                 $type = request('typeActive');
 
                 $pdf = PDF::loadView('reports.daughters.list-active', compact('data', 'from', 'to', 'type'));
+
+                if (count($data) >= 300) {
+                    return redirect()->route('secretary.daughters.index')->with('error', 'No es posible imprimir en formato pdf sobrepasa las 500 hermanas, cambie a EXCEL.');
+                }
+
                 return $pdf->setPaper('a4', 'landscape')->stream('ReportesHermanasHDLCActivas.pdf');
             }
             if (request('status') == 2) {
@@ -894,6 +991,11 @@ class UserController extends Controller
                     ->get();
 
                 $pdf = PDF::loadView('reports.daughters.list-dead', compact('data', 'from', 'to'));
+
+                if (count($data) >= 300) {
+                    return redirect()->route('secretary.daughters.index')->with('error', 'No es posible imprimir en formato pdf sobrepasa las 500 hermanas, cambie a EXCEL.');
+                }
+
                 return $pdf->setPaper('a4', 'landscape')->stream('ReportesHermanasHDLCFallecidas.pdf');
             }
             if (request('status') == 3) {
@@ -903,6 +1005,11 @@ class UserController extends Controller
                     ->get();
 
                 $pdf = PDF::loadView('reports.daughters.list-retired', compact('data', 'from', 'to'));
+
+                if (count($data) >= 300) {
+                    return redirect()->route('secretary.daughters.index')->with('error', 'No es posible imprimir en formato pdf sobrepasa las 500 hermanas, cambie a EXCEL.');
+                }
+
                 return $pdf->setPaper('a4', 'landscape')->stream('ReportesHermanasHDLCRetiradas.pdf');
             }
             if (request('status') == 4) {
@@ -912,6 +1019,11 @@ class UserController extends Controller
                     ->get();
 
                 $pdf = PDF::loadView('reports.daughters.list-retirement', compact('data', 'from', 'to'));
+
+                if (count($data) >= 300) {
+                    return redirect()->route('secretary.daughters.index')->with('error', 'No es posible imprimir en formato pdf sobrepasa las 500 hermanas, cambie a EXCEL.');
+                }
+
                 return $pdf->setPaper('a4', 'landscape')->stream('ReportesHermanasHDLCJubiladas.pdf');
             }
         }
@@ -922,8 +1034,12 @@ class UserController extends Controller
             ->with('profile')
             ->get();
 
-        $pdf = PDF::loadView('reports.daughters.list-general', compact('data', 'from', 'to'));
+        if (count($data) >= 300) {
+            return redirect()->route('secretary.daughters.index')->with('error', 'No es posible imprimir en formato pdf sobrepasa las 500 hermanas, cambie a EXCEL.');
+        }
 
-        return $pdf->setPaper('a4', 'landscape')->stream('ReportesHermanasHDLC.pdf');
+        // $pdf = PDF::loadView('reports.daughters.list-general', compact('data', 'from', 'to'));
+
+        // return $pdf->setPaper('a4', 'landscape')->stream('ReportesHermanasHDLC.pdf');
     }
 }

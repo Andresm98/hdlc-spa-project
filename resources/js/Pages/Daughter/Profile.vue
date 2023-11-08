@@ -184,7 +184,7 @@
                         >
                           Nombre de Usuario:
                         </label>
-                        <small>Formato: No editable</small>
+                        <small class="font-bold">Formato: No editable</small>
                         <jet-input-error :message="errors.username" />
                         <input
                           type="text"
@@ -202,7 +202,7 @@
                         </label>
 
                         <jet-input-error :message="errors.email" />
-                        <small>Formato: Único en el sistema</small>
+                        <small class="font-bold">Formato: Único en el sistema</small>
                         <input
                           type="email"
                           placeholder="micorreo@correo.com"
@@ -221,7 +221,7 @@
                           Nombres Completos:
                         </label>
                         <jet-input-error :message="errors.name" />
-                        <small>Formato: Andrea Fransheska</small>
+                        <small class="font-bold">Formato: Andrea Laura</small>
                         <input
                           type="text"
                           placeholder="Ejm: Lucas Andres"
@@ -243,7 +243,7 @@
                         </label>
 
                         <jet-input-error :message="errors.lastname" />
-                        <small>Formato: López Guerra</small>
+                        <small class="font-bold">Formato: López Guerra</small>
                         <input
                           type="text"
                           placeholder="Ejm: Fuentes Ramos"
@@ -286,7 +286,7 @@
                         </label>
                         <jet-input-error :message="errors.file" />
 
-                        <small>Formato: JPG, PNG, JPEG.</small>
+                        <small class="font-bold">Formato: JPG, PNG, JPEG.</small>
 
                         <img
                           v-if="image && !url"
@@ -459,7 +459,7 @@
                         {{ $page.props.errors.address_bt }}
                       </p>
                       <small
-                        >Formato: Ingrese la dirección máximo 100
+                         class="font-bold">Formato: Ingrese la dirección máximo 100
                         caracteres.</small
                       >
                       <div class="mb-1">
@@ -499,7 +499,7 @@
                       >
                         Ingresar cédula o RUC válido
                       </p>
-                      <small>Formato: Cédula Ecuatoriana</small>
+                      <small class="font-bold">Formato: Cédula Ecuatoriana</small>
 
                       <input
                         type="text"
@@ -522,7 +522,7 @@
                       >
                         {{ $page.props.errors.iess_card }}
                       </p>
-                      <small>Formato: Carnet IESS</small>
+                      <small class="font-bold">Formato: Carnet IESS</small>
                       <input
                         type="text"
                         minLength="1"
@@ -542,7 +542,7 @@
                       >
                         {{ $page.props.errors.driver_license }}
                       </p>
-                      <small>Formato: Licencia de Conducir</small>
+                      <small class="font-bold">Formato: Licencia de Conducir</small>
 
                       <input
                         type="text"
@@ -566,12 +566,13 @@
                       >
                         {{ $page.props.errors.date_birth }}
                       </p>
-                      <small>Formato: Necesario</small>
+                      <small class="font-bold">Formato: Necesario</small>
                       <Datepicker
                         autoApply
                         v-model="profileForm.date_birth"
                         :format="format"
                         required
+                        :year-range="[1800, this.year]"
                       />
                     </div>
 
@@ -588,11 +589,12 @@
                       >
                         {{ $page.props.errors.date_vocation }}
                       </p>
-                      <small>Formato: Necesario</small>
+                      <small class="font-bold">Formato: Necesario</small>
                       <Datepicker
                         autoApply
                         v-model="profileForm.date_vocation"
                         :format="format"
+                        :year-range="[1800, this.year]"
                       />
                     </div>
 
@@ -609,12 +611,13 @@
                       >
                         {{ $page.props.errors.date_vocation }}
                       </p>
-                      <small>Formato: Opcional</small>
+                      <small class="font-bold">Formato: Opcional</small>
                       <Datepicker
                         v-model="profileForm.date_vocation"
                         :format="format"
                         autoApply
                         readonly
+                        :year-range="[1800, this.year]"
                       />
                     </div>
 
@@ -628,11 +631,12 @@
                       >
                         {{ $page.props.errors.date_send }}
                       </p>
-                      <small>Formato: Opcional</small>
+                      <small class="font-bold">Formato: Opcional</small>
                       <Datepicker
                         autoApply
                         v-model="profileForm.date_send"
                         :format="format"
+                        :year-range="[1800, this.year]"
                       />
                     </div>
 
@@ -646,11 +650,12 @@
                       >
                         {{ $page.props.errors.date_vote }}
                       </p>
-                      <small>Formato: Opcional</small>
+                      <small class="font-bold">Formato: Opcional</small>
                       <Datepicker
                         autoApply
                         v-model="profileForm.date_vote"
                         :format="format"
+                        :year-range="[1800, this.year]"
                       />
                     </div>
                     <div class="col-span-8 sm:col-span-2">
@@ -666,7 +671,7 @@
                       >
                         {{ $page.props.errors.cellphone }}
                       </p>
-                      <small>Formato: 0997643146</small>
+                      <small class="font-bold">Formato: 0997643146</small>
                       <input
                         type="text"
                         minLength="10"
@@ -692,7 +697,7 @@
                       >
                         {{ $page.props.errors.phone }}
                       </p>
-                      <small>Formato: 022400111</small>
+                      <small class="font-bold">Formato: 022400111</small>
 
                       <input
                         type="text"
@@ -721,12 +726,13 @@
                       >
                         {{ $page.props.errors.date_retirement }}
                       </p>
-                      <small>Formato: Necesario</small>
+                      <small class="font-bold">Formato: Necesario</small>
                       <Datepicker
                         autoApply
                         v-model="profileForm.date_retirement"
                         :format="format"
                         readonly
+                        :year-range="[1800, this.year]"
                       />
                     </div>
 
@@ -745,7 +751,7 @@
                         {{ $page.props.errors.address }}
                       </p>
                       <small
-                        >Formato: Ingrese la dirección máximo 100
+                         class="font-bold">Formato: Ingrese la dirección máximo 100
                         caracteres.</small
                       >
                       <div class="mb-1">
@@ -915,7 +921,7 @@
                       >
                         {{ $page.props.errors.names_father }}
                       </p>
-                      <small>Formato: José Fernando García García</small>
+                      <small class="font-bold">Formato: José Fernando García García</small>
                       <div class="mt-1 rounded-md mx-2">
                         <input
                           type="text"
@@ -942,7 +948,7 @@
                         {{ $page.props.errors.names_mother }}
                       </p>
                       <small
-                        >Formato: Andrea Fransheska González González
+                         class="font-bold">Formato: Andrea Laura González González
                       </small>
                       <div class="mt-1 rounded-md mx-2">
                         <input
@@ -969,7 +975,7 @@
                       >
                         {{ $page.props.errors.nr_sisters }}
                       </p>
-                      <small>Formato: 0 - 20</small>
+                      <small class="font-bold">Formato: 0 - 20</small>
                       <div class="mt-1 rounded-md mx-2">
                         <input
                           type="number"
@@ -993,7 +999,7 @@
                       >
                         {{ $page.props.errors.nr_brothers }}
                       </p>
-                      <small>Formato: 0 - 20</small>
+                      <small class="font-bold">Formato: 0 - 20</small>
                       <div class="mt-1 rounded-md mx-2">
                         <input
                           type="number"
@@ -1017,7 +1023,7 @@
                       >
                         {{ $page.props.errors.place_of_family }}
                       </p>
-                      <small>Formato: Orden Cronológico</small>
+                      <small class="font-bold">Formato: Orden Cronológico</small>
                       <div class="mt-1 rounded-md mx-2">
                         <input
                           type="number"
@@ -1046,7 +1052,7 @@
                       >
                         {{ $page.props.errors.name_family_member }}
                       </p>
-                      <small>Formato: Andrea González López </small>
+                      <small class="font-bold">Formato: Andrea González López </small>
                       <div class="mt-1 rounded-md mx-2">
                         <input
                           type="text"
@@ -1072,7 +1078,7 @@
                       >
                         {{ $page.props.errors.relation }}
                       </p>
-                      <small>Formato: Hermano, Primo, etc. </small>
+                      <small class="font-bold">Formato: Hermano, Primo, etc. </small>
                       <div class="mt-1 rounded-md mx-2">
                         <input
                           type="text"
@@ -1098,7 +1104,7 @@
                       >
                         {{ $page.props.errors.cellphone }}
                       </p>
-                      <small>Formato: 0997643146</small>
+                      <small class="font-bold">Formato: 0997643146</small>
                       <div class="mx-2 mt-1">
                         <input
                           type="text"
@@ -1127,7 +1133,7 @@
                       >
                         {{ $page.props.errors.phone }}
                       </p>
-                      <small>Formato: 022400111</small>
+                      <small class="font-bold">Formato: 022400111</small>
                       <div class="mx-2 mt-1">
                         <input
                           type="text"
@@ -1194,7 +1200,7 @@
                       Ingresar cédula o RUC válido
                     </p>
 
-                    <small>Formato: Cédula Ecuatoriana</small>
+                    <small class="font-bold">Formato: Cédula Ecuatoriana</small>
 
                     <input
                       type="text"
@@ -1221,12 +1227,13 @@
                     >
                       {{ $page.props.errors.date_birth }}
                     </p>
-                    <small>Formato: Necesario</small>
+                    <small class="font-bold">Formato: Necesario</small>
                     <Datepicker
                       autoApply
                       v-model="createProfileForm.date_birth"
                       :format="format"
                       required
+                      :year-range="[1800, this.year]"
                     />
                   </div>
                   <br />
@@ -1322,7 +1329,7 @@
                         {{ $page.props.errors.address_bt }}
                       </p>
                       <small
-                        >Formato: Ingrese la dirección máximo 100
+                         class="font-bold">Formato: Ingrese la dirección máximo 100
                         caracteres.</small
                       >
                       <div class="mb-1">
@@ -1352,11 +1359,12 @@
                     >
                       {{ $page.props.errors.date_vocation }}
                     </p>
-                    <small>Formato: Necesario</small>
+                    <small class="font-bold">Formato: Necesario</small>
                     <Datepicker
                       autoApply
                       v-model="createProfileForm.date_vocation"
                       :format="format"
+                      :year-range="[1800, this.year]"
                     />
                   </div>
 
@@ -1373,12 +1381,13 @@
                     >
                       {{ $page.props.errors.date_vocation }}
                     </p>
-                    <small>Formato: Opcional</small>
+                    <small class="font-bold">Formato: Opcional</small>
                     <Datepicker
                       v-model="createProfileForm.date_vocation"
                       :format="format"
                       autoApply
                       readonly
+                      :year-range="[1800, this.year]"
                     />
                   </div>
 
@@ -1392,11 +1401,12 @@
                     >
                       {{ $page.props.errors.date_send }}
                     </p>
-                    <small>Formato: Opcional</small>
+                    <small class="font-bold">Formato: Opcional</small>
                     <Datepicker
                       autoApply
                       v-model="createProfileForm.date_send"
                       :format="format"
+                      :year-range="[1800, this.year]"
                     />
                   </div>
 
@@ -1410,11 +1420,12 @@
                     >
                       {{ $page.props.errors.date_vote }}
                     </p>
-                    <small>Formato: Opcional</small>
+                    <small class="font-bold">Formato: Opcional</small>
                     <Datepicker
                       autoApply
                       v-model="createProfileForm.date_vote"
                       :format="format"
+                      :year-range="[1800, this.year]"
                     />
                   </div>
                   <div class="col-span-8 sm:col-span-2">
@@ -1430,7 +1441,7 @@
                     >
                       {{ $page.props.errors.cellphone }}
                     </p>
-                    <small>Formato: 0997643146</small>
+                    <small class="font-bold">Formato: 0997643146</small>
                     <input
                       type="text"
                       minLength="10"
@@ -1456,7 +1467,7 @@
                     >
                       {{ $page.props.errors.phone }}
                     </p>
-                    <small>Formato: 022400111</small>
+                    <small class="font-bold">Formato: 022400111</small>
 
                     <input
                       type="text"
@@ -1485,7 +1496,7 @@
                       {{ $page.props.errors.address }}
                     </p>
                     <small
-                      >Formato: Ingrese la dirección máximo 100
+                       class="font-bold">Formato: Ingrese la dirección máximo 100
                       caracteres.</small
                     >
                     <div class="mb-1">
@@ -1707,6 +1718,7 @@ export default {
   setup() {
     const formatSet = "YYYY-MM-DD";
     let date = new Date();
+    const year = new Date().getFullYear();
     var format = (date) => {
       return moment(date).format(formatSet);
     };
@@ -1722,6 +1734,7 @@ export default {
     });
     return {
       date,
+      year,
       format,
       form,
     };

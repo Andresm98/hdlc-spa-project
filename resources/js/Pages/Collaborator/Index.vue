@@ -147,8 +147,6 @@
                     <option :value="null">Todos</option>
                     <option value="1">Activas</option>
                     <option value="2">Fallecidas</option>
-                    <option value="3">Retiradas</option>
-                    <option value="4">Jubiladas</option>
                   </select>
 
                   <div v-if="params.status == 1">
@@ -229,6 +227,7 @@
                   :format="format"
                   autoApply
                   required
+                  :year-range="[1800, this.year]"
                 />
                 <small class="justify-content-center ml-6">Deste - Hasta</small>
                 <p
@@ -242,6 +241,7 @@
                   :format="format"
                   autoApply
                   required
+                  :year-range="[1800, this.year]"
                 />
               </div>
 
@@ -286,17 +286,6 @@
                           "
                           >Excel</a
                         >
-                        <a
-                          class="block px-6 py-2 hover:text-white hover:bg-blue-500"
-                          target="_blank"
-                          :href="
-                            route(
-                              'collaborator.daughters.export.csv',
-                              this.params
-                            )
-                          "
-                          >CSV</a
-                        >
                       </div>
                     </template>
                   </dropdown>
@@ -330,12 +319,12 @@
                         >
                           <span
                             class="inline-flex px-6 py-3 w-full justify-between"
-                            @click="sort('name')"
-                            >Nombre
+                            @click="sort('lastname')"
+                            >Nombre y Apellido
 
                             <svg
                               v-if="
-                                params.field === 'name' &&
+                                params.field === 'lastname' &&
                                 params.direction === 'asc'
                               "
                               class="h-6 w-6"
@@ -347,7 +336,7 @@
                             </svg>
                             <svg
                               v-if="
-                                params.field === 'name' &&
+                                params.field === 'lastname' &&
                                 params.direction === 'desc'
                               "
                               class="h-6 w-6"
@@ -464,7 +453,7 @@
                               <span
                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                               >
-                                Vigente desde
+                                Activa desde
                                 {{
                                   formatDateShow(
                                     user_custom.profile.date_admission
@@ -490,6 +479,25 @@
                                 {{
                                   formatDateShow(user_custom.profile.date_exit)
                                 }}
+                              </span>
+                            </div>
+                            <div v-if="user_custom.profile.status == 4">
+                              <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-cyan-100 text-cyan-800"
+                              >
+                                Salida a otros países
+                                {{
+                                  formatDateShow(
+                                    user_custom.profile.date_other_country
+                                  )
+                                }}
+                              </span>
+                            </div>
+                            <div v-if="user_custom.profile.status == 5">
+                              <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
+                              >
+                                Información Insuficiente.
                               </span>
                             </div>
                             <div
@@ -676,12 +684,14 @@ export default defineComponent({
   },
   setup() {
     const date = ref(new Date());
+    const year = new Date().getFullYear();
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
     return {
       date,
+      year,
       format,
       pagination: {
         clickable: true,

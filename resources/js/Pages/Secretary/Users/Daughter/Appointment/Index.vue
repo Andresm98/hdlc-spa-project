@@ -22,14 +22,7 @@
       <div class="my-4">
         <div class="w-full md:w-5/5 mx-auto">
           <h4
-            class="
-              text-lg
-              font-medium
-              text-center
-              leading-6
-              text-gray-900
-              uppercase
-            "
+            class="text-lg font-medium text-center leading-6 text-gray-900 uppercase"
           >
             <strong>Plantilla de Nombramientos</strong>
           </h4>
@@ -55,31 +48,12 @@
               <!-- dot -->
               <div
                 v-if="this.visualAppointments == 1"
-                class="
-                  absolute
-                  w-6
-                  h-6
-                  rounded-full
-                  shadow
-                  -left-1
-                  -top-1
-                  transition
-                "
+                class="absolute w-6 h-6 rounded-full shadow -left-1 -top-1 transition"
                 style="transform: translateX(100%); background-color: #204de0"
               />
               <div
                 v-if="this.visualAppointments == 0"
-                class="
-                  absolute
-                  w-6
-                  h-6
-                  bg-yellow-400
-                  rounded-full
-                  shadow
-                  -left-1
-                  -top-1
-                  transition
-                "
+                class="absolute w-6 h-6 bg-yellow-400 rounded-full shadow -left-1 -top-1 transition"
               />
             </div>
           </label>
@@ -112,82 +86,38 @@
           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
             <div
               v-if="this.getAllAppointment()"
-              class="
-                py-2
-                align-middle
-                inline-block
-                min-w-full
-                sm:px-6
-                lg:px-8
-                overflow-y-auto
-                h-72
-              "
+              class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 overflow-y-auto h-72"
             >
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-blue-100">
                   <tr>
                     <th
                       scope="col"
-                      class="
-                        pl-4
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Comunidad/Obra
                     </th>
                     <th
                       scope="col"
-                      class="
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Cargo
                     </th>
                     <th
                       scope="col"
-                      class="
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Cambio
                     </th>
                     <th
                       scope="col"
-                      class="
-                        px-6
-                        py-3
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Fechas (inicio-fin)
                     </th>
                     <th
                       scope="col"
-                      class="
-                        px-6
-                        py-3
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Acciones
                     </th>
@@ -206,12 +136,7 @@
                         </div>
                         <div class="ml-4">
                           <div
-                            class="
-                              text-sm
-                              font-medium
-                              text-black
-                              hover:text-blue-500
-                            "
+                            class="text-sm font-medium text-black hover:text-blue-500"
                           >
                             <div
                               v-if="
@@ -257,16 +182,7 @@
                         v-if="
                           appointment.transfer.transfer_date_relocated === null
                         "
-                        class="
-                          px-2
-                          inline-flex
-                          text-xs
-                          leading-5
-                          font-semibold
-                          rounded-sm
-                          bg-green-100
-                          text-green-800
-                        "
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-green-100 text-green-800"
                       >
                         {{
                           appointment.transfer.transfer_reason.substring(0, 15)
@@ -285,16 +201,7 @@
                       </span>
                       <span
                         v-else
-                        class="
-                          px-2
-                          inline-flex
-                          text-xs
-                          leading-5
-                          font-semibold
-                          rounded-sm
-                          bg-blue-100
-                          text-blue-800
-                        "
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
                       >
                         {{
                           appointment.transfer.transfer_reason.substring(0, 15)
@@ -317,16 +224,7 @@
                       v-if="appointment.date_end_appointment == null"
                     >
                       <span
-                        class="
-                          px-2
-                          inline-flex
-                          text-xs
-                          leading-5
-                          font-semibold
-                          rounded-full
-                          bg-green-100
-                          text-green-800
-                        "
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                       >
                         {{ this.formatDateShow(appointment.date_appointment) }}
                         -
@@ -337,16 +235,7 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap" v-else>
                       <span
-                        class="
-                          px-2
-                          inline-flex
-                          text-xs
-                          leading-5
-                          font-semibold
-                          rounded-full
-                          bg-blue-100
-                          text-blue-800
-                        "
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
                       >
                         {{ this.formatDateShow(appointment.date_appointment) }}
                         -
@@ -357,13 +246,7 @@
                     </td>
 
                     <td
-                      class="
-                        px-3
-                        py-4
-                        whitespace-nowrap
-                        text-right text-sm
-                        font-medium
-                      "
+                      class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                     >
                       <!-- Components -->
 
@@ -395,82 +278,38 @@
           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
             <div
               v-if="this.getAllAppointment()"
-              class="
-                py-2
-                align-middle
-                inline-block
-                min-w-full
-                sm:px-6
-                lg:px-8
-                overflow-y-auto
-                h-72
-              "
+              class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 overflow-y-auto h-72"
             >
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-blue-100">
                   <tr>
                     <th
                       scope="col"
-                      class="
-                        pl-4
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Comunidad/Obra
                     </th>
                     <th
                       scope="col"
-                      class="
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Cargo
                     </th>
                     <th
                       scope="col"
-                      class="
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Cambio
                     </th>
                     <th
                       scope="col"
-                      class="
-                        px-6
-                        py-3
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Fechas (inicio-fin)
                     </th>
                     <th
                       scope="col"
-                      class="
-                        px-6
-                        py-3
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Acciones
                     </th>
@@ -489,12 +328,7 @@
                         </div>
                         <div class="ml-4">
                           <div
-                            class="
-                              text-sm
-                              font-medium
-                              text-black
-                              hover:text-blue-500
-                            "
+                            class="text-sm font-medium text-black hover:text-blue-500"
                           >
                             <div
                               v-if="
@@ -540,16 +374,7 @@
                         v-if="
                           appointment.transfer.transfer_date_relocated === null
                         "
-                        class="
-                          px-2
-                          inline-flex
-                          text-xs
-                          leading-5
-                          font-semibold
-                          rounded-sm
-                          bg-green-100
-                          text-green-800
-                        "
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-green-100 text-green-800"
                       >
                         {{
                           appointment.transfer.transfer_reason.substring(0, 15)
@@ -568,16 +393,7 @@
                       </span>
                       <span
                         v-else
-                        class="
-                          px-2
-                          inline-flex
-                          text-xs
-                          leading-5
-                          font-semibold
-                          rounded-sm
-                          bg-blue-100
-                          text-blue-800
-                        "
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
                       >
                         {{
                           appointment.transfer.transfer_reason.substring(0, 15)
@@ -600,16 +416,7 @@
                       v-if="appointment.date_end_appointment == null"
                     >
                       <span
-                        class="
-                          px-2
-                          inline-flex
-                          text-xs
-                          leading-5
-                          font-semibold
-                          rounded-full
-                          bg-green-100
-                          text-green-800
-                        "
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                       >
                         {{ this.formatDateShow(appointment.date_appointment) }}
                         -
@@ -620,16 +427,7 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap" v-else>
                       <span
-                        class="
-                          px-2
-                          inline-flex
-                          text-xs
-                          leading-5
-                          font-semibold
-                          rounded-full
-                          bg-blue-100
-                          text-blue-800
-                        "
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
                       >
                         {{ this.formatDateShow(appointment.date_appointment) }}
                         -
@@ -640,13 +438,7 @@
                     </td>
 
                     <td
-                      class="
-                        px-3
-                        py-4
-                        whitespace-nowrap
-                        text-right text-sm
-                        font-medium
-                      "
+                      class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                     >
                       <!-- Components -->
 
@@ -691,16 +483,7 @@
           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
             <div
               v-if="this.getAllAppointment()"
-              class="
-                py-2
-                align-middle
-                inline-block
-                min-w-full
-                sm:px-6
-                lg:px-8
-                overflow-y-auto
-                h-72
-              "
+              class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 overflow-y-auto h-72"
             >
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-blue-100">
@@ -708,42 +491,20 @@
                     <th></th>
                     <th
                       scope="col"
-                      class="
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Cargo
                     </th>
 
                     <th
                       scope="col"
-                      class="
-                        px-6
-                        py-3
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Fechas (inicio-fin)
                     </th>
                     <th
                       scope="col"
-                      class="
-                        px-6
-                        py-3
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Acciones
                     </th>
@@ -765,12 +526,7 @@
                         </div>
                         <div class="ml-4">
                           <div
-                            class="
-                              text-sm
-                              font-medium
-                              text-black
-                              hover:text-blue-500
-                            "
+                            class="text-sm font-medium text-black hover:text-blue-500"
                           ></div>
                         </div>
                       </div>
@@ -785,16 +541,7 @@
                       v-if="appointment.date_end_appointment == null"
                     >
                       <span
-                        class="
-                          px-2
-                          inline-flex
-                          text-xs
-                          leading-5
-                          font-semibold
-                          rounded-full
-                          bg-green-100
-                          text-green-800
-                        "
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                       >
                         {{ this.formatDateShow(appointment.date_appointment) }}
                         -
@@ -805,16 +552,7 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap" v-else>
                       <span
-                        class="
-                          px-2
-                          inline-flex
-                          text-xs
-                          leading-5
-                          font-semibold
-                          rounded-full
-                          bg-blue-100
-                          text-blue-800
-                        "
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
                       >
                         {{ this.formatDateShow(appointment.date_appointment) }}
                         -
@@ -825,13 +563,7 @@
                     </td>
 
                     <td
-                      class="
-                        px-3
-                        py-4
-                        whitespace-nowrap
-                        text-right text-sm
-                        font-medium
-                      "
+                      class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                     >
                       <!-- Components -->
 
@@ -865,16 +597,7 @@
           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
             <div
               v-if="this.getAllAppointment()"
-              class="
-                py-2
-                align-middle
-                inline-block
-                min-w-full
-                sm:px-6
-                lg:px-8
-                overflow-y-auto
-                h-72
-              "
+              class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 overflow-y-auto h-72"
             >
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-blue-100">
@@ -882,42 +605,20 @@
                     <th></th>
                     <th
                       scope="col"
-                      class="
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Cargo
                     </th>
 
                     <th
                       scope="col"
-                      class="
-                        px-6
-                        py-3
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Fechas (inicio-fin)
                     </th>
                     <th
                       scope="col"
-                      class="
-                        px-6
-                        py-3
-                        text-left text-xs
-                        font-medium
-                        text-black
-                        uppercase
-                        tracking-wider
-                      "
+                      class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       Acciones
                     </th>
@@ -939,12 +640,7 @@
                         </div>
                         <div class="ml-4">
                           <div
-                            class="
-                              text-sm
-                              font-medium
-                              text-black
-                              hover:text-blue-500
-                            "
+                            class="text-sm font-medium text-black hover:text-blue-500"
                           ></div>
                         </div>
                       </div>
@@ -959,16 +655,7 @@
                       v-if="appointment.date_end_appointment == null"
                     >
                       <span
-                        class="
-                          px-2
-                          inline-flex
-                          text-xs
-                          leading-5
-                          font-semibold
-                          rounded-full
-                          bg-green-100
-                          text-green-800
-                        "
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                       >
                         {{ this.formatDateShow(appointment.date_appointment) }}
                         -
@@ -979,16 +666,7 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap" v-else>
                       <span
-                        class="
-                          px-2
-                          inline-flex
-                          text-xs
-                          leading-5
-                          font-semibold
-                          rounded-full
-                          bg-blue-100
-                          text-blue-800
-                        "
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
                       >
                         {{ this.formatDateShow(appointment.date_appointment) }}
                         -
@@ -999,13 +677,7 @@
                     </td>
 
                     <td
-                      class="
-                        px-3
-                        py-4
-                        whitespace-nowrap
-                        text-right text-sm
-                        font-medium
-                      "
+                      class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                     >
                       <!-- Components -->
 
@@ -1072,16 +744,7 @@
                     <!-- dot -->
                     <div
                       v-if="this.statusappointment == 1"
-                      class="
-                        absolute
-                        w-6
-                        h-6
-                        rounded-full
-                        shadow
-                        -left-1
-                        -top-1
-                        transition
-                      "
+                      class="absolute w-6 h-6 rounded-full shadow -left-1 -top-1 transition"
                       style="
                         transform: translateX(100%);
                         background-color: #204de0;
@@ -1089,17 +752,7 @@
                     />
                     <div
                       v-if="this.statusappointment == 0"
-                      class="
-                        absolute
-                        w-6
-                        h-6
-                        bg-red-400
-                        rounded-full
-                        shadow
-                        -left-1
-                        -top-1
-                        transition
-                      "
+                      class="absolute w-6 h-6 bg-red-400 rounded-full shadow -left-1 -top-1 transition"
                     />
                   </div>
                 </label>
@@ -1183,9 +836,10 @@
                   nombramiento.</small
                 >
                 <Datepicker
+                  :year-range="[1800, this.year]"
+                  v-model="form.date_appointment"
                   :format="format"
                   autoApply
-                  v-model="form.date_appointment"
                   required
                 />
               </div>
@@ -1211,9 +865,10 @@
                   >Formato: Fecha que en la que culmina el nombramiento.</small
                 >
                 <Datepicker
+                  v-model="form.date_end_appointment"
+                  :year-range="[1800, this.year]"
                   :format="format"
                   autoApply
-                  v-model="form.date_end_appointment"
                 />
               </div>
             </div>
@@ -1301,16 +956,7 @@
                     <!-- dot -->
                     <div
                       v-if="this.statusappointment == 1"
-                      class="
-                        absolute
-                        w-6
-                        h-6
-                        rounded-full
-                        shadow
-                        -left-1
-                        -top-1
-                        transition
-                      "
+                      class="absolute w-6 h-6 rounded-full shadow -left-1 -top-1 transition"
                       style="
                         transform: translateX(100%);
                         background-color: #204de0;
@@ -1318,17 +964,7 @@
                     />
                     <div
                       v-if="this.statusappointment == 0"
-                      class="
-                        absolute
-                        w-6
-                        h-6
-                        bg-red-400
-                        rounded-full
-                        shadow
-                        -left-1
-                        -top-1
-                        transition
-                      "
+                      class="absolute w-6 h-6 bg-red-400 rounded-full shadow -left-1 -top-1 transition"
                     />
                   </div>
                 </label>
@@ -1414,8 +1050,9 @@
                 >
                 <Datepicker
                   :format="format"
-                  autoApply
+                  :year-range="[1800, this.year]"
                   v-model="updateIndividualAppointmentForm.date_appointment"
+                  autoApply
                   required
                 />
               </div>
@@ -1442,8 +1079,9 @@
                   >Formato: Fecha que en la que culmina el nombramiento.</small
                 >
                 <Datepicker
-                  :format="format"
                   autoApply
+                  :format="format"
+                  :year-range="[1800, this.year]"
                   v-model="updateIndividualAppointmentForm.date_end_appointment"
                 />
               </div>
@@ -1531,16 +1169,7 @@
                     <!-- dot -->
                     <div
                       v-if="this.statusappointment == 1"
-                      class="
-                        absolute
-                        w-6
-                        h-6
-                        rounded-full
-                        shadow
-                        -left-1
-                        -top-1
-                        transition
-                      "
+                      class="absolute w-6 h-6 rounded-full shadow -left-1 -top-1 transition"
                       style="
                         transform: translateX(100%);
                         background-color: #204de0;
@@ -1548,17 +1177,7 @@
                     />
                     <div
                       v-if="this.statusappointment == 0"
-                      class="
-                        absolute
-                        w-6
-                        h-6
-                        bg-red-400
-                        rounded-full
-                        shadow
-                        -left-1
-                        -top-1
-                        transition
-                      "
+                      class="absolute w-6 h-6 bg-red-400 rounded-full shadow -left-1 -top-1 transition"
                     />
                   </div>
                 </label>
@@ -1679,8 +1298,9 @@
                 >
                 <Datepicker
                   :format="format"
-                  autoApply
+                  :year-range="[1800, this.year]"
                   v-model="form.date_appointment"
+                  autoApply
                   required
                 />
               </div>
@@ -1706,8 +1326,9 @@
                   >Formato: Fecha que en la que culmina el nombramiento.</small
                 >
                 <Datepicker
-                  :format="format"
                   autoApply
+                  :format="format"
+                  :year-range="[1800, this.year]"
                   v-model="form.date_end_appointment"
                 />
               </div>
@@ -1791,16 +1412,7 @@
                     <!-- dot -->
                     <div
                       v-if="this.statusappointment == 1"
-                      class="
-                        absolute
-                        w-6
-                        h-6
-                        rounded-full
-                        shadow
-                        -left-1
-                        -top-1
-                        transition
-                      "
+                      class="absolute w-6 h-6 rounded-full shadow -left-1 -top-1 transition"
                       style="
                         transform: translateX(100%);
                         background-color: #204de0;
@@ -1808,17 +1420,7 @@
                     />
                     <div
                       v-if="this.statusappointment == 0"
-                      class="
-                        absolute
-                        w-6
-                        h-6
-                        bg-red-400
-                        rounded-full
-                        shadow
-                        -left-1
-                        -top-1
-                        transition
-                      "
+                      class="absolute w-6 h-6 bg-red-400 rounded-full shadow -left-1 -top-1 transition"
                     />
                   </div>
                 </label>
@@ -1942,9 +1544,10 @@
                   nombramiento.</small
                 >
                 <Datepicker
+                  v-model="updateAppointmentForm.date_appointment"
+                  :year-range="[1800, this.year]"
                   :format="format"
                   autoApply
-                  v-model="updateAppointmentForm.date_appointment"
                   required
                 />
               </div>
@@ -1971,6 +1574,7 @@
                   >Formato: Fecha que en la que culmina el nombramiento.</small
                 >
                 <Datepicker
+                  :year-range="[1800, this.year]"
                   :format="format"
                   autoApply
                   v-model="updateAppointmentForm.date_end_appointment"
@@ -2044,22 +1648,7 @@
                   type="text"
                   minLength="10"
                   maxlength="100"
-                  class="
-                    border-0
-                    px-3
-                    my-2
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="deleteAppointmentForm.name_appointment"
                   readonly
                 />
@@ -2139,13 +1728,14 @@ export default {
   //  Setup all data
   setup() {
     const date = ref(new Date());
+    const year = new Date().getFullYear();
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
-
     return {
       date,
+      year,
       format,
     };
   },

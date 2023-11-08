@@ -9,16 +9,7 @@ input:checked ~ .dot {
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
       <h6
-        class="
-          mt-2
-          mb-2
-          text-lg
-          font-medium
-          text-center
-          leading-6
-          text-gray-900
-          uppercase
-        "
+        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
       >
         Plantilla de Permisos de Hermana
       </h6>
@@ -62,22 +53,7 @@ input:checked ~ .dot {
                   minLength="10"
                   maxlength="100"
                   placeholder="Ingresar Motivo del Permiso"
-                  class="
-                    border-0
-                    px-3
-                    my-2
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="form.reason"
                   required
                 />
@@ -113,6 +89,7 @@ input:checked ~ .dot {
                 Permiso.</small
               >
               <Datepicker
+                :year-range="[1800, this.year]"
                 v-model="form.date_province"
                 :format="format"
                 autoApply
@@ -140,6 +117,7 @@ input:checked ~ .dot {
                 Permiso.</small
               >
               <Datepicker
+                :year-range="[1800, this.year]"
                 v-model="form.date_general"
                 :format="format"
                 autoApply
@@ -164,6 +142,7 @@ input:checked ~ .dot {
               </p>
               <small>Formato: Fecha en la que sale la hermana.</small>
               <Datepicker
+                :year-range="[1800, this.year]"
                 v-model="form.date_out"
                 :format="format"
                 autoApply
@@ -188,6 +167,7 @@ input:checked ~ .dot {
               </p>
               <small>Formato: Fecha en la que regresa la hermana.</small>
               <Datepicker
+                :year-range="[1800, this.year]"
                 v-model="form.date_in"
                 :format="format"
                 autoApply
@@ -245,17 +225,7 @@ input:checked ~ .dot {
                   id="address"
                   name="address"
                   rows="1"
-                  class="
-                    shadow-sm
-                    focus:ring-blue-500 focus:border-blue-500
-                    mt-1
-                    mb-2
-                    block
-                    w-full
-                    sm:text-sm
-                    border border-gray-300
-                    rounded-md
-                  "
+                  class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
                   v-model="form.address"
                   placeholder="Agregar la dirección de destino.."
                   :maxlength="100"
@@ -361,15 +331,7 @@ input:checked ~ .dot {
       </form>
 
       <hr
-        class="
-          w-full
-          mt-1
-          mb-3
-          ml-4
-          mr-4
-          border-b-1 border-gray-400
-          hover:border-gray-400
-        "
+        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
       />
 
       <div class="py-2">
@@ -383,54 +345,25 @@ input:checked ~ .dot {
                 <tr>
                   <th
                     scope="col"
-                    class="
-                      pl-4
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Motivo
                   </th>
                   <th
                     scope="col"
-                    class="
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Fechas (provincial-general)
                   </th>
                   <th
                     scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Fechas (salida-regreso)
                   </th>
                   <th
                     scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Acciones
                   </th>
@@ -442,12 +375,7 @@ input:checked ~ .dot {
                     <div class="ml-4">
                       <div class="w-6/8 ...">
                         <div
-                          class="
-                            whitespace-normal
-                            text-sm
-                            font-semibold
-                            text-gray-900
-                          "
+                          class="whitespace-normal text-sm font-semibold text-gray-900"
                         >
                           {{ permit.reason }}
                         </div>
@@ -456,47 +384,20 @@ input:checked ~ .dot {
                     <br />
                     <span
                       v-if="permit.status == 1"
-                      class="
-                        px-2
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-emerald-100
-                        text-emerald-800
-                      "
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800"
                     >
                       Activo
                     </span>
                     <span
                       v-if="permit.status == 0"
-                      class="
-                        px-2
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-red-100
-                        text-red-800
-                      "
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
                     >
                       Cerrado
                     </span>
                   </td>
                   <td class="px-1 py-4 whitespace-nowrap">
                     <span
-                      class="
-                        px-2
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-cyan-100
-                        text-cyan-800
-                      "
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-cyan-100 text-cyan-800"
                     >
                       {{ this.formatShowDate(permit.date_province) }} -
                       {{ this.formatShowDate(permit.date_general) }}
@@ -504,16 +405,7 @@ input:checked ~ .dot {
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span
-                      class="
-                        px-2
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-blue-100
-                        text-blue-800
-                      "
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
                     >
                       {{ this.formatShowDate(permit.date_out) }} -
                       {{ this.formatShowDate(permit.date_in) }}
@@ -568,22 +460,7 @@ input:checked ~ .dot {
                   minLength="10"
                   maxlength="100"
                   placeholder="Ingresar Motivo del Permiso"
-                  class="
-                    border-0
-                    px-3
-                    my-2
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="deletePermitForm.reason"
                   readonly
                 />
@@ -640,16 +517,7 @@ input:checked ~ .dot {
                     <!-- dot -->
                     <div
                       v-if="this.statuspermit == 1"
-                      class="
-                        absolute
-                        w-6
-                        h-6
-                        rounded-full
-                        shadow
-                        -left-1
-                        -top-1
-                        transition
-                      "
+                      class="absolute w-6 h-6 rounded-full shadow -left-1 -top-1 transition"
                       style="
                         transform: translateX(100%);
                         background-color: #204de0;
@@ -657,17 +525,7 @@ input:checked ~ .dot {
                     />
                     <div
                       v-if="this.statuspermit == 0"
-                      class="
-                        absolute
-                        w-6
-                        h-6
-                        bg-red-400
-                        rounded-full
-                        shadow
-                        -left-1
-                        -top-1
-                        transition
-                      "
+                      class="absolute w-6 h-6 bg-red-400 rounded-full shadow -left-1 -top-1 transition"
                     />
                   </div>
                 </label>
@@ -694,22 +552,7 @@ input:checked ~ .dot {
                     minLength="10"
                     maxlength="100"
                     placeholder="Ingresar Motivo del Permiso"
-                    class="
-                      border-0
-                      px-3
-                      my-2
-                      placeholder-blueGray-300
-                      text-blueGray-600
-                      bg-white
-                      rounded
-                      text-sm
-                      shadow
-                      focus:outline-none focus:ring
-                      w-full
-                      ease-linear
-                      transition-all
-                      duration-150
-                    "
+                    class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="updatePermitForm.reason"
                     required
                   />
@@ -739,17 +582,7 @@ input:checked ~ .dot {
                     id="address"
                     name="address"
                     rows="1"
-                    class="
-                      shadow-sm
-                      focus:ring-blue-500 focus:border-blue-500
-                      mt-1
-                      mb-2
-                      block
-                      w-full
-                      sm:text-sm
-                      border border-gray-300
-                      rounded-md
-                    "
+                    class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
                     v-model="updatePermitForm.address"
                     placeholder="Agregar la dirección de destino.."
                     :maxlength="100"
@@ -865,8 +698,8 @@ input:checked ~ .dot {
                   >Formato: Fecha de Consejo Provincial que concede el
                   Permiso.</small
                 >
-
                 <Datepicker
+                  :year-range="[1800, this.year]"
                   v-model="updatePermitForm.date_province"
                   :format="format"
                   autoApply
@@ -893,8 +726,8 @@ input:checked ~ .dot {
                   >Formato: Fecha de Consejo General que concede el
                   Permiso.</small
                 >
-
                 <Datepicker
+                  :year-range="[1800, this.year]"
                   v-model="updatePermitForm.date_general"
                   :format="format"
                   autoApply
@@ -919,6 +752,7 @@ input:checked ~ .dot {
                 </p>
                 <small>Formato: Fecha en la que sale la hermana.</small>
                 <Datepicker
+                  :year-range="[1800, this.year]"
                   v-model="updatePermitForm.date_out"
                   :format="format"
                   autoApply
@@ -944,6 +778,7 @@ input:checked ~ .dot {
                 <small>Formato: Fecha en la que regresa la hermana.</small>
 
                 <Datepicker
+                  :year-range="[1800, this.year]"
                   v-model="updatePermitForm.date_in"
                   :format="format"
                   autoApply
@@ -1047,6 +882,7 @@ export default {
   //  Setup all data
   setup() {
     const date = ref(new Date());
+    const year = new Date().getFullYear();
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
@@ -1066,6 +902,7 @@ export default {
     });
     return {
       date,
+      year,
       format,
       form,
     };

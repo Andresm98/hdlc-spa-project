@@ -280,6 +280,7 @@
             :format="format"
             autoApply
             required
+            :year-range="[1800, this.year]"
           />
           <small class="justify-content-center ml-6">Deste - Hasta</small>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.dateEnd">
@@ -290,6 +291,7 @@
             :format="format"
             autoApply
             required
+            :year-range="[1800, this.year]"
           />
         </div>
 
@@ -785,6 +787,7 @@
               required
               autoApply
               readonly
+              :year-range="[1800, this.year]"
             />
           </div>
         </div>
@@ -803,6 +806,7 @@
               :format="format"
               autoApply
               readonly
+              :year-range="[1800, this.year]"
             />
           </div>
         </div>
@@ -935,6 +939,7 @@ export default {
     filters: Object,
   },
   setup() {
+    const year = new Date().getFullYear();
     const date = ref(new Date());
     var format = (date) => {
       const format = "YYYY-MM-DD";
@@ -943,6 +948,7 @@ export default {
 
     return {
       date,
+      year,
       format,
     };
   },

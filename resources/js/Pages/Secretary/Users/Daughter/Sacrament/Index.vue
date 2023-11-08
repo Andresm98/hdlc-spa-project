@@ -2,16 +2,7 @@
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
       <h6
-        class="
-          mt-2
-          mb-2
-          text-lg
-          font-medium
-          text-center
-          leading-6
-          text-gray-900
-          uppercase
-        "
+        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
       >
         Plantilla de Sacramentos
       </h6>
@@ -72,6 +63,7 @@
                 :format="format"
                 autoApply
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -112,15 +104,7 @@
         >
       </form>
       <hr
-        class="
-          w-full
-          mt-1
-          mb-3
-          ml-4
-          mr-4
-          border-b-1 border-gray-400
-          hover:border-gray-400
-        "
+        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
       />
 
       <div class="py-2">
@@ -134,41 +118,19 @@
                 <tr>
                   <th
                     scope="col"
-                    class="
-                      pl-4
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Nombre Sacramento
                   </th>
                   <th
                     scope="col"
-                    class="
-                      pl-4
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Fecha Sacramento
                   </th>
                   <th
                     scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Acciones
                   </th>
@@ -184,28 +146,13 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span
-                      class="
-                        px-2
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-green-100
-                        text-green-800
-                      "
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                     >
                       {{ this.formatShowDate(sacrament.sacrament_date) }}
                     </span>
                   </td>
                   <td
-                    class="
-                      px-3
-                      py-4
-                      whitespace-nowrap
-                      text-right text-sm
-                      font-medium
-                    "
+                    class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                   >
                     <!-- Components -->
 
@@ -246,22 +193,7 @@
               type="text"
               minLength="10"
               maxlength="100"
-              class="
-                border-0
-                px-3
-                my-2
-                placeholder-blueGray-300
-                text-blueGray-600
-                bg-white
-                rounded
-                text-sm
-                shadow
-                focus:outline-none focus:ring
-                w-full
-                ease-linear
-                transition-all
-                duration-150
-              "
+              class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               v-model="deleteSacramentForm.sacrament_name"
               readonly
             />
@@ -339,6 +271,7 @@
                   :format="format"
                   autoApply
                   required
+                  :year-range="[1800, this.year]"
                 />
               </div>
             </div>
@@ -450,6 +383,7 @@ export default {
   //  Setup all data
   setup() {
     const date = ref(new Date());
+    const year = new Date().getFullYear();
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
@@ -461,6 +395,7 @@ export default {
     });
     return {
       date,
+      year,
       format,
       form,
     };

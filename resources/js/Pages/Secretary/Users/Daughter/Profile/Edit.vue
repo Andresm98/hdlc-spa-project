@@ -86,6 +86,7 @@ input:checked ~ .dot {
                     autoApply
                     required
                     readonly
+                    :year-range="[1800, this.year]"
                   />
                 </div>
               </div>
@@ -109,6 +110,7 @@ input:checked ~ .dot {
                     autoApply
                     required
                     readonly
+                    :year-range="[1800, this.year]"
                   />
                 </div>
               </div>
@@ -132,6 +134,7 @@ input:checked ~ .dot {
                     autoApply
                     required
                     readonly
+                    :year-range="[1800, this.year]"
                   />
                 </div>
               </div>
@@ -260,6 +263,7 @@ input:checked ~ .dot {
             v-model="profile.date_birth"
             :format="format"
             required
+            :year-range="[1800, this.year]"
           />
         </div>
       </div>
@@ -283,6 +287,7 @@ input:checked ~ .dot {
             autoApply
             v-model="profile.date_vocation"
             :format="format"
+            :year-range="[1800, this.year]"
           />
         </div>
       </div>
@@ -307,6 +312,7 @@ input:checked ~ .dot {
             :format="format"
             autoApply
             readonly
+            :year-range="[1800, this.year]"
           />
         </div>
       </div>
@@ -320,7 +326,12 @@ input:checked ~ .dot {
             {{ $page.props.errors.date_send }}
           </p>
           <small>Formato: Opcional</small>
-          <Datepicker autoApply v-model="profile.date_send" :format="format" />
+          <Datepicker
+            autoApply
+            v-model="profile.date_send"
+            :format="format"
+            :year-range="[1800, this.year]"
+          />
         </div>
       </div>
       <div class="w-full lg:w-4/12 px-4">
@@ -331,7 +342,12 @@ input:checked ~ .dot {
           {{ $page.props.errors.date_vote }}
         </p>
         <small>Formato: Opcional</small>
-        <Datepicker autoApply v-model="profile.date_vote" :format="format" />
+        <Datepicker
+          autoApply
+          v-model="profile.date_vote"
+          :format="format"
+          :year-range="[1800, this.year]"
+        />
       </div>
       <div class="w-full lg:w-4/12 px-4">
         <div class="relative w-full mb-3">
@@ -400,6 +416,7 @@ input:checked ~ .dot {
             autoApply
             v-model="profile.date_retirement"
             :format="format"
+            :year-range="[1800, this.year]"
           />
         </div>
       </div>
@@ -794,6 +811,7 @@ input:checked ~ .dot {
                 :format="format"
                 autoApply
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -821,6 +839,7 @@ input:checked ~ .dot {
                 :format="format"
                 autoApply
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -847,6 +866,7 @@ input:checked ~ .dot {
                 :format="format"
                 autoApply
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -1059,6 +1079,7 @@ export default {
 
   setup() {
     const formatSet = "YYYY-MM-DD";
+    const year = new Date().getFullYear();
     let date = new Date(0);
     var format = (date) => {
       // console.log("smoke ", date);
@@ -1072,6 +1093,7 @@ export default {
     });
     return {
       date,
+      year,
       format,
       form,
     };

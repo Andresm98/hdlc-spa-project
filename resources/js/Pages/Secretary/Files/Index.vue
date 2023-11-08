@@ -277,6 +277,7 @@
             :format="format"
             autoApply
             required
+            :year-range="[1800, this.year]"
           />
           <small class="justify-content-center ml-6">Deste - Hasta</small>
           <p class="text-red-400 text-sm" v-show="$page.props.errors.dateEnd">
@@ -287,6 +288,7 @@
             :format="format"
             autoApply
             required
+            :year-range="[1800, this.year]"
           />
         </div>
       </div>
@@ -851,6 +853,7 @@ export default {
   },
   setup() {
     const date = ref(new Date());
+    const year = new Date().getFullYear();
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
@@ -858,6 +861,7 @@ export default {
 
     return {
       date,
+      year,
       format,
     };
   },

@@ -311,6 +311,7 @@
                     :format="format"
                     autoApply
                     required
+                    :year-range="[1800, this.year]"
                   />
                   <small class="justify-content-center ml-6"
                     >Deste - Hasta</small
@@ -326,6 +327,7 @@
                     :format="format"
                     autoApply
                     required
+                    :year-range="[1800, this.year]"
                   />
                 </div>
 
@@ -895,6 +897,7 @@
                 :format="format"
                 autoApply
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -922,6 +925,7 @@
                 :format="format"
                 autoApply
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -946,6 +950,7 @@
                 :format="format"
                 autoApply
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -970,6 +975,7 @@
                 :format="format"
                 autoApply
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -1421,12 +1427,12 @@
                 >Formato: Fecha de Consejo Provincial que concede el
                 Permiso.</small
               >
-
               <Datepicker
                 v-model="updatePermitForm.date_province"
                 :format="format"
                 autoApply
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -1449,12 +1455,12 @@
                 >Formato: Fecha de Consejo General que concede el
                 Permiso.</small
               >
-
               <Datepicker
                 v-model="updatePermitForm.date_general"
                 :format="format"
                 autoApply
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -1479,10 +1485,10 @@
                 :format="format"
                 autoApply
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
-
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
               <label
@@ -1503,6 +1509,7 @@
                 v-model="updatePermitForm.date_in"
                 :format="format"
                 autoApply
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -1653,6 +1660,7 @@ export default {
   },
   setup() {
     const date = ref(new Date());
+    const year = new Date().getFullYear();
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
@@ -1660,6 +1668,7 @@ export default {
 
     return {
       date,
+      year,
       format,
     };
   },

@@ -163,6 +163,7 @@
                     :format="format"
                     autoApply
                     required
+                    :year-range="[1800, this.year]"
                   />
                   <small class="justify-content-center ml-6"
                     >Deste - Hasta</small
@@ -178,6 +179,7 @@
                     :format="format"
                     autoApply
                     required
+                    :year-range="[1800, this.year]"
                   />
                 </div>
               </div>
@@ -432,6 +434,7 @@
                   :format="format"
                   autoApply
                   required
+                  :year-range="[1800, this.year]"
                 />
               </div>
             </div>
@@ -559,6 +562,7 @@
                   :format="format"
                   autoApply
                   required
+                  :year-range="[1800, this.year]"
                 />
               </div>
             </div>
@@ -657,12 +661,14 @@ export default {
   },
   setup() {
     const formatSet = "YYYY-MM-DD";
+    const year = new Date().getFullYear();
     let date = new Date();
     var format = (date) => {
       return moment(date).format(formatSet);
     };
     return {
       date,
+      year,
       format,
     };
   },

@@ -112,7 +112,40 @@ class CommunityDaughterController extends Controller
         }
     }
 
+    public static function reportStatic($community_id)
+    {
+        $validator = Validator::make(['community_id' => $community_id], [
+            'community_id' => ['required', 'exists:communities,id']
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->with(['error' => 'No existe la comunidad']);
+        }
+        $community = Community::find($community_id);
 
+        if ($community->comm_status == 1) {
+            $arrayid =  DB::table('users')
+                //
+                ->select('profiles.id')
+                //
+                ->join('profiles', 'profiles.user_id', '=', 'users.id')
+                ->join('transfers', 'transfers.profile_id', '=', 'profiles.id')
+                ->join('communities', 'communities.id', '=', 'transfers.community_id')
+
+                ->where('transfers.community_id', '=', $community_id)
+                ->where('transfers.status', '=', 1)
+                ->get();
+
+            $query = Transfer::query();
+
+            return   $query->whereIn('profile_id', $arrayid->pluck('id')->toArray())
+                ->with('profile.user')
+                ->with('community')
+                ->with('appointments.appointment_level')
+                ->orderBy('transfer_date_adission', 'desc')
+                ->where('status',  1)
+                ->get();
+        }
+    }
 
     /**
      * Show the form for creating a new resource.

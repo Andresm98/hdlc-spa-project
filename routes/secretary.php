@@ -141,6 +141,9 @@ Route::group(
         Route::get('daughters-charity/all/report', [UserController::class, 'reportDaughtersPDF'])
             ->name('daughters.report.all');
 
+        Route::get('daughters-charity/vocation/report', [UserController::class, 'reportByVocation'])
+            ->name('daughters.report.vocation');
+
         Route::get('daughters-charity/exportExcel', [UserController::class, 'exportExcel'])
             ->name('daughters.export.excel');
 
@@ -586,6 +589,9 @@ Route::group(
 
         Route::get('appoinments/all', [AppointmentGlobalController::class, 'index'])
             ->name('appoinments.index');
+
+        Route::get('appoinments/terminated', [AppointmentGlobalController::class, 'terminateServant'])
+            ->name('appoinments.terminated.index');
 
         Route::post('appoinments/store', [AppointmentGlobalController::class, 'store'])
             ->name('appoinments.store');

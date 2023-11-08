@@ -49,8 +49,8 @@ class AppointmentGlobalController extends Controller
      */
     public function index()
     {
-
         $query = Appointment::query();
+
         $query->with('profile.user')
             ->with('appointment_level')
             ->with('community')
@@ -98,13 +98,13 @@ class AppointmentGlobalController extends Controller
                 $query->orderBy('date_appointment', 'desc');
             }
         }
-        //  Data
+
         $categories = AppointmentLevel::where('level', 1)
             ->get();
+
         $levels = AppointmentLevel::where('level', 2)
             ->where('appointment_levelc_id', request('type'))
             ->get();
-
 
         return Inertia::render('Secretary/Appointments/Index', [
             'appointments' => $query
@@ -113,6 +113,33 @@ class AppointmentGlobalController extends Controller
             'filters' => request()->all(['date', 'type', 'search', 'status', 'level', 'dateStart', 'dateEnd']),
             'levels' => $levels,
             'categories' => $categories,
+        ]);
+    }
+
+    public function terminateServant()
+    {
+        $query = Appointment::query();
+
+        $query->where('status', 1);
+
+        $daughterServant = AppointmentLevel::where('level', 2)
+            ->where('name', 'LIKE', '%Sirviente%')
+            ->first();
+
+        $query->whereHas('appointment_level', function ($q) use ($daughterServant) {
+            $q->where('id', $daughterServant->id);
+        });
+
+        $start = date('Y-m-d H:i:s', strtotime('-3 years'));
+
+        $end = date('Y-m-d H:i:s', strtotime('-3 years +3 months'));
+
+        $query->whereBetween('date_appointment', [$start, $end]);
+
+        return response()->json([
+            'counter' => count($query->get()),
+            'start' => $start,
+            'end' => $end
         ]);
     }
 
@@ -224,12 +251,6 @@ class AppointmentGlobalController extends Controller
             }
         }
 
-        if (request('level')) {
-            $query->whereHas('appointment_level', function ($q) {
-                $q->where('id', request('level'));
-            });
-        }
-
         $dateFromTo = new AppointmentGlobalController();
         if (request('dateStart') || request('dateEnd')) {
             $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
@@ -248,17 +269,61 @@ class AppointmentGlobalController extends Controller
             }
         }
 
-        //  Data
+        if (request('level')) {
+            $query->whereHas('appointment_level', function ($q) {
+                $q->where('id', request('level'));
+            });
+        }
+
         $level = AppointmentLevel::where('id', request('level'))->get()->first();
 
-        $data = $query
-            ->get();
+        $data = $query->get();
 
         $from =   $dateFromTo->getFrom();
+
         $to =  $dateFromTo->getTo();
+
         $type = request('status');
 
+        //
+
+        if ((int)request('level') === 10 && (int)request('status') === 1) {
+
+            $dataServant = array();
+
+            foreach ($data as $key => $appointment) {
+
+                $lastAppointment = Appointment::select('date_appointment')
+                    ->where('appointment_level_id', 10)
+                    ->where('date_appointment', '<=', $appointment->date_appointment)
+                    ->where('profile_id', $appointment->profile_id)
+                    ->where('community_id', $appointment->community_id)
+                    ->orderBy('date_appointment', 'asc')
+                    ->take(4)
+                    ->get();
+
+                array_push($dataServant, [
+                    'appsubjet' => $appointment,
+                    'id' => $appointment['profile']->user->id,
+                    'community' => $appointment['community'],
+                    'lastname' => $appointment['profile']->user->lastname,
+                    'name' => $appointment['profile']->user->name,
+                    'date_birth' => $appointment['profile']->date_birth,
+                    'date_vocation' => $appointment['profile']->date_vocation,
+                    'presentation_thr' =>   $lastAppointment->get(0),
+                    'first_thr' =>   $lastAppointment->get(1),
+                    'second_thr' =>   $lastAppointment->get(2),
+                ]);
+            }
+
+            $pdf = PDF::loadView('reports.appointments.list-appointments-servant', compact('dataServant', 'from', 'to', 'type', 'level'));
+
+            return $pdf->setPaper('a4', 'landscape')->stream('ReportesNombramientosHermanas.pdf');
+        }
+
+
         $pdf = PDF::loadView('reports.appointments.list-appointments', compact('data', 'from', 'to', 'type', 'level'));
+
         return $pdf->setPaper('a4', 'landscape')->stream('ReportesNombramientosHermanas.pdf');
     }
 

@@ -8,6 +8,8 @@ use App\Models\Permit;
 use App\Models\Community;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
+use App\Models\AppointmentLevel;
 use Illuminate\Support\Facades\Validator;
 
 class PermitController extends Controller
@@ -28,6 +30,7 @@ class PermitController extends Controller
         }
 
         $user = User::find($user_id);
+
         return Permit::with('address')
             ->where('profile_id', '=', $user->profile->id)
             ->orderBy('date_province', 'DESC')
@@ -52,7 +55,6 @@ class PermitController extends Controller
      */
     public function store(Request $request, $user_id)
     {
-
         $validatorData = Validator::make($request->all(), [
             'reason' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
@@ -80,7 +82,6 @@ class PermitController extends Controller
         }
 
         $user = User::find($user_id);
-        // Get permissions active
 
         if (count($user->profile->permits->where('status', 1)) > 0) {
             return redirect()->back()->with(['error' => 'Error, existe un permiso vigente!']);
@@ -89,6 +90,7 @@ class PermitController extends Controller
         $transfer = $user->profile->transfers()->where('status', 1)->get()->first();
 
         $community = null;
+
         if ($transfer) {
             $community = Community::find($transfer->community_id);
         }
@@ -115,7 +117,6 @@ class PermitController extends Controller
                 'status' => 1,
             ]);
         }
-
 
         $permit->address()->create([
             'address' => $request->get('address'),
@@ -172,10 +173,11 @@ class PermitController extends Controller
 
 
         $user = User::find($user_id);
+
         $permit = Permit::find($permit_id);
 
-        // Get permissions active
         $countPermissions = count($user->profile->permits->where('status', 1)->where('id', '!=', $permit->id));
+
         if ($request->get('status') == 1 &&  $countPermissions > 0) {
             return redirect()->back()->with(['error' => 'Error, existe un permiso vigente!']);
         }
@@ -193,6 +195,7 @@ class PermitController extends Controller
                 'status' => ['required', 'digits_between:0,1'],
             ]
         );
+
         if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validatorData->errors())
@@ -213,7 +216,6 @@ class PermitController extends Controller
             'address' => $request->get('address'),
             'political_division_id' => $request->get('political_division_id'),
         ]);
-
 
         return redirect()->back()->with(['success' => 'Permiso actualizado correctamente!']);
     }
@@ -239,8 +241,11 @@ class PermitController extends Controller
         }
 
         $permit = Permit::find($permit_id);
+
         $permit->address()->delete();
+
         $permit->delete();
+
         return redirect()->back()->with(['success' => 'Permiso eliminado correctamente']);
     }
 
@@ -262,11 +267,24 @@ class PermitController extends Controller
         if ($validator->fails()) {
             return abort(404);
         }
+
         $permit = Permit::find($permit_id);
+
         $user = User::find($user_id);
+
         $user->profile;
-        $pdf = PDF::loadView('reports.daughters.permit', compact('permit', 'user'));
-        // return $pdf -> download('Usuarios-OpenScience.pdf');
+
+        $dVisitatorAppointment = AppointmentLevel::where('level', 2)
+            ->where('id', 4)
+            ->first();
+
+        $visitator = Appointment::where('appointment_level_id', $dVisitatorAppointment->id)
+            ->where('status', 1)
+            ->with('profile.user')
+            ->first();
+
+        $pdf = PDF::loadView('reports.daughters.permit', compact('permit', 'user', 'visitator'));
+
         return $pdf->setPaper('a4', 'portrait')->stream('Permiso de la hermana ' . $user->name . '.pdf');
     }
 }

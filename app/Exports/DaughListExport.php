@@ -69,6 +69,22 @@ class DaughListExport implements FromView
             $query->orderBy(request('field'), request('direction'));
         }
 
+        if (request()->has(['book'])) {
+            $query->whereHas("profile", function ($qMain) {
+                $qMain->whereHas("profileBooks", function ($qProfileBooks) {
+                    $qProfileBooks->whereHas("book", function ($qBook) {
+                        $qBook->where("id", request('book'));
+                    });
+                });
+            });
+        }
+
+        if (request()->has(['box'])) {
+            $query->whereHas("profile", function ($q) {
+                $q->where('box', request('box'));
+            });
+        }
+
         if (request('pastoral')) {
             $query->whereHas("profile", function ($q) {
                 $q->whereHas("transfers", function ($qtransfer) {
@@ -102,7 +118,6 @@ class DaughListExport implements FromView
         $query->whereHas("roles", function ($q) {
             $q->where("name", "daughter");
         })->get();
-
 
         if (request('status')) {
             $dateFromTo = new UsersExport();

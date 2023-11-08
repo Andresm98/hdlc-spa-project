@@ -31,15 +31,9 @@ class CollaboratorController extends Controller
     public function indexDaughters()
     {
 
-        //                              OBJECT
-        // return  User::whereHas("roles", function ($q) {
-        // $q->where("name", "daughter");
-        // })->get();
-        // return User::role('daughter')->get();
-
         request()->validate([
             'direction' => ['in:asc,desc'],
-            'field' => ['in:name,email'],
+            'field' => ['in:name,email,lastname'],
             'dateStart' => ['date_format:Y-m-d H:i:s'],
         ]);
 
@@ -70,7 +64,6 @@ class CollaboratorController extends Controller
                 });
             });
         }
-
 
         if (request('perProvince')) {
             $query->whereHas("profile", function ($q) {
@@ -175,7 +168,7 @@ class CollaboratorController extends Controller
                     $q->where("status", request('status'))->orderBy('date_admission', 'desc');
                 }
                 if (request('status') == 2) {
-                    $q->where("status", request('status'))->orderBy('date_death', 'desc');
+                    $q->where("status", request('status'))->orderBy('date_death', 'asc');
                 }
                 if (request('status') == 3) {
                     $q->where("status", request('status'))->orderBy('date_exit', 'desc');

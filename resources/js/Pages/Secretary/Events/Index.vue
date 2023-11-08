@@ -302,6 +302,7 @@
                     v-model="params.date"
                     monthPicker
                     autoApply
+                    :year-range="[1800, this.year]"
                   />
                 </div>
 
@@ -633,6 +634,7 @@
                 autoApply
                 v-model="this.createEventForm.dates"
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -653,6 +655,7 @@
                 :format="format"
                 autoApply
                 v-model="createEventForm.datesEnd"
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -798,6 +801,7 @@
                 autoApply
                 v-model="updateEventForm.dates"
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -818,6 +822,7 @@
                 :format="format"
                 autoApply
                 v-model="updateEventForm.datesEnd"
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -865,6 +870,7 @@ export default {
   layout: PrincipalLayout,
   setup() {
     const date = ref(new Date());
+    const year = new Date().getFullYear();
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
@@ -872,6 +878,7 @@ export default {
 
     return {
       date,
+      year,
       format,
     };
   },

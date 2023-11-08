@@ -7,7 +7,7 @@ $count = 1;
     <p style="text-align: center;"><strong>{{ $count++ }}. {{ $community->comm_name }}</strong></p>
 
     <?php
-    $listDaughters = CommunityDaughterController::report($community->id);
+    $listDaughters = CommunityDaughterController::reportStatic($community->id);
     ?>
     @if (count($listDaughters) > 0)
         <table>

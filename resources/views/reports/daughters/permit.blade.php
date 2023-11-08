@@ -18,7 +18,7 @@
 
             body {
                 margin: 2.5cm 2cm 2cm;
-                font-family: Arial, sans-serif;
+
             }
 
             header {
@@ -75,13 +75,13 @@
             table,
             td,
             th {
-                border: 1px solid black;
-                padding-left: 15px;
+                border: none;
+                padding-left: -2px;
                 text-align: left;
             }
 
             table {
-                border-collapse: collapse;
+                border: none;
                 width: 100%;
                 align-items: center;
             }
@@ -94,24 +94,24 @@
 </head>
 
 <body>
+    <?php
+    use App\Http\Controllers\AddressController;
+    ?>
     <header>
         <div style=" margin-block-start: 0.2cm; color: #000000">
+            <br>
+            <br>
             <div>
-                <div style="float: left;width: 10%; height: 30px;">
-                    <p style="font-size:medium; margin-left:2.5cm; margin-bottom:2.0cm;">
-                        <img height="60px" width="100px"
-                            src="https://files-hdlc-frontend.s3.amazonaws.com/icon_hdlc.png" />
-                    </p>
-                </div>
-                <div style="float: left;width: 90%; height: 30px;">
+                <div style=" height: 30px;">
                     <p style="font-size:medium; margin-top:0.5cm;">
-                        Compañía Hijas de la Caridad de San Vicente de Paúl ©
+
+                        <strong>PROVINCIA DE: </strong>ECUADOR
                     </p>
-                    <small>Permiso de la Hermana - Estado: @if ($permit->status == 1)
+                    <small>AUTORIZACIÓN PARA RESIDIR FUERA DE UNA CASA DE LA COMPAÑÍA <br> Estado: @if ($permit->status == 1)
                             Activo
                         @elseif ($permit->status == 0)
                             Cerrado
-                        @endif - Provincia Ecuador
+                        @endif
                     </small>
                 </div>
 
@@ -120,58 +120,143 @@
     </header>
 
     <main>
-        <div class="a">
-            <div style="font-size: small; margin-top: 30px">
+        <div>
+            <div style="font-size: medium; margin-top: 30px">
+                <br>
+                <br>
+                <br>
 
-                <strong>Datos de la Hermana que solicita el Permiso: </strong>
-                <ul>
-                    <li><strong>Nombres: </strong> {{ $user->name }}</li>
-                    <li><strong>Apellidos: </strong> {{ $user->lastname }}</li>
+                <table>
+                    <tr>
+                        <td> <strong>Apellidos: </strong></td>
+                        <td> {{ strtoupper($user->lastname) }}</td>
+                    </tr>
+                    <tr>
+                        <td> <strong>Nombres: </strong></td>
+                        <td> {{ strtoupper($user->name) }}</td>
+                    </tr>
+
+                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+
                     @if ($user->profile->date_birth)
-                        <li><strong>Fecha de Nacimiento: </strong>
-                            {{ date('Y-m-d', strtotime($user->profile->date_birth)) }}</li>
+                        <tr>
+                            <td> <strong>Fecha de Nacimiento: </strong> </td>
+                            <td> {{ date('d-m-Y', strtotime($user->profile->date_birth)) }}</td>
+                        </tr>
                     @endif
-                    @if ($user->profile->date_vocation)
-                        <li><strong>Fecha de Vocación: </strong>
-                            {{ date('Y-m-d', strtotime($user->profile->date_vocation)) }}</li>
-                    @endif
-                    @if ($user->profile->date_vote)
-                        <li><strong>Fecha de Votos: </strong>
-                            {{ date('Y-m-d', strtotime($user->profile->date_vote)) }}</li>
-                    @endif
-                </ul>
-                <strong>Detalles del Permiso: </strong>
-                <?php
-                use App\Http\Controllers\AddressController;
-                ?>
 
-                <ul>
-                    <li><strong>Motivo del Permiso: </strong> {{ $permit->reason }}</li>
-                    <li><strong>Dirección Destino: </strong> {{ $permit->address->address }},
-                        {{ AddressController::showActualAddress($permit->address->political_division_id) }}.</li>
-                    <li><strong>Fecha del consejo provicial en el que se autoriza el Permiso: </strong>
-                        {{ date('Y-m-d', strtotime($permit->date_province)) }}</li>
-                    <li><strong>Fecha del consejo general que aprueba el Permiso: </strong>
-                        {{ date('Y-m-d', strtotime($permit->date_general)) }}</li>
-                    <li><strong>Fecha de Salida: </strong>
-                        {{ date('Y-m-d', strtotime($permit->date_out)) }}</li>
-                    <li><strong>Fecha de integración a la Comunidad: </strong>
-                        {{ date('Y-m-d', strtotime($permit->date_in)) }}</li>
-                    <li><strong>Observaciones : </strong>
-                        <div class="a">{!! $permit->description !!}</div>
-                    </li>
-                </ul>
+                    @if ($user->profile->date_vocation)
+                        <tr>
+                            <td> <strong>Fecha de Vocación: </strong></td>
+                            <td> {{ date('d-m-Y', strtotime($user->profile->date_vocation)) }}</td>
+                        </tr>
+                    @endif
+
+                    @if ($user->profile->date_vote)
+                        <tr>
+                            <td> <strong>Fecha de Votos: </strong></td>
+                            <td> {{ date('d-m-Y', strtotime($user->profile->date_vote)) }}</td>
+                        </tr>
+                    @endif
+
+                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+
+                    <tr>
+                        <td> <strong>Destino: </strong></td>
+                        <td> {{ $permit->address->address }}
+                            {{ AddressController::showActualAddressPermit($permit->address->political_division_id) }}.
+                        </td>
+                    </tr>
+
+                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+
+                    <tr>
+                        <td> <strong>Fecha del Consejo en el que se dió la autorización: </strong></td>
+                        <td> {{ date('d-m-Y', strtotime($permit->date_general)) }}</td>
+                    </tr>
+
+                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+
+                    <tr>
+                        <td> <strong>Motivo de esta petición: </strong> </td>
+                        <td> {{ $permit->reason }}</td>
+                    </tr>
+
+                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+
+                    <tr>
+                        <td> <strong>Fecha efectiva de la marcha: </strong> </td>
+                        <td> {{ date('d-m-Y', strtotime($permit->date_out)) }}</td>
+                    </tr>
+
+                </table>
+                <br>
+                <br>
+                {{-- <strong>Fecha del consejo provicial en el que se autoriza el Permiso: </strong>
+                {{ date('d-m-Y', strtotime($permit->date_province)) }} --}}
+
+                Dirección de la Hermana fuera de la Comunidad en
+                {{ AddressController::showActualCompleteAddressPermit($permit->address->political_division_id) }}.
+                <br>
+                @if ($user->profile->cellphone)
+                    Teléfono: {{ $user->profile->cellphone }}
+                @endif
+                <br>
+                <br>
+                {{-- <strong>Fecha de integración a la Comunidad: </strong>
+                {{ date('d-m-Y', strtotime($permit->date_in)) }}
+                <br>
+                <br> --}}
+                <strong>Observaciones: </strong>
+                <div>{!! $permit->description !!}</div>
+                <br>
+                <br>
+                <br>
+                <strong>Fecha: </strong>{{ date('d.m.Y', strtotime($permit->date_province)) }}
+                <br>
+                <br>
+                <br>
+                <br>
+
             </div>
         </div>
     </main>
 
     <footer>
         <p
-            style="font-size:12px; margin-left:0.40cm;  margin-right:0.40cm; margin-bottom:0.20cm; margin-top:0.20cm; color:#111631">
-            Fecha Impresión: {{ date('Y-m-d h:i:s a', time()) }}. Pichincha,
-            Ecuador.
-            Este documento fue generado en la plataforma privada de la
-            Compañía Hijas de la Caridad de San Vicente de Paúl ©, Provincia Ecuador.
+            style="font-size:15px; margin-left:0.40cm;  margin-right:0.40cm; margin-bottom:0.20cm; margin-top:0.20cm; color:#111631">
+
+            @if ($visitator)
+                Sor {{ $visitator['profile']->user->name }} {{ strtoupper($visitator['profile']->user->lastname) }}
+                <br>
+                Hija de la Caridad
+            @endif
+
         </p>
     </footer>
 

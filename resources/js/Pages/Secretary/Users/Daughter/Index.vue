@@ -11,26 +11,10 @@
     <section class="py-1 bg-gray">
       <div class="w-full lg:w-full">
         <div
-          class="
-            relative
-            flex flex-col
-            min-w-0
-            break-words
-            w-full
-            mb-6
-            shadow-lg
-            rounded-lg
-            bg-blueGray-100
-            border-0
-          "
+          class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
         >
           <div
-            class="
-              shadow
-              overflow-hidden
-              border-b border-gray-200
-              sm:rounded-lg
-            "
+            class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
           >
             <div v-if="$page.props.flash != null">
               <alert
@@ -52,22 +36,10 @@
             </div>
             <operation></operation>
             <br />
-            <!-- <Link
-              :href="route('admin.user.create')"
-              class="pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-sm rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
-              >Crear usuarios</Link
-            > -->
-            <!-- Container Filters -->
             <div class="container mx-auto ml-7">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    bg-gray-100
-                  "
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm bg-gray-100"
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Filtros de Búsqueda</small
@@ -75,34 +47,13 @@
 
                   <search-filter
                     v-model="params.search"
-                    class="
-                      border border-blue-300
-                      rounded-md
-                      shadow-sm
-                      focus:outline-none
-                      focus:ring-indigo-500
-                      focus:border-indigo-500
-                      sm:text-sm
-                    "
+                    class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     @reset="reset"
                   >
                     <small class="block text-gray-700">Estado:</small>
                     <select
                       v-model="params.status"
-                      class="
-                        mt-1
-                        block
-                        w-full
-                        px-3
-                        border border-gray-300
-                        bg-white
-                        rounded-md
-                        shadow-sm
-                        focus:outline-none
-                        focus:ring-blue-500
-                        focus:border-blue-500
-                        sm:text-sm
-                      "
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
                       <option :value="null">Todos</option>
                       <option value="1">Activas</option>
@@ -117,20 +68,7 @@
                       <small class="block text-gray-700 mt-2">Tipo:</small>
                       <select
                         v-model="params.typeActive"
-                        class="
-                          mt-1
-                          block
-                          w-full
-                          px-3
-                          border border-gray-300
-                          bg-white
-                          rounded-md
-                          shadow-sm
-                          focus:outline-none
-                          focus:ring-blue-500
-                          focus:border-blue-500
-                          sm:text-sm
-                        "
+                        class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       >
                         <option :value="null">Todos</option>
                         <option value="1">Hermanas Seminario</option>
@@ -144,20 +82,7 @@
                     >
                     <select
                       v-model="params.perProvince"
-                      class="
-                        mt-1
-                        block
-                        w-full
-                        px-3
-                        border border-gray-300
-                        bg-white
-                        rounded-md
-                        shadow-sm
-                        focus:outline-none
-                        focus:ring-blue-500
-                        focus:border-blue-500
-                        sm:text-sm
-                      "
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
                       <option :value="null">Todas</option>
                       <option
@@ -172,20 +97,7 @@
                     <small class="block text-gray-700 mt-2">Por página:</small>
                     <select
                       v-model="params.perPage"
-                      class="
-                        mt-1
-                        block
-                        w-full
-                        px-3
-                        border border-gray-300
-                        bg-white
-                        rounded-md
-                        shadow-sm
-                        focus:outline-none
-                        focus:ring-blue-500
-                        focus:border-blue-500
-                        sm:text-sm
-                      "
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
                       <option value="5">5</option>
                       <option value="10">10</option>
@@ -193,25 +105,27 @@
                       <option value="20">20</option>
                     </select>
 
+                    <small class="block text-gray-700 mt-2">Libros:</small>
+                    <select
+                      v-model="params.book"
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    >
+                      <option :value="null">Todos</option>
+                      <option
+                        v-for="book in books"
+                        :key="book"
+                        :value="book.id"
+                      >
+                        {{ book.name }}
+                      </option>
+                    </select>
+
                     <div>
                       <small class="block text-gray-700 mt-2">Pastoral:</small>
 
                       <select
                         v-model="params.pastoral"
-                        class="
-                          mt-1
-                          block
-                          w-full
-                          px-3
-                          border border-gray-300
-                          bg-white
-                          rounded-md
-                          shadow-sm
-                          focus:outline-none
-                          focus:ring-blue-500
-                          focus:border-blue-500
-                          sm:text-sm
-                        "
+                        class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       >
                         <option :value="null">Todas</option>
                         <option
@@ -228,14 +142,7 @@
 
                 <div
                   v-if="params.status != null"
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    p-1
-                    bg-gray-100
-                  "
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Rangos de Fechas</small
@@ -247,6 +154,7 @@
                     {{ $page.props.errors.dateStart }}
                   </p>
                   <Datepicker
+                    :year-range="[1800, this.year]"
                     v-model="params.dateStart"
                     :format="format"
                     autoApply
@@ -262,6 +170,7 @@
                     {{ $page.props.errors.dateEnd }}
                   </p>
                   <Datepicker
+                    :year-range="[1800, this.year]"
                     v-model="params.dateEnd"
                     :format="format"
                     autoApply
@@ -270,72 +179,29 @@
                 </div>
 
                 <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    p-1
-                    bg-gray-100
-                  "
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Exportar Listas</small
                   >
                   <div
-                    class="
-                      md:text-md
-                      flex
-                      items-center
-                      justify-between
-                      p-4
-                      w-full
-                      text-sm
-                      md:px-12 md:py-0
-                    "
+                    class="md:text-md flex items-center justify-between p-4 w-full text-sm md:px-12 md:py-0"
                   >
                     <dropdown class="mt-1" placement="bottom-end">
                       <template #default>
                         <div
-                          class="
-                            group
-                            flex
-                            items-center
-                            cursor-pointer
-                            select-none
-                          "
+                          class="group flex items-center cursor-pointer select-none"
                         >
                           <div
-                            class="
-                              mr-1
-                              text-gray-700
-                              group-hover:text-blue-600
-                              focus:text-blue-600
-                              whitespace-nowrap
-                            "
+                            class="mr-1 text-gray-700 group-hover:text-blue-600 focus:text-blue-600 whitespace-nowrap"
                           >
                             <span
-                              class="
-                                px-1
-                                inline-flex
-                                text-xs
-                                leading-5
-                                font-semibold
-                                rounded-sm
-                                bg-gray-200
-                                text-gray-800
-                              "
+                              class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-gray-200 text-gray-800"
                               >&nbsp;Filtros</span
                             >
                           </div>
                           <icon
-                            class="
-                              w-5
-                              h-5
-                              fill-gray-700
-                              group-hover:fill-blue-600
-                              focus:fill-blue-600
-                            "
+                            class="w-5 h-5 fill-gray-700 group-hover:fill-blue-600 focus:fill-blue-600"
                             name="cheveron-down"
                           />
                         </div>
@@ -345,12 +211,7 @@
                           class="mt-2 py-2 text-sm bg-white rounded shadow-xl"
                         >
                           <a
-                            class="
-                              block
-                              px-6
-                              py-2
-                              hover:text-white hover:bg-blue-500
-                            "
+                            class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                             target="_blank"
                             :href="
                               route(
@@ -361,12 +222,7 @@
                             >PDF</a
                           >
                           <a
-                            class="
-                              block
-                              px-6
-                              py-2
-                              hover:text-white hover:bg-blue-500
-                            "
+                            class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                             target="_blank"
                             :href="
                               this.route(
@@ -376,21 +232,54 @@
                             "
                             >Excel</a
                           >
+                        </div>
+                      </template>
+                    </dropdown>
+                  </div>
+                </div>
+
+                <div
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
+                >
+                  <small class="justify-content-center ml-20 uppercase"
+                    >Reportes Personalizados</small
+                  >
+                  <div
+                    class="md:text-md flex items-center justify-between p-4 w-full text-sm md:px-12 md:py-0"
+                  >
+                    <dropdown class="mt-1" placement="bottom-end">
+                      <template #default>
+                        <div
+                          class="group flex items-center cursor-pointer select-none"
+                        >
+                          <div
+                            class="mr-1 text-gray-700 group-hover:text-blue-600 focus:text-blue-600 whitespace-nowrap"
+                          >
+                            <span
+                              class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-gray-200 text-gray-800"
+                              >&nbsp;Filtros</span
+                            >
+                          </div>
+                          <icon
+                            class="w-5 h-5 fill-gray-700 group-hover:fill-blue-600 focus:fill-blue-600"
+                            name="cheveron-down"
+                          />
+                        </div>
+                      </template>
+                      <template #dropdown>
+                        <div
+                          class="mt-2 py-2 text-sm bg-white rounded shadow-xl"
+                        >
                           <a
-                            class="
-                              block
-                              px-6
-                              py-2
-                              hover:text-white hover:bg-blue-500
-                            "
+                            class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                             target="_blank"
                             :href="
                               route(
-                                'secretary.daughters.export.csv',
+                                'secretary.daughters.report.vocation',
                                 this.params
                               )
                             "
-                            >CSV</a
+                            >Por Años de Vocación</a
                           >
                         </div>
                       </template>
@@ -411,14 +300,7 @@
               <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div
-                    class="
-                      py-2
-                      align-middle
-                      inline-block
-                      min-w-full
-                      sm:px-6
-                      lg:px-8
-                    "
+                    class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
                   >
                     <table
                       v-if="daughters_list.data.length > 0"
@@ -428,28 +310,16 @@
                         <tr>
                           <th
                             scope="col"
-                            class="
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             <span
-                              class="
-                                inline-flex
-                                px-6
-                                py-3
-                                w-full
-                                justify-between
-                              "
-                              @click="sort('name')"
-                              >Nombre
+                              class="inline-flex px-6 py-3 w-full justify-between"
+                              @click="sort('lastname')"
+                              >Nombre y Apellido
 
                               <svg
                                 v-if="
-                                  params.field === 'name' &&
+                                  params.field === 'lastname' &&
                                   params.direction === 'asc'
                                 "
                                 class="h-6 w-6"
@@ -461,7 +331,7 @@
                               </svg>
                               <svg
                                 v-if="
-                                  params.field === 'name' &&
+                                  params.field === 'lastname' &&
                                   params.direction === 'desc'
                                 "
                                 class="h-6 w-6"
@@ -475,22 +345,10 @@
                           </th>
                           <th
                             scope="col"
-                            class="
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             <span
-                              class="
-                                inline-flex
-                                px-6
-                                py-3
-                                w-full
-                                justify-between
-                              "
+                              class="inline-flex px-6 py-3 w-full justify-between"
                               @click="sort('email')"
                               >Correo
                               <svg
@@ -521,29 +379,13 @@
                           </th>
                           <th
                             scope="col"
-                            class="
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             Estado
                           </th>
                           <th
                             scope="col"
-                            class="
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             Operaciones
                           </th>
@@ -580,16 +422,7 @@
                                       v-if="
                                         appointent.date_end_appointment == null
                                       "
-                                      class="
-                                        px-2
-                                        inline-flex
-                                        text-xs
-                                        leading-5
-                                        font-semibold
-                                        rounded-full
-                                        bg-cyan-100
-                                        text-cyan-800
-                                      "
+                                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-cyan-100 text-cyan-800"
                                     >
                                       {{ appointent.appointment_level.name }}
                                     </span>
@@ -608,16 +441,7 @@
                             <div v-if="user_custom.profile != null">
                               <div v-if="user_custom.profile.status == 1">
                                 <span
-                                  class="
-                                    px-2
-                                    inline-flex
-                                    text-xs
-                                    leading-5
-                                    font-semibold
-                                    rounded-full
-                                    bg-green-100
-                                    text-green-800
-                                  "
+                                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                                 >
                                   Activa desde
                                   {{
@@ -629,16 +453,7 @@
                               </div>
                               <div v-if="user_custom.profile.status == 2">
                                 <span
-                                  class="
-                                    px-2
-                                    inline-flex
-                                    text-xs
-                                    leading-5
-                                    font-semibold
-                                    rounded-full
-                                    bg-red-100
-                                    text-red-800
-                                  "
+                                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
                                 >
                                   Fallecida en
                                   {{
@@ -650,16 +465,7 @@
                               </div>
                               <div v-if="user_custom.profile.status == 3">
                                 <span
-                                  class="
-                                    px-2
-                                    inline-flex
-                                    text-xs
-                                    leading-5
-                                    font-semibold
-                                    rounded-full
-                                    bg-blue-100
-                                    text-blue-800
-                                  "
+                                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
                                 >
                                   Retirada en
                                   {{
@@ -671,18 +477,10 @@
                               </div>
                               <div v-if="user_custom.profile.status == 4">
                                 <span
-                                  class="
-                                    px-2
-                                    inline-flex
-                                    text-xs
-                                    leading-5
-                                    font-semibold
-                                    rounded-full
-                                    bg-cyan-100
-                                    text-cyan-800
-                                  "
+                                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-cyan-100 text-cyan-800"
                                 >
-                                   Salida a otros países                                  {{
+                                  Salida a otros países
+                                  {{
                                     formatDateShow(
                                       user_custom.profile.date_other_country
                                     )
@@ -691,32 +489,18 @@
                               </div>
                               <div v-if="user_custom.profile.status == 5">
                                 <span
-                                  class="
-                                    px-2
-                                    inline-flex
-                                    text-xs
-                                    leading-5
-                                    font-semibold
-                                    rounded-full
-                                    bg-gray-100
-                                    text-gray-800
-                                  "
+                                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
                                 >
-                                Información Insuficiente.
+                                  Información Insuficiente.
                                 </span>
                               </div>
-                              <div v-if="user_custom.profile.date_retirement!=null">
-                                  <span
-                                  class="
-                                    px-2
-                                    inline-flex
-                                    text-xs
-                                    leading-5
-                                    font-semibold
-                                    rounded-full
-                                    bg-yellow-100
-                                    text-yellow-800
-                                  "
+                              <div
+                                v-if="
+                                  user_custom.profile.date_retirement != null
+                                "
+                              >
+                                <span
+                                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"
                                 >
                                   Jubilada en
                                   {{
@@ -729,29 +513,14 @@
                             </div>
                             <div v-else>
                               <span
-                                class="
-                                  px-2
-                                  inline-flex
-                                  text-xs
-                                  leading-5
-                                  font-semibold
-                                  rounded-full
-                                  bg-gray-100
-                                  text-gray-800
-                                "
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
                               >
                                 Pendiente
                               </span>
                             </div>
                           </td>
                           <td
-                            class="
-                              px-3
-                              py-4
-                              whitespace-nowrap
-                              text-right text-sm
-                              font-medium
-                            "
+                            class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                           >
                             <!-- Components -->
 
@@ -767,19 +536,7 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="
-                                        flex
-                                        items-center
-                                        justify-center
-                                        flex-1
-                                        h-full
-                                        p-2
-                                        border border-green-500
-                                        text-white
-                                        shadow
-                                        rounded-lg
-                                        hover:bg-green-50 hover:text-zinc-300
-                                      "
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-green-500 text-white shadow rounded-lg hover:bg-green-50 hover:text-zinc-300"
                                     >
                                       <div class="relative">
                                         <svg
@@ -803,19 +560,7 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="
-                                        flex
-                                        items-center
-                                        justify-center
-                                        flex-1
-                                        h-full
-                                        p-2
-                                        border border-blue-800
-                                        text-white
-                                        shadow
-                                        rounded-lg
-                                        hover:bg-blue-50 hover:text-zinc-300
-                                      "
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-blue-800 text-white shadow rounded-lg hover:bg-blue-50 hover:text-zinc-300"
                                     >
                                       <div class="relative">
                                         <svg
@@ -843,19 +588,7 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="
-                                        flex
-                                        items-center
-                                        justify-center
-                                        flex-1
-                                        h-full
-                                        p-2
-                                        border border-red-500
-                                        text-white
-                                        shadow
-                                        rounded-lg
-                                        hover:bg-red-50 hover:text-zinc-300
-                                      "
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-red-500 text-white shadow rounded-lg hover:bg-red-50 hover:text-zinc-300"
                                     >
                                       <div class="relative">
                                         <svg
@@ -938,16 +671,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <label class="flex items-center">
             <input
-              class="
-                rounded
-                border-gray-300
-                text-emerald-600
-                shadow-sm
-                focus:border-emerald-300
-                focus:ring
-                focus:ring-emerald-200
-                focus:ring-opacity-50
-              "
+              class="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
               type="checkbox"
               :value="1"
               v-model="options"
@@ -956,16 +680,7 @@
           </label>
           <label class="flex items-center">
             <input
-              class="
-                rounded
-                border-gray-300
-                text-emerald-600
-                shadow-sm
-                focus:border-emerald-300
-                focus:ring
-                focus:ring-emerald-200
-                focus:ring-opacity-50
-              "
+              class="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
               type="checkbox"
               :value="2"
               v-model="options"
@@ -974,16 +689,7 @@
           </label>
           <label class="flex items-center">
             <input
-              class="
-                rounded
-                border-gray-300
-                text-emerald-600
-                shadow-sm
-                focus:border-emerald-300
-                focus:ring
-                focus:ring-emerald-200
-                focus:ring-opacity-50
-              "
+              class="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
               type="checkbox"
               :value="3"
               v-model="options"
@@ -1004,16 +710,7 @@
         </jet-secondary-button>
 
         <a
-          class="
-            mx-2
-            bg-blue-600
-            text-white text-sm
-            leading-6
-            font-medium
-            py-2
-            px-3
-            rounded-lg
-          "
+          class="mx-2 bg-blue-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg"
           target="_blank"
           :href="
             this.route(`secretary.daughters.report.profile`, {
@@ -1062,6 +759,7 @@ export default defineComponent({
   props: {
     daughters_list: Object,
     pastorals: Object,
+    books: Object,
     user_custom: Object,
     filters: Object,
     provinces: {
@@ -1070,12 +768,14 @@ export default defineComponent({
   },
   setup() {
     const date = ref(new Date());
+    const year = new Date().getFullYear();
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
     return {
       date,
+      year,
       format,
       pagination: {
         clickable: true,
@@ -1120,6 +820,7 @@ export default defineComponent({
         perPage: this.filters.perPage,
         perProvince: this.filters.perProvince,
         typeActive: this.filters.typeActive,
+        book: this.filters.book,
       },
       managingReportsFor: null,
       options: [],

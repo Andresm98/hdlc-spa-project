@@ -270,8 +270,6 @@ class AppointmentController extends Controller
             return abort(404);
         }
 
-        $user = User::find($user_id);
-
         $appointment = Appointment::find($appointment_id);
 
         $transfer = Transfer::find($appointment->transfer_id);

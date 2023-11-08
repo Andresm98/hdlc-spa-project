@@ -197,7 +197,7 @@
                           v-if="data.status == 4"
                           class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-cyan-100 text-cyan-800"
                         >
-                          Retiradas
+                          Otros Países
                         </span>
                         <span
                           v-if="data.status == 5"
@@ -377,7 +377,7 @@ export default {
       let data = [];
       for (let index = 0; index < this.groupDaughters.length; index++) {
         if (array[index].status == 1) {
-          data.push("Activos");
+          data.push("Activas");
         }
         if (array[index].status == 2) {
           data.push("Fallecidas");
@@ -385,10 +385,10 @@ export default {
         if (array[index].status == 3) {
           data.push("Retiradas");
         }
-        if (array[index].status == 5) {
+        if (array[index].status == 4) {
           data.push("A otros Países");
         }
-        if (array[index].status == 3) {
+        if (array[index].status == 5) {
           data.push("Sin Datos");
         }
       }

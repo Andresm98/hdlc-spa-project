@@ -2,16 +2,7 @@
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
       <h6
-        class="
-          mt-2
-          mb-2
-          text-lg
-          font-medium
-          text-center
-          leading-6
-          text-gray-900
-          uppercase
-        "
+        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
       >
         Plantilla de Cambios
       </h6>
@@ -52,15 +43,7 @@
       </div>
 
       <hr
-        class="
-          w-full
-          mt-1
-          mb-3
-          ml-4
-          mr-4
-          border-b-1 border-gray-400
-          hover:border-gray-400
-        "
+        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
       />
 
       <!-- Table -->
@@ -76,14 +59,7 @@
                 <tr>
                   <th
                     scope="col"
-                    class="
-                      pl-4
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Comunidad/Obra
                   </th>
@@ -95,29 +71,13 @@
                   </th> -->
                   <th
                     scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Fechas (inicio-fin)
                   </th>
                   <th
                     scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
+                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Acciones
                   </th>
@@ -136,13 +96,7 @@
                       </div>
                       <div class="ml-4 sm:w-8/8 md:w-8/8 lg:w-6/8 ...">
                         <div
-                          class="
-                            whitespace-normal
-                            text-sm
-                            font-semibold
-                            text-gray-900
-                            hover:text-blue-500
-                          "
+                          class="whitespace-normal text-sm font-semibold text-gray-900 hover:text-blue-500"
                         >
                           <div
                             v-if="
@@ -167,31 +121,13 @@
                         </div>
                         <span
                           v-if="transfer.status == 1"
-                          class="
-                            px-2
-                            inline-flex
-                            text-xs
-                            leading-5
-                            font-semibold
-                            rounded-full
-                            bg-cyan-100
-                            text-cyan-800
-                          "
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-cyan-100 text-cyan-800"
                         >
                           Activo
                         </span>
                         <span
                           v-if="transfer.status == 0"
-                          class="
-                            px-2
-                            inline-flex
-                            text-xs
-                            leading-5
-                            font-semibold
-                            rounded-full
-                            bg-red-100
-                            text-red-800
-                          "
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
                         >
                           Historial
                         </span>
@@ -204,16 +140,7 @@
                     v-if="transfer.transfer_date_relocated == null"
                   >
                     <span
-                      class="
-                        px-2
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-green-100
-                        text-green-800
-                      "
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                     >
                       {{ this.formatDateShow(transfer.transfer_date_adission) }}
                       -
@@ -224,16 +151,7 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap" v-else>
                     <span
-                      class="
-                        px-2
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-blue-100
-                        text-blue-800
-                      "
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
                     >
                       {{ this.formatDateShow(transfer.transfer_date_adission) }}
                       -
@@ -244,13 +162,7 @@
                   </td>
 
                   <td
-                    class="
-                      px-3
-                      py-4
-                      whitespace-nowrap
-                      text-right text-sm
-                      font-medium
-                    "
+                    class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                   >
                     <!-- Components -->
 
@@ -319,31 +231,12 @@
                 <!-- dot -->
                 <div
                   v-if="this.statustransfer == 1"
-                  class="
-                    absolute
-                    w-6
-                    h-6
-                    rounded-full
-                    shadow
-                    -left-1
-                    -top-1
-                    transition
-                  "
+                  class="absolute w-6 h-6 rounded-full shadow -left-1 -top-1 transition"
                   style="transform: translateX(100%); background-color: #204de0"
                 />
                 <div
                   v-if="this.statustransfer == 0"
-                  class="
-                    absolute
-                    w-6
-                    h-6
-                    bg-red-400
-                    rounded-full
-                    shadow
-                    -left-1
-                    -top-1
-                    transition
-                  "
+                  class="absolute w-6 h-6 bg-red-400 rounded-full shadow -left-1 -top-1 transition"
                 />
               </div>
             </label>
@@ -352,15 +245,7 @@
             <div class="flex flex-wrap" v-if="navigationOp == 1">
               <div class="w-full md:w-5/5 mx-auto">
                 <h4
-                  class="
-                    text-lg
-                    font-medium
-                    text-center
-                    leading-6
-                    text-gray-900
-                    uppercase
-                    my-2
-                  "
+                  class="text-lg font-medium text-center leading-6 text-gray-900 uppercase my-2"
                 >
                   <strong>Datos del Cambio</strong>
                 </h4>
@@ -381,22 +266,7 @@
                       minLength="10"
                       maxlength="100"
                       placeholder="Ingresar motivo del cambio"
-                      class="
-                        border-0
-                        px-3
-                        my-2
-                        placeholder-blueGray-300
-                        text-blueGray-600
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="form.transfer.transfer_reason"
                       required
                     />
@@ -483,6 +353,7 @@
                   <small>Formato: Fecha de inicio de actividades.</small>
                   <Datepicker
                     v-model="form.transfer.transfer_date_adission"
+                    :year-range="[1800, this.year]"
                     :format="format"
                     autoApply
                     required
@@ -507,6 +378,7 @@
                   >
                   <Datepicker
                     v-model="form.transfer.transfer_date_relocated"
+                    :year-range="[1800, this.year]"
                     :format="format"
                     autoApply
                   />
@@ -516,15 +388,7 @@
             <div class="flex flex-wrap" v-if="navigationOp == 2">
               <div class="w-full md:w-5/5 mx-auto">
                 <h4
-                  class="
-                    text-lg
-                    font-medium
-                    text-center
-                    leading-6
-                    text-gray-900
-                    uppercase
-                    my-2
-                  "
+                  class="text-lg font-medium text-center leading-6 text-gray-900 uppercase my-2"
                 >
                   <strong>Nombramientos asignados al Cambio</strong>
                 </h4>
@@ -644,9 +508,10 @@
                       nombramiento.</small
                     >
                     <Datepicker
+                      v-model="form.appointment.date_appointment"
+                      :year-range="[1800, this.year]"
                       :format="format"
                       autoApply
-                      v-model="form.appointment.date_appointment"
                       required
                     />
                   </div>
@@ -669,6 +534,7 @@
                       (opcional).</small
                     >
                     <Datepicker
+                      :year-range="[1800, this.year]"
                       :format="format"
                       autoApply
                       v-model="form.appointment.date_end_appointment"
@@ -763,22 +629,7 @@
                   minLength="10"
                   maxlength="100"
                   placeholder="Ingresar motivo del cambio"
-                  class="
-                    border-0
-                    px-3
-                    my-2
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="deleteTransferForm.transfer_reason"
                   readonly
                   required
@@ -841,31 +692,12 @@
                 <!-- dot -->
                 <div
                   v-if="this.statustransfer == 1"
-                  class="
-                    absolute
-                    w-6
-                    h-6
-                    rounded-full
-                    shadow
-                    -left-1
-                    -top-1
-                    transition
-                  "
+                  class="absolute w-6 h-6 rounded-full shadow -left-1 -top-1 transition"
                   style="transform: translateX(100%); background-color: #204de0"
                 />
                 <div
                   v-if="this.statustransfer == 0"
-                  class="
-                    absolute
-                    w-6
-                    h-6
-                    bg-red-400
-                    rounded-full
-                    shadow
-                    -left-1
-                    -top-1
-                    transition
-                  "
+                  class="absolute w-6 h-6 bg-red-400 rounded-full shadow -left-1 -top-1 transition"
                 />
               </div>
             </label>
@@ -873,15 +705,7 @@
           <div class="flex flex-wrap" v-if="navigationOp == 1">
             <div class="w-full md:w-5/5 mx-auto">
               <h4
-                class="
-                  text-lg
-                  font-medium
-                  text-center
-                  leading-6
-                  text-gray-900
-                  uppercase
-                  my-2
-                "
+                class="text-lg font-medium text-center leading-6 text-gray-900 uppercase my-2"
               >
                 <strong>Datos del Cambio</strong>
               </h4>
@@ -907,22 +731,7 @@
                     minLength="10"
                     maxlength="100"
                     placeholder="Ingresar motivo del cambio"
-                    class="
-                      border-0
-                      px-3
-                      my-2
-                      placeholder-blueGray-300
-                      text-blueGray-600
-                      bg-white
-                      rounded
-                      text-sm
-                      shadow
-                      focus:outline-none focus:ring
-                      w-full
-                      ease-linear
-                      transition-all
-                      duration-150
-                    "
+                    class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="updateTransferForm.transfer_reason"
                     required
                   />
@@ -1015,6 +824,7 @@
                 <small>Formato: Fecha de inicio de actividades.</small>
                 <Datepicker
                   v-model="updateTransferForm.transfer_date_adission"
+                  :year-range="[1800, this.year]"
                   :format="format"
                   autoApply
                   required
@@ -1033,6 +843,7 @@
                 <small>Opcional: Fecha de inicio de actividades.</small>
                 <Datepicker
                   v-model="updateTransferForm.transfer_date_relocated"
+                  :year-range="[1800, this.year]"
                   :format="format"
                   autoApply
                 />
@@ -1049,16 +860,7 @@
               >
                 <div v-for="data in this.allAppointmentsTransfer" :key="data">
                   <li
-                    class="
-                      flex
-                      justify-between
-                      p-3
-                      hover:rounded-lg hover:text-white
-                      tab
-                      w-full
-                      overflow-hidden
-                      border-t
-                    "
+                    class="flex justify-between p-3 hover:rounded-lg hover:text-white tab w-full overflow-hidden border-t"
                     :class="
                       data.date_end_appointment != null
                         ? 'hover:bg-red-500'
@@ -1083,14 +885,7 @@
                   </li>
                   <div class="tab w-full overflow-hidden border-t">
                     <div
-                      class="
-                        w-full
-                        tab-content
-                        overflow-hidden
-                        border-l-2
-                        bg-gray-100
-                        leading-normal
-                      "
+                      class="w-full tab-content overflow-hidden border-l-2 bg-gray-100 leading-normal"
                       :class="
                         data.date_end_appointment != null
                           ? 'border-red-500'
@@ -1339,6 +1134,7 @@ export default {
   //  Setup all data
   setup() {
     const date = ref(new Date());
+    const year = new Date().getFullYear();
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
@@ -1346,6 +1142,7 @@ export default {
 
     return {
       date,
+      year,
       format,
     };
   },

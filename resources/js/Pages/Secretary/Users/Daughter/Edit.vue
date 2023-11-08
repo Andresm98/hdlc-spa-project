@@ -271,7 +271,7 @@
                       Nombres Completos:
                     </label>
                     <jet-input-error :message="errors.name" />
-                    <small>Formato: Andrea Fransheska</small>
+                    <small>Formato: Andrea Laura</small>
                     <input
                       type="text"
                       placeholder="Ejm: Lucas Andres"

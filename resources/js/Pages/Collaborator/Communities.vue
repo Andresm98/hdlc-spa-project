@@ -219,6 +219,7 @@
                     :format="format"
                     autoApply
                     required
+                    :year-range="[1800, this.year]"
                   />
                   <small class="justify-content-center ml-6"
                     >Deste - Hasta</small
@@ -234,6 +235,7 @@
                     :format="format"
                     autoApply
                     required
+                    :year-range="[1800, this.year]"
                   />
                 </div>
               </div>
@@ -256,6 +258,7 @@
                     :format="format"
                     autoApply
                     required
+                    :year-range="[1800, this.year]"
                   />
                   <small class="justify-content-center ml-6"
                     >Deste - Hasta</small
@@ -271,6 +274,7 @@
                     :format="format"
                     autoApply
                     required
+                    :year-range="[1800, this.year]"
                   />
                 </div>
               </div>
@@ -721,12 +725,14 @@ export default defineComponent({
   },
   setup() {
     const date = ref(new Date());
+    const year = new Date().getFullYear();
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
     return {
       date,
+      year,
       format,
       pagination: {
         clickable: true,

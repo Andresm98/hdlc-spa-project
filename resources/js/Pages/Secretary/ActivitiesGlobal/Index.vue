@@ -28,110 +28,38 @@
     <operation></operation>
 
     <section
-      class="
-        bg-gray-200
-        dark:bg-slate-800
-        y-1
-        px-4
-        sm:p-6
-        md:py-10 md:px-8
-        pt-2
-        pb-4
-        rounded-lg
-        sm:m-2
-        lg:m-3
-        md:m-4
-      "
+      class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg sm:m-2 lg:m-3 md:m-4"
     >
       <div
-        class="
-          max-w-4xl
-          mx-auto
-          grid grid-cols-1
-          lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2
-        "
+        class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
       >
         <div
-          class="
-            relative
-            p-3
-            col-start-1
-            row-start-1
-            flex flex-col-reverse
-            rounded-lg
-            bg-gradient-to-t
-            from-black/75
-            via-black/0
-            sm:bg-none sm:row-start-2 sm:p-0
-            md:bg-none md:row-start-2 md:p-0
-            lg:row-start-1
-          "
+          class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 md:bg-none md:row-start-2 md:p-0 lg:row-start-1"
         >
           <h1
-            class="
-              mt-1
-              text-lg
-              font-semibold
-              text-black
-              sm:text-black
-              md:text-2xl
-              dark:sm:text-white
-            "
+            class="mt-1 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
           >
             Provincia Ecuador
           </h1>
           <p
-            class="
-              text-sm
-              leading-4
-              font-medium
-              text-black
-              sm:text-black
-              dark:sm:text-slate-400
-            "
+            class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
           >
             Información General de las actividades realizadas en las comunidades
             u obras.
           </p>
         </div>
         <div
-          class="
-            grid
-            gap-4
-            col-start-1 col-end-3
-            row-start-1
-            sm:mb-6 sm:grid-cols-4
-            md:mb-6 md:grid-cols-4
-            lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0
-          "
+          class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 md:mb-6 md:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
         >
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_2.png"
             alt=""
-            class="
-              w-full
-              h-60
-              object-cover
-              rounded-lg
-              sm:h-52 sm:col-span-2
-              md:h-52 md:col-span-2
-              lg:col-span-full
-            "
+            class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 md:h-52 md:col-span-2 lg:col-span-full"
             loading="lazy"
           />
         </div>
         <dl
-          class="
-            mt-4
-            text-xs
-            font-medium
-            flex
-            items-center
-            row-start-2
-            sm:mt-1 sm:row-start-3
-            md:mt-1 md:row-start-3
-            lg:row-start-2
-          "
+          class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-1 md:row-start-3 lg:row-start-2"
         >
           <dt class="sr-only">Visto</dt>
           <dd class="text-indigo-600 flex items-center dark:text-indigo-400">
@@ -202,38 +130,16 @@
     <section class="py-1 bg-gray">
       <div class="w-full lg:w-full">
         <div
-          class="
-            relative
-            flex flex-col
-            min-w-0
-            break-words
-            w-full
-            mb-6
-            shadow-lg
-            rounded-lg
-            bg-blueGray-100
-            border-0
-          "
+          class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
         >
           <div
-            class="
-              shadow
-              overflow-hidden
-              border-b border-gray-200
-              sm:rounded-lg
-            "
+            class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
           >
             <!-- Container Filters -->
             <div class="container mx-auto ml-7">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    bg-gray-100
-                  "
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm bg-gray-100"
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Filtros de Búsqueda</small
@@ -241,15 +147,7 @@
 
                   <search-filter
                     v-model="params.search"
-                    class="
-                      border border-blue-300
-                      rounded-md
-                      shadow-sm
-                      focus:outline-none
-                      focus:ring-indigo-500
-                      focus:border-indigo-500
-                      sm:text-sm
-                    "
+                    class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     @reset="reset"
                   >
                     <!-- <v-date-picker v-model="params.date" is-required :format="format">
@@ -266,20 +164,7 @@
 
                     <select
                       v-model="params.community"
-                      class="
-                        mt-1
-                        block
-                        w-full
-                        px-3
-                        border border-gray-300
-                        bg-white
-                        rounded-md
-                        shadow-sm
-                        focus:outline-none
-                        focus:ring-blue-500
-                        focus:border-blue-500
-                        sm:text-sm
-                      "
+                      class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
                       <option :value="null">Todos</option>
                       <option
@@ -294,14 +179,7 @@
                 </div>
 
                 <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    p-1
-                    bg-gray-100
-                  "
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Rangos de Fechas</small
@@ -317,6 +195,7 @@
                     :format="format"
                     autoApply
                     required
+                    :year-range="[1800, this.year]"
                   />
                   <small class="justify-content-center ml-6"
                     >Deste - Hasta</small
@@ -332,76 +211,34 @@
                     :format="format"
                     autoApply
                     required
+                    :year-range="[1800, this.year]"
                   />
                 </div>
 
                 <div
-                  class="
-                    justify-center
-                    text-sm
-                    border-1 border-gray-300
-                    rounded-sm
-                    p-1
-                    bg-gray-100
-                  "
+                  class="justify-center text-sm border-1 border-gray-300 rounded-sm p-1 bg-gray-100"
                 >
                   <small class="justify-content-center ml-20 uppercase"
                     >Exportar Listas</small
                   >
                   <div
-                    class="
-                      md:text-md
-                      flex
-                      items-center
-                      justify-between
-                      p-4
-                      w-full
-                      text-sm
-                      md:px-12 md:py-0
-                    "
+                    class="md:text-md flex items-center justify-between p-4 w-full text-sm md:px-12 md:py-0"
                   >
                     <dropdown class="mt-1" placement="bottom-end">
                       <template #default>
                         <div
-                          class="
-                            group
-                            flex
-                            items-center
-                            cursor-pointer
-                            select-none
-                          "
+                          class="group flex items-center cursor-pointer select-none"
                         >
                           <div
-                            class="
-                              mr-1
-                              text-gray-700
-                              group-hover:text-blue-600
-                              focus:text-blue-600
-                              whitespace-nowrap
-                            "
+                            class="mr-1 text-gray-700 group-hover:text-blue-600 focus:text-blue-600 whitespace-nowrap"
                           >
                             <span
-                              class="
-                                px-1
-                                inline-flex
-                                text-xs
-                                leading-5
-                                font-semibold
-                                rounded-sm
-                                bg-gray-200
-                                text-gray-800
-                              "
+                              class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-gray-200 text-gray-800"
                               >&nbsp;Filtros</span
                             >
                           </div>
                           <icon
-                            class="
-                              w-5
-                              h-5
-                              fill-gray-700
-                              group-hover:fill-blue-600
-                              focus:fill-blue-600
-                            "
+                            class="w-5 h-5 fill-gray-700 group-hover:fill-blue-600 focus:fill-blue-600"
                             name="cheveron-down"
                           />
                         </div>
@@ -411,12 +248,7 @@
                           class="mt-2 py-2 text-sm bg-white rounded shadow-xl"
                         >
                           <a
-                            class="
-                              block
-                              px-6
-                              py-2
-                              hover:text-white hover:bg-blue-500
-                            "
+                            class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                             target="_blank"
                             :href="
                               route(
@@ -427,12 +259,7 @@
                             >PDF</a
                           >
                           <a
-                            class="
-                              block
-                              px-6
-                              py-2
-                              hover:text-white hover:bg-blue-500
-                            "
+                            class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                             target="_blank"
                             :href="
                               route(
@@ -443,12 +270,7 @@
                             >Excel</a
                           >
                           <a
-                            class="
-                              block
-                              px-6
-                              py-2
-                              hover:text-white hover:bg-blue-500
-                            "
+                            class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                             target="_blank"
                             :href="
                               route(
@@ -474,68 +296,33 @@
               <div class="py-2">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
                   <div
-                    class="
-                      py-2
-                      align-middle
-                      inline-block
-                      min-w-full
-                      sm:px-6
-                      lg:px-8
-                    "
+                    class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
                   >
                     <table class="min-w-full divide-y divide-gray-200">
                       <thead class="bg-blue-100">
                         <tr>
                           <th
                             scope="col"
-                            class="
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             Razón / Comunidad u Obra
                           </th>
                           <th
                             scope="col"
-                            class="
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             Fecha Actividad
                           </th>
                           <th
                             scope="col"
-                            class="
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             Nro. Hermanas, Beneficiarios y Colaboradores
                           </th>
 
                           <th
                             scope="col"
-                            class="
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-black
-                              uppercase
-                              tracking-wider
-                            "
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
                             Acciones
                           </th>
@@ -576,16 +363,7 @@
                               </div>
                               <div class="ml-4 w-6/8 ...">
                                 <span
-                                  class="
-                                    px-2
-                                    inline-flex
-                                    text-xs
-                                    leading-5
-                                    font-semibold
-                                    rounded-sm
-                                    bg-emerald-100
-                                    text-emerald-800
-                                  "
+                                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-emerald-100 text-emerald-800"
                                 >
                                   <div v-if="activity.community != null">
                                     {{ activity.community.comm_name }}
@@ -606,16 +384,7 @@
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             <span
-                              class="
-                                px-2
-                                inline-flex
-                                text-xs
-                                leading-5
-                                font-semibold
-                                rounded-full
-                                bg-cyan-100
-                                text-cyan-800
-                              "
+                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-cyan-100 text-cyan-800"
                             >
                               {{
                                 this.formatDateShow(activity.comm_date_activity)
@@ -624,60 +393,24 @@
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             <span
-                              class="
-                                px-3
-                                inline-flex
-                                text-xs
-                                leading-5
-                                font-semibold
-                                rounded-full
-                                bg-yellow-100
-                                text-yellow-800
-                                mr-2
-                              "
+                              class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 mr-2"
                             >
                               {{ activity.comm_nr_daughters }}
                             </span>
                             <span
-                              class="
-                                px-3
-                                inline-flex
-                                text-xs
-                                leading-5
-                                font-semibold
-                                rounded-full
-                                bg-red-100
-                                text-red-800
-                                mr-2
-                              "
+                              class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 mr-2"
                             >
                               {{ activity.comm_nr_beneficiaries }}
                             </span>
                             <span
-                              class="
-                                px-3
-                                inline-flex
-                                text-xs
-                                leading-5
-                                font-semibold
-                                rounded-full
-                                bg-blue-100
-                                text-blue-800
-                                mr-2
-                              "
+                              class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 mr-2"
                             >
                               {{ activity.comm_nr_collaborators }}
                             </span>
                           </td>
 
                           <td
-                            class="
-                              px-3
-                              py-4
-                              whitespace-nowrap
-                              text-right text-sm
-                              font-medium
-                            "
+                            class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                           >
                             <!-- Components -->
 
@@ -688,19 +421,7 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="
-                                        flex
-                                        items-center
-                                        justify-center
-                                        flex-1
-                                        h-full
-                                        p-2
-                                        border border-green-500
-                                        text-white
-                                        shadow
-                                        rounded-lg
-                                        hover:bg-green-50 hover:text-zinc-300
-                                      "
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-green-500 text-white shadow rounded-lg hover:bg-green-50 hover:text-zinc-300"
                                     >
                                       <div class="relative">
                                         <svg
@@ -724,19 +445,7 @@
                                 <div class="w-auto h-auto">
                                   <div class="flex-1 h-full">
                                     <div
-                                      class="
-                                        flex
-                                        items-center
-                                        justify-center
-                                        flex-1
-                                        h-full
-                                        p-2
-                                        border border-red-500
-                                        text-white
-                                        shadow
-                                        rounded-lg
-                                        hover:bg-red-50 hover:text-zinc-300
-                                      "
+                                      class="flex items-center justify-center flex-1 h-full p-2 border border-red-500 text-white shadow rounded-lg hover:bg-red-50 hover:text-zinc-300"
                                     >
                                       <div class="relative">
                                         <svg
@@ -827,21 +536,7 @@
                   minLength="5"
                   maxlength="100"
                   placeholder="Ingresar nombre actividad"
-                  class="
-                    border-0
-                    px-3
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="form.comm_name_activity"
                   required
                 />
@@ -866,6 +561,7 @@
                 autoApply
                 v-model="form.comm_date_activity"
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -917,15 +613,7 @@
                 type="number"
                 name="nr_daughters"
                 placeholder="Número de Hermanas"
-                class="
-                  focus:ring-blue-500 focus:border-blue-500
-                  flex-1
-                  block
-                  w-full
-                  rounded-none rounded-r-md
-                  sm:text-sm
-                  border-gray-300
-                "
+                class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                 min="0"
                 max="1000"
                 v-model="form.comm_nr_daughters"
@@ -951,15 +639,7 @@
               <small>Formato: Número de beneficiarios.</small>
               <input
                 type="number"
-                class="
-                  focus:ring-blue-500 focus:border-blue-500
-                  flex-1
-                  block
-                  w-full
-                  rounded-none rounded-r-md
-                  sm:text-sm
-                  border-gray-300
-                "
+                class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                 min="0"
                 max="1000"
                 name="nr_beneficiaries"
@@ -987,15 +667,7 @@
               <small>Formato: Número de colaboradores.</small>
               <input
                 type="number"
-                class="
-                  focus:ring-blue-500 focus:border-blue-500
-                  flex-1
-                  block
-                  w-full
-                  rounded-none rounded-r-md
-                  sm:text-sm
-                  border-gray-300
-                "
+                class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                 min="0"
                 max="1000"
                 name="nr_collaborators"
@@ -1028,16 +700,7 @@
       <template #title>
         Datos de Registro de la Actividad
         <span
-          class="
-            px-2
-            inline-flex
-            text-base
-            leading-5
-            font-semibold
-            rounded-sm
-            bg-blue-100
-            text-blue-800
-          "
+          class="px-2 inline-flex text-base leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
         >
           {{ activityBeingUpdated.community.comm_name }} </span
         >.
@@ -1063,21 +726,7 @@
                   minLength="5"
                   maxlength="100"
                   placeholder="Ingresar nombre actividad"
-                  class="
-                    border-0
-                    px-3
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="updateActivityForm.comm_name_activity"
                   required
                 />
@@ -1102,6 +751,7 @@
                 autoApply
                 v-model="updateActivityForm.comm_date_activity"
                 required
+                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -1153,15 +803,7 @@
                 type="number"
                 name="nr_daughters"
                 placeholder="Número de Hermanas"
-                class="
-                  focus:ring-blue-500 focus:border-blue-500
-                  flex-1
-                  block
-                  w-full
-                  rounded-none rounded-r-md
-                  sm:text-sm
-                  border-gray-300
-                "
+                class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                 min="0"
                 max="1000"
                 v-model="updateActivityForm.comm_nr_daughters"
@@ -1187,15 +829,7 @@
               <small>Formato: Número de beneficiarios.</small>
               <input
                 type="number"
-                class="
-                  focus:ring-blue-500 focus:border-blue-500
-                  flex-1
-                  block
-                  w-full
-                  rounded-none rounded-r-md
-                  sm:text-sm
-                  border-gray-300
-                "
+                class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                 min="0"
                 max="1000"
                 name="nr_beneficiaries"
@@ -1223,15 +857,7 @@
               <small>Formato: Número de colaboradores.</small>
               <input
                 type="number"
-                class="
-                  focus:ring-blue-500 focus:border-blue-500
-                  flex-1
-                  block
-                  w-full
-                  rounded-none rounded-r-md
-                  sm:text-sm
-                  border-gray-300
-                "
+                class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                 min="0"
                 max="1000"
                 name="nr_collaborators"
@@ -1313,6 +939,7 @@ export default {
   },
   setup() {
     const date = ref(new Date());
+    const year = new Date().getFullYear();
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
@@ -1320,6 +947,7 @@ export default {
 
     return {
       date,
+      year,
       format,
     };
   },

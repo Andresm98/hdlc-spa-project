@@ -64,6 +64,7 @@
             :format="format"
             autoApply
             required
+            :year-range="[1800, this.year]"
           />
         </div>
       </div>
@@ -187,7 +188,12 @@
             {{ $page.props.errors.date_vocation }}
           </p>
           <small>Formato: Necesario</small>
-          <Datepicker v-model="form.date_vocation" :format="format" autoApply />
+          <Datepicker
+            v-model="form.date_vocation"
+            :format="format"
+            autoApply
+            :year-range="[1800, this.year]"
+          />
         </div>
       </div>
 
@@ -211,6 +217,7 @@
             :format="format"
             autoApply
             readonly
+            :year-range="[1800, this.year]"
           />
         </div>
       </div>
@@ -226,7 +233,12 @@
             {{ $page.props.errors.date_send }}
           </p>
           <small>Formato: Opcional</small>
-          <Datepicker v-model="form.date_send" :format="format" autoApply />
+          <Datepicker
+            v-model="form.date_send"
+            :format="format"
+            autoApply
+            :year-range="[1800, this.year]"
+          />
         </div>
       </div>
       <div class="w-full lg:w-4/12 px-4">
@@ -241,7 +253,12 @@
             {{ $page.props.errors.date_vote }}
           </p>
           <small>Formato: Opcional</small>
-          <Datepicker v-model="form.date_vote" :format="format" autoApply />
+          <Datepicker
+            v-model="form.date_vote"
+            :format="format"
+            autoApply
+            :year-range="[1800, this.year]"
+          />
         </div>
       </div>
 
@@ -472,6 +489,7 @@ export default {
   //  Setup all data
   setup() {
     const date = ref(new Date());
+    const year = new Date().getFullYear();
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
@@ -505,6 +523,7 @@ export default {
     });
     return {
       date,
+      year,
       format,
       form,
     };

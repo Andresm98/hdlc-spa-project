@@ -46,7 +46,7 @@ class UsersExport implements FromView
     {
         request()->validate([
             'direction' => ['in:asc,desc'],
-            'field' => ['in:name,email'],
+            'field' => ['in:name,email,lastname'],
             'dateStart' => ['date_format:Y-m-d H:i:s'],
         ]);
 
@@ -60,6 +60,16 @@ class UsersExport implements FromView
             $query->where(function ($query) use ($search) {
                 $query->where('name', 'LIKE', '%' . $search . '%');
                 $query->orWhere('lastname', 'LIKE', '%' . $search . '%');
+            });
+        }
+
+        if (request()->has(['book'])) {
+            $query->whereHas("profile", function ($qMain) {
+                $qMain->whereHas("profileBooks", function ($qProfileBooks) {
+                    $qProfileBooks->whereHas("book", function ($qBook) {
+                        $qBook->where("id", request('book'));
+                    });
+                });
             });
         }
 

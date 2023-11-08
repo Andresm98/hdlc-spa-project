@@ -69,7 +69,7 @@
               >
                 {{ $page.props.errors.names_mother }}
               </p>
-              <small>Formato: Andrea Fransheska González González </small>
+              <small>Formato: Andrea Laura González González </small>
               <div class="mt-1 rounded-md mx-2">
                 <input
                   type="text"
