@@ -255,6 +255,7 @@ import PrincipalLayout from "@/Components/Admin/PrincipalLayout";
 
 export default defineComponent({
   layout: PrincipalLayout,
+
   props: {
     users: Number,
     roles: Number,
@@ -263,6 +264,7 @@ export default defineComponent({
     appointments: Number,
     zones: Number,
   },
+
   components: {
     Head,
     AppLayout,

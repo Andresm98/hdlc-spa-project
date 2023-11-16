@@ -374,12 +374,14 @@ export default defineComponent({
   computed: {
     all() {},
   },
+
   props: {
     users_list: Object,
     user_custom: Object,
     roles: Object,
     filters: Object,
   },
+
   components: {
     Link,
     AppLayout,
@@ -393,6 +395,7 @@ export default defineComponent({
     TextInput,
     Alert,
   },
+
   data() {
     return {
       modal_open: false,
@@ -406,6 +409,7 @@ export default defineComponent({
       },
     };
   },
+
   methods: {
     sort(field) {
       this.params.field = field;
@@ -418,9 +422,11 @@ export default defineComponent({
       );
       this.modal_open = false;
     },
+
     closeModal() {
       this.modal_open = false;
     },
+
     reset() {
       this.params = mapValues(this.params, () => null);
     },

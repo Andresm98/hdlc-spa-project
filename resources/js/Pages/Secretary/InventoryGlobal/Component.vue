@@ -11,109 +11,37 @@
     <operation></operation>
 
     <section
-      class="
-        bg-gray-200
-        dark:bg-slate-800
-        y-1
-        px-4
-        sm:p-6
-        md:py-10 md:px-8
-        pt-2
-        pb-4
-        rounded-lg
-        sm:m-2
-        lg:m-3
-        md:m-4
-      "
+      class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg sm:m-2 lg:m-3 md:m-4"
     >
       <div
-        class="
-          max-w-4xl
-          mx-auto
-          grid grid-cols-1
-          lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2
-        "
+        class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
       >
         <div
-          class="
-            relative
-            p-3
-            col-start-1
-            row-start-1
-            flex flex-col-reverse
-            rounded-lg
-            bg-gradient-to-t
-            from-black/75
-            via-black/0
-            sm:bg-none sm:row-start-2 sm:p-0
-            md:bg-none md:row-start-2 md:p-0
-            lg:row-start-1
-          "
+          class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 md:bg-none md:row-start-2 md:p-0 lg:row-start-1"
         >
           <h1
-            class="
-              mt-1
-              text-lg
-              font-semibold
-              text-black
-              sm:text-black
-              md:text-2xl
-              dark:sm:text-white
-            "
+            class="mt-1 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
           >
             Provincia Ecuador
           </h1>
           <p
-            class="
-              text-sm
-              leading-4
-              font-medium
-              text-black
-              sm:text-black
-              dark:sm:text-slate-400
-            "
+            class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
           >
             Información General del inventario de la comunidades u obra.
           </p>
         </div>
         <div
-          class="
-            grid
-            gap-4
-            col-start-1 col-end-3
-            row-start-1
-            sm:mb-6 sm:grid-cols-4
-            md:mb-6 md:grid-cols-4
-            lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0
-          "
+          class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 md:mb-6 md:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
         >
           <img
             src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_2.png"
             alt=""
-            class="
-              w-full
-              h-60
-              object-cover
-              rounded-lg
-              sm:h-52 sm:col-span-2
-              md:h-52 md:col-span-2
-              lg:col-span-full
-            "
+            class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 md:h-52 md:col-span-2 lg:col-span-full"
             loading="lazy"
           />
         </div>
         <dl
-          class="
-            mt-4
-            text-xs
-            font-medium
-            flex
-            items-center
-            row-start-2
-            sm:mt-1 sm:row-start-3
-            md:mt-1 md:row-start-3
-            lg:row-start-2
-          "
+          class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-1 md:row-start-3 lg:row-start-2"
         >
           <dt class="sr-only">Visto</dt>
           <dd class="text-indigo-600 flex items-center dark:text-indigo-400">
@@ -210,21 +138,7 @@
                     minLength="5"
                     maxlength="50"
                     placeholder="Ingresar nombre del inventario"
-                    class="
-                      border-0
-                      px-3
-                      placeholder-blueGray-300
-                      text-blueGray-600
-                      bg-white
-                      rounded
-                      text-sm
-                      shadow
-                      focus:outline-none focus:ring
-                      w-full
-                      ease-linear
-                      transition-all
-                      duration-150
-                    "
+                    class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="formInventory.name"
                     required
                   />
@@ -269,14 +183,7 @@
         <div class="my-4">
           <div class="w-full md:w-5/5 mx-auto">
             <h4
-              class="
-                text-lg
-                font-medium
-                text-center
-                leading-6
-                text-gray-900
-                uppercase
-              "
+              class="text-lg font-medium text-center leading-6 text-gray-900 uppercase"
             >
               <strong>Secciones</strong>
             </h4>
@@ -336,15 +243,7 @@
                     </label>
 
                     <div
-                      class="
-                        w-full
-                        tab-content
-                        overflow-hidden
-                        border-l-2
-                        bg-gray-100
-                        border-blue-500
-                        leading-normal
-                      "
+                      class="w-full tab-content overflow-hidden border-l-2 bg-gray-100 border-blue-500 leading-normal"
                     >
                       <div class="p-5 overflow-y-auto h-60">
                         <section>
@@ -412,21 +311,7 @@
                       minLength="5"
                       maxlength="50"
                       placeholder="Ingresar nombre de la sección"
-                      class="
-                        border-0
-                        px-3
-                        placeholder-blueGray-300
-                        text-blueGray-600
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="createSectionForm.name"
                       required
                     />
@@ -525,21 +410,7 @@
                       minLength="10"
                       maxlength="100"
                       placeholder="Ingresar nombre de la sección"
-                      class="
-                        border-0
-                        px-3
-                        placeholder-blueGray-300
-                        text-blueGray-600
-                        bg-white
-                        rounded
-                        text-sm
-                        shadow
-                        focus:outline-none focus:ring
-                        w-full
-                        ease-linear
-                        transition-all
-                        duration-150
-                      "
+                      class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       v-model="updateSectionForm.name"
                       required
                     />
@@ -591,43 +462,46 @@
   </app-layout>
 </template>
 <script>
-import Datepicker from "vue3-date-time-picker";
-import { useForm } from "@inertiajs/inertia-vue3";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import JetButton from "@/Jetstream/Button.vue";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import { Link } from "@inertiajs/inertia-vue3";
-
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import Operation from "@/Components/Secretary/Community/Operation";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import moment from "moment";
-import { Inertia } from "@inertiajs/inertia";
-import "vue3-date-time-picker/dist/main.css";
-import { ref } from "vue";
 import { mapState, mapGetters, mapActions } from "vuex";
 import JetInputError from "@/Jetstream/InputError";
+import { useForm } from "@inertiajs/inertia-vue3";
+import JetButton from "@/Jetstream/Button.vue";
+import Datepicker from "vue3-date-time-picker";
+import { Link } from "@inertiajs/inertia-vue3";
+import "vue3-date-time-picker/dist/main.css";
+import JetInput from "@/Jetstream/Input.vue";
+import { Inertia } from "@inertiajs/inertia";
 import Alert from "@/Components/Alert";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   layout: PrincipalLayout,
+
   props: {
     errors: null,
     community: Object,
     datac: Object,
   },
+
   mounted() {
     this.inventory;
   },
+
   updated() {
     this.section;
   },
+
   components: {
     Datepicker,
     JetButtonSuccess,
@@ -645,6 +519,7 @@ export default {
     Alert,
     Operation,
   },
+
   watch: {
     "createSectionForm.description": function () {
       var limit = 4000;
@@ -657,6 +532,7 @@ export default {
         }
       }
     },
+
     "updateSectionForm.description": function () {
       var limit = 4000;
       const quill = this.$refs.qlcreateditor1;
@@ -668,6 +544,7 @@ export default {
         }
       }
     },
+
     "formInventory.description": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -681,6 +558,7 @@ export default {
       }
     },
   },
+
   data() {
     return {
       toolbarOptions: [
@@ -702,33 +580,45 @@ export default {
 
         ["clean"], // remove formatting button
       ],
+
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       formInventory: this.$inertia.form({
         name: null,
         description: null,
         community_id: null,
       }),
+
       sectionBeingCreated: null,
+
       createSectionForm: null,
+
       sectionBeingDeleted: null,
+
       deleteSectionForm: this.$inertia.form({
         name: null,
         description: null,
         community_id: null,
       }),
+
       sectionBeingUpdated: null,
+
       updateSectionForm: this.$inertia.form({
         name: null,
         description: null,
         community_id: null,
       }),
+
       allSection: {
         default: Array,
       },
     };
   },
+
   computed: {
     inventory() {
       axios
@@ -742,21 +632,10 @@ export default {
           this.formInventory = this.getInventory();
         });
 
-      //
-      //
-      //
-
       const headers = { "Content-Type": "application/json" };
       fetch("https://api.npms.io/v2/search?q=vue", { headers })
         .then((response) => response.json())
-        .then((data) => {
-          //   console.log("Send data: ");
-          //   console.log("Print: ", data.results);
-        });
-
-      //
-      //
-      //
+        .then((data) => {});
 
       fetch(
         this.route("secretary.communities.inventory.index", {
@@ -765,24 +644,14 @@ export default {
       )
         .then(async (response) => {
           const data = await response.json();
-
-          // check for error response
           if (!response.ok) {
-            // get error message from body or default to response statusText
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
           }
-
-          //   console.log("Send data 2: ");
-          //   console.log("Print 2: ", data);
         })
         .catch((error) => {
           this.errorMessage = error;
-          //   console.error("There was an error!", error);
         });
-
-      //
-
       this.section;
     },
 
@@ -802,9 +671,13 @@ export default {
   },
   methods: {
     ...mapActions("inventory", ["updateInventory"]),
+
     ...mapGetters("inventory", ["getInventory"]),
+
     ...mapActions("inventory", ["updateAllSection"]),
+
     ...mapGetters("inventory", ["getAllSection"]),
+
     submit() {
       Inertia.put(
         this.route("secretary.communities.inventory.update", {
@@ -817,6 +690,7 @@ export default {
         }
       );
     },
+
     accessArticles(section) {
       Inertia.get(
         this.route(
@@ -832,7 +706,6 @@ export default {
         )
       );
     },
-    // Update Data Table
 
     updateTable() {
       axios
@@ -846,7 +719,7 @@ export default {
           this.allSection = this.getAllSection();
         });
     },
-    // Create Data
+
     confirmationSectionCreate() {
       this.createSectionForm = this.$inertia.form({
         name: null,
@@ -874,7 +747,6 @@ export default {
       );
     },
 
-    // Put Data
     confirmationSectionUpdate(section) {
       this.updateSectionForm.name = section.name;
       this.updateSectionForm.description = section.description;
@@ -900,7 +772,6 @@ export default {
         }
       );
     },
-    // Delete Data
 
     confirmationSectionDelete(section) {
       this.deleteSectionForm.name = section.name;

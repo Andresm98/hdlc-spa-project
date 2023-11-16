@@ -2,16 +2,7 @@
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
       <h6
-        class="
-          mt-2
-          mb-2
-          text-lg
-          font-medium
-          text-center
-          leading-6
-          text-gray-900
-          uppercase
-        "
+        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
       >
         Plantilla de Resumen de la Comunidad
       </h6>
@@ -35,21 +26,7 @@
                   minLength="10"
                   maxlength="100"
                   placeholder="Ingresar nombre del resumen"
-                  class="
-                    border-0
-                    px-3
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="form.comm_name_resume"
                   required
                 />
@@ -98,21 +75,7 @@
                 minLength="10"
                 maxlength="400"
                 type="text"
-                class="
-                  border-0
-                  px-3
-                  placeholder-blueGray-300
-                  text-blueGray-600
-                  bg-white
-                  rounded
-                  text-sm
-                  shadow
-                  focus:outline-none focus:ring
-                  w-full
-                  ease-linear
-                  transition-all
-                  duration-150
-                "
+                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 name="anexed"
                 placeholder="Ingresar el anexo del resumen"
                 v-model="form.comm_annexed_resume"
@@ -155,149 +118,96 @@
           >Crear Resumen</jet-button-success
         >
       </form>
-
       <hr
-        class="
-          w-full
-          mt-1
-          mb-3
-          ml-4
-          mr-4
-          border-b-1 border-gray-400
-          hover:border-gray-400
-        "
+        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
       />
-
-      <!-- Table -->
-
       <div class="py-2">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
           <div
             v-if="this.getAllResume()"
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-blue-100">
-                <tr>
-                  <th
-                    scope="col"
-                    class="
-                      pl-4
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
-                  >
-                    Nombre
-                  </th>
-                  <th
-                    scope="col"
-                    class="
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
-                  >
-                    Fecha
-                  </th>
-                  <th
-                    scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
-                  >
-                    Anexo
-                  </th>
-                  <th
-                    scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
-                  >
-                    Acciones
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="resume in this.getAllResume()" :key="resume">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 h-10 w-10">
-                        <svg class="svg-icon mt-1" viewBox="2 2 23 23">
-                          <path
-                            d="M18.092,5.137l-3.977-1.466h-0.006c0.084,0.042-0.123-0.08-0.283,0H13.82L10,5.079L6.178,3.671H6.172c0.076,0.038-0.114-0.076-0.285,0H5.884L1.908,5.137c-0.151,0.062-0.25,0.207-0.25,0.369v10.451c0,0.691,0.879,0.244,0.545,0.369l3.829-1.406l3.821,1.406c0.186,0.062,0.385-0.029,0.294,0l3.822-1.406l3.83,1.406c0.26,0.1,0.543-0.08,0.543-0.369V5.506C18.342,5.344,18.242,5.199,18.092,5.137 M5.633,14.221l-3.181,1.15V5.776l3.181-1.15V14.221z M9.602,15.371l-3.173-1.15V4.626l3.173,1.15V15.371z M13.57,14.221l-3.173,1.15V5.776l3.173-1.15V14.221z M17.547,15.371l-3.182-1.15V4.626l3.182,1.15V15.371z"
-                          ></path>
-                        </svg>
-                      </div>
-                      <div class="ml-4">
-                        <div class="text-sm font-medium text-gray-900">
-                          {{ resume.comm_name_resume.substring(0, 15) }}...
+            <div className="overflow-y-auto h-96">
+              <div className="relative px-4">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-blue-100">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Nombre
+                      </th>
+                      <th
+                        scope="col"
+                        class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Fecha
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Anexo
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Acciones
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr v-for="resume in this.getAllResume()" :key="resume">
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div class="flex-shrink-0 h-10 w-10">
+                            <svg class="svg-icon mt-1" viewBox="2 2 23 23">
+                              <path
+                                d="M18.092,5.137l-3.977-1.466h-0.006c0.084,0.042-0.123-0.08-0.283,0H13.82L10,5.079L6.178,3.671H6.172c0.076,0.038-0.114-0.076-0.285,0H5.884L1.908,5.137c-0.151,0.062-0.25,0.207-0.25,0.369v10.451c0,0.691,0.879,0.244,0.545,0.369l3.829-1.406l3.821,1.406c0.186,0.062,0.385-0.029,0.294,0l3.822-1.406l3.83,1.406c0.26,0.1,0.543-0.08,0.543-0.369V5.506C18.342,5.344,18.242,5.199,18.092,5.137 M5.633,14.221l-3.181,1.15V5.776l3.181-1.15V14.221z M9.602,15.371l-3.173-1.15V4.626l3.173,1.15V15.371z M13.57,14.221l-3.173,1.15V5.776l3.173-1.15V14.221z M17.547,15.371l-3.182-1.15V4.626l3.182,1.15V15.371z"
+                              ></path>
+                            </svg>
+                          </div>
+                          <div class="ml-4">
+                            <div class="text-sm font-medium text-gray-900">
+                              {{ resume.comm_name_resume.substring(0, 15) }}...
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">
-                      {{ this.formatShowDate(resume.comm_date_resume) }}
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span
-                      class="
-                        px-3
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-yellow-100
-                        text-yellow-800
-                        mr-2
-                      "
-                    >
-                      {{ resume.comm_annexed_resume.substring(0, 15) }}...
-                    </span>
-                  </td>
-                  <td
-                    class="
-                      px-3
-                      py-4
-                      whitespace-nowrap
-                      text-right text-sm
-                      font-medium
-                    "
-                  >
-                    <!-- Components -->
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">
+                          {{ this.formatShowDate(resume.comm_date_resume) }}
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 mr-2"
+                        >
+                          {{ resume.comm_annexed_resume.substring(0, 15) }}...
+                        </span>
+                      </td>
+                      <td
+                        class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
+                      >
+                        <!-- Components -->
 
-                    <div class="mx-auto flex gap-10">
-                      <jet-button @click="confirmationResumeUpdate(resume)"
-                        >Detalles</jet-button
-                      >
-                      <jet-danger-button
-                        @click="confirmationResumeDelete(resume)"
-                        >Eliminar</jet-danger-button
-                      >
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                        <div class="mx-auto flex gap-10">
+                          <jet-button @click="confirmationResumeUpdate(resume)"
+                            >Detalles</jet-button
+                          >
+                          <jet-danger-button
+                            @click="confirmationResumeDelete(resume)"
+                            >Eliminar</jet-danger-button
+                          >
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
           <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
             <p class="text-center text-lg">
@@ -356,21 +266,7 @@
                     minLength="10"
                     maxlength="100"
                     placeholder="Ingresar nombre del resumen"
-                    class="
-                      border-0
-                      px-3
-                      placeholder-blueGray-300
-                      text-blueGray-600
-                      bg-white
-                      rounded
-                      text-sm
-                      shadow
-                      focus:outline-none focus:ring
-                      w-full
-                      ease-linear
-                      transition-all
-                      duration-150
-                    "
+                    class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="updateResumeForm.comm_name_resume"
                     required
                   />
@@ -419,21 +315,7 @@
                   minLength="10"
                   maxlength="400"
                   type="text"
-                  class="
-                    border-0
-                    px-3
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   name="anexed"
                   placeholder="Ingresar el anexo del resumen"
                   v-model="updateResumeForm.comm_annexed_resume"
@@ -489,31 +371,32 @@
 </template>
 
 <script>
-import Datepicker from "vue3-date-time-picker";
-import { useForm } from "@inertiajs/inertia-vue3";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import JetButton from "@/Jetstream/Button.vue";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import moment from "moment";
-import { Inertia } from "@inertiajs/inertia";
-import "vue3-date-time-picker/dist/main.css";
-import { ref } from "vue";
 import { mapState, mapGetters, mapActions } from "vuex";
 import JetInputError from "@/Jetstream/InputError";
+import { useForm } from "@inertiajs/inertia-vue3";
+import Datepicker from "vue3-date-time-picker";
+import JetButton from "@/Jetstream/Button.vue";
+import JetInput from "@/Jetstream/Input.vue";
+import { Inertia } from "@inertiajs/inertia";
+import "vue3-date-time-picker/dist/main.css";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   props: {
     errors: [],
   },
+
   mounted() {
     this.allResumes;
   },
+
   computed: {
     isInvalid() {
       console.log("inva ", this.isTouched, "\n\nopp> ");
@@ -521,6 +404,7 @@ export default {
     },
 
     ...mapState("community", ["community"]),
+
     ...mapState("resume", ["resume"]),
 
     allResumes() {
@@ -535,7 +419,7 @@ export default {
         });
     },
   },
-  // Relashionship with another components
+
   components: {
     Datepicker,
     JetButtonSuccess,
@@ -549,20 +433,24 @@ export default {
     JetFormSection,
     moment,
   },
-  //  Setup all data
+
   setup() {
     const date = ref(new Date());
+
     const year = new Date().getFullYear();
+
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
+
     const form = useForm({
       comm_name_resume: null,
       comm_annexed_resume: null,
       comm_observation_resume: null,
       comm_date_resume: null,
     });
+
     return {
       date,
       year,
@@ -592,9 +480,13 @@ export default {
 
         ["clean"], // remove formatting button
       ],
+
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       options: [
         "Bautismo",
         "Penitencia",
@@ -604,14 +496,18 @@ export default {
         "Matrimonio",
         "Unión de Enfermos",
       ],
+
       resumeBeingDeleted: null,
+
       deleteResumeForm: this.$inertia.form({
         comm_name_resume: null,
         comm_annexed_resume: null,
         comm_observation_resume: null,
         comm_date_resume: null,
       }),
+
       resumeBeingUpdated: null,
+
       updateResumeForm: this.$inertia.form({
         comm_name_resume: null,
         comm_annexed_resume: null,
@@ -631,6 +527,7 @@ export default {
         quill.setHTML(this.data_intput_one);
       }
     },
+
     "updateResumeForm.comm_observation_resume": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -644,10 +541,11 @@ export default {
   },
   methods: {
     ...mapActions("resume", ["updateAllResume"]),
+
     ...mapGetters("resume", ["getAllResume"]),
+
     submit() {
       this.form.comm_date_resume = this.formatDate(this.form.comm_date_resume);
-      //
       Inertia.post(
         route("secretary.communities.resume.store", {
           community_id: this.community.id,
@@ -660,7 +558,6 @@ export default {
             setTimeout(() => {
               this.updateTable();
             }, 10);
-
             this.form.comm_name_resume = null;
             this.form.comm_annexed_resume = null;
             this.form.comm_observation_resume = null;
@@ -669,8 +566,8 @@ export default {
           },
         }
       );
-      //
     },
+
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
@@ -678,15 +575,16 @@ export default {
     formatShowDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD");
     },
+
     confirmationResumeUpdate(resume) {
       this.updateResumeForm.comm_name_resume = resume.comm_name_resume;
       this.updateResumeForm.comm_observation_resume =
         resume.comm_observation_resume;
       this.updateResumeForm.comm_date_resume = resume.comm_date_resume;
       this.updateResumeForm.comm_annexed_resume = resume.comm_annexed_resume;
-
       this.resumeBeingUpdated = resume;
     },
+
     updateResume() {
       if (this.updateResumeForm.comm_date_resume != null) {
         this.updateResumeForm.comm_date_resume = this.formatDate(
@@ -712,7 +610,6 @@ export default {
       );
     },
 
-    // // Delete
     confirmationResumeDelete(resume) {
       this.deleteResumeForm.comm_name_resume = resume.comm_name_resume;
       this.deleteResumeForm.comm_observation_resume =
@@ -740,7 +637,7 @@ export default {
         }
       );
     },
-    // //
+
     updateTable() {
       axios
         .get(
@@ -752,28 +649,6 @@ export default {
           this.updateAllResume(res.data);
         });
     },
-    // showAlert() {
-    //   // Use sweetalert2
-    //   this.$swal("Hello Vue world!!!");
-    // },
-    // onChange(value) {
-    //   this.value = value;
-    //   console.log("aiudaaa> ", value);
-    //   if (value.indexOf("Reset me!") !== -1) {
-    //     console.log("is reset");
-    //     this.value = [];
-    //   }
-    // },
-    // onSelect(option) {
-    //   if (option === "Disable me!") {
-    //     console.log("is disable");
-    //     this.isDisabled = true;
-    //   }
-    // },
-    // onTouch() {
-    //   console.log("is touched");
-    //   this.isTouched = true;
-    // },
   },
 };
 </script>

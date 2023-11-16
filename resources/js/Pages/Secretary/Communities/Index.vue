@@ -779,15 +779,6 @@
                                 }}
                               </span>
                             </div>
-                            <!-- <span
-                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
-                            >
-                              {{
-                                this.showAddress(
-                                  community_custom.address.political_division_id
-                                )
-                              }}
-                            </span> -->
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             <span
@@ -1002,42 +993,6 @@
                                 </Link>
                               </div>
 
-                              <!-- Print Community -->
-                              <!-- <Link href="#">
-                                <div class="w-auto h-auto">
-                                  <div class="flex-1 h-full">
-                                    <div
-                                      class="
-                                        flex
-                                        items-center
-                                        justify-center
-                                        flex-1
-                                        h-full
-                                        p-2
-                                        border border-blue-800
-                                        text-white
-                                        shadow
-                                        rounded-lg
-                                        hover:bg-blue-50 hover:text-zinc-300
-                                      "
-                                    >
-                                      <div class="relative">
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          class="h-5 w-5 text-blue-800"
-                                          viewBox="0 0 20 20"
-                                          fill="currentColor"
-                                        >
-                                          <path
-                                            d="M17.453,12.691V7.723 M17.453,12.691V7.723 M1.719,12.691V7.723 M18.281,12.691V7.723 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M7.309,13.312h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,13.312,7.309,13.312 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M16.625,6.066h-1.449V3.168c0-0.228-0.186-0.414-0.414-0.414H5.238c-0.228,0-0.414,0.187-0.414,0.414v2.898H3.375c-0.913,0-1.656,0.743-1.656,1.656v4.969c0,0.913,0.743,1.656,1.656,1.656h1.449v2.484c0,0.228,0.187,0.414,0.414,0.414h9.523c0.229,0,0.414-0.187,0.414-0.414v-2.484h1.449c0.912,0,1.656-0.743,1.656-1.656V7.723C18.281,6.81,17.537,6.066,16.625,6.066 M5.652,3.582h8.695v2.484H5.652V3.582zM14.348,16.418H5.652v-4.969h8.695V16.418z M17.453,12.691c0,0.458-0.371,0.828-0.828,0.828h-1.449v-2.484c0-0.228-0.186-0.414-0.414-0.414H5.238c-0.228,0-0.414,0.186-0.414,0.414v2.484H3.375c-0.458,0-0.828-0.37-0.828-0.828V7.723c0-0.458,0.371-0.828,0.828-0.828h13.25c0.457,0,0.828,0.371,0.828,0.828V12.691z M7.309,13.312h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,13.312,7.309,13.312M7.309,15.383h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,15.383,7.309,15.383 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555"
-                                          ></path>
-                                        </svg>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </Link> -->
-
                               <!-- Delete Community -->
 
                               <button
@@ -1231,37 +1186,39 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
 
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 
-import { Link } from "@inertiajs/inertia-vue3";
-import Pagination from "@/Components/Pagination";
-import { Inertia } from "@inertiajs/inertia";
-import "sweetalert2/dist/sweetalert2.min.css";
-import { ref } from "vue";
 import { pickBy, throttle, mapValues } from "lodash";
+import Pagination from "@/Components/Pagination";
+import { Link } from "@inertiajs/inertia-vue3";
+import "sweetalert2/dist/sweetalert2.min.css";
+import { Inertia } from "@inertiajs/inertia";
 
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import moment from "moment";
+
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
+import JetInputError from "@/Jetstream/InputError.vue";
+import JetButton from "@/Jetstream/Button.vue";
+import JetInput from "@/Jetstream/Input.vue";
 import Dropdown from "@/Components/Dropdown";
 import Icon from "@/Components/Icon";
-import JetButton from "@/Jetstream/Button.vue";
+import moment from "moment";
 
+import Operation from "@/Components/Secretary/Community/Operation";
+import SearchFilter from "@/Components/SearchFilter";
+import Datepicker from "vue3-date-time-picker";
 import TextInput from "@/Components/TextInput";
 import Alert from "@/Components/Alert";
-import SearchFilter from "@/Components/SearchFilter";
-import Operation from "@/Components/Secretary/Community/Operation";
+import { defineComponent } from "vue";
 import { mapActions } from "vuex";
-import Datepicker from "vue3-date-time-picker";
+import { ref } from "vue";
 
 export default defineComponent({
   layout: PrincipalLayout,
+
   props: {
     communities_list: Object,
     pastorals: Object,
@@ -1271,6 +1228,7 @@ export default defineComponent({
       type: Array,
     },
   },
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -1278,6 +1236,7 @@ export default defineComponent({
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
+
     return {
       date,
       year,
@@ -1291,6 +1250,7 @@ export default defineComponent({
       modules: [Pagination],
     };
   },
+
   components: {
     Link,
     AppLayout,
@@ -1310,6 +1270,7 @@ export default defineComponent({
     Operation,
     Icon,
   },
+
   data() {
     return {
       modal_open: false,
@@ -1329,13 +1290,14 @@ export default defineComponent({
         dateEnd: this.filters.dateEnd,
         perPage: this.filters.perPage,
         perProvince: this.filters.perProvince,
-        //
         printOperation: null,
       },
       arrayAddress: [],
     };
   },
+
   mounted() {},
+
   methods: {
     showAddress(value) {
       const address = fetch(
@@ -1346,24 +1308,22 @@ export default defineComponent({
           this.arrayAddress.push(data.data_province);
           return data.data_province; //3
         });
-      //   const printAddress = async () => {
-      //     console.log(address);
-      //     return await address;
-      //   };
-      //   return "ay" + printAddress();
     },
+
     async resolveAddress(value) {
       const response = await axios.get(
         route("secretary.address.address-format", { actual_parish: value })
       );
       return response.data;
     },
+
     formatDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
       }
       return null;
     },
+
     formatDateShow(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
@@ -1375,6 +1335,7 @@ export default defineComponent({
       this.params.field = field;
       this.params.direction = this.params.direction === "asc" ? "desc" : "asc";
     },
+
     deleteCommunity: function (value) {
       if (value == 1) {
         Inertia.delete(
@@ -1392,31 +1353,37 @@ export default defineComponent({
 
       this.modal_open = false;
     },
+
     closeModal() {
       this.modal_open = false;
     },
+
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     dataParams() {
       return this.params;
     },
-    //
+
     openReportDialog(type) {
       this.report_modal_open = true;
       this.type_operation_report = type;
     },
+
     closeReportModal() {
       this.report_modal_open = false;
       this.type_operation_report = null;
       this.params.printOperation = null;
     },
   },
+
   watch: {
     "params.active": function () {
       this.params.dateEnd = null;
       this.params.dateStart = null;
     },
+
     params: {
       handler: throttle(function () {
         if (this.params.dateStart != null) {

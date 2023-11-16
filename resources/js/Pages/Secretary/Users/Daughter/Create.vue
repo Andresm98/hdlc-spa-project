@@ -410,18 +410,18 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
-import { useForm } from "@inertiajs/inertia-vue3";
-import { Link } from "@inertiajs/inertia-vue3";
-import Pagination from "@/Components/Pagination";
-import JetInputError from "@/Jetstream/InputError";
-import JetInput from "@/Jetstream/Input";
-import JetLabel from "@/Jetstream/Label";
-import JetButton from "@/Jetstream/Button";
-import SelectInput from "@/Components/SelectInput";
-import SimpleUpload from "@/Components/SimpleUpload";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import Operation from "@/Components/Secretary/Daughter/Operation";
+import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
+import SimpleUpload from "@/Components/SimpleUpload";
+import JetInputError from "@/Jetstream/InputError";
+import SelectInput from "@/Components/SelectInput";
+import { useForm } from "@inertiajs/inertia-vue3";
+import Pagination from "@/Components/Pagination";
+import { Link } from "@inertiajs/inertia-vue3";
+import JetButton from "@/Jetstream/Button";
+import JetInput from "@/Jetstream/Input";
+import JetLabel from "@/Jetstream/Label";
 
 export default {
   props: ["errors"],
@@ -438,6 +438,7 @@ export default {
     SelectInput,
     Operation,
   },
+
   data() {
     return {
       photoPreview: null,
@@ -451,6 +452,7 @@ export default {
       this.url = URL.createObjectURL(file);
     },
   },
+
   setup() {
     const form = useForm({
       username: null,

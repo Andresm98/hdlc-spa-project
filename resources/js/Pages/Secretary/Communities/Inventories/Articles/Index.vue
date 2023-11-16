@@ -1618,38 +1618,36 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-
-import { Link } from "@inertiajs/inertia-vue3";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import Pagination from "@/Components/Pagination";
-import { Inertia } from "@inertiajs/inertia";
+import { Link } from "@inertiajs/inertia-vue3";
 import "sweetalert2/dist/sweetalert2.min.css";
+import { Inertia } from "@inertiajs/inertia";
 
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import SearchFilter from "@/Components/SearchFilter";
 import Operation from "@/Components/Secretary/Community/Operation";
-import Icon from "@/Components/Icon";
-
-import TextInput from "@/Components/TextInput";
-import Alert from "@/Components/Alert";
-import { mapActions } from "vuex";
-import { ref } from "vue";
-import Dropdown from "@/Components/Dropdown";
-import moment from "moment";
-import Datepicker from "vue3-date-time-picker";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
+import JetInputError from "@/Jetstream/InputError.vue";
+import SearchFilter from "@/Components/SearchFilter";
 import { pickBy, throttle, mapValues } from "lodash";
-
+import JetInput from "@/Jetstream/Input.vue";
+import Datepicker from "vue3-date-time-picker";
+import TextInput from "@/Components/TextInput";
+import Dropdown from "@/Components/Dropdown";
+import Alert from "@/Components/Alert";
+import { defineComponent } from "vue";
+import Icon from "@/Components/Icon";
+import { mapActions } from "vuex";
+import moment from "moment";
+import { ref } from "vue";
 import $ from "jquery";
+
 export default defineComponent({
   layout: PrincipalLayout,
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -1663,6 +1661,7 @@ export default defineComponent({
       format,
     };
   },
+
   props: {
     listArticles: Object,
     section_slug: String,
@@ -1671,6 +1670,7 @@ export default defineComponent({
     dataInventoryCommunity: Object,
     section: Object,
   },
+
   components: {
     Link,
     AppLayout,
@@ -1690,6 +1690,7 @@ export default defineComponent({
     moment,
     Operation,
   },
+
   data() {
     return {
       modal_open: false,
@@ -1707,12 +1708,9 @@ export default defineComponent({
         sectionSlug: this.section_slug,
       },
 
-      //  Create
-
       articleBeingCreated: null,
-      createArticleForm: null,
 
-      //   Update
+      createArticleForm: null,
 
       articleBeingUpdated: null,
       updateArticleForm: this.$inertia.form({
@@ -1727,6 +1725,7 @@ export default defineComponent({
       }),
     };
   },
+
   methods: {
     formatDate(value) {
       if (value != null) {
@@ -1734,13 +1733,13 @@ export default defineComponent({
       }
       return null;
     },
+
     formatDateShow(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
       }
       return null;
     },
-    // jquery
 
     printJquery() {
       $("<iframe>", { name: "myiframe", class: "printFrame" })
@@ -1788,6 +1787,7 @@ export default defineComponent({
         `);
 
       window.frames["myiframe"].focus();
+
       window.frames["myiframe"].print();
 
       setTimeout(() => {
@@ -1799,7 +1799,6 @@ export default defineComponent({
       this.params.field = field;
       this.params.direction = this.params.direction === "asc" ? "desc" : "asc";
     },
-    // Post
 
     confirmCreateArticle() {
       this.createArticleForm = this.$inertia.form({
@@ -1814,6 +1813,7 @@ export default defineComponent({
       });
       this.articleBeingCreated = this.createArticleForm;
     },
+
     createArticle() {
       this.createArticleForm.post(
         this.route("secretary.communities.articles.store", {
@@ -1828,7 +1828,6 @@ export default defineComponent({
         }
       );
     },
-    // Put
 
     confirmUpdateArticle(article_custom) {
       this.updateArticleForm.name = article_custom.name;
@@ -1839,7 +1838,6 @@ export default defineComponent({
       this.updateArticleForm.status = article_custom.status;
       this.updateArticleForm.size = article_custom.size;
       this.updateArticleForm.brand = article_custom.brand;
-
       this.articleBeingUpdated = article_custom;
     },
 
@@ -1860,8 +1858,6 @@ export default defineComponent({
       );
     },
 
-    // Delete
-
     deleteArticle: function () {
       Inertia.delete(
         this.route("secretary.communities.articles.delete", {
@@ -1871,22 +1867,25 @@ export default defineComponent({
           preserveState: true,
           preserveScroll: true,
           onSuccess: () => {
-            // console.log("deleted");
           },
         }
       );
       this.modal_open = false;
     },
+
     closeModal() {
       this.modal_open = false;
     },
+
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     dataParams() {
       return this.params;
     },
   },
+
   watch: {
     params: {
       handler: throttle(function () {

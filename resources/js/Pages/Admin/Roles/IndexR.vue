@@ -299,7 +299,9 @@ export default defineComponent({
     AppLayout,
     Alert,
   },
+
   layout: PrincipalLayout,
+
   props: ["roles", "availablePermissions", "defaultPermissions"],
 
   data() {
@@ -331,6 +333,7 @@ export default defineComponent({
       }
       return "";
     },
+
     createApiToken() {
       this.createApiTokenForm.post(route("admin.roles.store"), {
         preserveScroll: true,

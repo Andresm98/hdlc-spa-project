@@ -453,23 +453,24 @@
   </app-layout>
 </template>
 <script>
-import Datepicker from "vue3-date-time-picker";
-import { useForm } from "@inertiajs/inertia-vue3";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import JetButton from "@/Jetstream/Button.vue";
+
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import { Link } from "@inertiajs/inertia-vue3";
-import AppLayout from "@/Layouts/AppLayout.vue";
-import Operation from "@/Components/Daughter/Operation";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import { mapState, mapGetters, mapActions } from "vuex";
+import Operation from "@/Components/Daughter/Operation";
+import JetInputError from "@/Jetstream/InputError";
+import { useForm } from "@inertiajs/inertia-vue3";
+import JetButton from "@/Jetstream/Button.vue";
+import Datepicker from "vue3-date-time-picker";
+import { Link } from "@inertiajs/inertia-vue3";
+import AppLayout from "@/Layouts/AppLayout.vue";
 import JetInput from "@/Jetstream/Input.vue";
 import { Inertia } from "@inertiajs/inertia";
 import "vue3-date-time-picker/dist/main.css";
-import JetInputError from "@/Jetstream/InputError";
 import Alert from "@/Components/Alert";
 import moment from "moment";
 import { ref } from "vue";
@@ -480,12 +481,15 @@ export default {
     community: Object,
     datac: Object,
   },
+
   mounted() {
     this.inventory;
   },
+
   updated() {
     this.section;
   },
+
   components: {
     Datepicker,
     JetButtonSuccess,
@@ -503,6 +507,7 @@ export default {
     Alert,
     Operation,
   },
+
   watch: {
     "createSectionForm.description": function () {
       var limit = 4000;
@@ -515,6 +520,7 @@ export default {
         }
       }
     },
+
     "updateSectionForm.description": function () {
       var limit = 4000;
       const quill = this.$refs.qlcreateditor1;
@@ -526,6 +532,7 @@ export default {
         }
       }
     },
+
     "formInventory.description": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -560,33 +567,45 @@ export default {
 
         ["clean"], // remove formatting button
       ],
+
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       formInventory: this.$inertia.form({
         name: null,
         description: null,
         community_id: null,
       }),
+
       sectionBeingCreated: null,
+
       createSectionForm: null,
+
       sectionBeingDeleted: null,
+
       deleteSectionForm: this.$inertia.form({
         name: null,
         description: null,
         community_id: null,
       }),
+
       sectionBeingUpdated: null,
+
       updateSectionForm: this.$inertia.form({
         name: null,
         description: null,
         community_id: null,
       }),
+
       allSection: {
         default: Array,
       },
     };
   },
+
   computed: {
     inventory() {
       axios
@@ -620,6 +639,7 @@ export default {
         });
       this.section;
     },
+
     section() {
       axios
         .get(
@@ -636,9 +656,13 @@ export default {
   },
   methods: {
     ...mapActions("inventory", ["updateInventory"]),
+
     ...mapGetters("inventory", ["getInventory"]),
+
     ...mapActions("inventory", ["updateAllSection"]),
+
     ...mapGetters("inventory", ["getAllSection"]),
+
     submit() {
       Inertia.put(
         this.route("daughter.communities.inventory.update", {
@@ -651,6 +675,7 @@ export default {
         }
       );
     },
+
     accessArticles(section) {
       Inertia.get(
         this.route(
@@ -666,6 +691,7 @@ export default {
         )
       );
     },
+
     updateTable() {
       axios
         .get(
@@ -678,6 +704,7 @@ export default {
           this.allSection = this.getAllSection();
         });
     },
+
     confirmationSectionCreate() {
       this.createSectionForm = this.$inertia.form({
         name: null,
@@ -686,6 +713,7 @@ export default {
       });
       this.sectionBeingCreated = this.createSectionForm;
     },
+
     createSection() {
       this.createSectionForm.post(
         this.route("daughter.communities.section.store", {
@@ -703,11 +731,13 @@ export default {
         }
       );
     },
+
     confirmationSectionUpdate(section) {
       this.updateSectionForm.name = section.name;
       this.updateSectionForm.description = section.description;
       this.sectionBeingUpdated = section;
     },
+
     updateSection() {
       this.updateSectionForm.put(
         this.route("daughter.communities.section.update", {
@@ -727,10 +757,12 @@ export default {
         }
       );
     },
+
     confirmationSectionDelete(section) {
       this.deleteSectionForm.name = section.name;
       this.sectionBeingDeleted = section;
     },
+
     deleteSection() {
       this.deleteSectionForm.delete(
         this.route("daughter.communities.section.delete", {
@@ -751,9 +783,13 @@ export default {
     },
   },
 };
+
 var myRadios = document.getElementsByName("tabs2");
+
 var setCheck;
+
 var x = 0;
+
 for (x = 0; x < myRadios.length; x++) {
   myRadios[x].onclick = function () {
     if (setCheck != this) {

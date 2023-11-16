@@ -1325,6 +1325,9 @@ select {
 .h-1\/2 {
   height: 50%;
 }
+.h-96 {
+  height: 24rem;
+}
 .h-80 {
   height: 20rem;
 }

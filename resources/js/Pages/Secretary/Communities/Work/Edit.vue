@@ -952,6 +952,7 @@
   </jet-dialog-modal>
 </template>
 <script>
+
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import { useForm, Link } from "@inertiajs/inertia-vue3";
@@ -973,10 +974,12 @@ import Operation from "@/Components/Secretary/Community/Operation";
 
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "../../../../../css/style.css";
+
 // import required modules
 import { Pagination } from "swiper";
 
@@ -990,10 +993,7 @@ import Files from "@/Pages/Secretary/Communities/Files/Index";
 
 export default defineComponent({
   created() {
-    // console.log("created " + this.$el);
     this.uploadProvinces(this.provinces);
-
-    // Method fetch
 
     fetch(this.route("secretary.pastoral.index"))
       .then(async (response) => {
@@ -1009,7 +1009,6 @@ export default defineComponent({
       })
       .catch((error) => {
         element.parentElement.innerHTML = `Error: ${error}`;
-        console.error("There was an error!", error);
       });
 
     fetch(this.route("secretary.zone.index"))
@@ -1030,6 +1029,7 @@ export default defineComponent({
   },
 
   beforeMount() {},
+
   mounted() {
     if (this.community_custom.address != null) {
       this.status().then((data) => {
@@ -1044,6 +1044,7 @@ export default defineComponent({
     }
     this.changeCommunity(this.community_custom);
   },
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -1064,6 +1065,7 @@ export default defineComponent({
       modules: [Pagination],
     };
   },
+
   props: {
     community_principal: Object,
     community_custom: Object,
@@ -1076,42 +1078,42 @@ export default defineComponent({
     prefix: null,
     postfix: null,
   },
+
   computed: {
     ...mapGetters("daughter", ["actualCount"]),
+
     ...mapState("address", ["allProvinces"]),
+
     ...mapState("community", ["community"]),
 
-    // Validate Multioption
     isInvalidProvince() {
-      //   console.log("ee", this.selectOne.selectedProvince);
       return (
         this.selectOne.selectedProvince == undefined ||
         this.selectOne.selectedProvince == null
       );
     },
+
     isInvalidCanton() {
-      //   console.log("ee canton", this.selectTwo.selectedCanton);
       return (
         this.selectTwo.selectedCanton == undefined ||
         this.selectTwo.selectedCanton == null
       );
     },
+
     isInvalidParish() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectThree.selectedParish == undefined ||
         this.selectThree.selectedParish == null
       );
     },
+
     isInvalidPastoral() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectFour.selectedPastoral == undefined ||
         this.selectFour.selectedPastoral == null
       );
     },
 
-    // Validate ID Card`
     validateIdentityCard() {
       this.form.comm_identity_card = this.form.comm_identity_card + "";
       if (this.form.comm_identity_card == null) {
@@ -1122,7 +1124,6 @@ export default defineComponent({
         this.form.comm_identity_card.length == 13
       ) {
         const digit = this.form.comm_identity_card.split("").map(Number);
-        //   console.log(digit);
         const coefficient = [2, 1];
         var province_code = digit[0] * 10 + digit[1];
         var verification_code = digit.slice(9, 10);
@@ -1155,7 +1156,9 @@ export default defineComponent({
       return false;
     },
   },
+
   layout: PrincipalLayout,
+
   components: {
     Link,
     Swiper,
@@ -1220,7 +1223,6 @@ export default defineComponent({
         multiSelectUser: null,
         vSelectUser: null,
       },
-      //
       form: useForm({
         comm_identity_card: this.community_custom.comm_identity_card,
         comm_name: this.community_custom.comm_name,
@@ -1241,7 +1243,6 @@ export default defineComponent({
       }),
       photoPreview: null,
       url: null,
-      //Provinces
       selectOne: {
         selectedProvince: undefined,
         value: 0,
@@ -1300,6 +1301,7 @@ export default defineComponent({
       options: [],
     };
   },
+
   watch: {
     "selectOne.selectedProvince": function () {
       if (this.selectOne.selectedProvince === null) {
@@ -1307,30 +1309,30 @@ export default defineComponent({
         this.selectThree.selectedParish = null;
         this.selectTwo.options = [];
         this.selectThree.options = [];
-        // Clean data Form
         this.form.province_id = null;
         this.form.canton_id = null;
         this.form.parish_id = null;
         this.form.political_division_id = null;
       }
     },
+
     "selectTwo.selectedCanton": function () {
       if (this.selectTwo.selectedCanton === null) {
         this.selectThree.selectedParish = null;
         this.selectThree.options = [];
-        // Clean data Form
         this.form.canton_id = null;
         this.form.parish_id = null;
         this.form.political_division_id = null;
       }
     },
+
     "selectThree.selectedParish": function () {
       if (this.selectThree.selectedParish === null) {
-        // Clean data Form
         this.form.parish_id = null;
         this.form.political_division_id = null;
       }
     },
+
     "updatedStatusPastoralForm.closeReason": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -1342,6 +1344,7 @@ export default defineComponent({
       }
     },
   },
+
   methods: {
     changeStatusCommunity() {
       if (
@@ -1399,6 +1402,7 @@ export default defineComponent({
     },
 
     handleScroll() {},
+
     async status() {
       this.form.address = this.community_custom.address["address"];
       this.form.political_division_id =
@@ -1410,22 +1414,25 @@ export default defineComponent({
       );
       return response.data;
     },
+
     ...mapActions("community", ["changeCommunity"]),
 
     onSearchPastoralsChange() {},
+
     onSelectedPastoral(pastoral) {
       this.form.pastoral_id = pastoral.id;
     },
+
     onSearchZonesChange() {},
+
     onSelectedZone(zone) {
       this.form.zone_id = zone.id;
     },
+
     onSearchProvincesChange(term) {
-      //   console.log("input data search " + term);
     },
 
     onSelectedProvince(province) {
-      //   console.log("input data selecter " + province.id);
       this.form.province_id = province.id;
       this.form.canton_id = null;
       this.form.parish_id = null;
@@ -1441,17 +1448,14 @@ export default defineComponent({
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.selectTwo.options = res.data;
         });
     },
 
     onSearchCantonChange(term) {
-      //   console.log(term);
     },
 
     onSelectedCanton(canton) {
-      //   console.log("input data selecter " + canton.id);
       this.form.canton_id = canton.id;
       this.form.parish_id = null;
       this.form.political_division_id = null;
@@ -1465,26 +1469,17 @@ export default defineComponent({
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.selectThree.options = res.data;
         });
     },
 
     onSearchParishChange(term) {
-      //   console.log(term);
     },
 
     onSelectedParish(parish) {
       this.form.parish_id = parish.id;
       this.form.political_division_id = parish.id;
-      //   console.log("input parish data selecter " + this.form.parish_id);
     },
-
-    // ...mapActions("daughter", ["increment"]),
-
-    // ...mapActions("daughter", ["changeUser"]),
-
-    // ...mapActions("daughter", ["changeUserId"]),
 
     ...mapActions("address", ["uploadProvinces"]),
 
@@ -1492,9 +1487,11 @@ export default defineComponent({
       const file = e.target.files[0];
       this.url = URL.createObjectURL(file);
     },
+
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
+
     submit() {
       this.form.date_fndt_comm = this.formatDate(this.form.date_fndt_comm);
       if (this.form.date_fndt_work != null) {
@@ -1531,22 +1528,21 @@ export default defineComponent({
 
     onChange(value) {
       this.value = value;
-      console.log("aiudaaa> ", value);
       if (value.indexOf("Reset me!") !== -1) {
-        console.log("is reset");
         this.value = [];
       }
     },
+
     onSelect(option) {
       if (option === "Disable me!") {
-        console.log("is disable");
         this.isDisabled = true;
       }
     },
+
     onTouch() {
-      console.log("is touched");
       this.isTouched = true;
     },
+
     openDialogReport() {
       this.managingReportsFor = this.$inertia.form({});
     },

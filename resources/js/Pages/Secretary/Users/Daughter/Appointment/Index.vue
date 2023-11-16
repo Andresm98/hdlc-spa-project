@@ -88,182 +88,210 @@
               v-if="this.getAllAppointment()"
               class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 overflow-y-auto h-72"
             >
-              <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-blue-100">
-                  <tr>
-                    <th
-                      scope="col"
-                      class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
-                    >
-                      Comunidad/Obra
-                    </th>
-                    <th
-                      scope="col"
-                      class="text-left text-xs font-medium text-black uppercase tracking-wider"
-                    >
-                      Cargo
-                    </th>
-                    <th
-                      scope="col"
-                      class="text-left text-xs font-medium text-black uppercase tracking-wider"
-                    >
-                      Cambio
-                    </th>
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                    >
-                      Fechas (inicio-fin)
-                    </th>
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                    >
-                      Acciones
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  <tr v-for="appointment in this.listActual" :key="appointment">
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="flex items-center">
-                        <div class="flex-shrink-0 h-10 w-10">
-                          <svg class="svg-icon" viewBox="2 2 23 23">
-                            <path
-                              d="M17.283,5.549h-5.26V4.335c0-0.222-0.183-0.404-0.404-0.404H8.381c-0.222,0-0.404,0.182-0.404,0.404v1.214h-5.26c-0.223,0-0.405,0.182-0.405,0.405v9.71c0,0.223,0.182,0.405,0.405,0.405h14.566c0.223,0,0.404-0.183,0.404-0.405v-9.71C17.688,5.731,17.506,5.549,17.283,5.549 M8.786,4.74h2.428v0.809H8.786V4.74z M16.879,15.26H3.122v-4.046h5.665v1.201c0,0.223,0.182,0.404,0.405,0.404h1.618c0.222,0,0.405-0.182,0.405-0.404v-1.201h5.665V15.26z M9.595,9.583h0.81v2.428h-0.81V9.583zM16.879,10.405h-5.665V9.19c0-0.222-0.183-0.405-0.405-0.405H9.191c-0.223,0-0.405,0.183-0.405,0.405v1.215H3.122V6.358h13.757V10.405z"
-                            ></path>
-                          </svg>
-                        </div>
-                        <div class="ml-4">
-                          <div
-                            class="text-sm font-medium text-black hover:text-blue-500"
-                          >
-                            <div
-                              v-if="
-                                appointment.community.comm_level == 1 &&
-                                appointment.community.comm_id == null
-                              "
-                            >
-                              <a
-                                :href="
-                                  route('secretary.communities.edit', {
-                                    slug: appointment.community.comm_slug,
-                                  })
-                                "
-                                target="_blank"
-                              >
-                                {{
-                                  appointment.community.comm_name.substring(
-                                    0,
-                                    15
-                                  )
-                                }}...
-                              </a>
+              <div className="overflow-y-auto h-96">
+                <div className="relative px-4">
+                  <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-blue-100">
+                      <tr>
+                        <th
+                          scope="col"
+                          class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                        >
+                          Comunidad/Obra
+                        </th>
+                        <th
+                          scope="col"
+                          class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                        >
+                          Cargo
+                        </th>
+                        <th
+                          scope="col"
+                          class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                        >
+                          Cambio
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                        >
+                          Fechas (inicio-fin)
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                        >
+                          Acciones
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                      <tr
+                        v-for="appointment in this.listActual"
+                        :key="appointment"
+                      >
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10">
+                              <svg class="svg-icon" viewBox="2 2 23 23">
+                                <path
+                                  d="M17.283,5.549h-5.26V4.335c0-0.222-0.183-0.404-0.404-0.404H8.381c-0.222,0-0.404,0.182-0.404,0.404v1.214h-5.26c-0.223,0-0.405,0.182-0.405,0.405v9.71c0,0.223,0.182,0.405,0.405,0.405h14.566c0.223,0,0.404-0.183,0.404-0.405v-9.71C17.688,5.731,17.506,5.549,17.283,5.549 M8.786,4.74h2.428v0.809H8.786V4.74z M16.879,15.26H3.122v-4.046h5.665v1.201c0,0.223,0.182,0.404,0.405,0.404h1.618c0.222,0,0.405-0.182,0.405-0.404v-1.201h5.665V15.26z M9.595,9.583h0.81v2.428h-0.81V9.583zM16.879,10.405h-5.665V9.19c0-0.222-0.183-0.405-0.405-0.405H9.191c-0.223,0-0.405,0.183-0.405,0.405v1.215H3.122V6.358h13.757V10.405z"
+                                ></path>
+                              </svg>
                             </div>
-                            <div v-if="appointment.community.comm_level == 2">
-                              {{
-                                appointment.community.comm_name.substring(
-                                  0,
-                                  15
-                                )
-                              }}.
+                            <div class="ml-4">
+                              <div
+                                class="text-sm font-medium text-black hover:text-blue-500"
+                              >
+                                <div
+                                  v-if="
+                                    appointment.community.comm_level == 1 &&
+                                    appointment.community.comm_id == null
+                                  "
+                                >
+                                  <a
+                                    :href="
+                                      route('secretary.communities.edit', {
+                                        slug: appointment.community.comm_slug,
+                                      })
+                                    "
+                                    target="_blank"
+                                  >
+                                    {{
+                                      appointment.community.comm_name.substring(
+                                        0,
+                                        15
+                                      )
+                                    }}...
+                                  </a>
+                                </div>
+                                <div
+                                  v-if="appointment.community.comm_level == 2"
+                                >
+                                  {{
+                                    appointment.community.comm_name.substring(
+                                      0,
+                                      15
+                                    )
+                                  }}.
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-sm text-gray-900">
-                        {{ appointment.appointment_level.name }}
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <span
-                        v-if="
-                          appointment.transfer.transfer_date_relocated === null
-                        "
-                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-green-100 text-green-800"
-                      >
-                        {{
-                          appointment.transfer.transfer_reason.substring(0, 15)
-                        }}
-                        <br />
-                        {{
-                          this.formatDateShow(
-                            appointment.transfer.transfer_date_adission
-                          )
-                        }}<br />
-                        {{
-                          this.formatDateShow(
-                            appointment.transfer.transfer_date_relocated
-                          )
-                        }}
-                      </span>
-                      <span
-                        v-else
-                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
-                      >
-                        {{
-                          appointment.transfer.transfer_reason.substring(0, 15)
-                        }}
-                        <br />
-                        {{
-                          this.formatDateShow(
-                            appointment.transfer.transfer_date_adission
-                          )
-                        }}<br />
-                        {{
-                          this.formatDateShow(
-                            appointment.transfer.transfer_date_relocated
-                          )
-                        }}
-                      </span>
-                    </td>
-                    <td
-                      class="px-6 py-4 whitespace-nowrap"
-                      v-if="appointment.date_end_appointment == null"
-                    >
-                      <span
-                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                      >
-                        {{ this.formatDateShow(appointment.date_appointment) }}
-                        -
-                        {{
-                          this.formatDateShow(appointment.date_end_appointment)
-                        }}
-                      </span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap" v-else>
-                      <span
-                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
-                      >
-                        {{ this.formatDateShow(appointment.date_appointment) }}
-                        -
-                        {{
-                          this.formatDateShow(appointment.date_end_appointment)
-                        }}
-                      </span>
-                    </td>
-
-                    <td
-                      class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
-                    >
-                      <!-- Components -->
-
-                      <div class="mx-auto flex gap-10">
-                        <jet-button
-                          @click="confirmationAppointmentUpdate(appointment)"
-                          >Detalles</jet-button
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <div class="text-sm text-gray-900">
+                            {{ appointment.appointment_level.name }}
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <span
+                            v-if="
+                              appointment.transfer.transfer_date_relocated ===
+                              null
+                            "
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-green-100 text-green-800"
+                          >
+                            {{
+                              appointment.transfer.transfer_reason.substring(
+                                0,
+                                15
+                              )
+                            }}
+                            <br />
+                            {{
+                              this.formatDateShow(
+                                appointment.transfer.transfer_date_adission
+                              )
+                            }}<br />
+                            {{
+                              this.formatDateShow(
+                                appointment.transfer.transfer_date_relocated
+                              )
+                            }}
+                          </span>
+                          <span
+                            v-else
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
+                          >
+                            {{
+                              appointment.transfer.transfer_reason.substring(
+                                0,
+                                15
+                              )
+                            }}
+                            <br />
+                            {{
+                              this.formatDateShow(
+                                appointment.transfer.transfer_date_adission
+                              )
+                            }}<br />
+                            {{
+                              this.formatDateShow(
+                                appointment.transfer.transfer_date_relocated
+                              )
+                            }}
+                          </span>
+                        </td>
+                        <td
+                          class="px-6 py-4 whitespace-nowrap"
+                          v-if="appointment.date_end_appointment == null"
                         >
-                        <jet-danger-button
-                          @click="confirmationAppointmentDelete(appointment)"
-                          >Eliminar</jet-danger-button
+                          <span
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                          >
+                            {{
+                              this.formatDateShow(appointment.date_appointment)
+                            }}
+                            -
+                            {{
+                              this.formatDateShow(
+                                appointment.date_end_appointment
+                              )
+                            }}
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap" v-else>
+                          <span
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                          >
+                            {{
+                              this.formatDateShow(appointment.date_appointment)
+                            }}
+                            -
+                            {{
+                              this.formatDateShow(
+                                appointment.date_end_appointment
+                              )
+                            }}
+                          </span>
+                        </td>
+
+                        <td
+                          class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                         >
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                          <!-- Components -->
+
+                          <div class="mx-auto flex gap-10">
+                            <jet-button
+                              @click="
+                                confirmationAppointmentUpdate(appointment)
+                              "
+                              >Detalles</jet-button
+                            >
+                            <jet-danger-button
+                              @click="
+                                confirmationAppointmentDelete(appointment)
+                              "
+                              >Eliminar</jet-danger-button
+                            >
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
             <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
               <p class="text-center text-lg">
@@ -280,182 +308,210 @@
               v-if="this.getAllAppointment()"
               class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 overflow-y-auto h-72"
             >
-              <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-blue-100">
-                  <tr>
-                    <th
-                      scope="col"
-                      class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
-                    >
-                      Comunidad/Obra
-                    </th>
-                    <th
-                      scope="col"
-                      class="text-left text-xs font-medium text-black uppercase tracking-wider"
-                    >
-                      Cargo
-                    </th>
-                    <th
-                      scope="col"
-                      class="text-left text-xs font-medium text-black uppercase tracking-wider"
-                    >
-                      Cambio
-                    </th>
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                    >
-                      Fechas (inicio-fin)
-                    </th>
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                    >
-                      Acciones
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  <tr v-for="appointment in this.listOld" :key="appointment">
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="flex items-center">
-                        <div class="flex-shrink-0 h-10 w-10">
-                          <svg class="svg-icon" viewBox="2 2 23 23">
-                            <path
-                              d="M17.283,5.549h-5.26V4.335c0-0.222-0.183-0.404-0.404-0.404H8.381c-0.222,0-0.404,0.182-0.404,0.404v1.214h-5.26c-0.223,0-0.405,0.182-0.405,0.405v9.71c0,0.223,0.182,0.405,0.405,0.405h14.566c0.223,0,0.404-0.183,0.404-0.405v-9.71C17.688,5.731,17.506,5.549,17.283,5.549 M8.786,4.74h2.428v0.809H8.786V4.74z M16.879,15.26H3.122v-4.046h5.665v1.201c0,0.223,0.182,0.404,0.405,0.404h1.618c0.222,0,0.405-0.182,0.405-0.404v-1.201h5.665V15.26z M9.595,9.583h0.81v2.428h-0.81V9.583zM16.879,10.405h-5.665V9.19c0-0.222-0.183-0.405-0.405-0.405H9.191c-0.223,0-0.405,0.183-0.405,0.405v1.215H3.122V6.358h13.757V10.405z"
-                            ></path>
-                          </svg>
-                        </div>
-                        <div class="ml-4">
-                          <div
-                            class="text-sm font-medium text-black hover:text-blue-500"
-                          >
-                            <div
-                              v-if="
-                                appointment.community.comm_level == 1 &&
-                                appointment.community.comm_id == null
-                              "
-                            >
-                              <a
-                                :href="
-                                  route('secretary.communities.edit', {
-                                    slug: appointment.community.comm_slug,
-                                  })
-                                "
-                                target="_blank"
-                              >
-                                {{
-                                  appointment.community.comm_name.substring(
-                                    0,
-                                    15
-                                  )
-                                }}...
-                              </a>
+              <div className="overflow-y-auto h-96">
+                <div className="relative px-4">
+                  <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-blue-100">
+                      <tr>
+                        <th
+                          scope="col"
+                          class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                        >
+                          Comunidad/Obra
+                        </th>
+                        <th
+                          scope="col"
+                          class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                        >
+                          Cargo
+                        </th>
+                        <th
+                          scope="col"
+                          class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                        >
+                          Cambio
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                        >
+                          Fechas (inicio-fin)
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                        >
+                          Acciones
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                      <tr
+                        v-for="appointment in this.listOld"
+                        :key="appointment"
+                      >
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10">
+                              <svg class="svg-icon" viewBox="2 2 23 23">
+                                <path
+                                  d="M17.283,5.549h-5.26V4.335c0-0.222-0.183-0.404-0.404-0.404H8.381c-0.222,0-0.404,0.182-0.404,0.404v1.214h-5.26c-0.223,0-0.405,0.182-0.405,0.405v9.71c0,0.223,0.182,0.405,0.405,0.405h14.566c0.223,0,0.404-0.183,0.404-0.405v-9.71C17.688,5.731,17.506,5.549,17.283,5.549 M8.786,4.74h2.428v0.809H8.786V4.74z M16.879,15.26H3.122v-4.046h5.665v1.201c0,0.223,0.182,0.404,0.405,0.404h1.618c0.222,0,0.405-0.182,0.405-0.404v-1.201h5.665V15.26z M9.595,9.583h0.81v2.428h-0.81V9.583zM16.879,10.405h-5.665V9.19c0-0.222-0.183-0.405-0.405-0.405H9.191c-0.223,0-0.405,0.183-0.405,0.405v1.215H3.122V6.358h13.757V10.405z"
+                                ></path>
+                              </svg>
                             </div>
-                            <div v-if="appointment.community.comm_level == 2">
-                              {{
-                                appointment.community.comm_name.substring(
-                                  0,
-                                  15
-                                )
-                              }}.
+                            <div class="ml-4">
+                              <div
+                                class="text-sm font-medium text-black hover:text-blue-500"
+                              >
+                                <div
+                                  v-if="
+                                    appointment.community.comm_level == 1 &&
+                                    appointment.community.comm_id == null
+                                  "
+                                >
+                                  <a
+                                    :href="
+                                      route('secretary.communities.edit', {
+                                        slug: appointment.community.comm_slug,
+                                      })
+                                    "
+                                    target="_blank"
+                                  >
+                                    {{
+                                      appointment.community.comm_name.substring(
+                                        0,
+                                        15
+                                      )
+                                    }}...
+                                  </a>
+                                </div>
+                                <div
+                                  v-if="appointment.community.comm_level == 2"
+                                >
+                                  {{
+                                    appointment.community.comm_name.substring(
+                                      0,
+                                      15
+                                    )
+                                  }}.
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-sm text-gray-900">
-                        {{ appointment.appointment_level.name }}
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <span
-                        v-if="
-                          appointment.transfer.transfer_date_relocated === null
-                        "
-                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-green-100 text-green-800"
-                      >
-                        {{
-                          appointment.transfer.transfer_reason.substring(0, 15)
-                        }}
-                        <br />
-                        {{
-                          this.formatDateShow(
-                            appointment.transfer.transfer_date_adission
-                          )
-                        }}<br />
-                        {{
-                          this.formatDateShow(
-                            appointment.transfer.transfer_date_relocated
-                          )
-                        }}
-                      </span>
-                      <span
-                        v-else
-                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
-                      >
-                        {{
-                          appointment.transfer.transfer_reason.substring(0, 15)
-                        }}
-                        <br />
-                        {{
-                          this.formatDateShow(
-                            appointment.transfer.transfer_date_adission
-                          )
-                        }}<br />
-                        {{
-                          this.formatDateShow(
-                            appointment.transfer.transfer_date_relocated
-                          )
-                        }}
-                      </span>
-                    </td>
-                    <td
-                      class="px-6 py-4 whitespace-nowrap"
-                      v-if="appointment.date_end_appointment == null"
-                    >
-                      <span
-                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                      >
-                        {{ this.formatDateShow(appointment.date_appointment) }}
-                        -
-                        {{
-                          this.formatDateShow(appointment.date_end_appointment)
-                        }}
-                      </span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap" v-else>
-                      <span
-                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
-                      >
-                        {{ this.formatDateShow(appointment.date_appointment) }}
-                        -
-                        {{
-                          this.formatDateShow(appointment.date_end_appointment)
-                        }}
-                      </span>
-                    </td>
-
-                    <td
-                      class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
-                    >
-                      <!-- Components -->
-
-                      <div class="mx-auto flex gap-10">
-                        <jet-button
-                          @click="confirmationAppointmentUpdate(appointment)"
-                          >Detalles</jet-button
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <div class="text-sm text-gray-900">
+                            {{ appointment.appointment_level.name }}
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <span
+                            v-if="
+                              appointment.transfer.transfer_date_relocated ===
+                              null
+                            "
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-green-100 text-green-800"
+                          >
+                            {{
+                              appointment.transfer.transfer_reason.substring(
+                                0,
+                                15
+                              )
+                            }}
+                            <br />
+                            {{
+                              this.formatDateShow(
+                                appointment.transfer.transfer_date_adission
+                              )
+                            }}<br />
+                            {{
+                              this.formatDateShow(
+                                appointment.transfer.transfer_date_relocated
+                              )
+                            }}
+                          </span>
+                          <span
+                            v-else
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
+                          >
+                            {{
+                              appointment.transfer.transfer_reason.substring(
+                                0,
+                                15
+                              )
+                            }}
+                            <br />
+                            {{
+                              this.formatDateShow(
+                                appointment.transfer.transfer_date_adission
+                              )
+                            }}<br />
+                            {{
+                              this.formatDateShow(
+                                appointment.transfer.transfer_date_relocated
+                              )
+                            }}
+                          </span>
+                        </td>
+                        <td
+                          class="px-6 py-4 whitespace-nowrap"
+                          v-if="appointment.date_end_appointment == null"
                         >
-                        <jet-danger-button
-                          @click="confirmationAppointmentDelete(appointment)"
-                          >Eliminar</jet-danger-button
+                          <span
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                          >
+                            {{
+                              this.formatDateShow(appointment.date_appointment)
+                            }}
+                            -
+                            {{
+                              this.formatDateShow(
+                                appointment.date_end_appointment
+                              )
+                            }}
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap" v-else>
+                          <span
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                          >
+                            {{
+                              this.formatDateShow(appointment.date_appointment)
+                            }}
+                            -
+                            {{
+                              this.formatDateShow(
+                                appointment.date_end_appointment
+                              )
+                            }}
+                          </span>
+                        </td>
+
+                        <td
+                          class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                         >
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                          <!-- Components -->
+
+                          <div class="mx-auto flex gap-10">
+                            <jet-button
+                              @click="
+                                confirmationAppointmentUpdate(appointment)
+                              "
+                              >Detalles</jet-button
+                            >
+                            <jet-danger-button
+                              @click="
+                                confirmationAppointmentDelete(appointment)
+                              "
+                              >Eliminar</jet-danger-button
+                            >
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
             <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
               <p class="text-center text-lg">
@@ -1687,30 +1743,30 @@
 </template>
 
 <script>
-import Datepicker from "vue3-date-time-picker";
-import { useForm } from "@inertiajs/inertia-vue3";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import JetButton from "@/Jetstream/Button.vue";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
+import { useForm } from "@inertiajs/inertia-vue3";
+import Datepicker from "vue3-date-time-picker";
+import JetButton from "@/Jetstream/Button.vue";
 import Alert from "@/Components/Alert";
 
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import moment from "moment";
-import { Inertia } from "@inertiajs/inertia";
-import "vue3-date-time-picker/dist/main.css";
-import { ref } from "vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 import JetInputError from "@/Jetstream/InputError";
+import JetInput from "@/Jetstream/Input.vue";
+import { Inertia } from "@inertiajs/inertia";
+import "vue3-date-time-picker/dist/main.css";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   props: {
     errors: null,
   },
-  // Relashionship with another components
+
   components: {
     Datepicker,
     JetButtonSuccess,
@@ -1725,7 +1781,7 @@ export default {
     moment,
     Alert,
   },
-  //  Setup all data
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -1762,16 +1818,13 @@ export default {
         ["clean"], // remove formatting button
       ],
       visualAppointments: null,
-      //   List data
       listActual: null,
       listOld: null,
       listIndividualActual: null,
       lastTransfer: null,
       listIndividualOld: null,
       appointmentBeingDeleted: null,
-      // Create actual appointment
       individualAppointmentActualBeingCreated: null,
-      // Create actual appointment
       appointmentActualBeingCreated: null,
       form: this.$inertia.form({
         description: null,
@@ -1807,7 +1860,6 @@ export default {
         appointment_level_id: null,
         status: null,
       }),
-      //   Selects
       selectLevel: {
         selectedLevel: undefined,
         value: 0,
@@ -1858,12 +1910,12 @@ export default {
         multiSelectLevelCategory: null,
         vSelectLevelCategory: null,
       },
-
       isDisabled: false,
       isTouched: false,
       value: null,
     };
   },
+
   created() {
     axios
       .get(this.route("secretary.daughter-profile.transfer.communities.index"))
@@ -1871,24 +1923,29 @@ export default {
         this.updateAllWork(res.data);
       });
   },
+
   mounted() {
     this.allAppointment;
     this.allAppointmentLevel;
     this.visualAppointments = 0;
   },
+
   computed: {
     ...mapState("daughter", ["profile"]),
+
     ...mapState("appointment", ["appointment"]),
+
     ...mapState("work", ["work"]),
+
     ...mapState("work", ["allWork"]),
 
-    // Validate Multioption
     isInvalidLevel() {
       return (
         this.selectLevel.selectedLevel == undefined ||
         Object.keys(this.selectLevel.selectedLevel).length === 0
       );
     },
+
     isInvalidLevelCategory() {
       return (
         this.selectCategory.selectedLevelCategory == undefined ||
@@ -1896,16 +1953,14 @@ export default {
       );
     },
 
-    // Validate Multioption
     isInvalidLevelUpdate() {
-      //   console.log("ee", this.selectOne.selectedProvince);
       return (
         this.selectOneUpdate.selectedLevel == undefined ||
         this.selectOneUpdate.selectedLevel == null
       );
     },
+
     isInvalidLevelCategoryUpdate() {
-      //   console.log("ee canton", this.selectTwo.selectedCanton);
       return (
         this.selectTwoUpdate.selectedLevelCategory == undefined ||
         this.selectTwoUpdate.selectedLevelCategory == null
@@ -1913,18 +1968,18 @@ export default {
     },
 
     isInvalidCommunity() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.form.community_id == undefined || this.form.community_id == null
       );
     },
+
     isInvalidUpdateCommunity() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectThree.selectedCommunity == undefined ||
         this.selectThree.selectedCommunity == null
       );
     },
+
     allAppointment() {
       axios
         .get(
@@ -1933,7 +1988,6 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log("app ", res.data);
           this.lastTransfer = res.data.lastTransfer;
           this.listActual = res.data.listActual;
           this.listOld = res.data.listOld;
@@ -1942,6 +1996,7 @@ export default {
           this.updateAllAppointment(res.data);
         });
     },
+
     allAppointmentLevel() {
       axios
         .get(
@@ -1956,6 +2011,7 @@ export default {
         });
     },
   },
+
   watch: {
     "selectLevel.selectedLevel": function () {
       this.selectCategory.options = [];
@@ -1983,32 +2039,31 @@ export default {
       if (this.selectOneUpdate.selectedLevel === null) {
         this.selectTwoUpdate.selectedLevelCategory = null;
         this.selectTwoUpdate.options = [];
-        // Clean data Form
         this.form.appointment_level_id = null;
-
         if (this.permitBeingUpdated != null) {
           this.updatePermitForm.appointment_level_id = null;
         }
       }
     },
+
     "selectCategory.selectedLevelCategory": function () {
       if (this.selectCategory.selectedLevelCategory === null) {
-        // Clean data Form
         this.form.appointment_level_id = null;
         if (this.permitBeingUpdated != null) {
           this.updatePermitForm.appointment_level_id = null;
         }
       }
     },
+
     "selectTwoUpdate.selectedLevelCategory": function () {
       if (this.selectTwoUpdate.selectedLevelCategory === null) {
-        // Clean data Form
         this.form.appointment_level_id = null;
         if (this.permitBeingUpdated != null) {
           this.updatePermitForm.appointment_level_id = null;
         }
       }
     },
+
     "form.description": function () {
       var limit = 2000;
       const quill = this.$refs.qleditor1;
@@ -2020,37 +2075,30 @@ export default {
         }
       }
     },
+
     "updateAppointmentForm.description": function () {
       var limit = 2000;
-      //   console.log("ey");
-      //   const quill = this.$refs.qleditor1;
-      //   if (quill != null) {
-      //     if (quill.getHTML().length <= limit) {
-      //       this.data_intput_one = quill.getHTML();
-      //     } else {
-      //       quill.setHTML(this.data_intput_one);
-      //     }
-      //   }
     },
   },
   methods: {
     ...mapActions("appointment", ["updateAllAppointment"]),
+
     ...mapGetters("appointment", ["getAllAppointment"]),
+
     ...mapActions("work", ["updateAllWork"]),
+
     ...mapGetters("work", ["getAllWork"]),
 
-    // Appoinment Actual
     confirmationCreateAppointmentActual() {
       this.appointmentActualBeingCreated = this.form;
       this.form.community_id = this.lastTransfer.community;
-      //   console.log("gusto \n", this.form);
     },
-    // Appoinment Individual Actual
+
     confirmationCreateIndividualAppointmentActual() {
       this.individualAppointmentActualBeingCreated = this.form;
-      //   console.log("gusto \n", this.form);
+
     },
-    // Save Appoinment
+
     createAppointmentActual() {
       if (this.form.date_appointment != null) {
         this.form.date_appointment = this.formatDate(
@@ -2102,7 +2150,7 @@ export default {
         );
       }
     },
-    // Save Individual Appoinment
+
     createIndividualAppointmentActual() {
       if (this.form.date_appointment != null) {
         this.form.date_appointment = this.formatDate(
@@ -2155,8 +2203,8 @@ export default {
       }
     },
 
-    //
     onSearchLevelChange() {},
+
     onSelectedLevel(level) {
       this.form.appointment_level_id = null;
 
@@ -2176,6 +2224,7 @@ export default {
     },
 
     onSearchLevelCategoryChange() {},
+
     onSelectedCategoryLevel(category) {
       this.form.appointment_level_id = category.id;
 
@@ -2192,7 +2241,6 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log("app ", res.data);
           this.lastTransfer = res.data.lastTransfer;
           this.listActual = res.data.listActual;
           this.listOld = res.data.listOld;
@@ -2201,8 +2249,6 @@ export default {
           this.updateAllAppointment(res.data);
         });
     },
-
-    // Update Individual Appointment
 
     confirmationIndividualAppointmentUpdate(appointment) {
       this.updateIndividualAppointmentForm.name_appointment =
@@ -2282,8 +2328,6 @@ export default {
       }
     },
 
-    // Update Appointment
-
     confirmationAppointmentUpdate(appointment) {
       this.updateAppointmentForm.name_appointment =
         appointment.name_appointment;
@@ -2318,7 +2362,6 @@ export default {
             )
           )
           .then((res) => {
-            // console.log("abs ", res.data);
             this.selectThree.selectedCommunity = res.data;
           });
 
@@ -2327,6 +2370,7 @@ export default {
 
       this.appointmentBeingUpdated = appointment;
     },
+
     async status(appointment) {
       let response = await axios.get(
         this.route("secretary.appointment-data.index", {
@@ -2335,6 +2379,7 @@ export default {
       );
       return response.data;
     },
+
     cancelUpdateAppointment() {
       this.selectOneUpdate.selectedLevel = null;
       this.selectTwoUpdate.selectedLevelCategory = null;
@@ -2344,6 +2389,7 @@ export default {
       this.appointmentBeingUpdated = null;
       this.statusappointment = 0;
     },
+
     cancelUpdateIndividualAppointment() {
       this.selectOneUpdate.selectedLevel = null;
       this.selectTwoUpdate.selectedLevelCategory = null;
@@ -2362,6 +2408,7 @@ export default {
       this.appointmentActualBeingCreated = null;
       this.statusappointment = 0;
     },
+
     cancelCreateIndividualAppointment() {
       this.selectLevel.selectedLevel = null;
       this.selectCategory.selectedLevelCategory = null;
@@ -2377,6 +2424,7 @@ export default {
           this.updateAppointmentForm.date_appointment
         );
       }
+
       if (this.updateAppointmentForm.date_end_appointment != null) {
         this.updateAppointmentForm.date_end_appointment = this.formatDate(
           this.updateAppointmentForm.date_end_appointment
@@ -2420,7 +2468,6 @@ export default {
       }
     },
 
-    // Delete
     confirmationAppointmentDelete(appointment) {
       this.deleteAppointmentForm.name_appointment =
         appointment.appointment_level.name;
@@ -2464,23 +2511,21 @@ export default {
 
     onChange(value) {
       this.value = value;
-      //   console.log("aiudaaa> ", value);
       if (value.indexOf("Reset me!") !== -1) {
-        // console.log("is reset");
         this.value = [];
       }
     },
+
     onSelect(option) {
       if (option === "Disable me!") {
-        // console.log("is disable");
         this.isDisabled = true;
       }
     },
+
     onTouch() {
-      //   console.log("is touched");
-      //   console.log(this.allOffice);
       this.isTouched = true;
     },
+
     changeStatusAppointment() {
       if (this.statusappointment == 1) {
         this.statusappointment = 0;
@@ -2488,6 +2533,7 @@ export default {
         this.statusappointment = 1;
       }
     },
+
     changeVisualAppointment() {
       if (this.visualAppointments == 1) {
         this.visualAppointments = 0;

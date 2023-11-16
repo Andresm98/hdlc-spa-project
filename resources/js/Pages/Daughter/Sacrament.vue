@@ -780,6 +780,7 @@ export default {
       type: Array,
     },
   },
+
   setup() {
     const formatSet = "YYYY-MM-DD";
     let date = new Date();
@@ -793,6 +794,7 @@ export default {
       format,
     };
   },
+
   data() {
     return {
       toolbarOptions: [
@@ -844,6 +846,7 @@ export default {
       }),
     };
   },
+
   watch: {
     "form.observation": function () {
       var limit = 4000;
@@ -855,6 +858,7 @@ export default {
         quill.setHTML(this.data_intput_one);
       }
     },
+
     "updateSacramentForm.observation": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -866,6 +870,7 @@ export default {
         }
       }
     },
+
     params: {
       handler: throttle(function () {
         if (this.params.dateStart != null) {
@@ -884,6 +889,7 @@ export default {
       deep: true,
     },
   },
+
   components: {
     Datepicker,
     AppLayout,
@@ -906,6 +912,7 @@ export default {
     Operation,
     ref,
   },
+
   methods: {
     formatDate(value) {
       if (value != null) {
@@ -913,13 +920,14 @@ export default {
       }
       return null;
     },
+
     formatShowDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
       }
       return null;
     },
-    // Create Health
+
     confirmationSacramentCreate() {
       this.form = this.$inertia.form({
         sacrament_name: null,
@@ -928,6 +936,7 @@ export default {
       });
       this.sacramentBeingCreated = this.form;
     },
+
     createSacramentStatus() {
       if (this.form.sacrament_date != null) {
         this.form.sacrament_date = this.formatDate(this.form.sacrament_date);
@@ -948,7 +957,6 @@ export default {
         }
       );
     },
-    // Update Health
 
     confirmationSacramentUpdate(sacrament) {
       this.updateSacramentForm.sacrament_name = sacrament.sacrament_name;
@@ -956,6 +964,7 @@ export default {
       this.updateSacramentForm.observation = sacrament.observation;
       this.sacramentBeingUpdated = sacrament;
     },
+
     updateSacrament() {
       if (this.updateSacramentForm.sacrament_date != null) {
         this.updateSacramentForm.sacrament_date = this.formatDate(
@@ -977,10 +986,11 @@ export default {
         }
       );
     },
-    //
+
     closeModal() {
       this.modal_open = false;
     },
+
     deleteSacrament: function () {
       Inertia.delete(
         this.route("daughter.sacrament.delete", {
@@ -990,9 +1000,9 @@ export default {
       );
       this.modal_open = false;
     },
+
     onSelect(option) {
       if (option === "Disable me!") {
-        // console.log("is disable");
         this.isDisabled = true;
       }
     },

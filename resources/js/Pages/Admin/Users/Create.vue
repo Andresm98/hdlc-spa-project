@@ -398,6 +398,7 @@ export default {
     SimpleUpload,
     SelectInput,
   },
+
   data() {
     return {
       photoPreview: null,
@@ -411,6 +412,7 @@ export default {
       this.url = URL.createObjectURL(file);
     },
   },
+
   setup() {
     const form = useForm({
       username: null,

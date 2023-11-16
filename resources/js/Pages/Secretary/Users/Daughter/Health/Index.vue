@@ -128,50 +128,54 @@
             v-if="this.getAllHealth()"
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-blue-100">
-                <tr>
-                  <th
-                    scope="col"
-                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Fecha Registro
-                  </th>
-                  <th
-                    scope="col"
-                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Acciones
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="health in this.getAllHealth()" :key="health">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                    >
-                      {{ this.formatShowDate(health.consult_date) }}
-                    </span>
-                  </td>
-                  <td
-                    class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
-                  >
-                    <!-- Components -->
+            <div className="overflow-y-auto h-96">
+              <div className="relative px-4">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-blue-100">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Fecha Registro
+                      </th>
+                      <th
+                        scope="col"
+                        class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Acciones
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr v-for="health in this.getAllHealth()" :key="health">
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                        >
+                          {{ this.formatShowDate(health.consult_date) }}
+                        </span>
+                      </td>
+                      <td
+                        class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
+                      >
+                        <!-- Components -->
 
-                    <div class="mx-auto flex gap-10">
-                      <jet-button @click="confirmationHealthUpdate(health)"
-                        >Detalles</jet-button
-                      >
-                      <jet-danger-button
-                        @click="confirmationHealthDelete(health)"
-                        >Eliminar</jet-danger-button
-                      >
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                        <div class="mx-auto flex gap-10">
+                          <jet-button @click="confirmationHealthUpdate(health)"
+                            >Detalles</jet-button
+                          >
+                          <jet-danger-button
+                            @click="confirmationHealthDelete(health)"
+                            >Eliminar</jet-danger-button
+                          >
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
           <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
             <p class="text-center text-lg">
@@ -350,28 +354,27 @@
   </jet-dialog-modal>
 </template>
 <script>
-import { defineComponent, ref } from "vue";
+import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetSectionBorder from "@/Jetstream/SectionBorder.vue";
 import JetActionMessage from "@/Jetstream/ActionMessage.vue";
 import JetActionSection from "@/Jetstream/ActionSection.vue";
-import JetButton from "@/Jetstream/Button.vue";
-import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
-import JetInput from "@/Jetstream/Input.vue";
-
+import { mapActions, mapGetters, mapState } from "vuex";
 import JetInputError from "@/Jetstream/InputError.vue";
-import JetLabel from "@/Jetstream/Label.vue";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import JetSectionBorder from "@/Jetstream/SectionBorder.vue";
 import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
+import JetLabel from "@/Jetstream/Label.vue";
 
 import { useForm } from "@inertiajs/inertia-vue3";
-import { mapActions, mapGetters, mapState } from "vuex";
 import Datepicker from "vue3-date-time-picker";
-import moment from "moment";
+import JetButton from "@/Jetstream/Button.vue";
 import { Inertia } from "@inertiajs/inertia";
+import JetInput from "@/Jetstream/Input.vue";
+import { defineComponent, ref } from "vue";
+import moment from "moment";
 
 export default {
   components: {
@@ -392,9 +395,11 @@ export default {
     Datepicker,
     moment,
   },
+
   mounted() {
     this.allHealth;
   },
+
   watch: {
     content() {
       var limit = 4000;
@@ -405,6 +410,7 @@ export default {
         quill.setHTML(this.data_flag);
       }
     },
+
     "form.actual_health": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -414,6 +420,7 @@ export default {
         quill.setHTML(this.data_intput_one);
       }
     },
+
     "form.chronic_diseases": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor2;
@@ -423,6 +430,7 @@ export default {
         quill.setHTML(this.data_intput_two);
       }
     },
+
     "form.other_health_problems": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor3;
@@ -443,6 +451,7 @@ export default {
         quill.setHTML(this.data_intput_one);
       }
     },
+
     "updateHealthForm.chronic_diseases": function () {
       var limit = 4000;
       const quill = this.$refs.qlupdateditor2;
@@ -452,6 +461,7 @@ export default {
         quill.setHTML(this.data_intput_two);
       }
     },
+
     "updateHealthForm.other_health_problems": function () {
       var limit = 4000;
       const quill = this.$refs.qlupdateditor3;
@@ -462,13 +472,16 @@ export default {
       }
     },
   },
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
+
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
+
     const form = useForm({
       consult_date: null,
       actual_health: null,
@@ -482,9 +495,11 @@ export default {
     }
     return { dateinput, dateSelected, date, format, form, year };
   },
+
   props: {
     errors: [],
   },
+
   data() {
     return {
       data_flag: "",
@@ -512,9 +527,13 @@ export default {
 
         ["clean"], // remove formatting button
       ],
+
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       options: [
         "Select option",
         "Disable me!",
@@ -523,14 +542,18 @@ export default {
         "label",
         "searchable",
       ],
+
       healthBeingDeleted: null,
+
       deleteHealthForm: this.$inertia.form({
         consult_date: null,
         actual_health: null,
         chronic_diseases: null,
         other_health_problems: null,
       }),
+
       healthBeingUpdated: null,
+
       updateHealthForm: this.$inertia.form({
         consult_date: null,
         actual_health: null,
@@ -542,7 +565,9 @@ export default {
 
   computed: {
     ...mapState("daughter", ["profile"]),
+
     ...mapState("health", ["health"]),
+
     allHealth() {
       axios
         .get(
@@ -558,10 +583,11 @@ export default {
 
   methods: {
     ...mapActions("health", ["updateAllHealth"]),
+
     ...mapGetters("health", ["getAllHealth"]),
+
     submit() {
       this.form.consult_date = this.formatDate(this.form.consult_date);
-      //
       Inertia.post(
         route("secretary.daughter-profile.health.store", {
           user_id: this.profile.user_id,
@@ -578,18 +604,15 @@ export default {
             this.form.actual_health = null;
             this.form.chronic_diseases = null;
             this.form.other_health_problems = null;
-
             this.$refs.qleditor1.setHTML("");
             this.$refs.qleditor2.setHTML("");
             this.$refs.qleditor3.setHTML("");
           },
         }
       );
-      //
     },
 
     updateTable() {
-      console.log("siempre");
       axios
         .get(
           this.route("secretary.daughter-profile.health.index", {
@@ -604,14 +627,13 @@ export default {
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
+
     formatShowDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
       }
       return "";
     },
-
-    // Delete Health
 
     confirmationHealthDelete(health) {
       this.deleteHealthForm.consult_date = health.consult_date;
@@ -637,8 +659,6 @@ export default {
       );
     },
 
-    // Update Health
-
     confirmationHealthUpdate(health) {
       this.updateHealthForm.consult_date = health.consult_date;
       this.updateHealthForm.actual_health = health.actual_health;
@@ -647,6 +667,7 @@ export default {
         health.other_health_problems;
       this.healthBeingUpdated = health;
     },
+
     updateHealthStatus() {
       if (this.updateHealthForm.consult_date != null) {
         this.updateHealthForm.consult_date = this.formatDate(

@@ -11,12 +11,10 @@
       </template>
       <jet-form-section @submitted="createOffice">
         <template #title> Crear Oficios en el Sistema </template>
-
         <template #description>
           Los oficios permiten que se asigne a cada cambio que se asigna a una
           determinada hermana.
         </template>
-
         <template #form>
           <div class="col-span-6 sm:col-span-6">
             <jet-label for="name" value="Nombre Oficio" />
@@ -32,7 +30,6 @@
               v-model="createOfficeForm.office_name"
               autofocus
             />
-
             <jet-label for="description" value="Descripción" class="mt-2" />
             <p
               class="text-red-400 text-sm"
@@ -52,7 +49,6 @@
             />
           </div>
         </template>
-
         <template #actions>
           <jet-action-message
             :on="createOfficeForm.recentlySuccessful"
@@ -69,7 +65,6 @@
           >
         </template>
       </jet-form-section>
-
       <div>
         <jet-section-border />
 
@@ -121,7 +116,6 @@
           </jet-action-section>
         </div>
       </div>
-
       <jet-dialog-modal
         :show="displayingToken"
         @close="displayingToken = false"
@@ -187,7 +181,6 @@
             />
           </div>
         </template>
-
         <template #footer>
           <jet-secondary-button @click="officeBeingUpdated = null">
             Cancelar
@@ -209,7 +202,6 @@
         @close="officeBeingDeleted = null"
       >
         <template #title> Eliminar el Oficio </template>
-
         <template #content>
           <h5>
             ¿Está seguro de que desea eliminar el oficio:
@@ -219,12 +211,10 @@
             ?
           </h5>
         </template>
-
         <template #footer>
           <jet-secondary-button @click="officeBeingDeleted = null">
             Cancelar
           </jet-secondary-button>
-
           <jet-danger-button
             class="ml-3"
             @click="deleteOffice"
@@ -238,7 +228,6 @@
     </app-layout>
   </div>
 </template>
-
 <script>
 import { defineComponent } from "vue";
 import JetActionMessage from "@/Jetstream/ActionMessage.vue";
@@ -278,8 +267,11 @@ export default {
     AppLayout,
     moment,
   },
+
   layout: PrincipalLayout,
+
   props: ["offices"],
+
   data() {
     return {
       createOfficeForm: this.$inertia.form({

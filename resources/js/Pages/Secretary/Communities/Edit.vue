@@ -940,49 +940,49 @@ input:checked ~ .dot {
   </app-layout>
 </template>
 <script>
-import { defineComponent } from "vue";
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
-import { useForm, Link } from "@inertiajs/inertia-vue3";
-import { Inertia } from "@inertiajs/inertia";
-import JetInputError from "@/Jetstream/InputError";
-import JetInput from "@/Jetstream/Input";
-import JetLabel from "@/Jetstream/Label";
+import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
+import Operation from "@/Components/Secretary/Community/Operation";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetButton from "@/Jetstream/Button";
-import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-import JetCheckbox from "@/Jetstream/Checkbox";
-import Alert from "@/Components/Alert";
-import { ref } from "vue";
-import Datepicker from "vue3-date-time-picker";
-import moment from "moment";
-import Operation from "@/Components/Secretary/Community/Operation";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import { useForm, Link } from "@inertiajs/inertia-vue3";
 import { mapState, mapActions, mapGetters } from "vuex";
+import JetInputError from "@/Jetstream/InputError";
+import Datepicker from "vue3-date-time-picker";
+import JetCheckbox from "@/Jetstream/Checkbox";
+import { Inertia } from "@inertiajs/inertia";
+import JetButton from "@/Jetstream/Button";
+import JetInput from "@/Jetstream/Input";
+import JetLabel from "@/Jetstream/Label";
+import Alert from "@/Components/Alert";
+import { defineComponent } from "vue";
+import moment from "moment";
+import { ref } from "vue";
 
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "../../../../css/style.css";
+
 // import required modules
 import { Pagination } from "swiper";
 
 // Import Custom Components
+import Inventories from "@/Pages/Secretary/Communities/Inventories/Index";
 import Activities from "@/Pages/Secretary/Communities/Activities/Index";
+import Daughters from "@/Pages/Secretary/Communities/Daughters/Index";
 import Resumes from "@/Pages/Secretary/Communities/Resumes/Index";
 import Visits from "@/Pages/Secretary/Communities/Visits/Index";
-import Works from "@/Pages/Secretary/Communities/Work/Index";
-import Inventories from "@/Pages/Secretary/Communities/Inventories/Index";
-import Daughters from "@/Pages/Secretary/Communities/Daughters/Index";
 import Files from "@/Pages/Secretary/Communities/Files/Index";
+import Works from "@/Pages/Secretary/Communities/Work/Index";
 
 export default defineComponent({
-  created() {
-    // console.log("created " + this.$el);
-    this.uploadProvinces(this.provinces);
 
-    // Method fetch
+  created() {
+    this.uploadProvinces(this.provinces);
 
     fetch(this.route("secretary.pastoral.index"))
       .then(async (response) => {
@@ -998,10 +998,7 @@ export default defineComponent({
       })
       .catch((error) => {
         element.parentElement.innerHTML = `Error: ${error}`;
-        console.error("There was an error!", error);
       });
-
-    // Method fetch Zones
 
     fetch(this.route("secretary.zone.index"))
       .then(async (response) => {
@@ -1021,35 +1018,31 @@ export default defineComponent({
   },
 
   beforeMount() {
-    // console.log("mounted " + this.$el);
-    // if (this.profile_daughter == null) {
-    //   this.changeUserId(this.community_custom.id);
-    // } else {
-    //   this.changeUser(this.profile_daughter);
-    // }
   },
+
   mounted() {
     if (this.community_custom.address != null) {
       this.status().then((data) => {
-        //   console.log(data);
         this.selectThree.options = data.parishes;
         this.selectThree.selectedParish = data.data_parish;
-
         this.selectTwo.options = data.cantons;
         this.selectTwo.selectedCanton = data.data_canton;
-
         this.selectOne.selectedProvince = data.data_province;
       });
     }
     this.changeCommunity(this.community_custom);
   },
+
   setup() {
     const date = ref(new Date());
+
     const year = new Date().getFullYear();
+
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
+
     return {
       date,
       year,
@@ -1063,6 +1056,7 @@ export default defineComponent({
       modules: [Pagination],
     };
   },
+
   props: {
     community_custom: Object,
     errors: null,
@@ -1074,37 +1068,42 @@ export default defineComponent({
     prefix: null,
     postfix: null,
   },
+
   computed: {
     ...mapGetters("daughter", ["actualCount"]),
+
     ...mapState("address", ["allProvinces"]),
+
     ...mapState("community", ["community"]),
 
-    // Validate Multioption
     isInvalidProvince() {
       return (
         this.selectOne.selectedProvince == undefined ||
         this.selectOne.selectedProvince == null
       );
     },
+
     isInvalidCanton() {
       return (
         this.selectTwo.selectedCanton == undefined ||
         this.selectTwo.selectedCanton == null
       );
     },
+
     isInvalidParish() {
       return (
         this.selectThree.selectedParish == undefined ||
         this.selectThree.selectedParish == null
       );
     },
+
     isInvalidPastoral() {
       return (
         this.selectFour.selectedPastoral == undefined ||
         this.selectFour.selectedPastoral == null
       );
     },
-    // Validate ID Card`
+
     validateIdentityCard() {
       this.form.comm_identity_card = this.form.comm_identity_card + "";
       if (this.form.comm_identity_card == null) {
@@ -1115,7 +1114,6 @@ export default defineComponent({
         this.form.comm_identity_card.length == 13
       ) {
         const digit = this.form.comm_identity_card.split("").map(Number);
-        //   console.log(digit);
         const coefficient = [2, 1];
         var province_code = digit[0] * 10 + digit[1];
         var verification_code = digit.slice(9, 10);
@@ -1148,7 +1146,9 @@ export default defineComponent({
       return false;
     },
   },
+
   layout: PrincipalLayout,
+
   components: {
     Link,
     Swiper,
@@ -1195,9 +1195,13 @@ export default defineComponent({
 
         ["clean"], // remove formatting button
       ],
+
       nameComplete: this.prefix,
+
       isDisabled: false,
+
       isTouched: false,
+
       selectMenu: {
         selectedElement: null,
         isDisabled: false,
@@ -1215,7 +1219,7 @@ export default defineComponent({
         multiSelectUser: null,
         vSelectUser: null,
       },
-      //
+
       form: useForm({
         comm_identity_card: this.community_custom.comm_identity_card,
         comm_name: this.community_custom.comm_name,
@@ -1234,9 +1238,11 @@ export default defineComponent({
         zone_id: null,
         file: null,
       }),
+
       photoPreview: null,
+
       url: null,
-      //Provinces
+
       selectOne: {
         selectedProvince: undefined,
         value: 0,
@@ -1250,6 +1256,7 @@ export default defineComponent({
         multiSelectUser: null,
         vSelectUser: null,
       },
+
       selectTwo: {
         selectedCanton: undefined,
         value: 0,
@@ -1258,6 +1265,7 @@ export default defineComponent({
         multiSelectCanton: null,
         vSelectCanton: null,
       },
+
       selectThree: {
         selectedParish: undefined,
         value: 0,
@@ -1266,6 +1274,7 @@ export default defineComponent({
         multiSelectParish: null,
         vSelectParish: null,
       },
+
       selectFour: {
         selectedPastoral: this.community_custom.pastoral,
         value: 0,
@@ -1274,6 +1283,7 @@ export default defineComponent({
         multiSelectPastoral: null,
         vSelectPastoral: null,
       },
+
       selectFive: {
         selectedZone: this.community_custom.zone,
         value: 0,
@@ -1282,16 +1292,22 @@ export default defineComponent({
         multiSelectZone: null,
         vSelectZone: null,
       },
+
       allPastoral: null,
+
       allZone: null,
+
       displayingStatus: false,
+
       updatedStatusPastoralForm: this.$inertia.form({
         dateCloseCommunity: null,
         dateCouncilProvince: null,
         dateCouncilGeneral: null,
         closeReason: null,
       }),
+
       managingReportsFor: null,
+
       options: [],
     };
   },
@@ -1302,34 +1318,33 @@ export default defineComponent({
         this.selectThree.selectedParish = null;
         this.selectTwo.options = [];
         this.selectThree.options = [];
-        // Clean data Form
         this.form.province_id = null;
         this.form.canton_id = null;
         this.form.parish_id = null;
         this.form.political_division_id = null;
       }
     },
+
     "selectTwo.selectedCanton": function () {
       if (this.selectTwo.selectedCanton === null) {
         this.selectThree.selectedParish = null;
         this.selectThree.options = [];
-        // Clean data Form
         this.form.canton_id = null;
         this.form.parish_id = null;
         this.form.political_division_id = null;
       }
     },
+
     "selectThree.selectedParish": function () {
       if (this.selectThree.selectedParish === null) {
-        // Clean data Form
         this.form.parish_id = null;
         this.form.political_division_id = null;
       }
     },
+
     "updatedStatusPastoralForm.closeReason": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
-
       if (quill.getHTML().length <= limit) {
         this.data_intput_one = quill.getHTML();
       } else {
@@ -1337,6 +1352,7 @@ export default defineComponent({
       }
     },
   },
+
   methods: {
     changeStatusCommunity() {
       if (
@@ -1367,11 +1383,13 @@ export default defineComponent({
           this.updatedStatusPastoralForm.dateCloseCommunity
         );
       }
+
       if (this.updatedStatusPastoralForm.dateCouncilProvince != null) {
         this.updatedStatusPastoralForm.dateCouncilProvince = this.formatDate(
           this.updatedStatusPastoralForm.dateCouncilProvince
         );
       }
+
       if (this.updatedStatusPastoralForm.dateCouncilGeneral != null) {
         this.updatedStatusPastoralForm.dateCouncilGeneral = this.formatDate(
           this.updatedStatusPastoralForm.dateCouncilGeneral
@@ -1394,9 +1412,8 @@ export default defineComponent({
     },
 
     handleScroll() {
-      console.log(window.scrollY);
-      console.log("numme");
     },
+
     async status() {
       this.form.address = this.community_custom.address["address"];
       this.form.political_division_id =
@@ -1408,23 +1425,25 @@ export default defineComponent({
       );
       return response.data;
     },
+
     ...mapActions("community", ["changeCommunity"]),
 
     onSearchPastoralsChange() {},
+
     onSelectedPastoral(pastoral) {
       this.form.pastoral_id = pastoral.id;
     },
 
     onSearchZonesChange() {},
+
     onSelectedZone(zone) {
       this.form.zone_id = zone.id;
     },
+
     onSearchProvincesChange(term) {
-      //   console.log("input data search " + term);
     },
 
     onSelectedProvince(province) {
-      //   console.log("input data selecter " + province.id);
       this.form.province_id = province.id;
       this.form.canton_id = null;
       this.form.parish_id = null;
@@ -1440,23 +1459,19 @@ export default defineComponent({
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.selectTwo.options = res.data;
         });
     },
 
     onSearchCantonChange(term) {
-      //   console.log(term);
     },
 
     onSelectedCanton(canton) {
-      //   console.log("input data selecter " + canton.id);
       this.form.canton_id = canton.id;
       this.form.parish_id = null;
       this.form.political_division_id = null;
       this.selectThree.selectedParish = undefined;
       this.selectThree.options = [];
-
       axios
         .get(
           this.route("secretary.address.parishes", {
@@ -1464,19 +1479,16 @@ export default defineComponent({
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.selectThree.options = res.data;
         });
     },
 
     onSearchParishChange(term) {
-      //   console.log(term);
     },
 
     onSelectedParish(parish) {
       this.form.parish_id = parish.id;
       this.form.political_division_id = parish.id;
-      //   console.log("input parish data selecter " + this.form.parish_id);
     },
 
     ...mapActions("address", ["uploadProvinces"]),
@@ -1485,14 +1497,18 @@ export default defineComponent({
       const file = e.target.files[0];
       this.url = URL.createObjectURL(file);
     },
+
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
+
     submit() {
       this.form.date_fndt_comm = this.formatDate(this.form.date_fndt_comm);
+
       if (this.form.date_fndt_work != null) {
         this.form.date_fndt_work = this.formatDate(this.form.date_fndt_work);
       }
+
       if (
         this.isInvalidProvince == false &&
         this.isInvalidCanton == false &&
@@ -1501,7 +1517,9 @@ export default defineComponent({
         this.validateIdentityCard == true
       ) {
         this.form.comm_name = this.nameComplete + "" + this.postfix;
+
         this.form.pastoral_id = this.selectFour.selectedPastoral.id;
+
         if (this.selectFive.selectedZone != null) {
           this.form.zone_id = this.selectFive.selectedZone.id;
         }
@@ -1524,20 +1542,21 @@ export default defineComponent({
 
     onChange(value) {
       this.value = value;
-      console.log("aiudaaa> ", value);
       if (value.indexOf("Reset me!") !== -1) {
-        console.log("is reset");
         this.value = [];
       }
     },
+
     onSelect(option) {
       if (option === "Disable me!") {
         this.isDisabled = true;
       }
     },
+
     onTouch() {
       this.isTouched = true;
     },
+
     openDialogReport() {
       this.managingReportsFor = this.$inertia.form({});
     },

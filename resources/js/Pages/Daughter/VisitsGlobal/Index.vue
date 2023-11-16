@@ -467,7 +467,6 @@
         Datos de la Nueva Visita perteneciente a
         {{ communities.comm_name }}</template
       >
-
       <template #content>
         <div class="flex flex-wrap">
           <div class="w-full lg:w-6/12 px-4">
@@ -784,38 +783,40 @@
   </app-layout>
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-import { pickBy, throttle, mapValues } from "lodash";
-import { range } from "moment-range";
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetButton from "@/Jetstream/Button.vue";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import Datepicker from "vue3-date-time-picker";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import Pagination from "@/Components/Pagination";
-import Icon from "@/Components/Icon";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import TextInput from "@/Components/TextInput";
-import Alert from "@/Components/Alert";
-import SearchFilter from "@/Components/SearchFilter";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import Operation from "@/Components/Daughter/Operation";
-import { Inertia } from "@inertiajs/inertia";
 import { mapState, mapActions, mapGetters } from "vuex";
+import JetInputError from "@/Jetstream/InputError.vue";
+import SearchFilter from "@/Components/SearchFilter";
+import { pickBy, throttle, mapValues } from "lodash";
+import Pagination from "@/Components/Pagination";
+import JetButton from "@/Jetstream/Button.vue";
+import Datepicker from "vue3-date-time-picker";
+import TextInput from "@/Components/TextInput";
+import { Inertia } from "@inertiajs/inertia";
+import JetInput from "@/Jetstream/Input.vue";
 import Dropdown from "@/Components/Dropdown";
+import Alert from "@/Components/Alert";
+import Icon from "@/Components/Icon";
+import { range } from "moment-range";
 import moment from "moment";
 import { ref } from "vue";
 
 export default {
   layout: PrincipalLayout,
+
   props: {
     visits: Object,
     communities: Object,
     filters: Object,
   },
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -829,6 +830,7 @@ export default {
       format,
     };
   },
+
   components: {
     JetButton,
     AppLayout,
@@ -850,9 +852,11 @@ export default {
     Pagination,
     JetConfirmationModal,
   },
+
   mounted() {
     this.allAppointmentLevel;
   },
+
   data() {
     return {
       toolbarOptions: [
@@ -874,7 +878,9 @@ export default {
 
         ["clean"], // remove formatting button
       ],
+
       modal_open: false,
+
       params: {
         search: this.filters.search,
         date: this.filters.date,
@@ -884,7 +890,9 @@ export default {
         dateStart: this.filters.dateStart,
         dateEnd: this.filters.dateEnd,
       },
+
       visitBeingCreated: null,
+
       form: this.$inertia.form({
         comm_reason_visit: null,
         comm_type_visit: null,
@@ -893,7 +901,9 @@ export default {
         comm_date_end_visit: null,
         community_id: null,
       }),
+
       visitBeingDeleted: null,
+
       deleteVisitForm: this.$inertia.form({
         comm_reason_visit: null,
         comm_type_visit: null,
@@ -902,7 +912,9 @@ export default {
         comm_date_end_visit: null,
         community_id: null,
       }),
+
       visitBeingUpdated: null,
+
       updateVisitForm: this.$inertia.form({
         comm_reason_visit: null,
         comm_type_visit: null,
@@ -911,6 +923,7 @@ export default {
         comm_date_end_visit: null,
         community_id: null,
       }),
+
       selectCommunity: {
         selectedCommunity: undefined,
         value: 0,
@@ -921,8 +934,10 @@ export default {
       },
     };
   },
+
   watch: {
     dataTransfer: function () {},
+
     "form.comm_description_visit": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -934,6 +949,7 @@ export default {
         }
       }
     },
+
     "updateVisitForm.comm_description_visit": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -945,15 +961,19 @@ export default {
         }
       }
     },
+
     params: {
       handler: throttle(function () {
         let params = pickBy(this.params);
+
         if (this.params.dateStart != null) {
           this.params.dateStart = this.formatDate(this.params.dateStart);
         }
+
         if (this.params.dateEnd != null) {
           this.params.dateEnd = this.formatDate(this.params.dateEnd);
         }
+
         this.$inertia.get(this.route("daughter.visits.index"), params, {
           replace: true,
           preserveState: true,
@@ -964,9 +984,12 @@ export default {
       deep: true,
     },
   },
+
   computed: {
     ...mapState("work", ["work"]),
+
     ...mapState("work", ["allWork"]),
+
     isInvalidCommunity() {
       return (
         this.selectCommunity.selectedCommunity == undefined ||
@@ -974,6 +997,7 @@ export default {
       );
     },
   },
+
   methods: {
     onSearchCommunityChange(search) {
       var string = search;
@@ -991,23 +1015,29 @@ export default {
           });
       }
     },
+
     onselectedCommunity(community) {
       this.form.community_id = community.id;
       this.selectCommunity.options = [];
     },
+
     customLabel(option) {
       return `${option.comm_name}`;
     },
+
     confirmationVisitCreate() {
       this.visitBeingCreated = this.form;
     },
+
     createActivity() {
       this.form.comm_date_init_visit = this.formatDate(
         this.form.comm_date_init_visit
       );
+
       this.form.comm_date_end_visit = this.formatDate(
         this.form.comm_date_end_visit
       );
+
       Inertia.post(
         route("daughter.communities.visit.store", {
           community_id: this.communities.id,
@@ -1028,12 +1058,14 @@ export default {
         }
       );
     },
+
     createActivityCancel() {
       this.visitBeingCreated = null;
       this.selectCommunity.selectedCommunity = null;
       this.selectCommunity.options = [];
       this.form.reset();
     },
+
     confirmationVisitUpdate(visit) {
       this.updateVisitForm.comm_reason_visit = visit.comm_reason_visit;
       this.updateVisitForm.comm_type_visit = visit.comm_type_visit;
@@ -1044,17 +1076,20 @@ export default {
       this.updateVisitForm.community_id = visit.community.id;
       this.visitBeingUpdated = visit;
     },
+
     updateVisit() {
       if (this.updateVisitForm.comm_date_init_visit != null) {
         this.updateVisitForm.comm_date_init_visit = this.formatDate(
           this.updateVisitForm.comm_date_init_visit
         );
       }
+
       if (this.updateVisitForm.comm_date_end_visit != null) {
         this.updateVisitForm.comm_date_end_visit = this.formatDate(
           this.updateVisitForm.comm_date_end_visit
         );
       }
+
       this.updateVisitForm.put(
         this.route("daughter.communities.visit.update", {
           community_id: this.updateVisitForm.community_id,
@@ -1072,15 +1107,18 @@ export default {
         }
       );
     },
+
     updateVisitCancel() {
       this.visitBeingUpdated = null;
       this.updateVisitForm.reset();
     },
+
     confirmationVisitDelete(visit) {
       this.deleteVisitForm.comm_reason_visit = visit.comm_reason_visit;
       this.deleteVisitForm.community_id = visit.community.id;
       this.visitBeingDeleted = visit;
     },
+
     deleteVisit() {
       this.deleteVisitForm.delete(
         this.route("daughter.communities.visit.delete", {
@@ -1098,15 +1136,18 @@ export default {
         }
       );
     },
+
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     formatDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
       }
       return null;
     },
+
     formatDateShow(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");

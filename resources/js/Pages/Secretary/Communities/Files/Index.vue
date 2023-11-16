@@ -329,18 +329,17 @@
 </template>
 
 <script>
-import { Inertia } from "@inertiajs/inertia";
-import { useForm, Link } from "@inertiajs/inertia-vue3";
-import { mapState } from "vuex";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import JetInputError from "@/Jetstream/InputError";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetButton from "@/Jetstream/Button";
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import Alert from "@/Components/Alert";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
+import { useForm, Link } from "@inertiajs/inertia-vue3";
+import JetInputError from "@/Jetstream/InputError";
+import { Inertia } from "@inertiajs/inertia";
+import JetButton from "@/Jetstream/Button";
+import Alert from "@/Components/Alert";
+import { mapState } from "vuex";
 import moment from "moment";
 
 export default {
@@ -355,10 +354,12 @@ export default {
     Alert,
     moment,
   },
+
   props: {
     errors: null,
     image: String,
   },
+
   data() {
     return {
       allFiles: null,
@@ -387,6 +388,7 @@ export default {
       }),
     };
   },
+
   mounted() {
     axios
       .get(
@@ -398,9 +400,11 @@ export default {
         this.allFiles = response.data;
       });
   },
+
   computed: {
     ...mapState("community", ["community"]),
   },
+
   methods: {
     bytesToSize(bytes) {
       var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
@@ -408,6 +412,7 @@ export default {
       var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
       return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
     },
+
     extensionFile(filename) {
       if (filename != null) {
         return (
@@ -416,6 +421,7 @@ export default {
       }
       return "";
     },
+
     formatShowDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
@@ -423,18 +429,16 @@ export default {
       return "";
     },
     onFileChange(e) {
-      //   console.log("event", e);
       const filedata = e.target.files[0];
       this.url = URL.createObjectURL(filedata);
     },
 
     onFileChangeUpdate(e) {
-      //   console.log("event", e);
       const filedata = e.target.files[0];
       this.url = URL.createObjectURL(filedata);
     },
+
     submit() {
-      //   console.log("data initi", this.form);
       this.form.post(
         route(`secretary.communities.files.store`, {
           community_id: this.community.id,
@@ -456,7 +460,6 @@ export default {
       );
     },
 
-    //
     confirmationFileUpdate(file) {
       this.updateFileForm.filename = file.filename;
       this.updateFileForm.external_filename = file.external_filename;
@@ -474,6 +477,7 @@ export default {
 
       this.fileBeingUpdated = file;
     },
+
     clearUpdateData() {
       this.fileBeingUpdated = null;
       this.updateFileForm.filedata = null;
@@ -484,7 +488,6 @@ export default {
       this.updateFileForm.fileshow = null;
     },
     updateFile() {
-      //   console.log("data update", this.updateFileForm);
       this.updateFileForm.post(
         this.route("secretary.communities.files.update", {
           community_id: this.community.id,
@@ -510,7 +513,7 @@ export default {
         }
       );
     },
-    //
+
     confirmationFileDelete(file) {
       this.deleteFileForm.external_filename = file.external_filename;
       this.deleteFileForm.filename = file.filename;

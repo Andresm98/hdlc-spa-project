@@ -403,6 +403,7 @@ import Alert from "@/Components/Alert";
 import JetCheckbox from "@/Jetstream/Checkbox";
 
 export default defineComponent({
+
   props: {
     user_custom: Object,
     roles: {},
@@ -410,7 +411,9 @@ export default defineComponent({
     image: String,
     rolesAvailable: null,
   },
+
   layout: PrincipalLayout,
+
   components: {
     AppLayout,
     Link,
@@ -444,6 +447,7 @@ export default defineComponent({
       const file = e.target.files[0];
       this.url = URL.createObjectURL(file);
     },
+
     submit() {
       this.form.post(
         route("admin.user.update", { user_custom: this.user_custom }),

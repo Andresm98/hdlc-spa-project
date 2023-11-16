@@ -1683,27 +1683,27 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/AppLayout.vue";
-import { pickBy, throttle, mapValues } from "lodash";
-import moment from "moment";
-import { range } from "moment-range";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
 import JetInputError from "@/Jetstream/InputError.vue";
 import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import Datepicker from "vue3-date-time-picker";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import Icon from "@/Components/Icon";
-import JetButton from "@/Jetstream/Button";
-import { useForm } from "@inertiajs/inertia-vue3";
 import Operation from "@/Components/Daughter/Operation";
-import TextInput from "@/Components/TextInput";
-import { ref } from "vue";
-import Alert from "@/Components/Alert";
 import SearchFilter from "@/Components/SearchFilter";
+import { pickBy, throttle, mapValues } from "lodash";
+import { useForm } from "@inertiajs/inertia-vue3";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import TextInput from "@/Components/TextInput";
+import Datepicker from "vue3-date-time-picker";
 import Dropdown from "@/Components/Dropdown";
 import { Inertia } from "@inertiajs/inertia";
+import JetInput from "@/Jetstream/Input.vue";
+import JetButton from "@/Jetstream/Button";
+import Alert from "@/Components/Alert";
+import Icon from "@/Components/Icon";
+import { range } from "moment-range";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   props: {
@@ -1715,13 +1715,16 @@ export default {
       type: Array,
     },
   },
+
   setup() {
     const formatSet = "YYYY-MM-DD";
     let date = new Date();
     const year = new Date().getFullYear();
+
     var format = (date) => {
       return moment(date).format(formatSet);
     };
+
     const form = useForm({
       province_id: null,
       canton_id: null,
@@ -1732,6 +1735,7 @@ export default {
       parish_id_bt: null,
       political_division_id_bt: null,
     });
+
     return {
       date,
       year,
@@ -1739,6 +1743,7 @@ export default {
       form,
     };
   },
+
   data() {
     return {
       daughterForm: this.$inertia.form({
@@ -1750,13 +1755,21 @@ export default {
         email: this.daughter.email,
         file: null,
       }),
+
       profileForm: null,
+
       infoFamilyForm: null,
+
       createProfileForm: null,
+
       profileBeingCreated: null,
+
       photoPreview: null,
+
       url: null,
+
       allProvinces: null,
+
       selectOne: {
         selectedProvince: undefined,
         value: 0,
@@ -1768,6 +1781,7 @@ export default {
         multiSelectUser: null,
         vSelectUser: null,
       },
+
       selectTwo: {
         selectedCanton: undefined,
         value: 0,
@@ -1776,6 +1790,7 @@ export default {
         multiSelectCanton: null,
         vSelectCanton: null,
       },
+
       selectThree: {
         selectedParish: undefined,
         value: 0,
@@ -1784,6 +1799,7 @@ export default {
         multiSelectParish: null,
         vSelectParish: null,
       },
+
       selectOneBt: {
         selectedProvince: undefined,
         value: 0,
@@ -1797,6 +1813,7 @@ export default {
         multiSelectUser: null,
         vSelectUser: null,
       },
+
       selectTwoBt: {
         selectedCanton: undefined,
         value: 0,
@@ -1805,6 +1822,7 @@ export default {
         multiSelectCanton: null,
         vSelectCanton: null,
       },
+
       selectThreeBt: {
         selectedParish: undefined,
         value: 0,
@@ -1813,7 +1831,9 @@ export default {
         multiSelectParish: null,
         vSelectParish: null,
       },
+
       managingReportsFor: null,
+
       options: [],
     };
   },
@@ -1830,6 +1850,7 @@ export default {
         this.form.political_division_id = null;
       }
     },
+
     "selectTwo.selectedCanton": function () {
       if (this.selectTwo.selectedCanton === null) {
         this.selectThree.selectedParish = null;
@@ -1839,12 +1860,14 @@ export default {
         this.form.political_division_id = null;
       }
     },
+
     "selectThree.selectedParish": function () {
       if (this.selectThree.selectedParish === null) {
         this.form.parish_id = null;
         this.form.political_division_id = null;
       }
     },
+
     "selectOneBt.selectedProvince": function () {
       if (this.selectOneBt.selectedProvince === null) {
         this.selectTwoBt.selectedCanton = null;
@@ -1858,6 +1881,7 @@ export default {
         this.profileForm.political_division_id_bt = null;
       }
     },
+
     "selectTwoBt.selectedCanton": function () {
       if (this.selectTwoBt.selectedCanton === null) {
         this.selectThreeBt.selectedParish = null;
@@ -1868,6 +1892,7 @@ export default {
         this.profileForm.political_division_id_bt = null;
       }
     },
+
     "selectThreeBt.selectedParish": function () {
       if (this.selectThreeBt.selectedParish === null) {
         this.form.parish_id_bt = null;
@@ -1876,12 +1901,14 @@ export default {
       }
     },
   },
+
   mounted() {
     this.loadInfoProfile;
     axios.get(this.route("daughter.address.province")).then((response) => {
       this.allProvinces = response.data;
     });
   },
+
   components: {
     Datepicker,
     AppLayout,
@@ -1902,6 +1929,7 @@ export default {
     Operation,
     ref,
   },
+
   methods: {
     formatDate(value) {
       if (value != null) {
@@ -1909,16 +1937,19 @@ export default {
       }
       return null;
     },
+
     formatShowDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
       }
       return null;
     },
+
     onFileChange(e) {
       const file = e.target.files[0];
       this.url = URL.createObjectURL(file);
     },
+
     confirmationProfileCreate() {
       this.createProfileForm = this.$inertia.form({
         identity_card: null,
@@ -1937,20 +1968,26 @@ export default {
       });
       this.profileBeingCreated = this.createProfileForm;
     },
+
     createProfile() {
       this.createProfileForm.date_birth = this.formatDate(
         this.createProfileForm.date_birth
       );
+
       this.createProfileForm.date_vocation = this.formatDate(
         this.createProfileForm.date_vocation
       );
+
       this.createProfileForm.date_send = this.formatDate(
         this.createProfileForm.date_send
       );
+
       this.createProfileForm.date_vote = this.formatDate(
         this.createProfileForm.date_vote
       );
+
       let dataaddresbt = null;
+
       if (
         this.form.province_id_bt !== null &&
         this.form.canton_id_bt === null &&
@@ -1958,6 +1995,7 @@ export default {
       ) {
         dataaddresbt = this.form.province_id_bt;
       }
+
       if (
         this.form.province_id_bt !== null &&
         this.form.canton_id_bt !== null &&
@@ -1965,6 +2003,7 @@ export default {
       ) {
         dataaddresbt = this.form.canton_id_bt;
       }
+
       if (
         this.form.province_id_bt !== null &&
         this.form.canton_id_bt !== null &&
@@ -1973,8 +2012,10 @@ export default {
         dataaddresbt = this.form.parish_id_bt;
       }
       this.createProfileForm.political_division_id_bt = dataaddresbt;
+
       this.createProfileForm.political_division_id =
         this.form.political_division_id;
+
       if (
         this.isInvalidProvince == false &&
         this.isInvalidCanton == false &&
@@ -1996,6 +2037,7 @@ export default {
         );
       }
     },
+
     saveInfoUser() {
       Inertia.post(
         route(`daughter.user.update`, {
@@ -2014,6 +2056,7 @@ export default {
         }
       );
     },
+
     saveUserProfile() {
       this.profileForm.date_birth = this.formatDate(
         this.profileForm.date_birth
@@ -2040,6 +2083,7 @@ export default {
         );
       }
     },
+
     saveProfileInfoFamily() {
       this.infoFamilyForm.post(
         this.route("daughter.infofamily.store", { id: this.daughterForm.id }),
@@ -2053,6 +2097,7 @@ export default {
         }
       );
     },
+
     async status() {
       let response = await axios.get(
         this.route("daughter.address.actual-address", {
@@ -2061,6 +2106,7 @@ export default {
       );
       return response.data;
     },
+
     async status_bt() {
       if (this.daughter.profile.origin["political_division_id"]) {
         let response = await axios.get(
@@ -2072,7 +2118,9 @@ export default {
         return response.data;
       }
     },
+
     onSearchProvincesChange(term) {},
+
     onSelectedProvince(province) {
       this.form.province_id = province.id;
       this.form.canton_id = null;
@@ -2094,6 +2142,7 @@ export default {
     },
 
     onSearchCantonChange(term) {},
+
     onSelectedCanton(canton) {
       this.form.canton_id = canton.id;
       this.form.parish_id = null;
@@ -2110,7 +2159,9 @@ export default {
           this.selectThree.options = res.data;
         });
     },
+
     onSearchParishChange(term) {},
+
     onSelectedParish(parish) {
       if (this.profileForm != null) {
         this.profileForm.political_division_id = parish.id;
@@ -2119,7 +2170,9 @@ export default {
         this.form.political_division_id = parish.id;
       }
     },
+
     onSearchProvincesChangeBt(term) {},
+
     onSelectedProvinceBt(province) {
       this.form.province_id_bt = province.id;
       this.profileForm.political_division_id_bt = province.id;
@@ -2140,7 +2193,9 @@ export default {
           this.selectTwoBt.options = res.data;
         });
     },
+
     onSearchCantonChangeBt(term) {},
+
     onSelectedCantonBt(canton) {
       this.form.canton_id_bt = canton.id;
       this.profileForm.political_division_id_bt = canton.id;
@@ -2158,12 +2213,15 @@ export default {
           this.selectThreeBt.options = res.data;
         });
     },
+
     onSearchParishChangeBt(term) {},
+
     onSelectedParishBt(parish) {
       this.form.parish_id_bt = parish.id;
       this.form.political_division_id_bt = parish.id;
       this.profileForm.political_division_id_bt = parish.id;
     },
+
     openDialogReport() {
       this.managingReportsFor = "setup";
     },
@@ -2208,6 +2266,7 @@ export default {
       }
       return false;
     },
+
     validateIdentityCardCreate() {
       if (this.createProfileForm.identity_card == null) {
         return false;
@@ -2252,42 +2311,49 @@ export default {
 
       return false;
     },
+
     isInvalidProvince() {
       return (
         this.selectOne.selectedProvince == undefined ||
         this.selectOne.selectedProvince == null
       );
     },
+
     isInvalidCanton() {
       return (
         this.selectTwo.selectedCanton == undefined ||
         this.selectTwo.selectedCanton == null
       );
     },
+
     isInvalidParish() {
       return (
         this.selectThree.selectedParish == undefined ||
         this.selectThree.selectedParish == null
       );
     },
+
     isInvalidBt() {
       return (
         this.selectOneBt.selectedProvince == undefined ||
         this.selectOneBt.selectedProvince == null
       );
     },
+
     isInvalidCantonBt() {
       return (
         this.selectTwoBt.selectedCanton == undefined ||
         this.selectTwoBt.selectedCanton == null
       );
     },
+
     isInvalidParishBt() {
       return (
         this.selectThreeBt.selectedParish == undefined ||
         this.selectThreeBt.selectedParish == null
       );
     },
+
     loadInfoProfile() {
       if (this.daughter.profile != null) {
         this.profileForm = this.$inertia.form({
@@ -2331,6 +2397,7 @@ export default {
         this.loadInfoFamily;
       }
     },
+
     loadInfoFamily() {
       if (this.daughter.profile.info_family != null) {
         if (this.daughter.profile.info_family.info_family_break != null) {

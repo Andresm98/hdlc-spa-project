@@ -24,17 +24,14 @@
       >
       </alert>
       <div>
-        <!-- Manage API Tokens -->
         <div class="mb-10 sm:mt-0">
           <jet-action-section>
             <template #title> Administrar Pastorales del Sistema </template>
-
             <template #description>
               Puede eliminar o gestionar las pastorales aquí descritas, tenga en
               cuenta si las pastorales estan asociadas a una comunidad u obra no
               podrán ser eliminadas pero si actualizadas.
             </template>
-            <!-- API Token List -->
             <template #content>
               <div class="space-y-6">
                 <div
@@ -104,14 +101,11 @@
       <jet-section-border />
       <jet-form-section @submitted="createPastoral">
         <template #title> Crear Pastorales en el Sistema </template>
-
         <template #description>
           Las pastorales permiten que asigne categorías a cada una de las
           comunidades que son ingresadas por el rol de secretaria.
         </template>
-
         <template #form>
-          <!-- Token Name -->
           <div class="col-span-6 sm:col-span-6">
             <jet-label for="name" value="Nombre Pastoral" />
             <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
@@ -126,7 +120,6 @@
               v-model="createPastoralForm.name"
               autofocus
             />
-
             <jet-label for="description" value="Descripción" class="mt-2" />
             <p
               class="text-red-400 text-sm"
@@ -155,7 +148,6 @@
             />
           </div>
         </template>
-
         <template #actions>
           <jet-action-message
             :on="createPastoralForm.recentlySuccessful"
@@ -163,7 +155,6 @@
           >
             Creado.
           </jet-action-message>
-
           <jet-button-success
             :class="{ 'opacity-25': createPastoralForm.processing }"
             :disabled="createPastoralForm.processing"
@@ -172,7 +163,6 @@
           >
         </template>
       </jet-form-section>
-
       <jet-dialog-modal
         :show="displayingToken"
         @close="displayingToken = false"
@@ -182,14 +172,12 @@
             Pastoral Creada Correctamente
           </h2></template
         >
-
         <template #content>
           <div>
             Recuerde que la pastoral que acaba de crear se encuentra disponible
             en la zona de Comunidades en el rol de secretaria.
           </div>
         </template>
-
         <template #footer>
           <jet-secondary-button @click="displayingToken = false">
             Cerrar
@@ -202,7 +190,6 @@
         @close="pastoralBeingUpdated = null"
       >
         <template #title> Datos de la Pastoral</template>
-
         <template #content>
           <div class="col-span-6 sm:col-span-6">
             <jet-label for="name" value="Nombre Pastoral" />
@@ -218,7 +205,6 @@
               v-model="updatePastoralForm.name"
               autofocus
             />
-
             <jet-label for="description" value="Descripción" class="mt-2" />
             <p
               class="text-red-400 text-sm"
@@ -247,7 +233,6 @@
             />
           </div>
         </template>
-
         <template #footer>
           <jet-secondary-button @click="pastoralBeingUpdated = null">
             Cancelar
@@ -269,7 +254,6 @@
         @close="pastoralBeingDeleted = null"
       >
         <template #title> Eliminar la Pastoral </template>
-
         <template #content>
           <h5>
             ¿Está seguro de que desea eliminar la pastoral:
@@ -277,12 +261,10 @@
             ?
           </h5>
         </template>
-
         <template #footer>
           <jet-secondary-button @click="pastoralBeingDeleted = null">
             Cancelar
           </jet-secondary-button>
-
           <jet-danger-button
             class="ml-3"
             @click="deleteApiToken"
@@ -298,7 +280,6 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
 import JetActionMessage from "@/Jetstream/ActionMessage.vue";
 import JetActionSection from "@/Jetstream/ActionSection.vue";
 import JetButton from "@/Jetstream/Button.vue";
@@ -338,8 +319,11 @@ export default {
     moment,
     Alert,
   },
+
   layout: PrincipalLayout,
+
   props: ["pastoral"],
+
   data() {
     return {
       createPastoralForm: this.$inertia.form({

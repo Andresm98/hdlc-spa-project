@@ -4,16 +4,7 @@
       <form @submit.prevent="submit">
         <div class="">
           <h6
-            class="
-              mt-2
-              mb-2
-              text-lg
-              font-medium
-              text-center
-              leading-6
-              text-gray-900
-              uppercase
-            "
+            class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
           >
             Plantilla de INFORMACIÓN DEL FAMILIAR
           </h6>
@@ -34,22 +25,7 @@
                 <input
                   type="text"
                   placeholder="Ejm: Fuentes Ramos"
-                  class="
-                    border-0
-                    px-3
-                    py-3
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   onkeydown="return /[a-z, ]/i.test(event.key)"
                   onblur="if (this.value == '') {this.value = '';}"
                   onfocus="if (this.value == '') {this.value = '';}"
@@ -74,22 +50,7 @@
                 <input
                   type="text"
                   placeholder="Ejm: Fuentes Ramos"
-                  class="
-                    border-0
-                    px-3
-                    py-3
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   onkeydown="return /[a-z, ]/i.test(event.key)"
                   onblur="if (this.value == '') {this.value = '';}"
                   onfocus="if (this.value == '') {this.value = '';}"
@@ -114,15 +75,7 @@
               <div class="mt-1 rounded-md mx-2">
                 <input
                   type="number"
-                  class="
-                    focus:ring-blue-500 focus:border-blue-500
-                    flex-1
-                    block
-                    w-full
-                    rounded-none rounded-r-md
-                    sm:text-sm
-                    border-gray-300
-                  "
+                  class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                   placeholder="Ingrese el número"
                   min="0"
                   max="20"
@@ -145,15 +98,7 @@
               <div class="mt-1 rounded-md mx-2">
                 <input
                   type="number"
-                  class="
-                    focus:ring-blue-500 focus:border-blue-500
-                    flex-1
-                    block
-                    w-full
-                    rounded-none rounded-r-md
-                    sm:text-sm
-                    border-gray-300
-                  "
+                  class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                   placeholder="Ingrese el número"
                   min="0"
                   max="20"
@@ -177,15 +122,7 @@
               <div class="mt-1 rounded-md mx-2">
                 <input
                   type="number"
-                  class="
-                    focus:ring-blue-500 focus:border-blue-500
-                    flex-1
-                    block
-                    w-full
-                    rounded-none rounded-r-md
-                    sm:text-sm
-                    border-gray-300
-                  "
+                  class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                   placeholder="Ingrese el número"
                   min="0"
                   max="20"
@@ -211,26 +148,10 @@
       <form @submit.prevent="submitTwo" v-if="isExistData">
         <!-- Info Break Family -->
         <hr
-          class="
-            mt-4
-            mb-3
-            ml-4
-            mr-4
-            border-b-1 border-gray-300
-            hover:border-gray-300
-          "
+          class="mt-4 mb-3 ml-4 mr-4 border-b-1 border-gray-300 hover:border-gray-300"
         />
         <h6
-          class="
-            mt-2
-            mb-2
-            text-lg
-            font-medium
-            text-center
-            leading-6
-            text-gray-900
-            uppercase
-          "
+          class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
         >
           Información del familiar en donde la hermana se hospeda en los días de
           descanso
@@ -251,22 +172,7 @@
               <input
                 type="text"
                 placeholder="Ejm: Fuentes Ramos"
-                class="
-                  border-0
-                  px-3
-                  py-3
-                  placeholder-blueGray-300
-                  text-blueGray-600
-                  bg-white
-                  rounded
-                  text-sm
-                  shadow
-                  focus:outline-none focus:ring
-                  w-full
-                  ease-linear
-                  transition-all
-                  duration-150
-                "
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 onkeydown="return /[a-z, ]/i.test(event.key)"
                 onblur="if (this.value == '') {this.value = '';}"
                 onfocus="if (this.value == '') {this.value = '';}"
@@ -291,22 +197,7 @@
               <input
                 type="text"
                 placeholder="Ejm: Primo, Hermano, etc"
-                class="
-                  border-0
-                  px-3
-                  py-3
-                  placeholder-blueGray-300
-                  text-blueGray-600
-                  bg-white
-                  rounded
-                  text-sm
-                  shadow
-                  focus:outline-none focus:ring
-                  w-full
-                  ease-linear
-                  transition-all
-                  duration-150
-                "
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 onkeydown="return /[a-z, ]/i.test(event.key)"
                 onblur="if (this.value == '') {this.value = '';}"
                 onfocus="if (this.value == '') {this.value = '';}"
@@ -339,22 +230,7 @@
                 pattern="^\d{10}$"
                 title="Ingrese un número de celular con un formato válido, máximo 10digitos."
                 placeholder="0997643146"
-                class="
-                  border-0
-                  px-3
-                  py-3
-                  placeholder-blueGray-300
-                  text-blueGray-600
-                  bg-white
-                  rounded
-                  text-sm
-                  shadow
-                  focus:outline-none focus:ring
-                  w-full
-                  ease-linear
-                  transition-all
-                  duration-150
-                "
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 v-model="this.infofamilybreak.cellphone"
                 required
               />
@@ -379,24 +255,8 @@
                 pattern="^\d{9}$"
                 title="Ingrese un número de celular con un formato válido, máximo 9 digitos."
                 placeholder="022400111"
-                class="
-                  border-0
-                  px-3
-                  py-3
-                  placeholder-blueGray-300
-                  text-blueGray-600
-                  bg-white
-                  rounded
-                  text-sm
-                  shadow
-                  focus:outline-none focus:ring
-                  w-full
-                  ease-linear
-                  transition-all
-                  duration-150
-                "
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 v-model="this.infofamilybreak.phone"
-
               />
             </div>
           </div>
@@ -412,25 +272,27 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import Datepickerf from "vuejs3-datepicker";
-import { useForm } from "@inertiajs/inertia-vue3";
-import JetInputError from "@/Jetstream/InputError";
-import { mapActions, mapGetters, mapState } from "vuex";
 import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
+import { mapActions, mapGetters, mapState } from "vuex";
+import JetInputError from "@/Jetstream/InputError";
+import { useForm } from "@inertiajs/inertia-vue3";
 import JetButton from "@/Jetstream/Button.vue";
 import { Inertia } from "@inertiajs/inertia";
+import Datepickerf from "vuejs3-datepicker";
+import { ref, onMounted } from "vue";
 
 export default {
   props: {
     errors: null,
   },
+
   components: {
     Datepickerf,
     JetButtonSuccess,
     JetButton,
     JetInputError,
   },
+
   data() {
     return {
       isExistData: false,
@@ -448,15 +310,19 @@ export default {
       ],
     };
   },
+
   mounted() {
     this.getDataInfoFamily;
   },
+
   computed: {
     ...mapState("daughter", ["profile"]),
+
     ...mapState("informationfamily", ["infofamily"]),
+
     ...mapState("informationfamily", ["infofamilybreak"]),
+
     isInvalid() {
-      //   console.log("inva ", this.isTouched, "\n\nopp> ");
       return this.value == null;
     },
 
@@ -475,6 +341,7 @@ export default {
           }
         });
     },
+
     getDataInfoFamilyBreak() {
       if (this.isExistData) {
         axios
@@ -494,9 +361,13 @@ export default {
   },
   methods: {
     ...mapActions("informationfamily", ["updateInfoFamily"]),
+
     ...mapGetters("informationfamily", ["getInfoFamily"]),
+
     ...mapActions("informationfamily", ["updateInfoFamilyBreak"]),
+
     ...mapGetters("informationfamily", ["getInfoFamilyBreak"]),
+
     submit() {
       Inertia.post(
         this.route("secretary.daughter-profile.infofamily.store", {
@@ -508,13 +379,13 @@ export default {
           preserveState: true,
           onSuccess: () => {
             setTimeout(() => {
-              //   console.log("saved.");
               this.isExistData = true;
             }, 2);
           },
         }
       );
     },
+
     submitTwo() {
       try {
         Inertia.post(
@@ -527,7 +398,6 @@ export default {
             preserveState: true,
             onSuccess: () => {
               setTimeout(() => {
-                // console.log("saved.");
                 this.isExistDataInfBreak = true;
               }, 2);
             },
@@ -537,34 +407,35 @@ export default {
         console.log(error);
       }
     },
+
     showAlert() {
-      // Use sweetalert2
       this.$swal("Hello Vue world!!!");
     },
+
     onChange(value) {
       this.value = value;
-      //   console.log("aiudaaa> ", value);
       if (value.indexOf("Reset me!") !== -1) {
-        // console.log("is reset");
         this.value = [];
       }
     },
+
     onSelect(option) {
       if (option === "Disable me!") {
         console.log("is disable");
         this.isDisabled = true;
       }
     },
+
     onTouch() {
-      //   console.log("is touched");
       this.isTouched = true;
     },
   },
+
   setup() {
     const dateinput = ref(new Date());
-    function dateSelected(payload) {
-      //   console.log(payload);
-    }
+
+    function dateSelected(payload) {}
+
     return { dateinput, dateSelected };
   },
 };

@@ -713,39 +713,40 @@
   </app-layout>
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-import { pickBy, throttle, mapValues } from "lodash";
-import moment from "moment";
-import { range } from "moment-range";
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetButton from "@/Jetstream/Button.vue";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import Datepicker from "vue3-date-time-picker";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import Pagination from "@/Components/Pagination";
-import Icon from "@/Components/Icon";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-
-import TextInput from "@/Components/TextInput";
-import { ref } from "vue";
-import Alert from "@/Components/Alert";
-import SearchFilter from "@/Components/SearchFilter";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import Operation from "@/Components/Daughter/Operation";
-import { Inertia } from "@inertiajs/inertia";
 import { mapState, mapActions, mapGetters } from "vuex";
+import JetInputError from "@/Jetstream/InputError.vue";
+import { pickBy, throttle, mapValues } from "lodash";
+import SearchFilter from "@/Components/SearchFilter";
+import JetButton from "@/Jetstream/Button.vue";
+import Datepicker from "vue3-date-time-picker";
+import Pagination from "@/Components/Pagination";
+import TextInput from "@/Components/TextInput";
+import JetInput from "@/Jetstream/Input.vue";
+import { Inertia } from "@inertiajs/inertia";
 import Dropdown from "@/Components/Dropdown";
+import Alert from "@/Components/Alert";
+import Icon from "@/Components/Icon";
+import { range } from "moment-range";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   layout: PrincipalLayout,
+
   props: {
     resumes: Object,
     communities: Object,
     filters: Object,
   },
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -760,6 +761,7 @@ export default {
       format,
     };
   },
+
   components: {
     JetButton,
     AppLayout,
@@ -781,9 +783,11 @@ export default {
     Pagination,
     JetConfirmationModal,
   },
+
   mounted() {
     this.allAppointmentLevel;
   },
+
   data() {
     return {
       toolbarOptions: [
@@ -805,7 +809,9 @@ export default {
 
         ["clean"], // remove formatting button
       ],
+
       modal_open: false,
+
       params: {
         search: this.filters.search,
         date: this.filters.date,
@@ -815,7 +821,9 @@ export default {
         dateStart: this.filters.dateStart,
         dateEnd: this.filters.dateEnd,
       },
+
       resumeBeingCreated: null,
+
       form: this.$inertia.form({
         comm_name_resume: null,
         comm_annexed_resume: null,
@@ -823,7 +831,9 @@ export default {
         comm_date_resume: null,
         community_id: null,
       }),
+
       resumeBeingDeleted: null,
+
       deleteResumeForm: this.$inertia.form({
         comm_name_resume: null,
         comm_annexed_resume: null,
@@ -831,7 +841,9 @@ export default {
         comm_date_resume: null,
         community_id: null,
       }),
+
       resumeBeingUpdated: null,
+
       updateResumeForm: this.$inertia.form({
         comm_name_resume: null,
         comm_annexed_resume: null,
@@ -839,6 +851,7 @@ export default {
         comm_date_resume: null,
         community_id: null,
       }),
+
       selectCommunity: {
         selectedCommunity: undefined,
         value: 0,
@@ -849,6 +862,7 @@ export default {
       },
     };
   },
+
   watch: {
     dataTransfer: function () {},
     "form.comm_observation_resume": function () {
@@ -862,6 +876,7 @@ export default {
         }
       }
     },
+
     "updateResumeForm.comm_observation_resume": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -873,6 +888,7 @@ export default {
         }
       }
     },
+
     params: {
       handler: throttle(function () {
         let params = pickBy(this.params);
@@ -892,8 +908,10 @@ export default {
       deep: true,
     },
   },
+
   computed: {
     ...mapState("work", ["work"]),
+
     ...mapState("work", ["allWork"]),
 
     isInvalidCommunity() {
@@ -920,16 +938,20 @@ export default {
           });
       }
     },
+
     onselectedCommunity(community) {
       this.form.community_id = community.id;
       this.selectCommunity.options = [];
     },
+
     customLabel(option) {
       return `${option.comm_name}`;
     },
+
     confirmationResumenCreate() {
       this.resumeBeingCreated = this.form;
     },
+
     createActivity() {
       this.form.comm_date_resume = this.formatDate(this.form.comm_date_resume);
       Inertia.post(
@@ -952,12 +974,14 @@ export default {
         }
       );
     },
+
     createActivityCancel() {
       this.resumeBeingCreated = null;
       this.selectCommunity.selectedCommunity = null;
       this.selectCommunity.options = [];
       this.form.reset();
     },
+
     confirmationResumeUpdate(resume) {
       this.updateResumeForm.comm_name_resume = resume.comm_name_resume;
       this.updateResumeForm.comm_observation_resume =
@@ -967,12 +991,14 @@ export default {
       this.updateResumeForm.community_id = resume.community.id;
       this.resumeBeingUpdated = resume;
     },
+
     updateResume() {
       if (this.updateResumeForm.comm_date_resume != null) {
         this.updateResumeForm.comm_date_resume = this.formatDate(
           this.updateResumeForm.comm_date_resume
         );
       }
+
       this.updateResumeForm.put(
         this.route("daughter.communities.resume.update", {
           community_id: this.updateResumeForm.community_id,
@@ -989,18 +1015,26 @@ export default {
         }
       );
     },
+
     updateResumeCancel() {
       this.resumeBeingUpdated = null;
+
       this.updateResumeForm.reset();
     },
+
     confirmationResumeDelete(resume) {
       this.deleteResumeForm.comm_name_resume = resume.comm_name_resume;
+
       this.deleteResumeForm.comm_observation_resume =
         resume.comm_observation_resume;
+
       this.deleteResumeForm.comm_date_resume = resume.comm_date_resume;
+
       this.deleteResumeForm.community_id = resume.community.id;
+
       this.resumeBeingDeleted = resume;
     },
+
     deleteResume() {
       this.deleteResumeForm.delete(
         this.route("daughter.communities.resume.delete", {
@@ -1018,15 +1052,18 @@ export default {
         }
       );
     },
+
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     formatDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
       }
       return null;
     },
+
     formatDateShow(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");

@@ -636,20 +636,20 @@
   </app-layout>
 </template>
 <script>
-import { defineComponent } from "vue";
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
-import { useForm, Link } from "@inertiajs/inertia-vue3";
-import { Inertia } from "@inertiajs/inertia";
-import JetInputError from "@/Jetstream/InputError";
-import Alert from "@/Components/Alert";
-import { ref } from "vue";
-import Operation from "@/Components/Secretary/Community/Operation";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-import Chart from "@/Pages/Secretary/Communities/Chart";
-import Dropdown from "@/Components/Dropdown";
-import Icon from "@/Components/Icon";
+import Operation from "@/Components/Secretary/Community/Operation";
 import PieChart from "@/Pages/Secretary/Communities/PieChart";
 import Linear from "@/Pages/Secretary/Communities/Linear";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import { useForm, Link } from "@inertiajs/inertia-vue3";
+import Chart from "@/Pages/Secretary/Communities/Chart";
+import JetInputError from "@/Jetstream/InputError";
+import Dropdown from "@/Components/Dropdown";
+import { Inertia } from "@inertiajs/inertia";
+import Alert from "@/Components/Alert";
+import { defineComponent } from "vue";
+import Icon from "@/Components/Icon";
+import { ref } from "vue";
 
 export default {
   data() {
@@ -672,7 +672,9 @@ export default {
     groupDaughters: Object,
     pastorals: Object,
   },
+
   layout: PrincipalLayout,
+
   components: {
     AppLayout,
     JetInputError,
@@ -684,6 +686,7 @@ export default {
     Dropdown,
     Linear,
   },
+
   methods: {
     getData(array) {
       let data = [];
@@ -697,6 +700,7 @@ export default {
 
       return (this.arrayData = data);
     },
+
     getLabels(array) {
       let data = [];
       for (let index = 0; index < this.pastorals.length; index++) {
@@ -709,6 +713,7 @@ export default {
 
       return (this.arrayLabels = data);
     },
+
     countCommunities() {
       let total = 0;
       this.groupCommunities.forEach(myFunction);
@@ -718,6 +723,7 @@ export default {
       }
       return total;
     },
+
     countWorks() {
       let total = 0;
       this.groupWorks.forEach(myFunction);

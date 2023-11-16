@@ -859,39 +859,40 @@
   </app-layout>
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
-import { pickBy, throttle, mapValues } from "lodash";
-import moment from "moment";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-import { range } from "moment-range";
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetButton from "@/Jetstream/Button.vue";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import Datepicker from "vue3-date-time-picker";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import Pagination from "@/Components/Pagination";
-import Icon from "@/Components/Icon";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-
-import TextInput from "@/Components/TextInput";
-import { ref } from "vue";
-import Alert from "@/Components/Alert";
-import SearchFilter from "@/Components/SearchFilter";
 import Operation from "@/Components/Secretary/Community/Operation";
-import { Inertia } from "@inertiajs/inertia";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import { mapState, mapActions, mapGetters } from "vuex";
+import JetInputError from "@/Jetstream/InputError.vue";
+import { pickBy, throttle, mapValues } from "lodash";
+import SearchFilter from "@/Components/SearchFilter";
+import Pagination from "@/Components/Pagination";
+import Datepicker from "vue3-date-time-picker";
+import JetButton from "@/Jetstream/Button.vue";
+import TextInput from "@/Components/TextInput";
+import { Inertia } from "@inertiajs/inertia";
 import Dropdown from "@/Components/Dropdown";
+import JetInput from "@/Jetstream/Input.vue";
+import Alert from "@/Components/Alert";
+import { range } from "moment-range";
+import Icon from "@/Components/Icon";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   layout: PrincipalLayout,
+
   props: {
     visits: Object,
     communities: Object,
     filters: Object,
   },
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -906,6 +907,7 @@ export default {
       format,
     };
   },
+
   components: {
     JetButton,
     AppLayout,
@@ -927,9 +929,11 @@ export default {
     Pagination,
     JetConfirmationModal,
   },
+
   mounted() {
     this.allAppointmentLevel;
   },
+
   data() {
     return {
       toolbarOptions: [
@@ -998,10 +1002,11 @@ export default {
       },
     };
   },
+
   watch: {
     dataTransfer: function () {
-      //   console.log("log ");
     },
+
     "form.comm_description_visit": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -1013,6 +1018,7 @@ export default {
         }
       }
     },
+
     "updateVisitForm.comm_description_visit": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -1024,6 +1030,7 @@ export default {
         }
       }
     },
+
     params: {
       handler: throttle(function () {
         let params = pickBy(this.params);
@@ -1038,25 +1045,26 @@ export default {
           preserveState: true,
           preserveScroll: true,
           onSuccess: () => {
-            // console.log("Success");
           },
         });
       }, 1),
       deep: true,
     },
   },
+
   computed: {
     ...mapState("work", ["work"]),
+
     ...mapState("work", ["allWork"]),
 
     isInvalidCommunity() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectCommunity.selectedCommunity == undefined ||
         this.selectCommunity.selectedCommunity == null
       );
     },
   },
+
   methods: {
     onSearchCommunityChange(search) {
       var string = search;
@@ -1074,6 +1082,7 @@ export default {
           });
       }
     },
+
     onselectedCommunity(community) {
       this.form.community_id = community.id;
       this.selectCommunity.options = [];
@@ -1082,8 +1091,6 @@ export default {
     customLabel(option) {
       return `${option.comm_name}`;
     },
-
-    // Create
 
     confirmationVisitCreate() {
       this.visitBeingCreated = this.form;
@@ -1121,15 +1128,11 @@ export default {
 
     createActivityCancel() {
       this.visitBeingCreated = null;
-      //   Clean address data
-
       this.selectCommunity.selectedCommunity = null;
       this.selectCommunity.options = [];
-
-      // Clean data Form
       this.form.reset();
     },
-    //  Update
+
     confirmationVisitUpdate(visit) {
       this.updateVisitForm.comm_reason_visit = visit.comm_reason_visit;
       this.updateVisitForm.comm_type_visit = visit.comm_type_visit;
@@ -1177,12 +1180,13 @@ export default {
       this.visitBeingUpdated = null;
       this.updateVisitForm.reset();
     },
-    // Delete
+
     confirmationVisitDelete(visit) {
       this.deleteVisitForm.comm_reason_visit = visit.comm_reason_visit;
       this.deleteVisitForm.community_id = visit.community.id;
       this.visitBeingDeleted = visit;
     },
+
     deleteVisit() {
       this.deleteVisitForm.delete(
         this.route("secretary.communities.visit.delete", {
@@ -1200,15 +1204,18 @@ export default {
         }
       );
     },
+
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     formatDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
       }
       return null;
     },
+
     formatDateShow(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");

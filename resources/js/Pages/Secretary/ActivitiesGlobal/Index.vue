@@ -144,22 +144,11 @@
                   <small class="justify-content-center ml-20 uppercase"
                     >Filtros de Búsqueda</small
                   >
-
                   <search-filter
                     v-model="params.search"
                     class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     @reset="reset"
                   >
-                    <!-- <v-date-picker v-model="params.date" is-required :format="format">
-              <template v-slot="{ inputValue, inputEvents }">
-                <input
-                  class="bg-white border px-2 py-1 rounded"
-                  :value="inputValue"
-                  v-on="inputEvents"
-                />
-              </template>
-            </v-date-picker> -->
-
                     <small class="block text-gray-700 mt-2">Comunidades:</small>
 
                     <select
@@ -904,39 +893,41 @@
   </app-layout>
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
-import { pickBy, throttle, mapValues } from "lodash";
-import moment from "moment";
-import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-import { range } from "moment-range";
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetButton from "@/Jetstream/Button.vue";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import Datepicker from "vue3-date-time-picker";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import Pagination from "@/Components/Pagination";
-import Icon from "@/Components/Icon";
-import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 
-import TextInput from "@/Components/TextInput";
-import { ref } from "vue";
-import Alert from "@/Components/Alert";
-import SearchFilter from "@/Components/SearchFilter";
+import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 import Operation from "@/Components/Secretary/Community/Operation";
-import { Inertia } from "@inertiajs/inertia";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import { mapState, mapActions, mapGetters } from "vuex";
+import JetInputError from "@/Jetstream/InputError.vue";
+import SearchFilter from "@/Components/SearchFilter";
+import { pickBy, throttle, mapValues } from "lodash";
+import Pagination from "@/Components/Pagination";
+import Datepicker from "vue3-date-time-picker";
+import JetButton from "@/Jetstream/Button.vue";
+import TextInput from "@/Components/TextInput";
+import { Inertia } from "@inertiajs/inertia";
+import JetInput from "@/Jetstream/Input.vue";
 import Dropdown from "@/Components/Dropdown";
+import Alert from "@/Components/Alert";
+import Icon from "@/Components/Icon";
+import { range } from "moment-range";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   layout: PrincipalLayout,
+
   props: {
     activities: Object,
     communities: Object,
     filters: Object,
   },
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -951,6 +942,7 @@ export default {
       format,
     };
   },
+
   components: {
     JetButton,
     AppLayout,
@@ -972,9 +964,11 @@ export default {
     Pagination,
     JetConfirmationModal,
   },
+
   mounted() {
     this.allAppointmentLevel;
   },
+
   data() {
     return {
       toolbarOptions: [
@@ -1046,10 +1040,11 @@ export default {
       },
     };
   },
+
   watch: {
     dataTransfer: function () {
-      //   console.log("log ");
     },
+
     "form.comm_description_activity": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -1061,6 +1056,7 @@ export default {
         }
       }
     },
+
     "updateActivityForm.comm_description_activity": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -1072,6 +1068,7 @@ export default {
         }
       }
     },
+
     params: {
       handler: throttle(function () {
         let params = pickBy(this.params);
@@ -1086,7 +1083,6 @@ export default {
           preserveState: true,
           preserveScroll: true,
           onSuccess: () => {
-            // console.log("Success");
           },
         });
       }, 1),
@@ -1095,32 +1091,31 @@ export default {
   },
   computed: {
     ...mapState("work", ["work"]),
+
     ...mapState("work", ["allWork"]),
-    // Validate Multioption
-    // Validate Multioption
+
     isInvalid() {
-      //   console.log("ee", this.selectOne.selectedProvince);
       return (
         this.selectOne.selectedProvince == undefined ||
         this.selectOne.selectedProvince == null
       );
     },
+
     isInvalidCanton() {
-      //   console.log("ee canton", this.selectTwo.selectedCanton);
       return (
         this.selectTwo.selectedCanton == undefined ||
         this.selectTwo.selectedCanton == null
       );
     },
+
     isInvalidParish() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectThree.selectedParish == undefined ||
         this.selectThree.selectedParish == null
       );
     },
+
     isInvalidCommunity() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectCommunity.selectedCommunity == undefined ||
         this.selectCommunity.selectedCommunity == null
@@ -1138,12 +1133,9 @@ export default {
     },
 
     onSearchProvincesChange(term) {
-      //   console.log("input data search " + term);
     },
 
     onSelectedProvince(province) {
-      //   console.log("input data selecter " + province.id);
-
       if (this.activityBeingUpdated != null) {
         this.updateActivityForm.political_division_id = null;
       }
@@ -1155,7 +1147,6 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.selectTwo.options = res.data;
         });
     },
@@ -1176,6 +1167,7 @@ export default {
           });
       }
     },
+
     onselectedCommunity(community) {
       this.form.community_id = community.id;
       this.selectCommunity.options = [];
@@ -1185,8 +1177,6 @@ export default {
       return `${option.comm_name}`;
     },
 
-    // Create
-
     confirmationActivityCreate() {
       this.activityBeingCreated = this.form;
     },
@@ -1195,7 +1185,7 @@ export default {
       this.form.comm_date_activity = this.formatDate(
         this.form.comm_date_activity
       );
-      //
+
       if (this.isInvalidCommunity == false) {
         Inertia.post(
           route("secretary.communities.activity.store", {
@@ -1221,15 +1211,11 @@ export default {
 
     createActivityCancel() {
       this.activityBeingCreated = null;
-      //   Clean address data
-
       this.selectCommunity.selectedCommunity = null;
       this.selectCommunity.options = [];
-
-      // Clean data Form
       this.form.reset();
     },
-    //  Update
+
     confirmationActivityUpdate(activity) {
       this.updateActivityForm.comm_name_activity = activity.comm_name_activity;
       this.updateActivityForm.comm_description_activity =
@@ -1241,7 +1227,6 @@ export default {
       this.updateActivityForm.comm_nr_collaborators =
         activity.comm_nr_collaborators;
       this.updateActivityForm.community_id = activity.community.id;
-
       this.activityBeingUpdated = activity;
     },
 
@@ -1273,7 +1258,7 @@ export default {
       this.activityBeingUpdated = null;
       this.updateActivityForm.reset();
     },
-    // Delete
+
     confirmationActivityDelete(activity) {
       this.deleteActivityForm.comm_name_activity = activity.comm_name_activity;
       this.deleteActivityForm.comm_description_activity =
@@ -1305,12 +1290,14 @@ export default {
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     formatDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
       }
       return null;
     },
+
     formatDateShow(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");

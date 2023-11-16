@@ -240,10 +240,12 @@
 <script>
 import { ref, onMounted } from "vue";
 import Datepickerf from "vuejs3-datepicker";
+
 export default {
   components: {
     Datepickerf,
   },
+
   data() {
     return {
       isDisabled: false,
@@ -259,6 +261,7 @@ export default {
       ],
     };
   },
+
   computed: {
     isInvalid() {
       console.log("inva ", this.isTouched, "\n\nopp> ");
@@ -268,25 +271,22 @@ export default {
   },
   methods: {
     showAlert() {
-      // Use sweetalert2
-      this.$swal("Hello Vue world!!!");
     },
+
     onChange(value) {
       this.value = value;
-      console.log("aiudaaa> ", value);
       if (value.indexOf("Reset me!") !== -1) {
-        console.log("is reset");
         this.value = [];
       }
     },
+
     onSelect(option) {
       if (option === "Disable me!") {
-        console.log("is disable");
         this.isDisabled = true;
       }
     },
+
     onTouch() {
-      console.log("is touched");
       this.isTouched = true;
     },
   },

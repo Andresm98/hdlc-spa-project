@@ -2,16 +2,7 @@
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:p-6">
       <h6
-        class="
-          mt-2
-          mb-2
-          text-lg
-          font-medium
-          text-center
-          leading-6
-          text-gray-900
-          uppercase
-        "
+        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
       >
         Plantilla de Visitas
       </h6>
@@ -35,22 +26,7 @@
                   minLength="10"
                   maxlength="100"
                   placeholder="Ingresar razón visita"
-                  class="
-                    border-0
-                    px-3
-                    my-2
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="form.comm_reason_visit"
                   required
                 />
@@ -76,20 +52,7 @@
                   id="material"
                   name="material"
                   autocomplete="article-material"
-                  class="
-                    mt-1
-                    block
-                    w-full
-                    px-3
-                    border border-gray-300
-                    bg-white
-                    rounded-md
-                    shadow-sm
-                    focus:outline-none
-                    focus:ring-indigo-500
-                    focus:border-indigo-500
-                    sm:text-sm
-                  "
+                  class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
                   <option value="1">Fraterna</option>
                   <option value="2">Regular</option>
@@ -184,15 +147,7 @@
       </form>
 
       <hr
-        class="
-          w-full
-          mt-1
-          mb-3
-          ml-4
-          mr-4
-          border-b-1 border-gray-400
-          hover:border-gray-400
-        "
+        class="w-full mt-1 mb-3 ml-4 mr-4 border-b-1 border-gray-400 hover:border-gray-400"
       />
       <!-- Data Table  -->
 
@@ -202,155 +157,105 @@
             v-if="this.getAllVisit()"
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-blue-100">
-                <tr>
-                  <th
-                    scope="col"
-                    class="
-                      pl-4
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
-                  >
-                    Razón
-                  </th>
-                  <th
-                    scope="col"
-                    class="
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
-                  >
-                    Tipo
-                  </th>
-                  <th
-                    scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
-                  >
-                    Fecha Inicio - Fin
-                  </th>
-                  <th
-                    scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-black
-                      uppercase
-                      tracking-wider
-                    "
-                  >
-                    Acciones
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="visit in this.getAllVisit()" :key="visit">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 h-10 w-10">
-                        <svg class="svg-icon mt-1" viewBox="2 2 23 23">
-                          <path
-                            d="M14.467,1.771H5.533c-0.258,0-0.47,0.211-0.47,0.47v15.516c0,0.414,0.504,0.634,0.802,0.331L10,13.955l4.136,4.133c0.241,0.241,0.802,0.169,0.802-0.331V2.241C14.938,1.982,14.726,1.771,14.467,1.771 M13.997,16.621l-3.665-3.662c-0.186-0.186-0.479-0.186-0.664,0l-3.666,3.662V2.711h7.994V16.621z"
-                          ></path>
-                        </svg>
-                      </div>
-                      <div class="ml-4">
-                        {{ visit.comm_reason_visit.substring(0, 10) }}
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div
-                      class="text-sm font-medium text-gray-900"
-                      v-if="visit.comm_type_visit == 1"
-                    >
-                      Fraterna
-                    </div>
-                    <div
-                      class="text-sm font-medium text-gray-900"
-                      v-if="visit.comm_type_visit == 2"
-                    >
-                      Regular
-                    </div>
-                    <div
-                      class="text-sm font-medium text-gray-900"
-                      v-if="visit.comm_type_visit == 3"
-                    >
-                      Pastoral
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span
-                      class="
-                        px-3
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-yellow-100
-                        text-yellow-800
-                        mr-2
-                      "
-                    >
-                      {{ this.formatShowDate(visit.comm_date_init_visit) }}
-                    </span>
-                    <span
-                      class="
-                        px-3
-                        inline-flex
-                        text-xs
-                        leading-5
-                        font-semibold
-                        rounded-full
-                        bg-red-100
-                        text-red-800
-                        mr-2
-                      "
-                    >
-                      {{ this.formatShowDate(visit.comm_date_end_visit) }}
-                    </span>
-                  </td>
-                  <td
-                    class="
-                      px-3
-                      py-4
-                      whitespace-nowrap
-                      text-right text-sm
-                      font-medium
-                    "
-                  >
-                    <!-- Components -->
+            <div className="overflow-y-auto h-96">
+              <div className="relative px-4">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-blue-100">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Razón
+                      </th>
+                      <th
+                        scope="col"
+                        class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Tipo
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Fecha Inicio - Fin
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Acciones
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr v-for="visit in this.getAllVisit()" :key="visit">
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div class="flex-shrink-0 h-10 w-10">
+                            <svg class="svg-icon mt-1" viewBox="2 2 23 23">
+                              <path
+                                d="M14.467,1.771H5.533c-0.258,0-0.47,0.211-0.47,0.47v15.516c0,0.414,0.504,0.634,0.802,0.331L10,13.955l4.136,4.133c0.241,0.241,0.802,0.169,0.802-0.331V2.241C14.938,1.982,14.726,1.771,14.467,1.771 M13.997,16.621l-3.665-3.662c-0.186-0.186-0.479-0.186-0.664,0l-3.666,3.662V2.711h7.994V16.621z"
+                              ></path>
+                            </svg>
+                          </div>
+                          <div class="ml-4">
+                            {{ visit.comm_reason_visit.substring(0, 10) }}
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div
+                          class="text-sm font-medium text-gray-900"
+                          v-if="visit.comm_type_visit == 1"
+                        >
+                          Fraterna
+                        </div>
+                        <div
+                          class="text-sm font-medium text-gray-900"
+                          v-if="visit.comm_type_visit == 2"
+                        >
+                          Regular
+                        </div>
+                        <div
+                          class="text-sm font-medium text-gray-900"
+                          v-if="visit.comm_type_visit == 3"
+                        >
+                          Pastoral
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 mr-2"
+                        >
+                          {{ this.formatShowDate(visit.comm_date_init_visit) }}
+                        </span>
+                        <span
+                          class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 mr-2"
+                        >
+                          {{ this.formatShowDate(visit.comm_date_end_visit) }}
+                        </span>
+                      </td>
+                      <td
+                        class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
+                      >
+                        <!-- Components -->
 
-                    <div class="mx-auto flex gap-10">
-                      <jet-button @click="confirmationVisitUpdate(visit)"
-                        >Detalles</jet-button
-                      >
-                      <jet-danger-button @click="confirmationVisitDelete(visit)"
-                        >Eliminar</jet-danger-button
-                      >
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                        <div class="mx-auto flex gap-10">
+                          <jet-button @click="confirmationVisitUpdate(visit)"
+                            >Detalles</jet-button
+                          >
+                          <jet-danger-button
+                            @click="confirmationVisitDelete(visit)"
+                            >Eliminar</jet-danger-button
+                          >
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
           <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
             <p class="text-center text-lg">
@@ -410,22 +315,7 @@
                     minLength="10"
                     maxlength="100"
                     placeholder="Ingresar razón visita"
-                    class="
-                      border-0
-                      px-3
-                      my-2
-                      placeholder-blueGray-300
-                      text-blueGray-600
-                      bg-white
-                      rounded
-                      text-sm
-                      shadow
-                      focus:outline-none focus:ring
-                      w-full
-                      ease-linear
-                      transition-all
-                      duration-150
-                    "
+                    class="border-0 px-3 my-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="updateVisitForm.comm_reason_visit"
                     required
                   />
@@ -451,20 +341,7 @@
                     id="material"
                     name="material"
                     autocomplete="article-material"
-                    class="
-                      mt-1
-                      block
-                      w-full
-                      px-3
-                      border border-gray-300
-                      bg-white
-                      rounded-md
-                      shadow-sm
-                      focus:outline-none
-                      focus:ring-indigo-500
-                      focus:border-indigo-500
-                      sm:text-sm
-                    "
+                    class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   >
                     <option value="1">Fraterna</option>
                     <option value="2">Regular</option>
@@ -569,38 +446,39 @@
 </template>
 
 <script>
-import Datepicker from "vue3-date-time-picker";
-import { useForm } from "@inertiajs/inertia-vue3";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import JetButton from "@/Jetstream/Button.vue";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import moment from "moment";
-import { Inertia } from "@inertiajs/inertia";
-import "vue3-date-time-picker/dist/main.css";
-import { ref } from "vue";
 import { mapState, mapGetters, mapActions } from "vuex";
 import JetInputError from "@/Jetstream/InputError";
+import { useForm } from "@inertiajs/inertia-vue3";
+import JetButton from "@/Jetstream/Button.vue";
+import Datepicker from "vue3-date-time-picker";
+import JetInput from "@/Jetstream/Input.vue";
+import { Inertia } from "@inertiajs/inertia";
+import "vue3-date-time-picker/dist/main.css";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   props: {
     errors: [],
   },
+
   mounted() {
     this.allVisit;
   },
+
   computed: {
     isInvalid() {
-      console.log("inva ", this.isTouched, "\n\nopp> ");
       return this.value == null;
     },
 
     ...mapState("community", ["community"]),
+
     ...mapState("visit", ["visit"]),
 
     allVisit() {
@@ -615,7 +493,7 @@ export default {
         });
     },
   },
-  // Relashionship with another components
+
   components: {
     Datepicker,
     JetButtonSuccess,
@@ -629,14 +507,16 @@ export default {
     JetFormSection,
     moment,
   },
-  //  Setup all data
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
+
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
+
     const form = useForm({
       comm_reason_visit: null,
       comm_type_visit: null,
@@ -644,6 +524,7 @@ export default {
       comm_date_init_visit: null,
       comm_date_end_visit: null,
     });
+
     return {
       date,
       year,
@@ -673,9 +554,13 @@ export default {
 
         ["clean"], // remove formatting button
       ],
+
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       options: [
         "Bautismo",
         "Penitencia",
@@ -685,7 +570,9 @@ export default {
         "Matrimonio",
         "Unión de Enfermos",
       ],
+
       visitBeingDeleted: null,
+
       deleteVisitForm: this.$inertia.form({
         comm_reason_visit: null,
         comm_type_visit: null,
@@ -693,7 +580,9 @@ export default {
         comm_date_init_visit: null,
         comm_date_end_visit: null,
       }),
+
       visitBeingUpdated: null,
+
       updateVisitForm: this.$inertia.form({
         comm_reason_visit: null,
         comm_type_visit: null,
@@ -703,6 +592,7 @@ export default {
       }),
     };
   },
+
   watch: {
     "form.comm_description_visit": function () {
       var limit = 4000;
@@ -714,6 +604,7 @@ export default {
         quill.setHTML(this.data_intput_one);
       }
     },
+
     "updateVisitForm.comm_description_visit": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -727,7 +618,9 @@ export default {
   },
   methods: {
     ...mapActions("visit", ["updateAllVisit"]),
+
     ...mapGetters("visit", ["getAllVisit"]),
+
     submit() {
       this.form.comm_date_init_visit = this.formatDate(
         this.form.comm_date_init_visit
@@ -735,7 +628,6 @@ export default {
       this.form.comm_date_end_visit = this.formatDate(
         this.form.comm_date_end_visit
       );
-      //
       Inertia.post(
         route("secretary.communities.visit.store", {
           community_id: this.community.id,
@@ -758,11 +650,12 @@ export default {
           },
         }
       );
-      //
     },
+
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
+
     formatShowDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
@@ -777,16 +670,15 @@ export default {
         visit.comm_description_visit;
       this.updateVisitForm.comm_date_init_visit = visit.comm_date_init_visit;
       this.updateVisitForm.comm_date_end_visit = visit.comm_date_end_visit;
-
       this.visitBeingUpdated = visit;
     },
+
     updateVisit() {
       if (this.updateVisitForm.comm_date_init_visit != null) {
         this.updateVisitForm.comm_date_init_visit = this.formatDate(
           this.updateVisitForm.comm_date_init_visit
         );
       }
-
       if (this.updateVisitForm.comm_date_end_visit != null) {
         this.updateVisitForm.comm_date_end_visit = this.formatDate(
           this.updateVisitForm.comm_date_end_visit
@@ -810,11 +702,12 @@ export default {
         }
       );
     },
-    // Delete
+
     confirmationVisitDelete(visit) {
       this.deleteVisitForm.comm_reason_visit = visit.comm_reason_visit;
       this.visitBeingDeleted = visit;
     },
+
     deleteVisit() {
       this.deleteVisitForm.delete(
         this.route("secretary.communities.visit.delete", {
@@ -833,7 +726,7 @@ export default {
         }
       );
     },
-    //
+
     updateTable() {
       axios
         .get(
@@ -845,28 +738,6 @@ export default {
           this.updateAllVisit(res.data);
         });
     },
-    // showAlert() {
-    //   // Use sweetalert2
-    //   this.$swal("Hello Vue world!!!");
-    // },
-    // onChange(value) {
-    //   this.value = value;
-    //   console.log("aiudaaa> ", value);
-    //   if (value.indexOf("Reset me!") !== -1) {
-    //     console.log("is reset");
-    //     this.value = [];
-    //   }
-    // },
-    // onSelect(option) {
-    //   if (option === "Disable me!") {
-    //     console.log("is disable");
-    //     this.isDisabled = true;
-    //   }
-    // },
-    // onTouch() {
-    //   console.log("is touched");
-    //   this.isTouched = true;
-    // },
   },
 };
 </script>

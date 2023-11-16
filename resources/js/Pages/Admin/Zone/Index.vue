@@ -289,8 +289,11 @@ export default {
     moment,
     Alert,
   },
+
   layout: PrincipalLayout,
+
   props: ["zone"],
+
   data() {
     return {
       createZoneForm: this.$inertia.form({

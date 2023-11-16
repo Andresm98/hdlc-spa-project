@@ -80,7 +80,6 @@
                 v-model="form.date_title"
                 :format="format"
                 autoApply
-                required
               />
             </div>
           </div>
@@ -135,83 +134,94 @@
             v-if="this.getAllAcademic()"
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-blue-100">
-                <tr>
-                  <th
-                    scope="col"
-                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Nombre Título
-                  </th>
-                  <th
-                    scope="col"
-                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Fecha Título
-                  </th>
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Insitución
-                  </th>
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Acciones
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="academic in this.getAllAcademic()" :key="academic">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 h-10 w-10">
-                        <svg class="svg-icon" viewBox="2 2 23 23">
-                          <path
-                            d="M14.467,1.771H5.533c-0.258,0-0.47,0.211-0.47,0.47v15.516c0,0.414,0.504,0.634,0.802,0.331L10,13.955l4.136,4.133c0.241,0.241,0.802,0.169,0.802-0.331V2.241C14.938,1.982,14.726,1.771,14.467,1.771 M13.997,16.621l-3.665-3.662c-0.186-0.186-0.479-0.186-0.664,0l-3.666,3.662V2.711h7.994V16.621z"
-                          ></path>
-                        </svg>
-                      </div>
-                      <div class="ml-4">
-                        <div class="text-sm font-medium text-gray-900">
-                          {{ academic.name_title.substring(0, 15) }}...
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">
-                      {{ this.formatShowDate(academic.date_title) }}
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+            <div className="overflow-y-auto h-96">
+              <div className="relative px-4">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-blue-100">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Nombre Título
+                      </th>
+                      <th
+                        scope="col"
+                        class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Fecha Título
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Insitución
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Acciones
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr
+                      v-for="academic in this.getAllAcademic()"
+                      :key="academic"
                     >
-                      {{ academic.institution.substring(0, 15) }}...
-                    </span>
-                  </td>
-                  <td
-                    class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
-                  >
-                    <!-- Components -->
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div class="flex-shrink-0 h-10 w-10">
+                            <svg class="svg-icon" viewBox="2 2 23 23">
+                              <path
+                                d="M14.467,1.771H5.533c-0.258,0-0.47,0.211-0.47,0.47v15.516c0,0.414,0.504,0.634,0.802,0.331L10,13.955l4.136,4.133c0.241,0.241,0.802,0.169,0.802-0.331V2.241C14.938,1.982,14.726,1.771,14.467,1.771 M13.997,16.621l-3.665-3.662c-0.186-0.186-0.479-0.186-0.664,0l-3.666,3.662V2.711h7.994V16.621z"
+                              ></path>
+                            </svg>
+                          </div>
+                          <div class="ml-4">
+                            <div class="text-sm font-medium text-gray-900">
+                              {{ academic.name_title.substring(0, 15) }}...
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">
+                          <div v-if="academic.date_title">
+                            {{ this.formatShowDate(academic.date_title) }}
+                          </div>
+                          <div v-else>Cursando</div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                        >
+                          {{ academic.institution.substring(0, 15) }}...
+                        </span>
+                      </td>
+                      <td
+                        class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
+                      >
+                        <!-- Components -->
 
-                    <div class="mx-auto flex gap-10">
-                      <jet-button @click="confirmationAcademicUpdate(academic)"
-                        >Detalles</jet-button
-                      >
-                      <jet-danger-button
-                        @click="confirmationAcademicDelete(academic)"
-                        >Eliminar</jet-danger-button
-                      >
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                        <div class="mx-auto flex gap-10">
+                          <jet-button
+                            @click="confirmationAcademicUpdate(academic)"
+                            >Detalles</jet-button
+                          >
+                          <jet-danger-button
+                            @click="confirmationAcademicDelete(academic)"
+                            >Eliminar</jet-danger-button
+                          >
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
           <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
             <p class="text-center text-lg">
@@ -404,29 +414,29 @@
 </template>
 
 <script>
-import Datepicker from "vue3-date-time-picker";
-import { useForm } from "@inertiajs/inertia-vue3";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import JetButton from "@/Jetstream/Button.vue";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
+import { useForm } from "@inertiajs/inertia-vue3";
+import JetButton from "@/Jetstream/Button.vue";
+import Datepicker from "vue3-date-time-picker";
 
+import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
+import JetInputError from "@/Jetstream/InputError";
 import JetInput from "@/Jetstream/Input.vue";
-import moment from "moment";
 import { Inertia } from "@inertiajs/inertia";
 import "vue3-date-time-picker/dist/main.css";
 import { ref } from "vue";
-import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
-import JetInputError from "@/Jetstream/InputError";
+import moment from "moment";
 
 export default {
   props: {
     errors: null,
   },
-  // Relashionship with another components
+
   components: {
     Datepicker,
     JetButtonSuccess,
@@ -441,7 +451,7 @@ export default {
     moment,
     JetButtonSuccess,
   },
-  //  Setup all data
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -462,6 +472,7 @@ export default {
       form,
     };
   },
+
   watch: {
     "form.observation": function () {
       var limit = 4000;
@@ -472,6 +483,7 @@ export default {
         quill.setHTML(this.data_intput_one);
       }
     },
+
     "updateAcademicForm.observation": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -505,14 +517,18 @@ export default {
         ["clean"], // remove formatting button
       ],
       data_intput_one: "",
+
       academicBeingDeleted: null,
+
       deleteAcademicForm: this.$inertia.form({
         name_title: null,
         institution: null,
         date_title: null,
         observation: null,
       }),
+
       academicBeingUpdated: null,
+
       updateAcademicForm: this.$inertia.form({
         name_title: null,
         institution: null,
@@ -521,12 +537,16 @@ export default {
       }),
     };
   },
+
   mounted() {
     this.allAcademic;
   },
+
   computed: {
     ...mapState("daughter", ["profile"]),
+
     ...mapState("academic", ["academic"]),
+
     allAcademic() {
       axios
         .get(
@@ -542,9 +562,9 @@ export default {
 
   methods: {
     ...mapActions("academic", ["updateAllAcademic"]),
+
     ...mapGetters("academic", ["getAllAcademic"]),
 
-    // Save
     submit() {
       this.form.date_title = this.formatDate(this.form.date_title);
 
@@ -569,7 +589,7 @@ export default {
         }
       );
     },
-    // Update
+
     confirmationAcademicUpdate(academic) {
       this.updateAcademicForm.name_title = academic.name_title;
       this.updateAcademicForm.institution = academic.institution;
@@ -577,6 +597,7 @@ export default {
       this.updateAcademicForm.observation = academic.observation;
       this.academicBeingUpdated = academic;
     },
+
     updateAcademic() {
       this.updateAcademicForm.date_title = this.formatDate(
         this.updateAcademicForm.date_title
@@ -599,11 +620,12 @@ export default {
         }
       );
     },
-    // Delete
+
     confirmationAcademicDelete(academic) {
       this.deleteAcademicForm.name_title = academic.name_title;
       this.academicBeingDeleted = academic;
     },
+
     deleteAcademic() {
       this.deleteAcademicForm.delete(
         this.route("secretary.daughter-profile.academic.delete", {
@@ -634,12 +656,14 @@ export default {
           this.updateAllAcademic(res.data);
         });
     },
+
     formatDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
       }
       return null;
     },
+
     formatShowDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");

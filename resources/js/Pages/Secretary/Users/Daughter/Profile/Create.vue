@@ -463,30 +463,30 @@
 </template>
 
 <script>
-import Datepicker from "vue3-date-time-picker";
-import { useForm } from "@inertiajs/inertia-vue3";
+import { mapState, mapMutations, mapGetters } from "vuex";
 import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import moment from "moment";
+import JetInputError from "@/Jetstream/InputError";
+import { useForm } from "@inertiajs/inertia-vue3";
+import Datepicker from "vue3-date-time-picker";
 import { Inertia } from "@inertiajs/inertia";
 import "vue3-date-time-picker/dist/main.css";
+import moment from "moment";
 import { ref } from "vue";
-import { mapState, mapMutations, mapGetters } from "vuex";
-import JetInputError from "@/Jetstream/InputError";
 
 export default {
-  //   Props
+
   props: {
     daughter_custom: Object,
     errors: null,
   },
-  // Relashionship with another components
+
   components: {
     Datepicker,
     JetButtonSuccess,
     JetInputError,
     moment,
   },
-  //  Setup all data
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -502,19 +502,14 @@ export default {
       date_admission: null,
       date_send: null,
       date_vote: null,
-      //   date_death: null,
       cellphone: null,
       phone: null,
       observation: null,
-
-      //
 
       address: null,
       province_id: null,
       canton_id: null,
       parish_id: null,
-
-      // Birth place
 
       address_bt: null,
       province_id_bt: null,
@@ -528,52 +523,51 @@ export default {
       form,
     };
   },
-  //  Return Data
+
   computed: {
     ...mapState("daughter", ["profile"]),
+
     ...mapState("address", ["allProvinces"]),
+
     ...mapState({
       message: (state) => state.obj.message,
     }),
 
-    // Validate Multioption
     isInvalid() {
-      //   console.log("ee", this.selectOne.selectedProvince);
       return (
         this.selectOne.selectedProvince == undefined ||
         this.selectOne.selectedProvince == null
       );
     },
+
     isInvalidCanton() {
-      //   console.log("ee canton", this.selectTwo.selectedCanton);
       return (
         this.selectTwo.selectedCanton == undefined ||
         this.selectTwo.selectedCanton == null
       );
     },
+
     isInvalidParish() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectThree.selectedParish == undefined ||
         this.selectThree.selectedParish == null
       );
     },
 
-    // Bt MlOption
-
-    // Validate Multioption
     isInvalidBt() {
       return (
         this.selectOneBt.selectedProvince == undefined ||
         this.selectOneBt.selectedProvince == null
       );
     },
+
     isInvalidCantonBt() {
       return (
         this.selectTwoBt.selectedCanton == undefined ||
         this.selectTwoBt.selectedCanton == null
       );
     },
+
     isInvalidParishBt() {
       return (
         this.selectThreeBt.selectedParish == undefined ||
@@ -581,10 +575,8 @@ export default {
       );
     },
 
-    // Validate ID Card`
     validateIdentityCard() {
       this.form.identity_card = this.form.identity_card + "";
-      //   console.log(typeof identity_card + "" + identity_card);
       if (this.form.identity_card == null) {
         return false;
       }
@@ -593,7 +585,6 @@ export default {
         this.form.identity_card.length == 13
       ) {
         const digit = this.form.identity_card.split("").map(Number);
-        //   console.log(digit);
         const coefficient = [2, 1];
         var province_code = digit[0] * 10 + digit[1];
         var verification_code = digit.slice(9, 10);
@@ -626,7 +617,7 @@ export default {
       return false;
     },
   },
-  // Data in this component
+
   data() {
     return {
       toolbarOptions: [
@@ -648,8 +639,6 @@ export default {
 
         ["clean"], // remove formatting button
       ],
-
-      //Provinces
       selectOne: {
         selectedProvince: undefined,
         value: 0,
@@ -679,7 +668,6 @@ export default {
         multiSelectParish: null,
         vSelectParish: null,
       },
-      //
       selectOneBt: {
         selectedProvince: undefined,
         value: 0,
@@ -711,7 +699,7 @@ export default {
       },
     };
   },
-  // Watch changes in data
+
   watch: {
     "selectOne.selectedProvince": function () {
       if (this.selectOne.selectedProvince === null) {
@@ -719,82 +707,79 @@ export default {
         this.selectThree.selectedParish = null;
         this.selectTwo.options = [];
         this.selectThree.options = [];
-        // Clean data Form
         this.form.province_id = null;
         this.form.canton_id = null;
         this.form.parish_id = null;
         this.form.political_division_id = null;
       }
     },
+
     "selectTwo.selectedCanton": function () {
       if (this.selectTwo.selectedCanton === null) {
         this.selectThree.selectedParish = null;
         this.selectThree.options = [];
-        // Clean data Form
         this.form.canton_id = null;
         this.form.parish_id = null;
         this.form.political_division_id = null;
       }
     },
+
     "selectThree.selectedParish": function () {
       if (this.selectThree.selectedParish === null) {
-        // Clean data Form
         this.form.parish_id = null;
         this.form.political_division_id = null;
       }
     },
-    //
+
     "selectOneBt.selectedProvince": function () {
       if (this.selectOneBt.selectedProvince === null) {
         this.selectTwoBt.selectedCanton = null;
         this.selectThreeBt.selectedParish = null;
         this.selectTwoBt.options = [];
         this.selectThreeBt.options = [];
-        // Clean data Form
         this.form.province_id_bt = null;
         this.form.canton_id_bt = null;
         this.form.parish_id_bt = null;
         this.form.political_division_id_bt = null;
       }
     },
+
     "selectTwoBt.selectedCanton": function () {
       if (this.selectTwoBt.selectedCanton === null) {
         this.selectThreeBt.selectedParish = null;
         this.selectThreeBt.options = [];
-        // Clean data Form
         this.form.canton_id_bt = null;
         this.form.parish_id_bt = null;
         this.form.political_division_id_bt = null;
       }
     },
+
     "selectThreeBt.selectedParish": function () {
       if (this.selectThreeBt.selectedParish === null) {
-        // Clean data Form
         this.form.parish_id_bt = null;
         this.form.political_division_id_bt = null;
       }
     },
   },
-  // Mehods in this component
+
   methods: {
     muestra() {
-      //   console.log("abrir");
+
     },
 
     cerrado() {
-      //   console.log("cerrado");
+
     },
 
     blur() {
-      //   console.log("blurrr");
+
     },
 
     onSearchProvincesChange(term) {
-      //   console.log("input data search " + term);
+
     },
 
     onSelectedProvince(province) {
-      //   console.log("input data selecter " + province.id);
       this.form.province_id = province.id;
       this.form.canton_id = null;
       this.form.parish_id = null;
@@ -810,7 +795,6 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.selectTwo.options = res.data;
         });
     },
@@ -841,8 +825,6 @@ export default {
       this.form.parish_id = parish.id;
       this.form.political_division_id = parish.id;
     },
-
-    // Address Bt
 
     onSearchProvincesChangeBt(term) {},
 
@@ -893,8 +875,6 @@ export default {
       this.form.political_division_id_bt = parish.id;
     },
 
-    //   Mutations
-
     ...mapMutations("daughter", ["updateProfile"]),
 
     ...mapGetters("daughter", ["profileDaughter"]),
@@ -938,20 +918,19 @@ export default {
         date_admission: this.formatDate(this.form.date_admission),
         date_send: this.formatDate(this.form.date_send),
         date_vote: this.formatDate(this.form.date_vote),
-        // date_death: this.formatDate(this.form.date_death),
         user_id: this.profile.user_id,
         //  Address Object
         address: {
           address: this.form.address,
           political_division_id: this.form.parish_id,
         },
-        //
         address_bt: {
           address_bt: this.form.address_bt,
           political_division_id_bt: dataaddresbt,
         },
       });
     },
+
     submit() {
       this.form.user_id = this.profile.user_id;
       this.updateData();

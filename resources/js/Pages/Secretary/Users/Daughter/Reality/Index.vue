@@ -315,21 +315,21 @@
   </app-layout>
 </template>
 <script>
-import { defineComponent } from "vue";
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
-import { useForm, Link } from "@inertiajs/inertia-vue3";
-import { Inertia } from "@inertiajs/inertia";
-import JetInputError from "@/Jetstream/InputError";
-import Alert from "@/Components/Alert";
-import { ref } from "vue";
+import PieChart from "@/Pages/Secretary/Users/Daughter/Reality/PieChart";
+import Linear from "@/Pages/Secretary/Users/Daughter/Reality/Linear";
 import Operation from "@/Components/Secretary/Daughter/Operation";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import Chart from "@/Pages/Secretary/Users/Daughter/Reality/Chart";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import { useForm, Link } from "@inertiajs/inertia-vue3";
+import JetInputError from "@/Jetstream/InputError";
 import Dropdown from "@/Components/Dropdown";
+import { Inertia } from "@inertiajs/inertia";
+import Alert from "@/Components/Alert";
+import { defineComponent } from "vue";
 import Icon from "@/Components/Icon";
-import PieChart from "@/Pages/Secretary/Users/Daughter/Reality/PieChart";
-import Linear from "@/Pages/Secretary/Users/Daughter/Reality/Linear";
 import { jsPDF } from "jspdf";
+import { ref } from "vue";
 
 export default {
   data() {
@@ -352,7 +352,9 @@ export default {
   props: {
     groupDaughters: Object,
   },
+
   layout: PrincipalLayout,
+
   components: {
     AppLayout,
     JetInputError,
@@ -364,6 +366,7 @@ export default {
     Dropdown,
     Linear,
   },
+
   methods: {
     getData(array) {
       let data = [];
@@ -373,6 +376,7 @@ export default {
 
       return (this.arrayData = data);
     },
+
     getLabels(array) {
       let data = [];
       for (let index = 0; index < this.groupDaughters.length; index++) {
@@ -418,6 +422,7 @@ export default {
           break;
       }
     },
+
     printData() {
       var doc = new jsPDF("p", "pt", "a4");
       doc.setFontSize(this.fontSize);

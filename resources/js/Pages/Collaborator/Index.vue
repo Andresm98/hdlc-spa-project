@@ -643,36 +643,34 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+
 import PrincipalLayout from "@/Components/Collaborator/PrincipalLayout";
-import AppLayout from "@/Layouts/AppLayout.vue";
-
-import Icon from "@/Components/Icon";
-
-import { Link } from "@inertiajs/inertia-vue3";
-import Pagination from "@/Components/Pagination";
-import { Inertia } from "@inertiajs/inertia";
-import "sweetalert2/dist/sweetalert2.min.css";
-import moment from "moment";
 import { pickBy, throttle, mapValues } from "lodash";
-
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
 import JetInputError from "@/Jetstream/InputError.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-
-import SearchFilter from "@/Components/SearchFilter";
-import TextInput from "@/Components/TextInput";
-import Alert from "@/Components/Alert";
-import { mapActions } from "vuex";
 import Operation from "@/Components/Collaborator/Operation";
+import SearchFilter from "@/Components/SearchFilter";
+import Pagination from "@/Components/Pagination";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import { Link } from "@inertiajs/inertia-vue3";
+import TextInput from "@/Components/TextInput";
 import Datepicker from "vue3-date-time-picker";
+import "sweetalert2/dist/sweetalert2.min.css";
+import JetInput from "@/Jetstream/Input.vue";
 import Dropdown from "@/Components/Dropdown";
+import { Inertia } from "@inertiajs/inertia";
+import Icon from "@/Components/Icon";
+import Alert from "@/Components/Alert";
+import { defineComponent } from "vue";
+import { mapActions } from "vuex";
+import moment from "moment";
 import { ref } from "vue";
 
 export default defineComponent({
   layout: PrincipalLayout,
+
   props: {
     daughters_list: Object,
     pastorals: Object,
@@ -682,6 +680,7 @@ export default defineComponent({
       type: Array,
     },
   },
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -689,6 +688,7 @@ export default defineComponent({
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
+
     return {
       date,
       year,
@@ -702,6 +702,7 @@ export default defineComponent({
       modules: [Pagination],
     };
   },
+
   components: {
     Link,
     AppLayout,
@@ -720,6 +721,7 @@ export default defineComponent({
     Icon,
     Dropdown,
   },
+
   data() {
     return {
       modal_open: false,
@@ -741,17 +743,20 @@ export default defineComponent({
       options: [],
     };
   },
+
   methods: {
     sort(field) {
       this.params.field = field;
       this.params.direction = this.params.direction === "asc" ? "desc" : "asc";
     },
+
     formatDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
       }
       return null;
     },
+
     formatDateShow(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
@@ -762,9 +767,11 @@ export default defineComponent({
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     dataParams() {
       return this.params;
     },
+
     openDialogReport(user) {
       this.managingReportsFor = this.$inertia.form({
         user: user,
@@ -777,13 +784,17 @@ export default defineComponent({
         if (this.params.status === null || this.params.status != 1) {
           this.params.typeActive = null;
         }
+
         if (this.params.dateStart != null) {
           this.params.dateStart = this.formatDate(this.params.dateStart);
         }
+
         if (this.params.dateEnd != null) {
           this.params.dateEnd = this.formatDate(this.params.dateEnd);
         }
+
         let params = pickBy(this.params);
+
         this.$inertia.get(this.route("collaborator.daughters.index"), params, {
           replace: true,
           preserveScroll: true,

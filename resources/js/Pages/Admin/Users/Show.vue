@@ -350,7 +350,9 @@ import PrincipalLayout from "@/Components/Admin/PrincipalLayout";
 
 export default defineComponent({
   props: { user_custom: Object, image: String },
+
   layout: PrincipalLayout,
+
   components: {
     AppLayout,
     Link,

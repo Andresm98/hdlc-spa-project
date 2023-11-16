@@ -1035,11 +1035,13 @@ import Icon from "@/Components/Icon";
 import { ref } from "vue";
 export default {
   layout: PrincipalLayout,
+
   props: {
     permits: Object,
     allProvinces: Object,
     filters: Object,
   },
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -1053,6 +1055,7 @@ export default {
       format,
     };
   },
+
   components: {
     AppLayout,
     moment,
@@ -1074,9 +1077,11 @@ export default {
     JetConfirmationModal,
     JetButton,
   },
+
   mounted() {
     this.allAppointmentLevel;
   },
+
   data() {
     return {
       toolbarOptions: [
@@ -1098,7 +1103,9 @@ export default {
 
         ["clean"], // remove formatting button
       ],
+
       modal_open: false,
+
       params: {
         search: this.filters.search,
         date: this.filters.date,
@@ -1107,8 +1114,11 @@ export default {
         dateStart: this.filters.dateStart,
         dateEnd: this.filters.dateEnd,
       },
+
       statuspermit: 0,
+
       permitBeingCreated: null,
+
       form: this.$inertia.form({
         reason: null,
         description: null,
@@ -1123,7 +1133,9 @@ export default {
         political_division_id: null,
         profile_id: null,
       }),
+
       permitBeingDeleted: null,
+
       deletePermitForm: this.$inertia.form({
         reason: null,
         description: null,
@@ -1132,7 +1144,9 @@ export default {
         date_out: null,
         date_in: null,
       }),
+
       permitBeingUpdated: null,
+
       updatePermitForm: this.$inertia.form({
         reason: null,
         status: null,
@@ -1147,6 +1161,7 @@ export default {
         parish_id: null,
         political_division_id: null,
       }),
+
       selectOne: {
         selectedProvince: undefined,
         value: 0,
@@ -1160,6 +1175,7 @@ export default {
         multiSelectUser: null,
         vSelectUser: null,
       },
+
       selectTwo: {
         selectedCanton: undefined,
         value: 0,
@@ -1168,6 +1184,7 @@ export default {
         multiSelectCanton: null,
         vSelectCanton: null,
       },
+
       selectThree: {
         selectedParish: undefined,
         value: 0,
@@ -1176,6 +1193,7 @@ export default {
         multiSelectParish: null,
         vSelectParish: null,
       },
+
       selectFour: {
         selectedPerfil: undefined,
         value: 0,
@@ -1186,8 +1204,10 @@ export default {
       },
     };
   },
+
   watch: {
     dataTransfer: function () {},
+
     "selectOne.selectedProvince": function () {
       if (this.selectOne.selectedProvince === null) {
         this.selectTwo.selectedCanton = null;
@@ -1203,6 +1223,7 @@ export default {
         }
       }
     },
+
     "selectTwo.selectedCanton": function () {
       if (this.selectTwo.selectedCanton === null) {
         this.selectThree.selectedParish = null;
@@ -1215,6 +1236,7 @@ export default {
         }
       }
     },
+
     "selectThree.selectedParish": function () {
       if (this.selectThree.selectedParish === null) {
         this.form.parish_id = null;
@@ -1235,6 +1257,7 @@ export default {
         }
       }
     },
+
     "updatePermitForm.description": function () {
       var limit = 2000;
       const quill = this.$refs.qleditor1;
@@ -1247,6 +1270,7 @@ export default {
         }
       }
     },
+
     params: {
       handler: throttle(function () {
         let params = pickBy(this.params);
@@ -1268,25 +1292,30 @@ export default {
   },
   computed: {
     ...mapState("work", ["work"]),
+
     ...mapState("work", ["allWork"]),
+
     isInvalid() {
       return (
         this.selectOne.selectedProvince == undefined ||
         this.selectOne.selectedProvince == null
       );
     },
+
     isInvalidCanton() {
       return (
         this.selectTwo.selectedCanton == undefined ||
         this.selectTwo.selectedCanton == null
       );
     },
+
     isInvalidParish() {
       return (
         this.selectThree.selectedParish == undefined ||
         this.selectThree.selectedParish == null
       );
     },
+
     isInvalidPerfil() {
       return (
         this.selectFour.selectedPerfil == undefined ||
@@ -1303,7 +1332,9 @@ export default {
       );
       return response.data;
     },
+
     onSearchProvincesChange(term) {},
+
     onSelectedProvince(province) {
       this.form.province_id = province.id;
       this.form.canton_id = null;
@@ -1326,7 +1357,9 @@ export default {
           this.selectTwo.options = res.data;
         });
     },
+
     onSearchCantonChange(term) {},
+
     onSelectedCanton(canton) {
       this.form.canton_id = canton.id;
       this.form.parish_id = null;
@@ -1347,6 +1380,7 @@ export default {
         });
     },
     onSearchParishChange(term) {},
+
     onSelectedParish(parish) {
       this.form.parish_id = parish.id;
       this.form.political_division_id = parish.id;
@@ -1354,6 +1388,7 @@ export default {
         this.updatePermitForm.political_division_id = parish.id;
       }
     },
+
     onSearchPerfilChange(search) {
       var string = search;
       var length = 60;
@@ -1370,16 +1405,20 @@ export default {
           });
       }
     },
+
     onSelectedPerfil(perfil) {
       this.form.profile_id = perfil.profile.user_id;
       this.selectFour.options = [];
     },
+
     customLabel(option) {
       return `${option.name} ${option.lastname} (${option.fullnamecomm})`;
     },
+
     confirmationPermitCreate() {
       this.permitBeingCreated = this.form;
     },
+
     createPermit() {
       this.form.date_province = this.formatDate(this.form.date_province);
       this.form.date_general = this.formatDate(this.form.date_general);
@@ -1416,6 +1455,7 @@ export default {
         );
       }
     },
+
     createPermitCancel() {
       this.permitBeingCreated = null;
       this.selectOne.selectedProvince = null;
@@ -1428,6 +1468,7 @@ export default {
       this.selectThree.options = [];
       this.form.reset();
     },
+
     confirmationPermitUpdate(permit) {
       this.updatePermitForm.reason = permit.reason;
       this.updatePermitForm.status = permit.status;
@@ -1449,22 +1490,28 @@ export default {
       });
       this.permitBeingUpdated = permit;
     },
+
     updatePermit() {
       this.updatePermitForm.date_province = this.formatDate(
         this.updatePermitForm.date_province
       );
+
       this.updatePermitForm.date_general = this.formatDate(
         this.updatePermitForm.date_general
       );
+
       this.updatePermitForm.date_out = this.formatDate(
         this.updatePermitForm.date_out
       );
+
       if (this.updatePermitForm.date_in != null) {
         this.updatePermitForm.date_in = this.formatDate(
           this.updatePermitForm.date_in
         );
       }
+
       this.updatePermitForm.status = this.statuspermit;
+
       if (
         this.isInvalid == false &&
         this.isInvalidCanton == false &&
@@ -1494,6 +1541,7 @@ export default {
         );
       }
     },
+
     updatePermitCancel() {
       this.permitBeingUpdated = null;
       this.selectOne.selectedProvince = null;
@@ -1507,12 +1555,14 @@ export default {
       this.form.parish_id = null;
       this.form.political_division_id = null;
     },
+
     confirmationPermitDelete(permit) {
       this.deletePermitForm.reason = permit.reason;
       this.deletePermitForm.description = permit.description;
       this.deletePermitForm.date_province = permit.date_province;
       this.permitBeingDeleted = permit;
     },
+
     deletePermit() {
       this.deletePermitForm.delete(
         this.route("secretary.daughter-profile.permit.delete", {
@@ -1528,15 +1578,18 @@ export default {
         }
       );
     },
+
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     formatDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
       }
       return null;
     },
+
     formatDateShow(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");

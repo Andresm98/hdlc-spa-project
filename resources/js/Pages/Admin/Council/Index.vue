@@ -547,6 +547,7 @@ import Alert from "@/Components/Alert";
 
 export default {
   props: ["appointmentlevels"],
+
   components: {
     JetActionMessage,
     JetActionSection,
@@ -566,7 +567,9 @@ export default {
     moment,
     Alert,
   },
+
   layout: PrincipalLayout,
+
   data() {
     return {
       toolbarOptions: [
@@ -601,7 +604,6 @@ export default {
         name: "",
       }),
       levelBeingDeleted: null,
-      //
       listLevelCategories: null,
       createCateroryForm: null,
       categoryBeingCreated: null,
@@ -614,7 +616,6 @@ export default {
         name: "",
       }),
       categoryBeingDeleted: null,
-      //
       levelCategoryGlobal: null,
     };
   },
@@ -631,6 +632,7 @@ export default {
         }
       }
     },
+
     "updateLevelForm.description": function () {
       var limit = 4000;
       const quill = this.$refs.qlcreateditor1;
@@ -655,6 +657,7 @@ export default {
       });
       this.levelBeingCreated = this.createLevelForm;
     },
+
     createLevel() {
       this.createLevelForm.post(route("admin.appointmentlevel.store"), {
         preserveScroll: true,
@@ -696,6 +699,7 @@ export default {
 
       this.levelBeingDeleted = level;
     },
+
     deleteLevel() {
       this.deleteLevelForm.delete(
         route("admin.appointmentlevel.destroy", this.levelBeingDeleted),
@@ -711,8 +715,6 @@ export default {
         }
       );
     },
-
-    //
 
     loadLevelCategories(levelCategory) {
       this.levelCategoryGlobal = levelCategory;
@@ -747,6 +749,7 @@ export default {
       });
       this.categoryBeingCreated = this.createCategoryForm;
     },
+
     createCategory() {
       this.createCategoryForm.post(
         route("admin.appointmentlevelcategory.store", {

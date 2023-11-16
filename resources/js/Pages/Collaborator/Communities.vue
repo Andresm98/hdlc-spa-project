@@ -684,36 +684,32 @@
 
 <script>
 import { defineComponent } from "vue";
-
 import PrincipalLayout from "@/Components/Collaborator/PrincipalLayout";
-
 import { Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/Pagination";
-import { Inertia } from "@inertiajs/inertia";
 import "sweetalert2/dist/sweetalert2.min.css";
-import { ref } from "vue";
 import { pickBy, throttle, mapValues } from "lodash";
-
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetInput from "@/Jetstream/Input.vue";
 import JetInputError from "@/Jetstream/InputError.vue";
-import moment from "moment";
+import { Inertia } from "@inertiajs/inertia";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import Dropdown from "@/Components/Dropdown";
 import Icon from "@/Components/Icon";
 import JetButton from "@/Jetstream/Button.vue";
-
 import TextInput from "@/Components/TextInput";
 import Alert from "@/Components/Alert";
 import SearchFilter from "@/Components/SearchFilter";
 import Operation from "@/Components/Collaborator/Operation";
-
-import { mapActions } from "vuex";
 import Datepicker from "vue3-date-time-picker";
+import { mapActions } from "vuex";
+import moment from "moment";
+import { ref } from "vue";
 
 export default defineComponent({
   layout: PrincipalLayout,
+
   props: {
     communities_list: Object,
     pastorals: Object,
@@ -723,6 +719,7 @@ export default defineComponent({
       type: Array,
     },
   },
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -743,6 +740,7 @@ export default defineComponent({
       modules: [Pagination],
     };
   },
+
   components: {
     Link,
     Pagination,
@@ -761,6 +759,7 @@ export default defineComponent({
     Operation,
     Icon,
   },
+
   data() {
     return {
       modal_open: false,
@@ -785,7 +784,9 @@ export default defineComponent({
       arrayAddress: [],
     };
   },
+
   mounted() {},
+
   methods: {
     showAddress(value) {
       const address = fetch(
@@ -797,38 +798,46 @@ export default defineComponent({
           return data.data_province;
         });
     },
+
     async resolveAddress(value) {
       const response = await axios.get(
         route("secretary.address.address-format", { actual_parish: value })
       );
       return response.data;
     },
+
     formatDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
       }
       return null;
     },
+
     formatDateShow(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
       }
       return null;
     },
+
     sort(field) {
       this.params.field = field;
       this.params.direction = this.params.direction === "asc" ? "desc" : "asc";
     },
+
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     dataParams() {
       return this.params;
     },
+
     openReportDialog(type) {
       this.report_modal_open = true;
       this.type_operation_report = type;
     },
+
     closeReportModal() {
       this.report_modal_open = false;
       this.type_operation_report = null;
@@ -840,6 +849,7 @@ export default defineComponent({
       this.params.dateEnd = null;
       this.params.dateStart = null;
     },
+
     params: {
       handler: throttle(function () {
         if (this.params.dateStart != null) {
@@ -850,6 +860,7 @@ export default defineComponent({
         }
 
         let params = pickBy(this.params);
+
         this.$inertia.get(
           this.route("collaborator.communities.index"),
           params,

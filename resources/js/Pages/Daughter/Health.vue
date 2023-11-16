@@ -603,23 +603,23 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/AppLayout.vue";
-import { pickBy, throttle, mapValues } from "lodash";
-import { Link } from "@inertiajs/inertia-vue3";
-import Pagination from "@/Components/Pagination";
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import Datepicker from "vue3-date-time-picker";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import { useForm } from "@inertiajs/inertia-vue3";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import Operation from "@/Components/Daughter/Operation";
-import TextInput from "@/Components/TextInput";
+import JetInputError from "@/Jetstream/InputError.vue";
 import SearchFilter from "@/Components/SearchFilter";
+import { pickBy, throttle, mapValues } from "lodash";
+import { useForm } from "@inertiajs/inertia-vue3";
+import Pagination from "@/Components/Pagination";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import TextInput from "@/Components/TextInput";
+import { Link } from "@inertiajs/inertia-vue3";
+import Datepicker from "vue3-date-time-picker";
 import Dropdown from "@/Components/Dropdown";
 import { Inertia } from "@inertiajs/inertia";
+import JetInput from "@/Jetstream/Input.vue";
 import JetButton from "@/Jetstream/Button";
 import Alert from "@/Components/Alert";
 import Icon from "@/Components/Icon";
@@ -639,6 +639,7 @@ export default {
       type: Array,
     },
   },
+
   setup() {
     const formatSet = "YYYY-MM-DD";
     let date = new Date();
@@ -652,6 +653,7 @@ export default {
       format,
     };
   },
+
   data() {
     return {
       toolbarOptions: [
@@ -674,15 +676,21 @@ export default {
         ["clean"], // remove formatting button
       ],
       modal_open: false,
+
       selected_health: Object,
+
       params: {
         dateStart: this.filters.dateStart,
         dateEnd: this.filters.dateEnd,
         perPage: this.filters.perPage,
       },
+
       healthBeingCreated: null,
+
       form: null,
+
       healthBeingUpdated: null,
+
       updateHealthForm: this.$inertia.form({
         consult_date: null,
         actual_health: null,
@@ -701,6 +709,7 @@ export default {
         quill.setHTML(this.data_intput_one);
       }
     },
+
     "form.chronic_diseases": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor2;
@@ -710,6 +719,7 @@ export default {
         quill.setHTML(this.data_intput_two);
       }
     },
+
     "form.other_health_problems": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor3;
@@ -719,6 +729,7 @@ export default {
         quill.setHTML(this.data_intput_three);
       }
     },
+
     "updateHealthForm.actual_health": function () {
       var limit = 4000;
       const quill = this.$refs.qlupdateditor1;
@@ -729,6 +740,7 @@ export default {
         quill.setHTML(this.data_intput_one);
       }
     },
+
     "updateHealthForm.chronic_diseases": function () {
       var limit = 4000;
       const quill = this.$refs.qlupdateditor2;
@@ -738,6 +750,7 @@ export default {
         quill.setHTML(this.data_intput_two);
       }
     },
+
     "updateHealthForm.other_health_problems": function () {
       var limit = 4000;
       const quill = this.$refs.qlupdateditor3;
@@ -747,6 +760,7 @@ export default {
         quill.setHTML(this.data_intput_three);
       }
     },
+
     params: {
       handler: throttle(function () {
         if (this.params.dateStart != null) {
@@ -765,6 +779,7 @@ export default {
       deep: true,
     },
   },
+
   components: {
     Datepicker,
     AppLayout,
@@ -787,6 +802,7 @@ export default {
     Operation,
     ref,
   },
+
   methods: {
     formatDate(value) {
       if (value != null) {
@@ -794,12 +810,14 @@ export default {
       }
       return null;
     },
+
     formatShowDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
       }
       return null;
     },
+
     confirmationHealthCreate() {
       this.form = this.$inertia.form({
         consult_date: null,
@@ -809,6 +827,7 @@ export default {
       });
       this.healthBeingCreated = this.form;
     },
+
     createHealthStatus() {
       if (this.form.consult_date != null) {
         this.form.consult_date = this.formatDate(this.form.consult_date);
@@ -828,6 +847,7 @@ export default {
         }
       );
     },
+
     confirmationHealthUpdate(health) {
       this.updateHealthForm.consult_date = health.consult_date;
       this.updateHealthForm.actual_health = health.actual_health;
@@ -836,6 +856,7 @@ export default {
         health.other_health_problems;
       this.healthBeingUpdated = health;
     },
+
     updateHealthStatus() {
       if (this.updateHealthForm.consult_date != null) {
         this.updateHealthForm.consult_date = this.formatDate(
@@ -857,9 +878,11 @@ export default {
         }
       );
     },
+
     closeModal() {
       this.modal_open = false;
     },
+
     deleteHealth: function () {
       Inertia.delete(
         this.route("daughter.health.delete", {

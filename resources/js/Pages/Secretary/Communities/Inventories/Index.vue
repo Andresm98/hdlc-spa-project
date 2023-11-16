@@ -2,16 +2,7 @@
   <div class="w-full shadow sm:rounded-md">
     <div class="px-4 py-5 m-2 border-2 rounded-lg bg-gray-200 sm:px-6">
       <h6
-        class="
-          mt-2
-          mb-2
-          text-lg
-          font-medium
-          text-center
-          leading-6
-          text-gray-900
-          uppercase
-        "
+        class="mt-2 mb-2 text-lg font-medium text-center leading-6 text-gray-900 uppercase"
       >
         Plantilla del Inventario de la Comunidad
       </h6>
@@ -51,21 +42,7 @@
                   minLength="5"
                   maxlength="50"
                   placeholder="Ingresar nombre del inventario"
-                  class="
-                    border-0
-                    px-3
-                    placeholder-blueGray-300
-                    text-blueGray-600
-                    bg-white
-                    rounded
-                    text-sm
-                    shadow
-                    focus:outline-none focus:ring
-                    w-full
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
+                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="formInventory.name"
                   required
                 />
@@ -110,14 +87,7 @@
       <div class="my-4">
         <div class="w-full md:w-5/5 mx-auto">
           <h4
-            class="
-              text-lg
-              font-medium
-              text-center
-              leading-6
-              text-gray-900
-              uppercase
-            "
+            class="text-lg font-medium text-center leading-6 text-gray-900 uppercase"
           >
             <strong>Secciones</strong>
           </h4>
@@ -152,67 +122,63 @@
             </div>
           </div>
 
-          <div v-if="this.allSection.length > 0">
-            <div class="shadow-md bg-white mt-4">
-              <div v-for="section in this.allSection" :key="section.id">
-                <div class="tab w-full overflow-hidden border-t">
-                  <input
-                    class="absolute opacity-0"
-                    :id="section.id"
-                    type="radio"
-                    name="tabs2"
-                  />
-                  <label
-                    class="block p-5 leading-normal cursor-pointer"
-                    :for="section.id"
-                    >{{ section.name }}
-                    <br />
+          <div className="overflow-y-auto h-96">
+            <div className="relative px-4">
+              <div v-if="this.allSection.length > 0">
+                <div class="shadow-md bg-white mt-4">
+                  <div v-for="section in this.allSection" :key="section.id">
+                    <div class="tab w-full overflow-hidden border-t">
+                      <input
+                        class="absolute opacity-0"
+                        :id="section.id"
+                        type="radio"
+                        name="tabs2"
+                      />
+                      <label
+                        class="block p-5 leading-normal cursor-pointer"
+                        :for="section.id"
+                        >{{ section.name }}
+                        <br />
 
-                    <small>
-                      Cantidad de artículos: {{ section.articles.length }}.
-                    </small>
-                  </label>
+                        <small>
+                          Cantidad de artículos: {{ section.articles.length }}.
+                        </small>
+                      </label>
 
-                  <div
-                    class="
-                      w-full
-                      tab-content
-                      overflow-hidden
-                      border-l-2
-                      bg-gray-100
-                      border-blue-500
-                      leading-normal
-                    "
-                  >
-                    <div class="p-5 overflow-y-auto h-60">
-                      <section>
-                        <jet-button
-                          @click="confirmationSectionUpdate(section)"
-                          class="block p-5 leading-normal"
-                          >Editar</jet-button
-                        >
-                        <jet-danger-button
-                          @click="confirmationSectionDelete(section)"
-                          class="block mx-2 p-5 leading-normal"
-                          >Eliminar</jet-danger-button
-                        >
+                      <div
+                        class="w-full tab-content overflow-hidden border-l-2 bg-gray-100 border-blue-500 leading-normal"
+                      >
+                        <div class="p-5 overflow-y-auto h-60">
+                          <section>
+                            <jet-button
+                              @click="confirmationSectionUpdate(section)"
+                              class="block p-5 leading-normal"
+                              >Editar</jet-button
+                            >
+                            <jet-danger-button
+                              @click="confirmationSectionDelete(section)"
+                              class="block mx-2 p-5 leading-normal"
+                              >Eliminar</jet-danger-button
+                            >
 
-                        <jet-button-success
-                          @click="accessArticles(section)"
-                          class="block mx-2 p-5 leading-normal"
-                        >
-                          Acceder
-                        </jet-button-success>
-                      </section>
-                      <br />
+                            <jet-button-success
+                              @click="accessArticles(section)"
+                              class="block mx-2 p-5 leading-normal"
+                            >
+                              Acceder
+                            </jet-button-success>
+                          </section>
+                          <br />
 
-                      <quill-editor
-                        contentType="html"
-                        theme="snow"
-                        toolbar="minimal"
-                        v-model:content="section.description"
-                        :readOnly="true"
-                      ></quill-editor>
+                          <quill-editor
+                            contentType="html"
+                            theme="snow"
+                            toolbar="minimal"
+                            v-model:content="section.description"
+                            :readOnly="true"
+                          ></quill-editor>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -250,21 +216,7 @@
                     minLength="5"
                     maxlength="50"
                     placeholder="Ingresar nombre de la sección"
-                    class="
-                      border-0
-                      px-3
-                      placeholder-blueGray-300
-                      text-blueGray-600
-                      bg-white
-                      rounded
-                      text-sm
-                      shadow
-                      focus:outline-none focus:ring
-                      w-full
-                      ease-linear
-                      transition-all
-                      duration-150
-                    "
+                    class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="createSectionForm.name"
                     required
                   />
@@ -363,21 +315,7 @@
                     minLength="10"
                     maxlength="100"
                     placeholder="Ingresar nombre de la sección"
-                    class="
-                      border-0
-                      px-3
-                      placeholder-blueGray-300
-                      text-blueGray-600
-                      bg-white
-                      rounded
-                      text-sm
-                      shadow
-                      focus:outline-none focus:ring
-                      w-full
-                      ease-linear
-                      transition-all
-                      duration-150
-                    "
+                    class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     v-model="updateSectionForm.name"
                     required
                   />
@@ -428,36 +366,39 @@
   </div>
 </template>
 <script>
-import Datepicker from "vue3-date-time-picker";
-import { useForm } from "@inertiajs/inertia-vue3";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import JetButton from "@/Jetstream/Button.vue";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
+import { useForm } from "@inertiajs/inertia-vue3";
+import Datepicker from "vue3-date-time-picker";
+import JetButton from "@/Jetstream/Button.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import moment from "moment";
-import { Inertia } from "@inertiajs/inertia";
-import "vue3-date-time-picker/dist/main.css";
-import { ref } from "vue";
 import { mapState, mapGetters, mapActions } from "vuex";
 import JetInputError from "@/Jetstream/InputError";
+import JetInput from "@/Jetstream/Input.vue";
+import { Inertia } from "@inertiajs/inertia";
+import "vue3-date-time-picker/dist/main.css";
 import Alert from "@/Components/Alert";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   props: {
     errors: null,
   },
+
   mounted() {
     this.inventory;
   },
+
   updated() {
     this.section;
   },
+
   components: {
     Datepicker,
     JetButtonSuccess,
@@ -473,6 +414,7 @@ export default {
     Link,
     Alert,
   },
+
   watch: {
     "createSectionForm.description": function () {
       var limit = 4000;
@@ -485,6 +427,7 @@ export default {
         }
       }
     },
+
     "updateSectionForm.description": function () {
       var limit = 4000;
       const quill = this.$refs.qlcreateditor1;
@@ -496,6 +439,7 @@ export default {
         }
       }
     },
+
     "formInventory.description": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -509,6 +453,7 @@ export default {
       }
     },
   },
+
   data() {
     return {
       toolbarOptions: [
@@ -531,27 +476,37 @@ export default {
         ["clean"], // remove formatting button
       ],
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       formInventory: this.$inertia.form({
         name: null,
         description: null,
         community_id: null,
       }),
+
       sectionBeingCreated: null,
+
       createSectionForm: null,
+
       sectionBeingDeleted: null,
+
       deleteSectionForm: this.$inertia.form({
         name: null,
         description: null,
         community_id: null,
       }),
+
       sectionBeingUpdated: null,
+
       updateSectionForm: this.$inertia.form({
         name: null,
         description: null,
         community_id: null,
       }),
+
       allSection: {
         default: Array,
       },
@@ -559,6 +514,7 @@ export default {
   },
   computed: {
     ...mapState("community", ["community"]),
+
     ...mapState("inventory", ["inventory"]),
 
     inventory() {
@@ -573,21 +529,12 @@ export default {
           this.formInventory = this.getInventory();
         });
 
-      //
-      //
-      //
-
       const headers = { "Content-Type": "application/json" };
+
       fetch("https://api.npms.io/v2/search?q=vue", { headers })
         .then((response) => response.json())
         .then((data) => {
-          //   console.log("Send data: ");
-          //   console.log("Print: ", data.results);
         });
-
-      //
-      //
-      //
 
       fetch(
         this.route("secretary.communities.inventory.index", {
@@ -596,23 +543,14 @@ export default {
       )
         .then(async (response) => {
           const data = await response.json();
-
-          // check for error response
           if (!response.ok) {
-            // get error message from body or default to response statusText
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
           }
-
-          //   console.log("Send data 2: ");
-          //   console.log("Print 2: ", data);
         })
         .catch((error) => {
           this.errorMessage = error;
-          //   console.error("There was an error!", error);
         });
-
-      //
     },
 
     section() {
@@ -630,9 +568,13 @@ export default {
   },
   methods: {
     ...mapActions("inventory", ["updateInventory"]),
+
     ...mapGetters("inventory", ["getInventory"]),
+
     ...mapActions("inventory", ["updateAllSection"]),
+
     ...mapGetters("inventory", ["getAllSection"]),
+
     submit() {
       Inertia.put(
         this.route("secretary.communities.inventory.update", {
@@ -645,6 +587,7 @@ export default {
         }
       );
     },
+
     accessArticles(section) {
       Inertia.get(
         this.route(
@@ -660,7 +603,6 @@ export default {
         )
       );
     },
-    // Update Data Table
 
     updateTable() {
       axios
@@ -674,7 +616,7 @@ export default {
           this.allSection = this.getAllSection();
         });
     },
-    // Create Data
+
     confirmationSectionCreate() {
       this.createSectionForm = this.$inertia.form({
         name: null,
@@ -702,7 +644,6 @@ export default {
       );
     },
 
-    // Put Data
     confirmationSectionUpdate(section) {
       this.updateSectionForm.name = section.name;
       this.updateSectionForm.description = section.description;
@@ -728,7 +669,6 @@ export default {
         }
       );
     },
-    // Delete Data
 
     confirmationSectionDelete(section) {
       this.deleteSectionForm.name = section.name;
@@ -756,7 +696,6 @@ export default {
   },
 };
 
-/* Optional Javascript to close the radio button version by clicking it again */
 var myRadios = document.getElementsByName("tabs2");
 var setCheck;
 var x = 0;

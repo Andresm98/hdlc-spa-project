@@ -246,15 +246,6 @@
                     "
                     @reset="reset"
                   >
-                    <!-- <v-date-picker v-model="params.date" is-required :format="format">
-              <template v-slot="{ inputValue, inputEvents }">
-                <input
-                  class="bg-white border px-2 py-1 rounded"
-                  :value="inputValue"
-                  v-on="inputEvents"
-                />
-              </template>
-            </v-date-picker> -->
 
                     <small class="block text-gray-700 mt-2"
                       >Tipo de evento:</small
@@ -846,28 +837,28 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
-import { pickBy, throttle, mapValues } from "lodash";
-import moment from "moment";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-import { range } from "moment-range";
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import Datepicker from "vue3-date-time-picker";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import Icon from "@/Components/Icon";
-
-import TextInput from "@/Components/TextInput";
-import { ref } from "vue";
-import Alert from "@/Components/Alert";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
+import JetInputError from "@/Jetstream/InputError.vue";
 import SearchFilter from "@/Components/SearchFilter";
+import { pickBy, throttle, mapValues } from "lodash";
+import Datepicker from "vue3-date-time-picker";
+import TextInput from "@/Components/TextInput";
 import Dropdown from "@/Components/Dropdown";
+import JetInput from "@/Jetstream/Input.vue";
+import Alert from "@/Components/Alert";
+import { range } from "moment-range";
+import Icon from "@/Components/Icon";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   layout: PrincipalLayout,
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -882,10 +873,12 @@ export default {
       format,
     };
   },
+
   props: {
     events: Object,
     filters: Object,
   },
+
   components: {
     AppLayout,
     moment,
@@ -903,20 +896,18 @@ export default {
     Icon,
     Dropdown,
   },
+
   mounted() {
-    // console.log("params ", this.params);
     if (this.params.date != null) {
       this.dateMonth = parseInt(this.params.date.month);
       this.dateYear = parseInt(this.params.date.year);
-      //   console.log("si", this.dateMonth, "\n", this.dateYear);
     } else {
       this.dateMonth = new Date().getMonth();
       this.dateYear = new Date().getFullYear();
-      //   console.log("no", this.dateMonth, "\n", this.dateYear);
     }
-
     this.reloadData;
   },
+
   computed: {
     reloadData() {
       this.eventsCommunity = [];
@@ -924,8 +915,6 @@ export default {
       for (var key in this.events) {
         let ob = {};
         var color = "";
-        // Comunidad, Extracomunitaria, Ordinaria, Extraordinaria
-
         if (this.events[key].type == 1) {
           color = "bg-pink-500 text-white";
         }
@@ -940,6 +929,7 @@ export default {
         }
 
         const start = new Date(this.events[key].dates);
+
         const end = new Date(this.events[key].datesEnd);
 
         for (var dt = start; dt <= end; dt.setDate(dt.getDate() + 1)) {
@@ -969,24 +959,25 @@ export default {
           this.eventsCommunity.push(ob);
         }
       }
-      //   console.log(this.eventsCommunity.length);
     },
   },
+
   data() {
     return {
-      //
-
       value: [],
+
       options: [
         { name: "Vue.js", code: "vu" },
         { name: "Javascript", code: "js" },
         { name: "Open Source", code: "os" },
       ],
-      //
+
       masks: {
         weekdays: "WWW",
       },
+
       dateMonth: Number,
+
       dateYear: Number,
 
       params: {
@@ -1004,14 +995,13 @@ export default {
         },
       },
       eventsCommunity: [],
-      //  Create
 
       eventBeingCreated: null,
+
       createEventForm: null,
 
-      //   Update
-
       eventBeingUpdated: null,
+
       updateEventForm: this.$inertia.form({
         name: null,
         description: null,
@@ -1021,6 +1011,7 @@ export default {
       }),
 
       eventBeingDeleted: null,
+
       deleteEventForm: this.$inertia.form({
         name: null,
         description: null,
@@ -1030,10 +1021,11 @@ export default {
       }),
     };
   },
+
   watch: {
     dataTransfer: function () {
-      //   console.log("log ");
     },
+
     params: {
       handler: throttle(function () {
         let params = pickBy(this.params);
@@ -1049,7 +1041,6 @@ export default {
           preserveState: true,
           preserveScroll: true,
           onSuccess: () => {
-            // console.log("Success");
             this.reloadData;
           },
         });
@@ -1057,25 +1048,29 @@ export default {
       deep: true,
     },
   },
+
   methods: {
     miDato() {
-      //   console.log("funciona cerdo");
     },
+
     showDay(day) {
-      //   console.log("Show data: ", day);
     },
+
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
+
     formatShowDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD");
     },
+
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     listEvent(day) {
-      //   console.log("day ", day);
     },
+
     confirmCreateEvent() {
       this.createEventForm = this.$inertia.form({
         name: null,
@@ -1086,6 +1081,7 @@ export default {
       });
       this.eventBeingCreated = this.createEventForm;
     },
+
     createEvent() {
       this.createEventForm.dates = this.formatDate(this.createEventForm.dates);
       if (this.createEventForm.datesEnd != null) {
@@ -1093,7 +1089,6 @@ export default {
           this.createEventForm.datesEnd
         );
       }
-
       this.createEventForm.post(this.route("secretary.events.store"), {
         preserveScroll: true,
         onSuccess: () => {
@@ -1113,7 +1108,6 @@ export default {
       this.updateEventForm.name = event.customData.title;
       this.updateEventForm.description = event.customData.description;
       this.updateEventForm.type = event.customData.type;
-
       this.eventBeingUpdated = event.customData;
     },
 

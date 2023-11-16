@@ -74,6 +74,7 @@
                         <option value="1">Hermanas Seminario</option>
                         <option value="2">Hermanas Jóvenes</option>
                         <option value="3">Hermanas con Votos</option>
+                        <option value="4">Hermanas con Voz Pasiva</option>
                       </select>
                     </div>
                     <hr />
@@ -726,36 +727,36 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
 
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-import Icon from "@/Components/Icon";
-
-import { Link } from "@inertiajs/inertia-vue3";
-import Pagination from "@/Components/Pagination";
-import { Inertia } from "@inertiajs/inertia";
-import "sweetalert2/dist/sweetalert2.min.css";
-import moment from "moment";
-import { pickBy, throttle, mapValues } from "lodash";
-
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import { pickBy, throttle, mapValues } from "lodash";
+import Pagination from "@/Components/Pagination";
+import { Link } from "@inertiajs/inertia-vue3";
+import "sweetalert2/dist/sweetalert2.min.css";
+import { Inertia } from "@inertiajs/inertia";
+import Icon from "@/Components/Icon";
+import moment from "moment";
 
+import Operation from "@/Components/Secretary/Daughter/Operation";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetInputError from "@/Jetstream/InputError.vue";
 import SearchFilter from "@/Components/SearchFilter";
 import TextInput from "@/Components/TextInput";
-import Alert from "@/Components/Alert";
-import { mapActions } from "vuex";
-import Operation from "@/Components/Secretary/Daughter/Operation";
 import Datepicker from "vue3-date-time-picker";
 import Dropdown from "@/Components/Dropdown";
+import JetInput from "@/Jetstream/Input.vue";
+import Alert from "@/Components/Alert";
+import { defineComponent } from "vue";
+import { mapActions } from "vuex";
 import { ref } from "vue";
 
 export default defineComponent({
   layout: PrincipalLayout,
+
   props: {
     daughters_list: Object,
     pastorals: Object,
@@ -766,6 +767,7 @@ export default defineComponent({
       type: Array,
     },
   },
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -773,6 +775,7 @@ export default defineComponent({
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
+
     return {
       date,
       year,
@@ -786,6 +789,7 @@ export default defineComponent({
       modules: [Pagination],
     };
   },
+
   components: {
     Link,
     AppLayout,
@@ -804,6 +808,7 @@ export default defineComponent({
     Icon,
     Dropdown,
   },
+
   data() {
     return {
       modal_open: false,
@@ -826,44 +831,53 @@ export default defineComponent({
       options: [],
     };
   },
+
   methods: {
     sort(field) {
       this.params.field = field;
       this.params.direction = this.params.direction === "asc" ? "desc" : "asc";
     },
+
     formatDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
       }
       return null;
     },
+
     formatDateShow(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
       }
       return null;
     },
+
     deleteUser: function () {
       Inertia.delete(
         route("secretary.user.destroy", { slug: this.selected_user.slug })
       );
       this.modal_open = false;
     },
+
     closeModal() {
       this.modal_open = false;
     },
+
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     dataParams() {
       return this.params;
     },
+
     openDialogReport(user) {
       this.managingReportsFor = this.$inertia.form({
         user: user,
       });
     },
   },
+
   watch: {
     params: {
       handler: throttle(function () {

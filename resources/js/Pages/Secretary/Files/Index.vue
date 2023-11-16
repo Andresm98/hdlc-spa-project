@@ -814,43 +814,43 @@
   </app-layout>
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
-import { pickBy, throttle, mapValues } from "lodash";
-import { useForm, Link } from "@inertiajs/inertia-vue3";
 
-import moment from "moment";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-import { range } from "moment-range";
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import Datepicker from "vue3-date-time-picker";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import Pagination from "@/Components/Pagination";
-import Icon from "@/Components/Icon";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import JetButton from "@/Jetstream/Button.vue";
-
-import TextInput from "@/Components/TextInput";
-import { ref } from "vue";
-import Alert from "@/Components/Alert";
-import SearchFilter from "@/Components/SearchFilter";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import Operation from "@/Components/Secretary/Daughter/Operation";
-
-import { Inertia } from "@inertiajs/inertia";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import { mapState, mapActions, mapGetters } from "vuex";
+import { useForm, Link } from "@inertiajs/inertia-vue3";
+import JetInputError from "@/Jetstream/InputError.vue";
+import { pickBy, throttle, mapValues } from "lodash";
+import SearchFilter from "@/Components/SearchFilter";
+import Pagination from "@/Components/Pagination";
+import Datepicker from "vue3-date-time-picker";
+import JetButton from "@/Jetstream/Button.vue";
+import TextInput from "@/Components/TextInput";
+import JetInput from "@/Jetstream/Input.vue";
+import { Inertia } from "@inertiajs/inertia";
 import Dropdown from "@/Components/Dropdown";
+import Alert from "@/Components/Alert";
+import { range } from "moment-range";
+import Icon from "@/Components/Icon";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   layout: PrincipalLayout,
+
   props: {
     files_list: Object,
     allProvinces: Object,
 
     filters: Object,
   },
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -865,6 +865,7 @@ export default {
       format,
     };
   },
+
   components: {
     AppLayout,
     moment,
@@ -898,8 +899,11 @@ export default {
         dateStart: this.filters.dateStart,
         dateEnd: this.filters.dateEnd,
       },
+
       navigationOp: 1,
+
       searchProfile: null,
+
       selectOne: {
         selectedCommunity: undefined,
         value: 0,
@@ -913,6 +917,7 @@ export default {
         multiSelectCommunity: null,
         vSelectCommunity: null,
       },
+
       selectTwo: {
         selectedOffice: undefined,
         value: 0,
@@ -926,9 +931,13 @@ export default {
         multiSelectOffice: null,
         vSelectOffice: null,
       },
+
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       options: [
         "Bautismo",
         "Penitencia",
@@ -938,12 +947,19 @@ export default {
         "Matrimonio",
         "Unión de Enfermos",
       ],
+
       statustransfer: 0,
+
       fileBeingCreated: null,
+
       form: null,
+
       photoPreview: null,
+
       url: null,
+
       fileBeingDeleted: null,
+
       deleteFileForm: this.$inertia.form({
         filename: null,
         external_filename: null,
@@ -952,6 +968,7 @@ export default {
       }),
 
       fileBeingUpdated: null,
+
       updateFileForm: useForm({
         filedata: null,
         filename: null,
@@ -962,9 +979,13 @@ export default {
       }),
 
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       allAppointmentsTransfer: null,
+
       selectFour: {
         selectedPerfil: undefined,
         value: 0,
@@ -973,6 +994,7 @@ export default {
         multiSelectPerfil: null,
         vSelectPerfil: null,
       },
+
       selectCyx: {
         selectedPerfil: undefined,
         value: 0,
@@ -983,6 +1005,7 @@ export default {
       },
     };
   },
+
   watch: {
     params: {
       handler: throttle(function () {
@@ -1001,7 +1024,6 @@ export default {
             preserveState: true,
             preserveScroll: true,
             onSuccess: () => {
-              // console.log("Success");
             },
           }
         );
@@ -1020,6 +1042,7 @@ export default {
         }
       }
     },
+
     "updateTransferForm.transfer_observation": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -1032,29 +1055,30 @@ export default {
       }
     },
   },
+
   computed: {
     isInvalidCommunity() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.form.transfer.community_id == undefined ||
         this.form.transfer.community_id == null
       );
     },
+
     isInvalidUpdateCommunity() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectOne.selectedCommunity == undefined ||
         this.selectOne.selectedCommunity == null
       );
     },
+
     isInvalidPerfil() {
-      //   console.log("ee Parish", this.selectFour.selectedPerfil);
       return (
         this.selectCyx.selectedPerfil == undefined ||
         this.selectCyx.selectedPerfil == null
       );
     },
   },
+
   methods: {
     bytesToSize(bytes) {
       var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
@@ -1062,6 +1086,7 @@ export default {
       var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
       return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
     },
+
     extensionFile(filename) {
       if (filename != null) {
         return (
@@ -1071,34 +1096,35 @@ export default {
       }
       return "";
     },
+
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
+
     formatShowDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
       }
       return "";
     },
+
     onFileChange(e) {
-      //   console.log("event", e);
       const filedata = e.target.files[0];
       this.url = URL.createObjectURL(filedata);
     },
 
     onFileChangeUpdate(e) {
-      //   console.log("event", e);
       const filedata = e.target.files[0];
       this.url = URL.createObjectURL(filedata);
     },
 
-    //
     confirmationFileCreate() {
       this.form = useForm({
         filedata: null,
       });
       this.fileBeingCreated = this.form;
     },
+
     createFile() {
       if (this.isInvalidPerfil == false) {
         this.form.post(
@@ -1117,7 +1143,6 @@ export default {
       }
     },
 
-    //
     confirmationFileUpdate(file) {
       this.updateFileForm.filename = file.filename;
       this.updateFileForm.external_filename = file.external_filename;
@@ -1135,6 +1160,7 @@ export default {
 
       this.fileBeingUpdated = file;
     },
+
     clearUpdateData() {
       this.fileBeingUpdated = null;
       this.updateFileForm.filedata = null;
@@ -1144,8 +1170,8 @@ export default {
       this.updateFileForm.url = null;
       this.updateFileForm.fileshow = null;
     },
+
     updateFile() {
-      //   console.log("data update", this.updateFileForm);
       this.updateFileForm.post(
         this.route("secretary.daughter-profile.files.update", {
           user_id: this.profile.user_id,
@@ -1171,13 +1197,12 @@ export default {
         }
       );
     },
-    //
+
     confirmationFileDelete(file) {
       this.deleteFileForm.external_filename = file.external_filename;
       this.deleteFileForm.filename = file.filename;
       this.deleteFileForm.filesize = file.filesize;
       this.deleteFileForm.url = file.url;
-
       this.fileBeingDeleted = file;
     },
 
@@ -1195,6 +1220,7 @@ export default {
         }
       );
     },
+
     reset() {
       this.params = mapValues(this.params, () => null);
     },
@@ -1211,21 +1237,18 @@ export default {
             })
           )
           .then((response) => {
-            // console.log("jj ", response.data);
             this.selectFour.options = response.data;
           });
       }
     },
+
     onSelectedPerfil(perfil) {
       this.selectFour.selectedPerfil = perfil;
-      //   this.selectFour.options = perfil;
     },
 
     customLabel(option) {
       return `${option.name} ${option.lastname} (${option.fullnamecomm})`;
     },
-
-    //
 
     onCyxSearchPerfilChange(search) {
       var string = search;
@@ -1239,14 +1262,13 @@ export default {
             })
           )
           .then((response) => {
-            // console.log("jj ", response.data);
             this.selectCyx.options = response.data;
           });
       }
     },
+
     onCyxSelectedPerfil(perfil) {
       this.selectCyx.selectedPerfil = perfil;
-      //   this.selectFour.options = perfil;
     },
 
     customCyxLabel(option) {

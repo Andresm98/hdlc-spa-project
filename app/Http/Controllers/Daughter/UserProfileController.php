@@ -386,7 +386,9 @@ class UserProfileController extends Controller
                         ->orderBy('consult_date', 'desc')->first());
                 }
                 if (is_numeric($this->search("2", $request->get('options')))) {
-                    $data->put('academic_trainings', $user->profile->academic_trainings);
+                    $data->put('academic_trainings', $user->profile->academic_trainings()
+                        ->orderBy('date_title', 'asc')
+                        ->get());
                 }
                 if (is_numeric($this->search("3", $request->get('options')))) {
                     $data->put('sacraments', $user->profile->sacraments()

@@ -336,6 +336,7 @@
                             <th>TÍTULOS OBTENIDOS:</th>
                             <th>CENTRO DE ESTUDIOS</th>
                             <th>NIVEL ACADÉMICO</th>
+                            <th>FECHA</th>
                         </tr>
                         @foreach ($data->get('academic_trainings') as $academic)
                             <tr>
@@ -347,6 +348,13 @@
                                 </td>
                                 <td>
                                     {!! $academic->observation !!}
+                                </td>
+                                <td>
+                                    @if ($academic->date_title)
+                                        {{ date('Y-m-d', strtotime($academic->date_title)) }}
+                                    @else
+                                        Cursando
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

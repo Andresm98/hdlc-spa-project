@@ -187,93 +187,103 @@
             v-if="this.getAllActivity()"
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-blue-100">
-                <tr>
-                  <th
-                    scope="col"
-                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Nombre
-                  </th>
-                  <th
-                    scope="col"
-                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Fecha
-                  </th>
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Hermanas - Beneficiarios - Colaboradores
-                  </th>
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Acciones
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="activity in this.getAllActivity()" :key="activity">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 h-10 w-10">
-                        <svg class="svg-icon mt-1" viewBox="2 2 23 23">
-                          <path
-                            d="M14.467,1.771H5.533c-0.258,0-0.47,0.211-0.47,0.47v15.516c0,0.414,0.504,0.634,0.802,0.331L10,13.955l4.136,4.133c0.241,0.241,0.802,0.169,0.802-0.331V2.241C14.938,1.982,14.726,1.771,14.467,1.771 M13.997,16.621l-3.665-3.662c-0.186-0.186-0.479-0.186-0.664,0l-3.666,3.662V2.711h7.994V16.621z"
-                          ></path>
-                        </svg>
-                      </div>
-                      <div class="ml-4">
-                        <div class="text-sm font-medium text-gray-900">
-                          {{ activity.comm_name_activity.substring(0, 15) }}...
+            <div className="overflow-y-auto h-96">
+              <div className="relative px-4">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-blue-100">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Nombre
+                      </th>
+                      <th
+                        scope="col"
+                        class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Fecha
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Hermanas - Beneficiarios - Colaboradores
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Acciones
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr
+                      v-for="activity in this.getAllActivity()"
+                      :key="activity"
+                    >
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div class="flex-shrink-0 h-10 w-10">
+                            <svg class="svg-icon mt-1" viewBox="2 2 23 23">
+                              <path
+                                d="M14.467,1.771H5.533c-0.258,0-0.47,0.211-0.47,0.47v15.516c0,0.414,0.504,0.634,0.802,0.331L10,13.955l4.136,4.133c0.241,0.241,0.802,0.169,0.802-0.331V2.241C14.938,1.982,14.726,1.771,14.467,1.771 M13.997,16.621l-3.665-3.662c-0.186-0.186-0.479-0.186-0.664,0l-3.666,3.662V2.711h7.994V16.621z"
+                              ></path>
+                            </svg>
+                          </div>
+                          <div class="ml-4">
+                            <div class="text-sm font-medium text-gray-900">
+                              {{
+                                activity.comm_name_activity.substring(0, 15)
+                              }}...
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">
-                      {{ this.formatShowDate(activity.comm_date_activity) }}
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span
-                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 mr-2"
-                    >
-                      {{ activity.comm_nr_daughters }}
-                    </span>
-                    <span
-                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 mr-2"
-                    >
-                      {{ activity.comm_nr_beneficiaries }}
-                    </span>
-                    <span
-                      class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 mr-2"
-                    >
-                      {{ activity.comm_nr_collaborators }}
-                    </span>
-                  </td>
-                  <td
-                    class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
-                  >
-                    <!-- Components -->
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">
+                          {{ this.formatShowDate(activity.comm_date_activity) }}
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 mr-2"
+                        >
+                          {{ activity.comm_nr_daughters }}
+                        </span>
+                        <span
+                          class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 mr-2"
+                        >
+                          {{ activity.comm_nr_beneficiaries }}
+                        </span>
+                        <span
+                          class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 mr-2"
+                        >
+                          {{ activity.comm_nr_collaborators }}
+                        </span>
+                      </td>
+                      <td
+                        class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
+                      >
+                        <!-- Components -->
 
-                    <div class="mx-auto flex gap-10">
-                      <jet-button @click="confirmationActivityUpdate(activity)"
-                        >Detalles</jet-button
-                      >
-                      <jet-danger-button
-                        @click="confirmationActivityDelete(activity)"
-                        >Eliminar</jet-danger-button
-                      >
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                        <div class="mx-auto flex gap-10">
+                          <jet-button
+                            @click="confirmationActivityUpdate(activity)"
+                            >Detalles</jet-button
+                          >
+                          <jet-danger-button
+                            @click="confirmationActivityDelete(activity)"
+                            >Eliminar</jet-danger-button
+                          >
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
           <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
             <p class="text-center text-lg">
@@ -493,23 +503,23 @@
 </template>
 
 <script>
-import Datepicker from "vue3-date-time-picker";
-import { useForm } from "@inertiajs/inertia-vue3";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import JetButton from "@/Jetstream/Button.vue";
-import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 
+import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import moment from "moment";
-import { Inertia } from "@inertiajs/inertia";
-import "vue3-date-time-picker/dist/main.css";
-import { ref } from "vue";
 import { mapState, mapGetters, mapActions } from "vuex";
 import JetInputError from "@/Jetstream/InputError";
+import { useForm } from "@inertiajs/inertia-vue3";
+import Datepicker from "vue3-date-time-picker";
+import JetButton from "@/Jetstream/Button.vue";
+import JetInput from "@/Jetstream/Input.vue";
+import { Inertia } from "@inertiajs/inertia";
+import "vue3-date-time-picker/dist/main.css";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   props: {
@@ -518,13 +528,14 @@ export default {
   mounted() {
     this.allActivities;
   },
+
   computed: {
     isInvalid() {
-      console.log("inva ", this.isTouched, "\n\nopp> ");
       return this.value == null;
     },
 
     ...mapState("community", ["community"]),
+
     ...mapState("activity", ["activity"]),
 
     allActivities() {
@@ -539,7 +550,7 @@ export default {
         });
     },
   },
-  // Relashionship with another components
+
   components: {
     Datepicker,
     JetButtonSuccess,
@@ -553,7 +564,7 @@ export default {
     JetFormSection,
     moment,
   },
-  //  Setup all data
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -598,9 +609,13 @@ export default {
 
         ["clean"], // remove formatting button
       ],
+
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       options: [
         "Bautismo",
         "Penitencia",
@@ -610,7 +625,9 @@ export default {
         "Matrimonio",
         "Unión de Enfermos",
       ],
+
       activityBeingDeleted: null,
+
       deleteActivityForm: this.$inertia.form({
         comm_name_activity: null,
         comm_description_activity: null,
@@ -619,7 +636,9 @@ export default {
         comm_nr_beneficiaries: null,
         comm_nr_collaborators: null,
       }),
+
       activityBeingUpdated: null,
+
       updateActivityForm: this.$inertia.form({
         comm_name_activity: null,
         comm_description_activity: null,
@@ -630,6 +649,7 @@ export default {
       }),
     };
   },
+
   watch: {
     "form.comm_description_activity": function () {
       var limit = 4000;
@@ -641,6 +661,7 @@ export default {
         quill.setHTML(this.data_intput_one);
       }
     },
+
     "updateActivityForm.comm_description_activity": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -652,14 +673,17 @@ export default {
       }
     },
   },
+
   methods: {
     ...mapActions("activity", ["updateAllActivity"]),
+
     ...mapGetters("activity", ["getAllActivity"]),
+
     submit() {
       this.form.comm_date_activity = this.formatDate(
         this.form.comm_date_activity
       );
-      //
+
       Inertia.post(
         route("secretary.communities.activity.store", {
           community_id: this.community.id,
@@ -672,19 +696,18 @@ export default {
             setTimeout(() => {
               this.updateTable();
             }, 10);
-
             this.form.comm_name_activity = null;
             this.form.comm_description_activity = null;
             this.form.comm_date_activity = null;
             this.form.comm_nr_daughters = null;
             this.form.comm_nr_beneficiaries = null;
             this.form.comm_nr_collaborators = null;
-
             this.$refs.qleditor1.setHTML("");
           },
         }
       );
     },
+
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
@@ -695,7 +718,6 @@ export default {
       }
       return "";
     },
-    // Update
 
     confirmationActivityUpdate(activity) {
       this.updateActivityForm.comm_name_activity = activity.comm_name_activity;
@@ -707,9 +729,9 @@ export default {
         activity.comm_nr_beneficiaries;
       this.updateActivityForm.comm_nr_collaborators =
         activity.comm_nr_collaborators;
-
       this.activityBeingUpdated = activity;
     },
+
     updateActivity() {
       if (this.updateActivityForm.comm_date_activity != null) {
         this.updateActivityForm.comm_date_activity = this.formatDate(
@@ -735,13 +757,11 @@ export default {
       );
     },
 
-    // // Delete
     confirmationActivityDelete(activity) {
       this.deleteActivityForm.comm_name_activity = activity.comm_name_activity;
       this.deleteActivityForm.comm_description_activity =
         activity.comm_description_activity;
       this.deleteActivityForm.comm_date_activity = activity.comm_date_activity;
-
       this.activityBeingDeleted = activity;
     },
 
@@ -763,7 +783,7 @@ export default {
         }
       );
     },
-    //
+
     updateTable() {
       axios
         .get(
@@ -775,28 +795,6 @@ export default {
           this.updateAllActivity(res.data);
         });
     },
-    // showAlert() {
-    //   // Use sweetalert2
-    //   this.$swal("Hello Vue world!!!");
-    // },
-    // onChange(value) {
-    //   this.value = value;
-    //   console.log("aiudaaa> ", value);
-    //   if (value.indexOf("Reset me!") !== -1) {
-    //     console.log("is reset");
-    //     this.value = [];
-    //   }
-    // },
-    // onSelect(option) {
-    //   if (option === "Disable me!") {
-    //     console.log("is disable");
-    //     this.isDisabled = true;
-    //   }
-    // },
-    // onTouch() {
-    //   console.log("is touched");
-    //   this.isTouched = true;
-    // },
   },
 };
 </script>

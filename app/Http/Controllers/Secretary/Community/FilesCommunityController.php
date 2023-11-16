@@ -31,7 +31,7 @@ class FilesCommunityController extends Controller
         $community =  Community::find($community_id);
 
         return $community->files()
-            ->orderBy('external_filename', 'asc')
+            ->orderBy('created_at', 'asc')
             ->get();
     }
 

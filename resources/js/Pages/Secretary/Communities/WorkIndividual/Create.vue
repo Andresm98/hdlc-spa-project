@@ -553,22 +553,22 @@
   </app-layout>
 </template>
 <script>
-import { defineComponent } from "vue";
+import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
+import Operation from "@/Components/Secretary/Community/Operation";
 import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import { useForm, Link } from "@inertiajs/inertia-vue3";
-import { Inertia } from "@inertiajs/inertia";
+import { mapState, mapActions, mapGetters } from "vuex";
 import JetInputError from "@/Jetstream/InputError";
+import JetCheckbox from "@/Jetstream/Checkbox";
+import Datepicker from "vue3-date-time-picker";
+import { Inertia } from "@inertiajs/inertia";
+import JetButton from "@/Jetstream/Button";
 import JetInput from "@/Jetstream/Input";
 import JetLabel from "@/Jetstream/Label";
-import JetButton from "@/Jetstream/Button";
-import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-import JetCheckbox from "@/Jetstream/Checkbox";
 import Alert from "@/Components/Alert";
-import { ref } from "vue";
-import Datepicker from "vue3-date-time-picker";
+import { defineComponent } from "vue";
 import moment from "moment";
-import Operation from "@/Components/Secretary/Community/Operation";
-import { mapState, mapActions, mapGetters } from "vuex";
+import { ref } from "vue";
 
 export default {
   props: {
@@ -579,13 +579,11 @@ export default {
       type: Array,
     },
   },
+
   created() {
-    // console.log("created " + this.$el);
     axios.get(this.route("secretary.address.province")).then((res) => {
       this.uploadProvinces(res.data);
     });
-
-    // Method fetch
 
     fetch(this.route("secretary.pastoral.index"))
       .then(async (response) => {
@@ -607,11 +605,14 @@ export default {
 
   setup() {
     const date = ref(new Date());
+
     const year = new Date().getFullYear();
+
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
+
     const form = useForm({
       comm_identity_card: "",
       comm_name: null,
@@ -629,6 +630,7 @@ export default {
       pastoral_id: null,
       file: null,
     });
+
     return { form, format, date, year };
   },
 
@@ -647,6 +649,7 @@ export default {
         multiSelectUser: null,
         vSelectUser: null,
       },
+
       selectTwo: {
         selectedCanton: undefined,
         value: 0,
@@ -655,6 +658,7 @@ export default {
         multiSelectCanton: null,
         vSelectCanton: null,
       },
+
       selectThree: {
         selectedParish: undefined,
         value: 0,
@@ -663,6 +667,7 @@ export default {
         multiSelectParish: null,
         vSelectParish: null,
       },
+
       selectFour: {
         selectedPastoral: undefined,
         value: 0,
@@ -671,10 +676,13 @@ export default {
         multiSelectPastoral: null,
         vSelectPastoral: null,
       },
+
       allPastoral: null,
     };
   },
+
   layout: PrincipalLayout,
+
   components: {
     Link,
     JetInputError,
@@ -691,23 +699,22 @@ export default {
 
   computed: {
     ...mapState("address", ["allProvinces"]),
-    // Validate Multioption
+
     isInvalidProvince() {
-      //   console.log("ee", this.selectOne.selectedProvince);
       return (
         this.selectOne.selectedProvince == undefined ||
         this.selectOne.selectedProvince == null
       );
     },
+
     isInvalidCanton() {
-      //   console.log("ee canton", this.selectTwo.selectedCanton);
       return (
         this.selectTwo.selectedCanton == undefined ||
         this.selectTwo.selectedCanton == null
       );
     },
+
     isInvalidParish() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectThree.selectedParish == undefined ||
         this.selectThree.selectedParish == null
@@ -715,16 +722,15 @@ export default {
     },
 
     isInvalidPastoral() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectFour.selectedPastoral == undefined ||
         this.selectFour.selectedPastoral == null
       );
     },
 
-    // Validate ID Card`
     validateIdentityCard() {
       this.form.comm_identity_card = this.form.comm_identity_card + "";
+
       if (this.form.comm_identity_card == null) {
         return false;
       }
@@ -733,7 +739,6 @@ export default {
         this.form.comm_identity_card.length == 13
       ) {
         const digit = this.form.comm_identity_card.split("").map(Number);
-        //   console.log(digit);
         const coefficient = [2, 1];
         var province_code = digit[0] * 10 + digit[1];
         var verification_code = digit.slice(9, 10);
@@ -774,35 +779,36 @@ export default {
         this.selectThree.selectedParish = null;
         this.selectTwo.options = [];
         this.selectThree.options = [];
-        // Clean data Form
         this.form.province_id = null;
         this.form.canton_id = null;
         this.form.parish_id = null;
         this.form.political_division_id = null;
       }
     },
+
     "selectTwo.selectedCanton": function () {
       if (this.selectTwo.selectedCanton === null) {
         this.selectThree.selectedParish = null;
         this.selectThree.options = [];
-        // Clean data Form
         this.form.canton_id = null;
         this.form.parish_id = null;
         this.form.political_division_id = null;
       }
     },
+
     "selectThree.selectedParish": function () {
       if (this.selectThree.selectedParish === null) {
-        // Clean data Form
         this.form.parish_id = null;
         this.form.political_division_id = null;
       }
     },
   },
+
   methods: {
     handleScroll() {
       console.log(window.scrollY);
     },
+
     async status() {
       this.form.address = this.community_custom.address["address"];
       this.form.political_division_id =
@@ -814,16 +820,17 @@ export default {
       );
       return response.data;
     },
+
     onSearchPrastoralsChange() {},
+
     onSelectedPastoral(pastoral) {
       this.form.pastoral_id = pastoral.id;
     },
+
     onSearchProvincesChange(term) {
-      //   console.log("input data search " + term);
     },
 
     onSelectedProvince(province) {
-      //   console.log("input data selecter " + province.id);
       this.form.province_id = province.id;
       this.form.canton_id = null;
       this.form.parish_id = null;
@@ -839,17 +846,14 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.selectTwo.options = res.data;
         });
     },
 
     onSearchCantonChange(term) {
-      //   console.log(term);
     },
 
     onSelectedCanton(canton) {
-      //   console.log("input data selecter " + canton.id);
       this.form.canton_id = canton.id;
       this.form.parish_id = null;
       this.form.political_division_id = null;
@@ -863,19 +867,16 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.selectThree.options = res.data;
         });
     },
 
     onSearchParishChange(term) {
-      //   console.log(term);
     },
 
     onSelectedParish(parish) {
       this.form.parish_id = parish.id;
       this.form.political_division_id = parish.id;
-      //   console.log("input parish data selecter " + this.form.parish_id);
     },
 
     ...mapActions("address", ["uploadProvinces"]),
@@ -884,9 +885,11 @@ export default {
       const file = e.target.files[0];
       this.url = URL.createObjectURL(file);
     },
+
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
+
     submit() {
       this.form.date_fndt_comm = this.formatDate(this.form.date_fndt_comm);
       if (this.form.date_fndt_work != null) {
@@ -904,7 +907,6 @@ export default {
           preserveState: true,
           onSuccess: () => {
             setTimeout(() => {
-              console.log("saved.");
             }, 1000);
           },
         });
@@ -913,20 +915,18 @@ export default {
 
     onChange(value) {
       this.value = value;
-      console.log("aiudaaa> ", value);
       if (value.indexOf("Reset me!") !== -1) {
-        console.log("is reset");
         this.value = [];
       }
     },
+
     onSelect(option) {
       if (option === "Disable me!") {
-        console.log("is disable");
         this.isDisabled = true;
       }
     },
+
     onTouch() {
-      console.log("is touched");
       this.isTouched = true;
     },
   },

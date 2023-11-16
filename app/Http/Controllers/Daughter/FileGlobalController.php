@@ -18,6 +18,7 @@ class FileGlobalController extends Controller
         $authUser = auth()->user();
 
         $daughter = User::find($authUser->id);
+
         $daughter->profile;
 
         if ($daughter->profile) {
@@ -99,7 +100,6 @@ class FileGlobalController extends Controller
             }
         }
     }
-
 
     public function search()
     {

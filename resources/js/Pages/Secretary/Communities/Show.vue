@@ -496,21 +496,22 @@
   </app-layout>
 </template>
 <script>
-import { defineComponent } from "vue";
+
+import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import { mapState, mapActions, mapGetters } from "vuex";
 import { useForm, Link } from "@inertiajs/inertia-vue3";
-import { Inertia } from "@inertiajs/inertia";
 import JetInputError from "@/Jetstream/InputError";
+import Datepicker from "vue3-date-time-picker";
+import JetCheckbox from "@/Jetstream/Checkbox";
+import { Inertia } from "@inertiajs/inertia";
+import JetButton from "@/Jetstream/Button";
 import JetInput from "@/Jetstream/Input";
 import JetLabel from "@/Jetstream/Label";
-import JetButton from "@/Jetstream/Button";
-import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-import JetCheckbox from "@/Jetstream/Checkbox";
 import Alert from "@/Components/Alert";
-import { ref } from "vue";
-import Datepicker from "vue3-date-time-picker";
+import { defineComponent } from "vue";
 import moment from "moment";
-import { mapState, mapActions, mapGetters } from "vuex";
+import { ref } from "vue";
 
 export default {
   setup() {

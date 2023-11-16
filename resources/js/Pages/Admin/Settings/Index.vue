@@ -451,9 +451,11 @@ import Alert from "@/Components/Alert";
 import { defineComponent } from "vue";
 export default defineComponent({
   setup() {},
+
   props: {
     keys: Object,
   },
+
   data() {
     return {
       listKeys: this.$inertia.form(this.keys),
@@ -461,10 +463,12 @@ export default defineComponent({
   },
 
   layout: PrincipalLayout,
+
   components: {
     AppLayout,
     Alert,
   },
+
   methods: {
     updateEnvData() {
       this.listKeys.post(route("admin.settings.store"), {
@@ -474,6 +478,7 @@ export default defineComponent({
         },
       });
     },
+
     sub() {
       console.log("redes ", this.listKeys);
     },

@@ -26,13 +26,6 @@
       >
       </alert>
     </div>
-    <!-- <alert
-      v-if="$page.props.flash.success"
-      class="alert"
-      :type_alert_r="(type_alert = 'success')"
-      :message="$page.props.flash.success"
-    >
-    </alert> -->
     <operation></operation>
     <br />
 
@@ -537,47 +530,49 @@
   </app-layout>
 </template>
 <script>
+import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import { useForm, Link } from "@inertiajs/inertia-vue3";
-import { Inertia } from "@inertiajs/inertia";
 import JetInputError from "@/Jetstream/InputError";
+import JetCheckbox from "@/Jetstream/Checkbox";
+import { mapActions, mapGetters } from "vuex";
+import { Inertia } from "@inertiajs/inertia";
+import JetButton from "@/Jetstream/Button";
 import JetInput from "@/Jetstream/Input";
 import JetLabel from "@/Jetstream/Label";
-import JetButton from "@/Jetstream/Button";
-import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-import JetCheckbox from "@/Jetstream/Checkbox";
 import Alert from "@/Components/Alert";
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import { mapActions, mapGetters } from "vuex";
+import { defineComponent } from "vue";
 
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "../../../../../css/style.css";
+
 // import required modules
 import { Pagination } from "swiper";
 
 // Import Components
-import ProfileDaughter from "@/Pages/Secretary/Users/Daughter/Profile/Create";
-import ProfileDaughterEdit from "@/Pages/Secretary/Users/Daughter/Profile/Edit";
-import Health from "@/Pages/Secretary/Users/Daughter/Health/Index";
 import AcademicTraining from "@/Pages/Secretary/Users/Daughter/AcademicTraining/Index";
-import Permit from "@/Pages/Secretary/Users/Daughter/Permit/Index";
+import ProfileDaughterEdit from "@/Pages/Secretary/Users/Daughter/Profile/Edit";
+import ProfileDaughter from "@/Pages/Secretary/Users/Daughter/Profile/Create";
 import Appointment from "@/Pages/Secretary/Users/Daughter/Appointment/Index";
 import InfoFamily from "@/Pages/Secretary/Users/Daughter/InfoFamily/Index";
 import Sacrament from "@/Pages/Secretary/Users/Daughter/Sacrament/Index";
 import Changes from "@/Pages/Secretary/Users/Daughter/Change/Index";
-import Files from "@/Pages/Secretary/Users/Daughter/Files/Index";
+import Permit from "@/Pages/Secretary/Users/Daughter/Permit/Index";
+import Health from "@/Pages/Secretary/Users/Daughter/Health/Index";
 import Operation from "@/Components/Secretary/Daughter/Operation";
+import Files from "@/Pages/Secretary/Users/Daughter/Files/Index";
 import moment from "moment";
 
 export default defineComponent({
+
   created() {
-    // console.log("created " + this.$el);
     this.uploadProvinces(this.provinces);
   },
 
@@ -600,6 +595,7 @@ export default defineComponent({
       this.changeUser(this.profile_daughter);
     }
   },
+
   watch: {
     profile_daughter: function () {
       if (this.profile_daughter != null) {
@@ -617,6 +613,7 @@ export default defineComponent({
       }
     },
   },
+
   setup() {
     return {
       pagination: {
@@ -628,6 +625,7 @@ export default defineComponent({
       modules: [Pagination],
     };
   },
+
   props: {
     daughter_custom: Object,
     errors: null,
@@ -638,13 +636,17 @@ export default defineComponent({
       type: Array,
     },
   },
+
   computed: {
     ...mapGetters("daughter", ["actualCount"]),
+
     isInvalid() {
       return this.value == null;
     },
   },
+
   layout: PrincipalLayout,
+
   components: {
     Link,
     Swiper,
@@ -686,7 +688,6 @@ export default defineComponent({
         multiSelectUser: null,
         vSelectUser: null,
       },
-      //
       form: useForm({
         username: this.daughter_custom.username,
         name: this.daughter_custom.name,
@@ -705,6 +706,7 @@ export default defineComponent({
   methods: {
     handleScroll() {
     },
+
     onSearchProvincesChange() {},
 
     onSelectedProvince() {},
@@ -740,6 +742,7 @@ export default defineComponent({
         }
       );
     },
+
     printReport() {
       Inertia.get(
         route(`secretary.daughters.report.profile`, {
@@ -750,31 +753,35 @@ export default defineComponent({
         }
       );
     },
+
     onChange(value) {
       this.value = value;
       if (value.indexOf("Reset me!") !== -1) {
-
         this.value = [];
       }
     },
+
     onSelect(option) {
       if (option === "Disable me!") {
         this.isDisabled = true;
       }
     },
+
     onTouch() {
       this.isTouched = true;
     },
-    //
+
     openDialogReport() {
       this.managingReportsFor = this.$inertia.form({});
     },
+
     formatShowDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
       }
       return null;
     },
+
     ageProfile() {
       if (this.profile_daughter != null) {
         let age = this.formatShowDate(this.profile_daughter.date_birth);

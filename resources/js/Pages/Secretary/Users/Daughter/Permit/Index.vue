@@ -340,93 +340,99 @@ input:checked ~ .dot {
             v-if="this.getAllPermit()"
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-blue-100">
-                <tr>
-                  <th
-                    scope="col"
-                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Motivo
-                  </th>
-                  <th
-                    scope="col"
-                    class="text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Fechas (provincial-general)
-                  </th>
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Fechas (salida-regreso)
-                  </th>
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Acciones
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="permit in this.getAllPermit()" :key="permit">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="ml-4">
-                      <div class="w-6/8 ...">
-                        <div
-                          class="whitespace-normal text-sm font-semibold text-gray-900"
-                        >
-                          {{ permit.reason }}
+            <div className="overflow-y-auto h-96">
+              <div className="relative px-4">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-blue-100">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Motivo
+                      </th>
+                      <th
+                        scope="col"
+                        class="text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Fechas (provincial-general)
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Fechas (salida-regreso)
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Acciones
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr v-for="permit in this.getAllPermit()" :key="permit">
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="ml-4">
+                          <div class="w-6/8 ...">
+                            <div
+                              class="whitespace-normal text-sm font-semibold text-gray-900"
+                            >
+                              {{ permit.reason }}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    <br />
-                    <span
-                      v-if="permit.status == 1"
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800"
-                    >
-                      Activo
-                    </span>
-                    <span
-                      v-if="permit.status == 0"
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
-                    >
-                      Cerrado
-                    </span>
-                  </td>
-                  <td class="px-1 py-4 whitespace-nowrap">
-                    <span
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-cyan-100 text-cyan-800"
-                    >
-                      {{ this.formatShowDate(permit.date_province) }} -
-                      {{ this.formatShowDate(permit.date_general) }}
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
-                    >
-                      {{ this.formatShowDate(permit.date_out) }} -
-                      {{ this.formatShowDate(permit.date_in) }}
-                    </span>
-                  </td>
-                  <td class="whitespace-nowrap text-right text-sm font-medium">
-                    <!-- Components -->
+                        <br />
+                        <span
+                          v-if="permit.status == 1"
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800"
+                        >
+                          Activo
+                        </span>
+                        <span
+                          v-if="permit.status == 0"
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                        >
+                          Cerrado
+                        </span>
+                      </td>
+                      <td class="px-1 py-4 whitespace-nowrap">
+                        <span
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-cyan-100 text-cyan-800"
+                        >
+                          {{ this.formatShowDate(permit.date_province) }} -
+                          {{ this.formatShowDate(permit.date_general) }}
+                        </span>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                        >
+                          {{ this.formatShowDate(permit.date_out) }} -
+                          {{ this.formatShowDate(permit.date_in) }}
+                        </span>
+                      </td>
+                      <td
+                        class="whitespace-nowrap text-right text-sm font-medium"
+                      >
+                        <!-- Components -->
 
-                    <div class="mx-2 flex gap-10">
-                      <jet-button @click="confirmationPermitUpdate(permit)"
-                        >Detalles</jet-button
-                      >
-                      <jet-danger-button
-                        @click="confirmationPermitDelete(permit)"
-                        >Eliminar</jet-danger-button
-                      >
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                        <div class="mx-2 flex gap-10">
+                          <jet-button @click="confirmationPermitUpdate(permit)"
+                            >Detalles</jet-button
+                          >
+                          <jet-danger-button
+                            @click="confirmationPermitDelete(permit)"
+                            >Eliminar</jet-danger-button
+                          >
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
           <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
             <p class="text-center text-lg">
@@ -841,30 +847,30 @@ input:checked ~ .dot {
 </template>
 
 <script>
-import Datepicker from "vue3-date-time-picker";
-import { useForm } from "@inertiajs/inertia-vue3";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import JetButton from "@/Jetstream/Button.vue";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
+import { useForm } from "@inertiajs/inertia-vue3";
+import Datepicker from "vue3-date-time-picker";
+import JetButton from "@/Jetstream/Button.vue";
 import Alert from "@/Components/Alert";
 
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import moment from "moment";
-import { Inertia } from "@inertiajs/inertia";
-import "vue3-date-time-picker/dist/main.css";
-import { ref } from "vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 import JetInputError from "@/Jetstream/InputError";
+import JetInput from "@/Jetstream/Input.vue";
+import "vue3-date-time-picker/dist/main.css";
+import { Inertia } from "@inertiajs/inertia";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   props: {
     errors: null,
   },
-  // Relashionship with another components
+
   components: {
     Datepicker,
     JetButtonSuccess,
@@ -879,14 +885,17 @@ export default {
     JetInputError,
     moment,
   },
-  //  Setup all data
+
   setup() {
     const date = ref(new Date());
+
     const year = new Date().getFullYear();
+
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
+
     const form = useForm({
       reason: null,
       description: null,
@@ -900,6 +909,7 @@ export default {
       parish_id: null,
       political_division_id: null,
     });
+
     return {
       date,
       year,
@@ -931,6 +941,7 @@ export default {
         ["clean"], // remove formatting button
       ],
       permitBeingDeleted: null,
+
       deletePermitForm: this.$inertia.form({
         reason: null,
         description: null,
@@ -939,7 +950,9 @@ export default {
         date_out: null,
         date_in: null,
       }),
+
       permitBeingUpdated: null,
+
       updatePermitForm: this.$inertia.form({
         reason: null,
         status: null,
@@ -955,7 +968,6 @@ export default {
         political_division_id: null,
       }),
 
-      //Provinces
       selectOne: {
         selectedProvince: undefined,
         value: 0,
@@ -969,6 +981,7 @@ export default {
         multiSelectUser: null,
         vSelectUser: null,
       },
+
       selectTwo: {
         selectedCanton: undefined,
         value: 0,
@@ -977,6 +990,7 @@ export default {
         multiSelectCanton: null,
         vSelectCanton: null,
       },
+
       selectThree: {
         selectedParish: undefined,
         value: 0,
@@ -991,10 +1005,14 @@ export default {
   mounted() {
     this.allPermit;
   },
+
   computed: {
     ...mapState("daughter", ["profile"]),
+
     ...mapState("address", ["allProvinces"]),
+
     ...mapState("permit", ["permit"]),
+
     allPermit() {
       axios
         .get(
@@ -1003,28 +1021,25 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.updateAllPermit(res.data);
         });
     },
 
-    // Validate Multioption
     isInvalid() {
-      //   console.log("ee", this.selectOne.selectedProvince);
       return (
         this.selectOne.selectedProvince == undefined ||
         this.selectOne.selectedProvince == null
       );
     },
+
     isInvalidCanton() {
-      //   console.log("ee canton", this.selectTwo.selectedCanton);
       return (
         this.selectTwo.selectedCanton == undefined ||
         this.selectTwo.selectedCanton == null
       );
     },
+
     isInvalidParish() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectThree.selectedParish == undefined ||
         this.selectThree.selectedParish == null
@@ -1038,7 +1053,6 @@ export default {
         this.selectThree.selectedParish = null;
         this.selectTwo.options = [];
         this.selectThree.options = [];
-        // Clean data Form
         this.form.province_id = null;
         this.form.canton_id = null;
         this.form.parish_id = null;
@@ -1048,11 +1062,11 @@ export default {
         }
       }
     },
+
     "selectTwo.selectedCanton": function () {
       if (this.selectTwo.selectedCanton === null) {
         this.selectThree.selectedParish = null;
         this.selectThree.options = [];
-        // Clean data Form
         this.form.canton_id = null;
         this.form.parish_id = null;
         this.form.political_division_id = null;
@@ -1061,9 +1075,9 @@ export default {
         }
       }
     },
+
     "selectThree.selectedParish": function () {
       if (this.selectThree.selectedParish === null) {
-        // Clean data Form
         this.form.parish_id = null;
         this.form.political_division_id = null;
 
@@ -1072,6 +1086,7 @@ export default {
         }
       }
     },
+
     "form.description": function () {
       var limit = 2000;
       const quill = this.$refs.qleditor1;
@@ -1082,6 +1097,7 @@ export default {
         quill.setHTML(this.data_intput_one);
       }
     },
+
     "updatePermitForm.description": function () {
       var limit = 2000;
       const quill = this.$refs.qleditor1;
@@ -1093,8 +1109,10 @@ export default {
       }
     },
   },
+
   methods: {
     ...mapActions("permit", ["updateAllPermit"]),
+
     ...mapGetters("permit", ["getAllPermit"]),
 
     async status() {
@@ -1107,11 +1125,9 @@ export default {
     },
 
     onSearchProvincesChange(term) {
-      //   console.log("input data search " + term);
     },
 
     onSelectedProvince(province) {
-      //   console.log("input data selecter " + province.id);
       this.form.province_id = province.id;
       this.form.canton_id = null;
       this.form.parish_id = null;
@@ -1131,17 +1147,14 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.selectTwo.options = res.data;
         });
     },
 
     onSearchCantonChange(term) {
-      //   console.log(term);
     },
 
     onSelectedCanton(canton) {
-      //   console.log("input data selecter " + canton.id);
       this.form.canton_id = canton.id;
       this.form.parish_id = null;
       this.form.political_division_id = null;
@@ -1158,30 +1171,27 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log(res.data);
           this.selectThree.options = res.data;
         });
     },
 
     onSearchParishChange(term) {
-      //   console.log(term);
     },
 
     onSelectedParish(parish) {
       this.form.parish_id = parish.id;
       this.form.political_division_id = parish.id;
-      //   console.log("input parish data selecter " + this.form.parish_id);
 
       if (this.permitBeingUpdated != null) {
         this.updatePermitForm.political_division_id = parish.id;
       }
     },
+
     submit() {
       this.form.date_province = this.formatDate(this.form.date_province);
       this.form.date_general = this.formatDate(this.form.date_general);
       this.form.date_out = this.formatDate(this.form.date_out);
       this.form.date_in = this.formatDate(this.form.date_in);
-      //
       if (
         this.isInvalid == false &&
         this.isInvalidCanton == false &&
@@ -1206,17 +1216,13 @@ export default {
               this.form.date_out = null;
               this.form.date_in = null;
               this.form.address = null;
-
               this.$refs.qleditor1.setHTML("");
-              //   Clean address data
-
               this.selectOne.selectedProvince = null;
               this.selectTwo.selectedCanton = null;
               this.selectThree.selectedParish = null;
               this.selectOne.options = [];
               this.selectTwo.options = [];
               this.selectThree.options = [];
-              // Clean data Form
               this.form.province_id = null;
               this.form.canton_id = null;
               this.form.parish_id = null;
@@ -1226,6 +1232,7 @@ export default {
         );
       }
     },
+
     updateTable() {
       axios
         .get(
@@ -1238,42 +1245,30 @@ export default {
         });
     },
 
-    //  Update
-
     confirmationPermitUpdate(permit) {
       this.updatePermitForm.reason = permit.reason;
       this.updatePermitForm.status = permit.status;
       this.statuspermit = permit.status;
-
       this.updatePermitForm.description = permit.description;
       this.updatePermitForm.date_province = permit.date_province;
       this.updatePermitForm.date_general = permit.date_general;
       this.updatePermitForm.date_out = permit.date_out;
       this.updatePermitForm.date_in = permit.date_in;
-
-      //   address: null,
-      //   province_id: null,
-      //   canton_id: null,
-      //   parish_id: null,
-      //   political_division_id: null,
-
       this.updatePermitForm.address = permit.address.address;
       this.updatePermitForm.political_division_id =
         permit.address.political_division_id;
 
       this.status().then((data) => {
-        //   console.log(data);
         this.selectThree.options = data.parishes;
         this.selectThree.selectedParish = data.data_parish;
-
         this.selectTwo.options = data.cantons;
         this.selectTwo.selectedCanton = data.data_canton;
-
         this.selectOne.selectedProvince = data.data_province;
       });
 
       this.permitBeingUpdated = permit;
     },
+
     updatePermit() {
       this.updatePermitForm.date_province = this.formatDate(
         this.updatePermitForm.date_province
@@ -1324,21 +1319,17 @@ export default {
 
     updatePermitCancel() {
       this.permitBeingUpdated = null;
-      //   Clean address data
-
       this.selectOne.selectedProvince = null;
       this.selectTwo.selectedCanton = null;
       this.selectThree.selectedParish = null;
       this.selectOne.options = [];
       this.selectTwo.options = [];
       this.selectThree.options = [];
-      // Clean data Form
       this.form.province_id = null;
       this.form.canton_id = null;
       this.form.parish_id = null;
       this.form.political_division_id = null;
     },
-    // Delete
 
     confirmationPermitDelete(permit) {
       this.deletePermitForm.reason = permit.reason;
@@ -1365,6 +1356,7 @@ export default {
         }
       );
     },
+
     changeStatusPermit() {
       if (this.statuspermit == 1) {
         this.statuspermit = 0;
@@ -1372,9 +1364,11 @@ export default {
         this.statuspermit = 1;
       }
     },
+
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
+
     formatShowDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");

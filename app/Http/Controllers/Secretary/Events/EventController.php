@@ -276,14 +276,10 @@ class EventController extends Controller
         return redirect()->back()->with(['success' => 'El evento fue eliminado correctamente.']);
     }
 
-    //  TODO: Export Excel
-
     public function exportExcel()
     {
         return Excel::download(new EventsExport(request()), 'EventosHDLC.xlsx');
     }
-
-    //  TODO: Export CSV
 
     public function exportCSV()
     {
@@ -299,12 +295,12 @@ class EventController extends Controller
             'type' => ['integer', 'between:1,4']
         ]);
 
-
         if ($validator->fails()) {
             return redirect()->back()->with(['error' => 'No se encuentran resultados.']);
         }
 
         $query = Events::query();
+
         $dateFromTo = new EventController();
 
         if (request('date')) {
@@ -335,11 +331,15 @@ class EventController extends Controller
         $query->orderBy('dates', 'asc');
 
         $from =   $dateFromTo->getFrom();
+
         $to =  $dateFromTo->getTo();
+
         $type = request('type');
+
         $data = $query->get();
 
         $pdf = PDF::loadView('reports.events.list-custom', compact('data', 'from', 'to', 'type'));
+
         return $pdf->setPaper('a4', 'landscape')->stream('ReportesEventosHDLC.pdf');
     }
 }

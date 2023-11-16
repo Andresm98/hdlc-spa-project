@@ -571,15 +571,22 @@ import Dropdown from "@/Components/Dropdown";
 
 export default {
   layout: PrincipalLayout,
+
   props: {
     files_list: Object,
+
     allProvinces: Object,
+
+    community: Object,
 
     filters: Object,
   },
+
   setup() {
     const date = ref(new Date());
+
     const year = new Date().getFullYear();
+
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
@@ -591,6 +598,7 @@ export default {
       format,
     };
   },
+
   components: {
     AppLayout,
     moment,
@@ -615,7 +623,6 @@ export default {
 
   data() {
     return {
-      community: Object,
       params: {
         search: this.filters.search,
         date: this.filters.date,
@@ -626,7 +633,9 @@ export default {
         dateEnd: this.filters.dateEnd,
       },
       navigationOp: 1,
+
       searchProfile: null,
+
       selectOne: {
         selectedCommunity: undefined,
         value: 0,
@@ -640,6 +649,7 @@ export default {
         multiSelectCommunity: null,
         vSelectCommunity: null,
       },
+
       selectTwo: {
         selectedOffice: undefined,
         value: 0,
@@ -653,9 +663,13 @@ export default {
         multiSelectOffice: null,
         vSelectOffice: null,
       },
+
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       options: [
         "Bautismo",
         "Penitencia",
@@ -665,12 +679,19 @@ export default {
         "Matrimonio",
         "Unión de Enfermos",
       ],
+
       statustransfer: 0,
+
       fileBeingCreated: null,
+
       form: null,
+
       photoPreview: null,
+
       url: null,
+
       fileBeingDeleted: null,
+
       deleteFileForm: this.$inertia.form({
         filename: null,
         external_filename: null,
@@ -679,6 +700,7 @@ export default {
       }),
 
       fileBeingUpdated: null,
+
       updateFileForm: useForm({
         filedata: null,
         filename: null,
@@ -689,9 +711,13 @@ export default {
       }),
 
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       allAppointmentsTransfer: null,
+
       selectFour: {
         selectedCommunity: undefined,
         value: 0,
@@ -700,6 +726,7 @@ export default {
         multiSelectCommunity: null,
         vSelectCommunity: null,
       },
+
       selectCyx: {
         selectedCommunity: undefined,
         value: 0,
@@ -744,6 +771,7 @@ export default {
         }
       }
     },
+
     "updateTransferForm.transfer_observation": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -763,12 +791,14 @@ export default {
         this.form.transfer.community_id == null
       );
     },
+
     isInvalidUpdateCommunity() {
       return (
         this.selectOne.selectedCommunity == undefined ||
         this.selectOne.selectedCommunity == null
       );
     },
+
     isInvalidPerfil() {
       return (
         this.selectCyx.selectedCommunity == undefined ||
@@ -783,6 +813,7 @@ export default {
       var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
       return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
     },
+
     extensionFile(filename) {
       if (filename != null) {
         return (
@@ -792,15 +823,18 @@ export default {
       }
       return "";
     },
+
     formatDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
     },
+
     formatShowDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
       }
       return "";
     },
+
     onFileChange(e) {
       const filedata = e.target.files[0];
       this.url = URL.createObjectURL(filedata);
@@ -810,12 +844,14 @@ export default {
       const filedata = e.target.files[0];
       this.url = URL.createObjectURL(filedata);
     },
+
     confirmationFileCreate() {
       this.form = useForm({
         filedata: null,
       });
       this.fileBeingCreated = this.form;
     },
+
     createFile() {
       this.form.post(
         route(`daughter.communities.files.store`, {
@@ -829,6 +865,7 @@ export default {
         }
       );
     },
+
     confirmationFileUpdate(file) {
       this.updateFileForm.filename = file.filename;
       this.updateFileForm.external_filename = file.external_filename;
@@ -846,6 +883,7 @@ export default {
 
       this.fileBeingUpdated = file;
     },
+
     clearUpdateData() {
       this.fileBeingUpdated = null;
       this.updateFileForm.filedata = null;
@@ -855,6 +893,7 @@ export default {
       this.updateFileForm.url = null;
       this.updateFileForm.fileshow = null;
     },
+
     updateFile() {
       this.updateFileForm.post(
         this.route("daughter.communities.files.update", {
@@ -871,6 +910,7 @@ export default {
         }
       );
     },
+
     confirmationFileDelete(file) {
       this.deleteFileForm.external_filename = file.external_filename;
       this.deleteFileForm.filename = file.filename;
@@ -879,6 +919,7 @@ export default {
 
       this.fileBeingDeleted = file;
     },
+
     deleteFile() {
       this.deleteFileForm.delete(
         this.route("daughter.communities.files.delete", {
@@ -893,9 +934,11 @@ export default {
         }
       );
     },
+
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     onSearchCommunityChange(search) {
       var string = search;
       var length = 60;
@@ -912,12 +955,15 @@ export default {
           });
       }
     },
+
     onSelectedCommunity(perfil) {
       this.selectFour.selectedCommunity = perfil;
     },
+
     customLabel(option) {
       return `${option.name} ${option.lastname} (${option.fullnamecomm})`;
     },
+
     onCyxSearchPerfilChange(search) {
       var string = search;
       var length = 60;
@@ -934,9 +980,11 @@ export default {
           });
       }
     },
+
     onCyxSelectedPerfil(perfil) {
       this.selectCyx.selectedCommunity = perfil;
     },
+
     customCyxLabel(option) {
       return `${option.name} ${option.lastname} (${option.fullnamecomm})`;
     },

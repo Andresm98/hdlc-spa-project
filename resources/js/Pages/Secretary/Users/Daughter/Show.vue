@@ -268,15 +268,17 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
-import { Link } from "@inertiajs/inertia-vue3";
-import Pagination from "@/Components/Pagination";
 import PrincipalLayout from "@/Components/Admin/PrincipalLayout";
+import AppLayout from "@/Layouts/AppLayoutAdmin.vue";
+import Pagination from "@/Components/Pagination";
+import { Link } from "@inertiajs/inertia-vue3";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   props: { user_custom: Object, image: String },
+
   layout: PrincipalLayout,
+
   components: {
     AppLayout,
     Link,

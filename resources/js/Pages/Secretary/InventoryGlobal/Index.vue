@@ -632,15 +632,6 @@
                                 }}
                               </span>
                             </div>
-                            <!-- <span
-                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
-                            >
-                              {{
-                                this.showAddress(
-                                  community_custom.address.political_division_id
-                                )
-                              }}
-                            </span> -->
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             <span
@@ -857,37 +848,37 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
 
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-
-import { Link } from "@inertiajs/inertia-vue3";
-import Pagination from "@/Components/Pagination";
-import { Inertia } from "@inertiajs/inertia";
-import "sweetalert2/dist/sweetalert2.min.css";
-import { ref } from "vue";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import { pickBy, throttle, mapValues } from "lodash";
+import Pagination from "@/Components/Pagination";
+import { Link } from "@inertiajs/inertia-vue3";
+import "sweetalert2/dist/sweetalert2.min.css";
+import { Inertia } from "@inertiajs/inertia";
+import { defineComponent } from "vue";
+import { ref } from "vue";
 
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import moment from "moment";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
+import JetInputError from "@/Jetstream/InputError.vue";
+import JetButton from "@/Jetstream/Button.vue";
+import JetInput from "@/Jetstream/Input.vue";
 import Dropdown from "@/Components/Dropdown";
 import Icon from "@/Components/Icon";
-import JetButton from "@/Jetstream/Button.vue";
+import moment from "moment";
 
+import Operation from "@/Components/Secretary/Community/Operation";
+import SearchFilter from "@/Components/SearchFilter";
+import Datepicker from "vue3-date-time-picker";
 import TextInput from "@/Components/TextInput";
 import Alert from "@/Components/Alert";
-import SearchFilter from "@/Components/SearchFilter";
-import Operation from "@/Components/Secretary/Community/Operation";
 import { mapActions } from "vuex";
-import Datepicker from "vue3-date-time-picker";
 
 export default defineComponent({
   layout: PrincipalLayout,
+
   props: {
     communities_list: Object,
     pastorals: Object,
@@ -897,13 +888,17 @@ export default defineComponent({
       type: Array,
     },
   },
+
   setup() {
     const date = ref(new Date());
+
     const year = new Date().getFullYear();
+
     var format = (date) => {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
+
     return {
       date,
       year,
@@ -917,6 +912,7 @@ export default defineComponent({
       modules: [Pagination],
     };
   },
+
   components: {
     Link,
     AppLayout,
@@ -936,14 +932,21 @@ export default defineComponent({
     Operation,
     Icon,
   },
+
   data() {
     return {
       modal_open: false,
+
       report_modal_open: false,
+
       type_operation_report: null,
+
       selected_community: Object,
+
       type_alert: null,
+
       allAddress: [],
+
       params: {
         search: this.filters.search,
         field: this.filters.field,
@@ -955,13 +958,14 @@ export default defineComponent({
         dateEnd: this.filters.dateEnd,
         perPage: this.filters.perPage,
         perProvince: this.filters.perProvince,
-        //
         printOperation: null,
       },
       arrayAddress: [],
     };
   },
+
   mounted() {},
+
   methods: {
     showAddress(value) {
       const address = fetch(
@@ -972,24 +976,22 @@ export default defineComponent({
           this.arrayAddress.push(data.data_province);
           return data.data_province; //3
         });
-      //   const printAddress = async () => {
-      //     console.log(address);
-      //     return await address;
-      //   };
-      //   return "ay" + printAddress();
     },
+
     async resolveAddress(value) {
       const response = await axios.get(
         route("secretary.address.address-format", { actual_parish: value })
       );
       return response.data;
     },
+
     formatDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
       }
       return null;
     },
+
     formatDateShow(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
@@ -1001,6 +1003,7 @@ export default defineComponent({
       this.params.field = field;
       this.params.direction = this.params.direction === "asc" ? "desc" : "asc";
     },
+
     deleteCommunity: function (value) {
       if (value == 1) {
         Inertia.delete(
@@ -1015,34 +1018,39 @@ export default defineComponent({
           })
         );
       }
-
       this.modal_open = false;
     },
+
     closeModal() {
       this.modal_open = false;
     },
+
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     dataParams() {
       return this.params;
     },
-    //
+
     openReportDialog(type) {
       this.report_modal_open = true;
       this.type_operation_report = type;
     },
+
     closeReportModal() {
       this.report_modal_open = false;
       this.type_operation_report = null;
       this.params.printOperation = null;
     },
   },
+
   watch: {
     "params.active": function () {
       this.params.dateEnd = null;
       this.params.dateStart = null;
     },
+
     params: {
       handler: throttle(function () {
         if (this.params.dateStart != null) {

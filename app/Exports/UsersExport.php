@@ -149,6 +149,17 @@ class UsersExport implements FromView
                                         ->where("date_send", '!=', null)
                                         ->where("date_vote",  '!=', null);
                                 }
+                                if (request('typeActive') == 4) {
+
+                                    $dateOne = date("Y-m-d H:i:s", strtotime("-15 year"));
+
+                                    $q->where("date_birth", '!=', null)
+                                        ->where("date_vocation", '!=', null)
+                                        ->where("date_admission", '!=', null)
+                                        ->where("date_send", '!=', null)
+                                        ->where("date_vote",  '!=', null)
+                                        ->where("date_vocation", '<=', $dateOne);
+                                }
                             }
                             $q->whereBetween('date_admission', [request('dateStart'), request('dateEnd')]);
                             $q->orderBy('date_admission', 'desc');
@@ -195,6 +206,17 @@ class UsersExport implements FromView
                                 ->where("date_admission", '!=', null)
                                 ->where("date_send", '!=', null)
                                 ->where("date_vote",  '!=', null);
+                        }
+                        if (request('typeActive') == 4) {
+
+                            $dateOne = date("Y-m-d H:i:s", strtotime("-15 year"));
+
+                            $q->where("date_birth", '!=', null)
+                                ->where("date_vocation", '!=', null)
+                                ->where("date_admission", '!=', null)
+                                ->where("date_send", '!=', null)
+                                ->where("date_vote",  '!=', null)
+                                ->where("date_vocation", '<=', $dateOne);
                         }
                     }
                     $q->where("status", request('status'))->orderBy('date_admission', 'desc');

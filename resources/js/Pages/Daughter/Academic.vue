@@ -239,9 +239,17 @@
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                               <span
+                                v-if="academic.date_title"
                                 class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
                               >
                                 {{ this.formatShowDate(academic.date_title) }}
+                              </span>
+
+                              <span
+                                v-else
+                                class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-green-100 text-green-800"
+                              >
+                                Cursando
                               </span>
                             </div>
                           </td>
@@ -659,6 +667,7 @@ export default {
       type: Array,
     },
   },
+
   setup() {
     const formatSet = "YYYY-MM-DD";
     const year = new Date().getFullYear();
@@ -672,6 +681,7 @@ export default {
       format,
     };
   },
+
   data() {
     return {
       toolbarOptions: [
@@ -690,15 +700,21 @@ export default {
         ["clean"],
       ],
       modal_open: false,
+
       selected_academic: Object,
+
       params: {
         dateStart: this.filters.dateStart,
         dateEnd: this.filters.dateEnd,
         perPage: this.filters.perPage,
       },
+
       academicBeingCreated: null,
+
       form: null,
+
       academicBeingUpdated: null,
+
       updateAcademicForm: this.$inertia.form({
         name_title: null,
         institution: null,
@@ -707,6 +723,7 @@ export default {
       }),
     };
   },
+
   watch: {
     "form.observation": function () {
       var limit = 4000;
@@ -717,6 +734,7 @@ export default {
         quill.setHTML(this.data_intput_one);
       }
     },
+
     "updateAcademicForm.observation": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -728,6 +746,7 @@ export default {
         }
       }
     },
+
     params: {
       handler: throttle(function () {
         if (this.params.dateStart != null) {
@@ -746,6 +765,7 @@ export default {
       deep: true,
     },
   },
+
   components: {
     Datepicker,
     AppLayout,
@@ -768,6 +788,7 @@ export default {
     Operation,
     ref,
   },
+
   methods: {
     formatDate(value) {
       if (value != null) {
@@ -775,12 +796,14 @@ export default {
       }
       return null;
     },
+
     formatShowDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
       }
       return null;
     },
+
     confirmationAcademicCreate() {
       this.form = this.$inertia.form({
         name_title: null,
@@ -790,6 +813,7 @@ export default {
       });
       this.academicBeingCreated = this.form;
     },
+
     createAcademicStatus() {
       if (this.form.date_title != null) {
         this.form.date_title = this.formatDate(this.form.date_title);
@@ -809,6 +833,7 @@ export default {
         }
       );
     },
+
     confirmationAcademicUpdate(academic) {
       this.updateAcademicForm.name_title = academic.name_title;
       this.updateAcademicForm.institution = academic.institution;
@@ -816,6 +841,7 @@ export default {
       this.updateAcademicForm.observation = academic.observation;
       this.academicBeingUpdated = academic;
     },
+
     updateAcademic() {
       this.updateAcademicForm.date_title = this.formatDate(
         this.updateAcademicForm.date_title
@@ -836,9 +862,11 @@ export default {
         }
       );
     },
+
     closeModal() {
       this.modal_open = false;
     },
+
     deleteAcademic: function () {
       Inertia.delete(
         this.route("daughter.academic.delete", {
@@ -849,6 +877,7 @@ export default {
       this.modal_open = false;
     },
   },
+
   computed: {},
 };
 </script>

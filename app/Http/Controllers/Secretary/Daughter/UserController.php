@@ -154,6 +154,7 @@ class UserController extends Controller
         ]);
 
         $addressClass = new AddressController();
+
         $provinces =  $addressClass->getProvinces();
 
         $query = User::query();
@@ -249,6 +250,17 @@ class UserController extends Controller
                                         ->where("date_send", '!=', null)
                                         ->where("date_vote",  '!=', null);
                                 }
+                                if (request('typeActive') == 4) {
+
+                                    $dateOne = date("Y-m-d H:i:s", strtotime("-15 year"));
+
+                                    $q->where("date_birth", '!=', null)
+                                        ->where("date_vocation", '!=', null)
+                                        ->where("date_admission", '!=', null)
+                                        ->where("date_send", '!=', null)
+                                        ->where("date_vote",  '!=', null)
+                                        ->where("date_vocation", '<=', $dateOne);
+                                }
                             }
                             $q->whereBetween('date_admission', [request('dateStart'), request('dateEnd')]);
                             $q->orderBy('date_admission', 'desc');
@@ -294,6 +306,17 @@ class UserController extends Controller
                                 ->where("date_send", '!=', null)
                                 ->where("date_vote",  '!=', null);
                         }
+                        if (request('typeActive') == 4) {
+
+                            $dateOne = date("Y-m-d H:i:s", strtotime("-15 year"));
+
+                            $q->where("date_birth", '!=', null)
+                                ->where("date_vocation", '!=', null)
+                                ->where("date_admission", '!=', null)
+                                ->where("date_send", '!=', null)
+                                ->where("date_vote",  '!=', null)
+                                ->where("date_vocation", '<=', $dateOne);
+                        }
                     }
                     $q->where("status", request('status'))->orderBy('date_admission', 'desc');
                 }
@@ -316,7 +339,9 @@ class UserController extends Controller
         }
 
         $pastorals = Pastoral::all();
+
         $books = Book::all();
+
         return Inertia::render('Secretary/Users/Daughter/Index', [
             'provinces' => $provinces,
             'daughters_list' => $query
@@ -901,6 +926,17 @@ class UserController extends Controller
                                         ->where("date_send", '!=', null)
                                         ->where("date_vote",  '!=', null);
                                 }
+                                if (request('typeActive') == 4) {
+
+                                    $dateOne = date("Y-m-d H:i:s", strtotime("-15 year"));
+
+                                    $q->where("date_birth", '!=', null)
+                                        ->where("date_vocation", '!=', null)
+                                        ->where("date_admission", '!=', null)
+                                        ->where("date_send", '!=', null)
+                                        ->where("date_vote",  '!=', null)
+                                        ->where("date_vocation", '<=', $dateOne);
+                                }
                             }
                             $q->whereBetween('date_admission', [request('dateStart'), request('dateEnd')]);
                             $q->orderBy('date_admission', 'desc');
@@ -946,6 +982,17 @@ class UserController extends Controller
                                 ->where("date_admission", '!=', null)
                                 ->where("date_send", '!=', null)
                                 ->where("date_vote",  '!=', null);
+                        }
+                        if (request('typeActive') == 4) {
+
+                            $dateOne = date("Y-m-d H:i:s", strtotime("-15 year"));
+
+                            $q->where("date_birth", '!=', null)
+                                ->where("date_vocation", '!=', null)
+                                ->where("date_admission", '!=', null)
+                                ->where("date_send", '!=', null)
+                                ->where("date_vote",  '!=', null)
+                                ->where("date_vocation", '<=', $dateOne);
                         }
                     }
                     $q->where("status", request('status'))->orderBy('date_admission', 'desc');

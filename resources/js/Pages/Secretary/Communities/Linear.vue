@@ -4,6 +4,7 @@
 
 <script>
 import { generateChart } from "vue-chartjs";
+
 import {
   Chart as ChartJS,
   Title,
@@ -30,14 +31,12 @@ ChartJS.register(
 class LineWithLineController extends LineController {
   draw() {
     super.draw();
-
     if (this.chart?.tooltip?.active) {
       const ctx = this.chart.ctx;
       const x = this.chart.tooltip.x;
       const topY = this.chart.scales["y-axis-0"].top;
       const bottomY = this.chart.scales["y-axis-0"].bottom;
 
-      // draw line
       ctx.save();
       ctx.beginPath();
       ctx.moveTo(x, topY);
@@ -86,6 +85,7 @@ export default {
       default: () => [],
     },
   },
+
   data() {
     return {
       chartData: {
@@ -98,6 +98,7 @@ export default {
           },
         ],
       },
+
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,

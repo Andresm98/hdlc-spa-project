@@ -923,38 +923,39 @@
   </app-layout>
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
-import { pickBy, throttle, mapValues } from "lodash";
-import moment from "moment";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-import { range } from "moment-range";
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import Datepicker from "vue3-date-time-picker";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import Pagination from "@/Components/Pagination";
-import Icon from "@/Components/Icon";
-
-import TextInput from "@/Components/TextInput";
-import { ref } from "vue";
-import Alert from "@/Components/Alert";
-import SearchFilter from "@/Components/SearchFilter";
 import Operation from "@/Components/Secretary/Daughter/Operation";
-import { Inertia } from "@inertiajs/inertia";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import { mapState, mapActions, mapGetters } from "vuex";
+import JetInputError from "@/Jetstream/InputError.vue";
+import SearchFilter from "@/Components/SearchFilter";
+import { pickBy, throttle, mapValues } from "lodash";
+import Pagination from "@/Components/Pagination";
+import Datepicker from "vue3-date-time-picker";
+import TextInput from "@/Components/TextInput";
+import JetInput from "@/Jetstream/Input.vue";
+import { Inertia } from "@inertiajs/inertia";
 import Dropdown from "@/Components/Dropdown";
+import Alert from "@/Components/Alert";
+import { range } from "moment-range";
+import Icon from "@/Components/Icon";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   layout: PrincipalLayout,
+
   props: {
     appointments: Object,
     levels: Object,
     categories: Object,
     filters: Object,
   },
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -969,6 +970,7 @@ export default {
       format,
     };
   },
+
   components: {
     AppLayout,
     moment,
@@ -988,11 +990,13 @@ export default {
     Operation,
     Pagination,
   },
+
   mounted() {
     this.allAppointmentLevel;
     this.byTerminateAppointment;
     this.showYears;
   },
+
   data() {
     return {
       toolbarOptions: [
@@ -1014,8 +1018,11 @@ export default {
 
         ["clean"], // remove formatting button
       ],
+
       modal_open: false,
+
       statusappointment: 0,
+
       params: {
         search: this.filters.search,
         date: this.filters.date,
@@ -1025,7 +1032,9 @@ export default {
         dateStart: this.filters.dateStart,
         dateEnd: this.filters.dateEnd,
       },
+
       appointmentBeingUpdated: null,
+
       updateAppointmentForm: this.$inertia.form({
         description: null,
         date_appointment: null,
@@ -1034,6 +1043,7 @@ export default {
         community_id: null,
         status: null,
       }),
+
       selectOneUpdate: {
         selectedLevel: undefined,
         value: 0,
@@ -1044,6 +1054,7 @@ export default {
         multiSelectLevel: null,
         vSelectLevel: null,
       },
+
       selectTwoUpdate: {
         selectedLevelCategory: undefined,
         value: 0,
@@ -1054,6 +1065,7 @@ export default {
         multiSelectLevelCategory: null,
         vSelectLevelCategory: null,
       },
+
       selectThree: {
         selectedCommunity: undefined,
         value: 0,
@@ -1064,11 +1076,14 @@ export default {
         multiSelectCommunity: null,
         vSelectCommunity: null,
       },
+
       byTerminateAppointmentCount: null,
     };
   },
+
   watch: {
     dataTransfer: function () {},
+
     "selectOneUpdate.selectedLevel": function () {
       if (this.selectOneUpdate.selectedLevel === null) {
         this.selectTwoUpdate.selectedLevelCategory = null;
@@ -1076,11 +1091,13 @@ export default {
         this.updateAppointmentForm.appointment_level_id = null;
       }
     },
+
     "selectTwoUpdate.selectedLevelCategory": function () {
       if (this.selectTwoUpdate.selectedLevelCategory === null) {
         this.updateAppointmentForm.appointment_level_id = null;
       }
     },
+
     "updateAppointmentForm.description": function () {
       var limit = 2000;
       const quill = this.$refs.qleditor1;
@@ -1092,11 +1109,13 @@ export default {
         }
       }
     },
+
     "params.type": function () {
       if (this.params.type != 2) {
         this.params.level = null;
       }
     },
+
     params: {
       handler: throttle(function () {
         let params = pickBy(this.params);
@@ -1116,27 +1135,33 @@ export default {
       deep: true,
     },
   },
+
   computed: {
     ...mapState("work", ["work"]),
+
     ...mapState("work", ["allWork"]),
+
     isInvalidLevelUpdate() {
       return (
         this.selectOneUpdate.selectedLevel == undefined ||
         this.selectOneUpdate.selectedLevel == null
       );
     },
+
     isInvalidLevelCategoryUpdate() {
       return (
         this.selectTwoUpdate.selectedLevelCategory == undefined ||
         this.selectTwoUpdate.selectedLevelCategory == null
       );
     },
+
     isInvalidUpdateCommunity() {
       return (
         this.selectThree.selectedCommunity == undefined ||
         this.selectThree.selectedCommunity == null
       );
     },
+
     allAppointmentLevel() {
       axios
         .get(
@@ -1157,6 +1182,7 @@ export default {
           this.byTerminateAppointmentCount = response.data;
         });
     },
+
     showYears() {
     },
   },
@@ -1168,10 +1194,11 @@ export default {
       this.params.dateStart = this.byTerminateAppointmentCount.start;
       this.params.dateEnd = this.byTerminateAppointmentCount.end;
     },
+
     onSearchLevelChange() {},
+
     onSelectedLevel(level) {
       this.selectTwoUpdate.selectedLevelCategory = undefined;
-
       this.selectTwoUpdate.options = [];
       axios
         .get(
@@ -1184,19 +1211,24 @@ export default {
           this.selectTwoUpdate.options = res.data;
         });
     },
+
     onSearchLevelCategoryChange() {},
+
     onSelectedCategoryLevel(category) {
       this.updateAppointmentForm.appointment_level_id = category.id;
     },
+
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     formatDate(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD 00:00:00");
       }
       return null;
     },
+
     formatDateShow(value) {
       if (value != null) {
         return moment(new Date(value)).format("YYYY-MM-DD");
@@ -1207,6 +1239,7 @@ export default {
     closeModal() {
       this.modal_open = false;
     },
+
     deleteAppointment: function () {
       Inertia.delete(
         route("secretary.appoinments.delete", {
@@ -1215,6 +1248,7 @@ export default {
       );
       this.modal_open = false;
     },
+
     confirmationAppointmentUpdate(appointment) {
       this.updateAppointmentForm.name_appointment =
         appointment.name_appointment;
@@ -1223,7 +1257,6 @@ export default {
         appointment.date_appointment;
       this.updateAppointmentForm.date_end_appointment =
         appointment.date_end_appointment;
-
       this.statusappointment = appointment.status;
       this.status(appointment).then((data) => {
         this.selectOneUpdate.selectedLevel = data.level;
@@ -1258,6 +1291,7 @@ export default {
 
       this.appointmentBeingUpdated = appointment;
     },
+
     async status(appointment) {
       let response = await axios.get(
         this.route("secretary.appointment-data.index", {
@@ -1266,6 +1300,7 @@ export default {
       );
       return response.data;
     },
+
     cancelUpdateAppointment() {
       this.selectOneUpdate.selectedLevel = null;
       this.selectTwoUpdate.selectedLevelCategory = null;
@@ -1275,6 +1310,7 @@ export default {
       this.appointmentBeingUpdated = null;
       this.statusappointment = 0;
     },
+
     updateAppointment() {
       if (this.updateAppointmentForm.date_appointment != null) {
         this.updateAppointmentForm.date_appointment = this.formatDate(
@@ -1286,12 +1322,10 @@ export default {
           this.updateAppointmentForm.date_end_appointment
         );
       }
-
       this.updateAppointmentForm.appointment_level_id =
         this.selectTwoUpdate.selectedLevelCategory;
       this.updateAppointmentForm.community_id =
         this.selectThree.selectedCommunity;
-
       this.updateAppointmentForm.status = this.statusappointment;
       if (
         this.isInvalidLevelUpdate == false &&
@@ -1320,6 +1354,7 @@ export default {
         );
       }
     },
+
     changeStatusAppointment() {
       if (this.statusappointment == 1) {
         this.statusappointment = 0;

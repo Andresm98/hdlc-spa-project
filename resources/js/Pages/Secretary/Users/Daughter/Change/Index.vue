@@ -54,131 +54,147 @@
             v-if="this.getAllTransfer()"
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-blue-100">
-                <tr>
-                  <th
-                    scope="col"
-                    class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Comunidad/Obra
-                  </th>
-                  <!-- <th
+            <div className="overflow-y-auto h-96">
+              <div className="relative px-4">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-blue-100">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Comunidad/Obra
+                      </th>
+                      <!-- <th
                     scope="col"
                     class="text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
                     Cargo
                   </th> -->
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Fechas (inicio-fin)
-                  </th>
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                  >
-                    Acciones
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="transfer in this.getAllTransfer()" :key="transfer">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 h-10 w-10">
-                        <svg class="svg-icon" viewBox="1 1 18 18">
-                          <path
-                            d="M10,1.529c-4.679,0-8.471,3.792-8.471,8.471c0,4.68,3.792,8.471,8.471,8.471c4.68,0,8.471-3.791,8.471-8.471C18.471,5.321,14.68,1.529,10,1.529 M10,17.579c-4.18,0-7.579-3.399-7.579-7.579S5.82,2.421,10,2.421S17.579,5.82,17.579,10S14.18,17.579,10,17.579 M14.348,10c0,0.245-0.201,0.446-0.446,0.446h-5c-0.246,0-0.446-0.201-0.446-0.446s0.2-0.446,0.446-0.446h5C14.146,9.554,14.348,9.755,14.348,10 M14.348,12.675c0,0.245-0.201,0.446-0.446,0.446h-5c-0.246,0-0.446-0.201-0.446-0.446s0.2-0.445,0.446-0.445h5C14.146,12.229,14.348,12.43,14.348,12.675 M7.394,10c0,0.245-0.2,0.446-0.446,0.446H6.099c-0.245,0-0.446-0.201-0.446-0.446s0.201-0.446,0.446-0.446h0.849C7.194,9.554,7.394,9.755,7.394,10 M7.394,12.675c0,0.245-0.2,0.446-0.446,0.446H6.099c-0.245,0-0.446-0.201-0.446-0.446s0.201-0.445,0.446-0.445h0.849C7.194,12.229,7.394,12.43,7.394,12.675 M14.348,7.325c0,0.246-0.201,0.446-0.446,0.446h-5c-0.246,0-0.446-0.2-0.446-0.446c0-0.245,0.2-0.446,0.446-0.446h5C14.146,6.879,14.348,7.08,14.348,7.325 M7.394,7.325c0,0.246-0.2,0.446-0.446,0.446H6.099c-0.245,0-0.446-0.2-0.446-0.446c0-0.245,0.201-0.446,0.446-0.446h0.849C7.194,6.879,7.394,7.08,7.394,7.325"
-                          ></path>
-                        </svg>
-                      </div>
-                      <div class="ml-4 sm:w-8/8 md:w-8/8 lg:w-6/8 ...">
-                        <div
-                          class="whitespace-normal text-sm font-semibold text-gray-900 hover:text-blue-500"
-                        >
-                          <div
-                            v-if="
-                              transfer.community.comm_level == 1 &&
-                              transfer.community.comm_id == null
-                            "
-                          >
-                            <a
-                              :href="
-                                route('secretary.communities.edit', {
-                                  slug: transfer.community.comm_slug,
-                                })
-                              "
-                              target="_blank"
-                            >
-                              {{ transfer.community.comm_name }}.
-                            </a>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Fechas (inicio-fin)
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                      >
+                        Acciones
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr
+                      v-for="transfer in this.getAllTransfer()"
+                      :key="transfer"
+                    >
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div class="flex-shrink-0 h-10 w-10">
+                            <svg class="svg-icon" viewBox="1 1 18 18">
+                              <path
+                                d="M10,1.529c-4.679,0-8.471,3.792-8.471,8.471c0,4.68,3.792,8.471,8.471,8.471c4.68,0,8.471-3.791,8.471-8.471C18.471,5.321,14.68,1.529,10,1.529 M10,17.579c-4.18,0-7.579-3.399-7.579-7.579S5.82,2.421,10,2.421S17.579,5.82,17.579,10S14.18,17.579,10,17.579 M14.348,10c0,0.245-0.201,0.446-0.446,0.446h-5c-0.246,0-0.446-0.201-0.446-0.446s0.2-0.446,0.446-0.446h5C14.146,9.554,14.348,9.755,14.348,10 M14.348,12.675c0,0.245-0.201,0.446-0.446,0.446h-5c-0.246,0-0.446-0.201-0.446-0.446s0.2-0.445,0.446-0.445h5C14.146,12.229,14.348,12.43,14.348,12.675 M7.394,10c0,0.245-0.2,0.446-0.446,0.446H6.099c-0.245,0-0.446-0.201-0.446-0.446s0.201-0.446,0.446-0.446h0.849C7.194,9.554,7.394,9.755,7.394,10 M7.394,12.675c0,0.245-0.2,0.446-0.446,0.446H6.099c-0.245,0-0.446-0.201-0.446-0.446s0.201-0.445,0.446-0.445h0.849C7.194,12.229,7.394,12.43,7.394,12.675 M14.348,7.325c0,0.246-0.201,0.446-0.446,0.446h-5c-0.246,0-0.446-0.2-0.446-0.446c0-0.245,0.2-0.446,0.446-0.446h5C14.146,6.879,14.348,7.08,14.348,7.325 M7.394,7.325c0,0.246-0.2,0.446-0.446,0.446H6.099c-0.245,0-0.446-0.2-0.446-0.446c0-0.245,0.201-0.446,0.446-0.446h0.849C7.194,6.879,7.394,7.08,7.394,7.325"
+                              ></path>
+                            </svg>
                           </div>
-                          <div v-if="transfer.community.comm_level == 2">
-                            {{ transfer.community.comm_name }}.
+                          <div class="ml-4 sm:w-8/8 md:w-8/8 lg:w-6/8 ...">
+                            <div
+                              class="whitespace-normal text-sm font-semibold text-gray-900 hover:text-blue-500"
+                            >
+                              <div
+                                v-if="
+                                  transfer.community.comm_level == 1 &&
+                                  transfer.community.comm_id == null
+                                "
+                              >
+                                <a
+                                  :href="
+                                    route('secretary.communities.edit', {
+                                      slug: transfer.community.comm_slug,
+                                    })
+                                  "
+                                  target="_blank"
+                                >
+                                  {{ transfer.community.comm_name }}.
+                                </a>
+                              </div>
+                              <div v-if="transfer.community.comm_level == 2">
+                                {{ transfer.community.comm_name }}.
+                              </div>
+                            </div>
+                            <span
+                              v-if="transfer.status == 1"
+                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-cyan-100 text-cyan-800"
+                            >
+                              Activo
+                            </span>
+                            <span
+                              v-if="transfer.status == 0"
+                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                            >
+                              Historial
+                            </span>
                           </div>
                         </div>
-                        <span
-                          v-if="transfer.status == 1"
-                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-cyan-100 text-cyan-800"
-                        >
-                          Activo
-                        </span>
-                        <span
-                          v-if="transfer.status == 0"
-                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
-                        >
-                          Historial
-                        </span>
-                      </div>
-                    </div>
-                  </td>
+                      </td>
 
-                  <td
-                    class="px-6 py-4 whitespace-nowrap"
-                    v-if="transfer.transfer_date_relocated == null"
-                  >
-                    <span
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                    >
-                      {{ this.formatDateShow(transfer.transfer_date_adission) }}
-                      -
-                      {{
-                        this.formatDateShow(transfer.transfer_date_relocated)
-                      }}
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap" v-else>
-                    <span
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
-                    >
-                      {{ this.formatDateShow(transfer.transfer_date_adission) }}
-                      -
-                      {{
-                        this.formatDateShow(transfer.transfer_date_relocated)
-                      }}
-                    </span>
-                  </td>
-
-                  <td
-                    class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
-                  >
-                    <!-- Components -->
-
-                    <div class="mx-auto flex gap-10">
-                      <jet-button @click="confirmationTransferUpdate(transfer)"
-                        >Detalles</jet-button
+                      <td
+                        class="px-6 py-4 whitespace-nowrap"
+                        v-if="transfer.transfer_date_relocated == null"
                       >
-                      <jet-danger-button
-                        @click="confirmationTransferDelete(transfer)"
-                        >Eliminar</jet-danger-button
+                        <span
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                        >
+                          {{
+                            this.formatDateShow(transfer.transfer_date_adission)
+                          }}
+                          -
+                          {{
+                            this.formatDateShow(
+                              transfer.transfer_date_relocated
+                            )
+                          }}
+                        </span>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap" v-else>
+                        <span
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                        >
+                          {{
+                            this.formatDateShow(transfer.transfer_date_adission)
+                          }}
+                          -
+                          {{
+                            this.formatDateShow(
+                              transfer.transfer_date_relocated
+                            )
+                          }}
+                        </span>
+                      </td>
+
+                      <td
+                        class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
                       >
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                        <!-- Components -->
+
+                        <div class="mx-auto flex gap-10">
+                          <jet-button
+                            @click="confirmationTransferUpdate(transfer)"
+                            >Detalles</jet-button
+                          >
+                          <jet-danger-button
+                            @click="confirmationTransferDelete(transfer)"
+                            >Eliminar</jet-danger-button
+                          >
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
           <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
             <p class="text-center text-lg">
@@ -966,24 +982,24 @@
 </template>
 
 <script>
-import Datepicker from "vue3-date-time-picker";
-import { useForm } from "@inertiajs/inertia-vue3";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import JetButton from "@/Jetstream/Button.vue";
+import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
+import { useForm } from "@inertiajs/inertia-vue3";
+import Datepicker from "vue3-date-time-picker";
+import JetButton from "@/Jetstream/Button.vue";
 
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
+import JetInputError from "@/Jetstream/InputError";
 import JetInput from "@/Jetstream/Input.vue";
-import moment from "moment";
 import { Inertia } from "@inertiajs/inertia";
 import "vue3-date-time-picker/dist/main.css";
-import { ref } from "vue";
-import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
-import JetInputError from "@/Jetstream/InputError";
 import Alert from "@/Components/Alert";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   props: {
@@ -993,6 +1009,7 @@ export default {
       },
     },
   },
+
   created() {
     axios.get(this.route("secretary.offices.index")).then((res) => {
       this.updateAllOffice(res.data);
@@ -1001,10 +1018,10 @@ export default {
     axios
       .get(this.route("secretary.daughter-profile.transfer.communities.index"))
       .then((res) => {
-        // console.log(res.data);
         this.updateAllWork(res.data);
       });
   },
+
   mounted() {
     this.allTransfer;
     this.allAppointment;
@@ -1012,17 +1029,21 @@ export default {
   },
   computed: {
     isInvalid() {
-      //   console.log("inva ", this.isTouched, "\n\nopp> ");
       return this.value == null;
     },
+
     ...mapState("daughter", ["profile"]),
+
     ...mapState("transfer", ["transfer"]),
+
     ...mapState("transfer", ["allOffice"]),
+
     ...mapState("work", ["work"]),
+
     ...mapState("work", ["allWork"]),
 
-    //
     ...mapState("daughter", ["profile"]),
+
     ...mapState("appointment", ["appointment"]),
 
     allTransfer() {
@@ -1033,7 +1054,6 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log("computed ", res.data);
           this.updateAllTransfer(res.data);
         });
     },
@@ -1049,6 +1069,7 @@ export default {
           this.updateAllAppointment(res.data);
         });
     },
+
     allAppointmentLevel() {
       axios
         .get(
@@ -1062,17 +1083,19 @@ export default {
           this.selectOneUpdate.options = res.data;
         });
     },
+
     isInvalidOffice() {
       return this.form.office_id == undefined || this.form.office_id == null;
     },
+
     isInvalidUpdateOffice() {
       return (
         this.selectTwo.selectedOffice == undefined ||
         this.selectTwo.selectedOffice == null
       );
     },
+
     isInvalidCommunity() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectOne.selectedCommunity == undefined ||
         this.selectOne.selectedCommunity == null
@@ -1085,6 +1108,7 @@ export default {
         Object.keys(this.selectLevel.selectedLevel).length === 0
       );
     },
+
     isInvalidLevelCategory() {
       return (
         this.selectCategory.selectedLevelCategory == undefined ||
@@ -1092,16 +1116,14 @@ export default {
       );
     },
 
-    // Validate Multioption
     isInvalidLevelUpdate() {
-      //   console.log("ee", this.selectOne.selectedProvince);
       return (
         this.selectOneUpdate.selectedLevel == undefined ||
         this.selectOneUpdate.selectedLevel == null
       );
     },
+
     isInvalidLevelCategoryUpdate() {
-      //   console.log("ee canton", this.selectTwo.selectedCanton);
       return (
         this.selectTwoUpdate.selectedLevelCategory == undefined ||
         this.selectTwoUpdate.selectedLevelCategory == null
@@ -1109,14 +1131,13 @@ export default {
     },
 
     isInvalidUpdateCommunity() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectOne.selectedCommunity == undefined ||
         this.selectOne.selectedCommunity == null
       );
     },
   },
-  // Relashionship with another components
+
   components: {
     Alert,
     Datepicker,
@@ -1131,7 +1152,7 @@ export default {
     JetFormSection,
     moment,
   },
-  //  Setup all data
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -1168,7 +1189,9 @@ export default {
 
         ["clean"], // remove formatting button
       ],
+
       navigationOp: 1,
+
       selectOne: {
         selectedCommunity: undefined,
         value: 0,
@@ -1182,6 +1205,7 @@ export default {
         multiSelectCommunity: null,
         vSelectCommunity: null,
       },
+
       selectTwo: {
         selectedOffice: undefined,
         value: 0,
@@ -1196,8 +1220,11 @@ export default {
         vSelectOffice: null,
       },
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       options: [
         "Bautismo",
         "Penitencia",
@@ -1207,10 +1234,15 @@ export default {
         "Matrimonio",
         "Unión de Enfermos",
       ],
+
       statustransfer: 0,
+
       form: null,
+
       transferBeingCreated: null,
+
       transferBeingDeleted: null,
+
       deleteTransferForm: this.$inertia.form({
         transfer_date_adission: null,
         transfer_date_relocated: null,
@@ -1220,7 +1252,9 @@ export default {
         community_id: null,
         office_id: null,
       }),
+
       transferBeingUpdated: null,
+
       updateTransferForm: this.$inertia.form({
         transfer_date_adission: null,
         transfer_date_relocated: null,
@@ -1242,6 +1276,7 @@ export default {
         community_id: null,
       }),
       appointmentBeingUpdated: null,
+
       updateAppointmentForm: this.$inertia.form({
         description: null,
         date_appointment: null,
@@ -1250,8 +1285,6 @@ export default {
         community_id: null,
         status: null,
       }),
-
-      //   Selects
 
       selectLevel: {
         selectedLevel: undefined,
@@ -1263,6 +1296,7 @@ export default {
         multiSelectLevel: null,
         vSelectLevel: null,
       },
+
       selectCategory: {
         selectedLevelCategory: undefined,
         value: 0,
@@ -1273,6 +1307,7 @@ export default {
         multiSelectLevelCategory: null,
         vSelectLevelCategory: null,
       },
+
       selectThree: {
         selectedCommunity: undefined,
         value: 0,
@@ -1283,6 +1318,7 @@ export default {
         multiSelectCommunity: null,
         vSelectCommunity: null,
       },
+
       selectOneUpdate: {
         selectedLevel: undefined,
         value: 0,
@@ -1293,6 +1329,7 @@ export default {
         multiSelectLevel: null,
         vSelectLevel: null,
       },
+
       selectTwoUpdate: {
         selectedLevelCategory: undefined,
         value: 0,
@@ -1305,11 +1342,15 @@ export default {
       },
 
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       allAppointmentsTransfer: null,
     };
   },
+
   watch: {
     "selectLevel.selectedLevel": function () {
       this.selectCategory.options = [];
@@ -1337,32 +1378,31 @@ export default {
       if (this.selectOneUpdate.selectedLevel === null) {
         this.selectTwoUpdate.selectedLevelCategory = null;
         this.selectTwoUpdate.options = [];
-        // Clean data Form
         this.form.appointment_level_id = null;
-
         if (this.permitBeingUpdated != null) {
           this.updatePermitForm.political_division_id = null;
         }
       }
     },
+
     "selectCategory.selectedLevelCategory": function () {
       if (this.selectCategory.selectedLevelCategory === null) {
-        // Clean data Form
         this.form.appointment_level_id = null;
         if (this.permitBeingUpdated != null) {
           this.updatePermitForm.political_division_id = null;
         }
       }
     },
+
     "selectTwoUpdate.selectedLevelCategory": function () {
       if (this.selectTwoUpdate.selectedLevelCategory === null) {
-        // Clean data Form
         this.form.appointment_level_id = null;
         if (this.permitBeingUpdated != null) {
           this.updatePermitForm.political_division_id = null;
         }
       }
     },
+
     "form.transfer.transfer_observation": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -1374,6 +1414,7 @@ export default {
         }
       }
     },
+
     "updateTransferForm.transfer_observation": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -1386,14 +1427,22 @@ export default {
       }
     },
   },
+
   methods: {
     ...mapActions("appointment", ["updateAllAppointment"]),
+
     ...mapGetters("appointment", ["getAllAppointment"]),
+
     ...mapActions("transfer", ["updateAllTransfer"]),
+
     ...mapActions("transfer", ["updateAllOffice"]),
+
     ...mapActions("transfer", ["getAllOffice"]),
+
     ...mapGetters("transfer", ["getAllTransfer"]),
+
     ...mapActions("work", ["updateAllWork"]),
+
     ...mapGetters("work", ["getAllWork"]),
 
     navigation(op) {
@@ -1403,7 +1452,6 @@ export default {
         this.navigationOp = 1;
       }
     },
-    // Create Data
 
     cancelCreation() {
       this.transferBeingCreated = null;
@@ -1412,12 +1460,14 @@ export default {
       this.selectLevel.selectedLevel = null;
       this.selectCategory.selectedLevelCategory = null;
     },
+
     cancelUpdate() {
       this.selectOne.selectedCommunity = null;
       this.transferBeingUpdated = null;
       this.navigationOp = 1;
       this.statustransfer = 0;
     },
+
     confirmationTransferCreate() {
       this.form = this.$inertia.form({
         transfer: {
@@ -1441,12 +1491,12 @@ export default {
       });
       this.transferBeingCreated = this.form;
     },
+
     onSearchLevelChange() {},
+
     onSelectedLevel(level) {
       this.form.appointment_level_id = null;
-
       this.selectTwoUpdate.selectedLevelCategory = undefined;
-
       this.selectTwoUpdate.options = [];
       axios
         .get(
@@ -1461,6 +1511,7 @@ export default {
     },
 
     onSearchLevelCategoryChange() {},
+
     onSelectedCategoryLevel(category) {
       this.form.appointment_level_id = category.id;
 
@@ -1468,6 +1519,7 @@ export default {
         this.updateAppointmentForm.appointment_level_id = category.id;
       }
     },
+
     submit() {
       if (
         this.isInvalidCommunity == false &&
@@ -1483,6 +1535,7 @@ export default {
             this.form.transfer.transfer_date_adission
           );
         }
+
         if (this.form.transfer.transfer_date_relocated) {
           this.form.transfer.transfer_date_relocated = this.formatDate(
             this.form.transfer.transfer_date_relocated
@@ -1494,16 +1547,17 @@ export default {
             this.form.appointment.date_appointment
           );
         }
+
         if (this.form.appointment.date_end_appointment != null) {
           this.form.appointment.date_end_appointment = this.formatDate(
             this.form.appointment.date_end_appointment
           );
         }
+
         this.form.appointment.appointment_level_id =
           this.selectCategory.selectedLevelCategory;
         this.form.transfer.status = this.statustransfer;
         this.form.appointment.status = this.statustransfer;
-        console.log("aa \n", this.form);
         Inertia.post(
           route("secretary.daughter-profile.transfer.store", {
             user_id: this.profile.user_id,
@@ -1522,17 +1576,14 @@ export default {
                 this.form.transfer.community_id = null;
                 this.form.transfer.office_id = null;
                 this.form.transfer.profile_id = null;
-                //
                 this.form.appointment.appointment_level_id = null;
                 this.form.appointment.description = null;
                 this.form.appointment.date_appointment = null;
-
                 this.selectLevel.selectedLevel = null;
                 this.selectCategory.selectedLevelCategory = null;
                 this.selectCategory.options = [];
                 this.selectThree.selectedCommunity = null;
                 this.selectOne.selectedCommunity = null;
-
                 this.selectThree.options = [];
                 this.transferBeingCreated = null;
                 this.navigationOp = 1;
@@ -1555,6 +1606,7 @@ export default {
       }
       return "Vigente";
     },
+
     changeStatusTransfer() {
       if (this.statustransfer == 1) {
         this.statustransfer = 0;
@@ -1562,6 +1614,7 @@ export default {
         this.statustransfer = 1;
       }
     },
+
     confirmationTransferUpdate(transfer) {
       this.updateTransferForm.transfer_date_adission =
         transfer.transfer_date_adission;
@@ -1574,7 +1627,6 @@ export default {
       this.updateTransferForm.community_id = transfer.community_id;
       this.updateTransferForm.office_id = transfer.office_id;
       this.statustransfer = transfer.status;
-
       this.status(transfer).then((data) => {
         this.selectOne.selectedCommunity = data.community;
         this.selectTwo.selectedOffice = data.office;
@@ -1592,6 +1644,7 @@ export default {
 
       this.transferBeingUpdated = transfer;
     },
+
     async status(transfer) {
       let response = await axios.get(
         this.route("secretary.daughter-profile.transfer-data.index", {
@@ -1600,12 +1653,14 @@ export default {
       );
       return response.data;
     },
+
     updateTransfer() {
       if (this.updateTransferForm.transfer_date_adission != null) {
         this.updateTransferForm.transfer_date_adission = this.formatDate(
           this.updateTransferForm.transfer_date_adission
         );
       }
+
       if (this.updateTransferForm.transfer_date_relocated != null) {
         this.updateTransferForm.transfer_date_relocated = this.formatDate(
           this.updateTransferForm.transfer_date_relocated
@@ -1615,6 +1670,7 @@ export default {
       this.updateTransferForm.community_id = this.selectOne.selectedCommunity;
       this.updateTransferForm.office_id = this.selectTwo.selectedOffice;
       this.updateTransferForm.status = this.statustransfer;
+
       if (this.isInvalidUpdateCommunity == false) {
         this.updateTransferForm.put(
           this.route("secretary.daughter-profile.transfer.update", {
@@ -1637,11 +1693,12 @@ export default {
         );
       }
     },
-    // Delete
+
     confirmationTransferDelete(transfer) {
       this.deleteTransferForm.transfer_reason = transfer.transfer_reason;
       this.transferBeingDeleted = transfer;
     },
+
     deleteTransfer() {
       this.deleteTransferForm.delete(
         this.route("secretary.daughter-profile.transfer.delete", {
@@ -1661,8 +1718,6 @@ export default {
       );
     },
 
-    //
-
     updateTable() {
       axios
         .get(
@@ -1676,26 +1731,23 @@ export default {
     },
 
     showAlert() {
-      // Use sweetalert2
       this.$swal("Hello Vue world!!!");
     },
+
     onChange(value) {
       this.value = value;
-      //   console.log("aiudaaa> ", value);
       if (value.indexOf("Reset me!") !== -1) {
-        // console.log("is reset");
         this.value = [];
       }
     },
+
     onSelect(option) {
       if (option === "Disable me!") {
-        // console.log("is disable");
         this.isDisabled = true;
       }
     },
+
     onTouch() {
-      //   console.log("is touched");
-      //   console.log(this.allOffice);
       this.isTouched = true;
     },
   },

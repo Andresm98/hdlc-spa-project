@@ -331,10 +331,10 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import { Head } from "@inertiajs/inertia-vue3";
-import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
@@ -343,7 +343,6 @@ export default defineComponent({
     works: Number,
     worksClosure: Number,
     pastorals: Number,
-    //
     daughters: Number,
     acdaughters: Number,
     dthdaughters: Number,
@@ -351,14 +350,18 @@ export default defineComponent({
     activepermits: Number,
     activechanges: Number,
   },
+
   data() {
     return {};
   },
+
   components: {
     AppLayout,
     Head,
   },
+
   setup() {},
+
   layout: PrincipalLayout,
 });
 </script>

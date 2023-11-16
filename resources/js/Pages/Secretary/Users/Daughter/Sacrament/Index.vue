@@ -322,38 +322,42 @@
 </template>
 
 <script>
-import Datepicker from "vue3-date-time-picker";
-import { useForm } from "@inertiajs/inertia-vue3";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import JetButton from "@/Jetstream/Button.vue";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
+import { useForm } from "@inertiajs/inertia-vue3";
+import Datepicker from "vue3-date-time-picker";
+import JetButton from "@/Jetstream/Button.vue";
 
+import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
+import JetInputError from "@/Jetstream/InputError";
 import JetInput from "@/Jetstream/Input.vue";
-import moment from "moment";
 import { Inertia } from "@inertiajs/inertia";
 import "vue3-date-time-picker/dist/main.css";
+import moment from "moment";
 import { ref } from "vue";
-import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
-import JetInputError from "@/Jetstream/InputError";
 
 export default {
   props: {
     errors: [],
   },
+
   mounted() {
     this.allSacrament;
   },
+
   computed: {
     isInvalid() {
-      //   console.log("inva ", this.isTouched, "\n\nopp> ");
       return this.value == null;
     },
+
     ...mapState("daughter", ["profile"]),
+
     ...mapState("sacrament", ["sacrament"]),
+
     allSacrament() {
       axios
         .get(
@@ -366,7 +370,7 @@ export default {
         });
     },
   },
-  // Relashionship with another components
+
   components: {
     Datepicker,
     JetButtonSuccess,
@@ -380,7 +384,7 @@ export default {
     JetFormSection,
     moment,
   },
-  //  Setup all data
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -449,6 +453,7 @@ export default {
       }),
     };
   },
+
   watch: {
     "form.observation": function () {
       var limit = 4000;
@@ -460,6 +465,7 @@ export default {
         quill.setHTML(this.data_intput_one);
       }
     },
+
     "updateSacramentForm.observation": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -471,12 +477,14 @@ export default {
       }
     },
   },
+
   methods: {
     ...mapActions("sacrament", ["updateAllSacrament"]),
+
     ...mapGetters("sacrament", ["getAllSacrament"]),
+
     submit() {
       this.form.sacrament_date = this.formatDate(this.form.sacrament_date);
-      //
       Inertia.post(
         route("secretary.daughter-profile.sacrament.store", {
           user_id: this.profile.user_id,
@@ -497,7 +505,6 @@ export default {
           },
         }
       );
-      //
     },
 
     formatDate(value) {
@@ -507,12 +514,14 @@ export default {
     formatShowDate(value) {
       return moment(new Date(value)).format("YYYY-MM-DD");
     },
+
     confirmationSacramentUpdate(sacrament) {
       this.updateSacramentForm.sacrament_name = sacrament.sacrament_name;
       this.updateSacramentForm.sacrament_date = sacrament.sacrament_date;
       this.updateSacramentForm.observation = sacrament.observation;
       this.sacramentBeingUpdated = sacrament;
     },
+
     updateSacrament() {
       if (this.updateSacramentForm.sacrament_date != null) {
         this.updateSacramentForm.sacrament_date = this.formatDate(
@@ -536,11 +545,12 @@ export default {
         }
       );
     },
-    // Delete
+
     confirmationSacramentDelete(sacrament) {
       this.deleteSacramentForm.sacrament_name = sacrament.sacrament_name;
       this.sacramentBeingDeleted = sacrament;
     },
+
     deleteSacrament() {
       this.deleteSacramentForm.delete(
         this.route("secretary.daughter-profile.sacrament.delete", {
@@ -560,8 +570,6 @@ export default {
       );
     },
 
-    //
-
     updateTable() {
       axios
         .get(
@@ -575,25 +583,23 @@ export default {
     },
 
     showAlert() {
-      // Use sweetalert2
       this.$swal("Hello Vue world!!!");
     },
+
     onChange(value) {
       this.value = value;
-      //   console.log("aiudaaa> ", value);
       if (value.indexOf("Reset me!") !== -1) {
-        // console.log("is reset");
         this.value = [];
       }
     },
+
     onSelect(option) {
       if (option === "Disable me!") {
-        // console.log("is disable");
         this.isDisabled = true;
       }
     },
+
     onTouch() {
-      //   console.log("is touched");
       this.isTouched = true;
     },
   },

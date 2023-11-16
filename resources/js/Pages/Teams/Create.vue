@@ -15,9 +15,9 @@
 </template>
 
 <script>
-    import { defineComponent } from 'vue'
-    import AppLayout from '@/Layouts/AppLayout.vue'
     import CreateTeamForm from '@/Pages/Teams/Partials/CreateTeamForm.vue'
+    import AppLayout from '@/Layouts/AppLayout.vue'
+    import { defineComponent } from 'vue'
 
     export default defineComponent({
         components: {

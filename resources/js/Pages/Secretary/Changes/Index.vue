@@ -149,18 +149,7 @@
                     class="border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     @reset="reset"
                   >
-                    <!-- <v-date-picker v-model="params.date" is-required :format="format">
-              <template v-slot="{ inputValue, inputEvents }">
-                <input
-                  class="bg-white border px-2 py-1 rounded"
-                  :value="inputValue"
-                  v-on="inputEvents"
-                />
-              </template>
-            </v-date-picker> -->
-
                     <small class="block text-gray-700 mt-2">Estado:</small>
-
                     <select
                       v-model="params.status"
                       class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -1253,39 +1242,41 @@
   </jet-confirmation-modal>
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
-import { pickBy, throttle, mapValues } from "lodash";
-import moment from "moment";
-import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
-import { range } from "moment-range";
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
-import Datepicker from "vue3-date-time-picker";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import Pagination from "@/Components/Pagination";
-import Icon from "@/Components/Icon";
-import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import JetButton from "@/Jetstream/Button.vue";
 
-import TextInput from "@/Components/TextInput";
-import { ref } from "vue";
-import Alert from "@/Components/Alert";
-import SearchFilter from "@/Components/SearchFilter";
+import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
+import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 import Operation from "@/Components/Secretary/Daughter/Operation";
-import { Inertia } from "@inertiajs/inertia";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
+import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
+import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import { mapState, mapActions, mapGetters } from "vuex";
+import JetInputError from "@/Jetstream/InputError.vue";
+import SearchFilter from "@/Components/SearchFilter";
+import { pickBy, throttle, mapValues } from "lodash";
+import Pagination from "@/Components/Pagination";
+import TextInput from "@/Components/TextInput";
+import JetButton from "@/Jetstream/Button.vue";
+import Datepicker from "vue3-date-time-picker";
+import JetInput from "@/Jetstream/Input.vue";
+import { Inertia } from "@inertiajs/inertia";
 import Dropdown from "@/Components/Dropdown";
+import Alert from "@/Components/Alert";
+import Icon from "@/Components/Icon";
+import { range } from "moment-range";
+import moment from "moment";
+import { ref } from "vue";
 
 export default {
   layout: PrincipalLayout,
+
   props: {
     transfers: Object,
     allProvinces: Object,
     filters: Object,
   },
+
   setup() {
     const date = ref(new Date());
     const year = new Date().getFullYear();
@@ -1300,6 +1291,7 @@ export default {
       format,
     };
   },
+
   components: {
     AppLayout,
     moment,
@@ -1321,11 +1313,12 @@ export default {
     Pagination,
     JetConfirmationModal,
   },
+
   mounted() {
-    // this.allAppointment;
     this.allAppointmentLevel;
     this.allCommunities;
   },
+
   data() {
     return {
       toolbarOptions: [
@@ -1347,6 +1340,7 @@ export default {
 
         ["clean"], // remove formatting button
       ],
+
       params: {
         search: this.filters.search,
         date: this.filters.date,
@@ -1355,7 +1349,9 @@ export default {
         dateStart: this.filters.dateStart,
         dateEnd: this.filters.dateEnd,
       },
+
       navigationOp: 1,
+
       selectOne: {
         selectedCommunity: undefined,
         value: 0,
@@ -1369,6 +1365,7 @@ export default {
         multiSelectCommunity: null,
         vSelectCommunity: null,
       },
+
       selectTwo: {
         selectedOffice: undefined,
         value: 0,
@@ -1382,9 +1379,13 @@ export default {
         multiSelectOffice: null,
         vSelectOffice: null,
       },
+
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       options: [
         "Bautismo",
         "Penitencia",
@@ -1394,10 +1395,15 @@ export default {
         "Matrimonio",
         "Unión de Enfermos",
       ],
+
       statustransfer: 0,
+
       form: null,
+
       transferBeingCreated: null,
+
       transferBeingDeleted: null,
+
       deleteTransferForm: this.$inertia.form({
         transfer_date_adission: null,
         transfer_date_relocated: null,
@@ -1407,6 +1413,7 @@ export default {
         community_id: null,
         office_id: null,
       }),
+
       transferBeingUpdated: null,
       updateTransferForm: this.$inertia.form({
         transfer_date_adission: null,
@@ -1418,6 +1425,7 @@ export default {
         office_id: null,
         status: null,
       }),
+
       selectFour: {
         selectedPerfil: undefined,
         value: 0,
@@ -1426,6 +1434,7 @@ export default {
         multiSelectPerfil: null,
         vSelectPerfil: null,
       },
+
       appointmentBeingDeleted: null,
 
       deleteAppointmentForm: this.$inertia.form({
@@ -1435,7 +1444,9 @@ export default {
         appointment_level_id: null,
         community_id: null,
       }),
+
       appointmentBeingUpdated: null,
+
       updateAppointmentForm: this.$inertia.form({
         description: null,
         date_appointment: null,
@@ -1444,8 +1455,6 @@ export default {
         community_id: null,
         status: null,
       }),
-
-      //   Selects
 
       selectLevel: {
         selectedLevel: undefined,
@@ -1457,6 +1466,7 @@ export default {
         multiSelectLevel: null,
         vSelectLevel: null,
       },
+
       selectCategory: {
         selectedLevelCategory: undefined,
         value: 0,
@@ -1467,6 +1477,7 @@ export default {
         multiSelectLevelCategory: null,
         vSelectLevelCategory: null,
       },
+
       selectThree: {
         selectedCommunity: undefined,
         value: 0,
@@ -1477,6 +1488,7 @@ export default {
         multiSelectCommunity: null,
         vSelectCommunity: null,
       },
+
       selectOneUpdate: {
         selectedLevel: undefined,
         value: 0,
@@ -1487,6 +1499,7 @@ export default {
         multiSelectLevel: null,
         vSelectLevel: null,
       },
+
       selectTwoUpdate: {
         selectedLevelCategory: undefined,
         value: 0,
@@ -1499,11 +1512,15 @@ export default {
       },
 
       isDisabled: false,
+
       isTouched: false,
+
       value: null,
+
       allAppointmentsTransfer: null,
     };
   },
+
   watch: {
     params: {
       handler: throttle(function () {
@@ -1519,12 +1536,12 @@ export default {
           preserveState: true,
           preserveScroll: true,
           onSuccess: () => {
-            // console.log("Success");
           },
         });
       }, 1),
       deep: true,
     },
+
     "selectLevel.selectedLevel": function () {
       this.selectCategory.options = [];
       for (var level in this.selectLevel.selectedLevel) {
@@ -1551,14 +1568,13 @@ export default {
       if (this.selectOneUpdate.selectedLevel === null) {
         this.selectTwoUpdate.selectedLevelCategory = null;
         this.selectTwoUpdate.options = [];
-        // Clean data Form
         this.form.appointment_level_id = null;
-
         if (this.permitBeingUpdated != null) {
           this.updatePermitForm.political_division_id = null;
         }
       }
     },
+
     "selectCategory.selectedLevelCategory": function () {
       if (this.selectCategory.selectedLevelCategory === null) {
         // Clean data Form
@@ -1568,6 +1584,7 @@ export default {
         }
       }
     },
+
     "selectTwoUpdate.selectedLevelCategory": function () {
       if (this.selectTwoUpdate.selectedLevelCategory === null) {
         // Clean data Form
@@ -1577,6 +1594,7 @@ export default {
         }
       }
     },
+
     "form.transfer.transfer_observation": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -1588,6 +1606,7 @@ export default {
         }
       }
     },
+
     "updateTransferForm.transfer_observation": function () {
       var limit = 4000;
       const quill = this.$refs.qleditor1;
@@ -1602,19 +1621,19 @@ export default {
   },
   computed: {
     ...mapState("work", ["work"]),
+
     ...mapState("work", ["allWork"]),
-    // Validate Multioption
-    // Validate Multioption
+
     allCommunities() {
       axios
         .get(
           this.route("secretary.daughter-profile.transfer.communities.index")
         )
         .then((res) => {
-          //   console.log("works ", res.data);
           this.updateAllWork(res.data);
         });
     },
+
     allAppointment() {
       axios
         .get(
@@ -1623,10 +1642,10 @@ export default {
           })
         )
         .then((res) => {
-          //   console.log("app", res.data);
           this.updateAllAppointment(res.data);
         });
     },
+
     allAppointmentLevel() {
       axios
         .get(
@@ -1640,17 +1659,19 @@ export default {
           this.selectOneUpdate.options = res.data;
         });
     },
+
     isInvalidOffice() {
       return this.form.office_id == undefined || this.form.office_id == null;
     },
+
     isInvalidUpdateOffice() {
       return (
         this.selectTwo.selectedOffice == undefined ||
         this.selectTwo.selectedOffice == null
       );
     },
+
     isInvalidCommunity() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectOne.selectedCommunity == undefined ||
         this.selectOne.selectedCommunity == null
@@ -1663,6 +1684,7 @@ export default {
         Object.keys(this.selectLevel.selectedLevel).length === 0
       );
     },
+
     isInvalidLevelCategory() {
       return (
         this.selectCategory.selectedLevelCategory == undefined ||
@@ -1670,16 +1692,14 @@ export default {
       );
     },
 
-    // Validate Multioption
     isInvalidLevelUpdate() {
-      //   console.log("ee", this.selectOne.selectedProvince);
       return (
         this.selectOneUpdate.selectedLevel == undefined ||
         this.selectOneUpdate.selectedLevel == null
       );
     },
+
     isInvalidLevelCategoryUpdate() {
-      //   console.log("ee canton", this.selectTwo.selectedCanton);
       return (
         this.selectTwoUpdate.selectedLevelCategory == undefined ||
         this.selectTwoUpdate.selectedLevelCategory == null
@@ -1687,23 +1707,25 @@ export default {
     },
 
     isInvalidUpdateCommunity() {
-      //   console.log("ee Parish", this.selectThree.selectedParish);
       return (
         this.selectOne.selectedCommunity == undefined ||
         this.selectOne.selectedCommunity == null
       );
     },
+
     isInvalidPerfil() {
-      //   console.log("ee Parish", this.selectFour.selectedPerfil);
       return (
         this.selectFour.selectedPerfil == undefined ||
         this.selectFour.selectedPerfil == null
       );
     },
   },
+
   methods: {
     ...mapActions("work", ["updateAllWork"]),
+
     ...mapGetters("work", ["getAllWork"]),
+
     navigation(op) {
       if (op == 1) {
         this.navigationOp = 2;
@@ -1711,7 +1733,6 @@ export default {
         this.navigationOp = 1;
       }
     },
-    // Create Data
 
     cancelCreation() {
       this.transferBeingCreated = null;
@@ -1721,12 +1742,14 @@ export default {
       this.selectFour.selectedPerfil = null;
       this.selectCategory.selectedLevelCategory = null;
     },
+
     cancelUpdate() {
       this.transferBeingUpdated = null;
       this.navigationOp = 1;
       this.statustransfer = 0;
       this.selectOne.selectedCommunity = null;
     },
+
     confirmationTransferCreate() {
       this.form = this.$inertia.form({
         transfer: {
@@ -1750,12 +1773,12 @@ export default {
       });
       this.transferBeingCreated = this.form;
     },
+
     onSearchLevelChange() {},
+
     onSelectedLevel(level) {
       this.form.appointment_level_id = null;
-
       this.selectTwoUpdate.selectedLevelCategory = undefined;
-
       this.selectTwoUpdate.options = [];
       axios
         .get(
@@ -1770,6 +1793,7 @@ export default {
     },
 
     onSearchLevelCategoryChange() {},
+
     onSelectedCategoryLevel(category) {
       this.form.appointment_level_id = category.id;
 
@@ -1777,6 +1801,7 @@ export default {
         this.updateAppointmentForm.appointment_level_id = category.id;
       }
     },
+
     submit() {
       if (
         this.isInvalidCommunity == false &&
@@ -1784,7 +1809,6 @@ export default {
         this.isInvalidLevelCategory == false &&
         this.isInvalidPerfil == false
       ) {
-        //   console.log("data send", this.form);
         if (this.selectOne.selectedCommunity != null) {
           this.form.transfer.community_id = this.selectOne.selectedCommunity.id;
         }
@@ -1794,28 +1818,29 @@ export default {
             this.form.transfer.transfer_date_adission
           );
         }
+
         if (this.form.transfer.transfer_date_relocated) {
           this.form.transfer.transfer_date_relocated = this.formatDate(
             this.form.transfer.transfer_date_relocated
           );
         }
-        //
 
         if (this.form.appointment.date_appointment != null) {
           this.form.appointment.date_appointment = this.formatDate(
             this.form.appointment.date_appointment
           );
         }
+
         if (this.form.appointment.date_end_appointment != null) {
           this.form.appointment.date_end_appointment = this.formatDate(
             this.form.appointment.date_end_appointment
           );
         }
+
         this.form.appointment.appointment_level_id =
           this.selectCategory.selectedLevelCategory;
         this.form.transfer.status = this.statustransfer;
         this.form.appointment.status = this.statustransfer;
-
         Inertia.post(
           route("secretary.daughter-profile.transfer.store", {
             user_id: this.form.transfer.profile_id,
@@ -1833,11 +1858,9 @@ export default {
                 this.form.transfer.community_id = null;
                 this.form.transfer.office_id = null;
                 this.form.transfer.profile_id = null;
-                //
                 this.form.appointment.appointment_level_id = null;
                 this.form.appointment.description = null;
                 this.form.appointment.date_appointment = null;
-
                 this.selectOne.selectedCommunity = null;
                 this.selectLevel.selectedLevel = null;
                 this.selectCategory.selectedLevelCategory = null;
@@ -1865,6 +1888,7 @@ export default {
       }
       return "Vigente";
     },
+
     changeStatusTransfer() {
       if (this.statustransfer == 1) {
         this.statustransfer = 0;
@@ -1872,6 +1896,7 @@ export default {
         this.statustransfer = 1;
       }
     },
+
     confirmationTransferUpdate(transfer) {
       this.updateTransferForm.transfer_date_adission =
         transfer.transfer_date_adission;
@@ -1884,7 +1909,6 @@ export default {
       this.updateTransferForm.community_id = transfer.community_id;
       this.updateTransferForm.office_id = transfer.office_id;
       this.statustransfer = transfer.status;
-
       this.status(transfer).then((data) => {
         this.selectOne.selectedCommunity = data.community;
         this.selectTwo.selectedOffice = data.office;
@@ -1902,6 +1926,7 @@ export default {
 
       this.transferBeingUpdated = transfer;
     },
+
     async status(transfer) {
       let response = await axios.get(
         this.route("secretary.daughter-profile.transfer-data.index", {
@@ -1910,6 +1935,7 @@ export default {
       );
       return response.data;
     },
+
     updateTransfer() {
       if (this.updateTransferForm.transfer_date_adission != null) {
         this.updateTransferForm.transfer_date_adission = this.formatDate(
@@ -1921,7 +1947,6 @@ export default {
           this.updateTransferForm.transfer_date_relocated
         );
       }
-
       this.updateTransferForm.community_id = this.selectOne.selectedCommunity;
       this.updateTransferForm.office_id = this.selectTwo.selectedOffice;
       this.updateTransferForm.status = this.statustransfer;
@@ -1946,11 +1971,12 @@ export default {
         );
       }
     },
-    // Delete
+
     confirmationTransferDelete(transfer) {
       this.deleteTransferForm.transfer_reason = transfer.transfer_reason;
       this.transferBeingDeleted = transfer;
     },
+
     deleteTransfer() {
       this.deleteTransferForm.delete(
         this.route("secretary.daughter-profile.transfer.delete", {
@@ -1971,9 +1997,9 @@ export default {
     reset() {
       this.params = mapValues(this.params, () => null);
     },
+
     onSelect(option) {
       if (option === "Disable me!") {
-        // console.log("is disable");
         this.isDisabled = true;
       }
     },
@@ -1994,6 +2020,7 @@ export default {
           });
       }
     },
+
     onSelectedPerfil(perfil) {
       this.form.transfer.profile_id = perfil.profile.user_id;
       this.selectFour.options = [];

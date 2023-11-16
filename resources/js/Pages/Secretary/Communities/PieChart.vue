@@ -15,6 +15,7 @@
 
 <script>
 import { Pie } from "vue-chartjs";
+
 import {
   Chart as ChartJS,
   Title,
@@ -29,7 +30,9 @@ ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
 
 export default {
   name: "PieChart",
+
   components: { Pie },
+
   props: {
     arrayLabels: Array,
     arrayData: Array,
@@ -37,7 +40,6 @@ export default {
       type: String,
       default: "pie-chart",
     },
-
     width: {
       type: Number,
       default: 400,
@@ -59,6 +61,7 @@ export default {
       default: () => [],
     },
   },
+
   data() {
     return {
       chartData: {
