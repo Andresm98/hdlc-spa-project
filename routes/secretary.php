@@ -39,9 +39,11 @@ use App\Http\Controllers\Secretary\Appointments\AppointmentGlobalController;
 use App\Http\Controllers\Secretary\Community\Files\FileCommGlobalController;
 use App\Http\Controllers\Secretary\Community\Resumes\ResumeGlobalController;
 use App\Http\Controllers\Secretary\Community\Activities\ActivityGlobalController;
+use App\Http\Controllers\Secretary\Community\CommunityVehicleController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityArticleController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunitySectionController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityInventoryController;
+use App\Http\Controllers\Secretary\Community\Vehicles\VehicleGlobalController;
 use App\Http\Controllers\Secretary\Community\WorkIndividual\WorkIndividualController;
 
 
@@ -448,6 +450,20 @@ Route::group([
     Route::put('visits/update/{community_id}/{visit_id}', [CommunityVisitController::class, 'update'])
         ->name('communities.visit.update');
 
+    // Communities Vehicles
+
+    Route::get('vehicles/{community_id}', [CommunityVehicleController::class, 'index'])
+        ->name('communities.vehicle.index');
+
+    Route::post('vehicles/store/{community_id}', [CommunityVehicleController::class, 'store'])
+        ->name('communities.vehicle.store');
+
+    Route::delete('vehicles/delete/{community_id}/{vehicle_id}', [CommunityVehicleController::class, 'destroy'])
+        ->name('communities.vehicle.delete');
+
+    Route::put('vehicles/update/{community_id}/{vehicle_id}', [CommunityVehicleController::class, 'update'])
+        ->name('communities.vehicle.update');
+
     // Communities Daughters
 
     Route::get('daughters/{community_id}', [CommunityDaughterController::class, 'index'])
@@ -724,5 +740,16 @@ Route::group(
 
         Route::get('community/visits/exportCSV', [VisitGlobalController::class, 'exportCSV'])
             ->name('visits.communities.export.csv');
+
+        //
+
+        Route::get('community/vehicles/all', [VehicleGlobalController::class, 'index'])
+            ->name('vehicles.index');
+
+        Route::get('community/vehicles/search', [VehicleGlobalController::class, 'search'])
+            ->name('vehicles.communities.index');
+
+        Route::get('community/vehicles/exportExcel', [VehicleGlobalController::class, 'exportExcel'])
+            ->name('vehicles.communities.export.excel');
     }
 );

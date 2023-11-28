@@ -150,8 +150,6 @@ class VisitGlobalController extends Controller
         }
     }
 
-
-
     public function search()
     {
         $validator = Validator::make(['search' => request('search')], [

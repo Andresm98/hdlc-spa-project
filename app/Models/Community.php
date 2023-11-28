@@ -45,6 +45,11 @@ class Community extends Model
         return $this->hasMany('App\Models\Visit');
     }
 
+    public function vehicles()
+    {
+        return $this->hasMany('App\Models\Vehicle');
+    }
+
     // One to one
 
     public function inventory()

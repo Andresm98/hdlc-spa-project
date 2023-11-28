@@ -757,6 +757,9 @@
             <div v-if="selectMenu.selectedElement == 'Documentos'">
               <files></files>
             </div>
+            <div v-if="selectMenu.selectedElement == 'Vehículos'">
+              <vehicles></vehicles>
+            </div>
           </div>
         </div>
       </div>
@@ -941,7 +944,6 @@
   </app-layout>
 </template>
 <script>
-
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import Operation from "@/Components/Secretary/Community/Operation";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
@@ -976,12 +978,12 @@ import { Pagination } from "swiper";
 import Inventories from "@/Pages/Secretary/Communities/Inventories/Index";
 import Activities from "@/Pages/Secretary/Communities/Activities/Index";
 import Daughters from "@/Pages/Secretary/Communities/Daughters/Index";
+import Vehicles from "@/Pages/Secretary/Communities/Vehicle/Index";
 import Resumes from "@/Pages/Secretary/Communities/Resumes/Index";
 import Visits from "@/Pages/Secretary/Communities/Visits/Index";
 import Files from "@/Pages/Secretary/Communities/Files/Index";
 
 export default defineComponent({
-
   created() {
     this.uploadProvinces(this.provinces);
 
@@ -1018,8 +1020,7 @@ export default defineComponent({
       });
   },
 
-  beforeMount() {
-  },
+  beforeMount() {},
 
   mounted() {
     if (this.community_custom.address != null) {
@@ -1163,6 +1164,7 @@ export default defineComponent({
     Inventories,
     Daughters,
     Files,
+    Vehicles,
     Datepicker,
     moment,
     Alert,
@@ -1209,6 +1211,7 @@ export default defineComponent({
           "Inventario",
           "Hermanas",
           "Documentos",
+          "Vehículos",
         ],
         loading: false,
         multiSelectUser: null,
@@ -1406,8 +1409,7 @@ export default defineComponent({
       );
     },
 
-    handleScroll() {
-    },
+    handleScroll() {},
 
     async status() {
       this.form.address = this.community_custom.address["address"];
@@ -1435,8 +1437,7 @@ export default defineComponent({
       this.form.zone_id = zone.id;
     },
 
-    onSearchProvincesChange(term) {
-    },
+    onSearchProvincesChange(term) {},
 
     onSelectedProvince(province) {
       this.form.province_id = province.id;
@@ -1458,8 +1459,7 @@ export default defineComponent({
         });
     },
 
-    onSearchCantonChange(term) {
-    },
+    onSearchCantonChange(term) {},
 
     onSelectedCanton(canton) {
       this.form.canton_id = canton.id;
@@ -1479,8 +1479,7 @@ export default defineComponent({
         });
     },
 
-    onSearchParishChange(term) {
-    },
+    onSearchParishChange(term) {},
 
     onSelectedParish(parish) {
       this.form.parish_id = parish.id;

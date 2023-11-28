@@ -129,6 +129,19 @@
 
     <section class="flex-shrink-0">
       <Link
+        :href="route('daughter.vehicles.index')"
+        :class="
+          isUrl('daughter/community/vehicles/all')
+            ? ' uppercase pt-12 pb-1 pl-4 pr-4 bg-emerald-700 border-2 border-emerald-700 text-white text-xs rounded-lg hover:bg-emerald-700 hover:text-gray-100 focus:border-4 focus:border-emerald-500'
+            : 'uppercase pt-12 pb-1 pl-4 pr-4 bg-emerald-500 border-2 border-emerald-500 text-white text-xs rounded-lg hover:bg-emerald-500 hover:text-gray-100 focus:border-4 focus:border-emerald-300'
+        "
+      >
+        Vehículos Comunidad
+      </Link>
+    </section>
+
+    <section class="flex-shrink-0">
+      <Link
         :href="route('daughter.filesglobal.communities.index')"
         :class="
           isUrl('daughter/community/filesglobal/all')

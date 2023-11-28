@@ -16,10 +16,12 @@ use App\Http\Controllers\Daughter\InventoryGlobalController;
 use App\Http\Controllers\Daughter\TransferProfileController;
 use App\Http\Controllers\Daughter\SacramentProfileController;
 use App\Http\Controllers\Daughter\InfoFamilyProfileController;
+use App\Http\Controllers\Daughter\VehicleGlobalController;
 use App\Http\Controllers\Secretary\Community\CommunityVisitController;
 use App\Http\Controllers\Secretary\Community\FilesCommunityController;
 use App\Http\Controllers\Secretary\Community\CommunityResumeController;
 use App\Http\Controllers\Secretary\Community\CommunityActivityController;
+use App\Http\Controllers\Secretary\Community\CommunityVehicleController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityArticleController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunitySectionController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityInventoryController;
@@ -228,7 +230,7 @@ Route::group(
         Route::put('resumes/update/{community_id}/{resume_id}', [CommunityResumeController::class, 'update'])
             ->name('communities.resume.update');
 
-        // Visiis Controller
+        // Visits Controller
 
         Route::get('community/visits/all', [VisitGlobalController::class, 'index'])
             ->name('visits.index');
@@ -258,6 +260,31 @@ Route::group(
 
         Route::put('visits/update/{community_id}/{visit_id}', [CommunityVisitController::class, 'update'])
             ->name('communities.visit.update');
+
+        // Vehicles Controller
+
+        Route::get('community/vehicles/all', [VehicleGlobalController::class, 'index'])
+            ->name('vehicles.index');
+
+        Route::get('community/vehicles/search', [VehicleGlobalController::class, 'search'])
+            ->name('vehicles.communities.index');
+
+        Route::get('community/vehicles/exportExcel', [VehicleGlobalController::class, 'exportExcel'])
+            ->name('vehicles.communities.export.excel');
+
+        // Communities Visits
+
+        Route::get('vehicle/{community_id}', [CommunityVehicleController::class, 'index'])
+            ->name('communities.vehicle.index');
+
+        Route::post('vehicle/store/{community_id}', [CommunityVehicleController::class, 'store'])
+            ->name('communities.vehicle.store');
+
+        Route::delete('vehicle/delete/{community_id}/{vehicle_id}', [CommunityVehicleController::class, 'destroy'])
+            ->name('communities.vehicle.delete');
+
+        Route::put('vehicle/update/{community_id}/{vehicle_id}', [CommunityVehicleController::class, 'update'])
+            ->name('communities.vehicle.update');
 
         // Communities Files Controllers
 

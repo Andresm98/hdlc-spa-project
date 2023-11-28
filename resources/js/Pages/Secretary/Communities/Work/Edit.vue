@@ -772,6 +772,9 @@
             <div v-if="selectMenu.selectedElement == 'Documentos'">
               <files></files>
             </div>
+            <div v-if="selectMenu.selectedElement == 'Vehículos'">
+              <vehicles></vehicles>
+            </div>
           </div>
         </div>
       </div>
@@ -990,6 +993,7 @@ import Visits from "@/Pages/Secretary/Communities/Visits/Index";
 import Inventories from "@/Pages/Secretary/Communities/Inventories/Index";
 import Daughters from "@/Pages/Secretary/Communities/Daughters/Index";
 import Files from "@/Pages/Secretary/Communities/Files/Index";
+import Vehicles from "@/Pages/Secretary/Communities/Vehicle/Index";
 
 export default defineComponent({
   created() {
@@ -1176,6 +1180,7 @@ export default defineComponent({
     Inventories,
     Daughters,
     Files,
+    Vehicles,
     Datepicker,
     moment,
     Alert,
@@ -1218,6 +1223,7 @@ export default defineComponent({
           "Inventario",
           "Hermanas",
           "Documentos",
+          'Vehículos'
         ],
         loading: false,
         multiSelectUser: null,

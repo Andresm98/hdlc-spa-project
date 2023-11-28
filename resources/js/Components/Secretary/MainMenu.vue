@@ -556,30 +556,6 @@
       </Link>
       <hr :class="isUrl('secretary/events/all') ? 'text-white' : 'hidden'" />
     </div>
-
-    <!-- <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/reports">
-        <icon
-          name="printer"
-          class="mr-2 w-4 h-4"
-          :class="
-            isUrl('reports')
-              ? 'fill-white'
-              : 'fill-gray-400 group-hover:fill-white'
-          "
-        />
-        <div
-          :class="
-            isUrl('reports')
-              ? 'text-white'
-              : 'text-gray-400 group-hover:text-white'
-          "
-        >
-          Reportes
-        </div>
-      </Link>
-      <hr :class="isUrl('reports') ? 'text-white' : 'hidden'" />
-    </div> -->
   </div>
 </template>
 

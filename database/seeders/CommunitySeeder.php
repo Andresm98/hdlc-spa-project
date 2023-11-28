@@ -498,7 +498,7 @@ class CommunitySeeder extends Seeder
                 ]);
 
                 for ($u = 0; $u <= 15; $u++) {
-                    //     // Convert to timetamps
+                    //  Convert to timetamps
                     $min = strtotime('2020-02-01 00:00:00');
                     $max = strtotime('2022-02-01 00:00:00');
 

@@ -131,26 +131,7 @@
     <div class="container mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <div
-          class="justify-center text-sm border-1 border-gray-300 rounded-sm bg-gray-100"
-        >
-          <small class="justify-content-center ml-20 uppercase"
-            >Comunidad</small
-          >
-          <multiselect
-            :searchable="true"
-            v-model="community"
-            :options="selectFour.options"
-            :close-on-select="true"
-            :clear-on-select="false"
-            label="comm_name"
-            track-by="comm_name"
-            placeholder="Buscar comunidad"
-            :disabled="true"
-          >
-          </multiselect>
-        </div>
-        <div
-          class="justify-center text-sm border-1 border-gray-300 rounded-sm bg-gray-100"
+          class="justify-center text-sm border-1 border-gray-300 rounded-sm bg-gray-100 mx-4"
         >
           <small class="justify-content-center ml-20 uppercase"
             >Filtros de Búsqueda</small

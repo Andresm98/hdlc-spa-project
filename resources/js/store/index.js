@@ -14,6 +14,7 @@ import transfer from "./modules/transfer";
 import community from "./modules/communities/community";
 import activity from "./modules/communities/activity";
 import resume from "./modules/communities/resume";
+import vehicle from "./modules/communities/vehicle";
 import visit from "./modules/communities/visit";
 import work from "./modules/communities/work";
 import inventory from "./modules/communities/inventory";
@@ -45,6 +46,7 @@ const store = new Vuex.Store({
         activity,
         resume,
         visit,
+        vehicle,
         work,
         transfer,
         inventory,
