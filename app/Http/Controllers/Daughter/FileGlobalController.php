@@ -8,14 +8,41 @@ use Inertia\Inertia;
 use App\Models\Community;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
 
 class FileGlobalController extends Controller
 {
+    /*
+    * Prove Verified proveNewVerified
+    */
+
+    public static function proveNewVerified()
+    {
+        $hashedPassword = Auth::user()->getAuthPassword();
+
+        if (Hash::check('secret', $hashedPassword)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /*
+
+    */
+
     public function index(Request $request)
     {
         $authUser = auth()->user();
+
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
+            return abort(404);
+        }
 
         $daughter = User::find($authUser->id);
 

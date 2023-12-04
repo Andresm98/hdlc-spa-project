@@ -358,9 +358,6 @@
                                 </td>
                             </tr>
                         @endforeach
-
-
-
                     </table>
                 </div>
             @endif

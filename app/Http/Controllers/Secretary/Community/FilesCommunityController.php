@@ -6,11 +6,28 @@ use App\Models\File;
 use App\Models\Community;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class FilesCommunityController extends Controller
 {
+    /*
+    * Prove Verified proveNewVerified
+    */
+
+    public static function proveNewVerified()
+    {
+        $hashedPassword = Auth::user()->getAuthPassword();
+
+        if (Hash::check('secret', $hashedPassword)) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +42,12 @@ class FilesCommunityController extends Controller
         ]);
 
         if ($validator->fails()) {
+            return abort(404);
+        }
+
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
             return abort(404);
         }
 
@@ -113,7 +136,7 @@ class FilesCommunityController extends Controller
                 ]);
                 return redirect()->back()->with(['success' => 'Archivo actualizado correctamente.']);
             } else {
-                if ($filesCount < 15) {
+                if ($filesCount < 30) {
                     Storage::disk('s3')->put($filePath, file_get_contents($file));
                     Storage::disk('s3')->setVisibility($filePath, 'private');
 
@@ -125,7 +148,7 @@ class FilesCommunityController extends Controller
                     ]);
                     return redirect()->back()->with(['success' => 'Archivo guardado correctamente.']);
                 } else {
-                    return redirect()->back()->with(['error' => 'Excede la cantidad de archivos permitidos, max 15 archivos.']);
+                    return redirect()->back()->with(['error' => 'Excede la cantidad de archivos permitidos, max 30 archivos.']);
                 }
             }
 

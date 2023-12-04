@@ -8,12 +8,29 @@ use Inertia\Inertia;
 use App\Models\Transfer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
 
 class FilesProfileController extends Controller
 {
+    /*
+    * Prove Verified proveNewVerified
+    */
+
+    public static function proveNewVerified()
+    {
+        $hashedPassword = Auth::user()->getAuthPassword();
+
+        if (Hash::check('secret', $hashedPassword)) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +40,14 @@ class FilesProfileController extends Controller
     {
         $authUser = auth()->user();
 
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
+            return abort(404);
+        }
+
         $daughter = User::find($authUser->id);
+
         $daughter->profile;
 
         if ($daughter->profile) {
@@ -107,7 +131,6 @@ class FilesProfileController extends Controller
                 ->withInput();
         }
 
-
         if ($request->hasFile('filedata')) {
 
             $user =  User::find($user_id);
@@ -137,7 +160,7 @@ class FilesProfileController extends Controller
                     ]);
                     return redirect()->back()->with(['success' => 'Archivo actualizado correctamente.']);
                 } else {
-                    if ($filesCount < 10) {
+                    if ($filesCount < 20) {
                         Storage::disk('s3')->put($filePath, file_get_contents($file));
                         Storage::disk('s3')->setVisibility($filePath, 'private');
 

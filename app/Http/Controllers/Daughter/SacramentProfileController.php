@@ -4,14 +4,33 @@ namespace App\Http\Controllers\Daughter;
 
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Sacrament;
 use Illuminate\Http\Request;
 use App\Models\AcademicTraining;
 use App\Http\Controllers\Controller;
-use App\Models\Sacrament;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class SacramentProfileController extends Controller
 {
+
+    /*
+    * Prove Verified proveNewVerified
+    */
+
+    public static function proveNewVerified()
+    {
+        $hashedPassword = Auth::user()->getAuthPassword();
+
+        if (Hash::check('secret', $hashedPassword)) {
+            return true;
+        }
+
+        return false;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +40,14 @@ class SacramentProfileController extends Controller
     {
         $authUser = auth()->user();
 
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
+            return abort(404);
+        }
+
         $daughter = User::find($authUser->id);
+
         $daughter->profile;
 
         if ($daughter->profile) {

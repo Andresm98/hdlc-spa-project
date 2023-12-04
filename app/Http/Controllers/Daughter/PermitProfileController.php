@@ -9,11 +9,28 @@ use App\Models\Permit;
 use App\Models\Transfer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
 
 class PermitProfileController extends Controller
 {
+    /*
+    * Prove Verified proveNewVerified
+    */
+
+    public static function proveNewVerified()
+    {
+        $hashedPassword = Auth::user()->getAuthPassword();
+
+        if (Hash::check('secret', $hashedPassword)) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +41,14 @@ class PermitProfileController extends Controller
 
         $authUser = auth()->user();
 
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
+            return abort(404);
+        }
+
         $daughter = User::find($authUser->id);
+
         $daughter->profile;
 
         if ($daughter->profile) {

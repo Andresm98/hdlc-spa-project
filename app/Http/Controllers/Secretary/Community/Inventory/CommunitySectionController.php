@@ -7,10 +7,27 @@ use App\Models\Community;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CommunitySectionController extends Controller
 {
+    /*
+    * Prove Verified proveNewVerified
+    */
+
+    public static function proveNewVerified()
+    {
+        $hashedPassword = Auth::user()->getAuthPassword();
+
+        if (Hash::check('secret', $hashedPassword)) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,6 +45,12 @@ class CommunitySectionController extends Controller
             return redirect()->back()
                 ->withErrors($validator->errors())
                 ->withInput();
+        }
+
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
+            return abort(404);
         }
 
         return  Section::where('inventory_id', '=', $inventory_id)

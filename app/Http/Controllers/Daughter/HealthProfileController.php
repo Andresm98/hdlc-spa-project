@@ -7,11 +7,29 @@ use Inertia\Inertia;
 use App\Models\Health;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class HealthProfileController extends Controller
 {
+
+    /*
+    * Prove Verified proveNewVerified
+    */
+
+    public static function proveNewVerified()
+    {
+        $hashedPassword = Auth::user()->getAuthPassword();
+
+        if (Hash::check('secret', $hashedPassword)) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +39,14 @@ class HealthProfileController extends Controller
     {
         $authUser = auth()->user();
 
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
+            return abort(404);
+        }
+
         $daughter = User::find($authUser->id);
+
         $daughter->profile;
 
         if ($daughter->profile) {

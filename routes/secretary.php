@@ -128,6 +128,9 @@ Route::group(
         Route::post('daughters-charity/store', [UserController::class, 'store'])
             ->name('daughters.store');
 
+        Route::get('daughters-charity/updatepass/{id}', [UserController::class, 'resetPassword'])
+            ->name('daughters.udpate.password');
+
         Route::get('daughters-charity/edit/{slug}', [UserController::class, 'edit'])
             ->name('daughters.edit');
 

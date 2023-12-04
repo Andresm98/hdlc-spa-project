@@ -416,7 +416,7 @@
                   type="text"
                   minLength="10"
                   maxlength="100"
-                  placeholder="Ingresar nombre del resumen"
+                  placeholder="Ingresar marca del vehículo"
                   class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="form.brand"
                   required
@@ -442,7 +442,7 @@
                   type="text"
                   minLength="10"
                   maxlength="100"
-                  placeholder="Ingresar nombre del resumen"
+                  placeholder="Ingresar tipo de vehículo"
                   class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="form.type"
                   required
@@ -468,7 +468,7 @@
                   type="text"
                   minLength="10"
                   maxlength="100"
-                  placeholder="Ingresar nombre del resumen"
+                  placeholder="Ingresar color del vehículo"
                   class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="form.color"
                   required
@@ -494,7 +494,7 @@
                   type="text"
                   minLength="10"
                   maxlength="100"
-                  placeholder="Ingresar nombre del resumen"
+                  placeholder="Ingresar la placa del vehículo"
                   class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="form.plaque"
                   required
@@ -511,7 +511,7 @@
               <p class="text-red-400 text-sm" v-show="$page.props.errors.year">
                 {{ $page.props.errors.year }}
               </p>
-              <small>Formato: Fecha del resumen anual.</small>
+              <small>Formato: Año vehículo.</small>
               <Datepicker
                 :format="format"
                 autoApply

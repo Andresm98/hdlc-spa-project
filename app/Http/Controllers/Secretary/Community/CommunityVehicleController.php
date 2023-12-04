@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Secretary\Community;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Community;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
@@ -10,6 +12,21 @@ use Illuminate\Support\Facades\Validator;
 
 class CommunityVehicleController extends Controller
 {
+    /*
+    * Prove Verified proveNewVerified
+    */
+
+    public static function proveNewVerified()
+    {
+        $hashedPassword = Auth::user()->getAuthPassword();
+
+        if (Hash::check('secret', $hashedPassword)) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +37,14 @@ class CommunityVehicleController extends Controller
         $validator = Validator::make(['id' => $community_id], [
             'id' => ['required', 'exists:communities,id']
         ]);
+
         if ($validator->fails()) {
+            return abort(404);
+        }
+
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
             return abort(404);
         }
 

@@ -7,10 +7,27 @@ use Inertia\Inertia;
 use App\Models\Community;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class InventoryGlobalController extends Controller
 {
+    /*
+    * Prove Verified proveNewVerified
+    */
+
+    public static function proveNewVerified()
+    {
+        $hashedPassword = Auth::user()->getAuthPassword();
+
+        if (Hash::check('secret', $hashedPassword)) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,14 +39,20 @@ class InventoryGlobalController extends Controller
             'id' => ['required', 'exists:communities,id']
         ]);
 
-
         if ($validation->fails()) {
             return response()->json([
                 'error' => 'El dato no existe'
             ]);
         }
 
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
+            return abort(404);
+        }
+
         $community = Community::find($community_id);
+
         return $community->inventory;
     }
 

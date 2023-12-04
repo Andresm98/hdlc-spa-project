@@ -2,14 +2,32 @@
 
 namespace App\Http\Controllers\Secretary\Community;
 
+use App\Models\Visit;
 use App\Models\Community;
 use Illuminate\Http\Request;
-use App\Models\Visit;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CommunityVisitController extends Controller
 {
+
+    /*
+    * Prove Verified proveNewVerified
+    */
+
+    public static function proveNewVerified()
+    {
+        $hashedPassword = Auth::user()->getAuthPassword();
+
+        if (Hash::check('secret', $hashedPassword)) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +42,14 @@ class CommunityVisitController extends Controller
             return abort(404);
         }
 
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
+            return abort(404);
+        }
+
         $community = Community::find($community_id);
+
         return $community->visits()
             ->orderBy('comm_date_init_visit', 'desc')
             ->get();

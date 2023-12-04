@@ -182,6 +182,17 @@
                   <h6 class="text-lg font-medium leading-6 text-gray-900">
                     Tarjeta de Información General Hermana
                   </h6>
+                  <a
+                    class="bg-red-500 hover:bg-red-700 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                    target="_blank"
+                    :href="
+                      route(
+                        'secretary.daughters.udpate.password',
+                        this.daughter_custom.id
+                      )
+                    "
+                    >Resetear Contraseña</a
+                  >
                   <button
                     class="bg-blue-500 hover:bg-blue-700 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                     type="submit"
@@ -571,7 +582,6 @@ import Files from "@/Pages/Secretary/Users/Daughter/Files/Index";
 import moment from "moment";
 
 export default defineComponent({
-
   created() {
     this.uploadProvinces(this.provinces);
   },
@@ -704,8 +714,7 @@ export default defineComponent({
   },
 
   methods: {
-    handleScroll() {
-    },
+    handleScroll() {},
 
     onSearchProvincesChange() {},
 

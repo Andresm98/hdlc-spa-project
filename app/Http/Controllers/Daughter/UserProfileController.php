@@ -8,6 +8,8 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
@@ -16,6 +18,68 @@ use App\Http\Controllers\Secretary\Daughter\TransferController;
 
 class UserProfileController extends Controller
 {
+    /*
+    * Display advance funcs
+    */
+
+    public function getAdvanceFunctions()
+    {
+        $authUser = auth()->user();
+
+        $daughter = User::find($authUser->id);
+
+        $daughter->profile;
+
+        if ($daughter->profile) {
+
+            $transferActive = $daughter->profile->transfers()->where('status', 1)->first();
+
+            if ($transferActive) {
+
+                $appointments = $transferActive->appointments;
+
+                if ($appointments) {
+
+                    $flag = true;
+
+                    foreach ($appointments as $app) {
+                        if (
+                            $app->appointment_level->id == 4 || $app->appointment_level->id == 7 ||
+                            $app->appointment_level->id == 10 || $app->appointment_level->id == 12 ||
+                            $app->appointment_level->id == 17 || $app->appointment_level->id == 18
+                        ) {
+                            $flag = true;
+                            break;
+                        } else {
+                            $flag = false;
+                        }
+                    }
+
+                    if (!$flag) {
+                        return false;
+                    }
+
+                    return true;
+                }
+            }
+        }
+    }
+
+    /*
+    * Prove Verified proveNewVerified
+    */
+
+    public static function proveNewVerified()
+    {
+        $hashedPassword = Auth::user()->getAuthPassword();
+
+        if (Hash::check('secret', $hashedPassword)) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,6 +88,12 @@ class UserProfileController extends Controller
     public function index()
     {
         $authUser = auth()->user();
+
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
+            return abort(404);
+        }
 
         $daughter = User::find($authUser->id);
 

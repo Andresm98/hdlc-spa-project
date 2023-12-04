@@ -1,5 +1,6 @@
 <?php
 
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Daughter\FileGlobalController;
@@ -64,6 +65,9 @@ Route::group(
 
         Route::put('profile/update/{id}', [UserProfileController::class, 'updateProfile'])
             ->name('profile.update');
+
+        Route::get('profile/getAdvanceFunctions', [UserProfileController::class, 'getAdvanceFunctions'])
+            ->name('profile.getAdvanceFunctions');
 
         // Information Family
 

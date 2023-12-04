@@ -10,6 +10,8 @@ use App\Models\Community;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ArticleGlobalController extends Controller
@@ -63,6 +65,21 @@ class ArticleGlobalController extends Controller
         $this->to = $to;
     }
 
+    /*
+    * Prove Verified proveNewVerified
+    */
+
+    public static function proveNewVerified()
+    {
+        $hashedPassword = Auth::user()->getAuthPassword();
+
+        if (Hash::check('secret', $hashedPassword)) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -72,7 +89,14 @@ class ArticleGlobalController extends Controller
     {
         $authUser = auth()->user();
 
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
+            return abort(404);
+        }
+
         $daughter = User::find($authUser->id);
+
         $daughter->profile;
 
         if ($daughter->profile) {

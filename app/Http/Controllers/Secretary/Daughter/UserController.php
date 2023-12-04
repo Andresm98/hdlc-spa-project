@@ -419,6 +419,28 @@ class UserController extends Controller
         ]);
     }
 
+    public function resetPassword($id)
+    {
+        $validator = Validator::make(
+            ['id' => $id],
+            ['id' => ['required', 'exists:users,id']]
+        );
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        $user = User::find($id);
+
+        $user->forceFill([
+            'password' => Hash::make('secret'),
+        ])->save();
+
+        return redirect()->route('secretary.daughters.edit', $user->slug)->with([
+            'success' => 'Contraseña reseteada correctamente.',
+        ]);
+    }
+
     /**
      * Display the specified resource.
      *

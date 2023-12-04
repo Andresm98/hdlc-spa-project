@@ -4,12 +4,29 @@ namespace App\Http\Controllers\Secretary\Community;
 
 use App\Models\Community;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Resume;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class CommunityResumeController extends Controller
 {
+    /*
+    * Prove Verified proveNewVerified
+    */
+
+    public static function proveNewVerified()
+    {
+        $hashedPassword = Auth::user()->getAuthPassword();
+
+        if (Hash::check('secret', $hashedPassword)) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +41,14 @@ class CommunityResumeController extends Controller
             return "Error no existen datos!";
         }
 
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
+            return abort(404);
+        }
+
         $community = Community::find($community_id);
+
         return $community->resumes;
     }
     /**

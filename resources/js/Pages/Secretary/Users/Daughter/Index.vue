@@ -421,7 +421,7 @@
                                   >
                                     <span
                                       v-if="
-                                        appointent.date_end_appointment == null
+                                        appointent.date_end_appointment === null
                                       "
                                       class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-cyan-100 text-cyan-800"
                                     >
