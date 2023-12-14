@@ -77,7 +77,7 @@ class CommunityActivityController extends Controller
             'comm_description_activity' => ['required', 'max:4000'],
             'comm_date_activity' => ['required', 'date_format:Y-m-d H:i:s'],
             'comm_nr_daughters' => 'required|integer|between:1,1000',
-            'comm_nr_beneficiaries' => 'required|integer|between:1,1000',
+            'comm_nr_beneficiaries' => 'required|integer|between:1,5000',
             'comm_nr_collaborators' => 'required|integer|between:1,1000',
         ]);
 
@@ -147,7 +147,7 @@ class CommunityActivityController extends Controller
             'comm_description_activity' => ['required', 'max:4000'],
             'comm_date_activity' => ['required', 'date_format:Y-m-d H:i:s'],
             'comm_nr_daughters' => 'required|integer|between:1,1000',
-            'comm_nr_beneficiaries' => 'required|integer|between:1,1000',
+            'comm_nr_beneficiaries' => 'required|integer|between:1,5000',
             'comm_nr_collaborators' => 'required|integer|between:1,1000',
         ]);
 

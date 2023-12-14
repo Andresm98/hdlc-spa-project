@@ -232,7 +232,6 @@
           <jet-secondary-button @click="resumeBeingDeleted = null">
             Cancelar
           </jet-secondary-button>
-
           <jet-danger-button class="ml-3" @click="deleteResume">
             Eliminar
           </jet-danger-button>
@@ -360,7 +359,9 @@
           <jet-secondary-button @click="this.resumeBeingUpdated = null">
             Cancelar
           </jet-secondary-button>
-
+          <jet-secondary-button class="ml-3" @click="downloadResume">
+            Imprimir
+          </jet-secondary-button>
           <jet-button-success class="ml-3" @click="updateResume">
             Actualizar
           </jet-button-success>
@@ -648,6 +649,25 @@ export default {
         .then((res) => {
           this.updateAllResume(res.data);
         });
+    },
+
+    downloadResume() {
+      window.open(
+        route(
+          "secretary.communities.resumeone.pdf",
+          {
+            resume_id: this.resumeBeingUpdated.id,
+          },
+          "one"
+        )
+      );
+
+      window.open(
+        route("secretary.communities.resumetwo.pdf", {
+          resume_id: this.resumeBeingUpdated.id,
+        }),
+        "two"
+      );
     },
   },
 };

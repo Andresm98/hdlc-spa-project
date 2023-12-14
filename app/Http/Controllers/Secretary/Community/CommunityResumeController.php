@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Secretary\Community;
 
+use PDF;
 use App\Models\Community;
 use Illuminate\Http\Request;
 use App\Models\Resume;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
+use App\Models\Transfer;
 use Illuminate\Support\Facades\Validator;
 
 class CommunityResumeController extends Controller
@@ -92,6 +95,7 @@ class CommunityResumeController extends Controller
         }
 
         $community = Community::find($community_id);
+
         $community->resumes()->create([
             'comm_name_resume' => $request->get('comm_name_resume'),
             'comm_annexed_resume' => $request->get('comm_annexed_resume'),
@@ -193,7 +197,67 @@ class CommunityResumeController extends Controller
         }
 
         $resume = Resume::find($resume_id);
+
         $resume->delete();
+
         return redirect()->back()->with(['success' => 'Resumen eliminado correctamente!']);
+    }
+
+    public function printResumeOne($resume_id)
+    {
+        $validator = Validator::make(
+            ['resume_id' => $resume_id],
+            ['resume_id' => ['required', 'exists:resumes,id']]
+        );
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        $resume = Resume::find($resume_id);
+
+        $community = Community::find($resume->community_id);
+
+        $firstDay = date('Y-m-d', strtotime('first day of january this year'));
+
+        $lastDay = date('Y-m-d', strtotime('last day of december this year'));
+
+        $activities = Activity::where('community_id', $resume->community_id)
+            ->whereBetween('comm_date_activity', [$firstDay, $lastDay])
+            ->get();
+
+        $exitTransfers = Transfer::where('community_id', $resume->community_id)
+            ->whereBetween('transfer_date_relocated', [$firstDay, $lastDay])
+            ->with('profile.actual.community')
+            ->with('profile.user')
+            ->get();
+
+        $actualTransfers = CommunityDaughterController::indexResponse($resume->community_id);
+
+        $pdf = PDF::loadView('reports.resume.resume', compact('community', 'activities', 'resume', 'exitTransfers', 'actualTransfers'));
+
+        return $pdf->setPaper('a4', 'portrait')->stream('Resumen Anual' . $community->name . '' . date("Y") . '.pdf');
+    }
+
+    public function printResumeTwo($resume_id)
+    {
+        $validator = Validator::make(
+            ['resume_id' => $resume_id],
+            ['resume_id' => ['required', 'exists:resumes,id']]
+        );
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        $resume = Resume::find($resume_id);
+
+        $community = Community::find($resume->community_id);
+
+        $actualTransfers = CommunityDaughterController::indexResponse($resume->community_id);
+
+        $pdf = PDF::loadView('reports.resume.resume-two', compact('community', 'actualTransfers'));
+
+        return $pdf->setPaper('a4', 'landscape')->stream('Resumen Anual' . $community->name . '' . date("Y") . '.pdf');
     }
 }

@@ -112,7 +112,7 @@
             </div>
             <table>
                 <tr>
-                    <th>Nombre</th>
+                    <th>Nombre de la Casa</th>
                     <th>Fundación de la Casa</th>
                     <th>Fecha del Consejo Provincial</th>
                     <th>Fecha del Consejo General</th>

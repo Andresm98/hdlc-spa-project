@@ -218,6 +218,14 @@ class TransferGlobalController extends Controller
     {
         $query = Transfer::query();
 
+        $transfers = Transfer::all();
+
+        if (count($transfers) >= 300) {
+            return redirect()->back()->with([
+                'error' => 'Los cambios superan los 100 registros, intente en formato EXCEL.'
+            ]);
+        }
+
         $query->with('profile.user')
             ->with('community')
             ->orderBy('transfer_date_adission', 'desc')
@@ -242,8 +250,8 @@ class TransferGlobalController extends Controller
             }
         }
 
-
         $dateFromTo = new TransferGlobalController();
+
         if (request('dateStart') || request('dateEnd')) {
             $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
                 'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
@@ -259,17 +267,22 @@ class TransferGlobalController extends Controller
                 $dateFromTo->setTo(request('dateEnd'));
             }
         }
+
         $addressClass = new AddressController();
+
         $provinces =  $addressClass->getProvinces();
 
         $data = $query
             ->get();
 
         $from =   $dateFromTo->getFrom();
+
         $to =  $dateFromTo->getTo();
+
         $type = request('status');
 
         $pdf = PDF::loadView('reports.transfers.list-transfers', compact('data', 'from', 'to', 'type'));
+
         return $pdf->setPaper('a4', 'landscape')->stream('ReportesCambiosHermanas.pdf');
     }
 

@@ -393,7 +393,37 @@ class TransferController extends Controller
         if ($validator->fails()) {
             return abort(404);
         }
+
         $user = User::find($user_id);
+
+        $transfer = Transfer::find($transfer_id);
+
+        $transfers = $user->profile->transfers()
+            ->where('transfer_date_adission', '<', $transfer->transfer_date_adission)
+            ->with('office')
+            ->with('community')
+            ->orderBy('transfer_date_adission', 'DESC')
+            ->get();
+
+        return $transfers->get(0);
+    }
+
+    public static function theLastTransferStatic($user_id, $transfer_id)
+    {
+        $validator = Validator::make([
+            'user_id' => $user_id,
+            'transfer_id' => $transfer_id
+        ], [
+            'user_id' => ['required', 'exists:users,id'],
+            'transfer_id' => ['required', 'exists:transfers,id']
+        ]);
+
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        $user = User::find($user_id);
+
         $transfer = Transfer::find($transfer_id);
 
         $transfers = $user->profile->transfers()

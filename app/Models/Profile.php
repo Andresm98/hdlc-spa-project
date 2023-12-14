@@ -102,4 +102,15 @@ class Profile extends Model
     {
         return $this->morphMany('App\Models\File', 'fileable');
     }
+
+    // Relacion de
+
+    public function actual()
+    {
+        $active = $this->hasOne(Transfer::class)
+        ->where('status', 1)
+        ->where('transfer_date_relocated', null);
+
+        return $active;
+    }
 }

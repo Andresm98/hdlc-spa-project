@@ -18,21 +18,89 @@ class CommunityDaughterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($community_id)
+
+    public static function indexResponse($community_id)
     {
         $validator = Validator::make(['community_id' => $community_id], [
             'community_id' => ['required', 'exists:communities,id']
         ]);
+
         if ($validator->fails()) {
             return redirect()->back()->with(['error' => 'No existe la comunidad']);
         }
+
         $community = Community::find($community_id);
 
         if ($community->comm_level == 1) {
             $array = Community::where('comm_id', $community_id)
                 ->pluck('id')
                 ->toArray();
+
             array_push($array, (int)$community_id);
+
+            $arrayid = DB::table('users')
+                ->select('profiles.id')
+                //
+                ->join('profiles', 'profiles.user_id', '=', 'users.id')
+                ->join('transfers', 'transfers.profile_id', '=', 'profiles.id')
+                ->join('communities', 'communities.id', '=', 'transfers.community_id')
+                ->whereIn('transfers.community_id',  $array)
+                ->where('transfers.status', '=', 1)
+                ->get();
+
+            $query = Transfer::query();
+
+            return   $query->whereIn('profile_id', $arrayid->pluck('id')->toArray())
+                ->with('profile.user')
+                ->with('community')
+                ->with('appointments.appointment_level')
+                ->orderBy('transfer_date_adission', 'desc')
+                ->where('status',  1)
+                ->get();
+        } else if ($community->comm_level == 2 && $community->comm_id = $community_id) {
+            $arrayid =  DB::table('users')
+                //
+                ->select('profiles.id')
+                //
+                ->join('profiles', 'profiles.user_id', '=', 'users.id')
+                ->join('transfers', 'transfers.profile_id', '=', 'profiles.id')
+                ->join('communities', 'communities.id', '=', 'transfers.community_id')
+
+                ->where('transfers.community_id', '=', $community_id)
+                ->where('transfers.status', '=', 1)
+                ->get();
+
+            $query = Transfer::query();
+
+            return   $query->whereIn('profile_id', $arrayid->pluck('id')->toArray())
+                ->with('profile.user')
+                ->with('community')
+                ->with('appointments.appointment_level')
+                ->orderBy('transfer_date_adission', 'desc')
+                ->where('status',  1)
+                ->get();
+        }
+    }
+
+    public function index($community_id)
+    {
+        $validator = Validator::make(['community_id' => $community_id], [
+            'community_id' => ['required', 'exists:communities,id']
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with(['error' => 'No existe la comunidad']);
+        }
+
+        $community = Community::find($community_id);
+
+        if ($community->comm_level == 1) {
+            $array = Community::where('comm_id', $community_id)
+                ->pluck('id')
+                ->toArray();
+
+            array_push($array, (int)$community_id);
+
             $arrayid = DB::table('users')
                 ->select('profiles.id')
                 //

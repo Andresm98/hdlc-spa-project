@@ -138,7 +138,7 @@
                         </td>
                         <td width="15%">
                             <?php
-                            $lastTransfer = TransferController::theLastTransfer($transfer->profile->user->id, $transfer->id);
+                            $lastTransfer = TransferController::theLastTransferStatic($transfer->profile->user->id, $transfer->id);
                             ?>
                             @if ($lastTransfer)
                                 {{ $lastTransfer->community->comm_name }}

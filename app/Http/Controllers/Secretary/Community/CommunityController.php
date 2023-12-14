@@ -765,28 +765,26 @@ class CommunityController extends Controller
         $pastoral =  $dateFromTo->getPastoral();
 
         $status =  $type = request('active');
-        if (request('printOperation') == 1) {
-            $pdf = PDF::loadView('reports.communities.list-custom', compact('data', 'status', 'from', 'to', 'pastoral'));
-            // return $pdf -> download('Usuarios.pdf');
-            return $pdf->setPaper('a4', 'landscape')->stream('ReportesComunidadesyHermanasHDLC.pdf');
-        } elseif (request('printOperation') == 0) {
-            if ((int)request('active') === 1) {
-                $pdf = PDF::loadView('reports.communities.list-general', compact('data', 'status', 'from', 'to', 'pastoral'));
-                // return $pdf -> download('Usuarios.pdf');
-                return $pdf->setPaper('a4', 'landscape')->stream('ReportesComunidadesHDLC.pdf');
-            } else {
 
-                $data = $query
-                    ->with('pastoral')
-                    ->with('zone')
-                    ->with('address')
-                    ->orderBy('date_close', 'asc')
-                    ->get();
+        if ((int)request('active') === 2) {
+            $data = $query
+                ->with('pastoral')
+                ->with('zone')
+                ->with('address')
+                ->orderBy('date_close', 'asc')
+                ->get();
 
-                $pdf = PDF::loadView('reports.communities.list-generalclose', compact('data', 'status', 'from', 'to', 'pastoral'));
-                // return $pdf -> download('Usuarios.pdf');
-                return $pdf->setPaper('a4', 'landscape')->stream('ReportesComunidadesCerradasHDLC.pdf');
-            }
+            $pdf = PDF::loadView('reports.communities.list-generalclose', compact('data', 'status', 'from', 'to', 'pastoral'));
+            return $pdf->setPaper('a4', 'landscape')->stream('ReportesComunidadesCerradasHDLC.pdf');
         }
+
+        if ((int)request('printOperation') === 1 && (int)request('active') === 1) {
+            $pdf = PDF::loadView('reports.communities.list-custom', compact('data', 'status', 'from', 'to', 'pastoral'));
+            return $pdf->setPaper('a4', 'landscape')->stream('ReportesComunidadesyHermanasHDLC.pdf');
+        }
+
+        $pdf = PDF::loadView('reports.communities.list-general', compact('data', 'status', 'from', 'to', 'pastoral'));
+        // return $pdf -> download('Usuarios.pdf');
+        return $pdf->setPaper('a4', 'landscape')->stream('ReportesComunidadesHDLC.pdf');
     }
 }

@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
+use App\Models\Appointment;
+use App\Models\AppointmentLevel;
 
 class PermitProfileController extends Controller
 {
@@ -192,9 +194,20 @@ class PermitProfileController extends Controller
         }
 
         $permit = Permit::find($permit_id);
+
         $user->profile;
-        $pdf = PDF::loadView('reports.daughters.permit', compact('permit', 'user'));
-        // return $pdf -> download('Usuarios-OpenScience.pdf');
+
+        $dVisitatorAppointment = AppointmentLevel::where('level', 2)
+            ->where('id', 4)
+            ->first();
+
+        $visitator = Appointment::where('appointment_level_id', $dVisitatorAppointment->id)
+            ->where('status', 1)
+            ->with('profile.user')
+            ->first();
+
+        $pdf = PDF::loadView('reports.daughters.permit', compact('permit', 'user', 'visitator'));
+
         return $pdf->setPaper('a4', 'portrait')->stream('Permiso de la hermana ' . $user->name . '.pdf');
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Appointment;
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\BookController;
@@ -438,6 +436,12 @@ Route::group([
 
     Route::put('resumes/update/{community_id}/{resume_id}', [CommunityResumeController::class, 'update'])
         ->name('communities.resume.update');
+
+    Route::get('resumes/report/pdf/one/{resume_id}', [CommunityResumeController::class, 'printResumeOne'])
+        ->name('communities.resumeone.pdf');
+
+    Route::get('resumes/report/pdf/two/{resume_id}', [CommunityResumeController::class, 'printResumeTwo'])
+        ->name('communities.resumetwo.pdf');
 
     // Communities Visits
 
