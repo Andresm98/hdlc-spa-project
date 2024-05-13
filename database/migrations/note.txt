@@ -1,0 +1,21 @@
+on profile table
+
+            // ALTER TABLE profiles
+            // ADD COLUMN iess_card tinytext AFTER identity_card;
+
+            // alter table profiles
+            // modify column iess_card tinytext NULL;
+
+
+            // ALTER TABLE profiles
+            // ADD COLUMN driver_license tinytext AFTER iess_card;
+
+            // alter table profiles
+            // modify column driver_license tinytext NULL;
+
+
+            // ALTER TABLE profiles
+            // ADD COLUMN date_retirement DATETIME AFTER date_exit;
+
+            // alter table profiles
+            // modify column date_retirement date NULL;

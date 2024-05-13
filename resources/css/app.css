@@ -1,0 +1,10 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import '../../node_modules/vue-multiselect/dist/vue-multiselect.css';
+@import '../../node_modules/vue3-date-time-picker/dist/main.css';
+@import'../../node_modules/vue-sidebar-menu/dist/vue-sidebar-menu.css';
+@import "../../node_modules/sweetalert2/dist/sweetalert2.min.css";
+@import '../../node_modules/@vueup/vue-quill/dist/vue-quill.snow.css';
+@import '../../node_modules/@vueup/vue-quill/dist/vue-quill.bubble.css';
+@import '../../node_modules/v-calendar/dist/style.css';
