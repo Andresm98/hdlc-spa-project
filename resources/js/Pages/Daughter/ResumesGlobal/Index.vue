@@ -442,7 +442,7 @@
             <div class="relative w-full mb-3">
               <div class="">
                 <label class="block text-sm font-medium text-gray-700">
-                  Nombre:
+                  Nombre Resumen
                 </label>
                 <p
                   class="text-red-400 text-sm"
@@ -467,7 +467,7 @@
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
               <label class="block text-sm font-medium text-gray-700">
-                Fecha:
+                Fecha
               </label>
               <p
                 class="text-red-400 text-sm"
@@ -489,7 +489,7 @@
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
               <label class="block text-sm font-medium text-gray-700">
-                Anexo:
+                Anexo
               </label>
               <p
                 class="text-red-400 text-sm"
@@ -517,7 +517,7 @@
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
               <label class="block text-sm font-medium text-gray-700">
-                Observaciones:
+                Observaciones
               </label>
               <p
                 class="text-red-400 text-sm"
@@ -545,11 +545,11 @@
       </template>
 
       <template #footer>
-        <jet-secondary-button @click="createActivityCancel">
+        <jet-secondary-button @click="createResumeCancel">
           Cancelar
         </jet-secondary-button>
 
-        <jet-button-success class="ml-3" @click="createActivity">
+        <jet-button-success class="ml-3" @click="createResume">
           Crear
         </jet-button-success>
       </template>
@@ -570,7 +570,7 @@
       </template>
 
       <template #content>
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap" v-if="navigationOp == 1">
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
               <div class="">
@@ -610,11 +610,11 @@
               </p>
               <small>Formato: Fecha del resumen anual.</small>
               <Datepicker
+                v-model="updateResumeForm.comm_date_resume"
+                :year-range="[1800, this.year]"
                 :format="format"
                 autoApply
-                v-model="updateResumeForm.comm_date_resume"
                 required
-                :year-range="[1800, this.year]"
               />
             </div>
           </div>
@@ -677,11 +677,367 @@
 
           <!-- Information Address -->
         </div>
+        <div v-if="navigationOp == 2">
+          <div v-if="operationCrud == 1">
+            <div
+              class="bg-white rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+            >
+              <form @submit.prevent="submit">
+                <div class="flex flex-wrap">
+                  <div class="w-full lg:w-12/12 px-4">
+                    <div class="relative w-full mb-3">
+                      <div class="">
+                        <label class="block text-sm font-medium text-gray-700">
+                          Nombre:
+                        </label>
+                        <p
+                          class="text-red-400 text-sm"
+                          v-show="$page.props.errors.comm_name_activity"
+                        >
+                          {{ $page.props.errors.comm_name_activity }}
+                        </p>
+                        <input
+                          type="text"
+                          minLength="5"
+                          maxlength="100"
+                          placeholder="Ingresar nombre actividad"
+                          class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          v-model="formActivity.comm_name_activity"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="w-full lg:w-4/12 px-4">
+                    <div class="relative w-full mb-3">
+                      <label
+                        class="block text-sm font-medium text-gray-700"
+                        htmlfor="nr_daughters"
+                      >
+                        Nro. de Hermanas:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.comm_nr_daughters"
+                      >
+                        {{ $page.props.errors.comm_nr_daughters }}
+                      </p>
+                      <input
+                        type="number"
+                        name="nr_daughters"
+                        placeholder="Número de Hermanas"
+                        class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                        min="0"
+                        max="1000"
+                        v-model="formActivity.comm_nr_daughters"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="w-full lg:w-4/12 px-4">
+                    <div class="relative w-full mb-3">
+                      <label
+                        class="block text-sm font-medium text-gray-700"
+                        htmlfor="nr_beneficiaries"
+                      >
+                        Nro. de Beneficiarios:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.comm_nr_beneficiaries"
+                      >
+                        {{ $page.props.errors.comm_nr_beneficiaries }}
+                      </p>
+                      <input
+                        type="number"
+                        class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                        min="0"
+                        max="1000"
+                        name="nr_beneficiaries"
+                        placeholder="Número de Beneficiarios"
+                        v-model="formActivity.comm_nr_beneficiaries"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="w-full lg:w-4/12 px-4">
+                    <div class="relative w-full mb-3">
+                      <label
+                        class="block text-sm font-medium text-gray-700"
+                        htmlfor="nr_collaborators"
+                      >
+                        Nro. de Colaboradores:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.comm_nr_collaborators"
+                      >
+                        {{ $page.props.errors.comm_nr_collaborators }}
+                      </p>
+                      <input
+                        type="number"
+                        class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                        min="0"
+                        max="1000"
+                        name="nr_collaborators"
+                        v-model="formActivity.comm_nr_collaborators"
+                        placeholder="Número de Colaboradores"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+                <jet-button type="submit" class="ml-4 mb-2 btn btn-primary"
+                  >Crear Actividad</jet-button
+                >
+              </form>
+            </div>
+          </div>
+
+          <div v-if="operationCrud == 2">
+            <div
+              class="bg-white rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+            >
+              <form @submit.prevent="submitUpdate">
+                <div class="flex flex-wrap">
+                  <div class="w-full lg:w-12/12 px-4">
+                    <div class="relative w-full mb-3">
+                      <div class="">
+                        <label class="block text-sm font-medium text-gray-700">
+                          Nombre:
+                        </label>
+                        <p
+                          class="text-red-400 text-sm"
+                          v-show="$page.props.errors.comm_name_activity"
+                        >
+                          {{ $page.props.errors.comm_name_activity }}
+                        </p>
+                        <input
+                          type="text"
+                          minLength="5"
+                          maxlength="100"
+                          placeholder="Ingresar nombre actividad"
+                          class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          v-model="updateActivityForm.comm_name_activity"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="w-full lg:w-4/12 px-4">
+                    <div class="relative w-full mb-3">
+                      <label
+                        class="block text-sm font-medium text-gray-700"
+                        htmlfor="nr_daughters"
+                      >
+                        Nro. de Hermanas:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.comm_nr_daughters"
+                      >
+                        {{ $page.props.errors.comm_nr_daughters }}
+                      </p>
+                      <input
+                        type="number"
+                        name="nr_daughters"
+                        placeholder="Número de Hermanas"
+                        class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                        min="0"
+                        max="1000"
+                        v-model="updateActivityForm.comm_nr_daughters"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="w-full lg:w-4/12 px-4">
+                    <div class="relative w-full mb-3">
+                      <label
+                        class="block text-sm font-medium text-gray-700"
+                        htmlfor="nr_beneficiaries"
+                      >
+                        Nro. de Beneficiarios:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.comm_nr_beneficiaries"
+                      >
+                        {{ $page.props.errors.comm_nr_beneficiaries }}
+                      </p>
+                      <input
+                        type="number"
+                        class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                        min="0"
+                        max="1000"
+                        name="nr_beneficiaries"
+                        placeholder="Número de Beneficiarios"
+                        v-model="updateActivityForm.comm_nr_beneficiaries"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="w-full lg:w-4/12 px-4">
+                    <div class="relative w-full mb-3">
+                      <label
+                        class="block text-sm font-medium text-gray-700"
+                        htmlfor="nr_collaborators"
+                      >
+                        Nro. de Colaboradores:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.comm_nr_collaborators"
+                      >
+                        {{ $page.props.errors.comm_nr_collaborators }}
+                      </p>
+                      <input
+                        type="number"
+                        class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                        min="0"
+                        max="1000"
+                        name="nr_collaborators"
+                        v-model="updateActivityForm.comm_nr_collaborators"
+                        placeholder="Número de Colaboradores"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+                <jet-button-success
+                  type="submit"
+                  class="ml-4 mb-2 btn btn-primary"
+                  >Editar Actividad</jet-button-success
+                >
+              </form>
+            </div>
+          </div>
+
+          <hr />
+          <div class="py-2">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
+              <div
+                v-if="this.getAllActivity != null"
+                class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
+              >
+                <div className="overflow-y-auto h-96">
+                  <div className="relative px-4">
+                    <table class="min-w-full divide-y divide-gray-200">
+                      <thead class="bg-blue-100">
+                        <tr>
+                          <th
+                            scope="col"
+                            class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                          >
+                            Nombre
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                          >
+                            Hermanas - Beneficiarios - Colaboradores
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                          >
+                            Acciones
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="bg-white divide-y divide-gray-200">
+                        <tr
+                          v-for="activity in this.getAllActivity"
+                          :key="activity"
+                        >
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                              <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">
+                                  {{
+                                    activity.comm_name_activity.substring(
+                                      0,
+                                      25
+                                    )
+                                  }}..
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            <span
+                              class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 mr-2"
+                            >
+                              {{ activity.comm_nr_daughters }}
+                            </span>
+                            <span
+                              class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 mr-2"
+                            >
+                              {{ activity.comm_nr_beneficiaries }}
+                            </span>
+                            <span
+                              class="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 mr-2"
+                            >
+                              {{ activity.comm_nr_collaborators }}
+                            </span>
+                          </td>
+                          <td
+                            class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
+                          >
+                            <!-- Components -->
+
+                            <div class="mx-auto flex gap-10">
+                              <jet-button
+                                @click="confirmationActivityUpdate(activity)"
+                                >Editar</jet-button
+                              >
+                              <jet-danger-button
+                                @click="confirmationActivityDelete(activity)"
+                                >Eliminar</jet-danger-button
+                              >
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
+                <p class="text-center text-lg">
+                  Por el momento no existen registros.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </template>
 
       <template #footer>
         <jet-secondary-button @click="updateResumeCancel">
           Cancelar
+        </jet-secondary-button>
+        <jet-button
+          class="ml-3"
+          @click="navigation(1)"
+          v-if="navigationOp == 1"
+        >
+          Siguiente
+        </jet-button>
+        <jet-button
+          class="ml-3"
+          @click="navigation(2)"
+          v-if="navigationOp == 2"
+        >
+          Anterior
+        </jet-button>
+        <jet-secondary-button class="ml-3" @click="downloadResume">
+          Imprimir
         </jet-secondary-button>
         <jet-button-success class="ml-3" @click="updateResume">
           Actualizar
@@ -710,6 +1066,28 @@
         </jet-danger-button>
       </template>
     </jet-confirmation-modal>
+
+    <jet-confirmation-modal
+      :show="activityBeingDeleted"
+      @close="activityBeingDeleted == null"
+    >
+      <template #title> Eliminar la Actividad</template>
+
+      <template #content>
+        ¿Está seguro de que desea eliminar el historial de la actividad:
+        {{ this.deleteActivityForm.comm_name_activity }}?
+      </template>
+
+      <template #footer>
+        <jet-secondary-button @click="activityBeingDeleted = null">
+          Cancelar
+        </jet-secondary-button>
+
+        <jet-danger-button class="ml-3" @click="deleteActivity">
+          Eliminar
+        </jet-danger-button>
+      </template>
+    </jet-confirmation-modal>
   </app-layout>
 </template>
 <script>
@@ -728,6 +1106,7 @@ import SearchFilter from "@/Components/SearchFilter";
 import JetButton from "@/Jetstream/Button.vue";
 import Datepicker from "vue3-date-time-picker";
 import Pagination from "@/Components/Pagination";
+import { useForm } from "@inertiajs/inertia-vue3";
 import TextInput from "@/Components/TextInput";
 import JetInput from "@/Jetstream/Input.vue";
 import { Inertia } from "@inertiajs/inertia";
@@ -754,11 +1133,21 @@ export default {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
+    const formActivity = useForm({
+      comm_name_activity: null,
+      comm_description_activity: null,
+      comm_date_activity: null,
+      comm_nr_daughters: null,
+      comm_nr_beneficiaries: null,
+      comm_nr_collaborators: null,
+      id_comm: null,
+    });
 
     return {
       date,
       year,
       format,
+      formActivity,
     };
   },
 
@@ -812,6 +1201,10 @@ export default {
 
       modal_open: false,
 
+      navigationOp: 1,
+
+      operationCrud: 1,
+
       params: {
         search: this.filters.search,
         date: this.filters.date,
@@ -860,6 +1253,30 @@ export default {
         multiSelectPerfil: null,
         vSelectPerfil: null,
       },
+
+      activityBeingDeleted: null,
+
+      deleteActivityForm: this.$inertia.form({
+        comm_name_activity: null,
+        comm_description_activity: null,
+        comm_date_activity: null,
+        comm_nr_daughters: null,
+        comm_nr_beneficiaries: null,
+        comm_nr_collaborators: null,
+      }),
+
+      activityBeingUpdated: null,
+
+      updateActivityForm: this.$inertia.form({
+        comm_name_activity: null,
+        comm_description_activity: null,
+        comm_date_activity: null,
+        comm_nr_daughters: null,
+        comm_nr_beneficiaries: null,
+        comm_nr_collaborators: null,
+      }),
+
+      getAllActivity: null,
     };
   },
 
@@ -922,6 +1339,14 @@ export default {
     },
   },
   methods: {
+    navigation(op) {
+      if (op == 1) {
+        this.navigationOp = 2;
+      } else {
+        this.navigationOp = 1;
+      }
+    },
+
     onSearchCommunityChange(search) {
       var string = search;
       var length = 60;
@@ -952,7 +1377,7 @@ export default {
       this.resumeBeingCreated = this.form;
     },
 
-    createActivity() {
+    createResume() {
       this.form.comm_date_resume = this.formatDate(this.form.comm_date_resume);
       Inertia.post(
         route("daughter.communities.resume.store", {
@@ -969,13 +1394,16 @@ export default {
               this.$refs.qleditor1.setHTML("");
               this.selectCommunity.selectedCommunity = null;
               this.selectCommunity.options = [];
+              let resume = this.$page.props.flash.message;
+              this.confirmationResumeUpdate(resume);
             }, 0);
           },
         }
       );
     },
 
-    createActivityCancel() {
+    createResumeCancel() {
+      this.navigationOp = 1;
       this.resumeBeingCreated = null;
       this.selectCommunity.selectedCommunity = null;
       this.selectCommunity.options = [];
@@ -990,6 +1418,7 @@ export default {
       this.updateResumeForm.comm_annexed_resume = resume.comm_annexed_resume;
       this.updateResumeForm.community_id = resume.community.id;
       this.resumeBeingUpdated = resume;
+      this.updateTable();
     },
 
     updateResume() {
@@ -1018,8 +1447,23 @@ export default {
 
     updateResumeCancel() {
       this.resumeBeingUpdated = null;
-
       this.updateResumeForm.reset();
+
+      //
+
+      this.formActivity.comm_name_activity = null;
+      this.formActivity.comm_description_activity = null;
+      this.formActivity.comm_date_activity = null;
+      this.formActivity.comm_nr_daughters = null;
+      this.formActivity.comm_nr_beneficiaries = null;
+      this.formActivity.comm_nr_collaborators = null;
+
+      this.updateActivityForm.comm_name_activity = null;
+      this.updateActivityForm.comm_nr_daughters = null;
+      this.updateActivityForm.comm_nr_beneficiaries = null;
+      this.updateActivityForm.comm_nr_collaborators = null;
+
+      this.navigation(2);
     },
 
     confirmationResumeDelete(resume) {
@@ -1050,6 +1494,131 @@ export default {
               this.deleteResumeForm.reset();
             }, 2),
         }
+      );
+    },
+
+    // Activities
+
+    submit() {
+      this.formActivity.id_comm = this.resumeBeingUpdated.community.id;
+      Inertia.post(
+        route("daughter.communities.activity.store", {
+          resume_id: this.resumeBeingUpdated.id,
+        }),
+        this.formActivity,
+        {
+          preserveScroll: true,
+          preserveState: true,
+          onSuccess: () => {
+            setTimeout(() => {
+              this.updateTable();
+            }, 10);
+            this.formActivity.comm_name_activity = null;
+            this.formActivity.comm_description_activity = null;
+            this.formActivity.comm_date_activity = null;
+            this.formActivity.comm_nr_daughters = null;
+            this.formActivity.comm_nr_beneficiaries = null;
+            this.formActivity.comm_nr_collaborators = null;
+            this.operationCrud = 1;
+          },
+        }
+      );
+    },
+
+    confirmationActivityUpdate(activity) {
+      this.updateActivityForm.comm_name_activity = activity.comm_name_activity;
+      this.updateActivityForm.comm_nr_daughters = activity.comm_nr_daughters;
+      this.updateActivityForm.comm_nr_beneficiaries =
+        activity.comm_nr_beneficiaries;
+      this.updateActivityForm.comm_nr_collaborators =
+        activity.comm_nr_collaborators;
+
+      this.operationCrud = 2;
+
+      this.activityBeingUpdated = activity;
+    },
+
+    submitUpdate() {
+      Inertia.put(
+        route("daughter.communities.activity.update", {
+          resume_id: this.resumeBeingUpdated.id,
+          activity_id: this.activityBeingUpdated.id,
+        }),
+        this.updateActivityForm,
+        {
+          preserveScroll: true,
+          preserveState: true,
+          onSuccess: () => {
+            setTimeout(() => {
+              this.updateTable();
+            }, 10);
+            this.updateActivityForm.comm_name_activity = null;
+            this.updateActivityForm.comm_nr_daughters = null;
+            this.updateActivityForm.comm_nr_beneficiaries = null;
+            this.updateActivityForm.comm_nr_collaborators = null;
+            this.operationCrud = 1;
+          },
+        }
+      );
+    },
+
+    confirmationActivityDelete(activity) {
+      this.deleteActivityForm.comm_name_activity = activity.comm_name_activity;
+      this.deleteActivityForm.comm_description_activity =
+        activity.comm_description_activity;
+      this.deleteActivityForm.comm_date_activity = activity.comm_date_activity;
+      this.activityBeingDeleted = activity;
+    },
+
+    deleteActivity() {
+      this.deleteActivityForm.delete(
+        this.route("daughter.communities.activity.delete", {
+          resume_id: this.resumeBeingUpdated.id,
+          activity_id: this.activityBeingDeleted.id,
+        }),
+        {
+          preserveScroll: true,
+          preserveState: true,
+          onSuccess: () => (
+            (this.activityBeingDeleted = null),
+            setTimeout(() => {
+              this.updateTable();
+
+              this.operationCrud = 1;
+            }, 2)
+          ),
+        }
+      );
+    },
+
+    updateTable() {
+      axios
+        .get(
+          this.route("daughter.communities.activity.resume.index", {
+            resume_id: this.resumeBeingUpdated.id,
+          })
+        )
+        .then((res) => {
+          this.getAllActivity = res.data;
+        });
+    },
+
+    downloadResume() {
+      window.open(
+        route(
+          "daughter.communities.resumeone.pdf",
+          {
+            resume_id: this.resumeBeingUpdated.id,
+          },
+          "one"
+        )
+      );
+
+      window.open(
+        route("daughter.communities.resumetwo.pdf", {
+          resume_id: this.resumeBeingUpdated.id,
+        }),
+        "two"
       );
     },
 

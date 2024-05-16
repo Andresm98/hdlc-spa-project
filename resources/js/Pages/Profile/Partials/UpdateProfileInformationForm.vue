@@ -1,12 +1,12 @@
 <template>
-    <jet-form-section @submitted="updateProfileInformation">
-        <template #title>
+    <jet-form-section-min @submitted="updateProfileInformation">
+        <!-- <template #title>
             Información del Perfil
         </template>
 
         <template #description>
             Actualice la información de perfil y la dirección de correo electrónico de su cuenta.
-        </template>
+        </template> -->
 
         <template #form>
             <!-- Profile Photo -->
@@ -65,13 +65,13 @@
                 Guardar
             </jet-button>
         </template>
-    </jet-form-section>
+    </jet-form-section-min>
 </template>
 
 <script>
     import { defineComponent } from 'vue'
     import JetButton from '@/Jetstream/Button.vue'
-    import JetFormSection from '@/Jetstream/FormSection.vue'
+    import JetFormSectionMin from '@/Jetstream/FormSectionMin.vue'
     import JetInput from '@/Jetstream/Input.vue'
     import JetInputError from '@/Jetstream/InputError.vue'
     import JetLabel from '@/Jetstream/Label.vue'
@@ -82,7 +82,7 @@
         components: {
             JetActionMessage,
             JetButton,
-            JetFormSection,
+            JetFormSectionMin,
             JetInput,
             JetInputError,
             JetLabel,

@@ -28,25 +28,25 @@
     <operation></operation>
     <div class="my-2 md:m-2 lg:m-4 xl:m-5 md:p-2 lg:p-4 rounded-md bg-gray-50">
       <div>
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-          <div class="md:col-span-1">
-            <div class="px-4 sm:px-0">
-              <h3 class="text-lg font-medium leading-6 text-gray-900">
-                Historial Académico
-              </h3>
-              <p class="mt-1 text-sm text-gray-600 text-justify">
-                La información que puede visualizar se relacionan a la
-                información de su historial académico, tenga en cuenta que los
-                datos deben mantener los formatos solicitados. La información
-                recopila toda la información académica de su perfil, en este
-                apartado podrá detallar la información requerida por la compañía
-                HDCL.
-              </p>
-            </div>
-          </div>
+        <div class=" ">
+          <!-- <div class="md:col-span-1">
+              <div class="px-4 sm:px-0">
+                <h3 class="text-lg font-medium leading-6 text-gray-900">
+                  Historial Académico
+                </h3>
+                <p class="mt-1 text-sm text-gray-600 text-justify">
+                  La información que puede visualizar se relacionan a la
+                  información de su historial académico, tenga en cuenta que los
+                  datos deben mantener los formatos solicitados. La información
+                  recopila toda la información académica de su perfil, en este
+                  apartado podrá detallar la información requerida por la compañía
+                  HDCL.
+                </p>
+              </div>
+            </div> -->
           <div class="mt-5 md:mt-0 md:col-span-2">
             <section
-              class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 rounded-lg sm:m-2 lg:m-3 md:m-4"
+              class="bg-yellow-100 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 rounded-lg sm:m-2 lg:m-3 md:m-4"
             >
               <div
                 class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
@@ -244,12 +244,11 @@
                               >
                                 {{ this.formatShowDate(academic.date_title) }}
                               </span>
-
                               <span
                                 v-else
                                 class="px-1 inline-flex text-xs leading-5 font-semibold rounded-sm bg-green-100 text-green-800"
                               >
-                                Cursando
+                                Cursando - {{ academic.level }}
                               </span>
                             </div>
                           </td>
@@ -346,7 +345,7 @@
           <p class="text-lg text-black">
             ¿Está seguro/a de que desea eliminar el registro académico?
           </p>
-          Una vez el historial de salud es eliminado no puede ser recuperado.
+          Una vez el historial académico es eliminado no puede ser recuperado.
           Por favor verifique que la información antes de confirmar su
           eliminación.
         </template>
@@ -364,7 +363,7 @@
         :show="academicBeingUpdated"
         @close="academicBeingUpdated == null"
       >
-        <template #title> Datos de Registro Académico</template>
+        <template #title>Actualizar Datos de Registro Académico</template>
         <template #content>
           <div class="flex flex-wrap">
             <div class="w-full lg:w-12/12 px-4">
@@ -373,7 +372,7 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Nombre de Título:
+                  Título
                 </label>
                 <p
                   class="text-red-400 text-sm"
@@ -381,7 +380,7 @@
                 >
                   {{ $page.props.errors.name_title }}
                 </p>
-                <small>Formato: Pedagogía.</small>
+                <small></small>
                 <div>
                   <input
                     type="text"
@@ -395,13 +394,13 @@
                 </div>
               </div>
             </div>
-            <div class="w-full lg:w-6/12 px-4">
+            <div class="w-full lg:w-4/12 px-4">
               <div class="relative w-full mb-3">
                 <label
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Insitución:
+                  Insitución
                 </label>
                 <p
                   class="text-red-400 text-sm"
@@ -409,7 +408,7 @@
                 >
                   {{ $page.props.errors.institution }}
                 </p>
-                <small>Formato: Universidad LXS.</small>
+                <small></small>
                 <input
                   type="text"
                   minLength="10"
@@ -421,13 +420,13 @@
                 />
               </div>
             </div>
-            <div class="w-full lg:w-6/12 px-4">
+            <div class="w-full lg:w-4/12 px-4">
               <div class="relative w-full mb-3">
                 <label
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Fecha de Entrega Título:
+                  Fecha de Emisión
                 </label>
                 <p
                   class="text-red-400 text-sm"
@@ -435,7 +434,6 @@
                 >
                   {{ $page.props.errors.date_title }}
                 </p>
-                <small>Formato: Fecha de emisión del título.</small>
 
                 <Datepicker
                   v-model="updateAcademicForm.date_title"
@@ -446,13 +444,39 @@
                 />
               </div>
             </div>
+            <div class="w-full lg:w-4/12 px-4">
+              <div class="relative w-full mb-3">
+                <label
+                  class="block text-sm font-medium text-gray-700"
+                  htmlfor="grid-password"
+                >
+                  Nivel
+                </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.level"
+                >
+                  {{ $page.props.errors.level }}
+                </p>
+                <small></small>
+                <input
+                  type="text"
+                  minLength="1"
+                  maxlength="100"
+                  placeholder="Ingresar Nivel"
+                  class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  v-model="updateAcademicForm.level"
+                  required
+                />
+              </div>
+            </div>
             <div class="w-full lg:w-full px-4">
               <div class="relative w-full mb-3">
                 <label
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Observaciones:
+                  Cursos y capacitaciones
                 </label>
                 <p
                   class="text-red-400 text-sm"
@@ -461,7 +485,7 @@
                   {{ $page.props.errors.observation }}
                 </p>
                 <small
-                  >Formato: Por favor ingresar las observaciones que usted crea
+                  >Formato: Por favor ingresar los datos que usted crea
                   pertinente relacionadas al historial académico, deberán ser
                   máximo 2000 caracteres.</small
                 >
@@ -493,7 +517,7 @@
         :show="academicBeingCreated"
         @close="academicBeingCreated == null"
       >
-        <template #title> Datos del Nuevo Registro de Salud</template>
+        <template #title> Datos del Nuevo Registro Académico</template>
         <template #content>
           <div class="flex flex-wrap">
             <div class="w-full lg:w-12/12 px-4">
@@ -502,7 +526,7 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Nombre de Título:
+                  Título
                 </label>
                 <p
                   class="text-red-400 text-sm"
@@ -510,7 +534,7 @@
                 >
                   {{ $page.props.errors.name_title }}
                 </p>
-                <small>Formato: Pedagogía.</small>
+                <small> </small>
                 <div>
                   <input
                     type="text"
@@ -524,13 +548,13 @@
                 </div>
               </div>
             </div>
-            <div class="w-full lg:w-6/12 px-4">
+            <div class="w-full lg:w-4/12 px-4">
               <div class="relative w-full mb-3">
                 <label
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Insitución:
+                  Insitución
                 </label>
                 <p
                   class="text-red-400 text-sm"
@@ -538,7 +562,7 @@
                 >
                   {{ $page.props.errors.institution }}
                 </p>
-                <small>Formato: Universidad LXS.</small>
+                <small> </small>
                 <input
                   type="text"
                   minLength="10"
@@ -550,13 +574,13 @@
                 />
               </div>
             </div>
-            <div class="w-full lg:w-6/12 px-4">
+            <div class="w-full lg:w-4/12 px-4">
               <div class="relative w-full mb-3">
                 <label
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Fecha de Entrega Título:
+                  Fecha de Emisión
                 </label>
                 <p
                   class="text-red-400 text-sm"
@@ -564,7 +588,7 @@
                 >
                   {{ $page.props.errors.date_title }}
                 </p>
-                <small>Formato: Fecha de emisión del título.</small>
+                <small> </small>
                 <Datepicker
                   v-model="form.date_title"
                   :format="format"
@@ -574,13 +598,39 @@
                 />
               </div>
             </div>
+            <div class="w-full lg:w-4/12 px-4">
+              <div class="relative w-full mb-3">
+                <label
+                  class="block text-sm font-medium text-gray-700"
+                  htmlfor="grid-password"
+                >
+                  Nivel
+                </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.level"
+                >
+                  {{ $page.props.errors.level }}
+                </p>
+                <small> </small>
+                <input
+                  type="text"
+                  minLength="1"
+                  maxlength="100"
+                  placeholder="Ingresar Nivel"
+                  class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  v-model="form.level"
+                  required
+                />
+              </div>
+            </div>
             <div class="w-full lg:w-full px-4">
               <div class="relative w-full mb-3">
                 <label
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Observaciones:
+                  Cursos y Capacitaciones
                 </label>
                 <p
                   class="text-red-400 text-sm"
@@ -589,8 +639,8 @@
                   {{ $page.props.errors.observation }}
                 </p>
                 <small
-                  >Formato: Por favor ingresar las observaciones que usted crea
-                  pertinente relacionadas al historial académico, deberán ser
+                  >Formato: Por favor ingresar los datos que usted crea
+                  pertinente relacionadas al historial académico; deberán ser
                   máximo 2000 caracteres.</small
                 >
                 <div class="bg-white">
@@ -720,6 +770,7 @@ export default {
         institution: null,
         date_title: null,
         observation: null,
+        level: null,
       }),
     };
   },
@@ -810,6 +861,7 @@ export default {
         institution: null,
         date_title: null,
         observation: null,
+        level: null,
       });
       this.academicBeingCreated = this.form;
     },
@@ -839,6 +891,7 @@ export default {
       this.updateAcademicForm.institution = academic.institution;
       this.updateAcademicForm.date_title = academic.date_title;
       this.updateAcademicForm.observation = academic.observation;
+      this.updateAcademicForm.level = academic.level;
       this.academicBeingUpdated = academic;
     },
 

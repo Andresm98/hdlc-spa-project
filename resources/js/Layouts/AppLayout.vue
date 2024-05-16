@@ -11,7 +11,7 @@
   <div>
     <Head :title="title" />
     <jet-banner />
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen bg-gray-50">
       <!-- Load General Menu -->
       <general-nav></general-nav>
       <!-- Page Heading -->

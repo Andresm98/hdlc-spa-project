@@ -102,7 +102,8 @@
         <table class="border: none" cellspacing="0" cellpadding="0">
             <tr class="border: none">
                 <td class="border: none" width="67.00%" class="first">PROVINCIA: ECUADOR</td>
-                <td class="border: none" width="33.00%" class="first">Fecha: {{ date('Y-m-d', time()) }}</td>
+                <td class="border: none" width="33.00%" class="first">Fecha:
+                    {{ date('Y-m-d', strtotime($resume->comm_date_resume)) }}</td>
             </tr>
             <tr class="border: none">
                 <td class="border: none" width="67.00%" class="second">NOMBRE DE LA COMUNIDAD:
@@ -220,16 +221,83 @@
                         @else
                             PENDIENTE
                         @endif
-
-
-
-
                     </td>
                 </tr>
             @endforeach
         </table>
-    </main>
 
+
+        @if (count($academicClose) > 0)
+            <h4 style="text-align: center;">HERMANAS GRADUADAS AÑO
+                {{ date('Y', strtotime($resume->comm_date_resume)) }}
+            </h4>
+            <h5 class="border: none" width="67.00%" class="second">NOMBRE DE LA CASA:
+                {{ $community->comm_name }}</h5>
+            <br>
+
+            <table border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th width="50.00%">NOMBRE DE LA HERMANA</th>
+                    <th width="15.00%">UNIVERSIDAD INSTITUCIÓN</th>
+                    <th width="15.00%">ESPECIALIZACIÓN</th>
+                    <th width="15.00%">LUGAR FECHA</th>
+                </tr>
+                @foreach ($academicClose as $close)
+                    {}
+                    <tr>
+                        <td>
+                            {{ $close->profile->user->name }} {{ $close->profile->user->lastname }}
+                        </td>
+                        <td>
+                            {{ $close->institution }}
+                        </td>
+                        <td>
+                            {{ $close->name_title }}
+                        </td>
+                        <td>
+                            {{ $close->date_title }}
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+
+            <br>
+
+        @endif
+
+
+        @if (count($academicActual) > 0)
+            <h4 style="text-align: center;">HERMANAS QUE ESTUDIAN </h4>
+            <table border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th width="50.00%">NOMBRE DE LA HERMANA</th>
+                    <th width="15.00%">UNIVERSIDAD</th>
+                    <th width="15.00%">ESPECIALIZACIÓN</th>
+                    <th width="15.00%">NIVEL</th>
+                </tr>
+
+                @foreach ($academicActual as $actual)
+                    {}
+                    <tr>
+                        <td>
+                            {{ $actual->profile->user->name }} {{ $actual->profile->user->lastname }}
+                        </td>
+                        <td>
+                            {{ $actual->institution }}
+                        </td>
+                        <td>
+                            {{ $actual->name_title }}
+                        </td>
+                        <td>
+                            {{ $actual->date_title }}
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+        @endif
+
+
+    </main>
     <footer>
     </footer>
 

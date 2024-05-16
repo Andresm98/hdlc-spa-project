@@ -363,7 +363,7 @@
                                         {{ $data->get('community')->comm_email }}
                                     </li>
                                     <?php
-                                    $listDaughters = CommunityDaughterController::index($work->id);
+                                    $listDaughters = CommunityDaughterController::indexStatic($work->id);
                                     ?>
                                     @if (count($listDaughters) != 0)
                                         <li>

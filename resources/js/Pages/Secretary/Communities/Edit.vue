@@ -724,12 +724,12 @@ input:checked ~ .dot {
               </div>
             </div>
             <!-- Options -->
-            <div v-if="selectMenu.selectedElement == 'Actividades'">
+            <!-- <div v-if="selectMenu.selectedElement == 'Actividades'">
               <activities></activities>
             </div>
             <div v-if="selectMenu.selectedElement == 'Resumen Anual'">
               <resumes></resumes>
-            </div>
+            </div> -->
             <div v-if="selectMenu.selectedElement == 'Visitas'">
               <visits></visits>
             </div>
@@ -867,7 +867,7 @@ input:checked ~ .dot {
             />
             <span class="ml-2 text-sm text-gray-600">Hermanas</span>
           </label>
-          <label class="flex items-center">
+          <!-- <label class="flex items-center">
             <input
               class="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
               type="checkbox"
@@ -884,7 +884,7 @@ input:checked ~ .dot {
               v-model="options"
             />
             <span class="ml-2 text-sm text-gray-600">Resumen Anual</span>
-          </label>
+          </label> -->
           <label class="flex items-center">
             <input
               class="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
@@ -1208,8 +1208,8 @@ export default defineComponent({
         isDisabled: false,
         isTouched: false,
         options: [
-          "Actividades",
-          "Resumen Anual",
+        //   "Actividades",
+        //   "Resumen Anual",
           "Visitas",
           "Obras",
           "Inventario",

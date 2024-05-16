@@ -29,7 +29,7 @@
     <operation></operation>
 
     <section
-      class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg sm:m-2 lg:m-3 md:m-4"
+      class="bg-blue-100 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg sm:m-2 lg:m-3 md:m-4"
     >
       <div
         class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
@@ -329,23 +329,6 @@
               Para hacer uso del almacenamiento de archivos debe tener en cuenta
               las siguientes indicaciones:
               <br />
-              <ul>
-                <li>1. Los archivos no pueden exceder 5MB.</li>
-                <li>
-                  2. Los archivos que usted puede adjuntar serán del formato que
-                  usted requiera (.mp3, mp4, PDF, DOC y otros).
-                </li>
-                <li>
-                  3. Tenga en cuenta que si sube un archivo que contenga un
-                  nombre de un fichero existente en los registro de la base de
-                  datos, el antiguo fichero será reemplazado.
-                </li>
-                <li>
-                  5. Puede descargar, visualizar y eliminar el archivo (eliminar
-                  un fichero es una acción irreversible por lo que debe
-                  verificar de manera adecuada cual fichero ya no necesita).
-                </li>
-              </ul>
             </small>
             <br />
             <label class="block text-sm font-medium text-gray-700">

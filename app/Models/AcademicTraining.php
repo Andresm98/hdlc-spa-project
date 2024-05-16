@@ -13,7 +13,8 @@ class AcademicTraining extends Model
         'name_title',
         'institution',
         'date_title',
-        'observation'
+        'observation',
+        'level'
     ];
     /**
      *

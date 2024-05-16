@@ -9,6 +9,7 @@ use App\Models\Resume;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Models\AcademicTraining;
 use App\Models\Activity;
 use App\Models\Transfer;
 use Illuminate\Support\Facades\Validator;
@@ -96,15 +97,19 @@ class CommunityResumeController extends Controller
 
         $community = Community::find($community_id);
 
-        $community->resumes()->create([
+        $resume = $community->resumes()->create([
             'comm_name_resume' => $request->get('comm_name_resume'),
             'comm_annexed_resume' => $request->get('comm_annexed_resume'),
             'comm_observation_resume' => $request->get('comm_observation_resume'),
             'comm_date_resume' => $request->get('comm_date_resume'),
         ]);
 
+        $messageData = Resume::where('id', $resume->id)
+            ->with('community')->first();
+
         return redirect()->back()->with([
-            'success' => 'Actividad de la comunidad creado correctamente!',
+            'success' => 'Resumen de la comunidad creado correctamente!',
+            'message' => $messageData
         ]);
     }
 
@@ -216,15 +221,15 @@ class CommunityResumeController extends Controller
 
         $resume = Resume::find($resume_id);
 
+        $dateF = date("Y", strtotime($resume->comm_date_resume));
+
         $community = Community::find($resume->community_id);
 
-        $firstDay = date('Y-m-d', strtotime('first day of january this year'));
+        $firstDay = date($dateF . '-m-d', strtotime('first day of january this year'));
 
-        $lastDay = date('Y-m-d', strtotime('last day of december this year'));
+        $lastDay = date($dateF . '-m-d', strtotime('last day of december this year'));
 
-        $activities = Activity::where('community_id', $resume->community_id)
-            ->whereBetween('comm_date_activity', [$firstDay, $lastDay])
-            ->get();
+        $activities = $resume->activities;
 
         $exitTransfers = Transfer::where('community_id', $resume->community_id)
             ->whereBetween('transfer_date_relocated', [$firstDay, $lastDay])
@@ -234,7 +239,23 @@ class CommunityResumeController extends Controller
 
         $actualTransfers = CommunityDaughterController::indexResponse($resume->community_id);
 
-        $pdf = PDF::loadView('reports.resume.resume', compact('community', 'activities', 'resume', 'exitTransfers', 'actualTransfers'));
+        $profilesIds = array();
+
+        foreach ($actualTransfers as $index) {
+            array_push($profilesIds, $index->profile_id);
+        }
+
+        $academicActual = AcademicTraining::whereIn('profile_id', $profilesIds)
+            ->where('date_title', null)
+            ->with('profile.user')
+            ->get();
+
+        $academicClose = AcademicTraining::whereIn('profile_id', $profilesIds)
+            ->whereBetween('date_title', [$firstDay, $lastDay])
+            ->with('profile.user')
+            ->get();
+
+        $pdf = PDF::loadView('reports.resume.resume', compact('community', 'activities', 'resume', 'exitTransfers', 'academicClose', 'academicActual'));
 
         return $pdf->setPaper('a4', 'portrait')->stream('Resumen Anual' . $community->name . '' . date("Y") . '.pdf');
     }

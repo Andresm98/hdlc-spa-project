@@ -33,7 +33,7 @@
         >Crear Obras Individuales</Link
       >
     </section>
-    <section class="flex-shrink-0">
+    <!-- <section class="flex-shrink-0">
       <Link
         :href="route('secretary.activities.index')"
         :class="
@@ -43,7 +43,7 @@
         "
         >Actividades</Link
       >
-    </section>
+    </section> -->
     <section class="flex-shrink-0">
       <Link
         :href="route('secretary.resumes.index')"

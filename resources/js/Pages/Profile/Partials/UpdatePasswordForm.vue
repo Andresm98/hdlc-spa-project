@@ -1,12 +1,12 @@
 <template>
-    <jet-form-section @submitted="updatePassword">
-        <template #title>
+    <jet-form-section-min @submitted="updatePassword">
+        <!-- <template #title>
             Actualizar Contraseña
         </template>
 
         <template #description>
             Asegúrese de que su cuenta esté usando una contraseña larga y aleatoria para mantenerse seguro.
-        </template>
+        </template> -->
 
         <template #form>
             <div class="col-span-6 sm:col-span-4">
@@ -22,7 +22,7 @@
             </div>
 
             <div class="col-span-6 sm:col-span-4">
-                <jet-label for="password_confirmation" value="Actualizar Contraseña" />
+                <jet-label for="password_confirmation" value="Confirmar Nueva Contraseña" />
                 <jet-input id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" autocomplete="new-password" />
                 <jet-input-error :message="form.errors.password_confirmation" class="mt-2" />
             </div>
@@ -37,14 +37,14 @@
                 Guardar
             </jet-button>
         </template>
-    </jet-form-section>
+    </jet-form-section-min>
 </template>
 
 <script>
     import { defineComponent } from 'vue'
     import JetActionMessage from '@/Jetstream/ActionMessage.vue'
     import JetButton from '@/Jetstream/Button.vue'
-    import JetFormSection from '@/Jetstream/FormSection.vue'
+    import JetFormSectionMin from '@/Jetstream/FormSectionMin.vue'
     import JetInput from '@/Jetstream/Input.vue'
     import JetInputError from '@/Jetstream/InputError.vue'
     import JetLabel from '@/Jetstream/Label.vue'
@@ -53,7 +53,7 @@
         components: {
             JetActionMessage,
             JetButton,
-            JetFormSection,
+            JetFormSectionMin,
             JetInput,
             JetInputError,
             JetLabel,

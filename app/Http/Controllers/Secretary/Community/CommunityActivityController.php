@@ -6,6 +6,7 @@ use App\Models\Community;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Resume;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -33,10 +34,10 @@ class CommunityActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($community_id)
+    public function index($resume_id)
     {
-        $validator = Validator::make(['id' => $community_id], [
-            'id' => ['required', 'exists:communities,id']
+        $validator = Validator::make(['id' => $resume_id], [
+            'id' => ['required', 'exists:resumes,id']
         ]);
         if ($validator->fails()) {
             return "error";
@@ -48,10 +49,32 @@ class CommunityActivityController extends Controller
             return abort(404);
         }
 
-        $community = Community::find($community_id);
+        $community = Community::find($resume_id);
 
         return $community->activities;
     }
+
+    public function indexActitiesByResume($resume_id)
+    {
+        $validator = Validator::make(
+            ['resume_id' => $resume_id],
+            ['resume_id' => ['required', 'exists:resumes,id']]
+        );
+        if ($validator->fails()) {
+            return abort(404);
+        }
+
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
+            return abort(404);
+        }
+
+        $resume = Resume::find($resume_id);
+
+        return $resume->activities;
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -69,22 +92,21 @@ class CommunityActivityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $community_id)
+    public function store(Request $request, $resume_id)
     {
-
         $validatorData = Validator::make($request->all(), [
             'comm_name_activity' => ['required', 'max:100'],
-            'comm_description_activity' => ['required', 'max:4000'],
-            'comm_date_activity' => ['required', 'date_format:Y-m-d H:i:s'],
+            // 'comm_description_activity' => ['required', 'max:4000'],
+            // 'comm_date_activity' => ['required', 'date_format:Y-m-d H:i:s'],
             'comm_nr_daughters' => 'required|integer|between:1,1000',
             'comm_nr_beneficiaries' => 'required|integer|between:1,5000',
             'comm_nr_collaborators' => 'required|integer|between:1,1000',
         ]);
 
         $validator = Validator::make([
-            'community_id' => $community_id,
+            'resume_id' => $resume_id,
         ], [
-            'community_id' => ['required', 'exists:communities,id'],
+            'resume_id' => ['required', 'exists:resumes,id'],
         ]);
 
         if ($validator->fails()) {
@@ -96,14 +118,16 @@ class CommunityActivityController extends Controller
                 ->withInput();
         }
 
-        $community = Community::find($community_id);
-        $community->activities()->create([
+        $resume = Resume::find($resume_id);
+
+        $resume->activities()->create([
             'comm_name_activity' => $request->get('comm_name_activity'),
-            'comm_description_activity' => $request->get('comm_description_activity'),
-            'comm_date_activity' => $request->get('comm_date_activity'),
+            'comm_description_activity' => '',
+            'comm_date_activity' => date("y-m-d 00:00:00"),
             'comm_nr_daughters' => $request->get('comm_nr_daughters'),
             'comm_nr_beneficiaries' => $request->get('comm_nr_beneficiaries'),
             'comm_nr_collaborators' => $request->get('comm_nr_collaborators'),
+            'community_id' => $request->get('id_comm'),
         ]);
 
         return redirect()->back()->with([
@@ -140,22 +164,20 @@ class CommunityActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $community_id, $activity_id)
+    public function update(Request $request, $resume_id, $activity_id)
     {
         $validatorData = Validator::make($request->all(), [
             'comm_name_activity' => ['required', 'max:100'],
-            'comm_description_activity' => ['required', 'max:4000'],
-            'comm_date_activity' => ['required', 'date_format:Y-m-d H:i:s'],
             'comm_nr_daughters' => 'required|integer|between:1,1000',
             'comm_nr_beneficiaries' => 'required|integer|between:1,5000',
             'comm_nr_collaborators' => 'required|integer|between:1,1000',
         ]);
 
         $validator = Validator::make([
-            'community_id' => $community_id,
+            'resume_id' => $resume_id,
             'activity_id' => $activity_id
         ], [
-            'community_id' => ['required', 'exists:communities,id'],
+            'resume_id' => ['required', 'exists:resumes,id'],
             'activity_id' => ['required', 'exists:activities,id']
         ]);
 
@@ -168,12 +190,12 @@ class CommunityActivityController extends Controller
                 ->withInput();
         }
 
-
         $activity = Activity::find($activity_id);
+
         $activity->update([
             'comm_name_activity' => $request->get('comm_name_activity'),
-            'comm_description_activity' => $request->get('comm_description_activity'),
-            'comm_date_activity' => $request->get('comm_date_activity'),
+            // 'comm_description_activity' => $request->get('comm_description_activity'),
+            // 'comm_date_activity' => $request->get('comm_date_activity'),
             'comm_nr_daughters' => $request->get('comm_nr_daughters'),
             'comm_nr_beneficiaries' => $request->get('comm_nr_beneficiaries'),
             'comm_nr_collaborators' => $request->get('comm_nr_collaborators'),
@@ -190,13 +212,13 @@ class CommunityActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($community_id, $activity_id)
+    public function destroy($resume_id, $activity_id)
     {
         $validator = Validator::make([
-            'community_id' => $community_id,
+            'resume_id' => $resume_id,
             'activity_id' => $activity_id
         ], [
-            'community_id' => ['required', 'exists:communities,id'],
+            'resume_id' => ['required', 'exists:resumes,id'],
             'activity_id' => ['required', 'exists:activities,id']
         ]);
 

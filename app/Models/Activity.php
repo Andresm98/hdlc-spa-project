@@ -24,4 +24,9 @@ class Activity extends Model
     {
         return $this->belongsTo('App\Models\Community');
     }
+
+    public function resume()
+    {
+        return $this->belongsTo('App\Models\Resume');
+    }
 }

@@ -11,7 +11,7 @@
           <div class="w-full lg:w-12/12 px-4">
             <div class="">
               <label class="block text-sm font-medium text-gray-700">
-                Nombre de Título:
+                Título
               </label>
               <p
                 class="text-red-400 text-sm"
@@ -19,7 +19,7 @@
               >
                 {{ $page.props.errors.name_title }}
               </p>
-              <small>Formato: Pedagogía.</small>
+              <!-- <small>Formato: Pedagogía.</small> -->
               <div>
                 <input
                   type="text"
@@ -33,13 +33,13 @@
               </div>
             </div>
           </div>
-          <div class="w-full lg:w-6/12 px-4">
+          <div class="w-full lg:w-4/12 px-4">
             <div class="relative w-full mb-3">
               <label
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Insitución:
+                Insitución
               </label>
               <p
                 class="text-red-400 text-sm"
@@ -47,7 +47,7 @@
               >
                 {{ $page.props.errors.institution }}
               </p>
-              <small>Formato: Universidad LXS.</small>
+              <!-- <small>Formato: Universidad LXS.</small> -->
               <input
                 type="text"
                 minLength="10"
@@ -60,13 +60,13 @@
             </div>
           </div>
 
-          <div class="w-full lg:w-6/12 px-4">
+          <div class="w-full lg:w-4/12 px-4">
             <div class="relative w-full mb-3">
               <label
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Fecha de Entrega Título:
+                Fecha de Emisión:
               </label>
               <p
                 class="text-red-400 text-sm"
@@ -74,12 +74,36 @@
               >
                 {{ $page.props.errors.date_title }}
               </p>
-              <small>Formato: Fecha de emisión del título.</small>
+              <!-- <small>Formato: Fecha de emisión del título.</small> -->
               <Datepicker
                 :year-range="[1800, this.year]"
                 v-model="form.date_title"
                 :format="format"
                 autoApply
+              />
+            </div>
+          </div>
+
+          <div class="w-full lg:w-4/12 px-4">
+            <div class="relative w-full mb-3">
+              <label
+                class="block text-sm font-medium text-gray-700"
+                htmlfor="grid-password"
+              >
+                Nivel
+              </label>
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.level">
+                {{ $page.props.errors.level }}
+              </p>
+              <small></small>
+              <input
+                type="text"
+                minLength="1"
+                maxlength="100"
+                placeholder="Ingresar Nivel"
+                class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                v-model="form.level"
+                required
               />
             </div>
           </div>
@@ -90,7 +114,7 @@
                 class="block text-sm font-medium text-gray-700"
                 htmlfor="grid-password"
               >
-                Observaciones:
+                Cursos y capacitaciones:
               </label>
               <p
                 class="text-red-400 text-sm"
@@ -99,9 +123,9 @@
                 {{ $page.props.errors.observation }}
               </p>
               <small
-                >Formato: Por favor ingresar las observaciones que usted crea
-                pertinente relacionadas al historial académico, deberán ser
-                máximo 2000 caracteres.</small
+                >Formato: Por favor ingresar los datos que usted crea pertinente
+                relacionadas al historial académico, deberán ser máximo 2000
+                caracteres.</small
               >
               <div class="bg-white">
                 <quill-editor
@@ -290,7 +314,7 @@
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Nombre de Título:
+                  Título
                 </label>
                 <p
                   class="text-red-400 text-sm"
@@ -298,7 +322,7 @@
                 >
                   {{ $page.props.errors.name_title }}
                 </p>
-                <small>Formato: Pedagogía.</small>
+                <!-- <small>Formato: Pedagogía.</small> -->
                 <div>
                   <input
                     type="text"
@@ -312,13 +336,13 @@
                 </div>
               </div>
             </div>
-            <div class="w-full lg:w-6/12 px-4">
+            <div class="w-full lg:w-4/12 px-4">
               <div class="relative w-full mb-3">
                 <label
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Insitución:
+                  Insitución
                 </label>
                 <p
                   class="text-red-400 text-sm"
@@ -326,8 +350,7 @@
                 >
                   {{ $page.props.errors.institution }}
                 </p>
-                <small>Formato: Universidad LXS.</small>
-
+                <!-- <small>Formato: Universidad LXS.</small> -->
                 <input
                   type="text"
                   minLength="10"
@@ -340,7 +363,7 @@
               </div>
             </div>
 
-            <div class="w-full lg:w-6/12 px-4">
+            <div class="w-full lg:w-4/12 px-4">
               <div class="relative w-full mb-3">
                 <label
                   class="block text-sm font-medium text-gray-700"
@@ -354,7 +377,7 @@
                 >
                   {{ $page.props.errors.date_title }}
                 </p>
-                <small>Formato: Fecha de emisión del título.</small>
+                <!-- <small>Formato: Fecha de emisión del título.</small> -->
 
                 <Datepicker
                   v-model="updateAcademicForm.date_title"
@@ -366,13 +389,40 @@
               </div>
             </div>
 
+            <div class="w-full lg:w-4/12 px-4">
+              <div class="relative w-full mb-3">
+                <label
+                  class="block text-sm font-medium text-gray-700"
+                  htmlfor="grid-password"
+                >
+                  Nivel
+                </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.level"
+                >
+                  {{ $page.props.errors.level }}
+                </p>
+                <small></small>
+                <input
+                  type="text"
+                  minLength="1"
+                  maxlength="100"
+                  placeholder="Ingresar Nivel"
+                  class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  v-model="updateAcademicForm.level"
+                  required
+                />
+              </div>
+            </div>
+
             <div class="w-full lg:w-full px-4">
               <div class="relative w-full mb-3">
                 <label
                   class="block text-sm font-medium text-gray-700"
                   htmlfor="grid-password"
                 >
-                  Observaciones:
+                  Cursos y capacitaciones
                 </label>
                 <p
                   class="text-red-400 text-sm"
@@ -381,7 +431,7 @@
                   {{ $page.props.errors.observation }}
                 </p>
                 <small
-                  >Formato: Por favor ingresar las observaciones que usted crea
+                  >Formato: Por favor ingresar los datos que usted crea
                   pertinente relacionadas al historial académico, deberán ser
                   máximo 2000 caracteres.</small
                 >
@@ -413,7 +463,7 @@
   </div>
 </template>
 
-<script>
+  <script>
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
@@ -464,6 +514,7 @@ export default {
       institution: null,
       date_title: null,
       observation: null,
+      level: null,
     });
     return {
       date,
@@ -525,6 +576,7 @@ export default {
         institution: null,
         date_title: null,
         observation: null,
+        level: null,
       }),
 
       academicBeingUpdated: null,
@@ -534,6 +586,7 @@ export default {
         institution: null,
         date_title: null,
         observation: null,
+        level: null,
       }),
     };
   },
@@ -584,6 +637,7 @@ export default {
             this.form.institution = null;
             this.form.date_title = null;
             this.form.observation = null;
+            this.form.level = null;
             this.$refs.qleditor1.setHTML("");
           },
         }
@@ -595,6 +649,7 @@ export default {
       this.updateAcademicForm.institution = academic.institution;
       this.updateAcademicForm.date_title = academic.date_title;
       this.updateAcademicForm.observation = academic.observation;
+      this.updateAcademicForm.level = academic.level;
       this.academicBeingUpdated = academic;
     },
 

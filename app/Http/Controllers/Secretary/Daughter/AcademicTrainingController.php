@@ -64,6 +64,7 @@ class AcademicTrainingController extends Controller
             'institution' => ['required', 'max:50'],
             'date_title' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'observation' => ['required', 'max:4000'],
+            'level' => ['nullable', 'max:100'],
         ]);
 
         if ($validatorData->fails()) {
@@ -78,6 +79,7 @@ class AcademicTrainingController extends Controller
             'institution' => $request->get('institution'),
             'date_title' => $request->get('date_title'),
             'observation' => $request->get('observation'),
+            'level' => $request->get('level')
         ]);
 
         return redirect()->back()->with([
@@ -116,7 +118,6 @@ class AcademicTrainingController extends Controller
      */
     public function update(Request $request, $user_id, $academic_id)
     {
-
         $validator = Validator::make([
             'user_id' => $user_id,
             'academic_id' => $academic_id
@@ -134,6 +135,7 @@ class AcademicTrainingController extends Controller
             'institution' => ['required', 'max:50'],
             'date_title' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'observation' => ['required', 'max:4000'],
+            'level' => ['nullable', 'max:100'],
         ]);
 
         if ($validatorData->fails()) {
@@ -143,11 +145,13 @@ class AcademicTrainingController extends Controller
         }
 
         $academic = AcademicTraining::find($academic_id);
+
         $academic->update([
             'name_title' => $request->get('name_title'),
             'institution' => $request->get('institution'),
             'date_title' => $request->get('date_title'),
             'observation' => $request->get('observation'),
+            'level' => $request->get('level'),
         ]);
         return redirect()->back()->with(['success' => 'Registro Académico actualizado correctamente']);
     }

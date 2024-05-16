@@ -28,8 +28,8 @@ class HealthController extends Controller
 
         $user = User::find($user_id);
         return $user->profile->healths()
-        ->orderBy('consult_date','DESC')
-        ->get();
+            ->orderBy('consult_date', 'DESC')
+            ->get();
     }
 
     /**
@@ -52,7 +52,7 @@ class HealthController extends Controller
     {
         $validatorData = Validator::make($request->all(), [
             'actual_health' => ['required', 'max:4000'],
-            'chronic_diseases' => ['required', 'max:4000'],
+            // 'chronic_diseases' => ['required', 'max:4000'],
             'other_health_problems' => ['required', 'max:4000'],
             'consult_date' => ['required', 'date_format:Y-m-d H:i:s'],
         ]);
@@ -76,7 +76,7 @@ class HealthController extends Controller
         $user = User::find($user_id);
         $user->profile->healths()->create([
             'actual_health' => $request->get('actual_health'),
-            'chronic_diseases' => $request->get('chronic_diseases'),
+            'chronic_diseases' => ' ',
             'other_health_problems' => $request->get('other_health_problems'),
             'consult_date' => $request->get('consult_date'),
         ]);
@@ -130,7 +130,7 @@ class HealthController extends Controller
             $request->all(),
             [
                 'actual_health' => ['required', 'max:4000'],
-                'chronic_diseases' => ['required', 'max:4000'],
+                // 'chronic_diseases' => ['required', 'max:4000'],
                 'other_health_problems' => ['required', 'max:4000'],
                 'consult_date' => ['required', 'date_format:Y-m-d H:i:s'],
             ]
@@ -150,7 +150,7 @@ class HealthController extends Controller
 
         $health->update([
             'actual_health' => $request->get('actual_health'),
-            'chronic_diseases' => $request->get('chronic_diseases'),
+            'chronic_diseases' => "",
             'other_health_problems' => $request->get('other_health_problems'),
             'consult_date' => $request->get('consult_date'),
         ]);

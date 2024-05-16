@@ -117,6 +117,7 @@ class RecordProfileController extends Controller
             'institution' => ['required', 'max:50'],
             'date_title' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'observation' => ['required', 'max:4000'],
+            'level' => ['nullable', 'max:100'],
         ]);
 
         if ($validatorData->fails()) {
@@ -131,6 +132,7 @@ class RecordProfileController extends Controller
             'institution' => $request->get('institution'),
             'date_title' => $request->get('date_title'),
             'observation' => $request->get('observation'),
+            'level' => $request->get('level')
         ]);
 
         return redirect()->back()->with([
@@ -186,6 +188,7 @@ class RecordProfileController extends Controller
             'institution' => ['required', 'max:50'],
             'date_title' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'observation' => ['required', 'max:4000'],
+            'level' => ['nullable', 'max:100'],
         ]);
 
         if ($validatorData->fails()) {
@@ -200,6 +203,7 @@ class RecordProfileController extends Controller
             'institution' => $request->get('institution'),
             'date_title' => $request->get('date_title'),
             'observation' => $request->get('observation'),
+            'level' => $request->get('level')
         ]);
         return redirect()->back()->with(['success' => 'Registro Académico actualizado correctamente']);
     }

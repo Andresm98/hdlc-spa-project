@@ -1,12 +1,12 @@
 <template>
-    <jet-action-section>
-        <template #title>
+    <jet-action-section-min>
+        <!-- <template #title>
             Buscar Sesiones
         </template>
 
         <template #description>
           Administre y cierre sesión en sus sesiones activas en otros navegadores y dispositivos.
-        </template>
+        </template> -->
 
         <template #content>
             <div class="max-w-xl text-sm text-gray-600">
@@ -83,13 +83,13 @@
                 </template>
             </jet-dialog-modal>
         </template>
-    </jet-action-section>
+    </jet-action-section-min>
 </template>
 
 <script>
     import { defineComponent } from 'vue'
     import JetActionMessage from '@/Jetstream/ActionMessage.vue'
-    import JetActionSection from '@/Jetstream/ActionSection.vue'
+    import JetActionSectionMin from '@/Jetstream/ActionSectionMin.vue'
     import JetButton from '@/Jetstream/Button.vue'
     import JetDialogModal from '@/Jetstream/DialogModal.vue'
     import JetInput from '@/Jetstream/Input.vue'
@@ -101,7 +101,7 @@
 
         components: {
             JetActionMessage,
-            JetActionSection,
+            JetActionSectionMin,
             JetButton,
             JetDialogModal,
             JetInput,

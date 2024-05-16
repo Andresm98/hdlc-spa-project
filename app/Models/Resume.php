@@ -23,4 +23,9 @@ class Resume extends Model
     {
         return $this->belongsTo('App\Models\Community');
     }
+
+    public function activities()
+    {
+        return $this->hasMany('App\Models\Activity');
+    }
 }

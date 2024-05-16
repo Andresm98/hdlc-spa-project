@@ -36,7 +36,7 @@
         Historial Académico
       </Link>
     </section>
-    <section class="flex-shrink-0">
+    <!-- <section class="flex-shrink-0">
       <Link
         :href="route('daughter.sacrament.index')"
         :class="
@@ -47,7 +47,7 @@
       >
         Historial Sacramentos
       </Link>
-    </section>
+    </section> -->
     <section class="flex-shrink-0">
       <Link
         :href="route('daughter.permit.index')"

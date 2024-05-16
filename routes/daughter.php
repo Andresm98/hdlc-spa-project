@@ -194,13 +194,16 @@ Route::group(
         Route::get('activities/{community_id}', [CommunityActivityController::class, 'index'])
             ->name('communities.activity.index');
 
-        Route::post('activities/store/{community_id}', [CommunityActivityController::class, 'store'])
+        Route::get('activities/resume/{resume_id}', [CommunityActivityController::class, 'indexActitiesByResume'])
+            ->name('communities.activity.resume.index');
+
+        Route::post('activities/store/{resume_id}', [CommunityActivityController::class, 'store'])
             ->name('communities.activity.store');
 
-        Route::delete('activities/delete/{community_id}/{activity_id}', [CommunityActivityController::class, 'destroy'])
+        Route::delete('activities/delete/{resume_id}/{activity_id}', [CommunityActivityController::class, 'destroy'])
             ->name('communities.activity.delete');
 
-        Route::put('activities/update/{community_id}/{activity_id}', [CommunityActivityController::class, 'update'])
+        Route::put('activities/update/{resume_id}/{activity_id}', [CommunityActivityController::class, 'update'])
             ->name('communities.activity.update');
 
         //  Communities Resumes
@@ -233,6 +236,12 @@ Route::group(
 
         Route::put('resumes/update/{community_id}/{resume_id}', [CommunityResumeController::class, 'update'])
             ->name('communities.resume.update');
+
+        Route::get('resumes/report/pdf/one/{resume_id}', [CommunityResumeController::class, 'printResumeOne'])
+            ->name('communities.resumeone.pdf');
+
+        Route::get('resumes/report/pdf/two/{resume_id}', [CommunityResumeController::class, 'printResumeTwo'])
+            ->name('communities.resumetwo.pdf');
 
         // Visits Controller
 
