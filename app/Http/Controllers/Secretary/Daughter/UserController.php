@@ -1051,7 +1051,7 @@ class UserController extends Controller
                     return redirect()->route('secretary.daughters.index')->with('error', 'No es posible imprimir en formato pdf sobrepasa las 500 hermanas, cambie a EXCEL.');
                 }
 
-                return $pdf->setPaper('a4', 'landscape')->stream('ReportesHermanasHDLCActivas.pdf');
+                return $pdf->setPaper('a4', 'portrait')->stream('ReportesHermanasHDLCActivas.pdf');
             }
             if (request('status') == 2) {
                 $data = $query

@@ -1694,7 +1694,7 @@
               />
               <span class="ml-2 text-sm text-gray-600">Récord Académico</span>
             </label>
-            <label class="flex items-center">
+            <!-- <label class="flex items-center">
               <input
                 class="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
                 type="checkbox"
@@ -1702,7 +1702,7 @@
                 v-model="options"
               />
               <span class="ml-2 text-sm text-gray-600">Sacramentos</span>
-            </label>
+            </label> -->
           </div>
         </template>
 

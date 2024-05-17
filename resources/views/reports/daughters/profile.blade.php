@@ -347,7 +347,7 @@
                                     {!! $academic->institution !!}
                                 </td>
                                 <td>
-                                    {!! $academic->observation !!}
+                                    {!! $academic->level !!}
                                 </td>
                                 <td>
                                     @if ($academic->date_title)

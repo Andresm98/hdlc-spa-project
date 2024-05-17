@@ -5,7 +5,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Reporte Comunidades</title>
+        <title>Reporte General Comunidades</title>
         {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> --}}
 
@@ -82,20 +82,19 @@
                     </p>
                 </div>
                 <div style="float: left;width: 90%; height: 30px;">
-                    <p style="font-size:medium; margin-top:0.5cm;">
-                        Compañía Hijas de la Caridad de San Vicente de Paúl ©
-                    <p>Reporte Comunidades @if ($status)
+                    <p style="font-size:large; margin-top:0.9cm;">
+                    <h4>COMUNIDADES CON AÑOS DE FUNDACIÓN @if ($status)
                             @if ($status == 1)
                                 Abiertas
                             @else
                                 Cerradas
                             @endif
-                        @endif de la Compañía
+                        @endif
                         @if ($from && $to)
                             ({{ date('Y-m-d', strtotime($from)) }} -
                             {{ date('Y-m-d', strtotime($to)) }})
                         @endif
-                    </p>
+                    </h4>
                 </div>
             </div>
         </div>
@@ -113,43 +112,34 @@
             <table>
                 <tr>
                     <th>Nro</th>
-                    <th>Nombre</th>
-                    <th>Pastoral</th>
-                    <th>Correo</th>
-                    <th>Fechas Fundación</th>
-                    <th>Fechas Cierre</th>
+                    <th>Lugar</th>
+                    <th>Ciudad</th>
+                    <th>Comunidades</th>
+                    <th>Dirección</th>
+                    <th>Fechas de Apertura</th>
                 </tr>
                 {{ $count = 1 }}
-                @foreach ($data as $community)
+                @foreach ($data as $obj)
                     <tr>
                         <td width="7%">{{ $count++ }}</td>
-                        <td width="25%">{{ $community->comm_name }}</td>
-                        <td width="20%">{{ $community->pastoral->name }}</td>
-                        <td width="18%">{{ $community->comm_email }}</td>
+                        <td width="15%">{{ $obj->parish }}</td>
+                        <td width="15%">{{ $obj->province}}</td>
+                        <td width="25%">{{ $obj->community->comm_name }}</td>
+                        <td width="25%">{{ $obj->community->address->address }}</td>
                         <td>
-                            @if ($community->comm_status == 1)
-                                {{ date('Y-m-d', strtotime($community->date_fndt_comm)) }}
-                            @else
-                                {{ date('Y-m-d', strtotime($community->date_fndt_comm)) }}
-                            @endif
+                            {{ date('d.m.Y', strtotime($obj->community->date_fndt_comm)) }}
                         </td>
-                        <td>
-                            @if ($community->comm_status == 1)
+                        {{-- <td>
+                            @if ($obj->community->comm_status == 1)
                                 Presente
                             @else
-                                {{ date('Y-m-d', strtotime($community->date_close)) }}
+                                {{ date('Y-m-d', strtotime($obj->community->date_close)) }}
                             @endif
-                        </td>
-
+                        </td> --}}
                     </tr>
-
-                    {{-- Hermanas --}}
                 @endforeach
-
             </table>
-
             <hr>
-
         </div>
     </main>
 

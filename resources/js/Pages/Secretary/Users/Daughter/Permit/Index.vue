@@ -126,7 +126,7 @@ input:checked ~ .dot {
             </div>
           </div>
 
-          <div class="w-full lg:w-6/12 px-4">
+          <div class="w-full lg:w-4/12 px-4">
             <div class="relative w-full mb-3">
               <label
                 class="block text-sm font-medium text-gray-700"
@@ -151,7 +151,7 @@ input:checked ~ .dot {
             </div>
           </div>
 
-          <div class="w-full lg:w-6/12 px-4">
+          <div class="w-full lg:w-4/12 px-4">
             <div class="relative w-full mb-3">
               <label
                 class="block text-sm font-medium text-gray-700"
@@ -175,6 +175,61 @@ input:checked ~ .dot {
               />
             </div>
           </div>
+
+          <div class="w-full lg:w-4/12 px-4">
+            <div class="relative w-full mb-3">
+              <label
+                class="block text-sm font-medium text-gray-700"
+                htmlfor="grid-password"
+              >
+                ¿La hermana lleva hábito?:
+              </label>
+              <small>Formato: Seleccionar una opción.</small>
+
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.habit">
+                {{ $page.props.errors.habit }}
+              </p>
+
+              <select
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                v-model="form.habit"
+              >
+                <option value="1">Si</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-full px-4">
+            <div>
+              <label
+                for="duration"
+                class="block text-sm font-medium text-gray-700"
+              >
+                Duración de la ausencia autorizada:
+              </label>
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.duration"
+              >
+                {{ $page.props.errors.duration }}
+              </p>
+              <small>Formato: Agregar la dirección de destino.</small>
+              <div class="mb-1">
+                <textarea
+                  id="duration"
+                  name="duration"
+                  rows="1"
+                  class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
+                  v-model="form.duration"
+                  placeholder="Agregar la duración.."
+                  :maxlength="100"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
           <div class="w-full lg:w-full px-4">
             <div class="relative w-full mb-3">
               <label
@@ -742,7 +797,7 @@ input:checked ~ .dot {
               </div>
             </div>
 
-            <div class="w-full lg:w-6/12 px-4">
+            <div class="w-full lg:w-4/12 px-4">
               <div class="relative w-full mb-3">
                 <label
                   class="block text-sm font-medium text-gray-700"
@@ -767,7 +822,7 @@ input:checked ~ .dot {
               </div>
             </div>
 
-            <div class="w-full lg:w-6/12 px-4">
+            <div class="w-full lg:w-4/12 px-4">
               <div class="relative w-full mb-3">
                 <label
                   class="block text-sm font-medium text-gray-700"
@@ -791,6 +846,64 @@ input:checked ~ .dot {
                 />
               </div>
             </div>
+
+            <div class="w-full lg:w-4/12 px-4">
+              <div class="relative w-full mb-3">
+                <label
+                  class="block text-sm font-medium text-gray-700"
+                  htmlfor="grid-password"
+                >
+                  ¿La hermana lleva hábito?:
+                </label>
+                <small>Formato: Seleccionar una opción.</small>
+
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.habit"
+                >
+                  {{ $page.props.errors.habit }}
+                </p>
+
+                <select
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  v-model="updatePermitForm.habit"
+                >
+                  <option value="1">Si</option>
+                  <option value="0">No</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="w-full lg:w-full px-4">
+              <div>
+                <label
+                  for="duration"
+                  class="block text-sm font-medium text-gray-700"
+                >
+                  Duración de la ausencia autorizada:
+                </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.duration"
+                >
+                  {{ $page.props.errors.duration }}
+                </p>
+                <small>Formato: Agregar la dirección de destino.</small>
+                <div class="mb-1">
+                  <textarea
+                    id="duration"
+                    name="duration"
+                    rows="1"
+                    class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
+                    v-model="updatePermitForm.duration"
+                    placeholder="Agregar la duración.."
+                    :maxlength="100"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
             <div class="w-full lg:w-full px-4">
               <div class="relative w-full mb-3">
                 <label
@@ -903,6 +1016,8 @@ export default {
       date_general: null,
       date_out: null,
       date_in: null,
+      duration: null,
+      habit: null,
       address: null,
       province_id: null,
       canton_id: null,
@@ -949,6 +1064,8 @@ export default {
         date_general: null,
         date_out: null,
         date_in: null,
+        duration: null,
+        habit: null,
       }),
 
       permitBeingUpdated: null,
@@ -966,6 +1083,8 @@ export default {
         canton_id: null,
         parish_id: null,
         political_division_id: null,
+        duration: null,
+        habit: null,
       }),
 
       selectOne: {
@@ -1124,8 +1243,7 @@ export default {
       return response.data;
     },
 
-    onSearchProvincesChange(term) {
-    },
+    onSearchProvincesChange(term) {},
 
     onSelectedProvince(province) {
       this.form.province_id = province.id;
@@ -1151,8 +1269,7 @@ export default {
         });
     },
 
-    onSearchCantonChange(term) {
-    },
+    onSearchCantonChange(term) {},
 
     onSelectedCanton(canton) {
       this.form.canton_id = canton.id;
@@ -1175,8 +1292,7 @@ export default {
         });
     },
 
-    onSearchParishChange(term) {
-    },
+    onSearchParishChange(term) {},
 
     onSelectedParish(parish) {
       this.form.parish_id = parish.id;
@@ -1215,6 +1331,8 @@ export default {
               this.form.date_general = null;
               this.form.date_out = null;
               this.form.date_in = null;
+              this.form.duration = null;
+              this.form.habit = null;
               this.form.address = null;
               this.$refs.qleditor1.setHTML("");
               this.selectOne.selectedProvince = null;
@@ -1254,6 +1372,8 @@ export default {
       this.updatePermitForm.date_general = permit.date_general;
       this.updatePermitForm.date_out = permit.date_out;
       this.updatePermitForm.date_in = permit.date_in;
+      this.updatePermitForm.duration = permit.duration_absence;
+      this.updatePermitForm.habit = permit.habit;
       this.updatePermitForm.address = permit.address.address;
       this.updatePermitForm.political_division_id =
         permit.address.political_division_id;

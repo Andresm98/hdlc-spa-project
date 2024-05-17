@@ -43,7 +43,7 @@ use App\Http\Controllers\Secretary\Community\Inventory\CommunitySectionControlle
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityInventoryController;
 use App\Http\Controllers\Secretary\Community\Vehicles\VehicleGlobalController;
 use App\Http\Controllers\Secretary\Community\WorkIndividual\WorkIndividualController;
-
+use App\Http\Controllers\Secretary\Documents\DocumentController;
 
 // Address Controllers
 
@@ -761,5 +761,22 @@ Route::group(
 
         Route::get('community/vehicles/exportExcel', [VehicleGlobalController::class, 'exportExcel'])
             ->name('vehicles.communities.export.excel');
+
+        // Documents
+
+        Route::get('documents/all', [DocumentController::class, 'index'])
+            ->name('documents.index');
+
+        Route::post('documents/store', [DocumentController::class, 'store'])
+            ->name('documents.store');
+
+        Route::put('documents/update/{event_id}', [DocumentController::class, 'update'])
+            ->name('documents.update');
+
+        Route::get('documents/delete/{event_id}', [DocumentController::class, 'destroy'])
+            ->name('documents.delete');
+
+        Route::get('documents/report-pdf/{event_id}', [DocumentController::class, 'reportPDF'])
+            ->name('documents.report.pdf');
     }
 );

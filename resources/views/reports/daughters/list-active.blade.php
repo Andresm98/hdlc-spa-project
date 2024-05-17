@@ -5,7 +5,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Reporte Hermanas @if ($type == 1)
+        <title>Reporte Hermanas Activas @if ($type == 1)
                 Seminario
             @elseif ($type == 2)
                 Jóvenes
@@ -29,7 +29,7 @@
             }
 
             header {
-                position: fixed;
+                /* position: fixed;
                 margin-bottom: 0.01cm;
                 top: 0cm;
                 left: 0cm;
@@ -37,7 +37,7 @@
                 height: 2.2cm;
                 background-color: #ffffff;
                 color: white;
-                text-align: center;
+                text-align: center; */
                 /* line-height: 15px; */
             }
 
@@ -79,7 +79,7 @@
 </head>
 
 <body>
-    <header>
+    {{-- <header>
         <div style=" margin-block-start: 0.2cm; color: #000000">
             <div>
                 <div style="float: left;width: 10%; height: 30px;">
@@ -110,7 +110,21 @@
 
             </div>
         </div>
-    </header>
+    </header> --}}
+    <?php
+    use Carbon\Carbon;
+    ?>
+    <div style=" margin-left: 40px; color: #000000">
+        <h4 style="text-align: center; margin-right: 60px">LISTADO GENERAL: COMPAÑÍA DE LAS HIJAS DE LA CARIDAD DE SAN
+            VICENTE DE PAÚL
+            <br>
+            PROVINCIA DEL ECUADOR
+        </h4>
+
+        <h4 style="text-align: center; margin-left: 80px; margin-right: 80px">
+            DISTRIBUCIÓN ALFABÉTICA
+        </h4>
+    </div>
 
     <main>
         {{-- Address --}}
@@ -121,36 +135,52 @@
             <div style="margin-bottom:5px;">
 
             </div>
+
+            <h5 style="text-align: right; margin-left: 80px; margin-right: 80px">
+                {{ strtoupper(\Carbon\Carbon::parse(Carbon::now())->locale('es')->isoFormat('D MMMM YYYY')) }}
+            </h5>
             <table>
                 <tr>
                     <th>Nro</th>
-                    <th>Hermana</th>
-                    <th>Nombres</th>
-                    <th>Apellidos</th>
-                    <th>Fecha de Nacimiento</th>
-                    <th>Fecha de Admisión</th>
-                    @if ($type == 2)
+                    {{-- <th>Hermana</th> --}}
+                    <th>APELLIDOS Y NOMBRES</th>
+                    <th colspan="3" style="font-size: 10px">F. NACIMIENTO</th>
+                    <th colspan="3" style="font-size: 10px">F. VOCACIÓN</th>
+                    <th style="font-size: 10px">N.C. IDENTIDAD</th>
+                    <th style="font-size: 10px">Observac.</th>
+                    {{-- @if ($type == 2)
                         <th>Fecha de Envío</th>
                     @elseif ($type == 3)
                         <th>Fecha de Envío</th>
                         <th>Fecha de Votos</th>
-                    @endif
+                    @endif --}}
                 </tr>
                 {{ $count = 1 }}
                 @foreach ($data as $daughter)
                     <tr>
-                        <td width="7%">{{ $count++ }}</td>
-                        <td>{{ $daughter->fullnamecomm }}</td>
-                        <td>{{ $daughter->name }}</td>
-                        <td>{{ $daughter->lastname }}</td>
+                        <td width="5%">{{ $count++ }}</td>
+                        {{-- <td>{{ $daughter->fullnamecomm }}</td> --}}
+                        <td width="55%">{{ strtoupper($daughter->lastname) }} {{ $daughter->name }}</td>
                         @if ($daughter->profile)
-                            <td>
-                                {{ date('Y-m-d', strtotime($daughter->profile->date_birth)) }}
+                            <td width="5%" style="text-align:left ">
+                                {{ date('d', strtotime($daughter->profile->date_birth)) }}
                             </td>
-                            <td>
-                                {{ date('Y-m-d', strtotime($daughter->profile->date_admission)) }}
+                            <td width="5%" style="text-align:left">
+                                {{ date('m', strtotime($daughter->profile->date_birth)) }}
                             </td>
-                            @if ($type == 2)
+                            <td width="5%" style="text-align:left">
+                                {{ date('Y', strtotime($daughter->profile->date_birth)) }}
+                            </td>
+                            <td width="5%" style="text-align:left">
+                                {{ date('d', strtotime($daughter->profile->date_vocation)) }}
+                            </td>
+                            <td width="5%" style="text-align:left">
+                                {{ date('m', strtotime($daughter->profile->date_vocation)) }}
+                            </td>
+                            <td width="5%" style="text-align:left">
+                                {{ date('Y', strtotime($daughter->profile->date_vocation)) }}
+                            </td>
+                            {{-- @if ($type == 2)
                                 <td>
                                     {{ date('Y-m-d', strtotime($daughter->profile->date_send)) }}
                                 </td>
@@ -161,7 +191,13 @@
                                 <td>
                                     {{ date('Y-m-d', strtotime($daughter->profile->date_vote)) }}
                                 </td>
-                            @endif
+                            @endif --}}
+                            <td width="5%" style="text-align:left">
+                                @if ($daughter->profile->identity_card)
+                                    {{ $daughter->profile->identity_card }}
+                                @endif
+                            </td>
+                            <td></td>
                         @else
                             <td>Pendiente</td>
                             <td>Pendiente</td>

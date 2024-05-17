@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\AppointmentLevel;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\Validator;
 
 class PermitController extends Controller
@@ -63,6 +65,8 @@ class PermitController extends Controller
             'date_general' => ['required', 'date_format:Y-m-d H:i:s'],
             'date_out' => ['required', 'date_format:Y-m-d H:i:s'],
             'date_in' => ['required', 'date_format:Y-m-d H:i:s'],
+            'duration' => ['nullable', 'min:1', 'max:100'],
+            'habit' => ['required', 'digits_between:0,1'],
         ]);
 
         $validator = Validator::make([
@@ -105,6 +109,8 @@ class PermitController extends Controller
                 'date_in' => $request->get('date_in'),
                 'status' => 1,
                 'community_id' => $community->id,
+                'duration_absence' => $request->get('duration'),
+                'habit' => $request->get('habit'),
             ]);
         } else {
             $permit = $user->profile->permits()->create([
@@ -115,6 +121,8 @@ class PermitController extends Controller
                 'date_out' => $request->get('date_out'),
                 'date_in' => $request->get('date_in'),
                 'status' => 1,
+                'duration_absence' => $request->get('duration'),
+                'habit' => $request->get('habit'),
             ]);
         }
 
@@ -171,7 +179,6 @@ class PermitController extends Controller
             return abort(404);
         }
 
-
         $user = User::find($user_id);
 
         $permit = Permit::find($permit_id);
@@ -193,6 +200,8 @@ class PermitController extends Controller
                 'date_out' => ['required', 'date_format:Y-m-d H:i:s'],
                 'date_in' => ['required', 'date_format:Y-m-d H:i:s'],
                 'status' => ['required', 'digits_between:0,1'],
+                'duration' => ['nullable', 'min:1', 'max:100'],
+                'habit' => ['required', 'digits_between:0,1'],
             ]
         );
 
@@ -210,6 +219,8 @@ class PermitController extends Controller
             'date_out' => $request->get('date_out'),
             'date_in' => $request->get('date_in'),
             'status' => $request->get('status'),
+            'duration_absence' => $request->get('duration'),
+            'habit' => $request->get('habit'),
         ]);
 
         $permit->address()->update([

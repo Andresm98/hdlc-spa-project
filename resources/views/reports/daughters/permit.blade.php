@@ -5,11 +5,15 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Permiso Hermana {{ $user->name }}</title>
+        <title>Permiso Hermana {{ $user->name }}
+            @if ($permit->status == 1)
+                Activo
+            @elseif ($permit->status == 0)
+                Cerrado
+            @endif
+        </title>
         {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> --}}
-
-
         <style>
             @page {
                 margin: 0cm 0cm;
@@ -18,19 +22,6 @@
 
             body {
                 margin: 2.5cm 2cm 2cm;
-
-            }
-
-            header {
-                position: fixed;
-                top: 0cm;
-                left: 0cm;
-                right: 0cm;
-                height: 2.5cm;
-                background-color: #ffffff;
-                color: white;
-                text-align: center;
-                /* line-height: 15px; */
             }
 
             footer {
@@ -96,34 +87,20 @@
 <body>
     <?php
     use App\Http\Controllers\AddressController;
+    use Carbon\Carbon;
     ?>
-    <header>
-        <div style=" margin-block-start: 0.2cm; color: #000000">
-            <br>
-            <br>
-            <div>
-                <div style=" height: 30px;">
-                    <p style="font-size:medium; margin-top:0.5cm;">
+    <div style=" margin-left: 40px; color: #000000">
 
-                        <strong>PROVINCIA DE: </strong>ECUADOR
-                    </p>
-                    <small>AUTORIZACIÓN PARA RESIDIR FUERA DE UNA CASA DE LA COMPAÑÍA <br> Estado: @if ($permit->status == 1)
-                            Activo
-                        @elseif ($permit->status == 0)
-                            Cerrado
-                        @endif
-                    </small>
-                </div>
 
-            </div>
-        </div>
-    </header>
+        <strong>PROVINCIA DE: </strong>ECUADOR
 
+        <h4 style="text-align: center; margin-left: 80px; margin-right: 80px">AUTORIZACIÓN PARA RESIDIR UNA HERMANA FUERA
+            DE UNA CASA DE LA COMPAÑÍA
+        </h4>
+    </div>
     <main>
-        <div>
+        <div style="margin-left: 20px">
             <div style="font-size: medium; margin-top: 30px">
-                <br>
-                <br>
                 <br>
 
                 <table>
@@ -146,21 +123,24 @@
                     @if ($user->profile->date_birth)
                         <tr>
                             <td> <strong>Fecha de Nacimiento: </strong> </td>
-                            <td> {{ date('d-m-Y', strtotime($user->profile->date_birth)) }}</td>
+                            <td> {{ \Carbon\Carbon::parse($user->profile->date_birth)->locale('es')->isoFormat('D MMMM YYYY') }}
+                            </td>
                         </tr>
                     @endif
 
                     @if ($user->profile->date_vocation)
                         <tr>
                             <td> <strong>Fecha de Vocación: </strong></td>
-                            <td> {{ date('d-m-Y', strtotime($user->profile->date_vocation)) }}</td>
+                            <td> {{ \Carbon\Carbon::parse($user->profile->date_vocation)->locale('es')->isoFormat('D MMMM YYYY') }}
+                            </td>
                         </tr>
                     @endif
 
                     @if ($user->profile->date_vote)
                         <tr>
                             <td> <strong>Fecha de Votos: </strong></td>
-                            <td> {{ date('d-m-Y', strtotime($user->profile->date_vote)) }}</td>
+                            <td> {{ \Carbon\Carbon::parse($user->profile->date_vote)->locale('es')->isoFormat('D MMMM YYYY') }}
+                            </td>
                         </tr>
                     @endif
 
@@ -187,7 +167,7 @@
 
                     <tr>
                         <td> <strong>Fecha del Consejo en el que se dió la autorización: </strong></td>
-                        <td> {{ date('d-m-Y', strtotime($permit->date_general)) }}</td>
+                        <td> {{ \Carbon\Carbon::parse($permit->date_general)->locale('es')->isoFormat('D MMMM YYYY') }}
                     </tr>
 
                     @foreach ([1, 2, 3, 4, 5, 6] as $number)
@@ -210,16 +190,64 @@
                     @endforeach
 
                     <tr>
-                        <td> <strong>Fecha efectiva de la marcha: </strong> </td>
-                        <td> {{ date('d-m-Y', strtotime($permit->date_out)) }}</td>
+                        <td> <strong> Duración de la ausencia autorizada: </strong> </td>
+                        <td> {{ $permit->duration_absence }}</td>
                     </tr>
 
+                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+
+                    <tr>
+                        <td> <strong>Fecha efectiva de la marcha: </strong> </td>
+                        <td> {{ \Carbon\Carbon::parse($permit->date_out)->locale('es')->isoFormat('D MMMM YYYY') }}
+                        </td>
+
+                    </tr>
+
+                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+
+                    <tr>
+                        <td> <strong>Fecha que se reintegra a la Comunidad: </strong> </td>
+                        <td> {{ \Carbon\Carbon::parse($permit->date_in)->locale('es')->isoFormat('D MMMM YYYY') }}</td>
+                    </tr>
+
+                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+
+                    <tr>
+                        <td> <strong>La Hermana lleva ¿hábito? </strong> </td>
+                        <td>
+                            @if ($permit->habit)
+                                Si
+                            @else
+                                No
+                            @endif
+                        </td>
+                    </tr>
+
+                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    @endforeach
                 </table>
-                <br>
                 <br>
                 {{-- <strong>Fecha del consejo provicial en el que se autoriza el Permiso: </strong>
                 {{ date('d-m-Y', strtotime($permit->date_province)) }} --}}
-
                 Dirección de la Hermana fuera de la Comunidad en
                 {{ AddressController::showActualCompleteAddressPermit($permit->address->political_division_id) }}.
                 <br>
@@ -237,19 +265,17 @@
                 <br>
                 <br>
                 <br>
-                <strong>Fecha: </strong>{{ date('d.m.Y', strtotime($permit->date_province)) }}
+                Fecha: {{ date('d.m.Y', strtotime($permit->date_province)) }}
                 <br>
                 <br>
                 <br>
                 <br>
-
+                <br>
+                <br>
             </div>
         </div>
-    </main>
-
-    <footer>
         <p
-            style="font-size:15px; margin-left:0.40cm;  margin-right:0.40cm; margin-bottom:0.20cm; margin-top:0.20cm; color:#111631">
+            style="text-align: right; font-size:15px; margin-left:0.40cm;  margin-right:0.40cm; margin-bottom:0.20cm; margin-top:0.20cm; color:#111631">
 
             @if ($visitator)
                 Sor {{ $visitator['profile']->user->name }} {{ strtoupper($visitator['profile']->user->lastname) }}
@@ -258,6 +284,10 @@
             @endif
 
         </p>
+    </main>
+
+    <footer>
+
     </footer>
 
 </body>

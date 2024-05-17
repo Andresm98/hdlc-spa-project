@@ -85,11 +85,12 @@
                     <p style="font-size:medium; margin-top:0.5cm;">
                         Compañía Hijas de la Caridad de San Vicente de Paúl ©
                     </p>
-                    <h2 style="font-size:medium; margin-top:0.5cm;">Información Hermanas Sirvientes
+                    <h2 style="font-size:medium; margin-top:0.5cm;"> Hermanas Sirvientas
                         @if ($from != null || $to != null)
                             Fechas de Inicio: ({{ date('Y-m-d', strtotime($from)) }} -
                             {{ date('Y-m-d', strtotime($to)) }})
                         @endif- Provincia Ecuador
+                        Año {{ date('Y')}}
                     </h2>
                 </div>
 
@@ -110,48 +111,48 @@
             ?>
             <table>
                 <tr>
-                    <th>Comunidad Por Orden Alfabético</th>
-                    <th>Apellidos y Nombres de las Hermanas Sirvientes</th>
-                    <th>Fecha Nacimiento</th>
-                    <th>Fecha Vocación</th>
-                    <th>Fecha Presentación en la Comunidad Local</th>
-                    <th>Fecha del C. provincial que concedió un 2do Trenio</th>
-                    <th>Fecha del C. provincial que concedió un 3er Trenio</th>
+                    <th  style="text-align: center;">Comunidad Por Orden Alfabético de localidades</th>
+                    <th  style="text-align: center;">Apellidos y Nombres de las Hermanas Sirvientes</th>
+                    <th  style="text-align: center;">Fecha Nacimiento</th>
+                    <th  style="text-align: center;">Fecha Vocación</th>
+                    <th  style="text-align: center;">Fecha Presentación en la Comunidad Local</th>
+                    <th  style="text-align: center;">Fecha del C. provincial que concedió un 2do Trienio</th>
+                    <th  style="text-align: center;">Fecha del C. provincial que concedió un 3er Trienio</th>
                 </tr>
                 {{ $count = 1 }}
                 @foreach ($dataServant as $appointment)
                     <tr>
                         <td width="15%">
-                            @if ($appointment['community'] != null)
-                                {{ $appointment['community']->comm_name }}
+                            @if ($appointment->community != null)
+                                {{ $appointment->community->comm_name }}
                             @endif
                         </td>
                         <td width="10%">
-                            {{ $appointment['appsubjet']->profile->user->lastname }} <br>
-                            {{ $appointment['appsubjet']->profile->user->name }}</td>
+                            {{ strtoupper($appointment->appsubjet->profile->user->lastname) }} <br>
+                            {{ $appointment->appsubjet->profile->user->name }}</td>
                         <td width="6%">
-                            @if ($appointment['appsubjet']->profile->date_birth != null)
-                                {{ date('Y-m-d', strtotime($appointment['appsubjet']->profile->date_birth)) }}<br>
+                            @if ($appointment->appsubjet->profile->date_birth != null)
+                                {{ date('d.m.Y', strtotime($appointment->appsubjet->profile->date_birth)) }}<br>
                             @endif
                         </td>
                         <td width="6%">
-                            @if ($appointment['appsubjet']->profile->date_vocation != null)
-                                {{ date('Y-m-d', strtotime($appointment['appsubjet']->profile->date_vocation)) }}<br>
+                            @if ($appointment->appsubjet->profile->date_vocation != null)
+                                {{ date('d.m.Y', strtotime($appointment->appsubjet->profile->date_vocation)) }}<br>
                             @endif
                         </td>
                         <td width="8%">
-                            @if ($appointment['presentation_thr'] != null)
-                                {{ date('Y-m-d', strtotime($appointment['presentation_thr']->date_appointment)) }}<br>
+                            @if ($appointment->presentation_thr != null)
+                                {{ date('d.m.Y', strtotime($appointment->presentation_thr->date_appointment)) }}<br>
                             @endif
                         </td>
                         <td width="8%">
-                            @if ($appointment['first_thr'] != null)
-                                {{ date('Y-m-d', strtotime($appointment['first_thr']->date_appointment)) }}<br>
+                            @if ($appointment->first_thr != null)
+                                {{ date('d.m.Y', strtotime($appointment->first_thr->date_appointment)) }}<br>
                             @endif
                         </td>
                         <td width="8%">
-                            @if ($appointment['second_thr'] != null)
-                                {{ date('Y-m-d', strtotime($appointment['second_thr']->date_appointment)) }}<br>
+                            @if ($appointment->second_thr != null)
+                                {{ date('d.m.Y', strtotime($appointment->second_thr->date_appointment)) }}<br>
                             @endif
                         </td>
 
@@ -166,13 +167,13 @@
     </main>
 
     <footer>
-        <p
+        {{-- <p
             style="font-size:12px; margin-left:0.40cm;  margin-right:0.40cm; margin-bottom:0.20cm; margin-top:0.20cm; color:#111631">
             Fecha Impresión: {{ date('Y-m-d h:i:s a', time()) }}. Pichincha,
             Ecuador.
             Este documento fue generado en la plataforma privada de la
             Compañía Hijas de la Caridad de San Vicente de Paúl ©, Provincia Ecuador.
-        </p>
+        </p> --}}
     </footer>
 
 </body>

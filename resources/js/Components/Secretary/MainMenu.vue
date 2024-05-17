@@ -463,7 +463,9 @@
         </Link>
         <hr
           :class="
-            isUrl('secretary/communities/filesglobal/all') ? 'text-white ' : 'hidden'
+            isUrl('secretary/communities/filesglobal/all')
+              ? 'text-white '
+              : 'hidden'
           "
         />
       </div>
@@ -493,7 +495,9 @@
         </Link>
         <hr
           :class="
-            isUrl('secretary/communities/inventoryglobal/all') ? 'text-white ' : 'hidden'
+            isUrl('secretary/communities/inventoryglobal/all')
+              ? 'text-white '
+              : 'hidden'
           "
         />
       </div>
@@ -528,6 +532,33 @@
           "
         />
       </div>
+    </div>
+
+    <div class="mb-4">
+      <Link
+        class="group flex items-center py-3"
+        :href="route('secretary.documents.index')"
+      >
+        <icon
+          name="settings"
+          class="mr-2 w-4 h-4"
+          :class="
+            isUrl('secretary/documents/all')
+              ? 'fill-white'
+              : 'fill-gray-400 group-hover:fill-white'
+          "
+        />
+        <div
+          :class="
+            isUrl('secretary/documents/all')
+              ? 'text-white'
+              : 'text-gray-400 group-hover:text-white'
+          "
+        >
+          Documentos
+        </div>
+      </Link>
+      <hr :class="isUrl('secretary/documents/all') ? 'text-white' : 'hidden'" />
     </div>
 
     <div class="mb-4">

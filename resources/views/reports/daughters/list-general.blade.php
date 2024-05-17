@@ -5,7 +5,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Reporte Hermanas</title>
+        <title>Reporte General Hermanas</title>
         {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> --}}
 
@@ -110,7 +110,7 @@
             <table>
                 <tr>
                     <th>Nro</th>
-                    <th>Hermana</th>
+                    {{-- <th>Hermana</th> --}}
                     <th>Nombres</th>
                     <th>Apellidos</th>
                     <th>Fecha de Nacimiento</th>
@@ -119,7 +119,7 @@
                 @foreach ($data as $daughter)
                     <tr>
                         <td width="7%">{{ $count++ }}</td>
-                        <td>{{ $daughter->fullnamecomm }}</td>
+                        {{-- <td>{{ $daughter->fullnamecomm }}</td> --}}
                         <td>{{ $daughter->name }}</td>
                         <td>{{ $daughter->lastname }}</td>
                         @if ($daughter->profile)

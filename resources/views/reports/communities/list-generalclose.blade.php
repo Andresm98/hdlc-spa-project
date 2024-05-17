@@ -112,8 +112,8 @@
             </div>
             <table>
                 <tr>
-                    <th>Nombre de la Casa</th>
-                    <th>Fundación de la Casa</th>
+                    <th>NOMBRE CASA</th>
+                    <th>FECHA DE FUNDACIÓN</th>
                     <th>Fecha del Consejo Provincial</th>
                     <th>Fecha del Consejo General</th>
                     <th>Fecha Cierre de la Casa</th>

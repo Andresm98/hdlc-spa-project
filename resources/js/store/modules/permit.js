@@ -7,6 +7,8 @@ const state = () => ({
         date_general: "",
         date_out: "",
         date_in: "",
+        duration: "",
+        habit: ""
     },
 });
 

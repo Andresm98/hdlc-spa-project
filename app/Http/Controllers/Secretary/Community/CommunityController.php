@@ -670,8 +670,11 @@ class CommunityController extends Controller
             'dateStart' => ['date_format:Y-m-d H:i:s'],
             'perPage' =>  ['integer'],
         ]);
+
         $dateFromTo = new CommunityController();
+
         $addressClass = new AddressController();
+
         $provinces =  $addressClass->getProvinces();
 
         if ($validator->fails()) {
@@ -761,7 +764,9 @@ class CommunityController extends Controller
             ->get();
 
         $from =   $dateFromTo->getFrom();
+
         $to =  $dateFromTo->getTo();
+
         $pastoral =  $dateFromTo->getPastoral();
 
         $status =  $type = request('active');
@@ -775,16 +780,35 @@ class CommunityController extends Controller
                 ->get();
 
             $pdf = PDF::loadView('reports.communities.list-generalclose', compact('data', 'status', 'from', 'to', 'pastoral'));
+
             return $pdf->setPaper('a4', 'landscape')->stream('ReportesComunidadesCerradasHDLC.pdf');
         }
 
+        $arrayComm = array();
+
+        foreach ($data as $comm) {
+            array_push($arrayComm, (object)[
+                'community' => $comm,
+                'parish' => $comm->address->parish->name,
+                'canton' => $comm->address->canton->name,
+                'province' => $comm->address->province->name,
+            ]);
+        }
+
+        usort($arrayComm, function ($a, $b) {
+            return strcmp($a->parish, $b->parish);
+        });
+
+        $data = $arrayComm;
+
         if ((int)request('printOperation') === 1 && (int)request('active') === 1) {
             $pdf = PDF::loadView('reports.communities.list-custom', compact('data', 'status', 'from', 'to', 'pastoral'));
+
             return $pdf->setPaper('a4', 'landscape')->stream('ReportesComunidadesyHermanasHDLC.pdf');
         }
 
         $pdf = PDF::loadView('reports.communities.list-general', compact('data', 'status', 'from', 'to', 'pastoral'));
-        // return $pdf -> download('Usuarios.pdf');
+
         return $pdf->setPaper('a4', 'landscape')->stream('ReportesComunidadesHDLC.pdf');
     }
 }

@@ -224,9 +224,10 @@ class AppointmentGlobalController extends Controller
     public function exportPDF()
     {
         $query = Appointment::query();
+
         $query->with('profile.user')
             ->with('appointment_level')
-            ->with('community')
+            ->with('community.address')
             ->with('transfer')
             ->orderBy('date_appointment', 'desc')
             ->get();
@@ -302,7 +303,7 @@ class AppointmentGlobalController extends Controller
                     ->take(4)
                     ->get();
 
-                array_push($dataServant, [
+                array_push($dataServant,  (object)[
                     'appsubjet' => $appointment,
                     'id' => $appointment['profile']->user->id,
                     'community' => $appointment['community'],
@@ -313,14 +314,19 @@ class AppointmentGlobalController extends Controller
                     'presentation_thr' =>   $lastAppointment->get(0),
                     'first_thr' =>   $lastAppointment->get(1),
                     'second_thr' =>   $lastAppointment->get(2),
+                    'second_thr' =>   $lastAppointment->get(2),
+                    'parish' => $appointment['community']->address->parish->name,
                 ]);
             }
+
+            usort($dataServant, function ($a, $b) {
+                return strcmp($a->parish, $b->parish);
+            });
 
             $pdf = PDF::loadView('reports.appointments.list-appointments-servant', compact('dataServant', 'from', 'to', 'type', 'level'));
 
             return $pdf->setPaper('a4', 'landscape')->stream('ReportesNombramientosHermanas.pdf');
         }
-
 
         $pdf = PDF::loadView('reports.appointments.list-appointments', compact('data', 'from', 'to', 'type', 'level'));
 

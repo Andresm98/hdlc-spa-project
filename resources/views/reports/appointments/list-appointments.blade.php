@@ -135,12 +135,12 @@
                         <td width="12%"> {{ $appointment->profile->user->name }}</td>
                         <td width="12%"> {{ $appointment->profile->user->lastname }}</td>
                         <td width="10%">
-                            {{ date('Y-m-d', strtotime($appointment->profile->date_birth)) }}<br>
+                            {{ date('d.m.Y', strtotime($appointment->profile->date_birth)) }}<br>
 
                         </td>
                         <td width="10%">
                             @if ($appointment->profile->date_vocation != null)
-                                {{ date('Y-m-d', strtotime($appointment->profile->date_vocation)) }}<br>
+                                {{ date('d.m.Y', strtotime($appointment->profile->date_vocation)) }}<br>
                             @endif
                         </td>
                         {{-- <td width="10%">
@@ -149,10 +149,10 @@
                             @endif
                         </td> --}}
                         <td>{{ $appointment->appointment_level->name }}</td>
-                        <td width="10%">{{ date('Y-m-d', strtotime($appointment->date_appointment)) }}
+                        <td width="10%">{{ date('d.m.Y', strtotime($appointment->date_appointment)) }}
                             @if ($appointment->date_end_appointment != null)
                                 -
-                                {{ date('Y-m-d', strtotime($appointment->date_end_appointment)) }}
+                                {{ date('d.m.Y', strtotime($appointment->date_end_appointment)) }}
                             @endif
                         </td>
 

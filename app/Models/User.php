@@ -86,4 +86,11 @@ class User extends Authenticatable
     {
         return $this->morphOne('App\Models\Images', 'imageable');
     }
+
+    // Uno a varios
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
 }
