@@ -153,6 +153,7 @@
                             En caso de tener un anexo que dependa de esta Comunidad,
                             indicar dirección:
                         </strong>
+                        <br>
                         {{ $resume->comm_annexed_resume }}
                     </p>
                 </td>
@@ -255,7 +256,7 @@
                             {{ $close->name_title }}
                         </td>
                         <td>
-                            {{ $close->date_title }}
+                            {{ date('Y-m-d', strtotime($close->date_title)) }}
                         </td>
                     </tr>
                 @endforeach

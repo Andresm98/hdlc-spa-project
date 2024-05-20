@@ -18,9 +18,7 @@ class DocumentController extends Controller
     public function index()
     {
         $validator = Validator::make(request()->all(), [
-            'date.month' =>  ['integer', 'between:0,11'],
-            'date.year' =>  ['integer', 'between:1000,200000'],
-            'type' => ['integer', 'between:1,4']
+            'type' => ['integer', 'between:1,15']
         ]);
 
         if ($validator->fails()) {
@@ -40,11 +38,26 @@ class DocumentController extends Controller
             $query->where('name', 'LIKE', '%' . request('search') . '%');
         }
 
-        // $query->orderBy('dates', 'asc');
+        if (request('dateStart') || request('dateEnd')) {
+            $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
+                'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
+                'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
+            ]);
+            if ($validatorData->fails()) {
+                return redirect()->back()
+                    ->withErrors($validatorData->errors());
+            } else {
+                $query->whereBetween('created_at', [request('dateStart'), request('dateEnd')]);
+                $query->orderBy('created_at', 'desc');
+            }
+        }
 
         return Inertia::render('Secretary/Documents/Index', [
-            'events' => $query->get(),
-            'filters' => request()->all(['type', 'search'])
+            'events' =>  $query
+                ->with('user')
+                ->paginate(10)
+                ->appends(request()->query()),
+            'filters' => request()->all(['type', 'search', 'dateStart', 'dateEnd'])
         ]);
     }
 
@@ -68,8 +81,8 @@ class DocumentController extends Controller
     {
         $validatorData = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
-            "type" => ['nullable', 'integer'],
-            'content' => ['required', 'max:40000'],
+            "type" => ['required', 'integer'],
+            'content' => ['required', 'max:60000'],
         ]);
 
         if ($validatorData->fails()) {
@@ -130,11 +143,10 @@ class DocumentController extends Controller
             return abort(404);
         }
 
-
         $validatorData = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
-            "type" => ['nullable', 'integer'],
-            'content' => ['nullable', 'max:40000'],
+            "type" => ['required', 'integer'],
+            'content' => ['nullable', 'max:60000'],
         ]);
 
         if ($validatorData->fails()) {
@@ -190,7 +202,7 @@ class DocumentController extends Controller
 
         $data = Document::find($event_id);
 
-        $pdf = PDF::loadView('reports.events.event', compact('data'));
+        $pdf = PDF::loadView('reports.document.document', compact('data'));
 
         return $pdf->setPaper('a4', 'portrait')->stream('DocumentosHDLC.pdf');
     }

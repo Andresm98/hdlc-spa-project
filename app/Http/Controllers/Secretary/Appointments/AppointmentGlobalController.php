@@ -286,8 +286,6 @@ class AppointmentGlobalController extends Controller
 
         $type = request('status');
 
-        //
-
         if ((int)request('level') === 10 && (int)request('status') === 1) {
 
             $dataServant = array();
@@ -328,7 +326,20 @@ class AppointmentGlobalController extends Controller
             return $pdf->setPaper('a4', 'landscape')->stream('ReportesNombramientosHermanas.pdf');
         }
 
-        $pdf = PDF::loadView('reports.appointments.list-appointments', compact('data', 'from', 'to', 'type', 'level'));
+        $dataServant = array();
+
+        foreach ($data as $key => $appointment) {
+            array_push($dataServant,  (object)[
+                'appsubjet' => $appointment,
+                'parish' => $appointment['community']->address->parish->name,
+            ]);
+        }
+
+        usort($dataServant, function ($a, $b) {
+            return strcmp($a->parish, $b->parish);
+        });
+
+        $pdf = PDF::loadView('reports.appointments.list-appointments', compact('dataServant', 'from', 'to', 'type', 'level'));
 
         return $pdf->setPaper('a4', 'landscape')->stream('ReportesNombramientosHermanas.pdf');
     }

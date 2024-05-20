@@ -112,8 +112,8 @@
             <table>
                 <tr>
                     <th>Nro</th>
-                    <th>Lugar</th>
                     <th>Ciudad</th>
+                    <th>Provincia</th>
                     <th>Comunidades</th>
                     <th>Dirección</th>
                     <th>Fechas de Apertura</th>

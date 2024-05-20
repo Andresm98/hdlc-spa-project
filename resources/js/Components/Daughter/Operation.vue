@@ -89,7 +89,7 @@
 
   <template v-if="stateFunctions">
     <div class="flex overflow-x-auto space-x-4 w-full py-1 my-1">
-      <section class="flex-shrink-0">
+      <!-- <section class="flex-shrink-0">
         <Link
           :href="route('daughter.activities.index')"
           :class="
@@ -100,7 +100,7 @@
         >
           Actividades Comunidad
         </Link>
-      </section>
+      </section> -->
 
       <section class="flex-shrink-0">
         <Link

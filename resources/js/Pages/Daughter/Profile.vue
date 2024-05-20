@@ -116,7 +116,7 @@
               </div>
               <form @submit.prevent="saveInfoUser">
                 <section
-                  class="bg-blue-50 hover:bg-blue-100 y-1 px-4 sm:p-6 md:py-10 md:px-8 rounded-lg sm:m-2 lg:m-3 md:m-4"
+                  class="bg-blue-100 hover:bg-blue-100 y-1 px-4 sm:p-6 md:py-10 md:px-8 rounded-lg sm:m-2 lg:m-3 md:m-4"
                 >
                   <div
                     class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
@@ -130,7 +130,7 @@
                         Provincia Ecuador
                       </h1>
                       <p
-                        class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
+                        class="text-lg leading-4 font-bold text-black sm:text-black dark:sm:text-slate-400"
                       >
                         Información General de la Hermana
                       </p>
@@ -139,31 +139,7 @@
                     <dl
                       class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2"
                     >
-                      <dt class="sr-only">Visto</dt>
-                      <dd
-                        class="text-indigo-600 flex items-center dark:text-indigo-400"
-                      >
-                        <svg
-                          width="24"
-                          height="24"
-                          fill="none"
-                          aria-hidden="true"
-                          class="mr-1 stroke-current dark:stroke-blue-100"
-                        >
-                          <path
-                            d="m12 5 2 5h5l-4 4 2.103 5L12 16l-5.103 3L9 14l-4-4h5l2-5Z"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          />
-                        </svg>
-                        <span
-                          >0.00
-                          <span class="text-slate-400 font-normal"
-                            >(0)</span
-                          ></span
-                        >
-                      </dd>
+
                       <dt class="sr-only">Ubicación por defecto - Ecuador</dt>
                       <dd class="flex items-center">
                         <svg
@@ -198,10 +174,7 @@
                   <div class="mt-2">
                     <p class="text-black dark:text-white">
                       La presente plantilla de información se relaciona a la
-                      información de su usuario y perfil. Por favor, mantenga la
-                      estructura de los datos solicitados y sus respectivos
-                      formatos, de no ser así la información no podrá ser
-                      ingresada correctamente.
+                      información de su usuario y perfil.
                     </p>
                   </div>
                 </section>

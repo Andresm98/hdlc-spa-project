@@ -27,7 +27,7 @@
     </div>
     <operation></operation>
     <section
-      class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg sm:m-2 lg:m-3 md:m-4"
+      class="bg-orange-100 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg sm:m-2 lg:m-3 md:m-4"
     >
       <div
         class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
@@ -41,7 +41,7 @@
             {{ communities.comm_name }}
           </h1>
           <p
-            class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
+            class="text-lg leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
           >
             Información General de las visitas.
           </p>
@@ -49,12 +49,6 @@
         <div
           class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 md:mb-6 md:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
         >
-          <img
-            src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_2.png"
-            alt=""
-            class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 md:h-52 md:col-span-2 lg:col-span-full"
-            loading="lazy"
-          />
         </div>
         <dl
           class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-1 md:row-start-3 lg:row-start-2"

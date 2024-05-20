@@ -214,7 +214,7 @@ input:checked ~ .dot {
               >
                 {{ $page.props.errors.duration }}
               </p>
-              <small>Formato: Agregar la dirección de destino.</small>
+              <small>Formato: Agregar la duración de destino.</small>
               <div class="mb-1">
                 <textarea
                   id="duration"
@@ -888,7 +888,7 @@ input:checked ~ .dot {
                 >
                   {{ $page.props.errors.duration }}
                 </p>
-                <small>Formato: Agregar la dirección de destino.</small>
+                <small>Formato: Agregar la duración de destino.</small>
                 <div class="mb-1">
                   <textarea
                     id="duration"

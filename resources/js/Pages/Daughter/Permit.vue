@@ -27,7 +27,7 @@
     </div>
     <operation></operation>
     <section
-      class="bg-rose-100 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg sm:m-2 lg:m-3 md:m-4"
+      class="bg-blue-100 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg sm:m-2 lg:m-3 md:m-4"
     >
       <div
         class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2"
@@ -48,37 +48,10 @@
         </div>
         <div
           class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 md:mb-6 md:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
-        >
-          <img
-            src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_2.png"
-            alt=""
-            class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 md:h-52 md:col-span-2 lg:col-span-full"
-            loading="lazy"
-          />
-        </div>
+        ></div>
         <dl
           class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-1 md:row-start-3 lg:row-start-2"
         >
-          <dt class="sr-only">Visto</dt>
-          <dd class="text-indigo-600 flex items-center dark:text-indigo-400">
-            <svg
-              width="24"
-              height="24"
-              fill="none"
-              aria-hidden="true"
-              class="mr-1 stroke-current dark:stroke-blue-100"
-            >
-              <path
-                d="m12 5 2 5h5l-4 4 2.103 5L12 16l-5.103 3L9 14l-4-4h5l2-5Z"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-            <span
-              >0.00 <span class="text-slate-400 font-normal">(0)</span></span
-            >
-          </dd>
           <dt class="sr-only">Ubicación por defecto - Ecuador</dt>
           <dd class="flex items-center">
             <svg
@@ -962,6 +935,59 @@
             </div>
           </div>
           <div class="w-full lg:w-full px-4">
+            <div>
+              <label
+                for="duration"
+                class="block text-sm font-medium text-gray-700"
+              >
+                Duración de la ausencia autorizada:
+              </label>
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.duration"
+              >
+                {{ $page.props.errors.duration }}
+              </p>
+              <small>Formato: Agregar la duración de destino.</small>
+              <div class="mb-1">
+                <textarea
+                  id="duration"
+                  name="duration"
+                  rows="1"
+                  class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 mb-2 block w-full sm:text-sm border border-gray-300 rounded-md"
+                  v-model="updatePermitForm.duration"
+                  placeholder="Agregar la duración.."
+                  :maxlength="100"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-4/12 px-4">
+            <div class="relative w-full mb-3">
+              <label
+                class="block text-sm font-medium text-gray-700"
+                htmlfor="grid-password"
+              >
+                ¿La hermana lleva hábito?:
+              </label>
+              <small>Formato: Seleccionar una opción.</small>
+
+              <p class="text-red-400 text-sm" v-show="$page.props.errors.habit">
+                {{ $page.props.errors.habit }}
+              </p>
+
+              <select
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                v-model="updatePermitForm.habit"
+              >
+                <option value="1">Si</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+          </div>
+          <div class="w-full lg:w-full px-4">
             <div class="relative w-full mb-3">
               <label
                 class="block text-sm font-medium text-gray-700"
@@ -1132,6 +1158,8 @@ export default {
         parish_id: null,
         political_division_id: null,
         profile_id: null,
+        duration: null,
+        habit: null,
       }),
 
       permitBeingDeleted: null,
@@ -1160,6 +1188,8 @@ export default {
         canton_id: null,
         parish_id: null,
         political_division_id: null,
+        duration: null,
+        habit: null,
       }),
 
       selectOne: {
@@ -1473,6 +1503,8 @@ export default {
       this.updatePermitForm.reason = permit.reason;
       this.updatePermitForm.status = permit.status;
       this.statuspermit = permit.status;
+      this.updatePermitForm.habit = permit.habit;
+      this.updatePermitForm.duration = permit.duration_absence;
       this.updatePermitForm.description = permit.description;
       this.updatePermitForm.date_province = permit.date_province;
       this.updatePermitForm.date_general = permit.date_general;

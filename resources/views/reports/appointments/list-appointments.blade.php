@@ -119,53 +119,41 @@
                     <th>Apellidos</th>
                     <th>Fecha Nacimiento</th>
                     <th>Fecha Vocación</th>
-                    {{-- <th>Fecha Votos</th> --}}
                     <th>Nombramiento</th>
                     <th>Fechas Nombramiento</th>
                 </tr>
                 {{ $count = 1 }}
-                @foreach ($data as $appointment)
+                @foreach ($dataServant as $appointment)
                     <tr>
                         <td width="5%">{{ $count++ }}</td>
                         <td width="25%">
-                            @if ($appointment->community != null)
-                                {{ $appointment->community->comm_name }}
+                            @if ($appointment->appsubjet->community != null)
+                                {{ $appointment->appsubjet->community->comm_name }}
                             @endif
                         </td>
-                        <td width="12%"> {{ $appointment->profile->user->name }}</td>
-                        <td width="12%"> {{ $appointment->profile->user->lastname }}</td>
+                        <td width="12%"> {{ $appointment->appsubjet->profile->user->name }}</td>
+                        <td width="12%"> {{ $appointment->appsubjet->profile->user->lastname }}</td>
                         <td width="10%">
-                            {{ date('d.m.Y', strtotime($appointment->profile->date_birth)) }}<br>
-
+                            {{ date('d.m.Y', strtotime($appointment->appsubjet->profile->date_birth)) }}<br>
                         </td>
                         <td width="10%">
-                            @if ($appointment->profile->date_vocation != null)
-                                {{ date('d.m.Y', strtotime($appointment->profile->date_vocation)) }}<br>
+                            @if ($appointment->appsubjet->profile->date_vocation != null)
+                                {{ date('d.m.Y', strtotime($appointment->appsubjet->profile->date_vocation)) }}<br>
                             @endif
                         </td>
-                        {{-- <td width="10%">
-                            @if ($appointment->profile->date_vote != null)
-                                {{ date('Y-m-d', strtotime($appointment->profile->date_vote)) }}<br>
-                            @endif
-                        </td> --}}
-                        <td>{{ $appointment->appointment_level->name }}</td>
-                        <td width="10%">{{ date('d.m.Y', strtotime($appointment->date_appointment)) }}
-                            @if ($appointment->date_end_appointment != null)
+                        <td>{{ $appointment->appsubjet->appointment_level->name }}</td>
+                        <td width="10%">{{ date('d.m.Y', strtotime($appointment->appsubjet->date_appointment)) }}
+                            @if ($appointment->appsubjet->date_end_appointment != null)
                                 -
-                                {{ date('d.m.Y', strtotime($appointment->date_end_appointment)) }}
+                                {{ date('d.m.Y', strtotime($appointment->appsubjet->date_end_appointment)) }}
                             @endif
                         </td>
-
                     </tr>
                 @endforeach
 
             </table>
-
-
-
         </div>
     </main>
-
     <footer>
         <p
             style="font-size:12px; margin-left:0.40cm;  margin-right:0.40cm; margin-bottom:0.20cm; margin-top:0.20cm; color:#111631">

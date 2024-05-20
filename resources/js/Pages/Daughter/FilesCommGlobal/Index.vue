@@ -43,7 +43,7 @@
             {{ community.comm_name }}
           </h1>
           <p
-            class="text-sm leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
+            class="text-lg leading-4 font-medium text-black sm:text-black dark:sm:text-slate-400"
           >
             Información General de los archivos pertenecientes a la Comunidad.
           </p>
@@ -51,12 +51,6 @@
         <div
           class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 md:mb-6 md:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
         >
-          <img
-            src="https://files-hdlc-frontend.s3.amazonaws.com/spa-hdlc-app/icon_secretary_2.png"
-            alt=""
-            class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 md:h-52 md:col-span-2 lg:col-span-full"
-            loading="lazy"
-          />
         </div>
         <dl
           class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-1 md:row-start-3 lg:row-start-2"
@@ -116,8 +110,7 @@
         <p class="text-black dark:text-white">
           La presente plantilla de información se relaciona a todos los
           documentos de la Comunidad, lea las istrucciones al ingresar un
-          documento. Tamaño, formatos y otros requisitos para almacenar de
-          manera correcta un archivo específico.
+          documento.
         </p>
       </div>
       <div class="content-center mt-2">
