@@ -163,7 +163,7 @@
       </div>
       <div class="mt-2">
         <p class="text-black dark:text-white">
-          La presente plantiflla de información se relaciona a todos los eventos
+          La presente plantilla de información se relaciona a todos los eventos
           que se realizan en el la compañía de las Hijas de la Caridad de San
           Vicente de Paúl.
         </p>

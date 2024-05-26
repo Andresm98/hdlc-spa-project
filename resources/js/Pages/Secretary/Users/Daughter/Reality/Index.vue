@@ -120,7 +120,7 @@
               class="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 text-black dark:text-white"
             >
               <p>
-                La presente plantiflla de información se relaciona con las
+                La presente plantilla de información se relaciona con las
                 Hermanas registradas en la compañía, tenga en cuenta que los
                 gráficos estadísticos corresponden a las Hermanas activas,
                 fallecidas y retiradas.

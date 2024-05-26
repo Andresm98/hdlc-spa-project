@@ -129,13 +129,6 @@
               >
               </alert>
             </div>
-
-            <button
-              @click="confirmCreateArticle()"
-              class="pt-1 pb-1 pl-4 pr-4 m-4 bg-blue-500 border-2 border-blue-500 text-white text-sm rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
-            >
-              Crear Artículos
-            </button>
             <!-- Container Filters -->
             <div class="container mx-auto pl-4">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -277,6 +270,417 @@
               </div>
             </div>
             <!-- End container Filters -->
+
+            <div
+              v-if="operationCrud === 1"
+              class="bg-gray-200 rounded-lg px-6 py-8 ring-slate-900/5 shadow-xl m-4"
+            >
+              <h1
+                class="mb-2 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
+              >
+                Nuevo Artículo
+              </h1>
+
+              <form @submit.prevent="createArticle">
+                <div class="flex flex-wrap">
+                  <div class="w-full lg:w-6/12 px-2">
+                    <div class="relative w-full mb-3">
+                      <div class="">
+                        <label class="block text-sm font-medium text-gray-700">
+                          Nombre:
+                        </label>
+                        <p
+                          class="text-red-400 text-sm"
+                          v-show="$page.props.errors.name"
+                        >
+                          {{ $page.props.errors.name }}
+                        </p>
+                        <input
+                          type="text"
+                          minLength="10"
+                          maxlength="100"
+                          placeholder="Ingresar nombre"
+                          class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          v-model="createArticleForm.name"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-full lg:w-3/12 px-2">
+                    <div class="relative w-full mb-3">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Material:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.material"
+                      >
+                        {{ $page.props.errors.material }}
+                      </p>
+                      <select
+                        v-model="createArticleForm.material"
+                        id="material"
+                        name="material"
+                        autocomplete="article-material"
+                        class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      >
+                        <option value="1">Madera</option>
+                        <option value="2">Tela</option>
+                        <option value="3">Plástico</option>
+                        <option value="4">Metal</option>
+                        <option value="5">Yeso</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="w-full lg:w-3/12 px-2">
+                    <div class="relative w-full mb-3">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Estado:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.status"
+                      >
+                        {{ $page.props.errors.status }}
+                      </p>
+                      <select
+                        v-model="createArticleForm.status"
+                        id="material"
+                        name="material"
+                        autocomplete="article-material"
+                        class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      >
+                        <option value="1">Malo</option>
+                        <option value="2">Regular</option>
+                        <option value="3">Bueno</option>
+                        <option value="4">Muy Bueno</option>
+                        <option value="5">Excelente</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="w-full lg:w-3/12 px-2">
+                    <div class="relative w-full mb-3">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Marca:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.brand"
+                      >
+                        {{ $page.props.errors.brand }}
+                      </p>
+                      <input
+                        type="text"
+                        minLength="1"
+                        maxlength="100"
+                        placeholder="Ingresar marca"
+                        class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        v-model="createArticleForm.brand"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="w-full lg:w-3/12 px-2">
+                    <div class="relative w-full mb-3">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Color
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.color"
+                      >
+                        {{ $page.props.errors.color }}
+                      </p>
+                      <input
+                        type="text"
+                        minLength="1"
+                        maxlength="50"
+                        placeholder="Ingresar color"
+                        class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        v-model="createArticleForm.color"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="w-full lg:w-3/12 px-2">
+                    <div class="relative w-full px-2">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Precio
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.price"
+                      >
+                        {{ $page.props.errors.price }}
+                      </p>
+                      <input
+                        type="numberd"
+                        placeholder="Ingresar precio"
+                        class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        v-model="createArticleForm.price"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="w-full lg:w-3/12">
+                    <div class="relative w-full px-2">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Medidas (alto x ancho)
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.size"
+                      >
+                        {{ $page.props.errors.size }}
+                      </p>
+                      <input
+                        type="text"
+                        placeholder="Ingresar medidas"
+                        class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        v-model="createArticleForm.size"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="w-full">
+                    <div class="relative w-full px-2">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Descripción
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.description"
+                      >
+                        {{ $page.props.errors.description }}
+                      </p>
+                      <textarea
+                        v-model="this.createArticleForm.description"
+                        id="about"
+                        name="about"
+                        rows="2"
+                        minLength="1"
+                        maxlength="2000"
+                        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                        placeholder="Ingresar descripción"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <jet-button type="submit" class="ml-4 my-2 btn btn-primary"
+                  >Crear Artículo</jet-button
+                >
+              </form>
+            </div>
+
+            <div
+              v-if="operationCrud === 2"
+              class="bg-state-400 rounded-lg px-6 py-8 ring-slate-900/5 shadow-xl m-4"
+            >
+              <h1
+                class="mb-2 text-lg font-semibold text-black sm:text-black md:text-2xl dark:sm:text-white"
+              >
+                Actualizar Artículo
+              </h1>
+              <form @submit.prevent="updateArticle">
+                <div class="flex flex-wrap">
+                  <div class="w-full lg:w-6/12 px-2">
+                    <div class="relative w-full mb-3">
+                      <div class="">
+                        <label class="block text-sm font-medium text-gray-700">
+                          Nombre:
+                        </label>
+                        <p
+                          class="text-red-400 text-sm"
+                          v-show="$page.props.errors.name"
+                        >
+                          {{ $page.props.errors.name }}
+                        </p>
+                        <input
+                          type="text"
+                          minLength="10"
+                          maxlength="100"
+                          placeholder="Ingresar nombre"
+                          class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          v-model="updateArticleForm.name"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-full lg:w-3/12 px-2">
+                    <div class="relative w-full mb-3">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Material:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.material"
+                      >
+                        {{ $page.props.errors.material }}
+                      </p>
+                      <select
+                        v-model="updateArticleForm.material"
+                        id="material"
+                        name="material"
+                        autocomplete="article-material"
+                        class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      >
+                        <option value="1">Madera</option>
+                        <option value="2">Tela</option>
+                        <option value="3">Plástico</option>
+                        <option value="4">Metal</option>
+                        <option value="5">Yeso</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="w-full lg:w-3/12 px-2">
+                    <div class="relative w-full mb-3">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Estado:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.status"
+                      >
+                        {{ $page.props.errors.status }}
+                      </p>
+                      <select
+                        v-model="updateArticleForm.status"
+                        id="material"
+                        name="material"
+                        autocomplete="article-material"
+                        class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      >
+                        <option value="1">Malo</option>
+                        <option value="2">Regular</option>
+                        <option value="3">Bueno</option>
+                        <option value="4">Muy Bueno</option>
+                        <option value="5">Excelente</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="w-full lg:w-3/12 px-2">
+                    <div class="relative w-full mb-3">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Marca:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.brand"
+                      >
+                        {{ $page.props.errors.brand }}
+                      </p>
+                      <input
+                        type="text"
+                        minLength="1"
+                        maxlength="100"
+                        placeholder="Ingresar marca"
+                        class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        v-model="updateArticleForm.brand"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="w-full lg:w-3/12 px-2">
+                    <div class="relative w-full mb-3">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Color
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.color"
+                      >
+                        {{ $page.props.errors.color }}
+                      </p>
+                      <input
+                        type="text"
+                        minLength="1"
+                        maxlength="50"
+                        placeholder="Ingresar color"
+                        class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        v-model="updateArticleForm.color"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="w-full lg:w-3/12 px-2">
+                    <div class="relative w-full px-2">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Precio
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.price"
+                      >
+                        {{ $page.props.errors.price }}
+                      </p>
+                      <input
+                        type="numberd"
+                        placeholder="Ingresar precio"
+                        class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        v-model="updateArticleForm.price"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="w-full lg:w-3/12">
+                    <div class="relative w-full px-2">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Medidas (alto x ancho)
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.size"
+                      >
+                        {{ $page.props.errors.size }}
+                      </p>
+                      <input
+                        type="text"
+                        placeholder="Ingresar medidas"
+                        class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        v-model="updateArticleForm.size"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="w-full">
+                    <div class="relative w-full px-2">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Descripción
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.description"
+                      >
+                        {{ $page.props.errors.description }}
+                      </p>
+                      <textarea
+                        v-model="updateArticleForm.description"
+                        id="about"
+                        name="about"
+                        rows="2"
+                        minLength="1"
+                        maxlength="2000"
+                        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                        placeholder="Ingresar descripción"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <jet-button-success type="submit" class="ml-3 my-2">
+                  Actualizar
+                </jet-button-success>
+              </form>
+            </div>
+
             <section class="pl-4">
               <pagination class="mt-6 mb-5" :links="listArticles.links" />
             </section>
@@ -571,410 +975,6 @@
         </div>
       </div>
     </section>
-    <!-- Create Form -->
-    <jet-dialog-modal
-      :max-width="'input-md'"
-      :show="articleBeingCreated"
-      @close="articleBeingCreated == null"
-    >
-      <template #title> Datos del nuevo artículo</template>
-
-      <template #content>
-        <div class="flex flex-wrap">
-          <div class="w-full lg:w-6/12 px-2">
-            <div class="relative w-full mb-3">
-              <div class="">
-                <label class="block text-sm font-medium text-gray-700">
-                  Nombre:
-                </label>
-                <p
-                  class="text-red-400 text-sm"
-                  v-show="$page.props.errors.name"
-                >
-                  {{ $page.props.errors.name }}
-                </p>
-                <input
-                  type="text"
-                  minLength="10"
-                  maxlength="100"
-                  placeholder="Ingresar nombre"
-                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  v-model="createArticleForm.name"
-                  required
-                />
-              </div>
-            </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-2">
-            <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700">
-                Material:
-              </label>
-              <p
-                class="text-red-400 text-sm"
-                v-show="$page.props.errors.material"
-              >
-                {{ $page.props.errors.material }}
-              </p>
-              <select
-                v-model="createArticleForm.material"
-                id="material"
-                name="material"
-                autocomplete="article-material"
-                class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              >
-                <option value="1">Madera</option>
-                <option value="2">Tela</option>
-                <option value="3">Plástico</option>
-                <option value="4">Metal</option>
-                <option value="5">Yeso</option>
-              </select>
-            </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-2">
-            <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700">
-                Estado:
-              </label>
-              <p
-                class="text-red-400 text-sm"
-                v-show="$page.props.errors.status"
-              >
-                {{ $page.props.errors.status }}
-              </p>
-              <select
-                v-model="createArticleForm.status"
-                id="material"
-                name="material"
-                autocomplete="article-material"
-                class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              >
-                <option value="1">Malo</option>
-                <option value="2">Regular</option>
-                <option value="3">Bueno</option>
-                <option value="4">Muy Bueno</option>
-                <option value="5">Excelente</option>
-              </select>
-            </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-2">
-            <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700">
-                Marca:
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.brand">
-                {{ $page.props.errors.brand }}
-              </p>
-              <input
-                type="text"
-                minLength="10"
-                maxlength="100"
-                placeholder="Ingresar marca"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="createArticleForm.brand"
-                required
-              />
-            </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-2">
-            <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700">
-                Color
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.color">
-                {{ $page.props.errors.color }}
-              </p>
-              <input
-                type="text"
-                minLength="10"
-                maxlength="50"
-                placeholder="Ingresar color"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="createArticleForm.color"
-                required
-              />
-            </div>
-          </div>
-
-          <div class="w-full lg:w-3/12 px-2">
-            <div class="relative w-full px-2">
-              <label class="block text-sm font-medium text-gray-700">
-                Precio
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.price">
-                {{ $page.props.errors.price }}
-              </p>
-              <input
-                type="numberd"
-                minLength="10"
-                maxlength="100"
-                placeholder="Ingresar precio"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="createArticleForm.price"
-                required
-              />
-            </div>
-          </div>
-
-          <div class="w-full lg:w-3/12">
-            <div class="relative w-full px-2">
-              <label class="block text-sm font-medium text-gray-700">
-                Medidas (alto x ancho)
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.size">
-                {{ $page.props.errors.size }}
-              </p>
-              <input
-                type="text"
-                minLength="10"
-                maxlength="100"
-                placeholder="Ingresar medidas"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="createArticleForm.size"
-                required
-              />
-            </div>
-          </div>
-
-          <div class="w-full">
-            <div class="relative w-full px-2">
-              <label class="block text-sm font-medium text-gray-700">
-                Descripción
-              </label>
-              <p
-                class="text-red-400 text-sm"
-                v-show="$page.props.errors.description"
-              >
-                {{ $page.props.errors.description }}
-              </p>
-              <textarea
-                v-model="this.createArticleForm.description"
-                id="about"
-                name="about"
-                rows="14"
-                minLength="1"
-                maxlength="2000"
-                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                placeholder="Ingresar descripción"
-              />
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template #footer>
-        <jet-secondary-button @click="this.articleBeingCreated = null">
-          Cancelar
-        </jet-secondary-button>
-
-        <jet-button-success class="ml-3" @click="createArticle">
-          Crear
-        </jet-button-success>
-      </template>
-    </jet-dialog-modal>
-
-    <!-- Update Form -->
-
-    <jet-dialog-modal
-      :max-width="'input-md'"
-      :show="articleBeingUpdated"
-      @close="articleBeingUpdated == null"
-    >
-      <template #title> Datos de la Artículo</template>
-
-      <template #content>
-        <div class="flex flex-wrap">
-          <div class="w-full lg:w-6/12 px-2">
-            <div class="relative w-full mb-3">
-              <div class="">
-                <label class="block text-sm font-medium text-gray-700">
-                  Nombre:
-                </label>
-                <p
-                  class="text-red-400 text-sm"
-                  v-show="$page.props.errors.name"
-                >
-                  {{ $page.props.errors.name }}
-                </p>
-                <input
-                  type="text"
-                  minLength="10"
-                  maxlength="100"
-                  placeholder="Ingresar nombre"
-                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  v-model="updateArticleForm.name"
-                  required
-                />
-              </div>
-            </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-2">
-            <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700">
-                Material:
-              </label>
-              <p
-                class="text-red-400 text-sm"
-                v-show="$page.props.errors.material"
-              >
-                {{ $page.props.errors.material }}
-              </p>
-              <select
-                v-model="updateArticleForm.material"
-                id="material"
-                name="material"
-                autocomplete="article-material"
-                class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              >
-                <option value="1">Madera</option>
-                <option value="2">Tela</option>
-                <option value="3">Plástico</option>
-                <option value="4">Metal</option>
-                <option value="5">Yeso</option>
-              </select>
-            </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-2">
-            <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700">
-                Estado:
-              </label>
-              <p
-                class="text-red-400 text-sm"
-                v-show="$page.props.errors.status"
-              >
-                {{ $page.props.errors.status }}
-              </p>
-              <select
-                v-model="updateArticleForm.status"
-                id="material"
-                name="material"
-                autocomplete="article-material"
-                class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              >
-                <option value="1">Malo</option>
-                <option value="2">Regular</option>
-                <option value="3">Bueno</option>
-                <option value="4">Muy Bueno</option>
-                <option value="5">Excelente</option>
-              </select>
-            </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-2">
-            <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700">
-                Marca:
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.brand">
-                {{ $page.props.errors.brand }}
-              </p>
-              <input
-                type="text"
-                minLength="10"
-                maxlength="100"
-                placeholder="Ingresar marca"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="updateArticleForm.brand"
-                required
-              />
-            </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-2">
-            <div class="relative w-full mb-3">
-              <label class="block text-sm font-medium text-gray-700">
-                Color
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.color">
-                {{ $page.props.errors.color }}
-              </p>
-              <input
-                type="text"
-                minLength="1"
-                maxlength="50"
-                placeholder="Ingresar color"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="updateArticleForm.color"
-                required
-              />
-            </div>
-          </div>
-
-          <div class="w-full lg:w-3/12 px-2">
-            <div class="relative w-full px-2">
-              <label class="block text-sm font-medium text-gray-700">
-                Precio
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.price">
-                {{ $page.props.errors.price }}
-              </p>
-              <input
-                type="numberd"
-                minLength="10"
-                maxlength="100"
-                placeholder="Ingresar precio"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="updateArticleForm.price"
-                required
-              />
-            </div>
-          </div>
-
-          <div class="w-full lg:w-3/12">
-            <div class="relative w-full px-2">
-              <label class="block text-sm font-medium text-gray-700">
-                Medidas (alto x ancho)
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.size">
-                {{ $page.props.errors.size }}
-              </p>
-              <input
-                type="text"
-                minLength="10"
-                maxlength="100"
-                placeholder="Ingresar medidas"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="updateArticleForm.size"
-                required
-              />
-            </div>
-          </div>
-
-          <div class="w-full">
-            <div class="relative w-full px-2">
-              <label class="block text-sm font-medium text-gray-700">
-                Descripción
-              </label>
-              <p
-                class="text-red-400 text-sm"
-                v-show="$page.props.errors.description"
-              >
-                {{ $page.props.errors.description }}
-              </p>
-              <textarea
-                v-model="updateArticleForm.description"
-                id="about"
-                name="about"
-                rows="14"
-                minLength="1"
-                maxlength="2000"
-                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                placeholder="Ingresar descripción"
-              />
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template #footer>
-        <jet-secondary-button @click="this.articleBeingUpdated = null">
-          Cancelar
-        </jet-secondary-button>
-
-        <jet-button-success class="ml-3" @click="updateArticle">
-          Actualizar
-        </jet-button-success>
-      </template>
-    </jet-dialog-modal>
     <!-- Delete Form -->
     <jet-dialog-modal :show="modal_open">
       <template v-slot:title> Eliminar </template>
@@ -1019,6 +1019,8 @@ import Datepicker from "vue3-date-time-picker";
 import Dropdown from "@/Components/Dropdown";
 import Alert from "@/Components/Alert";
 import Icon from "@/Components/Icon";
+import { useForm } from "@inertiajs/inertia-vue3";
+import JetButton from "@/Jetstream/Button.vue";
 import { mapActions } from "vuex";
 import moment from "moment";
 import { ref } from "vue";
@@ -1042,6 +1044,10 @@ export default defineComponent({
       year,
       format,
     };
+  },
+
+  mounted() {
+    this.operationCrud = 1;
   },
 
   props: {
@@ -1069,6 +1075,7 @@ export default defineComponent({
     Datepicker,
     Icon,
     Dropdown,
+    JetButton,
     moment,
     Operation,
   },
@@ -1095,7 +1102,16 @@ export default defineComponent({
 
       articleBeingCreated: null,
 
-      createArticleForm: null,
+      createArticleForm: useForm({
+        name: null,
+        description: null,
+        color: null,
+        price: null,
+        material: null,
+        status: null,
+        size: null,
+        brand: null,
+      }),
 
       articleBeingUpdated: null,
 
@@ -1109,6 +1125,8 @@ export default defineComponent({
         size: null,
         brand: null,
       }),
+
+      operationCrud: null,
     };
   },
   methods: {
@@ -1186,18 +1204,16 @@ export default defineComponent({
     },
 
     confirmCreateArticle() {
-      this.createArticleForm = this.$inertia.form({
-        name: null,
-        description: null,
-        color: null,
-        price: null,
-        material: null,
-        status: null,
-        size: null,
-        brand: null,
-      });
+      this.createArticleForm.name = null;
+      this.createArticleForm.description = null;
+      this.createArticleForm.color = null;
+      this.createArticleForm.price = null;
+      this.createArticleForm.material = null;
+      this.createArticleForm.status = null;
+      this.createArticleForm.size = null;
+      this.createArticleForm.brand = null;
 
-      this.articleBeingCreated = this.createArticleForm;
+      this.articleBeingCreated = null;
     },
 
     createArticle() {
@@ -1209,7 +1225,7 @@ export default defineComponent({
           preserveScroll: true,
           preserveState: true,
           onSuccess: () => {
-            this.articleBeingCreated = null;
+            this.confirmCreateArticle();
           },
         }
       );
@@ -1225,6 +1241,8 @@ export default defineComponent({
       this.updateArticleForm.size = article_custom.size;
       this.updateArticleForm.brand = article_custom.brand;
       this.articleBeingUpdated = article_custom;
+
+      this.operationCrud = 2;
     },
 
     updateArticle() {
@@ -1238,6 +1256,7 @@ export default defineComponent({
           preserveState: true,
           onSuccess: () => {
             this.articleBeingUpdated = null;
+            this.operationCrud = 1;
             setTimeout(() => {}, 2);
           },
         }

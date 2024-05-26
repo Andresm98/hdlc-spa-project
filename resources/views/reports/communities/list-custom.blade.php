@@ -115,11 +115,11 @@
             $count = 1;
             ?>
 
-            @foreach ($data as $community)
-                <p style="text-align: center;"><strong>{{ $count++ }}. {{ $community->comm_name }}</strong></p>
+            @foreach ($data as $index)
+                <p style="text-align: center;"><strong>{{ $count++ }}. {{ $index->community->comm_name }}</strong></p>
 
                 <?php
-                $listDaughters = CommunityDaughterController::reportStatic($community->id);
+                $listDaughters = CommunityDaughterController::reportStatic($index->community->id);
                 ?>
                 @if ($listDaughters)
                     <table>

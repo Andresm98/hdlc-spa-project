@@ -213,7 +213,7 @@
         </div>    <p
                     class="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 text-black dark:text-white"
                 >
-                    La presente plantiflla de información se relaciona con los
+                    La presente plantilla de información se relaciona con los
                     datos principales de la hermana a la que desea agregar al
                     sistema, por lo que deberá verificar los datos a ingresar.
                     <ul class="list-disc pl-5">

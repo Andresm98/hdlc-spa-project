@@ -87,7 +87,7 @@
       </div>
       <div class="mt-2">
         <p class="text-black dark:text-white">
-          La presente plantiflla de información se relaciona a todos los
+          La presente plantilla de información se relaciona a todos los
           documentos que se realizan en el la compañía de las Hijas de la
           Caridad de San Vicente de Paúl.
         </p>
@@ -706,6 +706,7 @@ export default {
             },
             { id: 10, idMain: 2, name: "CERTIFICADO DE LA RENOVACION" },
             { id: 11, idMain: 2, name: "PERMISO NORMAL" },
+            { id: 12, idMain: 2, name: "REVISIÓN TÉCNICA VEHICULAR" },
           ],
         },
       ],
@@ -784,6 +785,8 @@ export default {
         this.createDocumentForm.content = `<h2 class="ql-align-center"><strong>CERTIFICADO DE LA RENOVACION</strong></h2><p class="ql-align-center"><strong>&nbsp;</strong></p><p class="ql-align-justify">Yo </p><p class="ql-align-justify">………………………………………….</p><p class="ql-align-justify">CERTIFICO haber renovado los Votos en la Compañía de las Hijas de la Caridad, en la fiesta de la Anunciación el … de …… del 20..</p><p class="ql-align-justify">&nbsp;</p><p class="ql-align-justify">Firma:</p><p class="ql-align-justify"><br></p><p class="ql-align-center"><strong>………………………</strong></p><p><br></p><p><br></p>`;
       } else if (this.createDocumentForm.type === 11) {
         this.createDocumentForm.content = `<p><strong>Hermana:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fecha de Emisión:</strong></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><strong>Autorización</strong></p><p class="ql-align-justify"><strong>Lugar:</strong></p><p class="ql-align-justify"><strong>Tiempo</strong>:</p><p class="ql-align-justify"><strong>Días</strong>:</p><p class="ql-align-justify"><strong>Observación: </strong>Visitará a su Mamá delicada de salud, la (…………..) Ruego mantener la flexibilidad pertinente ante los requerimientos de la Comunidad local; salvo casos súbitos de su Familia, deberán en diálogo fraterno con su Hermana Sirviente, tomar otras decisiones. </p><p class="ql-align-justify">Tener presente este permiso en la planificación comunitaria.&nbsp;</p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><strong>Sor Nila GOMEZ A. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                               HERMANA SIRVIENTE</strong></p><p><strong>Hija de la Caridad</strong></p><p class="ql-align-justify"><br></p>`;
+      } else if (this.createDocumentForm.type === 12) {
+        this.createDocumentForm.content = `<p class="ql-align-right">Quito, (fecha)</p><p><strong>Señores</strong></p><p><strong>REVISIÓN TÉCNICA VEHICULAR</strong></p><p><strong>Presente. -</strong></p><p>&nbsp;</p><p class="ql-align-justify"><strong>Sor ...........................</strong>, Representante Legal de la Compañía de las Hijas de la Caridad de San Vicente de Paúl del Ecuador, con CI Nro. ….............., con residencia en Quito, en la calle Bolívar Oe6 110 e Imbabura.</p><p>&nbsp;</p><h2 class="ql-align-center"><strong>AUTORIZA</strong></h2><p class="ql-align-center"><br></p><p class="ql-align-justify"><strong>A ………………………………., </strong>con Cédula de Identidad Nro. …………….  nacida/o en ………………………. y con domicilio en ………………………………., para que realice la matrícula y revisión del carro: Marca …………., PLACA…………..., perteneciente a la COMPAÑÍA DE LAS HIJAS DE LA CARIDAD DE SAN VICENTE DE PAÚL DEL ECUADOR.</p><p class="ql-align-justify">Esta autorización puede ser utilizada para los trámites consiguientes.</p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p class="ql-align-center">Sor .....................</p><p class="ql-align-center">Hija de la Caridad</p><p class="ql-align-center">REPRESENTANTE LEGAL</p>`;
       } else {
         this.createDocumentForm.content = null;
       }

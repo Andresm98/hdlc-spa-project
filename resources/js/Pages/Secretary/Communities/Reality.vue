@@ -203,7 +203,7 @@
               "
             >
               <p>
-                La presente plantiflla de información se relaciona con los datos
+                La presente plantilla de información se relaciona con los datos
                 principales de la comunidad a la que desea modificar al sistema,
                 por lo que deberá verificar los datos a ingresar.
               </p>

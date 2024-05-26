@@ -96,7 +96,7 @@
       </div>
       <div class="mt-2">
         <p class="text-black dark:text-white">
-          La presente plantiflla de información se relaciona a todos los
+          La presente plantilla de información se relaciona a todos los
           nombramientos que se realizan en la compañía a nivel de provincia y
           comunidades, por lo tanto deberá tener una noción clara de todos los
           rangos y estructura organizacional a nivel de nombramientos.
