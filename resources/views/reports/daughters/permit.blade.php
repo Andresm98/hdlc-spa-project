@@ -93,7 +93,9 @@
 
 
         <strong>PROVINCIA DE: </strong>ECUADOR
-
+        <br>
+        <br>
+        <br>
         <h4 style="text-align: center; margin-left: 80px; margin-right: 80px">AUTORIZACIÓN PARA RESIDIR UNA HERMANA FUERA
             DE UNA CASA DE LA COMPAÑÍA
         </h4>
@@ -101,8 +103,6 @@
     <main>
         <div style="margin-left: 20px">
             <div style="font-size: medium; margin-top: 30px">
-                <br>
-
                 <table>
                     <tr>
                         <td> <strong>Apellidos: </strong></td>
@@ -113,7 +113,7 @@
                         <td> {{ strtoupper($user->name) }}</td>
                     </tr>
 
-                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                    @foreach ([1, 2, 3, 4] as $number)
                         <tr>
                             <td></td>
                             <td></td>
@@ -144,7 +144,7 @@
                         </tr>
                     @endif
 
-                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                    @foreach ([1, 2, 3] as $number)
                         <tr>
                             <td></td>
                             <td></td>
@@ -158,7 +158,7 @@
                         </td>
                     </tr>
 
-                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                    @foreach ([1, 2, 3] as $number)
                         <tr>
                             <td></td>
                             <td></td>
@@ -170,7 +170,7 @@
                         <td> {{ \Carbon\Carbon::parse($permit->date_general)->locale('es')->isoFormat('D MMMM YYYY') }}
                     </tr>
 
-                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                    @foreach ([1, 2, 3] as $number)
                         <tr>
                             <td></td>
                             <td></td>
@@ -182,7 +182,7 @@
                         <td> {{ $permit->reason }}</td>
                     </tr>
 
-                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                    @foreach ([1, 2, 3] as $number)
                         <tr>
                             <td></td>
                             <td></td>
@@ -194,7 +194,7 @@
                         <td> {{ $permit->duration_absence }}</td>
                     </tr>
 
-                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                    @foreach ([1, 2, 3] as $number)
                         <tr>
                             <td></td>
                             <td></td>
@@ -208,7 +208,7 @@
 
                     </tr>
 
-                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                    @foreach ([1, 2, 3] as $number)
                         <tr>
                             <td></td>
                             <td></td>
@@ -220,7 +220,7 @@
                         <td> {{ \Carbon\Carbon::parse($permit->date_in)->locale('es')->isoFormat('D MMMM YYYY') }}</td>
                     </tr>
 
-                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                    @foreach ([1, 2, 3] as $number)
                         <tr>
                             <td></td>
                             <td></td>
@@ -238,7 +238,7 @@
                         </td>
                     </tr>
 
-                    @foreach ([1, 2, 3, 4, 5, 6] as $number)
+                    @foreach ([1, 2, 3] as $number)
                         <tr>
                             <td></td>
                             <td></td>
@@ -264,10 +264,7 @@
                 <div>{!! $permit->description !!}</div>
                 <br>
                 <br>
-                <br>
                 Fecha: {{ date('d.m.Y', strtotime($permit->date_province)) }}
-                <br>
-                <br>
                 <br>
                 <br>
                 <br>

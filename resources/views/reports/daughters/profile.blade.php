@@ -404,7 +404,7 @@
             Fecha Impresión: {{ date('Y-m-d h:i:s a', time()) }}. Pichincha,
             Ecuador.
             Este documento fue generado en la plataforma privada de la
-            Compañía Hijas de la Caridad de San Vicente de Paúl ©, Provincia Ecuador.
+            Compañía Hijas de la Caridad de San Vicente de Paúl, Provincia Ecuador.
         </p>
     </footer>
 

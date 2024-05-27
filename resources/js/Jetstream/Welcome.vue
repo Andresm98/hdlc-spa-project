@@ -1,7 +1,11 @@
 <template>
   <div class="flex flex-wrap p-6 sm:px-20 bg-blue-100 border-2 border-blue-200">
     <div class="lg:w-2/5">
-      <jet-application-logo class="h-48 pt-9" />
+      <!-- <jet-application-logo class="h-48 pt-9" /> -->
+      <img
+        class="px-2"
+        src="https://files-hdlc-frontend.s3.amazonaws.com/logo-panel-hdlc.png"
+      />
     </div>
     <div class="lg:w-3/5 mx-auto">
       <div class="mt-8 text-2xl">

@@ -87,7 +87,7 @@
                 </div>
                 <div style="float: left;width: 90%; height: 30px;">
                     <p style="font-size:medium; margin-top:0.5cm;">
-                        Compañía Hijas de la Caridad de San Vicente de Paúl ©
+                        Compañía Hijas de la Caridad de San Vicente de Paúl
                     </p>
                     <small>Información de Cambios en la Compañía @if ($from != null || $to != null)
                             , Fechas de Transferencia: ({{ date('Y-m-d', strtotime($from)) }} -
@@ -170,7 +170,7 @@
             Fecha Impresión: {{ date('Y-m-d h:i:s a', time()) }}. Pichincha,
             Ecuador.
             Este documento fue generado en la plataforma privada de la
-            Compañía Hijas de la Caridad de San Vicente de Paúl ©, Provincia Ecuador.
+            Compañía Hijas de la Caridad de San Vicente de Paúl, Provincia Ecuador.
         </p>
     </footer>
 

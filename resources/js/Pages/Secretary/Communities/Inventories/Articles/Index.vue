@@ -290,12 +290,11 @@
                           </p>
                           <input
                             type="text"
-                            minLength="10"
+                            minLength="1"
                             maxlength="100"
                             placeholder="Ingresar nombre"
                             class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                             v-model="createArticleForm.name"
-                            required
                           />
                         </div>
                       </div>
@@ -413,7 +412,7 @@
                           placeholder="Ingresar precio"
                           class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           v-model="createArticleForm.price"
-                          required
+
                         />
                       </div>
                     </div>
@@ -496,12 +495,11 @@
                         </p>
                         <input
                           type="text"
-                          minLength="10"
+                          minLength="1"
                           maxlength="100"
                           placeholder="Ingresar nombre"
                           class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           v-model="updateArticleForm.name"
-                          required
                         />
                       </div>
                     </div>
@@ -619,7 +617,6 @@
                         placeholder="Ingresar precio"
                         class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         v-model="updateArticleForm.price"
-                        required
                       />
                     </div>
                   </div>

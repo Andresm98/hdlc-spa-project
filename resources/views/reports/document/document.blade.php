@@ -6,10 +6,6 @@
     <head>
         <meta charset="UTF-8">
         <title>Documento</title>
-        {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> --}}
-
-
         <style>
             @page {
                 margin: 0cm 0cm;
@@ -17,6 +13,11 @@
             }
 
             body {
+                margin: 2.0cm 2.5cm 2.5cm;
+                font-family: Georgia, serif;
+            }
+
+            .bodycontent {
                 margin: 2.0cm 2.5cm 2.5cm;
                 font-family: Georgia, serif;
             }
@@ -184,7 +185,7 @@
 </head>
 
 <body>
-    <img class="  " src="https://files-hdlc-frontend.s3.amazonaws.com/header_doc.png">
+    <img class="" src="https://files-hdlc-frontend.s3.amazonaws.com/header_doc.png">
     <main>
         {!! $data->content !!}
     </main>

@@ -101,18 +101,20 @@
     <main>
         <table class="border: none" cellspacing="0" cellpadding="0">
             <tr class="border: none">
-                <td class="border: none" width="67.00%" class="first">PROVINCIA: ECUADOR</td>
-                <td class="border: none" width="33.00%" class="first">Fecha:
-                    {{ date('Y-m-d', strtotime($resume->comm_date_resume)) }}</td>
+                <td class="border: none" width="67.00%" class="first" style="font-weight: bold">PROVINCIA: ECUADOR</td>
+                <td class="border: none" width="33.00%" class="first" style="font-weight: bold">Fecha:
+                    {{ date('d.m.Y', strtotime($resume->comm_date_resume)) }}</td>
             </tr>
             <tr class="border: none">
-                <td class="border: none" width="67.00%" class="second">NOMBRE DE LA COMUNIDAD:
+                <td class="border: none" class="second" colspan="2"><strong> NOMBRE DE LA COMUNIDAD: </strong>
                     {{ $community->comm_name }}</td>
-                <td class="border: none" width="33.00%" class="second"></td>
             </tr>
             <tr>
-                <td class="border: none" width="67.00%" class="second">Dirección Completa:
-                    {{ $community->address->address }} </td>
+                <td class="border: none" width="50.00%" class="second"><strong>Dirección Completa:</strong>
+                    {{ $community->address->address }}
+                </td>
+                <td class="border: none" width="50.00%" class="first"><strong>Email:</strong>
+                    {{ $community->comm_email }}</td>
             </tr>
         </table>
         <br>

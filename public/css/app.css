@@ -1052,6 +1052,9 @@ select {
 .m-8 {
   margin: 2rem;
 }
+.m-6 {
+  margin: 1.5rem;
+}
 .m-1 {
   margin: 0.25rem;
 }

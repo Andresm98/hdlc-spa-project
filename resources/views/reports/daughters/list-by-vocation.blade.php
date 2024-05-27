@@ -79,7 +79,7 @@
                 </div>
                 <div style="float: left;width: 90%; height: 30px; text-align: center;">
                     <p style="font-size:medium; margin-top:0.5cm;">
-                        COMPAÑÍA HIJAS DE LA CARIDAD DE SAN VICENTE DE PAÚL ©
+                        COMPAÑÍA HIJAS DE LA CARIDAD DE SAN VICENTE DE PAÚL
                     </p>
                     <small>HERMANAS CON VOZ PASIVA
                     </small>
@@ -141,7 +141,7 @@
             Fecha Impresión: {{ date('Y-m-d h:i:s a', time()) }}. Pichincha,
             Ecuador.
             Este documento fue generado en la plataforma privada de la
-            Compañía Hijas de la Caridad de San Vicente de Paúl ©, Provincia Ecuador.
+            Compañía Hijas de la Caridad de San Vicente de Paúl, Provincia Ecuador.
         </p>
     </footer>
 

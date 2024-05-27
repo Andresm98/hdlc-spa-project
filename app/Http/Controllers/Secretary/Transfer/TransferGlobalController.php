@@ -220,12 +220,6 @@ class TransferGlobalController extends Controller
 
         $transfers = Transfer::all();
 
-        if (count($transfers) >= 300) {
-            return redirect()->back()->with([
-                'error' => 'Los cambios superan los 100 registros, intente en formato EXCEL.'
-            ]);
-        }
-
         $query->with('profile.user')
             ->with('community')
             ->orderBy('transfer_date_adission', 'desc')
@@ -280,6 +274,12 @@ class TransferGlobalController extends Controller
         $to =  $dateFromTo->getTo();
 
         $type = request('status');
+
+        if (count($data) >= 300) {
+            return redirect()->back()->with([
+                'error' => 'Los cambios superan los 300 registros, intente en formato EXCEL.'
+            ]);
+        }
 
         $pdf = PDF::loadView('reports.transfers.list-transfers', compact('data', 'from', 'to', 'type'));
 
