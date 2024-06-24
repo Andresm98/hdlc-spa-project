@@ -13,6 +13,7 @@ use App\Http\Controllers\Daughter\HealthProfileController;
 use App\Http\Controllers\Daughter\PermitProfileController;
 use App\Http\Controllers\Daughter\RecordProfileController;
 use App\Http\Controllers\Daughter\ActivityGlobalController;
+use App\Http\Controllers\Daughter\DocumentGlobalController;
 use App\Http\Controllers\Daughter\InventoryGlobalController;
 use App\Http\Controllers\Daughter\TransferProfileController;
 use App\Http\Controllers\Daughter\SacramentProfileController;
@@ -371,5 +372,22 @@ Route::group(
 
         Route::get('articles/export-csv', [CommunityArticleController::class, 'exportCSV'])
             ->name('communities.articles.export.csv');
+
+        // Documents
+
+        Route::get('documents/all', [DocumentGlobalController::class, 'index'])
+            ->name('documents.index');
+
+        Route::post('documents/store', [DocumentGlobalController::class, 'store'])
+            ->name('documents.store');
+
+        Route::put('documents/update/{event_id}', [DocumentGlobalController::class, 'update'])
+            ->name('documents.update');
+
+        Route::get('documents/delete/{event_id}', [DocumentGlobalController::class, 'destroy'])
+            ->name('documents.delete');
+
+        Route::get('documents/report-pdf/{event_id}', [DocumentGlobalController::class, 'reportPDF'])
+            ->name('documents.report.pdf');
     }
 );

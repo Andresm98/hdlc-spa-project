@@ -14,4 +14,14 @@ class Document extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function community()
+    {
+        return $this->hasOne(Community::class);
+    }
 }

@@ -5,46 +5,20 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Documento</title>
+        <title>Permiso</title>
         <style>
             @page {
                 margin: 0cm 0cm;
                 font-size: 1.1em;
-                line-height: 18pt;
+                line-height: 13pt;
             }
 
             body {
-                margin: 2.0cm 2.5cm 2.5cm;
+                margin-top: 30px;
+                margin-bottom: 2px;
+                margin-right: 80px;
+                margin-left: 90px;
                 font-family: Georgia, serif;
-            }
-
-            .bodycontent {
-                margin: 2.0cm 2.5cm 2.5cm;
-                font-family: Georgia, serif;
-            }
-
-            header {
-                position: fixed;
-                top: 0cm;
-                left: 0cm;
-                right: 0cm;
-                height: 2.5cm;
-                background-color: #ffffff;
-                color: white;
-                text-align: center;
-                /* line-height: 15px; */
-            }
-
-            footer {
-                position: fixed;
-                bottom: 0cm;
-                left: 0cm;
-                right: 0cm;
-                height: 2.0cm;
-                background-color: #ffffff;
-                color: white;
-                text-align: center;
-                /* line-height: 35px; */
             }
 
             * {
@@ -72,24 +46,6 @@
 
             div.a {
                 text-align: justify;
-            }
-
-            table,
-            td,
-            th {
-                border: 1px solid black;
-                padding-left: 15px;
-                text-align: left;
-            }
-
-            table {
-                border-collapse: collapse;
-                width: 100%;
-                align-items: center;
-            }
-
-            th {
-                height: 20px;
             }
 
             /* h1 */
@@ -162,6 +118,10 @@
 
             /*  */
 
+            p {
+                margin-top: 22px;
+            }
+
             p.ql-align-right {
                 text-align: center;
             }
@@ -182,20 +142,78 @@
                 text-align: center;
             }
 
-            p {
-                margin: 10px;
+            .center {
+                margin-left: 40px;
+                justify-content: center;
             }
+
+            /*  */
+            div {
+                width: 660px;
+                position: relative;
+            }
+
+            table {
+                width: 660px;
+            }
+
+            td {
+                border: 1px solid rgb(37, 50, 122);
+            }
+
+            span {
+                position: absolute;
+                padding-right: 10px;
+                padding-left: 10px;
+                /* padding-top: 5px; */
+                padding-bottom: 5px;
+                z-index: 99;
+            }
+
         </style>
     </head>
 </head>
 
 <body>
-    <img class="" src="https://files-hdlc-frontend.s3.amazonaws.com/header_doc.png" style="margin-bottom: 40px">
+    <img width="570" height="90" class="center"
+        src="https://files-hdlc-frontend.s3.amazonaws.com/header_doc_three.png">
+    <div>
+        <span>
+            {!! $data->content !!}
+        </span>
 
-    <main>
-        {!! $data->content !!}
-    </main>
-
+        <table style="padding-top: 5px">
+            <tr>
+                <td height="33px" width="50%"></td>
+                <td height="33px" style="border-style: hidden;"></td>
+            </tr>
+        </table>
+        <table style="border-collapse: collapse; margin-left: 2px; margin-top:4px">
+            <tr>
+                <td height="33px" width="20%"></td>
+                <td height="33px"></td>
+            </tr>
+        </table>
+        <table style="border-collapse: collapse; margin-left: 2px; margin-top:4px">
+            <tr>
+                <td height="33px" width="20%"></td>
+                <td height="33px"></td>
+            </tr>
+            <tr>
+                <td height="33px" width="20%"></td>
+                <td height="33px"></td>
+            </tr>
+            <tr>
+                <td height="33px" width="20%"></td>
+                <td height="33px"></td>
+            </tr>
+            <tr>
+                <td style="padding-bottom: 10px" colspan="2" width="20%" height="120px"></td>
+            </tr>
+        </table>
+    </div>
+    <img style="margin-top:45px" width="570" height="55" class="center"
+        src="https://files-hdlc-frontend.s3.amazonaws.com/reports/sign_hdlc_exit.png">
 </body>
 
 </html>

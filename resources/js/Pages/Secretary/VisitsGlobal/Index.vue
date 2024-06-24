@@ -260,7 +260,7 @@
                             "
                             >PDF</a
                           >
-                          <a
+                          <!-- <a
                             class="block px-6 py-2 hover:text-white hover:bg-blue-500"
                             target="_blank"
                             :href="
@@ -281,7 +281,7 @@
                               )
                             "
                             >CSV</a
-                          >
+                          > -->
                         </div>
                       </template>
                     </dropdown>
@@ -1004,8 +1004,7 @@ export default {
   },
 
   watch: {
-    dataTransfer: function () {
-    },
+    dataTransfer: function () {},
 
     "form.comm_description_visit": function () {
       var limit = 4000;
@@ -1044,8 +1043,7 @@ export default {
           replace: true,
           preserveState: true,
           preserveScroll: true,
-          onSuccess: () => {
-          },
+          onSuccess: () => {},
         });
       }, 1),
       deep: true,

@@ -171,13 +171,7 @@
     </main>
 
     <footer>
-        <p
-            style="font-size:12px; margin-left:0.40cm;  margin-right:0.40cm; margin-bottom:0.20cm; margin-top:0.20cm; color:#111631">
-            Fecha Impresión: {{ date('Y-m-d h:i:s a', time()) }}. Pichincha,
-            Ecuador.
-            Este documento fue generado en la plataforma privada de la
-            Compañía Hijas de la Caridad de San Vicente de Paúl, Provincia Ecuador.
-        </p>
+
     </footer>
 
 </body>

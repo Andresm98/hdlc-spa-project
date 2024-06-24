@@ -102,4 +102,11 @@ class Community extends Model
             ->where('comm_level', 2)
             ->where('comm_id', $this->id);
     }
+
+    // Relacion inversa uno a uno
+
+    public function document()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

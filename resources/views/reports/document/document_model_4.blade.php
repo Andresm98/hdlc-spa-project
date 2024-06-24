@@ -10,16 +10,11 @@
             @page {
                 margin: 0cm 0cm;
                 font-size: 1.1em;
-                line-height: 18pt;
+                line-height: 15pt;
             }
 
             body {
-                margin: 2.0cm 2.5cm 2.5cm;
-                font-family: Georgia, serif;
-            }
-
-            .bodycontent {
-                margin: 2.0cm 2.5cm 2.5cm;
+                margin: 2.0cm 2.0cm 2.0cm;
                 font-family: Georgia, serif;
             }
 
@@ -190,12 +185,12 @@
 </head>
 
 <body>
-    <img class="" src="https://files-hdlc-frontend.s3.amazonaws.com/header_doc.png" style="margin-bottom: 40px">
-
+    @if ((int) $data->type == 13)
+        <img class="" src="https://files-hdlc-frontend.s3.amazonaws.com/header_doc_two.png">
+    @endif
     <main>
         {!! $data->content !!}
     </main>
-
 </body>
 
 </html>

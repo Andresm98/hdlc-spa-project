@@ -2,7 +2,7 @@
   <app-layout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-700 leading-tight">
-        Listado de Documentos en la Compañía
+        Listado de Documentos en la Hermana en la Compañía
       </h2>
       <div class="text-sm text-blue-700 mt-3 mb-6">
         Bienvenido Usuario: {{ $page.props.user.name }}
@@ -24,6 +24,9 @@
       >
       </alert>
     </div>
+
+    <operation></operation>
+
     <section
       class="bg-blue-100 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg sm:m-2 lg:m-3 md:m-4"
     >
@@ -308,258 +311,282 @@
         </div>
       </div>
     </section>
+
+    <!-- Create Form -->
+    <jet-dialog-modal
+      :max-width="'input-md'"
+      :show="eventBeingCreated"
+      @close="eventBeingCreated == null"
+    >
+      <template #title> Datos del nuevo documento</template>
+
+      <template #content>
+        <div class="flex flex-wrap">
+          <div class="w-full lg:w-6/12 px-2">
+            <div class="relative w-full mb-3">
+              <div class="">
+                <label class="block text-sm font-medium text-gray-700">
+                  Nombre Documento:
+                </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.name"
+                >
+                  {{ $page.props.errors.name }}
+                </p>
+                <input
+                  type="text"
+                  minLength="10"
+                  maxlength="100"
+                  placeholder="Ingresar nombre"
+                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  v-model="createDocumentForm.name"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="w-full lg:w-6/12 px-2">
+            <div class="relative w-full mb-3">
+              <div class="">
+                <label class="block text-sm font-medium text-gray-700">
+                  Tipo Documento:
+                </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.type"
+                >
+                  {{ $page.props.errors.type }}
+                </p>
+                <select
+                  v-model="mainOptionSelected"
+                  id="material"
+                  name="material"
+                  autocomplete="article-material"
+                  class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                >
+                  <option v-for="option in optionMain" :value="option">
+                    {{ option.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-12/12 px-2" v-if="mainOptionSelected">
+            <div class="relative w-full mb-3">
+              <div class="">
+                <label class="block text-sm font-medium text-gray-700">
+                  Nombre Tipo de Documento:
+                </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.type"
+                >
+                  {{ $page.props.errors.type }}
+                </p>
+                <select
+                  v-model="createDocumentForm.type"
+                  id="option"
+                  name="option"
+                  autocomplete="article-material"
+                  class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                >
+                  <option
+                    v-for="option in mainOptionSelected.options"
+                    :value="option.id"
+                  >
+                    {{ option.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full">
+            <div class="relative w-full px-2">
+              <label class="block text-sm font-medium text-gray-700">
+                Contenido
+              </label>
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.content"
+              >
+                {{ $page.props.errors.content }}
+              </p>
+
+              <quill-editor
+                ref="qleditor0"
+                contentType="html"
+                theme="snow"
+                :toolbar="toolbarOptions"
+                v-model:content="this.createDocumentForm.content"
+                placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+              ></quill-editor>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template #footer>
+        <jet-secondary-button @click="cancelCreate">
+          Cancelar
+        </jet-secondary-button>
+
+        <jet-button-success class="ml-3" @click="createEvent">
+          Crear
+        </jet-button-success>
+      </template>
+    </jet-dialog-modal>
+
+    <!-- Update Form -->
+
+    <jet-dialog-modal
+      :max-width="'input-md'"
+      :show="documentBeingUpdated"
+      @close="documentBeingUpdated == null"
+    >
+      <template #title> Datos del Evento</template>
+
+      <template #content>
+        <div class="flex flex-wrap">
+          <div class="w-full lg:w-6/12 px-2">
+            <div class="relative w-full mb-3">
+              <div class="">
+                <label class="block text-sm font-medium text-gray-700">
+                  Nombre Documento:
+                </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.name"
+                >
+                  {{ $page.props.errors.name }}
+                </p>
+                <input
+                  type="text"
+                  minLength="10"
+                  maxlength="100"
+                  placeholder="Ingresar nombre"
+                  class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  v-model="updateDocumentForm.name"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="w-full lg:w-6/12 px-2">
+            <div class="relative w-full mb-3">
+              <div class="read-only">
+                <label class="block text-sm font-medium text-gray-700">
+                  Tipo Documento:
+                </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.type"
+                >
+                  {{ $page.props.errors.type }}
+                </p>
+                <select
+                  disabled
+                  v-model="mainOptionSelected"
+                  id="material"
+                  name="material"
+                  autocomplete="article-material"
+                  class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                >
+                  <option v-for="option in optionMain" :value="option">
+                    {{ option.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-12/12 px-2" v-if="mainOptionSelected">
+            <div class="relative w-full mb-3">
+              <div class="read-only">
+                <label class="block text-sm font-medium text-gray-700">
+                  Nombre Tipo de Documento:
+                </label>
+                <p
+                  class="text-red-400 text-sm"
+                  v-show="$page.props.errors.type"
+                >
+                  {{ $page.props.errors.type }}
+                </p>
+                <select
+                  disabled
+                  v-model="updateDocumentForm.type"
+                  id="option"
+                  name="option"
+                  autocomplete="article-material"
+                  class="select-none mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                >
+                  <option
+                    v-for="option in mainOptionSelected.options"
+                    :value="option.id"
+                  >
+                    {{ option.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full">
+            <div class="relative w-full px-2">
+              <label class="block text-sm font-medium text-gray-700">
+                Contenido
+              </label>
+              <p
+                class="text-red-400 text-sm"
+                v-show="$page.props.errors.content"
+              >
+                {{ $page.props.errors.content }}
+              </p>
+
+              <quill-editor
+                ref="qleditor1"
+                contentType="html"
+                theme="snow"
+                :toolbar="toolbarOptions"
+                v-model:content="updateDocumentForm.content"
+                placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
+              ></quill-editor>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template #footer>
+        <jet-secondary-button @click="this.documentBeingUpdated = null">
+          Cerrar
+        </jet-secondary-button>
+
+        <jet-danger-button class="ml-3" @click="deleteEvent">
+          Eliminar
+        </jet-danger-button>
+
+        <jet-secondary-button class="ml-3" @click="downloadResume">
+          Imprimir
+        </jet-secondary-button>
+        <jet-button-success class="ml-3" @click="updateEvent">
+          Actualizar
+        </jet-button-success>
+      </template>
+    </jet-dialog-modal>
   </app-layout>
-
-  <!-- Create Form -->
-  <jet-dialog-modal
-    :max-width="'input-md'"
-    :show="eventBeingCreated"
-    @close="eventBeingCreated == null"
-  >
-    <template #title> Datos del nuevo documento</template>
-
-    <template #content>
-      <div class="flex flex-wrap">
-        <div class="w-full lg:w-6/12 px-2">
-          <div class="relative w-full mb-3">
-            <div class="">
-              <label class="block text-sm font-medium text-gray-700">
-                Nombre Documento:
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
-                {{ $page.props.errors.name }}
-              </p>
-              <input
-                type="text"
-                minLength="10"
-                maxlength="100"
-                placeholder="Ingresar nombre"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="createDocumentForm.name"
-                required
-              />
-            </div>
-          </div>
-        </div>
-        <div class="w-full lg:w-6/12 px-2">
-          <div class="relative w-full mb-3">
-            <div class="">
-              <label class="block text-sm font-medium text-gray-700">
-                Tipo Documento:
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.type">
-                {{ $page.props.errors.type }}
-              </p>
-              <select
-                v-model="mainOptionSelected"
-                id="material"
-                name="material"
-                autocomplete="article-material"
-                class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              >
-                <option v-for="option in optionMain" :value="option">
-                  {{ option.name }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="w-full lg:w-12/12 px-2" v-if="mainOptionSelected">
-          <div class="relative w-full mb-3">
-            <div class="">
-              <label class="block text-sm font-medium text-gray-700">
-                Nombre Tipo de Documento:
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.type">
-                {{ $page.props.errors.type }}
-              </p>
-              <select
-                v-model="createDocumentForm.type"
-                id="option"
-                name="option"
-                autocomplete="article-material"
-                class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              >
-                <option
-                  v-for="option in mainOptionSelected.options"
-                  :value="option.id"
-                >
-                  {{ option.name }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="w-full">
-          <div class="relative w-full px-2">
-            <label class="block text-sm font-medium text-gray-700">
-              Contenido
-            </label>
-            <p class="text-red-400 text-sm" v-show="$page.props.errors.content">
-              {{ $page.props.errors.content }}
-            </p>
-
-            <quill-editor
-              ref="qleditor0"
-              contentType="html"
-              theme="snow"
-              :toolbar="toolbarOptions"
-              v-model:content="this.createDocumentForm.content"
-              placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
-            ></quill-editor>
-          </div>
-        </div>
-      </div>
-    </template>
-
-    <template #footer>
-      <jet-secondary-button @click="cancelCreate">
-        Cancelar
-      </jet-secondary-button>
-
-      <jet-button-success class="ml-3" @click="createEvent">
-        Crear
-      </jet-button-success>
-    </template>
-  </jet-dialog-modal>
-
-  <!-- Update Form -->
-
-  <jet-dialog-modal
-    :max-width="'input-md'"
-    :show="documentBeingUpdated"
-    @close="documentBeingUpdated == null"
-  >
-    <template #title> Datos del Evento</template>
-
-    <template #content>
-      <div class="flex flex-wrap">
-        <div class="w-full lg:w-6/12 px-2">
-          <div class="relative w-full mb-3">
-            <div class="">
-              <label class="block text-sm font-medium text-gray-700">
-                Nombre Documento:
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.name">
-                {{ $page.props.errors.name }}
-              </p>
-              <input
-                type="text"
-                minLength="10"
-                maxlength="100"
-                placeholder="Ingresar nombre"
-                class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="updateDocumentForm.name"
-                required
-              />
-            </div>
-          </div>
-        </div>
-        <div class="w-full lg:w-6/12 px-2">
-          <div class="relative w-full mb-3">
-            <div class="read-only">
-              <label class="block text-sm font-medium text-gray-700">
-                Tipo Documento:
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.type">
-                {{ $page.props.errors.type }}
-              </p>
-              <select
-                disabled
-                v-model="mainOptionSelected"
-                id="material"
-                name="material"
-                autocomplete="article-material"
-                class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              >
-                <option v-for="option in optionMain" :value="option">
-                  {{ option.name }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="w-full lg:w-12/12 px-2" v-if="mainOptionSelected">
-          <div class="relative w-full mb-3">
-            <div class="read-only">
-              <label class="block text-sm font-medium text-gray-700">
-                Nombre Tipo de Documento:
-              </label>
-              <p class="text-red-400 text-sm" v-show="$page.props.errors.type">
-                {{ $page.props.errors.type }}
-              </p>
-              <select
-                disabled
-                v-model="updateDocumentForm.type"
-                id="option"
-                name="option"
-                autocomplete="article-material"
-                class="select-none mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              >
-                <option
-                  v-for="option in mainOptionSelected.options"
-                  :value="option.id"
-                >
-                  {{ option.name }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="w-full">
-          <div class="relative w-full px-2">
-            <label class="block text-sm font-medium text-gray-700">
-              Contenido
-            </label>
-            <p class="text-red-400 text-sm" v-show="$page.props.errors.content">
-              {{ $page.props.errors.content }}
-            </p>
-
-            <quill-editor
-              ref="qleditor1"
-              contentType="html"
-              theme="snow"
-              :toolbar="toolbarOptions"
-              v-model:content="updateDocumentForm.content"
-              placeholder="Ingresar los datos solicitados, puede ingresar 3000 caracteres como máximo..."
-            ></quill-editor>
-          </div>
-        </div>
-      </div>
-    </template>
-
-    <template #footer>
-      <jet-secondary-button @click="this.documentBeingUpdated = null">
-        Cerrar
-      </jet-secondary-button>
-
-      <jet-danger-button class="ml-3" @click="deleteEvent">
-        Eliminar
-      </jet-danger-button>
-
-      <jet-secondary-button class="ml-3" @click="downloadResume">
-        Imprimir
-      </jet-secondary-button>
-      <jet-button-success class="ml-3" @click="updateEvent">
-        Actualizar
-      </jet-button-success>
-    </template>
-  </jet-dialog-modal>
 </template>
 
   <script>
-import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
+import AppLayout from "@/Layouts/AppLayout.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
 import JetButtonSuccess from "@/Jetstream/ButtonSuccess";
 import JetInputError from "@/Jetstream/InputError.vue";
 import SearchFilter from "@/Components/SearchFilter";
+import Operation from "@/Components/Daughter/Operation";
 import { pickBy, throttle, mapValues } from "lodash";
 import Datepicker from "vue3-date-time-picker";
 import Pagination from "@/Components/Pagination";
@@ -573,8 +600,6 @@ import moment from "moment";
 import { ref } from "vue";
 
 export default {
-  layout: PrincipalLayout,
-
   setup() {
     const date = ref(new Date());
 
@@ -614,6 +639,7 @@ export default {
     Icon,
     Dropdown,
     Pagination,
+    Operation,
   },
 
   mounted() {
@@ -689,29 +715,29 @@ export default {
       mainOptionSelected: null,
 
       optionMain: [
-        {
-          id: 1,
-          name: "Documentos Secretaría",
-          options: [
-            {
-              id: 1,
-              idMain: 1,
-              name: "INFORME DE VISITA REGULAR",
-            },
-            { id: 2, idMain: 1, name: "SALIDA DE LA COMPAÑIA" },
-            { id: 3, idMain: 1, name: "PARA UNA SALIDA DE LA COMPAÑIA PT1" },
-            { id: 4, idMain: 1, name: "PARA UNA SALIDA DE LA COMPAÑIA PT2" },
-            { id: 5, idMain: 1, name: "PARA UNA NUEVA IMPLANTACION" },
-            { id: 6, idMain: 1, name: "MISIÓN AD GENTES – CUESTIONARIO" },
-            {
-              id: 7,
-              idMain: 1,
-              name: "CERTIFICADO DE ADMISIÓN EN LA COMPAÑIA",
-            },
-            { id: 11, idMain: 2, name: "PERMISO NORMAL" },
-            { id: 12, idMain: 2, name: "REVISIÓN TÉCNICA VEHICULAR" },
-          ],
-        },
+        // {
+        //   id: 1,
+        //   name: "Documentos Secretaría",
+        //   options: [
+        //     {
+        //       id: 1,
+        //       idMain: 1,
+        //       name: "INFORME DE VISITA REGULAR",
+        //     },
+        //     { id: 2, idMain: 1, name: "SALIDA DE LA COMPAÑIA" },
+        //     { id: 3, idMain: 1, name: "PARA UNA SALIDA DE LA COMPAÑIA PT1" },
+        //     { id: 4, idMain: 1, name: "PARA UNA SALIDA DE LA COMPAÑIA PT2" },
+        //     { id: 5, idMain: 1, name: "PARA UNA NUEVA IMPLANTACION" },
+        //     { id: 6, idMain: 1, name: "MISIÓN AD GENTES – CUESTIONARIO" },
+        //     {
+        //       id: 7,
+        //       idMain: 1,
+        //       name: "CERTIFICADO DE ADMISIÓN EN LA COMPAÑIA",
+        //     },
+        //     { id: 11, idMain: 2, name: "PERMISO NORMAL" },
+        //     { id: 12, idMain: 2, name: "REVISIÓN TÉCNICA VEHICULAR" },
+        //   ],
+        // },
         {
           id: 2,
           name: "Documentos para las Hermanas",
@@ -823,7 +849,7 @@ export default {
         if (this.params.dateEnd != null) {
           this.params.dateEnd = this.formatDate(this.params.dateEnd);
         }
-        this.$inertia.get(this.route("secretary.documents.index"), params, {
+        this.$inertia.get(this.route("daughter.documents.index"), params, {
           replace: true,
           preserveState: true,
           preserveScroll: true,
@@ -871,7 +897,7 @@ export default {
     },
 
     createEvent() {
-      this.createDocumentForm.post(this.route("secretary.documents.store"), {
+      this.createDocumentForm.post(this.route("daughter.documents.store"), {
         preserveScroll: true,
         onSuccess: () => {
           this.eventBeingCreated = null;
@@ -908,7 +934,7 @@ export default {
     downloadResume() {
       window.open(
         route(
-          "secretary.documents.report.pdf",
+          "daughter.documents.report.pdf",
           {
             event_id: this.documentBeingUpdated.id,
           },
@@ -919,7 +945,7 @@ export default {
 
     updateEvent() {
       this.updateDocumentForm.put(
-        this.route("secretary.documents.update", {
+        this.route("daughter.documents.update", {
           event_id: this.documentBeingUpdated.id,
         }),
         {
@@ -936,7 +962,7 @@ export default {
 
     deleteEvent() {
       this.updateDocumentForm.get(
-        this.route("secretary.documents.delete", {
+        this.route("daughter.documents.delete", {
           event_id: this.documentBeingUpdated.id,
         }),
         {

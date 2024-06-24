@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AddressController;
+use Illuminate\Support\Facades\DB;
 
 class VisitGlobalController extends Controller
 {
@@ -223,6 +224,7 @@ class VisitGlobalController extends Controller
         }
 
         $dateFromTo = new VisitGlobalController();
+
         if (request('dateStart') || request('dateEnd')) {
             $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
                 'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
@@ -244,13 +246,90 @@ class VisitGlobalController extends Controller
             ->get();
 
         $from =   $dateFromTo->getFrom();
+
         $to =  $dateFromTo->getTo();
+
         $type = request('status');
 
-        $pdf = PDF::loadView('reports.communities.visits.list-visits', compact('data', 'from', 'to', 'type'));
+        $dataVisit = array();
+
+        $queryCommunity = Community::query();
+
+        $dataCommunity = $queryCommunity
+            ->with('address')
+            ->where('comm_status', '=', 1)
+            ->get();
+
+        foreach ($dataCommunity as $comm) {
+
+            $dataVisitPerYear = array();
+
+            $listYears = array();
+
+            $year = date("Y");
+
+            for ($i = 0; $i < 10; $i++) {
+
+                array_push($listYears, $year);
+
+                //to get start date of previous year
+                $firstDay =  date($year . "-m-d 00:00:00", strtotime("last year January 1st"));
+
+                //to get end date of previous year
+                $lastDay = date($year . "-m-d 00:00:00", strtotime("last year December 31st"));
+
+                if (request('status')) {
+                    $listVisits = Visit::where('community_id', $comm->id)
+                        ->where('comm_type_visit', request('status'))
+                        ->whereBetween('comm_date_init_visit', [$firstDay, $lastDay])
+                        ->orderBy('comm_date_init_visit', 'asc')
+                        ->get();
+                } else {
+                    $listVisits = Visit::where('community_id', $comm->id)
+                        ->whereBetween('comm_date_init_visit', [$firstDay, $lastDay])
+                        ->orderBy('comm_date_init_visit', 'asc')
+                        ->get();
+                }
+
+                array_push(
+                    $dataVisitPerYear,
+                    $listVisits
+                );
+
+                $year = $this->restYear($year);
+            }
+
+            $lastPastoralVisit = Visit::where('community_id', $comm->id)
+                ->where('comm_type_visit', 3)
+                ->orderBy('comm_date_init_visit', 'desc')
+                ->first();
+
+
+            array_push($dataVisit, (object)[
+                'community' => $comm,
+                'parish' => $comm->address->parish->name,
+                'dataVisitPerYear' => array_reverse($dataVisitPerYear),
+                'lastPastoralVisit' => $lastPastoralVisit
+            ]);
+        }
+
+        usort($dataVisit, function ($a, $b) {
+            return strcmp($a->parish, $b->parish);
+        });
+
+        return $data = $dataVisit;
+
+        $listYears = array_reverse($listYears);
+
+        $pdf = PDF::loadView('reports.communities.visits.list-visits', compact('data', 'from', 'to', 'type', 'listYears'));
+
         return $pdf->setPaper('a4', 'landscape')->stream('ReportesVisitasHDLC.pdf');
     }
 
+    public function restYear($year)
+    {
+        return $year - 1;
+    }
 
     //  TODO: Export Excel
 

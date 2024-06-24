@@ -1,75 +1,93 @@
 <?php
 
-namespace App\Http\Controllers\Secretary\Documents;
+namespace App\Http\Controllers\Daughter;
 
-use App\Http\Controllers\Controller;
-use App\Models\Document;
-use App\Models\Events;
+use App\Models\User;
+use Inertia\Inertia;
+use App\Models\Sacrament;
 use Illuminate\Http\Request;
+use App\Models\Document;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Inertia\Inertia;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 use PDF;
 
-
-
-class DocumentController extends Controller
+class DocumentGlobalController extends Controller
 {
-    public function index()
+
+    /*
+    * Prove Verified proveNewVerified
+    */
+
+    public static function proveNewVerified()
     {
-        $validator = Validator::make(request()->all(), [
-            'type' => ['integer', 'between:1,15']
-        ]);
+        $hashedPassword = Auth::user()->getAuthPassword();
 
-        if ($validator->fails()) {
-            return redirect()->back()->with(['error' => 'No se encuentran resultados.']);
+        if (Hash::check('secret', $hashedPassword)) {
+            return true;
         }
 
-        $query = Document::query();
-
-        $query->with('user')
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        if (request('type')) {
-            $query->where('type', '=', request('type'));
-        }
-
-        if (request('search')) {
-            $query->where('name', 'LIKE', '%' . request('search') . '%');
-        }
-
-        if (request('dateStart') || request('dateEnd')) {
-            $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
-                'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
-                'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
-            ]);
-            if ($validatorData->fails()) {
-                return redirect()->back()
-                    ->withErrors($validatorData->errors());
-            } else {
-                $query->whereBetween('created_at', [request('dateStart'), request('dateEnd')]);
-                $query->orderBy('created_at', 'desc');
-            }
-        }
-
-        return Inertia::render('Secretary/Documents/Index', [
-            'events' =>  $query
-                ->with('user')
-                ->paginate(10)
-                ->appends(request()->query()),
-            'filters' => request()->all(['type', 'search', 'dateStart', 'dateEnd'])
-        ]);
+        return false;
     }
 
+
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function index()
     {
-        //
+        $authUser = auth()->user();
+
+        $checking = $this->proveNewVerified();
+
+        if ($checking) {
+            return abort(404);
+        }
+
+        if ($authUser->id) {
+            $query = Document::query();
+            $query
+                ->where('user_id', $authUser->id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            if (request('type')) {
+                $query->where('type', '=', request('type'));
+            }
+
+            if (request('search')) {
+                $query->where('name', 'LIKE', '%' . request('search') . '%');
+            }
+
+            if (request('dateStart') || request('dateEnd')) {
+                $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
+                    'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
+                    'dateEnd' => ['required', 'date', 'after:dateStart', 'date_format:Y-m-d H:i:s'],
+                ]);
+                if ($validatorData->fails()) {
+                    return redirect()->back()
+                        ->withErrors($validatorData->errors());
+                } else {
+                    $query->whereBetween('created_at', [request('dateStart'), request('dateEnd')]);
+                    $query->orderBy('created_at', 'desc');
+                }
+            }
+
+            return Inertia::render('Daughter/Document', [
+                'events' =>  $query
+                    ->with('user')
+                    ->paginate(10)
+                    ->appends(request()->query()),
+                'filters' => request()->all(['type', 'search', 'dateStart', 'dateEnd'])
+            ]);
+        } else {
+            return abort(404);
+        }
     }
 
     /**
@@ -92,8 +110,14 @@ class DocumentController extends Controller
                 ->withInput();
         }
 
+        $authUser = auth()->user();
+
+        $daughter = User::find($authUser->id);
+
+        $date = Str::slug(\Carbon\Carbon::parse(date('Y-m-d'))->locale('es')->isoFormat('D MMMM YYYY'));
+
         Document::create([
-            'name' => $request->get('name'),
+            'name' => $request->get('name') . "-" . $daughter->lastname . "-" . $daughter->name . "-" . $date,
             'type' =>  $request->get('type'),
             'content' => $request->get('content'),
             'user_id' => Auth::id()
@@ -133,7 +157,6 @@ class DocumentController extends Controller
      */
     public function update(Request $request, $event_id)
     {
-
         $validator = Validator::make(
             ['id' => $event_id],
             [
@@ -156,14 +179,20 @@ class DocumentController extends Controller
                 ->withInput();
         }
 
+        $authUser = auth()->user();
+
         $event = Document::find($event_id);
 
-        $event->update([
-            'name' => $request->get('name'),
-            'type' =>  $request->get('type'),
-            'content' => $request->get('content'),
-        ]);
-        return redirect()->back()->with(['success' => 'El documento fue actualizado correctamente.']);
+        if ($event->user_id === $authUser->id) {
+            $event->update([
+                'name' => $request->get('name'),
+                'type' =>  $request->get('type'),
+                'content' => $request->get('content'),
+            ]);
+            return redirect()->back()->with(['success' => 'El documento fue actualizado correctamente.']);
+        } else {
+            return redirect()->back()->with(['error' => 'El documento no fue actualizado correctamente.']);
+        }
     }
 
     /**
@@ -185,11 +214,17 @@ class DocumentController extends Controller
             return abort(404);
         }
 
+        $authUser = auth()->user();
+
         $event = Document::find($event_id);
 
-        $event->delete();
+        if ($event->user_id === $authUser->id) {
+            $event->delete();
 
-        return redirect()->back()->with(['success' => 'El documento fue eliminado correctamente.']);
+            return redirect()->back()->with(['success' => 'El documento fue eliminado correctamente.']);
+        } else {
+            return redirect()->back()->with(['error' => 'El documento no fue eliminado correctamente.']);
+        }
     }
 
     public function reportPDF($event_id)

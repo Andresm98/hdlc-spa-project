@@ -10,7 +10,6 @@
             @page {
                 margin: 0cm 0cm;
                 font-size: 1.1em;
-                line-height: 18pt;
             }
 
             body {
@@ -182,15 +181,16 @@
                 text-align: center;
             }
 
-            p {
-                margin: 10px;
-            }
+
         </style>
     </head>
 </head>
 
 <body>
-    <img class="" src="https://files-hdlc-frontend.s3.amazonaws.com/header_doc.png" style="margin-bottom: 40px">
+
+    @if ((int) $data->type == 13)
+        <img class="" src="https://files-hdlc-frontend.s3.amazonaws.com/header_doc.png">
+    @endif
 
     <main>
         {!! $data->content !!}

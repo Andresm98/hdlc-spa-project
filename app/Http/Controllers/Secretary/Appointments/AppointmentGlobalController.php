@@ -253,6 +253,7 @@ class AppointmentGlobalController extends Controller
         }
 
         $dateFromTo = new AppointmentGlobalController();
+
         if (request('dateStart') || request('dateEnd')) {
             $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
                 'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
@@ -311,7 +312,6 @@ class AppointmentGlobalController extends Controller
                     'date_vocation' => $appointment['profile']->date_vocation,
                     'presentation_thr' =>   $lastAppointment->get(0),
                     'first_thr' =>   $lastAppointment->get(1),
-                    'second_thr' =>   $lastAppointment->get(2),
                     'second_thr' =>   $lastAppointment->get(2),
                     'parish' => $appointment['community']->address->parish->name,
                 ]);

@@ -5,61 +5,32 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Documento</title>
+        <title>Vehiculo Autorización</title>
         <style>
             @page {
                 margin: 0cm 0cm;
                 font-size: 1.1em;
-                line-height: 18pt;
+                line-height: 22pt;
             }
 
             body {
-                margin: 2.0cm 2.5cm 2.5cm;
+                margin-top: 26px;
+                margin-bottom: 5px;
+                margin-right: 5px;
+                margin-left: 30px;
                 font-family: Georgia, serif;
-            }
-
-            .bodycontent {
-                margin: 2.0cm 2.5cm 2.5cm;
-                font-family: Georgia, serif;
-            }
-
-            header {
-                position: fixed;
-                top: 0cm;
-                left: 0cm;
-                right: 0cm;
-                height: 2.5cm;
-                background-color: #ffffff;
-                color: white;
-                text-align: center;
-                /* line-height: 15px; */
-            }
-
-            footer {
-                position: fixed;
-                bottom: 0cm;
-                left: 0cm;
-                right: 0cm;
-                height: 2.0cm;
-                background-color: #ffffff;
-                color: white;
-                text-align: center;
-                /* line-height: 35px; */
             }
 
             * {
                 box-sizing: border-box;
             }
 
-            /* Create two equal columns that floats next to each other */
             .column {
                 float: left;
-                padding: 10px;
+                padding: 12px;
                 height: auto;
-                /* Should be removed. Only for demonstration */
             }
 
-            /* Clear floats after the columns */
             .row:after {
                 content: "";
                 display: table;
@@ -68,41 +39,27 @@
 
             p.main {
                 text-align: justify;
+
             }
 
             div.a {
                 text-align: justify;
             }
 
-            table,
-            td,
-            th {
-                border: 1px solid black;
-                padding-left: 15px;
-                text-align: left;
-            }
-
-            table {
-                border-collapse: collapse;
-                width: 100%;
-                align-items: center;
-            }
-
-            th {
-                height: 20px;
-            }
-
             /* h1 */
             h1.ql-align-right {
                 text-align: center;
+
             }
 
             h1.ql-align-left {
                 text-align: left;
+
             }
 
             h1.ql-align-right {
                 text-align: right;
+
             }
 
             h1.ql-align-center {
@@ -162,6 +119,10 @@
 
             /*  */
 
+            p {
+                margin-top: 22px;
+            }
+
             p.ql-align-right {
                 text-align: center;
             }
@@ -182,19 +143,59 @@
                 text-align: center;
             }
 
+            .center {
+                justify-content: center;
+            }
+
+            /*  */
+            div {
+                width: 680px;
+                position: relative;
+            }
+
+            table {
+                width: 100px;
+            }
+
+            td {
+                border: 1px solid rgb(46, 62, 151);
+            }
+
+            span {
+                position: absolute;
+                padding-right: 10px;
+                padding-left: 90px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                z-index: 99;
+            }
+
             p {
-                margin: 10px;
+                margin: -1px;
             }
         </style>
     </head>
 </head>
 
 <body>
-    <img class="" src="https://files-hdlc-frontend.s3.amazonaws.com/header_doc.png" style="margin-bottom: 40px">
+    <div>
+        <span>
+            <img width="610" height="105" class="center" style="padding-top: 20px"
+                src="https://files-hdlc-frontend.s3.amazonaws.com/header_doc_three.png">
 
-    <main>
-        {!! $data->content !!}
-    </main>
+            {!! $data->content !!}
+
+            <img width="580" height="40" class="center" style="padding-top: 20px"
+                src="https://files-hdlc-frontend.s3.amazonaws.com/reports/footer_doc_vehicle.png">
+        </span>
+
+        <table style="padding-top: 5px">
+            <tr>
+                <td width="545" height="790"></td>
+            </tr>
+        </table>
+    </div>
+
 
 </body>
 

@@ -85,6 +85,19 @@
         Documentos Personales
       </Link>
     </section>
+
+    <section class="flex-shrink-0">
+      <Link
+        :href="route('daughter.documents.index')"
+        :class="
+          isUrl('daughter/documents')
+            ? ' uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-700 border-2 border-blue-700 text-white text-xs rounded-lg hover:bg-blue-700 hover:text-gray-100 focus:border-4 focus:border-blue-500'
+            : 'uppercase pt-12 pb-1 pl-4 pr-4 bg-blue-500 border-2 border-blue-500 text-white text-xs rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300'
+        "
+      >
+        Documentos Gestión Secretaría
+      </Link>
+    </section>
   </div>
 
   <template v-if="stateFunctions">

@@ -108,9 +108,16 @@ class Profile extends Model
     public function actual()
     {
         $active = $this->hasOne(Transfer::class)
-        ->where('status', 1)
-        ->where('transfer_date_relocated', null);
+            ->where('status', 1)
+            ->where('transfer_date_relocated', null);
 
         return $active;
+    }
+
+    // Relacion inversa uno a uno
+
+    public function document()
+    {
+        return $this->belongsTo(User::class);
     }
 }
