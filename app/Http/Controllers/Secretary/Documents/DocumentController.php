@@ -205,8 +205,13 @@ class DocumentController extends Controller
 
         $type = (int)$data->type;
 
-        if ($type === 1 || $type === 2 || $type === 3 || $type === 4 || $type === 5 || $type === 6 || $type === 7) {
+        if ($type === 1 || $type === 2 || $type === 3 || $type === 4 || $type === 6 || $type === 7) {
             $pdf = PDF::loadView('reports.document.document', compact('data'));
+
+            return $pdf->setPaper('a4', 'portrait')->stream('DocumentosHDLC.pdf');
+        }
+        if ($type === (5)) {
+            $pdf = PDF::loadView('reports.document.document_implantation', compact('data'));
 
             return $pdf->setPaper('a4', 'portrait')->stream('DocumentosHDLC.pdf');
         }

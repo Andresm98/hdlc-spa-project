@@ -317,7 +317,7 @@ class VisitGlobalController extends Controller
             return strcmp($a->parish, $b->parish);
         });
 
-        return $data = $dataVisit;
+        $data = $dataVisit;
 
         $listYears = array_reverse($listYears);
 

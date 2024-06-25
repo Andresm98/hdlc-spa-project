@@ -14,7 +14,7 @@
             }
 
             body {
-                margin-top: 30px;
+                margin-top: 20px;
                 margin-bottom: 2px;
                 margin-right: 80px;
                 margin-left: 90px;
@@ -165,23 +165,26 @@
                 position: absolute;
                 padding-right: 10px;
                 padding-left: 10px;
-                /* padding-top: 5px; */
+                padding-top: 0;
                 padding-bottom: 5px;
                 z-index: 99;
             }
 
+            em {
+                font-size: 1em;
+                line-height: 1pt;
+            }
         </style>
     </head>
 </head>
 
 <body>
-    <img width="570" height="90" class="center"
+    <img width="555" height="84" class="center" style="margin-top:4px; margin-bottom: -5px;"
         src="https://files-hdlc-frontend.s3.amazonaws.com/header_doc_three.png">
     <div>
         <span>
             {!! $data->content !!}
         </span>
-
         <table style="padding-top: 5px">
             <tr>
                 <td height="33px" width="50%"></td>
@@ -196,24 +199,22 @@
         </table>
         <table style="border-collapse: collapse; margin-left: 2px; margin-top:4px">
             <tr>
-                <td height="33px" width="20%"></td>
-                <td height="33px"></td>
+                <td height="35px" width="20%"></td>
+                <td height="35px"></td>
             </tr>
             <tr>
-                <td height="33px" width="20%"></td>
-                <td height="33px"></td>
+                <td height="35px" width="20%"></td>
+                <td height="35px"></td>
             </tr>
             <tr>
-                <td height="33px" width="20%"></td>
-                <td height="33px"></td>
+                <td height="35px" width="20%"></td>
+                <td height="35px"></td>
             </tr>
             <tr>
                 <td style="padding-bottom: 10px" colspan="2" width="20%" height="120px"></td>
             </tr>
         </table>
     </div>
-    <img style="margin-top:45px" width="570" height="55" class="center"
-        src="https://files-hdlc-frontend.s3.amazonaws.com/reports/sign_hdlc_exit.png">
 </body>
 
 </html>
