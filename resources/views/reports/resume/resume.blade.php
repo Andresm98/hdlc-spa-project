@@ -230,7 +230,7 @@
         </table>
 
 
-        @if (count($academicClose) > 0)
+        {{-- @if (count($academicClose) > 0)
             <h4 style="text-align: center;">HERMANAS GRADUADAS AÑO
                 {{ date('Y', strtotime($resume->comm_date_resume)) }}
             </h4>
@@ -266,10 +266,10 @@
 
             <br>
 
-        @endif
+        @endif --}}
 
 
-        @if (count($academicActual) > 0)
+        {{-- @if (count($academicActual) > 0)
             <h4 style="text-align: center;">HERMANAS QUE ESTUDIAN </h4>
             <table border="1" cellspacing="0" cellpadding="0">
                 <tr>
@@ -297,7 +297,7 @@
                     </tr>
                 @endforeach
             </table>
-        @endif
+        @endif --}}
 
 
     </main>

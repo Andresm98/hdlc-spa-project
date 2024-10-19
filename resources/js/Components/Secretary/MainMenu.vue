@@ -59,7 +59,6 @@
       v-if="
         route().current('secretary.daughters.index') ||
         route().current('secretary.daughters.create') ||
-        route().current('secretary.permissions.index') ||
         route().current('secretary.transfers.index') ||
         route().current('secretary.appoinments.index') ||
         route().current('secretary.daughters.reality.index') ||
@@ -98,7 +97,7 @@
           "
         />
       </div>
-      <div class="mr-4 mb-4">
+      <!-- <div class="mr-4 mb-4">
         <Link
           class="group flex items-center py-3"
           :href="route('secretary.permissions.index')"
@@ -125,7 +124,7 @@
         <hr
           :class="isUrl('secretary/permissions/all') ? 'text-white ' : 'hidden'"
         />
-      </div>
+      </div> -->
       <div class="mr-4 mb-4">
         <Link
           class="group flex items-center py-3"
@@ -559,6 +558,43 @@
         </div>
       </Link>
       <hr :class="isUrl('secretary/documents/all') ? 'text-white' : 'hidden'" />
+    </div>
+
+    <div
+      class="ml-4"
+      v-if="
+        route().current('secretary.documents.index') ||
+        route().current('secretary.permissions.index')
+      "
+    >
+      <div class="mr-4 mb-4">
+        <Link
+          class="group flex items-center py-3"
+          :href="route('secretary.permissions.index')"
+        >
+          <icon
+            name="point"
+            class="mr-2 w-4 h-4"
+            :class="
+              isUrl('secretary/permissions/all')
+                ? 'fill-white'
+                : 'fill-gray-400 group-hover:fill-white'
+            "
+          />
+          <div
+            :class="
+              isUrl('secretary/permissions/all')
+                ? 'text-white text-sm'
+                : 'text-gray-400 group-hover:text-white text-sm'
+            "
+          >
+            Permisos Temporales
+          </div>
+        </Link>
+        <hr
+          :class="isUrl('secretary/permissions/all') ? 'text-white ' : 'hidden'"
+        />
+      </div>
     </div>
 
     <div class="mb-4">

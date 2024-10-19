@@ -24,7 +24,7 @@
         >Crear Hermanas</Link
       >
     </section>
-    <section class="flex-shrink-0">
+    <!-- <section class="flex-shrink-0">
       <Link
         :href="route('secretary.permissions.index')"
         :class="
@@ -34,7 +34,7 @@
         "
         >Permisos</Link
       >
-    </section>
+    </section> -->
     <section class="flex-shrink-0">
       <Link
         :href="route('secretary.transfers.index')"

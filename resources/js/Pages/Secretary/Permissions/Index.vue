@@ -25,7 +25,7 @@
       >
       </alert>
     </div>
-    <operation></operation>
+    <!-- <operation></operation> -->
 
     <section
       class="bg-gray-200 dark:bg-slate-800 y-1 px-4 sm:p-6 md:py-10 md:px-8 pt-2 pb-4 rounded-lg sm:m-2 lg:m-3 md:m-4"

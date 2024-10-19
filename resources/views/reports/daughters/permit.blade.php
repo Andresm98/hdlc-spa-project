@@ -275,9 +275,12 @@
             style="text-align: right; font-size:15px; margin-left:0.40cm;  margin-right:0.40cm; margin-bottom:0.20cm; margin-top:0.20cm; color:#111631">
 
             @if ($visitator)
-                Sor {{ $visitator['profile']->user->name }} {{ strtoupper($visitator['profile']->user->lastname) }}
+                <strong>Sor {{ strtok($visitator['profile']->user->name, ' ') }}
+                    {{ strtoupper(strtok($visitator['profile']->user->lastname, ' ')) }}
+                    {{ strtoupper(mb_substr(explode(' ', $visitator['profile']->user->lastname)[1], 0, 1)) }}.
+                </strong>
                 <br>
-                Hija de la Caridad
+                <strong> Hija de la Caridad </strong>
             @endif
 
         </p>

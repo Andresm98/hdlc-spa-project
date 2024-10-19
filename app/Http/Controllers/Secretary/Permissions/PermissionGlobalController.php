@@ -77,7 +77,6 @@ class PermissionGlobalController extends Controller
             }
         }
 
-
         if (request('dateStart') || request('dateEnd')) {
             $validatorData = Validator::make(['dateEnd' => request('dateEnd'), 'dateStart' => request('dateStart')], [
                 'dateStart' => ['required', 'date', 'before:dateEnd', 'date_format:Y-m-d H:i:s'],
@@ -91,7 +90,9 @@ class PermissionGlobalController extends Controller
                 $query->orderBy('date_out', 'desc');
             }
         }
+
         $addressClass = new AddressController();
+
         $provinces =  $addressClass->getProvinces();
 
         return Inertia::render('Secretary/Permissions/Index', [
@@ -102,10 +103,8 @@ class PermissionGlobalController extends Controller
                 ->paginate(10)
                 ->appends(request()->query()),
             'filters' => request()->all(['date', 'search', 'status', 'dateStart', 'dateEnd']),
-
         ]);
     }
-
 
     public function search()
     {

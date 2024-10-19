@@ -494,7 +494,6 @@ export default {
       allRoles: null,
     };
   },
-
   methods: {
     switchToTeam(team) {
       this.$inertia.put(

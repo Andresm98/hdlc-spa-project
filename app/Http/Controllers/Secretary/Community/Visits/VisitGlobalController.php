@@ -156,9 +156,7 @@ class VisitGlobalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($user_id)
-    {
-    }
+    public function show($user_id) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -245,9 +243,9 @@ class VisitGlobalController extends Controller
             ->with('community')
             ->get();
 
-        $from =   $dateFromTo->getFrom();
+        $from = $dateFromTo->getFrom();
 
-        $to =  $dateFromTo->getTo();
+        $to = $dateFromTo->getTo();
 
         $type = request('status');
 
@@ -257,7 +255,8 @@ class VisitGlobalController extends Controller
 
         $dataCommunity = $queryCommunity
             ->with('address')
-            ->where('comm_status', '=', 1)
+            ->where('comm_level', 1)
+            ->where('comm_status', 1)
             ->get();
 
         foreach ($dataCommunity as $comm) {
@@ -286,6 +285,7 @@ class VisitGlobalController extends Controller
                         ->get();
                 } else {
                     $listVisits = Visit::where('community_id', $comm->id)
+                        ->whereBetween('comm_type_visit', [2, 3])
                         ->whereBetween('comm_date_init_visit', [$firstDay, $lastDay])
                         ->orderBy('comm_date_init_visit', 'asc')
                         ->get();
@@ -303,7 +303,6 @@ class VisitGlobalController extends Controller
                 ->where('comm_type_visit', 3)
                 ->orderBy('comm_date_init_visit', 'desc')
                 ->first();
-
 
             array_push($dataVisit, (object)[
                 'community' => $comm,
@@ -330,8 +329,6 @@ class VisitGlobalController extends Controller
     {
         return $year - 1;
     }
-
-    //  TODO: Export Excel
 
     public function exportExcel()
     {

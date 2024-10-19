@@ -44,24 +44,114 @@
             La documentación será puntual y dependiendo de las requerimientos
             deberá solicitar ayuda a los encargados del sistema.
           </div>
+          <div v-for="role in this.allRoles" :key="role">
+            <!-- SECRETARY -->
+            <div v-show="role.name == 'secretary'">
+              <a
+                target="_blank"
+                href="https://files-hdlc-frontend.s3.amazonaws.com/documents-system/Manual_Secretaria_SistemaDeGesti%C3%B3nDocumental.pdf"
+              >
+                <div
+                  class="mt-3 flex items-center text-sm font-semibold text-indigo-700"
+                >
+                  <div>Revise la documentación</div>
 
-          <a href="#">
-            <div
-              class="mt-3 flex items-center text-sm font-semibold text-indigo-700"
-            >
-              <div>Revise la documentación</div>
-
-              <div class="ml-1 text-indigo-500">
-                <svg viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
-                  <path
-                    fill-rule="evenodd"
-                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </div>
+                  <div class="ml-1 text-indigo-500">
+                    <svg
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      class="w-4 h-4"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </a>
             </div>
-          </a>
+            <!-- ADMIN -->
+            <div v-show="role.name == 'super admin'">
+              <a
+                target="_blank"
+                href="https://files-hdlc-frontend.s3.amazonaws.com/documents-system/Manual_Administrador_SistemaDeGesti%C3%B3nDocumental.pdf"
+              >
+                <div
+                  class="mt-3 flex items-center text-sm font-semibold text-indigo-700"
+                >
+                  <div>Revise la documentación</div>
+
+                  <div class="ml-1 text-indigo-500">
+                    <svg
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      class="w-4 h-4"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <!-- DAGTH -->
+            <div v-show="role.name == 'daughter'">
+              <a
+                target="_blank"
+                href="https://files-hdlc-frontend.s3.amazonaws.com/documents-system/Manual_1_Hermanas_SistemaDeGesti%C3%B3nDocumental.pdf"
+              >
+                <div
+                  class="mt-3 flex items-center text-sm font-semibold text-indigo-700"
+                >
+                  <div>Revise la documentación</div>
+
+                  <div class="ml-1 text-indigo-500">
+                    <svg
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      class="w-4 h-4"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                target="_blank"
+                href="https://files-hdlc-frontend.s3.amazonaws.com/documents-system/Manual_2_Hermanas_SistemaDeGesti%C3%B3nDocumental.pdf"
+              >
+                <div
+                  class="mt-3 flex items-center text-sm font-semibold text-indigo-700"
+                >
+                  <div>Revise la documentación Avanzada</div>
+
+                  <div class="ml-1 text-indigo-500">
+                    <svg
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      class="w-4 h-4"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -103,6 +193,12 @@
           </a>
         </div>
       </div>
+
+      <div class=" mx-auto">
+        <div class="m-4 text-black text-sm">
+          Para una mejor experiencia de usuario, se recomienta instalar el Navegador Firefox.
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -112,8 +208,19 @@ import { defineComponent } from "vue";
 import JetApplicationLogo from "@/Jetstream/ApplicationLogo.vue";
 
 export default defineComponent({
+  mounted() {
+    axios.get(this.route("web.user.roles.index")).then((response) => {
+      this.allRoles = response.data;
+    });
+  },
   components: {
     JetApplicationLogo,
+    allRoles: null,
+  },
+  data() {
+    return {
+      allRoles: null,
+    };
   },
 });
 </script>
