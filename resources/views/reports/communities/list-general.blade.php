@@ -54,7 +54,7 @@
             td,
             th {
                 border: 1px solid black;
-                padding-left: 15px;
+                padding-left: 5px;
                 text-align: left;
                 font-size: x-small;
             }
@@ -111,12 +111,12 @@
             </div>
             <table>
                 <tr>
-                    <th>Nro</th>
-                    <th>Ciudad</th>
-                    <th>Provincia</th>
-                    <th>Comunidades</th>
-                    <th>Dirección</th>
-                    <th>Fechas de Apertura</th>
+                    <th style="text-align: center">Nro</th>
+                    <th style="text-align: center">Ciudad</th>
+                    <th style="text-align: center">Provincia</th>
+                    <th style="text-align: center">Comunidades</th>
+                    <th style="text-align: center">Dirección</th>
+                    <th style="text-align: center">Fechas de Apertura</th>
                 </tr>
                 {{ $count = 1 }}
                 @foreach ($data as $obj)
@@ -126,7 +126,7 @@
                         <td width="15%">{{ $obj->province}}</td>
                         <td width="25%">{{ $obj->community->comm_name }}</td>
                         <td width="25%">{{ $obj->community->address->address }}</td>
-                        <td>
+                        <td style="text-align: center">
                             {{ date('d.m.Y', strtotime($obj->community->date_fndt_comm)) }}
                         </td>
                         {{-- <td>

@@ -194,9 +194,19 @@
         </div>
       </div>
 
-      <div class=" mx-auto">
-        <div class="m-4 text-black text-sm">
-          Para una mejor experiencia de usuario, se recomienta instalar el Navegador Firefox.
+      <div class="justify-items-startmx-auto">
+        <a href="https://www.mozilla.org/es-ES/firefox/new/" target="_blank">
+          <img
+            class="ml-4 mt-2"
+            src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg"
+            alt="Firefox"
+            height="40"
+            width="40"
+          />
+        </a>
+
+        <div class="my-2 ml-2 text-black text-sm">
+          Se recomienda usar el Navegador Firefox
         </div>
       </div>
     </div>

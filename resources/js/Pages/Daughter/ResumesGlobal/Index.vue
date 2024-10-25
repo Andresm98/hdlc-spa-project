@@ -47,8 +47,7 @@
         </div>
         <div
           class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 md:mb-6 md:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0"
-        >
-        </div>
+        ></div>
         <dl
           class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-1 md:row-start-3 lg:row-start-2"
         >
@@ -463,7 +462,8 @@
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
               <label class="block text-sm font-medium text-gray-700">
-                Anexo
+                En caso de tener un anexo que dependa de esta Comunidad, indicar
+                dirección
               </label>
               <p
                 class="text-red-400 text-sm"
@@ -500,8 +500,9 @@
                 {{ $page.props.errors.comm_observation_resume }}
               </p>
               <small
-                >Formato: Observaciones de la actividad anual, max 3000
-                caracteres.</small
+                >Formato: Observaciones (obras abiertas o cerradas) -
+                Dificultades particulares que se han presentado durante este
+                año,etc. max 3000 caracteres.</small
               >
               <div class="bg-white">
                 <quill-editor
@@ -596,7 +597,8 @@
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
               <label class="block text-sm font-medium text-gray-700">
-                Anexo:
+                En caso de tener un anexo que dependa de esta Comunidad, indicar
+                dirección:
               </label>
               <p
                 class="text-red-400 text-sm"
@@ -633,8 +635,9 @@
                 {{ $page.props.errors.comm_observation_resume }}
               </p>
               <small
-                >Formato: Observaciones de la actividad anual, max 3000
-                caracteres.</small
+                >Formato: Observaciones (obras abiertas o cerradas) -
+                Dificultades particulares que se han presentado durante este
+                año,etc. , max 3000 caracteres.</small
               >
               <div class="bg-white">
                 <quill-editor

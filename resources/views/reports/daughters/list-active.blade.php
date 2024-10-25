@@ -24,7 +24,7 @@
             }
 
             body {
-                margin: 2.5cm 2cm 2cm;
+                margin: 1.5cm 1cm 1cm;
                 font-family: Arial, sans-serif;
             }
 
@@ -141,13 +141,13 @@
             </h5>
             <table>
                 <tr>
-                    <th>Nro</th>
+                    <th style="text-align: center">Nro</th>
                     {{-- <th>Hermana</th> --}}
-                    <th>APELLIDOS Y NOMBRES</th>
-                    <th colspan="3" style="font-size: 10px">F. NACIMIENTO</th>
-                    <th colspan="3" style="font-size: 10px">F. VOCACIÓN</th>
-                    <th style="font-size: 10px">N.C. IDENTIDAD</th>
-                    <th style="font-size: 10px">Observac.</th>
+                    <th style="text-align: center">APELLIDOS Y NOMBRES</th>
+                    <th colspan="3" style="font-size: 10px; text-align: center;">F. NACIMIENTO</th>
+                    <th colspan="3" style="font-size: 10px; text-align: center;">F. VOCACIÓN</th>
+                    <th style="font-size: 10px; text-align: center;">N.C. IDENTIDAD</th>
+                    <th style="font-size: 10px; text-align: center;">Observac.</th>
                     {{-- @if ($type == 2)
                         <th>Fecha de Envío</th>
                     @elseif ($type == 3)

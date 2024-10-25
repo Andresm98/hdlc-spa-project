@@ -1055,7 +1055,7 @@
                   <div class="grid grid-cols-6 gap-6">
                     <div class="col-span-6 sm:col-span-3">
                       <label class="block text-sm font-medium text-gray-700 mr-2">
-                        Nombre de la persona dondo hace sus días familiares:
+                        Nombre de la persona donde hace sus días familiares:
                       </label>
                       <p
                         class="text-red-400 text-sm"

@@ -542,7 +542,8 @@
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
               <label class="block text-sm font-medium text-gray-700">
-                Anexo:
+                En caso de tener un anexo que dependa de esta Comunidad, indicar
+                dirección:
               </label>
               <p
                 class="text-red-400 text-sm"
@@ -579,8 +580,9 @@
                 {{ $page.props.errors.comm_observation_resume }}
               </p>
               <small
-                >Formato: Observaciones de la actividad anual, max 3000
-                caracteres.</small
+                >Formato: Observaciones (obras abiertas o cerradas) -
+                Dificultades particulares que se han presentado durante este
+                año,etc., max 3000 caracteres.</small
               >
               <div class="bg-white">
                 <quill-editor
@@ -691,7 +693,8 @@
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
               <label class="block text-sm font-medium text-gray-700">
-                Anexo:
+                En caso de tener un anexo que dependa de esta Comunidad, indicar
+                dirección:
               </label>
               <p
                 class="text-red-400 text-sm"
@@ -728,8 +731,9 @@
                 {{ $page.props.errors.comm_observation_resume }}
               </p>
               <small
-                >Formato: Observaciones de la actividad anual, max 3000
-                caracteres.</small
+                >Formato: Observaciones (obras abiertas o cerradas) -
+                Dificultades particulares que se han presentado durante este
+                año,etc., max 3000 caracteres.</small
               >
               <div class="bg-white">
                 <quill-editor

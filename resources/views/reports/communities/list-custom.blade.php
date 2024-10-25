@@ -54,7 +54,7 @@
             td,
             th {
                 border: 1px solid black;
-                padding-left: 15px;
+                padding-left: 5px;
                 text-align: left;
                 font-size: x-small;
             }
@@ -92,8 +92,8 @@
                             @endif
                         @endif de la Compañía
                         @if ($from && $to)
-                            ({{ date('Y-m-d', strtotime($from)) }} -
-                            {{ date('Y-m-d', strtotime($to)) }})
+                            ({{ date('d.m.Y', strtotime($from)) }} -
+                            {{ date('d.m.Y', strtotime($to)) }})
                         @endif - Provincia Ecuador
                     </p>
                 </div>
@@ -116,50 +116,47 @@
             ?>
 
             @foreach ($data as $index)
-                <p style="text-align: center;"><strong>{{ $count++ }}. {{ $index->community->comm_name }}</strong></p>
+                <p style="text-align: center;"><strong>{{ $count++ }}. {{ $index->community->comm_name }}</strong>
+                </p>
 
                 <?php
-                $listDaughters = CommunityDaughterController::reportStatic($index->community->id);
+                $listDaughters = CommunityDaughterController::reportStaticOrder($index->community->id);
                 ?>
                 @if ($listDaughters)
                     <table>
                         <tr>
                             <th>Nro</th>
-                            <th>Apellidos</th>
-                            <th>Nombres</th>
-                            <th>Nombre en Comunidad</th>
-                            <th>Fecha nacimiento</th>
-                            <th>Fecha vocación</th>
-                            <th>Fecha del último destino</th>
+                            <th style="text-align: center">Apellidos</th>
+                            <th style="text-align: center">Nombres</th>
+                            <th style="text-align: center">Nombre en Comunidad</th>
+                            <th style="text-align: center">Fecha nacimiento</th>
+                            <th style="text-align: center">Fecha vocación</th>
+                            <th style="text-align: center">Fecha del último destino</th>
                         </tr>
                         {{ $countTwo = 1 }}
                         @foreach ($listDaughters as $daughter)
                             <tr>
                                 <td width="4%">{{ $countTwo++ }}</td>
                                 <td width="15%">
-                                    {{ $daughter->profile->user->lastname }}
+                                    {{ $daughter['profile']['user']['lastname'] }}
                                 </td>
                                 <td width="15%">
-                                    {{ $daughter->profile->user->name }}
+                                    {{ $daughter['profile']['user']['name'] }}
                                 </td>
                                 <td width="15%">
-                                    {{ $daughter->profile->user->fullnamecomm }}
+                                    {{ $daughter['profile']['user']['fullnamecomm'] }}
                                 </td>
-                                <td width="10%">
-                                    {{ date('Y-m-d', strtotime($daughter->profile->date_birth)) }}<br>
+                                <td width="10%" style="text-align: center">
+                                    {{ date('d.m.Y', strtotime($daughter['profile']['date_birth'])) }}<br>
                                 </td>
-                                <td width="10%">
-                                    @if ($daughter->profile->date_vocation != null)
-                                        {{ date('Y-m-d', strtotime($daughter->profile->date_vocation)) }}<br>
+                                <td width="10%" style="text-align: center">
+                                    @if ($daughter['profile']['date_vocation'] != null)
+                                        {{ date('d.m.Y', strtotime($daughter['profile']['date_vocation'])) }}<br>
                                     @endif
                                 </td>
-                                <td width="10%">
-                                    @if ($daughter->profile->transfers)
-                                        @foreach ($daughter->profile->transfers as $transfer)
-                                            @if ($transfer->status == 1)
-                                                {{ date('Y-m-d', strtotime($transfer->transfer_date_adission)) }}
-                                            @endif
-                                        @endforeach
+                                <td width="10%" style="text-align: center">
+                                    @if ($daughter['transfer_date_adission'] != null)
+                                        {{ date('d.m.Y', strtotime($daughter['transfer_date_adission'])) }}<br>
                                     @endif
                                 </td>
                             </tr>

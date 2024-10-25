@@ -15,7 +15,7 @@
             }
 
             body {
-                margin: 2.5cm 2cm 2cm;
+                margin: 2.0cm 2cm 2cm;
                 font-family: Arial, sans-serif;
             }
 
@@ -24,7 +24,7 @@
                 top: 0cm;
                 left: 0cm;
                 right: 0cm;
-                height: 2.2cm;
+                height: 1.5cm;
                 background-color: #ffffff;
                 color: white;
                 text-align: center;
@@ -74,7 +74,7 @@
             td {
                 height: 40px;
                 font-size: 12px;
-                padding-left: 15px;
+                padding-left: 4px;
             }
 
             ,
@@ -93,10 +93,6 @@
 </head>
 
 <body>
-    <header>
-
-
-    </header>
     <?php
     $counter = 1;
     ?>
@@ -116,7 +112,7 @@
             @foreach ($actualTransfers as $exit)
                 {}
                 <tr>
-                    <td class="text-align: center">
+                    <td style="text-align: center">
                         {{ $counter++ }}
                     </td>
                     <td>
@@ -125,10 +121,10 @@
                     <td>
                         {{ $exit->profile->user->name }}
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         {{ date('d.m.Y', strtotime($exit->profile->date_birth)) }}
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         {{ date('d.m.Y', strtotime($exit->profile->date_vocation)) }}
                     </td>
                     <td>
@@ -140,7 +136,7 @@
                             @endif
                         @endif
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if ($exit->profile->actual)
                             {{ date('d.m.Y', strtotime($exit->profile->actual->transfer_date_adission)) }}
                         @else

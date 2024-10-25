@@ -353,7 +353,18 @@ class UserController extends Controller
             'pastorals' => $pastorals,
             'books' => $books,
             'filters' => request()->all([
-                'search', 'field', 'direction', 'page', 'status', 'pastoral', 'dateStart', 'dateEnd', 'perProvince', 'perPage', 'typeActive', 'book'
+                'search',
+                'field',
+                'direction',
+                'page',
+                'status',
+                'pastoral',
+                'dateStart',
+                'dateEnd',
+                'perProvince',
+                'perPage',
+                'typeActive',
+                'book'
             ])
         ]);
     }
@@ -795,7 +806,7 @@ class UserController extends Controller
         $then_ts = strtotime($then);
         $then_year = date('Y', $then_ts);
         $age = date('Y') - $then_year;
-        if (strtotime('+' . $age . ' years', $then_ts) > time()) $age--;
+        // if (strtotime('+' . $age . ' years', $then_ts) > time()) $age--;
         return $age;
     }
 
@@ -876,7 +887,6 @@ class UserController extends Controller
             });
         }
 
-
         if (request('pastoral')) {
             $query->whereHas("profile", function ($q) {
                 $q->whereHas("transfers", function ($qtransfer) {
@@ -887,7 +897,6 @@ class UserController extends Controller
                 });
             });
         }
-
 
         if (request('perProvince')) {
             $query->whereHas("profile", function ($q) {
@@ -1037,7 +1046,9 @@ class UserController extends Controller
             });
 
             $from =   $dateFromTo->getFrom();
+
             $to =  $dateFromTo->getTo();
+
             if (request('status') == 1) {
                 $data = $query
                     ->with('profile')

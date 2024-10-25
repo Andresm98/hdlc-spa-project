@@ -50,7 +50,7 @@
             td,
             th {
                 border: 1px solid black;
-                padding-left: 15px;
+                padding-left: 2px;
                 text-align: left;
                 font-size: x-small;
             }
@@ -104,29 +104,50 @@
                     {{ $key }} AÑOS DE VOCACIÓN</h2>
                 <table>
                     <tr>
-                        <th>No. ORD.</th>
-                        <th>NOMBRES Y APELLIDOS DE SOR</th>
-                        <th>FECHA DE NACIMIENTO</th>
-                        <th>FECHA DE VOCACIÓN</th>
-                        <th>AÑOS DE VOCACIÓN</th>
+                        <th rowspan="2" style="text-align: center">No. ORD.</th>
+                        <th rowspan="2" style="text-align: center">NOMBRES Y APELLIDOS DE SOR</th>
+                        <th colspan="3" style="text-align: center">FECHA DE NACIMIENTO</th>
+                        <th colspan="3" style="text-align: center">FECHA DE VOCACIÓN</th>
+                        <th rowspan="2" style="text-align: center">AÑOS DE VOCACIÓN</th>
                     </tr>
+                    <tr>
+                        <th style="text-align: center">DÍA</th>
+                        <th style="text-align: center">MES</th>
+                        <th style="text-align: center">AÑO</th>
+                        <th style="text-align: center">DÍA</th>
+                        <th style="text-align: center">MES</th>
+                        <th style="text-align: center">AÑO</th>
+                    </tr>
+                    {{ $count = 1 }}
                     @foreach ($row as $inside)
-                        {{ $count = 1 }}
                         <tr>
-                            <td width="4%">{{ $count++ }}</td>
+                            <td style="text-align:center" width="4%">{{ $count++ }}</td>
                             <td>{{ strtoupper($inside['daughter']->lastname) }}
                                 {{ strtoupper($inside['daughter']->name) }}</td>
                             @if ($inside['daughter']->profile)
-                                <td width="15%">
-                                    {{ date('d-m-Y', strtotime($inside['daughter']->profile->date_birth)) }}
+                                <td style="text-align:center" width="6%">
+                                    {{ date('d', strtotime($inside['daughter']->profile->date_birth)) }}
                                 </td>
-                                <td width="15%">
-                                    {{ date('d-m-Y', strtotime($inside['daughter']->profile->date_vocation)) }}
+                                <td style="text-align:center" width="6%">
+                                    {{ date('m', strtotime($inside['daughter']->profile->date_birth)) }}
+                                </td>
+                                <td style="text-align:center" width="6%">
+                                    {{ date('Y', strtotime($inside['daughter']->profile->date_birth)) }}
+                                </td>
+
+                                <td style="text-align:center" width="6%">
+                                    {{ date('d', strtotime($inside['daughter']->profile->date_vocation)) }}
+                                </td>
+                                <td style="text-align:center" width="6%">
+                                    {{ date('m', strtotime($inside['daughter']->profile->date_vocation)) }}
+                                </td>
+                                <td style="text-align:center" width="6%">
+                                    {{ date('Y', strtotime($inside['daughter']->profile->date_vocation)) }}
                                 </td>
                             @else
                                 <td>Pendiente</td>
                             @endif
-                            <td width="5%">{{ $inside['year'] }}</td>
+                            <td width="5%" style="text-align:center">{{ $inside['year'] }}</td>
                         </tr>
                     @endforeach
                 </table>
@@ -134,11 +155,8 @@
 
         </div>
     </main>
-
     <footer>
-
     </footer>
-
 </body>
 
 </html>

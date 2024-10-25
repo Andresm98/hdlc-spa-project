@@ -13,6 +13,22 @@ use Illuminate\Support\Facades\Validator;
 
 class CommunityDaughterController extends Controller
 {
+    public $moveIndex = null;
+
+    public function __construct()
+    {
+        $this->moveIndex;
+    }
+
+    public function setMoveIndex($moveIndex)
+    {
+        $this->moveIndex = $moveIndex;
+    }
+    public function getMoveIndex()
+    {
+        return $this->moveIndex;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -239,9 +255,11 @@ class CommunityDaughterController extends Controller
         $validator = Validator::make(['community_id' => $community_id], [
             'community_id' => ['required', 'exists:communities,id']
         ]);
+
         if ($validator->fails()) {
             return redirect()->back()->with(['error' => 'No existe la comunidad']);
         }
+
         $community = Community::find($community_id);
 
         if ($community->comm_status == 1) {
@@ -263,6 +281,71 @@ class CommunityDaughterController extends Controller
                 ->orderBy('transfer_date_adission', 'desc')
                 ->where('status',  1)
                 ->get();
+        }
+    }
+
+
+
+    public static function reportStaticOrder($community_id)
+    {
+        $validator = Validator::make(['community_id' => $community_id], [
+            'community_id' => ['required', 'exists:communities,id']
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with(['error' => 'No existe la comunidad']);
+        }
+
+        $community = Community::find($community_id);
+
+        if ($community->comm_status == 1) {
+
+            $arrayid =  DB::table('users')
+                ->select('profiles.id')
+                ->join('profiles', 'profiles.user_id', '=', 'users.id')
+                ->join('transfers', 'transfers.profile_id', '=', 'profiles.id')
+                ->join('communities', 'communities.id', '=', 'transfers.community_id')
+                ->where('transfers.community_id', '=', $community_id)
+                ->where('transfers.status', '=', 1)
+                ->get();
+
+            $query = Transfer::query();
+
+            $query->whereIn('profile_id', $arrayid->pluck('id')->toArray())
+                ->with('profile.user')
+                ->with('community')
+                ->with('appointments.appointment_level')
+                ->orderBy('transfer_date_adission', 'desc')
+                ->where('status',  1)
+                ->get();
+
+
+            $class = new CommunityDaughterController();
+
+            foreach ($query->get() as $value) {
+                foreach ($value->appointments as $valueLTwo) {
+                    if ((int)$valueLTwo->appointment_level_id === 10) {
+
+                        $class->setMoveIndex($value->id);
+
+                        break;
+                    }
+                }
+            }
+
+            $firstElement = $class->getMoveIndex();
+
+            $array_transform = $query->get()->toArray();
+
+            if ($query->count() > 0) {
+                $index = array_search((int)$firstElement, array_column($array_transform, 'id'));
+
+                $objeto = array_splice($array_transform, $index, 1)[0];
+
+                array_unshift($array_transform, $objeto);
+            }
+
+            return $array_transform;
         }
     }
 
