@@ -13,7 +13,7 @@
             }
 
             body {
-                margin: 2.5cm 2cm 2cm;
+                margin: 2cm 2cm 1cm 2cm;
                 font-family: Arial, sans-serif;
             }
 
@@ -155,8 +155,7 @@
 
         </div>
     </main>
-    <footer>
-    </footer>
+
 </body>
 
 </html>

@@ -56,9 +56,7 @@
                 border: 1px solid black;
                 font-size: 12px;
                 padding-left: 15px;
-            }
-
-            ,
+            },
             th {
                 height: 20px;
                 border: 1px solid black;

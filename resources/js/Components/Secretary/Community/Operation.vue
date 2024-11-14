@@ -88,7 +88,7 @@
         >Archivos</Link
       >
     </section>
-    <section class="flex-shrink-0">
+    <!-- <section class="flex-shrink-0">
       <Link
         :href="route('secretary.communitiesglobal.inventories.index')"
         :class="
@@ -98,7 +98,7 @@
         "
         >Inventarios</Link
       >
-    </section>
+    </section> -->
     <section class="flex-shrink-0">
       <Link
         :href="route('secretary.communities.reality.index')"

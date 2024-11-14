@@ -168,7 +168,7 @@
       </section>
 
       <section class="flex-shrink-0">
-        <Link
+        <!-- <Link
           :href="route('daughter.community.inventory.index')"
           :class="
             isUrl('daughter/community/inventory')
@@ -177,7 +177,7 @@
           "
         >
           Inventario Comunidad
-        </Link>
+        </Link> -->
       </section>
     </div>
   </template>

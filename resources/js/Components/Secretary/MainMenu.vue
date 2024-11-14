@@ -468,7 +468,7 @@
           "
         />
       </div>
-      <div class="mr-4 mb-4">
+      <!-- <div class="mr-4 mb-4">
         <Link
           class="group flex items-center py-3"
           :href="route('secretary.communitiesglobal.inventories.index')"
@@ -499,7 +499,7 @@
               : 'hidden'
           "
         />
-      </div>
+      </div> -->
 
       <div class="mr-4 mb-4">
         <Link

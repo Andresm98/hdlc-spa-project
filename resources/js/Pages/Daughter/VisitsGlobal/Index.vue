@@ -510,8 +510,8 @@
                   class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
                   <option value="1">Fraterna</option>
-                  <option value="2">Regular</option>
-                  <option value="3">Pastoral</option>
+                  <!-- <option value="2">Regular</option>
+                  <option value="3">Pastoral</option> -->
                 </select>
               </div>
             </div>
@@ -664,8 +664,8 @@
                   class="mt-1 block w-full px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
                   <option value="1">Fraterna</option>
-                  <option value="2">Regular</option>
-                  <option value="3">Pastoral</option>
+                  <!-- <option value="2">Regular</option>
+                  <option value="3">Pastoral</option> -->
                 </select>
               </div>
             </div>
