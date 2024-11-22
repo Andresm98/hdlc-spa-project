@@ -81,6 +81,7 @@
             th {
                 height: 20px;
                 font-size: 12px;
+                padding-bottom: 5px;
             }
 
             table {
@@ -93,10 +94,6 @@
 </head>
 
 <body>
-    <header>
-
-
-    </header>
 
     <main>
         <table class="border: none" cellspacing="0" cellpadding="0">
@@ -195,7 +192,6 @@
             </tr>
 
             @foreach ($exitTransfers as $exit)
-                {}
                 <tr>
                     <td>
                         {{ $exit->profile->user->lastname }}

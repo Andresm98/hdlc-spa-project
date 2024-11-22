@@ -109,42 +109,32 @@
                 <th width="10.00%">Mes del retiro</th>
             </tr>
 
-            @foreach ($actualTransfers as $exit)
+            @foreach ($actualTransfers as $element)
                 {}
                 <tr>
                     <td style="text-align: center">
                         {{ $counter++ }}
                     </td>
                     <td>
-                        {{ $exit->profile->user->lastname }}
+                        {{ $element['lastname'] }}
                     </td>
                     <td>
-                        {{ $exit->profile->user->name }}
+                        {{ $element['fullnamecomm'] }}
                     </td>
                     <td style="text-align: center">
-                        {{ date('d.m.Y', strtotime($exit->profile->date_birth)) }}
+                        {{ $element['datebirth'] }}
                     </td>
                     <td style="text-align: center">
-                        {{ date('d.m.Y', strtotime($exit->profile->date_vocation)) }}
-                    </td>
-                    <td>
-                        @if (null !== $exit->appointments)
-                            @if (count($exit->appointments) != 0)
-                                @foreach ($exit->appointments as $appointments)
-                                    {{ $appointments->appointment_level->name }}
-                                @endforeach
-                            @endif
-                        @endif
+                        {{ $element['datevocation'] }}
                     </td>
                     <td style="text-align: center">
-                        @if ($exit->profile->actual)
-                            {{ date('d.m.Y', strtotime($exit->profile->actual->transfer_date_adission)) }}
-                        @else
-                            PENDIENTE
-                        @endif
+                        {{ $element['office'] }}
                     </td>
-                    <td>
-
+                    <td style="text-align: center">
+                        {{ $element['dateinsert'] }}
+                    </td>
+                    <td style="text-align: center">
+                        {{ $element['retirement'] }}
                     </td>
                 </tr>
             @endforeach

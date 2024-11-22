@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\AcademicTraining;
 use App\Models\Activity;
+use App\Models\Staff;
 use App\Models\Transfer;
 use Illuminate\Support\Facades\Validator;
 
@@ -89,6 +90,7 @@ class CommunityResumeController extends Controller
         if ($validator->fails()) {
             return abort(404);
         }
+
         if ($validatorData->fails()) {
             return redirect()->back()
                 ->withErrors($validatorData->errors())
@@ -103,6 +105,21 @@ class CommunityResumeController extends Controller
             'comm_observation_resume' => $request->get('comm_observation_resume'),
             'comm_date_resume' => $request->get('comm_date_resume'),
         ]);
+
+        // create data of staff
+
+        $actualTransfers = CommunityDaughterController::indexResponse($community_id, null);
+
+        foreach ($actualTransfers as $transfer) {
+            Staff::create([
+                'office' => '',
+                'retirement' => '',
+                'transfer_id' => $transfer->id,
+                'resume_id' => $resume->id,
+            ]);
+        }
+
+        // create data of staff
 
         $messageData = Resume::where('id', $resume->id)
             ->with('community')->first();
@@ -237,7 +254,7 @@ class CommunityResumeController extends Controller
             ->with('profile.user')
             ->get();
 
-        $actualTransfers = CommunityDaughterController::indexResponse($resume->community_id);
+        $actualTransfers = CommunityDaughterController::indexResponse($resume->community_id, $dateF);
 
         $profilesIds = array();
 
@@ -273,9 +290,11 @@ class CommunityResumeController extends Controller
 
         $resume = Resume::find($resume_id);
 
+        $dateF = date("Y", strtotime($resume->comm_date_resume));
+
         $community = Community::find($resume->community_id);
 
-        $actualTransfers = CommunityDaughterController::indexResponse($resume->community_id);
+        $actualTransfers = StaffController::index($resume->id);
 
         $pdf = PDF::loadView('reports.resume.resume-two', compact('community', 'actualTransfers'));
 

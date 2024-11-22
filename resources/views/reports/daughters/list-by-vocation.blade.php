@@ -13,17 +13,16 @@
             }
 
             body {
-                margin: 2cm 2cm 1cm 2cm;
+                margin: 2.3cm 2cm 1cm 2cm;
                 font-family: Arial, sans-serif;
             }
 
             header {
                 position: fixed;
-                margin-bottom: 0.01cm;
                 top: 0cm;
                 left: 0cm;
                 right: 0cm;
-                height: 2.2cm;
+                height: 2cm;
                 background-color: #ffffff;
                 color: white;
                 text-align: center;

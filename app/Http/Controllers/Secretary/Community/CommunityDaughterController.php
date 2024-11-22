@@ -35,7 +35,7 @@ class CommunityDaughterController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public static function indexResponse($community_id)
+    public static function indexResponse($community_id, $dateF)
     {
         $validator = Validator::make(['community_id' => $community_id], [
             'community_id' => ['required', 'exists:communities,id']
@@ -78,7 +78,6 @@ class CommunityDaughterController extends Controller
                 ->join('profiles', 'profiles.user_id', '=', 'users.id')
                 ->join('transfers', 'transfers.profile_id', '=', 'profiles.id')
                 ->join('communities', 'communities.id', '=', 'transfers.community_id')
-
                 ->where('transfers.community_id', '=', $community_id)
                 ->where('transfers.status', '=', 1)
                 ->get();

@@ -27,6 +27,7 @@ use App\Http\Controllers\Secretary\Community\CommunityVehicleController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityArticleController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunitySectionController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityInventoryController;
+use App\Http\Controllers\Secretary\Community\StaffController;
 
 // Address Controllers
 
@@ -243,6 +244,14 @@ Route::group(
 
         Route::get('resumes/report/pdf/two/{resume_id}', [CommunityResumeController::class, 'printResumeTwo'])
             ->name('communities.resumetwo.pdf');
+
+        // Staff Controller
+
+        Route::get('staff/{resume_id}', [StaffController::class, 'index'])
+            ->name('communities.staff.resume.index');
+
+        Route::put('staff/update/{staff_id}', [StaffController::class, 'update'])
+            ->name('communities.staff.resume.update');
 
         // Visits Controller
 

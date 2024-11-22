@@ -28,4 +28,9 @@ class Resume extends Model
     {
         return $this->hasMany('App\Models\Activity');
     }
+
+    public function staffs()
+    {
+        return $this->hasMany('App\Models\Staff');
+    }
 }
