@@ -588,7 +588,7 @@
                 : 'text-gray-400 group-hover:text-white text-sm'
             "
           >
-            Permisos Temporales
+            Permisos Trimestrales
           </div>
         </Link>
         <hr

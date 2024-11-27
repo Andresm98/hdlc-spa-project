@@ -130,7 +130,7 @@ class AppointmentGlobalController extends Controller
             $q->where('id', $daughterServant->id);
         });
 
-        $start = date('Y-m-d H:i:s', strtotime('-3 years'));
+        $start = date('Y-m-d H:i:s', strtotime('-4 years'));
 
         $end = date('Y-m-d H:i:s', strtotime('-3 years +3 months'));
 

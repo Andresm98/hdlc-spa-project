@@ -506,8 +506,8 @@
                 <small>Formato: Nombre del resumen anual.</small>
                 <input
                   type="text"
-                  minLength="10"
-                  maxlength="100"
+                  minLength="1"
+                  maxlength="200"
                   placeholder="Ingresar nombre del resumen"
                   class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="form.comm_name_resume"
@@ -556,7 +556,7 @@
                 presente campo.</small
               >
               <input
-                minLength="10"
+                minLength="1"
                 maxlength="400"
                 type="text"
                 class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -657,8 +657,8 @@
                 <small>Formato: Nombre del resumen anual.</small>
                 <input
                   type="text"
-                  minLength="10"
-                  maxlength="100"
+                  minLength="1"
+                  maxlength="200"
                   placeholder="Ingresar nombre del resumen"
                   class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="updateResumeForm.comm_name_resume"
@@ -707,7 +707,7 @@
                 presente campo.</small
               >
               <input
-                minLength="10"
+                minLength="1"
                 maxlength="400"
                 type="text"
                 class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -771,8 +771,8 @@
                         </p>
                         <input
                           type="text"
-                          minLength="5"
-                          maxlength="100"
+                          minLength="1"
+                          maxlength="200"
                           placeholder="Ingresar nombre actividad"
                           class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           v-model="formActivity.comm_name_activity"
@@ -802,7 +802,7 @@
                         placeholder="Número de Hermanas"
                         class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                         min="0"
-                        max="1000"
+                        max="10000"
                         v-model="formActivity.comm_nr_daughters"
                         required
                       />
@@ -827,7 +827,7 @@
                         type="number"
                         class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                         min="0"
-                        max="1000"
+                        max="10000"
                         name="nr_beneficiaries"
                         placeholder="Número de Beneficiarios"
                         v-model="formActivity.comm_nr_beneficiaries"
@@ -854,7 +854,7 @@
                         type="number"
                         class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                         min="0"
-                        max="1000"
+                        max="10000"
                         name="nr_collaborators"
                         v-model="formActivity.comm_nr_collaborators"
                         placeholder="Número de Colaboradores"
@@ -890,8 +890,8 @@
                         </p>
                         <input
                           type="text"
-                          minLength="5"
-                          maxlength="100"
+                          minLength="1"
+                          maxlength="200"
                           placeholder="Ingresar nombre actividad"
                           class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           v-model="updateActivityForm.comm_name_activity"
@@ -921,7 +921,7 @@
                         placeholder="Número de Hermanas"
                         class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                         min="0"
-                        max="1000"
+                        max="10000"
                         v-model="updateActivityForm.comm_nr_daughters"
                         required
                       />
@@ -946,7 +946,7 @@
                         type="number"
                         class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                         min="0"
-                        max="1000"
+                        max="10000"
                         name="nr_beneficiaries"
                         placeholder="Número de Beneficiarios"
                         v-model="updateActivityForm.comm_nr_beneficiaries"
@@ -973,7 +973,7 @@
                         type="number"
                         class="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                         min="0"
-                        max="1000"
+                        max="10000"
                         name="nr_collaborators"
                         v-model="updateActivityForm.comm_nr_collaborators"
                         placeholder="Número de Colaboradores"

@@ -727,8 +727,6 @@
 </template>
 
 <script>
-
-
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
@@ -740,7 +738,6 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import { Inertia } from "@inertiajs/inertia";
 import Icon from "@/Components/Icon";
 import moment from "moment";
-
 import Operation from "@/Components/Secretary/Daughter/Operation";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import JetInputError from "@/Jetstream/InputError.vue";
@@ -829,10 +826,43 @@ export default defineComponent({
       },
       managingReportsFor: null,
       options: [],
+      byTerminateAppointmentCount: null,
     };
   },
 
+  mounted() {
+    this.byTerminateAppointment();
+  },
+
   methods: {
+    byTerminateAppointment() {
+      axios
+        .get(this.route("secretary.appoinments.terminated.index"))
+        .then((response) => {
+          this.byTerminateAppointmentCount = response.data;
+          this.showAlertTerminateAppointment();
+        });
+    },
+
+    showAlertTerminateAppointment() {
+      window.Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+      });
+      Toast.fire({
+        icon: "error",
+        title: `Existen ${this.byTerminateAppointmentCount.counter} hermanas
+            sirvientes con observaciones en sus nombramientos.`,
+      });
+    },
+
     sort(field) {
       this.params.field = field;
       this.params.direction = this.params.direction === "asc" ? "desc" : "asc";

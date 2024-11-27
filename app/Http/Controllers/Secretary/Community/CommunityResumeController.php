@@ -108,7 +108,9 @@ class CommunityResumeController extends Controller
 
         // create data of staff
 
-        $actualTransfers = CommunityDaughterController::indexResponse($community_id, null);
+        $dateF = date("Y", strtotime($request->get('comm_date_resume')));
+
+        $actualTransfers = CommunityDaughterController::indexResponse($community_id, $dateF);
 
         foreach ($actualTransfers as $transfer) {
             Staff::create([
@@ -290,11 +292,9 @@ class CommunityResumeController extends Controller
 
         $resume = Resume::find($resume_id);
 
-        $dateF = date("Y", strtotime($resume->comm_date_resume));
-
         $community = Community::find($resume->community_id);
 
-        $actualTransfers = StaffController::index($resume->id);
+        $actualTransfers = StaffController::index($resume->id, 1);
 
         $pdf = PDF::loadView('reports.resume.resume-two', compact('community', 'actualTransfers'));
 

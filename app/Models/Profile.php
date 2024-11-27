@@ -13,10 +13,26 @@ class Profile extends Model
     use HasFactory;
 
     protected $fillable = [
-        'identity_card', 'status', 'date_birth', 'date_vocation',
-        'date_admission', 'date_send', 'date_vote', 'date_death', 'date_exit', 'date_retirement',
-        'iess_card', 'driver_license', 'cellphone', 'phone', 'observation',
-        'date_other_country', 'book_id', 'place_other_country', 'ph_docs', 'dg_docs'
+        'identity_card',
+        'status',
+        'date_birth',
+        'date_vocation',
+        'date_admission',
+        'date_send',
+        'date_vote',
+        'date_death',
+        'date_exit',
+        'date_retirement',
+        'iess_card',
+        'driver_license',
+        'cellphone',
+        'phone',
+        'observation',
+        'date_other_country',
+        'book_id',
+        'place_other_country',
+        'ph_docs',
+        'dg_docs'
     ];
 
     /**
@@ -112,6 +128,13 @@ class Profile extends Model
             ->where('transfer_date_relocated', null);
 
         return $active;
+    }
+
+    public function next()
+    {
+        return $this->hasOne(Transfer::class)
+            ->whereColumn('transfer_date_adission', '>', 'transfer_date_relocated') // Transferencia posterior
+            ->orderBy('transfer_date_adission', 'asc');
     }
 
     // Relacion inversa uno a uno

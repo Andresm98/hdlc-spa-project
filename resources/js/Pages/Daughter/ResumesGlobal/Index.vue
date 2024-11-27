@@ -540,7 +540,10 @@
         <span
           class="px-2 inline-flex text-base leading-5 font-semibold rounded-sm bg-blue-100 text-blue-800"
         >
-          {{ resumeBeingUpdated.community.comm_name }} </span
+          {{ resumeBeingUpdated.community.comm_name }}
+          Año ({{
+            this.formatDateShow(resumeBeingUpdated.comm_date_resume)
+          }})</span
         >.
       </template>
 
@@ -1049,23 +1052,39 @@
                   </div>
                 </div>
               </div>
-              <jet-button-success
-                type="submit"
-                class="ml-4 mb-2 btn btn-primary"
-                >Guardar Registro</jet-button-success
-              >
+              <div v-if="this.staffBeingUpdated != null">
+                <jet-button-success
+                  type="submit"
+                  class="ml-4 mb-2 btn btn-primary"
+                >
+                  Guardar Registro
+                </jet-button-success>
+              </div>
             </form>
           </div>
           <!--  -->
-
+          <br />
+          <jet-secondary-button
+            class="ml-3"
+            @click="this.refreshStaff(this.resumeBeingUpdated)"
+          >
+            Refrescar Listado Hermanas
+          </jet-secondary-button>
           <div class="py-2">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
               <div
-                v-if="this.getAllStaff != null"
+                v-if="this.groupedStaff != null"
                 class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
               >
                 <div className="overflow-y-auto h-96">
-                  <div className="relative px-4">
+                  <div
+                    className="relative px-4"
+                    v-for="group in groupedStaff"
+                    :key="group.community"
+                  >
+                    <h4>{{ group.community }} ({{ group.count }} miembros)</h4>
+                    <!-- Nombre de la comunidad y el conteo -->
+
                     <table class="min-w-full divide-y divide-gray-200">
                       <thead class="bg-blue-100">
                         <tr>
@@ -1103,7 +1122,7 @@
                             scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                           >
-                            Fecha de llegada
+                            Fecha de llegada y salida
                           </th>
                           <th
                             scope="col"
@@ -1120,7 +1139,7 @@
                         </tr>
                       </thead>
                       <tbody class="bg-white divide-y divide-gray-200">
-                        <tr v-for="staff in this.getAllStaff" :key="staff">
+                        <tr v-for="staff in group.records" :key="staff.id">
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                               <div class="ml-4">
@@ -1171,6 +1190,12 @@
                               <div class="ml-4">
                                 <div class="text-sm font-medium text-gray-900">
                                   {{ staff.dateinsert }}
+                                </div>
+                                <div
+                                  v-if="staff.transferdaterelocated != ''"
+                                  class="text-sm font-medium text-gray-900"
+                                >
+                                  {{ staff.transferdaterelocated }}
                                 </div>
                               </div>
                             </div>
@@ -1332,6 +1357,7 @@ export default {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
+
     const formActivity = useForm({
       comm_name_activity: null,
       comm_description_activity: null,
@@ -1341,6 +1367,7 @@ export default {
       comm_nr_collaborators: null,
       id_comm: null,
     });
+
     const formStaff = useForm({
       office: null,
       retirement: null,
@@ -1491,12 +1518,12 @@ export default {
 
       updateStaffForm: this.$inertia.form({
         office: null,
+        lastname: null,
         retirement: null,
-        transfer_id: null,
-        resume_id: null,
+        id: null,
       }),
 
-      getAllStaff: null,
+      groupedStaff: null,
     };
   },
 
@@ -1629,6 +1656,14 @@ export default {
       this.resumeBeingCreated = null;
       this.selectCommunity.selectedCommunity = null;
       this.selectCommunity.options = [];
+
+      this.updateStaffForm.office = null;
+      this.updateStaffForm.lastname = null;
+      this.updateStaffForm.retirement = null;
+      this.updateStaffForm.id = null;
+
+      this.staffBeingUpdated = null;
+
       this.form.reset();
     },
 
@@ -1833,10 +1868,14 @@ export default {
         .get(
           this.route("daughter.communities.staff.resume.index", {
             resume_id: this.resumeBeingUpdated.id,
+            option: 2,
           })
         )
         .then((res) => {
-          this.getAllStaff = res.data;
+          console.log(res.data);
+
+          // Convertir el objeto agrupado en un array para facilitar la iteración en el template
+          this.groupedStaff = Object.values(res.data);
         });
     },
 
@@ -1863,7 +1902,28 @@ export default {
               this.updateTableStaff();
             }, 10);
             this.updateStaffForm.office = null;
+            this.updateStaffForm.lastname = null;
             this.updateStaffForm.retirement = null;
+            this.updateStaffForm.id = null;
+
+            this.staffBeingUpdated = null;
+          },
+        }
+      );
+    },
+
+    refreshStaff(staff) {
+      console.log(staff);
+      Inertia.put(
+        route("daughter.communities.staff.resume.refreshlist", {}),
+        staff,
+        {
+          preserveScroll: true,
+          preserveState: true,
+          onSuccess: () => {
+            setTimeout(() => {
+              this.updateTableStaff();
+            }, 10);
           },
         }
       );

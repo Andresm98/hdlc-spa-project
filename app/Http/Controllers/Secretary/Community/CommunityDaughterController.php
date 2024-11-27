@@ -48,30 +48,50 @@ class CommunityDaughterController extends Controller
         $community = Community::find($community_id);
 
         if ($community->comm_level == 1) {
+            // Construir límites del año
+            $startOfYear = "$dateF-01-01 00:00:00";
+            $endOfYear = "$dateF-12-31 23:59:59";
+
+            // Determinar si el año dado es el año actual (2024)
+            $isCurrentYear = (date('Y') == $dateF); // Verifica si el año es el actual
+
+            // Obtener las IDs de las comunidades relacionadas con la comunidad actual
             $array = Community::where('comm_id', $community_id)
                 ->pluck('id')
                 ->toArray();
 
             array_push($array, (int)$community_id);
 
-            $arrayid = DB::table('users')
-                ->select('profiles.id')
-                ->join('profiles', 'profiles.user_id', '=', 'users.id')
-                ->join('transfers', 'transfers.profile_id', '=', 'profiles.id')
-                ->join('communities', 'communities.id', '=', 'transfers.community_id')
-                ->whereIn('transfers.community_id',  $array)
-                ->where('transfers.status', '=', 1)
+            $latestTransferIds = Transfer::selectRaw('MAX(transfers.id) as id')
+                ->join('profiles', 'profiles.id', '=', 'transfers.profile_id') // Relacionar con perfiles
+                ->whereIn('transfers.community_id', $array) // Filtrar por comunidades
+                ->where(function ($query) use ($startOfYear, $endOfYear, $isCurrentYear) {
+                    if ($isCurrentYear) {
+                        // Para el año actual, filtrar solo transferencias activas
+                        $query->where('transfers.transfer_date_adission', '<=', $endOfYear) // Transferencias hasta el fin de año
+                            ->whereNull('transfers.transfer_date_relocated') // No relocalizadas
+                            ->where('transfers.status', 1); // Solo hermanas activas
+                    } else {
+                        // Para años pasados, simplemente obtener la última transferencia
+                        $query->where('transfers.transfer_date_adission', '<=', $endOfYear) // Transferencias hasta el fin de año
+                            ->where(function ($q) use ($startOfYear) {
+                                $q->whereNull('transfers.transfer_date_relocated') // No relocalizadas
+                                    ->orWhere('transfers.transfer_date_relocated', '>=', $startOfYear); // Activas durante el rango
+                            });
+                    }
+                })
+                ->groupBy('profiles.id') // Agrupar por perfil (hermana)
+                ->pluck('id'); // Obtener los IDs de las transferencias
+
+            // Recuperar los datos completos de las transferencias obtenidas
+            $latestTransfers = Transfer::whereIn('id', $latestTransferIds)
+                ->with('profile.user') // Relación con usuario
+                ->with('community') // Relación con comunidad
+                ->with('appointments.appointment_level') // Relación con citas
+                ->orderBy('transfer_date_adission', 'desc') // Ordenar por la fecha de admisión (descendente)
                 ->get();
 
-            $query = Transfer::query();
-
-            return   $query->whereIn('profile_id', $arrayid->pluck('id')->toArray())
-                ->with('profile.user')
-                ->with('community')
-                ->with('appointments.appointment_level')
-                ->orderBy('transfer_date_adission', 'desc')
-                ->where('status',  1)
-                ->get();
+            return $latestTransfers;
         } else if ($community->comm_level == 2 && $community->comm_id = $community_id) {
             $arrayid =  DB::table('users')
                 ->select('profiles.id')

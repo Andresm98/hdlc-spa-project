@@ -247,11 +247,14 @@ Route::group(
 
         // Staff Controller
 
-        Route::get('staff/{resume_id}', [StaffController::class, 'index'])
+        Route::get('staff/{resume_id}/{option}', [StaffController::class, 'index'])
             ->name('communities.staff.resume.index');
 
         Route::put('staff/update/{staff_id}', [StaffController::class, 'update'])
             ->name('communities.staff.resume.update');
+
+        Route::put('staff/refresh-list', [StaffController::class, 'refreshList'])
+            ->name('communities.staff.resume.refreshlist');
 
         // Visits Controller
 
