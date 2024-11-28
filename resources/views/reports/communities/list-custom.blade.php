@@ -116,11 +116,12 @@
             ?>
 
             @foreach ($data as $index)
-                <p style="text-align: center;"><strong>{{ $count++ }}. {{ $index->community->comm_name }}</strong>
+                <p style="text-align: center;"><strong>{{ $count++ }}.
+                        {{ $index->community->comm_name }}, {{ $index->parish }}</strong>
                 </p>
 
                 <?php
-                $listDaughters = CommunityDaughterController::reportStaticOrder($index->community->id);
+                $listDaughters = CommunityDaughterController::reportStaticOrder($index->community->id, $index->community->comm_level);
                 ?>
                 @if ($listDaughters)
                     <table>

@@ -801,8 +801,6 @@ class CommunityController extends Controller
 
         $data = $arrayComm;
 
-        // return CommunityDaughterController::reportStatic(1);
-
         if ((int)request('printOperation') === 1 && (int)request('active') === 1) {
             $pdf = PDF::loadView('reports.communities.list-custom', compact('data', 'status', 'from', 'to', 'pastoral'));
 

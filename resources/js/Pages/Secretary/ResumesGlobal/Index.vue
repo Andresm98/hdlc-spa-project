@@ -1089,23 +1089,266 @@
             </div>
           </div>
         </div>
+
+        <div v-if="navigationOp == 3">
+          <div
+            class="bg-white rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+          >
+            <form @submit.prevent="submitUpdateStaff">
+              <div class="flex flex-wrap">
+                <div class="w-full lg:w-12/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <div class="">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Oficio de la Hermana
+                        {{ this.updateStaffForm.lastname }}:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.office"
+                      >
+                        {{ $page.props.errors.office }}
+                      </p>
+                      <input
+                        type="text"
+                        minLength="1"
+                        maxlength="100"
+                        placeholder="Ingresar oficio"
+                        class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        v-model="updateStaffForm.office"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="w-full lg:w-12/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <div class="">
+                      <label class="block text-sm font-medium text-gray-700">
+                        Mes de Retiro:
+                      </label>
+                      <p
+                        class="text-red-400 text-sm"
+                        v-show="$page.props.errors.retirement"
+                      >
+                        {{ $page.props.errors.retirement }}
+                      </p>
+                      <input
+                        type="text"
+                        minLength="1"
+                        maxlength="100"
+                        placeholder="Ingresar mes retiro"
+                        class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        v-model="updateStaffForm.retirement"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div v-if="this.staffBeingUpdated != null">
+                <jet-button-success
+                  type="submit"
+                  class="ml-4 mb-2 btn btn-primary"
+                >
+                  Guardar Registro
+                </jet-button-success>
+              </div>
+            </form>
+          </div>
+          <!--  -->
+          <br />
+          <jet-secondary-button
+            class="ml-3"
+            @click="this.refreshStaff(this.resumeBeingUpdated)"
+          >
+            Refrescar Listado Hermanas
+          </jet-secondary-button>
+          <div class="py-2">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
+              <div
+                v-if="this.groupedStaff != null"
+                class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
+              >
+                <div className="overflow-y-auto h-96">
+                  <div
+                    className="relative px-4"
+                    v-for="group in groupedStaff"
+                    :key="group.community"
+                  >
+                    <h4>{{ group.community }} ({{ group.count }} miembros)</h4>
+                    <!-- Nombre de la comunidad y el conteo -->
+
+                    <table class="min-w-full divide-y divide-gray-200">
+                      <thead class="bg-blue-100">
+                        <tr>
+                          <th
+                            scope="col"
+                            class="pl-4 text-left text-xs font-medium text-black uppercase tracking-wider"
+                          >
+                            Apellidos
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                          >
+                            Nombre Comunidad
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                          >
+                            Fecha de Nacimiento
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                          >
+                            Fecha de Vocación
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                          >
+                            Oficio
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                          >
+                            Fecha de llegada y salida
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                          >
+                            Mes Retiro
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+                          >
+                            Acciones
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="bg-white divide-y divide-gray-200">
+                        <tr v-for="staff in group.records" :key="staff.id">
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                              <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">
+                                  {{ staff.lastname }}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                              <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">
+                                  {{ staff.fullnamecomm }}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                              <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">
+                                  {{ staff.datebirth }}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                              <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">
+                                  {{ staff.datevocation }}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                              <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">
+                                  {{ staff.office }}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                              <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">
+                                  {{ staff.dateinsert }}
+                                </div>
+                                <div
+                                  v-if="staff.transferdaterelocated != ''"
+                                  class="text-sm font-medium text-gray-900"
+                                >
+                                  {{ staff.transferdaterelocated }}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                              <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">
+                                  {{ staff.retirement }}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td
+                            class="px-3 py-4 whitespace-nowrap text-right text-sm font-medium"
+                          >
+                            <!-- Components -->
+
+                            <div class="mx-auto flex gap-10">
+                              <jet-button
+                                @click="confirmationStaffUpdate(staff)"
+                                >Editar</jet-button
+                              >
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div v-else class="bg-gray-200 pt-8 pb-8 pl-4 pr-4 rounded-lg">
+                <p class="text-center text-lg">
+                  Por el momento no existen registros.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </template>
 
       <template #footer>
         <jet-secondary-button @click="updateResumeCancel">
           Cancelar
         </jet-secondary-button>
+        <jet-warning-button class="ml-3" @click="navigation(3)">
+          Listado Hermanas
+        </jet-warning-button>
         <jet-button
           class="ml-3"
           @click="navigation(1)"
-          v-if="navigationOp == 1"
+          v-if="navigationOp == 1 || navigationOp == 3"
         >
           Siguiente
         </jet-button>
         <jet-button
           class="ml-3"
           @click="navigation(2)"
-          v-if="navigationOp == 2"
+          v-if="navigationOp == 2 || navigationOp == 3"
         >
           Anterior
         </jet-button>
@@ -1167,6 +1410,7 @@
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 import PrincipalLayout from "@/Components/Secretary/PrincipalLayout";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetWarningButton from "@/Jetstream/WarningButton.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import AppLayout from "@/Layouts/AppLayoutSecretary.vue";
@@ -1207,6 +1451,7 @@ export default {
       const format = "YYYY-MM-DD";
       return moment(date).format(format);
     };
+
     const formActivity = useForm({
       comm_name_activity: null,
       comm_description_activity: null,
@@ -1216,11 +1461,20 @@ export default {
       comm_nr_collaborators: null,
       id_comm: null,
     });
+
+    const formStaff = useForm({
+      office: null,
+      retirement: null,
+      transfer_id: null,
+      resume_id: null,
+    });
+
     return {
       date,
       year,
       format,
       formActivity,
+      formStaff,
     };
   },
 
@@ -1235,6 +1489,7 @@ export default {
     JetInputError,
     JetButtonSuccess,
     JetSecondaryButton,
+    JetWarningButton,
     TextInput,
     Alert,
     SearchFilter,
@@ -1350,6 +1605,19 @@ export default {
       }),
 
       getAllActivity: null,
+
+      //
+
+      staffBeingUpdated: null,
+
+      updateStaffForm: this.$inertia.form({
+        office: null,
+        lastname: null,
+        retirement: null,
+        id: null,
+      }),
+
+      groupedStaff: null,
     };
   },
 
@@ -1417,8 +1685,10 @@ export default {
     navigation(op) {
       if (op == 1) {
         this.navigationOp = 2;
-      } else {
+      } else if (op == 2) {
         this.navigationOp = 1;
+      } else if (op == 3) {
+        this.navigationOp = 3;
       }
     },
 
@@ -1484,6 +1754,13 @@ export default {
       this.resumeBeingCreated = null;
       this.selectCommunity.selectedCommunity = null;
       this.selectCommunity.options = [];
+
+      this.updateStaffForm.office = null;
+      this.updateStaffForm.lastname = null;
+      this.updateStaffForm.retirement = null;
+      this.updateStaffForm.id = null;
+      this.staffBeingUpdated = null;
+
       this.form.reset();
     },
 
@@ -1496,6 +1773,7 @@ export default {
       this.updateResumeForm.community_id = resume.community.id;
       this.resumeBeingUpdated = resume;
       this.updateTable();
+      this.updateTableStaff();
     },
 
     updateResume() {
@@ -1545,9 +1823,12 @@ export default {
 
     confirmationResumeDelete(resume) {
       this.deleteResumeForm.comm_name_resume = resume.comm_name_resume;
+
       this.deleteResumeForm.comm_observation_resume =
         resume.comm_observation_resume;
+
       this.deleteResumeForm.comm_date_resume = resume.comm_date_resume;
+
       this.deleteResumeForm.community_id = resume.community.id;
 
       this.resumeBeingDeleted = resume;
@@ -1677,6 +1958,75 @@ export default {
         });
     },
 
+    // Staff
+
+    updateTableStaff() {
+      axios
+        .get(
+          this.route("secretary.communities.staff.resume.index", {
+            resume_id: this.resumeBeingUpdated.id,
+            option: 2,
+          })
+        )
+        .then((res) => {
+          console.log(res.data);
+
+          // Convertir el objeto agrupado en un array para facilitar la iteración en el template
+          this.groupedStaff = Object.values(res.data);
+        });
+    },
+
+    confirmationStaffUpdate(staff) {
+      this.updateStaffForm.office = staff.office;
+      this.updateStaffForm.lastname = staff.lastname;
+      this.updateStaffForm.retirement = staff.retirement;
+      this.updateStaffForm.id = staff.id;
+
+      this.staffBeingUpdated = staff;
+    },
+
+    submitUpdateStaff() {
+      Inertia.put(
+        route("secretary.communities.staff.resume.update", {
+          staff_id: this.updateStaffForm.id,
+        }),
+        this.updateStaffForm,
+        {
+          preserveScroll: true,
+          preserveState: true,
+          onSuccess: () => {
+            setTimeout(() => {
+              this.updateTableStaff();
+            }, 10);
+            this.updateStaffForm.office = null;
+            this.updateStaffForm.lastname = null;
+            this.updateStaffForm.retirement = null;
+            this.updateStaffForm.id = null;
+
+            this.staffBeingUpdated = null;
+          },
+        }
+      );
+    },
+
+    refreshStaff(staff) {
+      console.log(staff);
+      Inertia.put(
+        route("secretary.communities.staff.resume.refreshlist", {}),
+        staff,
+        {
+          preserveScroll: true,
+          preserveState: true,
+          onSuccess: () => {
+            setTimeout(() => {
+              this.updateTableStaff();
+            }, 10);
+          },
+        }
+      );
+    },
+
+    // Print
     downloadResume() {
       window.open(
         route(

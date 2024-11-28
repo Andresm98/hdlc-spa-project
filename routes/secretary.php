@@ -41,6 +41,7 @@ use App\Http\Controllers\Secretary\Community\CommunityVehicleController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityArticleController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunitySectionController;
 use App\Http\Controllers\Secretary\Community\Inventory\CommunityInventoryController;
+use App\Http\Controllers\Secretary\Community\StaffController;
 use App\Http\Controllers\Secretary\Community\Vehicles\VehicleGlobalController;
 use App\Http\Controllers\Secretary\Community\WorkIndividual\WorkIndividualController;
 use App\Http\Controllers\Secretary\Documents\DocumentController;
@@ -445,6 +446,17 @@ Route::group([
 
     Route::get('resumes/report/pdf/two/{resume_id}', [CommunityResumeController::class, 'printResumeTwo'])
         ->name('communities.resumetwo.pdf');
+
+    // Communities Staff
+
+    Route::get('staff/{resume_id}/{option}', [StaffController::class, 'index'])
+        ->name('communities.staff.resume.index');
+
+    Route::put('staff/update/{staff_id}', [StaffController::class, 'update'])
+        ->name('communities.staff.resume.update');
+
+    Route::put('staff/refresh-list', [StaffController::class, 'refreshList'])
+        ->name('communities.staff.resume.refreshlist');
 
     // Communities Visits
 

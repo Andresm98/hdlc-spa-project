@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\AcademicTraining;
 use App\Models\Activity;
+use App\Models\Profile;
 use App\Models\Staff;
 use App\Models\Transfer;
 use Illuminate\Support\Facades\Validator;
@@ -250,11 +251,26 @@ class CommunityResumeController extends Controller
 
         $activities = $resume->activities;
 
-        $exitTransfers = Transfer::where('community_id', $resume->community_id)
+        $exitTransfersUnformat = Transfer::where('status', 0)
+            ->where('community_id', $resume->community_id)
             ->whereBetween('transfer_date_relocated', [$firstDay, $lastDay])
-            ->with('profile.actual.community')
             ->with('profile.user')
             ->get();
+
+        $exitTransfers = array();
+
+        foreach ($exitTransfersUnformat as $exit) {
+
+            $nextTransfer = Transfer::where('profile_id', $exit->profile->id)
+                ->where('transfer_date_adission', '>', $exit->transfer_date_adission)
+                ->with('community')
+                ->first();
+
+            array_push($exitTransfers, [
+                'profile' => $exit->profile,
+                'next' => $nextTransfer
+            ]);
+        }
 
         $actualTransfers = CommunityDaughterController::indexResponse($resume->community_id, $dateF);
 

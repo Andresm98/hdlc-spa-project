@@ -94,7 +94,6 @@ class Community extends Model
     {
         return $this->getQuery()
             ->select('communities.*', 'pastorals.name as name_pastoral')
-
             // // join the pivot table for users and roles
             ->join('pastorals', 'pastorals.id', '=', 'communities.pastoral_id')
             // ->join('zones', 'zones.id', '=', 'communities.zone_id')

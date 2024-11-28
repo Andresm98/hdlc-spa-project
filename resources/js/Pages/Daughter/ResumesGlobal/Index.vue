@@ -564,8 +564,8 @@
                 <small>Formato: Nombre del resumen anual.</small>
                 <input
                   type="text"
-                  minLength="10"
-                  maxlength="100"
+                  minLength="1"
+                  maxlength="200"
                   placeholder="Ingresar nombre del resumen"
                   class="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="updateResumeForm.comm_name_resume"
@@ -1258,7 +1258,6 @@
         >
           Anterior
         </jet-button>
-
         <jet-secondary-button class="ml-3" @click="downloadResume">
           Imprimir
         </jet-secondary-button>

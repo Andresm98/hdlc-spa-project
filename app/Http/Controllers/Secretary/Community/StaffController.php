@@ -31,7 +31,6 @@ class StaffController extends Controller
 
         $resume = Resume::find($resume_id);
 
-        // Obtener todos los miembros del staff
         $arrayStaff = $resume->staffs;
 
         $data = array();
@@ -55,17 +54,20 @@ class StaffController extends Controller
             ]);
         }
 
+        usort($data, function ($a, $b) {
+            return strcmp($a['lastname'], $b['lastname']);
+        });
+
         if ($option === 1 && $option != "") {
             return $data;
         }
 
-        // Ordenar los datos por comunidad
         usort($data, function ($a, $b) {
             return strcmp($a['community'], $b['community']);
         });
 
-        // Contar los registros por comunidad
         $communityCounts = [];
+
         foreach ($data as $item) {
             $communityName = $item['community'];
             if (!isset($communityCounts[$communityName])) {
@@ -74,8 +76,8 @@ class StaffController extends Controller
             $communityCounts[$communityName]++;
         }
 
-        // Mostrar los resultados organizados por comunidad con el conteo
         $groupedData = [];
+
         foreach ($communityCounts as $community => $count) {
             $groupedData[] = [
                 'community' => $community,
@@ -92,26 +94,23 @@ class StaffController extends Controller
 
     public function refreshList(Request $request)
     {
-        // Paso 1: Obtén las transferencias actuales
         $actualTransfers = CommunityDaughterController::indexResponse($request->community_id,  Str::substr($request->comm_date_resume, 0, 4));
-        $actualTransferIds = $actualTransfers->pluck('id')->toArray(); // IDs de las transferencias actuales
+        $actualTransferIds = $actualTransfers->pluck('id')->toArray();
 
-        // Paso 2: Eliminar registros en Staff que no estén en las transferencias actuales
+
         Staff::where('resume_id', $request->id)
-            ->whereNotIn('transfer_id', $actualTransferIds) // Eliminar transferencias que no están en la lista
+            ->whereNotIn('transfer_id', $actualTransferIds)
             ->delete();
 
-        // Paso 3: Recorrer las transferencias actuales y asegurarnos de que estén en Staff
         foreach ($actualTransfers as $transfer) {
-            // Verificar si ya existe un registro para esta transferencia y resumen
+
             $staffRecord = Staff::where('transfer_id', $transfer->id)
                 ->where('resume_id', $request->id)
                 ->first();
 
-            // Si el registro no existe, crearlo
             if (!$staffRecord) {
                 Staff::create([
-                    'office' => '', // Aquí puedes asignar el valor correspondiente
+                    'office' => '',
                     'retirement' => '',
                     'transfer_id' => $transfer->id,
                     'resume_id' => $request->id,

@@ -48,14 +48,12 @@ class CommunityDaughterController extends Controller
         $community = Community::find($community_id);
 
         if ($community->comm_level == 1) {
-            // Construir límites del año
+
             $startOfYear = "$dateF-01-01 00:00:00";
             $endOfYear = "$dateF-12-31 23:59:59";
 
-            // Determinar si el año dado es el año actual (2024)
-            $isCurrentYear = (date('Y') == $dateF); // Verifica si el año es el actual
+            $isCurrentYear = (date('Y') == $dateF);
 
-            // Obtener las IDs de las comunidades relacionadas con la comunidad actual
             $array = Community::where('comm_id', $community_id)
                 ->pluck('id')
                 ->toArray();
@@ -303,12 +301,17 @@ class CommunityDaughterController extends Controller
         }
     }
 
-
-
-    public static function reportStaticOrder($community_id)
+    public static function reportStaticOrder($community_id, $level)
     {
-        $validator = Validator::make(['community_id' => $community_id], [
-            'community_id' => ['required', 'exists:communities,id']
+        $validator = Validator::make([
+            'community_id' => $community_id,
+            'level' => $level
+        ], [
+            'community_id' => [
+                'required',
+                'exists:communities,id',
+                'level' => ['nullable', 'integer']
+            ]
         ]);
 
         if ($validator->fails()) {
@@ -318,15 +321,32 @@ class CommunityDaughterController extends Controller
         $community = Community::find($community_id);
 
         if ($community->comm_status == 1) {
+            $array = Community::where('comm_id', $community_id)
+                ->pluck('id')
+                ->toArray();
 
-            $arrayid =  DB::table('users')
+            array_push($array, (int)$community_id);
+
+            $arrayid = DB::table('users')
                 ->select('profiles.id')
                 ->join('profiles', 'profiles.user_id', '=', 'users.id')
                 ->join('transfers', 'transfers.profile_id', '=', 'profiles.id')
-                ->join('communities', 'communities.id', '=', 'transfers.community_id')
-                ->where('transfers.community_id', '=', $community_id)
+                ->join('communities as c1', function ($join) use ($level) {
+                    $join->on('c1.comm_level', '=', DB::raw($level));
+                })
+                ->join('communities as c2', 'c2.id', '=', 'transfers.community_id')
+                ->whereIn('transfers.community_id', $array)
                 ->where('transfers.status', '=', 1)
                 ->get();
+
+            // $arrayid = DB::table('users')
+            //     ->select('profiles.id')
+            //     ->join('profiles', 'profiles.user_id', '=', 'users.id')
+            //     ->join('transfers', 'transfers.profile_id', '=', 'profiles.id')
+            //     ->join('communities', 'communities.id', '=', 'transfers.community_id')
+            //     ->where('transfers.community_id', '=', $community_id)
+            //     ->where('transfers.status', '=', 1)
+            //     ->get();
 
             $query = Transfer::query();
 
@@ -338,15 +358,12 @@ class CommunityDaughterController extends Controller
                 ->where('status',  1)
                 ->get();
 
-
             $class = new CommunityDaughterController();
 
             foreach ($query->get() as $value) {
                 foreach ($value->appointments as $valueLTwo) {
                     if ((int)$valueLTwo->appointment_level_id === 10) {
-
                         $class->setMoveIndex($value->id);
-
                         break;
                     }
                 }
@@ -358,14 +375,14 @@ class CommunityDaughterController extends Controller
 
             if ($query->count() > 0) {
                 $index = array_search((int)$firstElement, array_column($array_transform, 'id'));
-
                 $objeto = array_splice($array_transform, $index, 1)[0];
-
                 array_unshift($array_transform, $objeto);
             }
 
             return $array_transform;
         }
+
+        return redirect()->back();
     }
 
     /**

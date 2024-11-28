@@ -193,27 +193,28 @@
 
             @foreach ($exitTransfers as $exit)
                 <tr>
-                    <td>
-                        {{ $exit->profile->user->lastname }}
-                        {{ $exit->profile->user->name }}
+
+                    <td style="text-align: center; padding-left: 5px; ">
+                        {{ $exit['profile']['user']['lastname'] }}
+                        {{ $exit['profile']['user']['name'] }}
                     </td>
-                    <td>
-                        {{ date('d.m.Y', strtotime($exit->profile->date_birth)) }}
+                    <td style="text-align: center; padding-left: 5px; ">
+                        {{ date('d.m.Y', strtotime($exit['profile']['date_birth'])) }}
                     </td>
-                    <td>
-                        {{ date('d.m.Y', strtotime($exit->profile->date_vocation)) }}
+                    <td style="text-align: center; padding-left: 5px; ">
+                        {{ date('d.m.Y', strtotime($exit['profile']['date_vocation'])) }}
                     </td>
-                    <td>
-                        @if ($exit->profile->actual)
-                            {{ date('d.m.Y', strtotime($exit->profile->actual->transfer_date_adission)) }}
+                    <td style="text-align: center; padding-left: 5px; ">
+                        @if ($exit['next'])
+                            {{ date('d.m.Y', strtotime($exit['next']['transfer_date_adission'])) }}
                         @else
                             PENDIENTE
                         @endif
                     </td>
-                    <td>
-                        @if ($exit->profile->actual)
-                            @if ($exit->profile->actual->community)
-                                {{ $exit->profile->actual->community->comm_name }}
+                    <td style="text-align: center; padding-left: 5px; ">
+                        @if ($exit['next'])
+                            @if ($exit['next']['community'])
+                                {{ $exit['next']['community']['comm_name'] }}
                             @else
                                 PENDIENTE
                             @endif
