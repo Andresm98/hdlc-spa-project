@@ -327,42 +327,32 @@ class CommunityDaughterController extends Controller
 
             array_push($array, (int)$community_id);
 
-            $arrayid = DB::table('users')
-                ->select('profiles.id')
-                ->join('profiles', 'profiles.user_id', '=', 'users.id')
-                ->join('transfers', 'transfers.profile_id', '=', 'profiles.id')
-                ->join('communities as c1', function ($join) use ($level) {
-                    $join->on('c1.comm_level', '=', DB::raw($level));
-                })
-                ->join('communities as c2', 'c2.id', '=', 'transfers.community_id')
-                ->whereIn('transfers.community_id', $array)
-                ->where('transfers.status', '=', 1)
-                ->get();
-
-            // $arrayid = DB::table('users')
-            //     ->select('profiles.id')
-            //     ->join('profiles', 'profiles.user_id', '=', 'users.id')
-            //     ->join('transfers', 'transfers.profile_id', '=', 'profiles.id')
-            //     ->join('communities', 'communities.id', '=', 'transfers.community_id')
-            //     ->where('transfers.community_id', '=', $community_id)
-            //     ->where('transfers.status', '=', 1)
-            //     ->get();
-
             $query = Transfer::query();
 
-            $query->whereIn('profile_id', $arrayid->pluck('id')->toArray())
-                ->with('profile.user')
-                ->with('community')
-                ->with('appointments.appointment_level')
-                ->orderBy('transfer_date_adission', 'desc')
-                ->where('status',  1)
+            $transfers = $query->whereIn('transfers.community_id', $array)
+                ->where('transfers.status', 1)
+                ->join('profiles', 'profiles.id', '=', 'transfers.profile_id')
+                ->join('users', 'users.id', '=', 'profiles.user_id')
+                ->join('communities', 'communities.id', '=', 'transfers.community_id')
+                ->select(
+                    'transfers.*',
+                    'users.lastname',
+                    'profiles.id as profile_id',
+                    'communities.comm_level'
+                )
+                ->with([
+                    'profile.user',
+                    'community',
+                    'appointments.appointment_level'
+                ])
+                ->orderBy('users.lastname', 'asc')
                 ->get();
 
             $class = new CommunityDaughterController();
 
-            foreach ($query->get() as $value) {
+            foreach ($transfers as $value) {
                 foreach ($value->appointments as $valueLTwo) {
-                    if ((int)$valueLTwo->appointment_level_id === 10) {
+                    if ($valueLTwo->appointment_level_id === 10) {
                         $class->setMoveIndex($value->id);
                         break;
                     }
@@ -371,10 +361,11 @@ class CommunityDaughterController extends Controller
 
             $firstElement = $class->getMoveIndex();
 
-            $array_transform = $query->get()->toArray();
+            $array_transform = $transfers->toArray();
 
-            if ($query->count() > 0) {
-                $index = array_search((int)$firstElement, array_column($array_transform, 'id'));
+            $index = array_search((int)$firstElement, array_column($array_transform, 'id'));
+
+            if ($index !== false) {
                 $objeto = array_splice($array_transform, $index, 1)[0];
                 array_unshift($array_transform, $objeto);
             }
