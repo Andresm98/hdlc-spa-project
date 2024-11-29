@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Community;
 use App\Models\Resume;
 use App\Models\Staff;
+use App\Models\Transfer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,22 @@ use Illuminate\Support\Str;
 
 class StaffController extends Controller
 {
+
+    public $moveIndex = null;
+
+    public function __construct()
+    {
+        $this->moveIndex;
+    }
+
+    public function setMoveIndex($moveIndex)
+    {
+        $this->moveIndex = $moveIndex;
+    }
+    public function getMoveIndex()
+    {
+        return $this->moveIndex;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -41,6 +58,7 @@ class StaffController extends Controller
             array_push($data, [
                 'id' => $staff->id,
                 'lastname' => $staff->transfer->profile->user->lastname,
+                'profileid' => $staff->transfer->profile->id,
                 'fullnamecomm' => $staff->transfer->profile->user->name,
                 'datebirth' => date('d.m.Y', strtotime($staff->transfer->profile->date_birth)),
                 'datevocation' => date('d.m.Y', strtotime($staff->transfer->profile->date_vocation)),
@@ -57,6 +75,42 @@ class StaffController extends Controller
         usort($data, function ($a, $b) {
             return strcmp($a['lastname'], $b['lastname']);
         });
+
+        $profileIds = array_column($data, 'profileid');
+
+        $query = Transfer::query();
+
+        $query->whereIn('profile_id', $profileIds)
+            ->with('profile.user')
+            ->with('community')
+            ->with('appointments.appointment_level')
+            ->orderBy('transfer_date_adission', 'desc')
+            ->where('status',  1)
+            ->get();
+
+        $class = new StaffController();
+
+        foreach ($query->get() as $value) {
+            foreach ($value->appointments as $valueLTwo) {
+                if ((int)$valueLTwo->appointment_level_id === 10) {
+                    $class->setMoveIndex($value->id);
+                    break;
+                }
+            }
+        }
+
+        $moveProfileId = (int)$class->getMoveIndex();
+
+        foreach ($data as $index => $staff) {
+            if ($staff['profileid'] == $moveProfileId) {
+
+                $firstElement = array_splice($data, $index, 1);
+
+                array_unshift($data, $firstElement[0]);
+
+                break;
+            }
+        }
 
         if ($option === 1 && $option != "") {
             return $data;
