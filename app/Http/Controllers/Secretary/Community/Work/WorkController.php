@@ -436,7 +436,49 @@ class WorkController extends Controller
             }
 
             $work = Community::find($work_id);
+
+            if (count($work->vehicles()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene vehículos asociados, si realmente necesita eliminar este registro es necesario eliminar todos los vehículos asociados.']);
+            }
+
+            if (count($work->visits()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene visitas asociadas, si realmente necesita eliminar este registro es necesario eliminar todas las visitas asociadas.']);
+            }
+
+            if (count($work->resumes()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene resúmenes anuales asociados, si realmente necesita eliminar este registro es necesario eliminar todos los resúmenes asociados.']);
+            }
+
+            if (count($work->activities()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene actividades asociadas, si realmente necesita eliminar este registro es necesario eliminar todas las actividades asociadas.']);
+            }
+
+            if (count($work->appointments()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene nombramientos asociados, si realmente necesita eliminar este registro es necesario eliminar todos los nombramientos asociados.']);
+            }
+
+            if (count($work->transfers()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene transferencias asociadas, si realmente necesita eliminar este registro es necesario eliminar todas las transferencias asociadas.']);
+            }
+
+            if (count($work->permits()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene permisos asociados, si realmente necesita eliminar este registro es necesario eliminar todas los permisos asociados.']);
+            }
+
+            if (count($work->files()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene archivos asociados, si realmente necesita eliminar este registro es necesario eliminar todas los archivos asociados.']);
+            }
+
+            $work->files()->delete();
+
+            $work->address()->delete();
+
+            $work->inventory()->sections()->articles()->delete();
+
+            $work->inventory()->sections()->delete();
+
             $work->inventory()->delete();
+
             $work->delete();
 
             return redirect()->back()->with(['success' => 'La obra fue eliminada correctamente']);

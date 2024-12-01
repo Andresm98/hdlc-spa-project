@@ -57,9 +57,9 @@ class Community extends Model
         return $this->hasOne('App\Models\Inventory');
     }
 
-    public function permit()
+    public function permits()
     {
-        return $this->hasOne('App\Models\Permit');
+        return $this->hasMany('App\Models\Permit');
     }
 
     // Relation pne to one inverse polimorph

@@ -728,7 +728,7 @@
                   </jet-secondary-button>
                   <jet-danger-button
                     class="ml-3"
-                    @click="deleteCommunity(selected_community.comm_levele)"
+                    @click="deleteCommunity(selected_community.comm_level)"
                   >
                     Eliminar
                   </jet-danger-button>
@@ -1014,10 +1014,10 @@ export default defineComponent({
             community_id: this.selected_community.id,
           })
         );
-      } else if (value == 1) {
+      } else if (value == 2) {
         Inertia.delete(
           route("secretary.works.delete", {
-            community_id: this.selected_community.id,
+            work_id: this.selected_community.id,
           })
         );
       }

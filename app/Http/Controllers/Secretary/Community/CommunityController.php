@@ -556,7 +556,53 @@ class CommunityController extends Controller
             }
 
             $community = Community::find($community_id);
+
+            if (count($community->vehicles()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene vehículos asociados, si realmente necesita eliminar este registro es necesario eliminar todos los vehículos asociados.']);
+            }
+
+            if (count($community->visits()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene visitas asociadas, si realmente necesita eliminar este registro es necesario eliminar todas las visitas asociadas.']);
+            }
+
+            if (count($community->resumes()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene resúmenes anuales asociados, si realmente necesita eliminar este registro es necesario eliminar todos los resúmenes asociados.']);
+            }
+
+            if (count($community->activities()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene actividades asociadas, si realmente necesita eliminar este registro es necesario eliminar todas las actividades asociadas.']);
+            }
+
+            if (count($community->appointments()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene nombramientos asociados, si realmente necesita eliminar este registro es necesario eliminar todos los nombramientos asociados.']);
+            }
+
+            if (count($community->transfers()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene transferencias asociadas, si realmente necesita eliminar este registro es necesario eliminar todas las transferencias asociadas.']);
+            }
+
+            if (count($community->permits()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene permisos asociados, si realmente necesita eliminar este registro es necesario eliminar todas los permisos asociados.']);
+            }
+
+            if (count($community->files()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene archivos asociados, si realmente necesita eliminar este registro es necesario eliminar todas los archivos asociados.']);
+            }
+
+            if (count($community->works()->get()) > 0) {
+                return redirect()->back()->with(['error' => 'La comunidad/obra tiene obras asociadas, si realmente necesita eliminar este registro es necesario eliminar todas las obras asociadas.']);
+            }
+
+            $community->files()->delete();
+
+            $community->address()->delete();
+
+            $community->inventory()->sections()->articles()->delete();
+
+            $community->inventory()->sections()->delete();
+
             $community->inventory()->delete();
+
             $community->delete();
 
             return redirect()->back()->with(['success' => 'La comunidad fue eliminada correctamente']);
