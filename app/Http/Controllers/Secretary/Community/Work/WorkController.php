@@ -473,10 +473,6 @@ class WorkController extends Controller
 
             $work->address()->delete();
 
-            $work->inventory()->sections()->articles()->delete();
-
-            $work->inventory()->sections()->delete();
-
             $work->inventory()->delete();
 
             $work->delete();

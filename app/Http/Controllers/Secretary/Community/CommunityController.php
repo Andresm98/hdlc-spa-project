@@ -597,10 +597,6 @@ class CommunityController extends Controller
 
             $community->address()->delete();
 
-            $community->inventory()->sections()->articles()->delete();
-
-            $community->inventory()->sections()->delete();
-
             $community->inventory()->delete();
 
             $community->delete();
