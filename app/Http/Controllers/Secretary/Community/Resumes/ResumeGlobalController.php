@@ -86,7 +86,7 @@ class ResumeGlobalController extends Controller
         $provinces =  $addressClass->getProvinces();
 
         $query->with('community')
-            ->orderBy('comm_date_resume', 'desc')
+            ->orderBy('id', 'desc')
             ->get();
 
         return Inertia::render('Secretary/ResumesGlobal/Index', [
