@@ -102,7 +102,7 @@ class StaffController extends Controller
         $moveProfileId = (int)$class->getMoveIndex();
 
         foreach ($data as $index => $staff) {
-            if ($staff['profileid'] == $moveProfileId) {
+            if ($staff['transfer_id'] == $moveProfileId) {
 
                 $firstElement = array_splice($data, $index, 1);
 
