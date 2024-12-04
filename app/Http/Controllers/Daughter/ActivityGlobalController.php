@@ -307,15 +307,10 @@ class ActivityGlobalController extends Controller
         return $pdf->setPaper('a4', 'landscape')->stream('ReportesActividadesHDLC.pdf');
     }
 
-
-    //  TODO: Export Excel
-
     public function exportExcel()
     {
         return Excel::download(new ActivityExport(request()), 'ReportesActividadesHDLC.xlsx');
     }
-
-    //  TODO: Export CSV
 
     public function exportCSV()
     {

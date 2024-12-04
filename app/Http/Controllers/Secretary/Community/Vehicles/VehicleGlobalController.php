@@ -53,7 +53,6 @@ class VehicleGlobalController extends Controller
      */
     public function index()
     {
-
         request()->validate([
             'dateStart' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'community' => ['nullable', 'integer', 'exists:communities,id'],
@@ -88,7 +87,7 @@ class VehicleGlobalController extends Controller
         $provinces =  $addressClass->getProvinces();
 
         $query->with('community')
-            ->orderBy('year', 'desc')
+            ->orderBy('id', 'desc')
             ->get();
 
         return Inertia::render('Secretary/VehiclesGlobal/Index', [

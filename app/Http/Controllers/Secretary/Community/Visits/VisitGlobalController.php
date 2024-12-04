@@ -52,7 +52,6 @@ class VisitGlobalController extends Controller
      */
     public function index()
     {
-
         request()->validate([
             'dateStart' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'community' => ['nullable', 'integer', 'exists:communities,id'],
@@ -97,7 +96,7 @@ class VisitGlobalController extends Controller
         $provinces =  $addressClass->getProvinces();
 
         $query->with('community')
-            ->orderBy('comm_date_init_visit', 'desc')
+            ->orderBy('id', 'desc')
             ->get();
 
         return Inertia::render('Secretary/VisitsGlobal/Index', [
